@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRuleCollectionPropertiesFormat"/>. </summary>
         public AzureFirewallNetworkRuleCollectionPropertiesFormat()
         {
-            Rules = new ChangeTrackingList<AzureFirewallNetworkRule>();
+            Rules = new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRuleCollectionPropertiesFormat"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rules"> Collection of rules used by a network rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the network rule collection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallNetworkRuleCollectionPropertiesFormat(int? priority, AzureFirewallRCAction action, IList<AzureFirewallNetworkRule> rules, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallNetworkRuleCollectionPropertiesFormat(int? priority, AzureFirewallRCAction action, IList<AzureFirewallNetworkRuleCollectionData> rules, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             Action = action;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         internal AzureFirewallRCAction Action { get; set; }
 
         /// <summary> Collection of rules used by a network rule collection. </summary>
-        public IList<AzureFirewallNetworkRule> Rules { get; } = new ChangeTrackingList<AzureFirewallNetworkRule>();
+        public IList<AzureFirewallNetworkRuleCollectionData> Rules { get; } = new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>();
 
         /// <summary> The provisioning state of the network rule collection resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

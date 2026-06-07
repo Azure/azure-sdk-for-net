@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the VpnServerConfigurationPolicyGroup. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnServerConfigurationPolicyGroupProperties properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnServerConfigurationPolicyGroupProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VpnServerConfigurationPolicyGroupProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Shows if this is a Default VpnServerConfigurationPolicyGroup or not. </summary>
         public bool? IsDefault

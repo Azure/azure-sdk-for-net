@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="LoadBalancerData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
         /// <param name="sku"> The load balancer SKU. </param>
-        internal LoadBalancerData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancerPropertiesFormat properties, string eTag, ExtendedLocation extendedLocation, LoadBalancerSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancingRuleProperties properties, ETag? eTag, Models.ExtendedLocation extendedLocation, LoadBalancerSku sku) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -40,13 +42,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of load balancer. </summary>
-        internal LoadBalancerPropertiesFormat Properties { get; set; }
+        internal LoadBalancingRuleProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The extended location of the load balancer. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public Models.ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The load balancer SKU. </summary>
         public LoadBalancerSku Sku { get; set; }
@@ -58,20 +60,20 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 return Properties.FrontendIPConfigurations;
             }
         }
 
         /// <summary> Collection of backend address pools used by a load balancer. </summary>
-        public IList<BackendAddressPoolData> BackendAddressPools
+        public IList<WritableSubResource> BackendAddressPools
         {
             get
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 return Properties.BackendAddressPools;
             }
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 return Properties.LoadBalancingRules;
             }
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 return Properties.Probes;
             }
@@ -110,20 +112,20 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 return Properties.InboundNatRules;
             }
         }
 
         /// <summary> Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound NAT rules are created automatically for each NIC associated with the Load Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive with defining inbound NAT rules. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They have to reference individual inbound NAT rules. </summary>
-        public IList<InboundNatPool> InboundNatPools
+        public IList<LoadBalancerInboundNatPool> InboundNatPools
         {
             get
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 return Properties.InboundNatPools;
             }
@@ -136,7 +138,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 return Properties.OutboundRules;
             }
@@ -171,7 +173,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancerPropertiesFormat();
+                    Properties = new LoadBalancingRuleProperties();
                 }
                 Properties.Scope = value;
             }

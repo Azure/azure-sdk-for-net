@@ -15,63 +15,63 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of VirtualHubRouteTableV2s and a URL nextLink to get the next set of results. </summary>
-    internal partial class ListVirtualHubRouteTableV2sResult : IJsonModel<ListVirtualHubRouteTableV2sResult>
+    internal partial class ListVirtualHubRouteTableV2SResult : IJsonModel<ListVirtualHubRouteTableV2SResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ListVirtualHubRouteTableV2sResult"/> for deserialization. </summary>
-        internal ListVirtualHubRouteTableV2sResult()
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubRouteTableV2SResult"/> for deserialization. </summary>
+        internal ListVirtualHubRouteTableV2SResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListVirtualHubRouteTableV2sResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ListVirtualHubRouteTableV2SResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2sResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2SResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListVirtualHubRouteTableV2sResult(document.RootElement, options);
+                        return DeserializeListVirtualHubRouteTableV2SResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2sResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2SResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2sResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2SResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2sResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2SResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListVirtualHubRouteTableV2sResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ListVirtualHubRouteTableV2SResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListVirtualHubRouteTableV2sResult IPersistableModel<ListVirtualHubRouteTableV2sResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListVirtualHubRouteTableV2SResult IPersistableModel<ListVirtualHubRouteTableV2SResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListVirtualHubRouteTableV2sResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListVirtualHubRouteTableV2SResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListVirtualHubRouteTableV2sResult"/> from. </param>
-        internal static ListVirtualHubRouteTableV2sResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListVirtualHubRouteTableV2SResult"/> from. </param>
+        internal static ListVirtualHubRouteTableV2SResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListVirtualHubRouteTableV2sResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeListVirtualHubRouteTableV2SResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListVirtualHubRouteTableV2sResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListVirtualHubRouteTableV2SResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2sResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2SResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2sResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2SResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListVirtualHubRouteTableV2sResult IJsonModel<ListVirtualHubRouteTableV2sResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ListVirtualHubRouteTableV2SResult IJsonModel<ListVirtualHubRouteTableV2SResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListVirtualHubRouteTableV2sResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ListVirtualHubRouteTableV2SResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2sResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubRouteTableV2SResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2sResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListVirtualHubRouteTableV2SResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListVirtualHubRouteTableV2sResult(document.RootElement, options);
+            return DeserializeListVirtualHubRouteTableV2SResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListVirtualHubRouteTableV2sResult DeserializeListVirtualHubRouteTableV2sResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ListVirtualHubRouteTableV2SResult DeserializeListVirtualHubRouteTableV2SResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListVirtualHubRouteTableV2sResult(value, nextLink, additionalBinaryDataProperties);
+            return new ListVirtualHubRouteTableV2SResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

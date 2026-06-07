@@ -14,51 +14,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains bgp community information offered in Service Community resources. </summary>
-    public partial class BGPCommunity : IJsonModel<BGPCommunity>
+    public partial class BgpCommunity : IJsonModel<BgpCommunity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BGPCommunity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BgpCommunity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BGPCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBGPCommunity(document.RootElement, options);
+                        return DeserializeBgpCommunity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BGPCommunity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BGPCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BGPCommunity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BGPCommunity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BgpCommunity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BGPCommunity IPersistableModel<BGPCommunity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BgpCommunity IPersistableModel<BgpCommunity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BGPCommunity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BgpCommunity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BGPCommunity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BgpCommunity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BGPCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BGPCommunity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpCommunity)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ServiceSupportedRegion))
             {
@@ -133,24 +133,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BGPCommunity IJsonModel<BGPCommunity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BgpCommunity IJsonModel<BgpCommunity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BGPCommunity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BgpCommunity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BGPCommunity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BGPCommunity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpCommunity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBGPCommunity(document.RootElement, options);
+            return DeserializeBgpCommunity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BGPCommunity DeserializeBGPCommunity(JsonElement element, ModelReaderWriterOptions options)
+        internal static BgpCommunity DeserializeBgpCommunity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BGPCommunity(
+            return new BgpCommunity(
                 serviceSupportedRegion,
                 communityName,
                 communityValue,

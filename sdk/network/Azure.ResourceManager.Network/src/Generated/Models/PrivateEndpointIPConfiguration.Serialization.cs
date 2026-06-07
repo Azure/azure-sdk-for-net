@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointIPConfigurationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(PrivateEndpointIPConfigurationType);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             PrivateEndpointIPConfigurationProperties properties = default;
             string name = default;
-            string @type = default;
+            string privateEndpointIPConfigurationType = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    privateEndpointIPConfigurationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointIPConfiguration(properties, name, @type, eTag, additionalBinaryDataProperties);
+            return new PrivateEndpointIPConfiguration(properties, name, privateEndpointIPConfigurationType, eTag, additionalBinaryDataProperties);
         }
     }
 }

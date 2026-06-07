@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the subnet. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal SubnetData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, SubnetPropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal SubnetData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, SubnetPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal SubnetPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The address prefix for the subnet. </summary>
         public string AddressPrefix
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> An array of service endpoints. </summary>
-        public IList<ServiceEndpointPropertiesFormat> ServiceEndpoints
+        public IList<ServiceEndpointProperties> ServiceEndpoints
         {
             get
             {
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> An array of references to the delegations on the subnet. </summary>
-        public IList<Delegation> Delegations
+        public IList<ServiceDelegation> Delegations
         {
             get
             {

@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealth"/>. </summary>
         internal VpnClientConnectionHealth()
         {
-            AllocatedIpAddresses = new ChangeTrackingList<string>();
+            AllocatedIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealth"/>. </summary>
         /// <param name="totalIngressBytesTransferred"> Total of the Ingress Bytes Transferred in this P2S Vpn connection. </param>
         /// <param name="totalEgressBytesTransferred"> Total of the Egress Bytes Transferred in this connection. </param>
         /// <param name="vpnClientConnectionsCount"> The total of p2s vpn clients connected at this time to this P2SVpnGateway. </param>
-        /// <param name="allocatedIpAddresses"> List of allocated ip addresses to the connected p2s vpn clients. </param>
+        /// <param name="allocatedIPAddresses"> List of allocated ip addresses to the connected p2s vpn clients. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnClientConnectionHealth(long? totalIngressBytesTransferred, long? totalEgressBytesTransferred, int? vpnClientConnectionsCount, IList<string> allocatedIpAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnClientConnectionHealth(long? totalIngressBytesTransferred, long? totalEgressBytesTransferred, int? vpnClientConnectionsCount, IReadOnlyList<string> allocatedIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalIngressBytesTransferred = totalIngressBytesTransferred;
             TotalEgressBytesTransferred = totalEgressBytesTransferred;
             VpnClientConnectionsCount = vpnClientConnectionsCount;
-            AllocatedIpAddresses = allocatedIpAddresses;
+            AllocatedIPAddresses = allocatedIPAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Network.Models
         public int? VpnClientConnectionsCount { get; }
 
         /// <summary> List of allocated ip addresses to the connected p2s vpn clients. </summary>
-        public IList<string> AllocatedIpAddresses { get; }
+        public IReadOnlyList<string> AllocatedIPAddresses { get; }
     }
 }

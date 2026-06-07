@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network.Models
         public PrivateEndpointProperties()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigPropertiesFormat>();
+            PrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
+            ManualPrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
+            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigProperties>();
             ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
             IpConfigurations = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customNetworkInterfaceName"> The custom name of the network interface attached to the private endpoint. </param>
         /// <param name="billingSku"> The billing sku of the private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointProperties(SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, PrivateEndpointIPVersionType? ipVersionType, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigPropertiesFormat> customDnsConfigs, IList<ApplicationSecurityGroupData> applicationSecurityGroups, IList<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName, PrivateEndpointBillingSku? billingSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointProperties(SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, PrivateEndpointIPVersionType? ipVersionType, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs, IList<ApplicationSecurityGroupData> applicationSecurityGroups, IList<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName, PrivateEndpointBillingSku? billingSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Network.Models
         public PrivateEndpointIPVersionType? IpVersionType { get; set; }
 
         /// <summary> A grouping of information about the connection to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections { get; } = new ChangeTrackingList<PrivateLinkServiceConnection>();
+        public IList<NetworkPrivateLinkServiceConnection> PrivateLinkServiceConnections { get; } = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
 
         /// <summary> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; } = new ChangeTrackingList<PrivateLinkServiceConnection>();
+        public IList<NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; } = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
 
         /// <summary> An array of custom dns configurations. </summary>
-        public IList<CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get; } = new ChangeTrackingList<CustomDnsConfigPropertiesFormat>();
+        public IList<CustomDnsConfigProperties> CustomDnsConfigs { get; } = new ChangeTrackingList<CustomDnsConfigProperties>();
 
         /// <summary> Application security groups in which the private endpoint IP configuration is included. </summary>
         public IList<ApplicationSecurityGroupData> ApplicationSecurityGroups { get; } = new ChangeTrackingList<ApplicationSecurityGroupData>();

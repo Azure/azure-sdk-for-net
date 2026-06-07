@@ -16,11 +16,11 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> VirtualHub Resource. </summary>
-    public partial class VirtualHubData : TrackedResourceWithSettableIdOptionalLocation, IJsonModel<VirtualHubData>
+    public partial class VirtualHubData : NetworkWritableResourceData, IJsonModel<VirtualHubData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrackedResourceWithSettableIdOptionalLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrackedResourceWithSettableIdOptionalLocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,20 +136,24 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             string location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VirtualHubProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             string kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -159,7 +163,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -199,7 +207,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -215,7 +227,7 @@ namespace Azure.ResourceManager.Network
             return new VirtualHubData(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,

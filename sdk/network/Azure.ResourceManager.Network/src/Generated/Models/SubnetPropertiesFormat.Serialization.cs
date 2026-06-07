@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
-                foreach (ServiceEndpointPropertiesFormat item in ServiceEndpoints)
+                foreach (ServiceEndpointProperties item in ServiceEndpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("delegations"u8);
                 writer.WriteStartArray();
-                foreach (Delegation item in Delegations)
+                foreach (ServiceDelegation item in Delegations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSecurityGroupData networkSecurityGroup = default;
             RouteTableData routeTable = default;
             NetworkSubResource natGateway = default;
-            IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default;
+            IList<ServiceEndpointProperties> serviceEndpoints = default;
             IList<ServiceEndpointPolicyData> serviceEndpointPolicies = default;
             IReadOnlyList<PrivateEndpointData> privateEndpoints = default;
             IReadOnlyList<NetworkIPConfiguration> ipConfigurations = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<NetworkSubResource> ipAllocations = default;
             IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks = default;
             IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks = default;
-            IList<Delegation> delegations = default;
+            IList<ServiceDelegation> delegations = default;
             string purpose = default;
             NetworkProvisioningState? provisioningState = default;
             VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies = default;
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ServiceEndpointPropertiesFormat> array = new List<ServiceEndpointPropertiesFormat>();
+                    List<ServiceEndpointProperties> array = new List<ServiceEndpointProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ServiceEndpointPropertiesFormat.DeserializeServiceEndpointPropertiesFormat(item, options));
+                        array.Add(ServiceEndpointProperties.DeserializeServiceEndpointProperties(item, options));
                     }
                     serviceEndpoints = array;
                     continue;
@@ -493,10 +493,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<Delegation> array = new List<Delegation>();
+                    List<ServiceDelegation> array = new List<ServiceDelegation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Delegation.DeserializeDelegation(item, options));
+                        array.Add(ServiceDelegation.DeserializeServiceDelegation(item, options));
                     }
                     delegations = array;
                     continue;
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Network.Models
                 networkSecurityGroup,
                 routeTable,
                 natGateway,
-                serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointPropertiesFormat>(),
+                serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(),
                 serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(),
                 privateEndpoints ?? new ChangeTrackingList<PrivateEndpointData>(),
                 ipConfigurations ?? new ChangeTrackingList<NetworkIPConfiguration>(),
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Network.Models
                 ipAllocations ?? new ChangeTrackingList<NetworkSubResource>(),
                 resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(),
                 serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(),
-                delegations ?? new ChangeTrackingList<Delegation>(),
+                delegations ?? new ChangeTrackingList<ServiceDelegation>(),
                 purpose,
                 provisioningState,
                 privateEndpointNetworkPolicies,

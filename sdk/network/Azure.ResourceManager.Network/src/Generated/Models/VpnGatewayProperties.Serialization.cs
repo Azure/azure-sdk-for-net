@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VpnGatewayIpConfiguration item in IpConfigurations)
+                foreach (VpnGatewayIPConfiguration item in IpConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
             BgpSettings bgpSettings = default;
             NetworkProvisioningState? provisioningState = default;
             int? vpnGatewayScaleUnit = default;
-            IReadOnlyList<VpnGatewayIpConfiguration> ipConfigurations = default;
+            IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations = default;
             bool? enableBgpRouteTranslationForNat = default;
             bool? isRoutingPreferenceInternet = default;
             IList<VpnGatewayNatRuleData> natRules = default;
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<VpnGatewayIpConfiguration> array = new List<VpnGatewayIpConfiguration>();
+                    List<VpnGatewayIPConfiguration> array = new List<VpnGatewayIPConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VpnGatewayIpConfiguration.DeserializeVpnGatewayIpConfiguration(item, options));
+                        array.Add(VpnGatewayIPConfiguration.DeserializeVpnGatewayIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network.Models
                 bgpSettings,
                 provisioningState,
                 vpnGatewayScaleUnit,
-                ipConfigurations ?? new ChangeTrackingList<VpnGatewayIpConfiguration>(),
+                ipConfigurations ?? new ChangeTrackingList<VpnGatewayIPConfiguration>(),
                 enableBgpRouteTranslationForNat,
                 isRoutingPreferenceInternet,
                 natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>(),

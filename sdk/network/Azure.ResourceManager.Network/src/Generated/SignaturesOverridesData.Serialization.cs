@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SignaturesOverridesProperties properties = default;
+            PolicySignaturesOverridesForIdpsProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = SignaturesOverridesProperties.DeserializeSignaturesOverridesProperties(prop.Value, options);
+                    properties = PolicySignaturesOverridesForIdpsProperties.DeserializePolicySignaturesOverridesForIdpsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

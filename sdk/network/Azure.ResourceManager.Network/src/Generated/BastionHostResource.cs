@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Post request for Delete Bastion Shareable Link By Token endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteBastionShareableLinkByTokenAsync(WaitUntil waitUntil, BastionShareableLinkTokenListRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteBastionShareableLinkByTokenAsync(WaitUntil waitUntil, BastionShareableLinkTokenListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListRequest.ToRequestContent(content), context);
+                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Post request for Delete Bastion Shareable Link By Token endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation DeleteBastionShareableLinkByToken(WaitUntil waitUntil, BastionShareableLinkTokenListRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteBastionShareableLinkByToken(WaitUntil waitUntil, BastionShareableLinkTokenListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListRequest.ToRequestContent(content), context);
+                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

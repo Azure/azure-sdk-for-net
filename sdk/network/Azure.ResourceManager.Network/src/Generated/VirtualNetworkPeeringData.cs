@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the virtual network peering. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VirtualNetworkPeeringData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualNetworkPeeringPropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VirtualNetworkPeeringData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualNetworkPeeringPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkPeeringPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </summary>
         public bool? AllowVirtualNetworkAccess
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The local address space of the local virtual network that is peered. </summary>
-        public AddressSpace LocalAddressSpace
+        public VirtualNetworkAddressSpace LocalAddressSpace
         {
             get
             {
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The current local address space of the local virtual network that is peered. </summary>
-        public AddressSpace LocalVirtualNetworkAddressSpace
+        public VirtualNetworkAddressSpace LocalVirtualNetworkAddressSpace
         {
             get
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The reference to the address space peered with the remote virtual network. </summary>
-        public AddressSpace RemoteAddressSpace
+        public VirtualNetworkAddressSpace RemoteAddressSpace
         {
             get
             {
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The reference to the current address space of the remote virtual network. </summary>
-        public AddressSpace RemoteVirtualNetworkAddressSpace
+        public VirtualNetworkAddressSpace RemoteVirtualNetworkAddressSpace
         {
             get
             {

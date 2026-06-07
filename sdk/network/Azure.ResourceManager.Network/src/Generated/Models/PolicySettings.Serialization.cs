@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("jsChallengeCookieExpirationInMins"u8);
                 writer.WriteNumberValue(JsChallengeCookieExpirationInMins.Value);
             }
-            if (Optional.IsDefined(CaptchaExpirationInMins))
+            if (Optional.IsDefined(CaptchaCookieExpirationInMins))
             {
                 writer.WritePropertyName("captchaExpirationInMins"u8);
-                writer.WriteNumberValue(CaptchaExpirationInMins.Value);
+                writer.WriteNumberValue(CaptchaCookieExpirationInMins.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
             string customBlockResponseBody = default;
             PolicySettingsLogScrubbing logScrubbing = default;
             int? jsChallengeCookieExpirationInMins = default;
-            int? captchaExpirationInMins = default;
+            int? captchaCookieExpirationInMins = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    captchaExpirationInMins = prop.Value.GetInt32();
+                    captchaCookieExpirationInMins = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network.Models
                 customBlockResponseBody,
                 logScrubbing,
                 jsChallengeCookieExpirationInMins,
-                captchaExpirationInMins,
+                captchaCookieExpirationInMins,
                 additionalBinaryDataProperties);
         }
     }

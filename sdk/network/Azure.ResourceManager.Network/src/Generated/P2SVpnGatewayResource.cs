@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<VpnProfileResponse>> GenerateVpnProfileAsync(WaitUntil waitUntil, P2SVpnProfileParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VpnProfileResponse>> GenerateVpnProfileAsync(WaitUntil waitUntil, P2SVpnProfileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnProfileParameters.ToRequestContent(content), context);
+                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnProfileContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VpnProfileResponse> operation = new NetworkArmOperation<VpnProfileResponse>(
                     new VpnProfileResponseOperationSource(),
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<VpnProfileResponse> GenerateVpnProfile(WaitUntil waitUntil, P2SVpnProfileParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnProfileResponse> GenerateVpnProfile(WaitUntil waitUntil, P2SVpnProfileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnProfileParameters.ToRequestContent(content), context);
+                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnProfileContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VpnProfileResponse> operation = new NetworkArmOperation<VpnProfileResponse>(
                     new VpnProfileResponseOperationSource(),
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<P2SVpnConnectionHealth>> GetP2sVpnConnectionHealthDetailedAsync(WaitUntil waitUntil, P2SVpnConnectionHealthRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<P2SVpnConnectionHealth>> GetP2sVpnConnectionHealthDetailedAsync(WaitUntil waitUntil, P2SVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGetP2sVpnConnectionHealthDetailedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionHealthRequest.ToRequestContent(content), context);
+                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGetP2sVpnConnectionHealthDetailedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionHealthContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<P2SVpnConnectionHealth> operation = new NetworkArmOperation<P2SVpnConnectionHealth>(
                     new P2SVpnConnectionHealthOperationSource(),
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<P2SVpnConnectionHealth> GetP2sVpnConnectionHealthDetailed(WaitUntil waitUntil, P2SVpnConnectionHealthRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<P2SVpnConnectionHealth> GetP2sVpnConnectionHealthDetailed(WaitUntil waitUntil, P2SVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGetP2sVpnConnectionHealthDetailedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionHealthRequest.ToRequestContent(content), context);
+                HttpMessage message = _p2sVpnGatewaysRestClient.CreateGetP2sVpnConnectionHealthDetailedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionHealthContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<P2SVpnConnectionHealth> operation = new NetworkArmOperation<P2SVpnConnectionHealth>(
                     new P2SVpnConnectionHealthOperationSource(),

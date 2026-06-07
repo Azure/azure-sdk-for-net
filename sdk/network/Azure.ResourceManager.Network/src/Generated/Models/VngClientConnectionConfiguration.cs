@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         public ETag? ETag { get; }
 
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
-        public AddressSpace VpnClientAddressPool
+        public VirtualNetworkAddressSpace VpnClientAddressPool
         {
             get
             {

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Type { get; }
 
         /// <summary> An array of application gateway private link ip configurations. </summary>
-        public IList<ApplicationGatewayPrivateLinkIpConfiguration> IpConfigurations
+        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IpConfigurations
         {
             get
             {

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string @type = default;
-            SharedKeyProperties properties = default;
+            VpnLinkConnectionSharedKeyProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = SharedKeyProperties.DeserializeSharedKeyProperties(prop.Value, options);
+                    properties = VpnLinkConnectionSharedKeyProperties.DeserializeVpnLinkConnectionSharedKeyProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

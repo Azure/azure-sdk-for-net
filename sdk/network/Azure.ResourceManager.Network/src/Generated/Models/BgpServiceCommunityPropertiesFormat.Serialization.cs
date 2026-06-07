@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteStartArray();
-                foreach (BGPCommunity item in BgpCommunities)
+                foreach (BgpCommunity item in BgpCommunities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string serviceName = default;
-            IList<BGPCommunity> bgpCommunities = default;
+            IList<BgpCommunity> bgpCommunities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<BGPCommunity> array = new List<BGPCommunity>();
+                    List<BgpCommunity> array = new List<BgpCommunity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BGPCommunity.DeserializeBGPCommunity(item, options));
+                        array.Add(BgpCommunity.DeserializeBgpCommunity(item, options));
                     }
                     bgpCommunities = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BgpServiceCommunityPropertiesFormat(serviceName, bgpCommunities ?? new ChangeTrackingList<BGPCommunity>(), additionalBinaryDataProperties);
+            return new BgpServiceCommunityPropertiesFormat(serviceName, bgpCommunities ?? new ChangeTrackingList<BgpCommunity>(), additionalBinaryDataProperties);
         }
     }
 }

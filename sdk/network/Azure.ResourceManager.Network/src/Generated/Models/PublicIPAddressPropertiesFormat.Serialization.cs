@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (IpTag item in IpTags)
+                foreach (IPTag item in IpTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkIPConfiguration ipConfiguration = default;
             PublicIPAddressDnsSettings dnsSettings = default;
             DdosSettings ddosSettings = default;
-            IList<IpTag> ipTags = default;
+            IList<IPTag> ipTags = default;
             string ipAddress = default;
             NetworkSubResource publicIPPrefix = default;
             int? idleTimeoutInMinutes = default;
@@ -271,10 +271,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IpTag> array = new List<IpTag>();
+                    List<IPTag> array = new List<IPTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpTag.DeserializeIpTag(item, options));
+                        array.Add(IPTag.DeserializeIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network.Models
                 ipConfiguration,
                 dnsSettings,
                 ddosSettings,
-                ipTags ?? new ChangeTrackingList<IpTag>(),
+                ipTags ?? new ChangeTrackingList<IPTag>(),
                 ipAddress,
                 publicIPPrefix,
                 idleTimeoutInMinutes,

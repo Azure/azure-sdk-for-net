@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyPropertiesFormat(string size, IReadOnlyList<NetworkSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, NetworkSubResource basePolicy, IReadOnlyList<NetworkSubResource> firewalls, IReadOnlyList<NetworkSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySNAT snat, FirewallPolicySQL sql, DnsSettings dnsSettings, ExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallPolicyPropertiesFormat(string size, IReadOnlyList<NetworkSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, NetworkSubResource basePolicy, IReadOnlyList<NetworkSubResource> firewalls, IReadOnlyList<NetworkSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             RuleCollectionGroups = ruleCollectionGroups;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
         public FirewallPolicyInsights Insights { get; set; }
 
         /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
-        public FirewallPolicySNAT Snat { get; set; }
+        public FirewallPolicySnat Snat { get; set; }
 
         /// <summary> SQL Settings definition. </summary>
         internal FirewallPolicySQL Sql { get; set; }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
         public DnsSettings DnsSettings { get; set; }
 
         /// <summary> Explicit Proxy Settings definition. </summary>
-        public ExplicitProxy ExplicitProxy { get; set; }
+        public FirewallPolicyExplicitProxy ExplicitProxy { get; set; }
 
         /// <summary> The configuration for Intrusion detection. </summary>
         public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }

@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
         /// <param name="properties"> Properties of private endpoint IP configurations. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="privateEndpointIPConfigurationType"> The resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointIPConfiguration(PrivateEndpointIPConfigurationProperties properties, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointIPConfiguration(PrivateEndpointIPConfigurationProperties properties, string name, string privateEndpointIPConfigurationType, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
-            Type = @type;
+            PrivateEndpointIPConfigurationType = privateEndpointIPConfigurationType;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get; set; }
 
         /// <summary> The resource type. </summary>
-        public string Type { get; }
+        public string PrivateEndpointIPConfigurationType { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }

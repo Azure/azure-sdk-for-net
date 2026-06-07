@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (ContainerNetworkInterfaceIpConfiguration item in IpConfigurations)
+                foreach (ContainerNetworkInterfaceIPConfiguration item in IpConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration = default;
             Container container = default;
-            IReadOnlyList<ContainerNetworkInterfaceIpConfiguration> ipConfigurations = default;
+            IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ContainerNetworkInterfaceIpConfiguration> array = new List<ContainerNetworkInterfaceIpConfiguration>();
+                    List<ContainerNetworkInterfaceIPConfiguration> array = new List<ContainerNetworkInterfaceIPConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContainerNetworkInterfaceIpConfiguration.DeserializeContainerNetworkInterfaceIpConfiguration(item, options));
+                        array.Add(ContainerNetworkInterfaceIPConfiguration.DeserializeContainerNetworkInterfaceIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerNetworkInterfacePropertiesFormat(containerNetworkInterfaceConfiguration, container, ipConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceIpConfiguration>(), provisioningState, additionalBinaryDataProperties);
+            return new ContainerNetworkInterfacePropertiesFormat(containerNetworkInterfaceConfiguration, container, ipConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

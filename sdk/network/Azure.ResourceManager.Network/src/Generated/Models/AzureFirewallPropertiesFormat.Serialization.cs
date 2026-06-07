@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
-                foreach (AzureFirewallIpGroups item in IpGroups)
+                foreach (AzureFirewallIPGroups item in IpGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource virtualHub = default;
             NetworkSubResource firewallPolicy = default;
             HubIPAddresses hubIPAddresses = default;
-            IReadOnlyList<AzureFirewallIpGroups> ipGroups = default;
+            IReadOnlyList<AzureFirewallIPGroups> ipGroups = default;
             AzureFirewallSku sku = default;
             IDictionary<string, string> additionalProperties = default;
             AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default;
@@ -361,10 +361,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<AzureFirewallIpGroups> array = new List<AzureFirewallIpGroups>();
+                    List<AzureFirewallIPGroups> array = new List<AzureFirewallIPGroups>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallIpGroups.DeserializeAzureFirewallIpGroups(item, options));
+                        array.Add(AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(item, options));
                     }
                     ipGroups = array;
                     continue;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network.Models
                 virtualHub,
                 firewallPolicy,
                 hubIPAddresses,
-                ipGroups ?? new ChangeTrackingList<AzureFirewallIpGroups>(),
+                ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(),
                 sku,
                 additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                 autoscaleConfiguration,

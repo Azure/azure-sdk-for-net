@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         public PrivateLinkServiceProperties()
         {
             LoadBalancerFrontendIpConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
-            IpConfigurations = new ChangeTrackingList<PrivateLinkServiceIpConfiguration>();
+            IpConfigurations = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
             PrivateEndpointConnections = new ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
             Fqdns = new ChangeTrackingList<string>();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkServiceProperties(IList<FrontendIPConfigurationData> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, string destinationIPAddress, AccessMode? accessMode, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkServiceProperties(IList<FrontendIPConfigurationData> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, string destinationIPAddress, AccessMode? accessMode, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
             IpConfigurations = ipConfigurations;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
         public IList<FrontendIPConfigurationData> LoadBalancerFrontendIpConfigurations { get; } = new ChangeTrackingList<FrontendIPConfigurationData>();
 
         /// <summary> An array of private link service IP configurations. </summary>
-        public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; } = new ChangeTrackingList<PrivateLinkServiceIpConfiguration>();
+        public IList<PrivateLinkServiceIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
 
         /// <summary> The destination IP address of the private link service. </summary>
         public string DestinationIPAddress { get; set; }

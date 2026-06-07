@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the endpoint service. </param>
-        /// <param name="type"> Type of the endpoint service. </param>
-        internal EndpointServiceResult(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        /// <param name="resourceType"> Type of the endpoint service. </param>
+        internal EndpointServiceResult(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(id, additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Name of the endpoint service. </summary>
         public string Name { get; }
 
         /// <summary> Type of the endpoint service. </summary>
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

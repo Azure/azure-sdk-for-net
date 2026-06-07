@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal IpamPoolData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, IpamPoolProperties properties, string eTag) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
+        internal IpamPoolData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, IpamPoolProperties properties, ETag? eTag) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
         {
             Properties = properties;
             ETag = eTag;
@@ -48,6 +49,6 @@ namespace Azure.ResourceManager.Network
         public IpamPoolProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
     }
 }

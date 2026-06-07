@@ -7,31 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The ip configuration for a container network interface. </summary>
-    public partial class ContainerNetworkInterfaceIpConfiguration
+    public partial class ContainerNetworkInterfaceIPConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIpConfiguration"/>. </summary>
-        internal ContainerNetworkInterfaceIpConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIPConfiguration"/>. </summary>
+        internal ContainerNetworkInterfaceIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIPConfiguration"/>. </summary>
         /// <param name="properties"> Properties of the container network interface IP configuration. </param>
         /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
-        /// <param name="type"> Sub Resource type. </param>
+        /// <param name="containerNetworkInterfaceIpConfigurationType"> Sub Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerNetworkInterfaceIpConfiguration(ContainerNetworkInterfaceIpConfigurationPropertiesFormat properties, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerNetworkInterfaceIPConfiguration(ContainerNetworkInterfaceIpConfigurationPropertiesFormat properties, string name, string containerNetworkInterfaceIpConfigurationType, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
-            Type = @type;
+            ContainerNetworkInterfaceIpConfigurationType = containerNetworkInterfaceIpConfigurationType;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get; }
 
         /// <summary> Sub Resource type. </summary>
-        public string Type { get; }
+        public string ContainerNetworkInterfaceIpConfigurationType { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The provisioning state of the container network interface IP configuration resource. </summary>
         public NetworkProvisioningState? ProvisioningState

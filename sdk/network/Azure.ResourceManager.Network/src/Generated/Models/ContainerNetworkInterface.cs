@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Reference to the ip configuration on this container nic. </summary>
-        public IReadOnlyList<ContainerNetworkInterfaceIpConfiguration> IpConfigurations
+        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IpConfigurations
         {
             get
             {

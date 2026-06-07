@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionProperties"/>. </summary>
         public VpnSiteLinkConnectionProperties()
         {
-            VpnGatewayCustomBgpAddresses = new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>();
-            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            VpnGatewayCustomBgpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
+            IpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             IngressNatRules = new ChangeTrackingList<NetworkSubResource>();
             EgressNatRules = new ChangeTrackingList<NetworkSubResource>();
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="egressNatRules"> List of egress NatRules. </param>
         /// <param name="dpdTimeoutSeconds"> Dead Peer Detection timeout in seconds for VpnLink connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnSiteLinkConnectionProperties(NetworkSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIpAddressIpConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, NetworkProvisioningState? provisioningState, IList<NetworkSubResource> ingressNatRules, IList<NetworkSubResource> egressNatRules, int? dpdTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnSiteLinkConnectionProperties(NetworkSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, NetworkProvisioningState? provisioningState, IList<NetworkSubResource> ingressNatRules, IList<NetworkSubResource> egressNatRules, int? dpdTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnSiteLink = vpnSiteLink;
             RoutingWeight = routingWeight;
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.Network.Models
         public bool? EnableBgp { get; set; }
 
         /// <summary> vpnGatewayCustomBgpAddresses used by this connection. </summary>
-        public IList<GatewayCustomBgpIpAddressIpConfiguration> VpnGatewayCustomBgpAddresses { get; } = new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>();
+        public IList<GatewayCustomBgpIPAddressIPConfiguration> VpnGatewayCustomBgpAddresses { get; } = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
 
         /// <summary> Enable policy-based traffic selectors. </summary>
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IpsecPolicy>();
+        public IList<IPsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
 
         /// <summary> EnableBgp flag. </summary>
         public bool? EnableRateLimiting { get; set; }

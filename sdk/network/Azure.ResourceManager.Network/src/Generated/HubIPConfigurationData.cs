@@ -13,21 +13,21 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> IpConfigurations. </summary>
-    public partial class HubIpConfigurationData : SubResourceModel
+    public partial class HubIPConfigurationData : SubResourceModel
     {
-        /// <summary> Initializes a new instance of <see cref="HubIpConfigurationData"/>. </summary>
-        public HubIpConfigurationData()
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
+        public HubIPConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HubIpConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> The properties of the Virtual Hub IPConfigurations. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal HubIpConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, HubIPConfigurationPropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal HubIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, HubIPConfigurationPropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;

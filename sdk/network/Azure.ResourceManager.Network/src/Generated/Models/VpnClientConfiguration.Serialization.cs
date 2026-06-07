@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue<Models.VirtualNetworkAddressSpace>(VpnClientAddressPool, options);
+                writer.WriteObjectValue(VpnClientAddressPool, options);
             }
             if (Optional.IsCollectionDefined(VpnClientRootCertificates))
             {
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientIpsecPolicies))
+            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies"u8);
                 writer.WriteStartArray();
-                foreach (IpsecPolicy item in VpnClientIpsecPolicies)
+                foreach (IPsecPolicy item in VpnClientIPsecPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Models.VirtualNetworkAddressSpace vpnClientAddressPool = default;
+            VirtualNetworkAddressSpace vpnClientAddressPool = default;
             IList<VpnClientRootCertificate> vpnClientRootCertificates = default;
             IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
             IList<VpnClientProtocol> vpnClientProtocols = default;
             IList<VpnAuthenticationType> vpnAuthenticationTypes = default;
-            IList<IpsecPolicy> vpnClientIpsecPolicies = default;
+            IList<IPsecPolicy> vpnClientIPsecPolicies = default;
             string radiusServerAddress = default;
             string radiusServerSecret = default;
             IList<RadiusServer> radiusServers = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vpnClientAddressPool = Models.VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
+                    vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vpnClientRootCertificates"u8))
@@ -303,12 +303,12 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IpsecPolicy> array = new List<IpsecPolicy>();
+                    List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpsecPolicy.DeserializeIpsecPolicy(item, options));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
-                    vpnClientIpsecPolicies = array;
+                    vpnClientIPsecPolicies = array;
                     continue;
                 }
                 if (prop.NameEquals("radiusServerAddress"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network.Models
                 vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnClientRevokedCertificate>(),
                 vpnClientProtocols ?? new ChangeTrackingList<VpnClientProtocol>(),
                 vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(),
-                vpnClientIpsecPolicies ?? new ChangeTrackingList<IpsecPolicy>(),
+                vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 radiusServerAddress,
                 radiusServerSecret,
                 radiusServers ?? new ChangeTrackingList<RadiusServer>(),

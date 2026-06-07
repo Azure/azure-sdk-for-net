@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies"u8);
                 writer.WriteStartArray();
-                foreach (IpsecPolicy item in VpnClientIpsecPolicies)
+                foreach (IPsecPolicy item in VpnClientIpsecPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
             IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates = default;
             IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates = default;
-            IList<IpsecPolicy> vpnClientIpsecPolicies = default;
+            IList<IPsecPolicy> vpnClientIpsecPolicies = default;
             string radiusServerAddress = default;
             string radiusServerSecret = default;
             IList<RadiusServer> radiusServers = default;
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IpsecPolicy> array = new List<IpsecPolicy>();
+                    List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpsecPolicy.DeserializeIpsecPolicy(item, options));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
                     vpnClientIpsecPolicies = array;
                     continue;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network.Models
                 vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>(),
                 radiusServerRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>(),
                 radiusClientRootCertificates ?? new ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>(),
-                vpnClientIpsecPolicies ?? new ChangeTrackingList<IpsecPolicy>(),
+                vpnClientIpsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 radiusServerAddress,
                 radiusServerSecret,
                 radiusServers ?? new ChangeTrackingList<RadiusServer>(),

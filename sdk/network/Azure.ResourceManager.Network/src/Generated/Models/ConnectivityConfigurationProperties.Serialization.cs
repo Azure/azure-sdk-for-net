@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
-                foreach (Hub item in Hubs)
+                foreach (ConnectivityHub item in Hubs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string description = default;
             ConnectivityTopology connectivityTopology = default;
-            IList<Hub> hubs = default;
+            IList<ConnectivityHub> hubs = default;
             IsGlobal? isGlobal = default;
             ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default;
             IList<ConnectivityGroupItem> appliesToGroups = default;
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<Hub> array = new List<Hub>();
+                    List<ConnectivityHub> array = new List<ConnectivityHub>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Hub.DeserializeHub(item, options));
+                        array.Add(ConnectivityHub.DeserializeConnectivityHub(item, options));
                     }
                     hubs = array;
                     continue;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectivityConfigurationProperties(
                 description,
                 connectivityTopology,
-                hubs ?? new ChangeTrackingList<Hub>(),
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
                 isGlobal,
                 connectivityCapabilities,
                 appliesToGroups,

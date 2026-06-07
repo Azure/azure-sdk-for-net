@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (PrivateLinkServiceIpConfiguration item in IpConfigurations)
+                foreach (PrivateLinkServiceIPConfiguration item in IpConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<FrontendIPConfigurationData> loadBalancerFrontendIpConfigurations = default;
-            IList<PrivateLinkServiceIpConfiguration> ipConfigurations = default;
+            IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
             string destinationIPAddress = default;
             AccessMode? accessMode = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkServiceIpConfiguration> array = new List<PrivateLinkServiceIpConfiguration>();
+                    List<PrivateLinkServiceIPConfiguration> array = new List<PrivateLinkServiceIPConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceIpConfiguration.DeserializePrivateLinkServiceIpConfiguration(item, options));
+                        array.Add(PrivateLinkServiceIPConfiguration.DeserializePrivateLinkServiceIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new PrivateLinkServiceProperties(
                 loadBalancerFrontendIpConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
-                ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIpConfiguration>(),
+                ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
                 destinationIPAddress,
                 accessMode,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),

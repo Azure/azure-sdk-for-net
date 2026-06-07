@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Network interface IP configuration properties. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, NetworkInterfaceIPConfigurationPropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, NetworkInterfaceIPConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceIPConfigurationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The reference to Virtual Network Taps. </summary>
         public IList<VirtualNetworkTapData> VirtualNetworkTaps

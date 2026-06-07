@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ListVirtualWANsResult"/>. </summary>
         /// <param name="value"> The VirtualWAN items on this page. </param>
-        internal ListVirtualWANsResult(IEnumerable<VirtualWANData> value)
+        internal ListVirtualWANsResult(IEnumerable<VirtualWanData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value"> The VirtualWAN items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListVirtualWANsResult(IList<VirtualWANData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListVirtualWANsResult(IList<VirtualWanData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The VirtualWAN items on this page. </summary>
-        public IList<VirtualWANData> Value { get; }
+        public IList<VirtualWanData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

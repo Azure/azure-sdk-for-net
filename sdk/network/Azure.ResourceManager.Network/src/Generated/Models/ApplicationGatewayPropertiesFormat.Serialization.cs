@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("entraJWTValidationConfigs"u8);
                 writer.WriteStartArray();
-                foreach (ApplicationGatewayEntraJWTValidationConfig item in EntraJWTValidationConfigs)
+                foreach (ApplicationGatewayEntraJwtValidationConfig item in EntraJWTValidationConfigs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
             bool? forceFirewallPolicyAssociation = default;
             IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = default;
-            IList<ApplicationGatewayEntraJWTValidationConfig> entraJWTValidationConfigs = default;
+            IList<ApplicationGatewayEntraJwtValidationConfig> entraJWTValidationConfigs = default;
             ApplicationGatewayGlobalConfiguration globalConfiguration = default;
             ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -884,10 +884,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ApplicationGatewayEntraJWTValidationConfig> array = new List<ApplicationGatewayEntraJWTValidationConfig>();
+                    List<ApplicationGatewayEntraJwtValidationConfig> array = new List<ApplicationGatewayEntraJwtValidationConfig>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayEntraJWTValidationConfig.DeserializeApplicationGatewayEntraJWTValidationConfig(item, options));
+                        array.Add(ApplicationGatewayEntraJwtValidationConfig.DeserializeApplicationGatewayEntraJwtValidationConfig(item, options));
                     }
                     entraJWTValidationConfigs = array;
                     continue;
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Network.Models
                 customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
                 forceFirewallPolicyAssociation,
                 loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>(),
-                entraJWTValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJWTValidationConfig>(),
+                entraJWTValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJwtValidationConfig>(),
                 globalConfiguration,
                 defaultPredefinedSslPolicy,
                 additionalBinaryDataProperties);

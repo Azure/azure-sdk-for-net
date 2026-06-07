@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunityPropertiesFormat"/>. </summary>
         internal BgpServiceCommunityPropertiesFormat()
         {
-            BgpCommunities = new ChangeTrackingList<BGPCommunity>();
+            BgpCommunities = new ChangeTrackingList<BgpCommunity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunityPropertiesFormat"/>. </summary>
         /// <param name="serviceName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="bgpCommunities"> A list of bgp communities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BgpServiceCommunityPropertiesFormat(string serviceName, IList<BGPCommunity> bgpCommunities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BgpServiceCommunityPropertiesFormat(string serviceName, IList<BgpCommunity> bgpCommunities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceName = serviceName;
             BgpCommunities = bgpCommunities;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Network.Models
         public string ServiceName { get; }
 
         /// <summary> A list of bgp communities. </summary>
-        public IList<BGPCommunity> BgpCommunities { get; } = new ChangeTrackingList<BGPCommunity>();
+        public IList<BgpCommunity> BgpCommunities { get; } = new ChangeTrackingList<BgpCommunity>();
     }
 }

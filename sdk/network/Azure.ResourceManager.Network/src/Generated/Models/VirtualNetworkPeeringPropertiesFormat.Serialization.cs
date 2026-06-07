@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.Network.Models
             bool? allowGatewayTransit = default;
             bool? useRemoteGateways = default;
             NetworkSubResource remoteVirtualNetwork = default;
-            AddressSpace localAddressSpace = default;
-            AddressSpace localVirtualNetworkAddressSpace = default;
-            AddressSpace remoteAddressSpace = default;
-            AddressSpace remoteVirtualNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace localAddressSpace = default;
+            VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace remoteAddressSpace = default;
+            VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace = default;
             VirtualNetworkBgpCommunities remoteBgpCommunities = default;
             VirtualNetworkEncryption remoteVirtualNetworkEncryption = default;
             VirtualNetworkPeeringState? peeringState = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    localAddressSpace = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    localAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("localVirtualNetworkAddressSpace"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    localVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    localVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("remoteAddressSpace"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    remoteAddressSpace = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    remoteAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("remoteVirtualNetworkAddressSpace"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    remoteVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    remoteVirtualNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("remoteBgpCommunities"u8))

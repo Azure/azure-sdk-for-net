@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a HubIpConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubIpConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetHubIpConfigurations method.
+    /// A class representing a HubIPConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubIPConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetHubIPConfigurations method.
     /// </summary>
-    public partial class HubIpConfigurationResource : ArmResource
+    public partial class HubIPConfigurationResource : ArmResource
     {
         private readonly ClientDiagnostics _virtualHubIpConfigurationClientDiagnostics;
         private readonly VirtualHubIpConfiguration _virtualHubIpConfigurationRestClient;
-        private readonly HubIpConfigurationData _data;
+        private readonly HubIPConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/ipConfigurations";
 
-        /// <summary> Initializes a new instance of HubIpConfigurationResource for mocking. </summary>
-        protected HubIpConfigurationResource()
+        /// <summary> Initializes a new instance of HubIPConfigurationResource for mocking. </summary>
+        protected HubIPConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HubIpConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HubIpConfigurationResource(ArmClient client, HubIpConfigurationData data) : this(client, data.Id)
+        internal HubIPConfigurationResource(ArmClient client, HubIPConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HubIpConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HubIpConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HubIPConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hubIpConfigurationApiVersion);
+            TryGetApiVersion(ResourceType, out string hubIPConfigurationApiVersion);
             _virtualHubIpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfiguration(_virtualHubIpConfigurationClientDiagnostics, Pipeline, Endpoint, hubIpConfigurationApiVersion ?? "2025-07-01");
+            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfiguration(_virtualHubIpConfigurationClientDiagnostics, Pipeline, Endpoint, hubIPConfigurationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual HubIpConfigurationData Data
+        public virtual HubIPConfigurationData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HubIpConfigurationResource"/>. </description>
+        /// <description> <see cref="HubIPConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HubIpConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HubIPConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationResource.Get");
+            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HubIpConfigurationData> response = Response.FromValue(HubIpConfigurationData.FromResponse(result), result);
+                Response<HubIPConfigurationData> response = Response.FromValue(HubIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HubIpConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HubIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HubIpConfigurationResource"/>. </description>
+        /// <description> <see cref="HubIPConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HubIpConfigurationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HubIPConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationResource.Get");
+            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HubIpConfigurationData> response = Response.FromValue(HubIpConfigurationData.FromResponse(result), result);
+                Response<HubIPConfigurationData> response = Response.FromValue(HubIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HubIpConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HubIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HubIpConfigurationResource"/>. </description>
+        /// <description> <see cref="HubIPConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationResource.Delete");
+            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HubIpConfigurationResource"/>. </description>
+        /// <description> <see cref="HubIPConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationResource.Delete");
+            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Delete");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Update a HubIpConfiguration.
+        /// Update a HubIPConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HubIpConfigurationResource"/>. </description>
+        /// <description> <see cref="HubIPConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Hub Ip Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HubIpConfigurationResource>> UpdateAsync(WaitUntil waitUntil, HubIpConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HubIPConfigurationResource>> UpdateAsync(WaitUntil waitUntil, HubIPConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationResource.Update");
+            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubIpConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubIPConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkArmOperation<HubIpConfigurationResource> operation = new NetworkArmOperation<HubIpConfigurationResource>(
-                    new HubIpConfigurationResourceOperationSource(Client),
+                NetworkArmOperation<HubIPConfigurationResource> operation = new NetworkArmOperation<HubIPConfigurationResource>(
+                    new HubIPConfigurationResourceOperationSource(Client),
                     _virtualHubIpConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Update a HubIpConfiguration.
+        /// Update a HubIPConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="HubIpConfigurationResource"/>. </description>
+        /// <description> <see cref="HubIPConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Hub Ip Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HubIpConfigurationResource> Update(WaitUntil waitUntil, HubIpConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HubIPConfigurationResource> Update(WaitUntil waitUntil, HubIPConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationResource.Update");
+            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubIpConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubIPConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkArmOperation<HubIpConfigurationResource> operation = new NetworkArmOperation<HubIpConfigurationResource>(
-                    new HubIpConfigurationResourceOperationSource(Client),
+                NetworkArmOperation<HubIPConfigurationResource> operation = new NetworkArmOperation<HubIPConfigurationResource>(
+                    new HubIPConfigurationResourceOperationSource(Client),
                     _virtualHubIpConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,

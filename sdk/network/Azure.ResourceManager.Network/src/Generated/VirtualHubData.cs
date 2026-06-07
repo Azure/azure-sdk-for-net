@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> VirtualHub Resource. </summary>
-    public partial class VirtualHubData : TrackedResourceWithSettableIdOptionalLocation
+    public partial class VirtualHubData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         public VirtualHubData()
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the virtual hub. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="kind"> Kind of service virtual hub. This is metadata used for the Azure portal experience for Route Server. </param>
-        internal VirtualHubData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualHubProperties properties, string eTag, string kind) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal VirtualHubData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualHubProperties properties, ETag? eTag, string kind) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualHubProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Kind of service virtual hub. This is metadata used for the Azure portal experience for Route Server. </summary>
         public string Kind { get; }

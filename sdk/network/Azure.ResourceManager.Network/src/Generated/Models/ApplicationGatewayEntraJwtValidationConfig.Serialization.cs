@@ -9,57 +9,58 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Entra JWT Validation Configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayEntraJWTValidationConfig : NetworkSubResource, IJsonModel<ApplicationGatewayEntraJWTValidationConfig>
+    public partial class ApplicationGatewayEntraJwtValidationConfig : NetworkSubResource, IJsonModel<ApplicationGatewayEntraJwtValidationConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationGatewayEntraJWTValidationConfig(document.RootElement, options);
+                        return DeserializeApplicationGatewayEntraJwtValidationConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationGatewayEntraJWTValidationConfig IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationGatewayEntraJWTValidationConfig)PersistableModelCreateCore(data, options);
+        ApplicationGatewayEntraJwtValidationConfig IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationGatewayEntraJwtValidationConfig)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationGatewayEntraJWTValidationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplicationGatewayEntraJwtValidationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +71,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -89,30 +90,30 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationGatewayEntraJWTValidationConfig IJsonModel<ApplicationGatewayEntraJWTValidationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationGatewayEntraJWTValidationConfig)JsonModelCreateCore(ref reader, options);
+        ApplicationGatewayEntraJwtValidationConfig IJsonModel<ApplicationGatewayEntraJwtValidationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationGatewayEntraJwtValidationConfig)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationGatewayEntraJWTValidationConfig(document.RootElement, options);
+            return DeserializeApplicationGatewayEntraJwtValidationConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationGatewayEntraJWTValidationConfig DeserializeApplicationGatewayEntraJWTValidationConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApplicationGatewayEntraJwtValidationConfig DeserializeApplicationGatewayEntraJwtValidationConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApplicationGatewayEntraJWTValidationConfigPropertiesFormat properties = default;
             string name = default;
-            string eTag = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -150,7 +151,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationGatewayEntraJWTValidationConfig(id, additionalBinaryDataProperties, properties, name, eTag);
+            return new ApplicationGatewayEntraJwtValidationConfig(id, additionalBinaryDataProperties, properties, name, eTag);
         }
     }
 }

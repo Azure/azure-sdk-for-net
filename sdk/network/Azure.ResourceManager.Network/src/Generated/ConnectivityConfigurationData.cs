@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of hubItems. </summary>
-        public IList<Hub> Hubs
+        public IList<ConnectivityHub> Hubs
         {
             get
             {

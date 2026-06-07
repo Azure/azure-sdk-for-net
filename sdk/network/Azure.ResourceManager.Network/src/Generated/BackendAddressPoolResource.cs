@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Query inbound NAT rule port mapping request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BackendAddressInboundNatRulePortMappings>> GetInboundNatRulePortMappingsAsync(WaitUntil waitUntil, QueryInboundNatRulePortMappingRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackendAddressInboundNatRulePortMappings>> GetInboundNatRulePortMappingsAsync(WaitUntil waitUntil, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetInboundNatRulePortMappingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, QueryInboundNatRulePortMappingRequest.ToRequestContent(content), context);
+                HttpMessage message = _loadBalancersRestClient.CreateGetInboundNatRulePortMappingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, QueryInboundNatRulePortMappingContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<BackendAddressInboundNatRulePortMappings> operation = new NetworkArmOperation<BackendAddressInboundNatRulePortMappings>(
                     new BackendAddressInboundNatRulePortMappingsOperationSource(),
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Query inbound NAT rule port mapping request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BackendAddressInboundNatRulePortMappings> GetInboundNatRulePortMappings(WaitUntil waitUntil, QueryInboundNatRulePortMappingRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackendAddressInboundNatRulePortMappings> GetInboundNatRulePortMappings(WaitUntil waitUntil, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetInboundNatRulePortMappingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, QueryInboundNatRulePortMappingRequest.ToRequestContent(content), context);
+                HttpMessage message = _loadBalancersRestClient.CreateGetInboundNatRulePortMappingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, QueryInboundNatRulePortMappingContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<BackendAddressInboundNatRulePortMappings> operation = new NetworkArmOperation<BackendAddressInboundNatRulePortMappings>(
                     new BackendAddressInboundNatRulePortMappingsOperationSource(),

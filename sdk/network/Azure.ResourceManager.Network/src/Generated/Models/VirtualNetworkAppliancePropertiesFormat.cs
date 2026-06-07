@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAppliancePropertiesFormat"/>. </summary>
         public VirtualNetworkAppliancePropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<VirtualNetworkApplianceIpConfiguration>();
+            IpConfigurations = new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAppliancePropertiesFormat"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIpConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, string resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, string resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BandwidthInGbps = bandwidthInGbps;
             IpConfigurations = ipConfigurations;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         public double? BandwidthInGbps { get; set; }
 
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
-        public IReadOnlyList<VirtualNetworkApplianceIpConfiguration> IpConfigurations { get; } = new ChangeTrackingList<VirtualNetworkApplianceIpConfiguration>();
+        public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>();
 
         /// <summary> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </summary>
         public VirtualNetworkApplianceIpVersionType? PrivateIPAddressVersion { get; set; }

@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<string>> GenerateVpnClientPackageAsync(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> GenerateVpnClientPackageAsync(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnClientPackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnClientPackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<string> GenerateVpnClientPackage(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> GenerateVpnClientPackage(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnClientPackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnClientPackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<string>> GenerateVpnProfileAsync(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> GenerateVpnProfileAsync(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<string> GenerateVpnProfile(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> GenerateVpnProfile(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -2209,7 +2209,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the Begin Prepare migration on basic vpn gateway through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> InvokePrepareMigrationAsync(WaitUntil waitUntil, VirtualNetworkGatewayMigrationParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> InvokePrepareMigrationAsync(WaitUntil waitUntil, VirtualNetworkGatewayMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2221,7 +2221,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateInvokePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualNetworkGatewayMigrationParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateInvokePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualNetworkGatewayMigrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworkGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2262,7 +2262,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the Begin Prepare migration on basic vpn gateway through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation InvokePrepareMigration(WaitUntil waitUntil, VirtualNetworkGatewayMigrationParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation InvokePrepareMigration(WaitUntil waitUntil, VirtualNetworkGatewayMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2274,7 +2274,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateInvokePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualNetworkGatewayMigrationParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateInvokePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualNetworkGatewayMigrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworkGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2934,7 +2934,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartParameters content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.StartPacketCapture");
             scope.Start();
@@ -2944,7 +2944,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStartParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStartContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -2990,7 +2990,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartParameters content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.StartPacketCapture");
             scope.Start();
@@ -3000,7 +3000,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStartParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStartContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -3047,7 +3047,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Virtual network gateway stop simulation parameters supplied to stop failover simulation on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<string>> StopExpressRouteSiteFailoverSimulationAsync(WaitUntil waitUntil, ExpressRouteFailoverStopApiParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> StopExpressRouteSiteFailoverSimulationAsync(WaitUntil waitUntil, ExpressRouteFailoverStopApiContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3059,7 +3059,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopExpressRouteSiteFailoverSimulationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteFailoverStopApiParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopExpressRouteSiteFailoverSimulationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteFailoverStopApiContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -3106,7 +3106,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Virtual network gateway stop simulation parameters supplied to stop failover simulation on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<string> StopExpressRouteSiteFailoverSimulation(WaitUntil waitUntil, ExpressRouteFailoverStopApiParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StopExpressRouteSiteFailoverSimulation(WaitUntil waitUntil, ExpressRouteFailoverStopApiContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3118,7 +3118,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopExpressRouteSiteFailoverSimulationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteFailoverStopApiParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopExpressRouteSiteFailoverSimulationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteFailoverStopApiContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -3165,7 +3165,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<string>> StopPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStopParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> StopPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStopContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3177,7 +3177,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStopParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStopContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -3224,7 +3224,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<string> StopPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStopParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StopPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStopContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3236,7 +3236,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStopParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnPacketCaptureStopContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),

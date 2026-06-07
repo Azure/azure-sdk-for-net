@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -79,10 +80,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IpAddress);
             }
-            if (Optional.IsDefined(NetworkInterfaceIPConfigurationId))
+            if (Optional.IsDefined(NetworkInterfaceIPConfigurationResourceId))
             {
                 writer.WritePropertyName("networkInterfaceIPConfigurationId"u8);
-                writer.WriteObjectValue(NetworkInterfaceIPConfigurationId, options);
+                writer.WriteStringValue(NetworkInterfaceIPConfigurationResourceId);
             }
             if (Optional.IsDefined(State))
             {
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ipAddress = default;
-            NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId = default;
+            ResourceIdentifier networkInterfaceIPConfigurationResourceId = default;
             string state = default;
             string reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkInterfaceIPConfigurationId = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(prop.Value, options);
+                    networkInterfaceIPConfigurationResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationId, state, reason, additionalBinaryDataProperties);
+            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationResourceId, state, reason, additionalBinaryDataProperties);
         }
     }
 }

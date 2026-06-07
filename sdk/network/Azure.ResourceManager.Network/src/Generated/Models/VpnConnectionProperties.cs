@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VpnConnectionProperties"/>. </summary>
         public VpnConnectionProperties()
         {
-            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            IpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
             VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnLinkConnections"> List of all vpn site link connections to the gateway. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnConnectionProperties(NetworkSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIpAddress, NetworkProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnConnectionProperties(NetworkSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIpAddress, NetworkProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RemoteVpnSite = remoteVpnSite;
             RoutingWeight = routingWeight;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IpsecPolicy>();
+        public IList<IPsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
 
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
         public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; } = new ChangeTrackingList<TrafficSelectorPolicy>();

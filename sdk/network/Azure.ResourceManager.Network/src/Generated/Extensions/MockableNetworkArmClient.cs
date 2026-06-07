@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return new ApplicationGatewayResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> object. </returns>
-        public virtual ApplicationGatewayAvailableSslOptionsResource GetApplicationGatewayAvailableSslOptionsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> object. </returns>
+        public virtual ApplicationGatewayAvailableSslOptionsInfoResource GetApplicationGatewayAvailableSslOptionsInfoResource(ResourceIdentifier id)
         {
-            ApplicationGatewayAvailableSslOptionsResource.ValidateResourceId(id);
-            return new ApplicationGatewayAvailableSslOptionsResource(Client, id);
+            ApplicationGatewayAvailableSslOptionsInfoResource.ValidateResourceId(id);
+            return new ApplicationGatewayAvailableSslOptionsInfoResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -813,13 +813,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return new VirtualRouterPeeringResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualWANResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualWanResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualWANResource"/> object. </returns>
-        public virtual VirtualWANResource GetVirtualWANResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWanResource"/> object. </returns>
+        public virtual VirtualWanResource GetVirtualWanResource(ResourceIdentifier id)
         {
-            VirtualWANResource.ValidateResourceId(id);
-            return new VirtualWANResource(Client, id);
+            VirtualWanResource.ValidateResourceId(id);
+            return new VirtualWanResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VpnSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1010,13 +1010,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return await GetSwapResources(scope).GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="CustomIpPrefixResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CustomIPPrefixResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomIpPrefixResource"/> object. </returns>
-        public virtual CustomIpPrefixResource GetCustomIpPrefixResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomIPPrefixResource"/> object. </returns>
+        public virtual CustomIPPrefixResource GetCustomIPPrefixResource(ResourceIdentifier id)
         {
-            CustomIpPrefixResource.ValidateResourceId(id);
-            return new CustomIpPrefixResource(Client, id);
+            CustomIPPrefixResource.ValidateResourceId(id);
+            return new CustomIPPrefixResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DscpConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1217,13 +1217,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return new BgpConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HubIpConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HubIPConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HubIpConfigurationResource"/> object. </returns>
-        public virtual HubIpConfigurationResource GetHubIpConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HubIPConfigurationResource"/> object. </returns>
+        public virtual HubIPConfigurationResource GetHubIPConfigurationResource(ResourceIdentifier id)
         {
-            HubIpConfigurationResource.ValidateResourceId(id);
-            return new HubIpConfigurationResource(Client, id);
+            HubIPConfigurationResource.ValidateResourceId(id);
+            return new HubIPConfigurationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="RoutingIntentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SwapResourceListResult>> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceSwapListResult>> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 };
                 HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SwapResourceListResult> response = Response.FromValue(SwapResourceListResult.FromResponse(result), result);
+                Response<CloudServiceSwapListResult> response = Response.FromValue(CloudServiceSwapListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1303,7 +1303,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SwapResourceListResult> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceSwapListResult> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1317,7 +1317,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 };
                 HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SwapResourceListResult> response = Response.FromValue(SwapResourceListResult.FromResponse(result), result);
+                Response<CloudServiceSwapListResult> response = Response.FromValue(CloudServiceSwapListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

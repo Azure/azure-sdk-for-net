@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the RouteMap resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal RouteMapData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteMapProperties properties, string eTag) : base(id, name, @type, additionalBinaryDataProperties)
+        internal RouteMapData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteMapProperties properties, ETag? eTag) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal RouteMapProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> List of connections which have this RoutMap associated for inbound traffic. </summary>
         public IList<string> AssociatedInboundConnections

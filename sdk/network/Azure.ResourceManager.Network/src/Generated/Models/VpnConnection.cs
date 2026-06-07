@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies
+        public IList<IPsecPolicy> IpsecPolicies
         {
             get
             {

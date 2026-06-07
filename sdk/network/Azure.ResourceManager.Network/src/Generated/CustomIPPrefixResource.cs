@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a CustomIpPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomIpPrefixResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCustomIpPrefixes method.
+    /// A class representing a CustomIPPrefix along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomIPPrefixResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCustomIPPrefixes method.
     /// </summary>
-    public partial class CustomIpPrefixResource : ArmResource
+    public partial class CustomIPPrefixResource : ArmResource
     {
         private readonly ClientDiagnostics _customIPPrefixesClientDiagnostics;
         private readonly CustomIPPrefixes _customIPPrefixesRestClient;
-        private readonly CustomIpPrefixData _data;
+        private readonly CustomIPPrefixData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/customIpPrefixes";
 
-        /// <summary> Initializes a new instance of CustomIpPrefixResource for mocking. </summary>
-        protected CustomIpPrefixResource()
+        /// <summary> Initializes a new instance of CustomIPPrefixResource for mocking. </summary>
+        protected CustomIPPrefixResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CustomIpPrefixResource(ArmClient client, CustomIpPrefixData data) : this(client, data.Id)
+        internal CustomIPPrefixResource(ArmClient client, CustomIPPrefixData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CustomIpPrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CustomIPPrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string customIpPrefixApiVersion);
+            TryGetApiVersion(ResourceType, out string customIPPrefixApiVersion);
             _customIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Endpoint, customIpPrefixApiVersion ?? "2025-07-01");
+            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Endpoint, customIPPrefixApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual CustomIpPrefixData Data
+        public virtual CustomIPPrefixData Data
         {
             get
             {
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomIpPrefixResource"/>. </description>
+        /// <description> <see cref="CustomIPPrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CustomIpPrefixResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.Get");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.Get");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomIpPrefixResource"/>. </description>
+        /// <description> <see cref="CustomIPPrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CustomIpPrefixResource> Get(string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.Get");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.Get");
             scope.Start();
             try
             {
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,18 +208,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomIpPrefixResource"/>. </description>
+        /// <description> <see cref="CustomIPPrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update custom IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
-        public virtual async Task<Response<CustomIpPrefixResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.Update");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.Update");
             scope.Start();
             try
             {
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _customIPPrefixesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,18 +260,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomIpPrefixResource"/>. </description>
+        /// <description> <see cref="CustomIPPrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update custom IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
-        public virtual Response<CustomIpPrefixResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.Update");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.Update");
             scope.Start();
             try
             {
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _customIPPrefixesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomIpPrefixResource"/>. </description>
+        /// <description> <see cref="CustomIPPrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.Delete");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.Delete");
             scope.Start();
             try
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomIpPrefixResource"/>. </description>
+        /// <description> <see cref="CustomIPPrefixResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.Delete");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.Delete");
             scope.Start();
             try
             {
@@ -398,12 +398,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<CustomIpPrefixResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.AddTag");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.AddTag");
             scope.Start();
             try
             {
@@ -418,19 +418,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
-                    return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                    Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
+                    return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomIpPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CustomIPPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<CustomIpPrefixResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<CustomIPPrefixResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -446,12 +446,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<CustomIpPrefixResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.AddTag");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.AddTag");
             scope.Start();
             try
             {
@@ -466,19 +466,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
-                    return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                    Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
+                    return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomIpPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CustomIPPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<CustomIpPrefixResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<CustomIPPrefixResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -493,11 +493,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<CustomIpPrefixResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.SetTags");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.SetTags");
             scope.Start();
             try
             {
@@ -513,15 +513,15 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
-                    return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                    Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
+                    return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomIpPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CustomIPPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<CustomIpPrefixResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<CustomIPPrefixResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -536,11 +536,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<CustomIpPrefixResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.SetTags");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.SetTags");
             scope.Start();
             try
             {
@@ -556,15 +556,15 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
-                    return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                    Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
+                    return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomIpPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CustomIPPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<CustomIpPrefixResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<CustomIPPrefixResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -579,11 +579,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<CustomIpPrefixResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.RemoveTag");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.RemoveTag");
             scope.Start();
             try
             {
@@ -598,19 +598,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
-                    return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                    Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
+                    return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomIpPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CustomIPPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<CustomIpPrefixResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<CustomIPPrefixResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -625,11 +625,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<CustomIpPrefixResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixResource.RemoveTag");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixResource.RemoveTag");
             scope.Start();
             try
             {
@@ -644,19 +644,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
-                    return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                    Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
+                    return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomIpPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CustomIPPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<CustomIpPrefixResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<CustomIPPrefixResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

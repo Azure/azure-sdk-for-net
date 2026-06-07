@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VirtualNetworkApplianceIpConfiguration item in IpConfigurations)
+                foreach (VirtualNetworkApplianceIPConfiguration item in IpConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             double? bandwidthInGbps = default;
-            IReadOnlyList<VirtualNetworkApplianceIpConfiguration> ipConfigurations = default;
+            IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default;
             VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default;
             NetworkProvisioningState? provisioningState = default;
             string resourceGuid = default;
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<VirtualNetworkApplianceIpConfiguration> array = new List<VirtualNetworkApplianceIpConfiguration>();
+                    List<VirtualNetworkApplianceIPConfiguration> array = new List<VirtualNetworkApplianceIPConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkApplianceIpConfiguration.DeserializeVirtualNetworkApplianceIpConfiguration(item, options));
+                        array.Add(VirtualNetworkApplianceIPConfiguration.DeserializeVirtualNetworkApplianceIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new VirtualNetworkAppliancePropertiesFormat(
                 bandwidthInGbps,
-                ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIpConfiguration>(),
+                ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>(),
                 privateIPAddressVersion,
                 provisioningState,
                 resourceGuid,

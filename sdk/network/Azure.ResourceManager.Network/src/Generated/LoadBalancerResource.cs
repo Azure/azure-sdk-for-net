@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="content"> Parameters supplied to the migrateToIpBased Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MigratedPools>> MigrateToIpBasedAsync(MigrateLoadBalancerToIpBasedRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateLoadBalancerToIPBasedResult>> MigrateToIpBasedAsync(MigrateLoadBalancerToIPBasedContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("LoadBalancerResource.MigrateToIpBased");
             scope.Start();
@@ -508,9 +508,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateMigrateToIpBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIpBasedRequest.ToRequestContent(content), context);
+                HttpMessage message = _loadBalancersRestClient.CreateMigrateToIpBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIPBasedContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MigratedPools> response = Response.FromValue(MigratedPools.FromResponse(result), result);
+                Response<MigrateLoadBalancerToIPBasedResult> response = Response.FromValue(MigrateLoadBalancerToIPBasedResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="content"> Parameters supplied to the migrateToIpBased Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MigratedPools> MigrateToIpBased(MigrateLoadBalancerToIpBasedRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<MigrateLoadBalancerToIPBasedResult> MigrateToIpBased(MigrateLoadBalancerToIPBasedContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("LoadBalancerResource.MigrateToIpBased");
             scope.Start();
@@ -557,9 +557,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateMigrateToIpBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIpBasedRequest.ToRequestContent(content), context);
+                HttpMessage message = _loadBalancersRestClient.CreateMigrateToIpBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIPBasedContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MigratedPools> response = Response.FromValue(MigratedPools.FromResponse(result), result);
+                Response<MigrateLoadBalancerToIPBasedResult> response = Response.FromValue(MigrateLoadBalancerToIPBasedResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

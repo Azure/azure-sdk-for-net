@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -18,25 +19,25 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         public ApplicationGatewayData()
         {
-            Zones = new ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the application gateway. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="availabilityZones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="identity"> The identity of the application gateway, if configured. </param>
-        internal ApplicationGatewayData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayPropertiesFormat properties, string eTag, IList<string> zones, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal ApplicationGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayPropertiesFormat properties, ETag? eTag, IList<string> availabilityZones, ManagedServiceIdentity identity) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
-            Zones = zones;
+            AvailabilityZones = availabilityZones;
             Identity = identity;
         }
 
@@ -44,10 +45,10 @@ namespace Azure.ResourceManager.Network
         internal ApplicationGatewayPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
-        public IList<string> Zones { get; }
+        public IList<string> AvailabilityZones { get; }
 
         /// <summary> The identity of the application gateway, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
@@ -498,7 +499,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Entra JWT validation configurations for the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        public IList<ApplicationGatewayEntraJWTValidationConfig> EntraJWTValidationConfigs
+        public IList<ApplicationGatewayEntraJwtValidationConfig> EntraJWTValidationConfigs
         {
             get
             {

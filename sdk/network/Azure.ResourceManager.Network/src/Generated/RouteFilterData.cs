@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Route Filter Resource. </summary>
-    public partial class RouteFilterData : TrackedResourceWithSettableIdOptionalLocation
+    public partial class RouteFilterData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of <see cref="RouteFilterData"/>. </summary>
         public RouteFilterData()
@@ -22,13 +24,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="RouteFilterData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the route filter. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal RouteFilterData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteFilterPropertiesFormat properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal RouteFilterData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteFilterPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal RouteFilterPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
         public IList<RouteFilterRule> Rules

@@ -65,21 +65,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetApplicationGatewayAvailableSslOptionsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetApplicationGatewayAvailableSslOptionsInfoResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> object. </returns>
-        public static ApplicationGatewayAvailableSslOptionsResource GetApplicationGatewayAvailableSslOptionsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> object. </returns>
+        public static ApplicationGatewayAvailableSslOptionsInfoResource GetApplicationGatewayAvailableSslOptionsInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetApplicationGatewayAvailableSslOptionsResource(id);
+            return GetMockableNetworkArmClient(client).GetApplicationGatewayAvailableSslOptionsInfoResource(id);
         }
 
         /// <summary>
@@ -1595,21 +1595,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualWANResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualWanResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetVirtualWANResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetVirtualWanResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualWANResource"/> object. </returns>
-        public static VirtualWANResource GetVirtualWANResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWanResource"/> object. </returns>
+        public static VirtualWanResource GetVirtualWanResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetVirtualWANResource(id);
+            return GetMockableNetworkArmClient(client).GetVirtualWanResource(id);
         }
 
         /// <summary>
@@ -1993,21 +1993,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CustomIpPrefixResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CustomIPPrefixResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetCustomIpPrefixResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetCustomIPPrefixResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CustomIpPrefixResource"/> object. </returns>
-        public static CustomIpPrefixResource GetCustomIpPrefixResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomIPPrefixResource"/> object. </returns>
+        public static CustomIPPrefixResource GetCustomIPPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetCustomIpPrefixResource(id);
+            return GetMockableNetworkArmClient(client).GetCustomIPPrefixResource(id);
         }
 
         /// <summary>
@@ -2407,21 +2407,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HubIpConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HubIPConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetHubIpConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetHubIPConfigurationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HubIpConfigurationResource"/> object. </returns>
-        public static HubIpConfigurationResource GetHubIpConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HubIPConfigurationResource"/> object. </returns>
+        public static HubIPConfigurationResource GetHubIPConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetHubIpConfigurationResource(id);
+            return GetMockableNetworkArmClient(client).GetHubIPConfigurationResource(id);
         }
 
         /// <summary>
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<SwapResourceListResult>> GetAllAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceSwapListResult>> GetAllAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -2471,7 +2471,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<SwapResourceListResult> GetAll(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceSwapListResult> GetAll(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -4626,27 +4626,27 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets a collection of VirtualWANs in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of VirtualWans in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualWANs()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualWans()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualWANs and their operations over a VirtualWANResource. </returns>
-        public static VirtualWANCollection GetVirtualWANs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWanResource. </returns>
+        public static VirtualWanCollection GetVirtualWans(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualWANs();
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualWans();
         }
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualWANAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualWanAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -4654,18 +4654,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualWANResource>> GetVirtualWANAsync(this ResourceGroupResource resourceGroupResource, string virtualWANName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualWanResource>> GetVirtualWanAsync(this ResourceGroupResource resourceGroupResource, string virtualWANName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualWANAsync(virtualWANName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualWanAsync(virtualWANName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualWAN(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualWan(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -4673,11 +4673,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualWANResource> GetVirtualWAN(this ResourceGroupResource resourceGroupResource, string virtualWANName, CancellationToken cancellationToken = default)
+        public static Response<VirtualWanResource> GetVirtualWan(this ResourceGroupResource resourceGroupResource, string virtualWANName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualWAN(virtualWANName, cancellationToken);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualWan(virtualWANName, cancellationToken);
         }
 
         /// <summary>
@@ -5176,27 +5176,27 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets a collection of CustomIpPrefixes in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of CustomIPPrefixes in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCustomIpPrefixes()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCustomIPPrefixes()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of CustomIpPrefixes and their operations over a CustomIpPrefixResource. </returns>
-        public static CustomIpPrefixCollection GetCustomIpPrefixes(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefixResource. </returns>
+        public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCustomIpPrefixes();
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCustomIPPrefixes();
         }
 
         /// <summary>
         /// Gets the specified custom IP prefix in a specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCustomIpPrefixAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCustomIPPrefixAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5205,18 +5205,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CustomIpPrefixResource>> GetCustomIpPrefixAsync(this ResourceGroupResource resourceGroupResource, string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCustomIpPrefixAsync(customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCustomIPPrefixAsync(customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified custom IP prefix in a specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCustomIpPrefix(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCustomIPPrefix(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5225,11 +5225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CustomIpPrefixResource> GetCustomIpPrefix(this ResourceGroupResource resourceGroupResource, string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<CustomIPPrefixResource> GetCustomIPPrefix(this ResourceGroupResource resourceGroupResource, string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCustomIpPrefix(customIpPrefixName, expand, cancellationToken);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCustomIPPrefix(customIpPrefixName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -5765,20 +5765,20 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
+        /// Gets an object representing a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptionsInfo()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> object. </returns>
-        public static ApplicationGatewayAvailableSslOptionsResource GetApplicationGatewayAvailableSslOptions(this SubscriptionResource subscriptionResource)
+        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> object. </returns>
+        public static ApplicationGatewayAvailableSslOptionsInfoResource GetApplicationGatewayAvailableSslOptionsInfo(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayAvailableSslOptions();
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayAvailableSslOptionsInfo();
         }
 
         /// <summary>
@@ -7241,36 +7241,36 @@ namespace Azure.ResourceManager.Network
         /// Lists all the VirtualWANs in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetVirtualWANsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetVirtualWansAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualWANResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualWANResource> GetVirtualWANsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualWanResource> GetVirtualWansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetVirtualWANsAsync(cancellationToken);
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetVirtualWansAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the VirtualWANs in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetVirtualWANs(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetVirtualWans(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualWANResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualWANResource> GetVirtualWANs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualWanResource> GetVirtualWans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetVirtualWANs(cancellationToken);
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetVirtualWans(cancellationToken);
         }
 
         /// <summary>
@@ -7565,36 +7565,36 @@ namespace Azure.ResourceManager.Network
         /// Gets all the custom IP prefixes in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetCustomIpPrefixesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetCustomIPPrefixesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomIpPrefixResource> GetCustomIpPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CustomIPPrefixResource> GetCustomIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetCustomIpPrefixesAsync(cancellationToken);
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetCustomIPPrefixesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets all the custom IP prefixes in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetCustomIpPrefixes(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetCustomIPPrefixes(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomIpPrefixResource> GetCustomIpPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CustomIPPrefixResource> GetCustomIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetCustomIpPrefixes(cancellationToken);
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetCustomIPPrefixes(cancellationToken);
         }
 
         /// <summary>
@@ -7815,7 +7815,7 @@ namespace Azure.ResourceManager.Network
         /// Swaps VIPs between two load balancers.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.SwapPublicIpAddressesAsync(WaitUntil, AzureLocation, LoadBalancerVipSwapRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.SwapPublicIpAddressesAsync(WaitUntil, AzureLocation, LoadBalancerVipSwapContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -7824,7 +7824,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation> SwapPublicIpAddressesAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> SwapPublicIpAddressesAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -7835,7 +7835,7 @@ namespace Azure.ResourceManager.Network
         /// Swaps VIPs between two load balancers.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.SwapPublicIpAddresses(WaitUntil, AzureLocation, LoadBalancerVipSwapRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.SwapPublicIpAddresses(WaitUntil, AzureLocation, LoadBalancerVipSwapContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -7844,7 +7844,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation SwapPublicIpAddresses(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation SwapPublicIpAddresses(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -8234,8 +8234,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PerimeterAssociableResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PerimeterAssociableResource> GetAllAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkSecurityPerimeterAssociableResourceType> GetAllAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -8253,8 +8253,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PerimeterAssociableResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PerimeterAssociableResource> GetAll(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkSecurityPerimeterAssociableResourceType> GetAll(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -8310,8 +8310,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NspServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NspServiceTagsResource> GetAllAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<Models.NetworkSecurityPerimeterServiceTags> GetAllAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -8329,8 +8329,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NspServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NspServiceTagsResource> GetAll(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<Models.NetworkSecurityPerimeterServiceTags> GetAll(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

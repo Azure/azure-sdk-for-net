@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PublicIpDdosProtectionStatusResult item in Value)
+            foreach (PublicIPDdosProtectionStatusResult item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<PublicIpDdosProtectionStatusResult> value = default;
+            IList<PublicIPDdosProtectionStatusResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PublicIpDdosProtectionStatusResult> array = new List<PublicIpDdosProtectionStatusResult>();
+                    List<PublicIPDdosProtectionStatusResult> array = new List<PublicIPDdosProtectionStatusResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PublicIpDdosProtectionStatusResult.DeserializePublicIpDdosProtectionStatusResult(item, options));
+                        array.Add(PublicIPDdosProtectionStatusResult.DeserializePublicIPDdosProtectionStatusResult(item, options));
                     }
                     value = array;
                     continue;

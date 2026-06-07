@@ -16,68 +16,68 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Custom IP prefix resource. </summary>
-    public partial class CustomIpPrefixData : NetworkTrackedResourceData, IJsonModel<CustomIpPrefixData>
+    public partial class CustomIPPrefixData : NetworkTrackedResourceData, IJsonModel<CustomIPPrefixData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomIpPrefixData(document.RootElement, options);
+                        return DeserializeCustomIPPrefixData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomIpPrefixData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomIpPrefixData IPersistableModel<CustomIpPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomIpPrefixData)PersistableModelCreateCore(data, options);
+        CustomIPPrefixData IPersistableModel<CustomIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomIPPrefixData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomIpPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="customIpPrefixData"> The <see cref="CustomIpPrefixData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CustomIpPrefixData customIpPrefixData)
+        /// <param name="customIPPrefixData"> The <see cref="CustomIPPrefixData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CustomIPPrefixData customIPPrefixData)
         {
-            if (customIpPrefixData == null)
+            if (customIPPrefixData == null)
             {
                 return null;
             }
-            return RequestContent.Create(customIpPrefixData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(customIPPrefixData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CustomIpPrefixData"/> from. </param>
-        internal static CustomIpPrefixData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CustomIPPrefixData"/> from. </param>
+        internal static CustomIPPrefixData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCustomIpPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCustomIPPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomIpPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -128,24 +128,24 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomIpPrefixData IJsonModel<CustomIpPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomIpPrefixData)JsonModelCreateCore(ref reader, options);
+        CustomIPPrefixData IJsonModel<CustomIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomIPPrefixData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomIpPrefixData(document.RootElement, options);
+            return DeserializeCustomIPPrefixData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CustomIpPrefixData DeserializeCustomIpPrefixData(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomIPPrefixData DeserializeCustomIPPrefixData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -179,7 +179,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -261,10 +265,10 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomIpPrefixData(
+            return new CustomIPPrefixData(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,

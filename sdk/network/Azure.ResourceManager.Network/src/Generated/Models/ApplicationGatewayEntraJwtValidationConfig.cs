@@ -7,25 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Entra JWT Validation Configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayEntraJWTValidationConfig : NetworkSubResource
+    public partial class ApplicationGatewayEntraJwtValidationConfig : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJWTValidationConfig"/>. </summary>
-        public ApplicationGatewayEntraJWTValidationConfig()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJwtValidationConfig"/>. </summary>
+        public ApplicationGatewayEntraJwtValidationConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJWTValidationConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJwtValidationConfig"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the application gateway entra jwt validation configuration. </param>
         /// <param name="name"> Name of the entra jwt validation configuration that is unique within an application gateway. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayEntraJWTValidationConfig(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayEntraJWTValidationConfigPropertiesFormat properties, string name, string eTag) : base(id, additionalBinaryDataProperties)
+        internal ApplicationGatewayEntraJwtValidationConfig(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayEntraJWTValidationConfigPropertiesFormat properties, string name, ETag? eTag) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Unauthorized request action. </summary>
         public ApplicationGatewayUnAuthorizedRequestAction? UnAuthorizedRequestAction

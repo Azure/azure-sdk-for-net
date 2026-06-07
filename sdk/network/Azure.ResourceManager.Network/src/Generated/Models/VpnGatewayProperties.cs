@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public VpnGatewayProperties()
         {
             Connections = new ChangeTrackingList<VpnConnection>();
-            IpConfigurations = new ChangeTrackingList<VpnGatewayIpConfiguration>();
+            IpConfigurations = new ChangeTrackingList<VpnGatewayIPConfiguration>();
             NatRules = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </param>
         /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnGatewayProperties(NetworkSubResource virtualHub, IList<VpnConnection> connections, BgpSettings bgpSettings, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIpConfiguration> ipConfigurations, bool? enableBgpRouteTranslationForNat, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnGatewayProperties(NetworkSubResource virtualHub, IList<VpnConnection> connections, BgpSettings bgpSettings, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? enableBgpRouteTranslationForNat, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualHub = virtualHub;
             Connections = connections;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
         public int? VpnGatewayScaleUnit { get; set; }
 
         /// <summary> List of all IPs configured on the gateway. </summary>
-        public IReadOnlyList<VpnGatewayIpConfiguration> IpConfigurations { get; } = new ChangeTrackingList<VpnGatewayIpConfiguration>();
+        public IReadOnlyList<VpnGatewayIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<VpnGatewayIPConfiguration>();
 
         /// <summary> Enable BGP routes translation for NAT on this VpnGateway. </summary>
         public bool? EnableBgpRouteTranslationForNat { get; set; }

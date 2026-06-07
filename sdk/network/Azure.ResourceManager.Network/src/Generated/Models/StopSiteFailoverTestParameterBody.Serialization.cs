@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ExpressRouteFailoverStopApiParameters stopParameters = default;
+            ExpressRouteFailoverStopApiContent stopParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("stopParameters"u8))
                 {
-                    stopParameters = ExpressRouteFailoverStopApiParameters.DeserializeExpressRouteFailoverStopApiParameters(prop.Value, options);
+                    stopParameters = ExpressRouteFailoverStopApiContent.DeserializeExpressRouteFailoverStopApiContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

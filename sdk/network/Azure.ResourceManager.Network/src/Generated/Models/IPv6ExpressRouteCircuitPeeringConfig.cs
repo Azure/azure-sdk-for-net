@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains IPv6 peering config. </summary>
-    public partial class Ipv6ExpressRouteCircuitPeeringConfig
+    public partial class IPv6ExpressRouteCircuitPeeringConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Ipv6ExpressRouteCircuitPeeringConfig"/>. </summary>
-        public Ipv6ExpressRouteCircuitPeeringConfig()
+        /// <summary> Initializes a new instance of <see cref="IPv6ExpressRouteCircuitPeeringConfig"/>. </summary>
+        public IPv6ExpressRouteCircuitPeeringConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Ipv6ExpressRouteCircuitPeeringConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6ExpressRouteCircuitPeeringConfig"/>. </summary>
         /// <param name="primaryPeerAddressPrefix"> The primary address prefix. </param>
         /// <param name="secondaryPeerAddressPrefix"> The secondary address prefix. </param>
         /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>
         /// <param name="routeFilter"> The reference to the RouteFilter resource. </param>
         /// <param name="state"> The state of peering. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Ipv6ExpressRouteCircuitPeeringConfig(string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, NetworkSubResource routeFilter, ExpressRouteCircuitPeeringState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPv6ExpressRouteCircuitPeeringConfig(string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, NetworkSubResource routeFilter, ExpressRouteCircuitPeeringState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryPeerAddressPrefix = primaryPeerAddressPrefix;
             SecondaryPeerAddressPrefix = secondaryPeerAddressPrefix;

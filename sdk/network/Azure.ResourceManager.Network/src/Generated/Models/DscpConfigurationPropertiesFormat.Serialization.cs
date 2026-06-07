@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
-                foreach (QosIpRange item in SourceIpRanges)
+                foreach (QosIPRange item in SourceIpRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
-                foreach (QosIpRange item in DestinationIpRanges)
+                foreach (QosIPRange item in DestinationIpRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("qosDefinitionCollection"u8);
                 writer.WriteStartArray();
-                foreach (QosDefinition item in QosDefinitionCollection)
+                foreach (DscpQosDefinition item in QosDefinitionCollection)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<int> markings = default;
-            IList<QosIpRange> sourceIpRanges = default;
-            IList<QosIpRange> destinationIpRanges = default;
+            IList<QosIPRange> sourceIpRanges = default;
+            IList<QosIPRange> destinationIpRanges = default;
             IList<QosPortRange> sourcePortRanges = default;
             IList<QosPortRange> destinationPortRanges = default;
             ProtocolType? protocol = default;
-            IList<QosDefinition> qosDefinitionCollection = default;
+            IList<DscpQosDefinition> qosDefinitionCollection = default;
             string qosCollectionId = default;
             IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces = default;
             string resourceGuid = default;
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<QosIpRange> array = new List<QosIpRange>();
+                    List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QosIpRange.DeserializeQosIpRange(item, options));
+                        array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
                     sourceIpRanges = array;
                     continue;
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<QosIpRange> array = new List<QosIpRange>();
+                    List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QosIpRange.DeserializeQosIpRange(item, options));
+                        array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
                     destinationIpRanges = array;
                     continue;
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<QosDefinition> array = new List<QosDefinition>();
+                    List<DscpQosDefinition> array = new List<DscpQosDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QosDefinition.DeserializeQosDefinition(item, options));
+                        array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item, options));
                     }
                     qosDefinitionCollection = array;
                     continue;
@@ -353,12 +353,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new DscpConfigurationPropertiesFormat(
                 markings ?? new ChangeTrackingList<int>(),
-                sourceIpRanges ?? new ChangeTrackingList<QosIpRange>(),
-                destinationIpRanges ?? new ChangeTrackingList<QosIpRange>(),
+                sourceIpRanges ?? new ChangeTrackingList<QosIPRange>(),
+                destinationIpRanges ?? new ChangeTrackingList<QosIPRange>(),
                 sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
                 destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
                 protocol,
-                qosDefinitionCollection ?? new ChangeTrackingList<QosDefinition>(),
+                qosDefinitionCollection ?? new ChangeTrackingList<DscpQosDefinition>(),
                 qosCollectionId,
                 associatedNetworkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
                 resourceGuid,

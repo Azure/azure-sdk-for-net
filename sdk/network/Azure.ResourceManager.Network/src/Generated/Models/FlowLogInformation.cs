@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(storageId, nameof(storageId));
 
             TargetResourceId = targetResourceId;
-            Properties = new FlowLogProperties(storageId, enabled);
+            Properties = new FlowLogInformationProperties(storageId, enabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogInformation(ResourceIdentifier targetResourceId, FlowLogProperties properties, TrafficAnalyticsProperties flowAnalyticsConfiguration, ResourceManager.Models.ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, FlowLogInformationProperties properties, TrafficAnalyticsProperties flowAnalyticsConfiguration, ResourceManager.Models.ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             Properties = properties;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         public ResourceIdentifier TargetResourceId { get; set; }
 
         /// <summary> Properties of the flow log. </summary>
-        internal FlowLogProperties Properties { get; set; }
+        internal FlowLogInformationProperties Properties { get; set; }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.StorageId = value;
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.EnabledFilteringCriteria = value;
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.RecordTypes = value;
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.Enabled = value;
             }
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.RetentionPolicy = value;
             }
         }
 
         /// <summary> Parameters that define the flow log format. </summary>
-        public FlowLogFormatParameters Format
+        public FlowLogProperties Format
         {
             get
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.Format = value;
             }

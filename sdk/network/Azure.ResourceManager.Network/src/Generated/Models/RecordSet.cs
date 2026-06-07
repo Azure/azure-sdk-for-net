@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="RecordSet"/>. </summary>
         internal RecordSet()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecordSet"/>. </summary>
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ttl"> Recordset time to live. </param>
         /// <param name="ipAddresses"> The private ip address of the private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecordSet(string recordType, string recordSetName, string fqdn, NetworkProvisioningState? provisioningState, int? ttl, IList<string> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecordSet(string recordType, string recordSetName, string fqdn, NetworkProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecordType = recordType;
             RecordSetName = recordSetName;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             Ttl = ttl;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.Network.Models
         public int? Ttl { get; }
 
         /// <summary> The private ip address of the private endpoint. </summary>
-        public IList<string> IpAddresses { get; }
+        public IReadOnlyList<string> IPAddresses { get; }
     }
 }

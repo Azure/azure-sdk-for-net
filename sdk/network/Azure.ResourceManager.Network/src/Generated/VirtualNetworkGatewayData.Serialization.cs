@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VirtualNetworkGatewayPropertiesFormat properties = default;
             ExtendedLocation extendedLocation = default;
-            string eTag = default;
+            ETag? eTag = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,7 +166,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -215,7 +219,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -235,7 +243,7 @@ namespace Azure.ResourceManager.Network
             return new VirtualNetworkGatewayData(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,

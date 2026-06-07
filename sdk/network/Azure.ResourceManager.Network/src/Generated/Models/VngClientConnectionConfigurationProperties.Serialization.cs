@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            AddressSpace vpnClientAddressPool = default;
+            VirtualNetworkAddressSpace vpnClientAddressPool = default;
             IList<NetworkSubResource> virtualNetworkGatewayPolicyGroups = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("vpnClientAddressPool"u8))
                 {
-                    vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualNetworkGatewayPolicyGroups"u8))

@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VerifierWorkspaceResource>> UpdateAsync(VerifierWorkspacePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VerifierWorkspaceResource>> UpdateAsync(NetworkVerifierWorkspacePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _verifierWorkspacesClientDiagnostics.CreateScope("VerifierWorkspaceResource.Update");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _verifierWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VerifierWorkspacePatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _verifierWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkVerifierWorkspacePatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VerifierWorkspaceData> response = Response.FromValue(VerifierWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VerifierWorkspaceResource> Update(VerifierWorkspacePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual Response<VerifierWorkspaceResource> Update(NetworkVerifierWorkspacePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _verifierWorkspacesClientDiagnostics.CreateScope("VerifierWorkspaceResource.Update");
             scope.Start();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _verifierWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VerifierWorkspacePatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _verifierWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkVerifierWorkspacePatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VerifierWorkspaceData> response = Response.FromValue(VerifierWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     VerifierWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    VerifierWorkspacePatch patch = new VerifierWorkspacePatch();
+                    NetworkVerifierWorkspacePatch patch = new NetworkVerifierWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     VerifierWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    VerifierWorkspacePatch patch = new VerifierWorkspacePatch();
+                    NetworkVerifierWorkspacePatch patch = new NetworkVerifierWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     VerifierWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    VerifierWorkspacePatch patch = new VerifierWorkspacePatch();
+                    NetworkVerifierWorkspacePatch patch = new NetworkVerifierWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<VerifierWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     VerifierWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    VerifierWorkspacePatch patch = new VerifierWorkspacePatch();
+                    NetworkVerifierWorkspacePatch patch = new NetworkVerifierWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<VerifierWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     VerifierWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    VerifierWorkspacePatch patch = new VerifierWorkspacePatch();
+                    NetworkVerifierWorkspacePatch patch = new NetworkVerifierWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     VerifierWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    VerifierWorkspacePatch patch = new VerifierWorkspacePatch();
+                    NetworkVerifierWorkspacePatch patch = new NetworkVerifierWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

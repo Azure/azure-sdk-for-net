@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (ApplicationGatewayPrivateLinkIpConfiguration item in IpConfigurations)
+                foreach (ApplicationGatewayPrivateLinkIPConfiguration item in IpConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<ApplicationGatewayPrivateLinkIpConfiguration> ipConfigurations = default;
+            IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ApplicationGatewayPrivateLinkIpConfiguration> array = new List<ApplicationGatewayPrivateLinkIpConfiguration>();
+                    List<ApplicationGatewayPrivateLinkIPConfiguration> array = new List<ApplicationGatewayPrivateLinkIPConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayPrivateLinkIpConfiguration.DeserializeApplicationGatewayPrivateLinkIpConfiguration(item, options));
+                        array.Add(ApplicationGatewayPrivateLinkIPConfiguration.DeserializeApplicationGatewayPrivateLinkIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationGatewayPrivateLinkConfigurationProperties(ipConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkIpConfiguration>(), provisioningState, additionalBinaryDataProperties);
+            return new ApplicationGatewayPrivateLinkConfigurationProperties(ipConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

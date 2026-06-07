@@ -14,51 +14,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IPv6 Circuit Connection properties for global reach. </summary>
-    public partial class Ipv6CircuitConnectionConfig : IJsonModel<Ipv6CircuitConnectionConfig>
+    public partial class IPv6CircuitConnectionConfig : IJsonModel<IPv6CircuitConnectionConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Ipv6CircuitConnectionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPv6CircuitConnectionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpv6CircuitConnectionConfig(document.RootElement, options);
+                        return DeserializeIPv6CircuitConnectionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Ipv6CircuitConnectionConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Ipv6CircuitConnectionConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Ipv6CircuitConnectionConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPv6CircuitConnectionConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Ipv6CircuitConnectionConfig IPersistableModel<Ipv6CircuitConnectionConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPv6CircuitConnectionConfig IPersistableModel<IPv6CircuitConnectionConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Ipv6CircuitConnectionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPv6CircuitConnectionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Ipv6CircuitConnectionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPv6CircuitConnectionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ipv6CircuitConnectionConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(AddressPrefix))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Ipv6CircuitConnectionConfig IJsonModel<Ipv6CircuitConnectionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPv6CircuitConnectionConfig IJsonModel<IPv6CircuitConnectionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Ipv6CircuitConnectionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPv6CircuitConnectionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ipv6CircuitConnectionConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpv6CircuitConnectionConfig(document.RootElement, options);
+            return DeserializeIPv6CircuitConnectionConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Ipv6CircuitConnectionConfig DeserializeIpv6CircuitConnectionConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPv6CircuitConnectionConfig DeserializeIPv6CircuitConnectionConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Ipv6CircuitConnectionConfig(addressPrefix, circuitConnectionStatus, additionalBinaryDataProperties);
+            return new IPv6CircuitConnectionConfig(addressPrefix, circuitConnectionStatus, additionalBinaryDataProperties);
         }
     }
 }

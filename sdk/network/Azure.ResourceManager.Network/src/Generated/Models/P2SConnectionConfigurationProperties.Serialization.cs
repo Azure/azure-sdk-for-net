@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            AddressSpace vpnClientAddressPool = default;
+            VirtualNetworkAddressSpace vpnClientAddressPool = default;
             RoutingConfiguration routingConfiguration = default;
             bool? enableInternetSecurity = default;
             IList<NetworkSubResource> configurationPolicyGroupAssociations = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("routingConfiguration"u8))

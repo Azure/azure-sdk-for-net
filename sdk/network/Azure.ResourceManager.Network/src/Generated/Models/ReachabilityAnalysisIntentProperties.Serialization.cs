@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("destinationResourceId"u8);
             writer.WriteStringValue(DestinationResourceId);
             writer.WritePropertyName("ipTraffic"u8);
-            writer.WriteObjectValue(IpTraffic, options);
+            writer.WriteObjectValue(IPTraffic, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
             string description = default;
             ResourceIdentifier sourceResourceId = default;
             ResourceIdentifier destinationResourceId = default;
-            IPTraffic ipTraffic = default;
+            NetworkVerifierIPTraffic ipTraffic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("ipTraffic"u8))
                 {
-                    ipTraffic = IPTraffic.DeserializeIPTraffic(prop.Value, options);
+                    ipTraffic = NetworkVerifierIPTraffic.DeserializeNetworkVerifierIPTraffic(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         internal ConnectionMonitorWorkspaceSettings WorkspaceSettings { get; set; }
 
         /// <summary> Log analytics workspace resource ID. </summary>
-        public string WorkspaceResourceId
+        public ResourceIdentifier WorkspaceResourceId
         {
             get
             {

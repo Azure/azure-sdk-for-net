@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ProviderType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string name = default;
             Uri uri = default;
-            VirtualWanSecurityProviderType? @type = default;
+            VirtualWanSecurityProviderType? providerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    @type = new VirtualWanSecurityProviderType(prop.Value.GetString());
+                    providerType = new VirtualWanSecurityProviderType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualWanSecurityProvider(name, uri, @type, additionalBinaryDataProperties);
+            return new VirtualWanSecurityProvider(name, uri, providerType, additionalBinaryDataProperties);
         }
     }
 }

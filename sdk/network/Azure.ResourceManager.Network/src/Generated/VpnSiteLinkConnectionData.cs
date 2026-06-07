@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the VPN site link connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VpnSiteLinkConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnSiteLinkConnectionProperties properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VpnSiteLinkConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnSiteLinkConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal VpnSiteLinkConnectionProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Routing weight for vpn connection. </summary>
         public int? RoutingWeight
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> vpnGatewayCustomBgpAddresses used by this connection. </summary>
-        public IList<GatewayCustomBgpIpAddressIpConfiguration> VpnGatewayCustomBgpAddresses
+        public IList<GatewayCustomBgpIPAddressIPConfiguration> VpnGatewayCustomBgpAddresses
         {
             get
             {
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies
+        public IList<IPsecPolicy> IpsecPolicies
         {
             get
             {

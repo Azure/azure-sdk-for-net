@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogPropertiesFormat(string targetResourceId, string targetResourceGuid, string storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowLogPropertiesFormat(string targetResourceId, string targetResourceGuid, string storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             TargetResourceGuid = targetResourceGuid;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
         public RetentionPolicyParameters RetentionPolicy { get; set; }
 
         /// <summary> Parameters that define the flow log format. </summary>
-        public FlowLogFormatParameters Format { get; set; }
+        public FlowLogProperties Format { get; set; }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }

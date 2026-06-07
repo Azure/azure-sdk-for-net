@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             string location = default;
-            VerifierWorkspaceProperties properties = default;
+            NetworkVerifierWorkspaceProperties properties = default;
             string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = VerifierWorkspaceProperties.DeserializeVerifierWorkspaceProperties(prop.Value, options);
+                    properties = NetworkVerifierWorkspaceProperties.DeserializeNetworkVerifierWorkspaceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

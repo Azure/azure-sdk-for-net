@@ -12,32 +12,32 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> GatewayCustomBgpIpAddressIpConfiguration for a virtual network gateway connection. </summary>
-    public partial class GatewayCustomBgpIpAddressIpConfiguration
+    public partial class GatewayCustomBgpIPAddressIPConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIpAddressIpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
         /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
-        /// <param name="customBgpIpAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationId"/> or <paramref name="customBgpIpAddress"/> is null. </exception>
-        public GatewayCustomBgpIpAddressIpConfiguration(string ipConfigurationId, string customBgpIpAddress)
+        /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationId"/> or <paramref name="customBgpIPAddress"/> is null. </exception>
+        public GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIPAddress)
         {
             Argument.AssertNotNull(ipConfigurationId, nameof(ipConfigurationId));
-            Argument.AssertNotNull(customBgpIpAddress, nameof(customBgpIpAddress));
+            Argument.AssertNotNull(customBgpIPAddress, nameof(customBgpIPAddress));
 
             IpConfigurationId = ipConfigurationId;
-            CustomBgpIpAddress = customBgpIpAddress;
+            CustomBgpIPAddress = customBgpIPAddress;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIpAddressIpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
         /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
-        /// <param name="customBgpIpAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
+        /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayCustomBgpIpAddressIpConfiguration(string ipConfigurationId, string customBgpIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpConfigurationId = ipConfigurationId;
-            CustomBgpIpAddress = customBgpIpAddress;
+            CustomBgpIPAddress = customBgpIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Network.Models
         public string IpConfigurationId { get; set; }
 
         /// <summary> The custom BgpPeeringAddress which belongs to IpconfigurationId. </summary>
-        public string CustomBgpIpAddress { get; set; }
+        public string CustomBgpIPAddress { get; set; }
     }
 }

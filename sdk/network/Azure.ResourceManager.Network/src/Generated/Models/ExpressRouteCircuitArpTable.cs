@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Age = age;
             Interface = @interface;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             MacAddress = macAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Interface { get; }
 
         /// <summary> The IP address. </summary>
-        public string IpAddress { get; }
+        public string IPAddress { get; }
 
         /// <summary> The MAC address. </summary>
         public string MacAddress { get; }

@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Network
 {
     /// <summary></summary>
-    public partial class CustomIpPrefixResource : IJsonModel<CustomIpPrefixData>
+    public partial class CustomIPPrefixResource : IJsonModel<CustomIPPrefixData>
     {
-        private static IJsonModel<CustomIpPrefixData> s_dataDeserializationInstance;
+        private static IJsonModel<CustomIPPrefixData> s_dataDeserializationInstance;
 
-        private static IJsonModel<CustomIpPrefixData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CustomIpPrefixData();
+        private static IJsonModel<CustomIPPrefixData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CustomIPPrefixData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomIpPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomIpPrefixData>)Data).Write(writer, options);
+        void IJsonModel<CustomIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomIPPrefixData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomIpPrefixData IJsonModel<CustomIpPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        CustomIPPrefixData IJsonModel<CustomIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomIpPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomIpPrefixData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomIPPrefixData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomIpPrefixData IPersistableModel<CustomIpPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomIpPrefixData>(data, options, AzureResourceManagerNetworkContext.Default);
+        CustomIPPrefixData IPersistableModel<CustomIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomIPPrefixData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomIpPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<CustomIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

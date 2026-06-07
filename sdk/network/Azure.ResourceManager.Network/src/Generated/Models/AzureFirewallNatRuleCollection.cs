@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Collection of rules used by a NAT rule collection. </summary>
-        public IList<AzureFirewallNatRule> Rules
+        public IList<AzureFirewallNatRuleCollectionData> Rules
         {
             get
             {

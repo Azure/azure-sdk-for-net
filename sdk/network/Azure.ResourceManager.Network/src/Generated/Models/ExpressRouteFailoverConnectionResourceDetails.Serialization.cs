@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(LastUpdatedTime))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
-                writer.WriteStringValue(LastUpdatedTime);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             Uri nrpResourceUri = default;
             string name = default;
             FailoverConnectionStatus? status = default;
-            string lastUpdatedTime = default;
+            DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("lastUpdatedTime"u8))
                 {
-                    lastUpdatedTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpressRouteFailoverConnectionResourceDetails(nrpResourceUri, name, status, lastUpdatedTime, additionalBinaryDataProperties);
+            return new ExpressRouteFailoverConnectionResourceDetails(nrpResourceUri, name, status, lastUpdatedOn, additionalBinaryDataProperties);
         }
     }
 }

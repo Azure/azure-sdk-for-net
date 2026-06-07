@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PublicIPPrefixPropertiesFormat"/>. </summary>
         public PublicIPPrefixPropertiesFormat()
         {
-            IpTags = new ChangeTrackingList<IpTag>();
+            IpTags = new ChangeTrackingList<IPTag>();
             PublicIPAddresses = new ChangeTrackingList<ReferencedPublicIpAddress>();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IpTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIpConfiguration, NetworkSubResource customIPPrefix, string resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIpConfiguration, NetworkSubResource customIPPrefix, string resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPAddressVersion = publicIPAddressVersion;
             IpTags = ipTags;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         public NetworkIPVersion? PublicIPAddressVersion { get; set; }
 
         /// <summary> The list of tags associated with the public IP prefix. </summary>
-        public IList<IpTag> IpTags { get; } = new ChangeTrackingList<IpTag>();
+        public IList<IPTag> IpTags { get; } = new ChangeTrackingList<IPTag>();
 
         /// <summary> The Length of the Public IP Prefix. </summary>
         public int? PrefixLength { get; set; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="properties"> Properties of the load balancer probe. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
-        internal FrontendIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, FrontendIPConfigurationPropertiesFormat properties, string eTag, IList<string> zones) : base(id, additionalBinaryDataProperties, name, @type)
+        internal FrontendIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, FrontendIPConfigurationPropertiesFormat properties, ETag? eTag, IList<string> zones) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network
         internal FrontendIPConfigurationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
         public IList<string> Zones { get; }

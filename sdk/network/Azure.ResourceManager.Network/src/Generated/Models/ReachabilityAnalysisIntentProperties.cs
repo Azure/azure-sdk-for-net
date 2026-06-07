@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationResourceId"> Destination resource id to verify the reachability path of. </param>
         /// <param name="ipTraffic"> IP traffic information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="destinationResourceId"/> or <paramref name="ipTraffic"/> is null. </exception>
-        public ReachabilityAnalysisIntentProperties(ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, IPTraffic ipTraffic)
+        public ReachabilityAnalysisIntentProperties(ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, NetworkVerifierIPTraffic ipTraffic)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
             Argument.AssertNotNull(destinationResourceId, nameof(destinationResourceId));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
 
             SourceResourceId = sourceResourceId;
             DestinationResourceId = destinationResourceId;
-            IpTraffic = ipTraffic;
+            IPTraffic = ipTraffic;
         }
 
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisIntentProperties"/>. </summary>
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationResourceId"> Destination resource id to verify the reachability path of. </param>
         /// <param name="ipTraffic"> IP traffic information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReachabilityAnalysisIntentProperties(NetworkProvisioningState? provisioningState, string description, ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, IPTraffic ipTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReachabilityAnalysisIntentProperties(NetworkProvisioningState? provisioningState, string description, ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, NetworkVerifierIPTraffic ipTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Description = description;
             SourceResourceId = sourceResourceId;
             DestinationResourceId = destinationResourceId;
-            IpTraffic = ipTraffic;
+            IPTraffic = ipTraffic;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Network.Models
         public ResourceIdentifier DestinationResourceId { get; set; }
 
         /// <summary> IP traffic information. </summary>
-        public IPTraffic IpTraffic { get; set; }
+        public NetworkVerifierIPTraffic IPTraffic { get; set; }
     }
 }

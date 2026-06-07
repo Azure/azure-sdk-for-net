@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("privateLinkServiceConnections"u8);
                 writer.WriteStartArray();
-                foreach (PrivateLinkServiceConnection item in PrivateLinkServiceConnections)
+                foreach (NetworkPrivateLinkServiceConnection item in PrivateLinkServiceConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
-                foreach (PrivateLinkServiceConnection item in ManualPrivateLinkServiceConnections)
+                foreach (NetworkPrivateLinkServiceConnection item in ManualPrivateLinkServiceConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("customDnsConfigs"u8);
                 writer.WriteStartArray();
-                foreach (CustomDnsConfigPropertiesFormat item in CustomDnsConfigs)
+                foreach (CustomDnsConfigProperties item in CustomDnsConfigs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             NetworkProvisioningState? provisioningState = default;
             PrivateEndpointIPVersionType? ipVersionType = default;
-            IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default;
-            IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
-            IList<CustomDnsConfigPropertiesFormat> customDnsConfigs = default;
+            IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections = default;
+            IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
+            IList<CustomDnsConfigProperties> customDnsConfigs = default;
             IList<ApplicationSecurityGroupData> applicationSecurityGroups = default;
             IList<PrivateEndpointIPConfiguration> ipConfigurations = default;
             string customNetworkInterfaceName = default;
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                    List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item, options));
+                        array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item, options));
                     }
                     privateLinkServiceConnections = array;
                     continue;
@@ -276,10 +276,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                    List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item, options));
+                        array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item, options));
                     }
                     manualPrivateLinkServiceConnections = array;
                     continue;
@@ -290,10 +290,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<CustomDnsConfigPropertiesFormat> array = new List<CustomDnsConfigPropertiesFormat>();
+                    List<CustomDnsConfigProperties> array = new List<CustomDnsConfigProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomDnsConfigPropertiesFormat.DeserializeCustomDnsConfigPropertiesFormat(item, options));
+                        array.Add(CustomDnsConfigProperties.DeserializeCustomDnsConfigProperties(item, options));
                     }
                     customDnsConfigs = array;
                     continue;
@@ -350,9 +350,9 @@ namespace Azure.ResourceManager.Network.Models
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
                 provisioningState,
                 ipVersionType,
-                privateLinkServiceConnections ?? new ChangeTrackingList<PrivateLinkServiceConnection>(),
-                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<PrivateLinkServiceConnection>(),
-                customDnsConfigs ?? new ChangeTrackingList<CustomDnsConfigPropertiesFormat>(),
+                privateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
+                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
+                customDnsConfigs ?? new ChangeTrackingList<CustomDnsConfigProperties>(),
                 applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
                 ipConfigurations ?? new ChangeTrackingList<PrivateEndpointIPConfiguration>(),
                 customNetworkInterfaceName,

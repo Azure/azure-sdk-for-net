@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SwapResourceProperties properties = default;
+            CloudServiceSwapProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = SwapResourceProperties.DeserializeSwapResourceProperties(prop.Value, options);
+                    properties = CloudServiceSwapProperties.DeserializeCloudServiceSwapProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

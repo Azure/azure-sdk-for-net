@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCircuitConnectionPropertiesFormat(NetworkSubResource expressRouteCircuitPeering, NetworkSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, Ipv6CircuitConnectionConfig ipv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCircuitConnectionPropertiesFormat(NetworkSubResource expressRouteCircuitPeering, NetworkSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         public string AuthorizationKey { get; set; }
 
         /// <summary> IPv6 Address PrefixProperties of the express route circuit connection. </summary>
-        public Ipv6CircuitConnectionConfig Ipv6CircuitConnectionConfig { get; set; }
+        public IPv6CircuitConnectionConfig Ipv6CircuitConnectionConfig { get; set; }
 
         /// <summary> Express Route Circuit connection state. </summary>
         public CircuitConnectionStatus? CircuitConnectionStatus { get; }

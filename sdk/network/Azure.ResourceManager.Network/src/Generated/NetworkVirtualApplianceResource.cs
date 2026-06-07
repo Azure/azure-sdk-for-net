@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to retrieve boot diagnostic logs for a NVA VM instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkVirtualApplianceInstanceId>> GetBootDiagnosticLogsAsync(WaitUntil waitUntil, NetworkVirtualApplianceBootDiagnosticParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkVirtualApplianceInstanceId>> GetBootDiagnosticLogsAsync(WaitUntil waitUntil, NetworkVirtualApplianceBootDiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetBootDiagnosticLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceBootDiagnosticParameters.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetBootDiagnosticLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceBootDiagnosticContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<NetworkVirtualApplianceInstanceId> operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceId>(
                     new NetworkVirtualApplianceInstanceIdOperationSource(),
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to retrieve boot diagnostic logs for a NVA VM instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkVirtualApplianceInstanceId> GetBootDiagnosticLogs(WaitUntil waitUntil, NetworkVirtualApplianceBootDiagnosticParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkVirtualApplianceInstanceId> GetBootDiagnosticLogs(WaitUntil waitUntil, NetworkVirtualApplianceBootDiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetBootDiagnosticLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceBootDiagnosticParameters.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetBootDiagnosticLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceBootDiagnosticContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<NetworkVirtualApplianceInstanceId> operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceId>(
                     new NetworkVirtualApplianceInstanceIdOperationSource(),

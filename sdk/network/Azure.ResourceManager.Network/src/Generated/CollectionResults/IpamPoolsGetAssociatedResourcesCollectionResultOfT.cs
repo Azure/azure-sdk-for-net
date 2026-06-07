@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class IpamPoolsGetAssociatedResourcesCollectionResultOfT : Pageable<PoolAssociation>
+    internal partial class IpamPoolsGetAssociatedResourcesCollectionResultOfT : Pageable<IpamPoolAssociation>
     {
         private readonly IpamPools _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of IpamPoolsGetAssociatedResourcesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PoolAssociation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<IpamPoolAssociation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 PoolAssociationList result = PoolAssociationList.FromResponse(response);
-                yield return Page<PoolAssociation>.FromValues((IReadOnlyList<PoolAssociation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<IpamPoolAssociation>.FromValues((IReadOnlyList<IpamPoolAssociation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

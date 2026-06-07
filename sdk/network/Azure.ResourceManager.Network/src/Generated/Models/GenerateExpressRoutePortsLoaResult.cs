@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GenerateExpressRoutePortsLOA API service call. </summary>
-    public partial class GenerateExpressRoutePortsLOAResult
+    public partial class GenerateExpressRoutePortsLoaResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLOAResult"/>. </summary>
-        internal GenerateExpressRoutePortsLOAResult()
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaResult"/>. </summary>
+        internal GenerateExpressRoutePortsLoaResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLOAResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaResult"/>. </summary>
         /// <param name="encodedContent"> The content as a base64 encoded string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateExpressRoutePortsLOAResult(string encodedContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenerateExpressRoutePortsLoaResult(string encodedContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EncodedContent = encodedContent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

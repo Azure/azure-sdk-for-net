@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomIpPrefixListResult"/>. </summary>
         /// <param name="value"> The CustomIpPrefix items on this page. </param>
-        internal CustomIpPrefixListResult(IEnumerable<CustomIpPrefixData> value)
+        internal CustomIpPrefixListResult(IEnumerable<CustomIPPrefixData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value"> The CustomIpPrefix items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIpPrefixListResult(IList<CustomIpPrefixData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomIpPrefixListResult(IList<CustomIPPrefixData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The CustomIpPrefix items on this page. </summary>
-        public IList<CustomIpPrefixData> Value { get; }
+        public IList<CustomIPPrefixData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfacePropertiesFormat"/>. </summary>
         internal ContainerNetworkInterfacePropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIpConfiguration>();
+            IpConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfacePropertiesFormat"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipConfigurations"> Reference to the ip configuration on this container nic. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerNetworkInterfacePropertiesFormat(ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, Container container, IReadOnlyList<ContainerNetworkInterfaceIpConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerNetworkInterfacePropertiesFormat(ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, Container container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerNetworkInterfaceConfiguration = containerNetworkInterfaceConfiguration;
             Container = container;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         internal Container Container { get; }
 
         /// <summary> Reference to the ip configuration on this container nic. </summary>
-        public IReadOnlyList<ContainerNetworkInterfaceIpConfiguration> IpConfigurations { get; } = new ChangeTrackingList<ContainerNetworkInterfaceIpConfiguration>();
+        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
 
         /// <summary> The provisioning state of the container network interface resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

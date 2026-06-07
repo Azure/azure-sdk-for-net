@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             SourceAddresses = new ChangeTrackingList<string>();
             DestinationAddresses = new ChangeTrackingList<string>();
             DestinationPorts = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NatRule"/>. </summary>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPorts"> List of destination ports. </param>
         /// <param name="translatedAddress"> The translated address for this NAT rule. </param>
         /// <param name="translatedPort"> The translated port for this NAT rule. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="translatedFqdn"> The translated FQDN for this NAT rule. </param>
-        internal NatRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, string translatedAddress, string translatedPort, IList<string> sourceIpGroups, string translatedFqdn) : base(name, description, ruleType, additionalBinaryDataProperties)
+        internal NatRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, string translatedAddress, string translatedPort, IList<string> sourceIPGroups, string translatedFqdn) : base(name, description, ruleType, additionalBinaryDataProperties)
         {
             IpProtocols = ipProtocols;
             SourceAddresses = sourceAddresses;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationPorts = destinationPorts;
             TranslatedAddress = translatedAddress;
             TranslatedPort = translatedPort;
-            SourceIpGroups = sourceIpGroups;
+            SourceIPGroups = sourceIPGroups;
             TranslatedFqdn = translatedFqdn;
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
         public string TranslatedPort { get; set; }
 
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
 
         /// <summary> The translated FQDN for this NAT rule. </summary>
         public string TranslatedFqdn { get; set; }

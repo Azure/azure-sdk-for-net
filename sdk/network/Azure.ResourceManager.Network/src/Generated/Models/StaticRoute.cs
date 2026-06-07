@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="StaticRoute"/>. </summary>
         /// <param name="name"> The name of the StaticRoute that is unique within a VnetRoute. </param>
         /// <param name="addressPrefixes"> List of all address prefixes. </param>
-        /// <param name="nextHopIpAddress"> The ip address of the next hop. </param>
+        /// <param name="nextHopIPAddress"> The ip address of the next hop. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticRoute(string name, IList<string> addressPrefixes, string nextHopIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticRoute(string name, IList<string> addressPrefixes, string nextHopIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AddressPrefixes = addressPrefixes;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Network.Models
         public IList<string> AddressPrefixes { get; }
 
         /// <summary> The ip address of the next hop. </summary>
-        public string NextHopIpAddress { get; set; }
+        public string NextHopIPAddress { get; set; }
     }
 }

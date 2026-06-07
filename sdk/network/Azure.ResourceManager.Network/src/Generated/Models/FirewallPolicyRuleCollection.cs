@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Properties of the rule collection.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FirewallPolicyNatRuleCollection"/> and <see cref="FirewallPolicyFilterRuleCollection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FirewallPolicyNatRuleCollectionInfo"/> and <see cref="FirewallPolicyFilterRuleCollectionInfo"/>.
     /// </summary>
     public abstract partial class FirewallPolicyRuleCollection
     {

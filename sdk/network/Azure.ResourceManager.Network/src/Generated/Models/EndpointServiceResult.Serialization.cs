@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType.Value);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -135,7 +135,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EndpointServiceResult(id, additionalBinaryDataProperties, name, @type);
+            return new EndpointServiceResult(id, additionalBinaryDataProperties, name, resourceType);
         }
     }
 }

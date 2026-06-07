@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
         /// <param name="privateIpAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<InternetIngressPublicIpsProperties> internetIngressPublicIps, IReadOnlyList<NetworkSubResource> virtualApplianceSites, IReadOnlyList<NetworkSubResource> virtualApplianceConnections, IReadOnlyList<NetworkSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, DelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, string privateIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<InternetIngressPublicIpsProperties> internetIngressPublicIps, IReadOnlyList<NetworkSubResource> virtualApplianceSites, IReadOnlyList<NetworkSubResource> virtualApplianceConnections, IReadOnlyList<NetworkSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, string privateIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NvaSku = nvaSku;
             AddressPrefix = addressPrefix;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
         public string DeploymentType { get; }
 
         /// <summary> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </summary>
-        public DelegationProperties Delegation { get; set; }
+        public VirtualApplianceDelegationProperties Delegation { get; set; }
 
         /// <summary> The delegation for the Virtual Appliance. </summary>
         public PartnerManagedResourceProperties PartnerManagedResource { get; set; }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PoolAssociation item in Value)
+            foreach (IpamPoolAssociation item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<PoolAssociation> value = default;
+            IList<IpamPoolAssociation> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PoolAssociation> array = new List<PoolAssociation>();
+                    List<IpamPoolAssociation> array = new List<IpamPoolAssociation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PoolAssociation.DeserializePoolAssociation(item, options));
+                        array.Add(IpamPoolAssociation.DeserializeIpamPoolAssociation(item, options));
                     }
                     value = array;
                     continue;

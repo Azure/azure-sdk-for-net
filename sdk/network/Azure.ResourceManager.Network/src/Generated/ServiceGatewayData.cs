@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// A list of availability zones denoting the zone in which service gateway should be deployed.
         /// <list type="bullet"><item><description>The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.</description></item></list>
         /// </param>
-        internal ServiceGatewayData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, ServiceGatewayPropertiesFormat properties, string eTag, ServiceGatewaySku sku, IList<string> zones) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
+        internal ServiceGatewayData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, ServiceGatewayPropertiesFormat properties, ETag? eTag, ServiceGatewaySku sku, IList<string> zones) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
         {
             Properties = properties;
             ETag = eTag;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network
         internal ServiceGatewayPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The service gateway SKU. </summary>
         public ServiceGatewaySku Sku { get; set; }

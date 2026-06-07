@@ -16,68 +16,68 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> IpConfigurations. </summary>
-    public partial class HubIpConfigurationData : SubResourceModel, IJsonModel<HubIpConfigurationData>
+    public partial class HubIPConfigurationData : SubResourceModel, IJsonModel<HubIPConfigurationData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HubIpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HubIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHubIpConfigurationData(document.RootElement, options);
+                        return DeserializeHubIPConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HubIpConfigurationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HubIpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HubIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HubIpConfigurationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HubIpConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HubIPConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HubIpConfigurationData IPersistableModel<HubIpConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HubIpConfigurationData)PersistableModelCreateCore(data, options);
+        HubIPConfigurationData IPersistableModel<HubIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HubIPConfigurationData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HubIpConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HubIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="hubIpConfigurationData"> The <see cref="HubIpConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HubIpConfigurationData hubIpConfigurationData)
+        /// <param name="hubIPConfigurationData"> The <see cref="HubIPConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HubIPConfigurationData hubIPConfigurationData)
         {
-            if (hubIpConfigurationData == null)
+            if (hubIPConfigurationData == null)
             {
                 return null;
             }
-            return RequestContent.Create(hubIpConfigurationData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(hubIPConfigurationData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HubIpConfigurationData"/> from. </param>
-        internal static HubIpConfigurationData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HubIPConfigurationData"/> from. </param>
+        internal static HubIPConfigurationData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHubIpConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHubIPConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HubIpConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HubIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HubIpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HubIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubIpConfigurationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HubIpConfigurationData IJsonModel<HubIpConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HubIpConfigurationData)JsonModelCreateCore(ref reader, options);
+        HubIPConfigurationData IJsonModel<HubIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HubIPConfigurationData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HubIpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HubIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubIpConfigurationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHubIpConfigurationData(document.RootElement, options);
+            return DeserializeHubIPConfigurationData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HubIpConfigurationData DeserializeHubIpConfigurationData(JsonElement element, ModelReaderWriterOptions options)
+        internal static HubIPConfigurationData DeserializeHubIPConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HubIpConfigurationData(
+            return new HubIPConfigurationData(
                 id,
                 additionalBinaryDataProperties,
                 name,

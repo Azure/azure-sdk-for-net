@@ -7,26 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The application gateway private link ip configuration. </summary>
-    public partial class ApplicationGatewayPrivateLinkIpConfiguration : NetworkSubResource
+    public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIpConfiguration"/>. </summary>
-        public ApplicationGatewayPrivateLinkIpConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
+        public ApplicationGatewayPrivateLinkIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of an application gateway private link ip configuration. </param>
         /// <param name="name"> The name of application gateway private link ip configuration. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> The resource type. </param>
-        internal ApplicationGatewayPrivateLinkIpConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayPrivateLinkIpConfigurationProperties properties, string name, string eTag, string @type) : base(id, additionalBinaryDataProperties)
+        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayPrivateLinkIpConfigurationProperties properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The resource type. </summary>
         public string Type { get; }

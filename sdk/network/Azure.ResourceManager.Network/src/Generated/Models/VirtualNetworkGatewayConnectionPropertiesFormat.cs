@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionType = connectionType;
             TunnelProperties = new ChangeTrackingList<VirtualNetworkGatewayConnectionTunnelProperties>();
             TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
-            GatewayCustomBgpIpAddresses = new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>();
-            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            GatewayCustomBgpIpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
+            IpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="certificateAuthentication"> Certificate Authentication information for a certificate based authentication connection. </param>
         /// <param name="routingConfiguration"> The routing configuration indicating the associated and propagated route tables for this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayConnectionPropertiesFormat(string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<NetworkSubResource> ingressNatRules, IList<NetworkSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, NetworkSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIpAddressIpConfiguration> gatewayCustomBgpIpAddresses, bool? useLocalAzureIpAddress, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, ConnectionAuthenticationType? authenticationType, CertificateAuthentication certificateAuthentication, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayConnectionPropertiesFormat(string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<NetworkSubResource> ingressNatRules, IList<NetworkSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, NetworkSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIpAddresses, bool? useLocalAzureIpAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, ConnectionAuthenticationType? authenticationType, CertificateAuthentication certificateAuthentication, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationKey = authorizationKey;
             VirtualNetworkGateway1 = virtualNetworkGateway1;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool? EnableBgp { get; set; }
 
         /// <summary> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </summary>
-        public IList<GatewayCustomBgpIpAddressIpConfiguration> GatewayCustomBgpIpAddresses { get; } = new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>();
+        public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIpAddresses { get; } = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
 
         /// <summary> Use private local Azure IP for the connection. </summary>
         public bool? UseLocalAzureIpAddress { get; set; }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IpsecPolicy>();
+        public IList<IPsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
 
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
         public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; } = new ChangeTrackingList<TrafficSelectorPolicy>();

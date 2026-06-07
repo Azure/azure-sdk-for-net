@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PerimeterAssociableResource item in Value)
+            foreach (NetworkSecurityPerimeterAssociableResourceType item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<PerimeterAssociableResource> value = default;
+            IList<NetworkSecurityPerimeterAssociableResourceType> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PerimeterAssociableResource> array = new List<PerimeterAssociableResource>();
+                    List<NetworkSecurityPerimeterAssociableResourceType> array = new List<NetworkSecurityPerimeterAssociableResourceType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PerimeterAssociableResource.DeserializePerimeterAssociableResource(item, options));
+                        array.Add(NetworkSecurityPerimeterAssociableResourceType.DeserializeNetworkSecurityPerimeterAssociableResourceType(item, options));
                     }
                     value = array;
                     continue;

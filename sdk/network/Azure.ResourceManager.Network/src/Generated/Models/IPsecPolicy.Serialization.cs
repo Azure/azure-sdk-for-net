@@ -14,56 +14,56 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An IPSec Policy configuration for a virtual network gateway connection. </summary>
-    public partial class IpsecPolicy : IJsonModel<IpsecPolicy>
+    public partial class IPsecPolicy : IJsonModel<IPsecPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="IpsecPolicy"/> for deserialization. </summary>
-        internal IpsecPolicy()
+        /// <summary> Initializes a new instance of <see cref="IPsecPolicy"/> for deserialization. </summary>
+        internal IPsecPolicy()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpsecPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPsecPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpsecPolicy(document.RootElement, options);
+                        return DeserializeIPsecPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpsecPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPsecPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpsecPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPsecPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpsecPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPsecPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpsecPolicy IPersistableModel<IpsecPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPsecPolicy IPersistableModel<IPsecPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpsecPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPsecPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpsecPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPsecPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpsecPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPsecPolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("saLifeTimeSeconds"u8);
             writer.WriteNumberValue(SaLifeTimeSeconds);
             writer.WritePropertyName("saDataSizeKilobytes"u8);
             writer.WriteNumberValue(SaDataSizeKilobytes);
             writer.WritePropertyName("ipsecEncryption"u8);
-            writer.WriteStringValue(IpsecEncryption.ToString());
+            writer.WriteStringValue(IPsecEncryption.ToString());
             writer.WritePropertyName("ipsecIntegrity"u8);
-            writer.WriteStringValue(IpsecIntegrity.ToString());
+            writer.WriteStringValue(IPsecIntegrity.ToString());
             writer.WritePropertyName("ikeEncryption"u8);
             writer.WriteStringValue(IkeEncryption.ToString());
             writer.WritePropertyName("ikeIntegrity"u8);
@@ -114,24 +114,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpsecPolicy IJsonModel<IpsecPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPsecPolicy IJsonModel<IPsecPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpsecPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPsecPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPsecPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpsecPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPsecPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpsecPolicy(document.RootElement, options);
+            return DeserializeIPsecPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpsecPolicy DeserializeIpsecPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPsecPolicy DeserializeIPsecPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             int saLifeTimeSeconds = default;
             int saDataSizeKilobytes = default;
-            IpsecEncryption ipsecEncryption = default;
-            IpsecIntegrity ipsecIntegrity = default;
+            Models.IPsecEncryption iPsecEncryption = default;
+            Models.IPsecIntegrity iPsecIntegrity = default;
             IkeEncryption ikeEncryption = default;
             IkeIntegrity ikeIntegrity = default;
-            DhGroup dhGroup = default;
+            Models.DHGroup dhGroup = default;
             PfsGroup pfsGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("ipsecEncryption"u8))
                 {
-                    ipsecEncryption = new IpsecEncryption(prop.Value.GetString());
+                    iPsecEncryption = new Models.IPsecEncryption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipsecIntegrity"u8))
                 {
-                    ipsecIntegrity = new IpsecIntegrity(prop.Value.GetString());
+                    iPsecIntegrity = new Models.IPsecIntegrity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ikeEncryption"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("dhGroup"u8))
                 {
-                    dhGroup = new DhGroup(prop.Value.GetString());
+                    dhGroup = new Models.DHGroup(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("pfsGroup"u8))
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpsecPolicy(
+            return new IPsecPolicy(
                 saLifeTimeSeconds,
                 saDataSizeKilobytes,
-                ipsecEncryption,
-                ipsecIntegrity,
+                iPsecEncryption,
+                iPsecIntegrity,
                 ikeEncryption,
                 ikeIntegrity,
                 dhGroup,

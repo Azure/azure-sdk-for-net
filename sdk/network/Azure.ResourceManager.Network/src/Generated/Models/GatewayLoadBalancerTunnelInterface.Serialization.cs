@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(InterfaceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(InterfaceType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             int? port = default;
             int? identifier = default;
             GatewayLoadBalancerTunnelProtocol? protocol = default;
-            GatewayLoadBalancerTunnelInterfaceType? @type = default;
+            GatewayLoadBalancerTunnelInterfaceType? interfaceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    @type = new GatewayLoadBalancerTunnelInterfaceType(prop.Value.GetString());
+                    interfaceType = new GatewayLoadBalancerTunnelInterfaceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GatewayLoadBalancerTunnelInterface(port, identifier, protocol, @type, additionalBinaryDataProperties);
+            return new GatewayLoadBalancerTunnelInterface(port, identifier, protocol, interfaceType, additionalBinaryDataProperties);
         }
     }
 }

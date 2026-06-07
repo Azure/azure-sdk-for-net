@@ -2603,11 +2603,11 @@ namespace Azure.ResourceManager.Network.Mocking
             return GetVirtualRouters().Get(virtualRouterName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualWANs in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of VirtualWANs and their operations over a VirtualWANResource. </returns>
-        public virtual VirtualWANCollection GetVirtualWANs()
+        /// <summary> Gets a collection of VirtualWans in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWanResource. </returns>
+        public virtual VirtualWanCollection GetVirtualWans()
         {
-            return GetCachedClient(client => new VirtualWANCollection(client, Id));
+            return GetCachedClient(client => new VirtualWanCollection(client, Id));
         }
 
         /// <summary>
@@ -2632,11 +2632,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualWANResource>> GetVirtualWANAsync(string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWANName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            return await GetVirtualWANs().GetAsync(virtualWANName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualWans().GetAsync(virtualWANName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2661,11 +2661,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualWANResource> GetVirtualWAN(string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWANName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            return GetVirtualWANs().Get(virtualWANName, cancellationToken);
+            return GetVirtualWans().Get(virtualWANName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnSites in the <see cref="ResourceGroupResource"/>. </summary>
@@ -3253,11 +3253,11 @@ namespace Azure.ResourceManager.Network.Mocking
             return GetInterconnectGroups().Get(interconnectGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CustomIpPrefixes in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of CustomIpPrefixes and their operations over a CustomIpPrefixResource. </returns>
-        public virtual CustomIpPrefixCollection GetCustomIpPrefixes()
+        /// <summary> Gets a collection of CustomIPPrefixes in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefixResource. </returns>
+        public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
         {
-            return GetCachedClient(client => new CustomIpPrefixCollection(client, Id));
+            return GetCachedClient(client => new CustomIPPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -3283,11 +3283,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomIpPrefixResource>> GetCustomIpPrefixAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            return await GetCustomIpPrefixes().GetAsync(customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetCustomIPPrefixes().GetAsync(customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3313,11 +3313,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomIpPrefixResource> GetCustomIpPrefix(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            return GetCustomIpPrefixes().Get(customIpPrefixName, expand, cancellationToken);
+            return GetCustomIPPrefixes().Get(customIpPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DscpConfigurations in the <see cref="ResourceGroupResource"/>. </summary>

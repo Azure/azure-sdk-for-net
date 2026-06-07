@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Optional.IsDefined(DeploymentStatus))
+            if (Optional.IsDefined(DeploymentState))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteStringValue(DeploymentStatus.Value.ToString());
+                writer.WriteStringValue(DeploymentState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ConfigurationIds))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             DateTimeOffset? commitOn = default;
             string region = default;
-            DeploymentStatus? deploymentStatus = default;
+            Models.NetworkManagerDeploymentState? deploymentState = default;
             IReadOnlyList<string> configurationIds = default;
             Models.NetworkConfigurationDeploymentType? deploymentType = default;
             string errorMessage = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    deploymentStatus = new DeploymentStatus(prop.Value.GetString());
+                    deploymentState = new Models.NetworkManagerDeploymentState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("configurationIds"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkManagerDeploymentStatus(
                 commitOn,
                 region,
-                deploymentStatus,
+                deploymentState,
                 configurationIds ?? new ChangeTrackingList<string>(),
                 deploymentType,
                 errorMessage,

@@ -16,68 +16,68 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> VirtualWAN Resource. </summary>
-    public partial class VirtualWANData : TrackedResourceWithSettableIdOptionalLocation, IJsonModel<VirtualWANData>
+    public partial class VirtualWanData : NetworkWritableResourceData, IJsonModel<VirtualWanData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrackedResourceWithSettableIdOptionalLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualWANData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualWanData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualWANData(document.RootElement, options);
+                        return DeserializeVirtualWanData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualWANData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualWanData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualWANData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualWanData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualWANData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualWanData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualWANData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualWANData IPersistableModel<VirtualWANData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualWANData)PersistableModelCreateCore(data, options);
+        VirtualWanData IPersistableModel<VirtualWanData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualWanData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualWANData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualWanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="virtualWANData"> The <see cref="VirtualWANData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VirtualWANData virtualWANData)
+        /// <param name="virtualWanData"> The <see cref="VirtualWanData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualWanData virtualWanData)
         {
-            if (virtualWANData == null)
+            if (virtualWanData == null)
             {
                 return null;
             }
-            return RequestContent.Create(virtualWANData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(virtualWanData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualWANData"/> from. </param>
-        internal static VirtualWANData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualWanData"/> from. </param>
+        internal static VirtualWanData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVirtualWANData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeVirtualWanData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualWANData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualWanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualWANData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualWanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualWANData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualWanData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -108,32 +108,32 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualWANData IJsonModel<VirtualWANData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualWANData)JsonModelCreateCore(ref reader, options);
+        VirtualWanData IJsonModel<VirtualWanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualWanData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrackedResourceWithSettableIdOptionalLocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualWANData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualWanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualWANData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualWanData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualWANData(document.RootElement, options);
+            return DeserializeVirtualWanData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualWANData DeserializeVirtualWANData(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualWanData DeserializeVirtualWanData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             string location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,11 @@ namespace Azure.ResourceManager.Network
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -153,7 +157,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -201,10 +209,10 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualWANData(
+            return new VirtualWanData(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,

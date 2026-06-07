@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP Configuration of a VPN Gateway Resource. </summary>
-    public partial class VpnGatewayIpConfiguration : IJsonModel<VpnGatewayIpConfiguration>
+    public partial class VpnGatewayIPConfiguration : IJsonModel<VpnGatewayIPConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VpnGatewayIpConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VpnGatewayIPConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVpnGatewayIpConfiguration(document.RootElement, options);
+                        return DeserializeVpnGatewayIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnGatewayIpConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnGatewayIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VpnGatewayIpConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnGatewayIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VpnGatewayIpConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VpnGatewayIPConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VpnGatewayIpConfiguration IPersistableModel<VpnGatewayIpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VpnGatewayIPConfiguration IPersistableModel<VpnGatewayIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VpnGatewayIpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VpnGatewayIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VpnGatewayIpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VpnGatewayIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +70,25 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnGatewayIpConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnGatewayIPConfiguration)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PublicIpAddress))
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress);
             }
-            if (Optional.IsDefined(PrivateIpAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,48 +109,52 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VpnGatewayIpConfiguration IJsonModel<VpnGatewayIpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VpnGatewayIPConfiguration IJsonModel<VpnGatewayIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VpnGatewayIpConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VpnGatewayIPConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnGatewayIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnGatewayIpConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnGatewayIPConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVpnGatewayIpConfiguration(document.RootElement, options);
+            return DeserializeVpnGatewayIPConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VpnGatewayIpConfiguration DeserializeVpnGatewayIpConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static VpnGatewayIPConfiguration DeserializeVpnGatewayIPConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
+            ResourceIdentifier id = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VpnGatewayIpConfiguration(id, publicIpAddress, privateIpAddress, additionalBinaryDataProperties);
+            return new VpnGatewayIPConfiguration(id, publicIPAddress, privateIPAddress, additionalBinaryDataProperties);
         }
     }
 }

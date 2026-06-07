@@ -14,51 +14,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains IPv6 peering config. </summary>
-    public partial class Ipv6ExpressRouteCircuitPeeringConfig : IJsonModel<Ipv6ExpressRouteCircuitPeeringConfig>
+    public partial class IPv6ExpressRouteCircuitPeeringConfig : IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Ipv6ExpressRouteCircuitPeeringConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPv6ExpressRouteCircuitPeeringConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
+                        return DeserializeIPv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Ipv6ExpressRouteCircuitPeeringConfig IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPv6ExpressRouteCircuitPeeringConfig IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Ipv6ExpressRouteCircuitPeeringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Ipv6ExpressRouteCircuitPeeringConfig IJsonModel<Ipv6ExpressRouteCircuitPeeringConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPv6ExpressRouteCircuitPeeringConfig IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Ipv6ExpressRouteCircuitPeeringConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPv6ExpressRouteCircuitPeeringConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
+            return DeserializeIPv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Ipv6ExpressRouteCircuitPeeringConfig DeserializeIpv6ExpressRouteCircuitPeeringConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Ipv6ExpressRouteCircuitPeeringConfig(
+            return new IPv6ExpressRouteCircuitPeeringConfig(
                 primaryPeerAddressPrefix,
                 secondaryPeerAddressPrefix,
                 microsoftPeeringConfig,

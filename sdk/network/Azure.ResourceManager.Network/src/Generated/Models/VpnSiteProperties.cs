@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
         /// <param name="o365Policy"> Office365 Policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnSiteProperties(NetworkSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnSiteProperties(NetworkSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, VirtualNetworkAddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
         public string SiteKey { get; set; }
 
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
-        public AddressSpace AddressSpace { get; set; }
+        public VirtualNetworkAddressSpace AddressSpace { get; set; }
 
         /// <summary> The set of bgp properties. </summary>
         public BgpSettings BgpProperties { get; set; }

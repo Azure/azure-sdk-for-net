@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
             DeviceProperties deviceProperties = default;
             string ipAddress = default;
             string siteKey = default;
-            AddressSpace addressSpace = default;
+            VirtualNetworkAddressSpace addressSpace = default;
             BgpSettings bgpProperties = default;
             NetworkProvisioningState? provisioningState = default;
             bool? isSecuritySite = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    addressSpace = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    addressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bgpProperties"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(appliesToGroups, nameof(appliesToGroups));
 
             ConnectivityTopology = connectivityTopology;
-            Hubs = new ChangeTrackingList<Hub>();
+            Hubs = new ChangeTrackingList<ConnectivityHub>();
             AppliesToGroups = appliesToGroups.ToList();
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityConfigurationProperties(string description, ConnectivityTopology connectivityTopology, IList<Hub> hubs, IsGlobal? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityConfigurationProperties(string description, ConnectivityTopology connectivityTopology, IList<ConnectivityHub> hubs, IsGlobal? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ConnectivityTopology = connectivityTopology;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         public ConnectivityTopology ConnectivityTopology { get; set; }
 
         /// <summary> List of hubItems. </summary>
-        public IList<Hub> Hubs { get; } = new ChangeTrackingList<Hub>();
+        public IList<ConnectivityHub> Hubs { get; } = new ChangeTrackingList<ConnectivityHub>();
 
         /// <summary> Flag if global mesh is supported. </summary>
         public IsGlobal? IsGlobal { get; set; }

@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
-                foreach (string item in SourceIpGroups)
+                foreach (string item in SourceIPGroups)
                 {
                     if (item == null)
                     {
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIpGroups))
+            if (Optional.IsCollectionDefined(DestinationIPGroups))
             {
                 writer.WritePropertyName("destinationIpGroups"u8);
                 writer.WriteStartArray();
-                foreach (string item in DestinationIpGroups)
+                foreach (string item in DestinationIPGroups)
                 {
                     if (item == null)
                     {
@@ -210,8 +210,8 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> sourceAddresses = default;
             IList<string> destinationAddresses = default;
             IList<string> destinationPorts = default;
-            IList<string> sourceIpGroups = default;
-            IList<string> destinationIpGroups = default;
+            IList<string> sourceIPGroups = default;
+            IList<string> destinationIPGroups = default;
             IList<string> destinationFqdns = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (prop.NameEquals("destinationIpGroups"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    destinationIpGroups = array;
+                    destinationIPGroups = array;
                     continue;
                 }
                 if (prop.NameEquals("destinationFqdns"u8))
@@ -384,8 +384,8 @@ namespace Azure.ResourceManager.Network.Models
                 sourceAddresses ?? new ChangeTrackingList<string>(),
                 destinationAddresses ?? new ChangeTrackingList<string>(),
                 destinationPorts ?? new ChangeTrackingList<string>(),
-                sourceIpGroups ?? new ChangeTrackingList<string>(),
-                destinationIpGroups ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                destinationIPGroups ?? new ChangeTrackingList<string>(),
                 destinationFqdns ?? new ChangeTrackingList<string>());
         }
     }

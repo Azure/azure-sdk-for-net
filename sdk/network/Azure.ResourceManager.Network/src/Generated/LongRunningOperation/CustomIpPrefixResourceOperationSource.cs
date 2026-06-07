@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary></summary>
-    internal partial class CustomIpPrefixResourceOperationSource : IOperationSource<CustomIpPrefixResource>
+    internal partial class CustomIPPrefixResourceOperationSource : IOperationSource<CustomIPPrefixResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal CustomIpPrefixResourceOperationSource(ArmClient client)
+        internal CustomIPPrefixResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        CustomIpPrefixResource IOperationSource<CustomIpPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CustomIPPrefixResource IOperationSource<CustomIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CustomIpPrefixData data = CustomIpPrefixData.DeserializeCustomIpPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CustomIpPrefixResource(_client, data);
+            CustomIPPrefixData data = CustomIPPrefixData.DeserializeCustomIPPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CustomIPPrefixResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<CustomIpPrefixResource> IOperationSource<CustomIpPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CustomIPPrefixResource> IOperationSource<CustomIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CustomIpPrefixData data = CustomIpPrefixData.DeserializeCustomIpPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CustomIpPrefixResource(_client, data);
+            CustomIPPrefixData data = CustomIPPrefixData.DeserializeCustomIPPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CustomIPPrefixResource(_client, data);
         }
     }
 }

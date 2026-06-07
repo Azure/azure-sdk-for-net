@@ -7,25 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IpGroups associated with azure firewall. </summary>
-    public partial class AzureFirewallIpGroups
+    public partial class AzureFirewallIPGroups
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureFirewallIpGroups"/>. </summary>
-        internal AzureFirewallIpGroups()
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPGroups"/>. </summary>
+        internal AzureFirewallIPGroups()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFirewallIpGroups"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPGroups"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="changeNumber"> The iteration number. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallIpGroups(string id, string changeNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallIPGroups(ResourceIdentifier id, string changeNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ChangeNumber = changeNumber;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The iteration number. </summary>
         public string ChangeNumber { get; }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfigurationProperties"/>. </summary>
         public ApplicationGatewayPrivateLinkConfigurationProperties()
         {
-            IpConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkIpConfiguration>();
+            IpConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfigurationProperties"/>. </summary>
         /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayPrivateLinkConfigurationProperties(IList<ApplicationGatewayPrivateLinkIpConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayPrivateLinkConfigurationProperties(IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> An array of application gateway private link ip configurations. </summary>
-        public IList<ApplicationGatewayPrivateLinkIpConfiguration> IpConfigurations { get; } = new ChangeTrackingList<ApplicationGatewayPrivateLinkIpConfiguration>();
+        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
 
         /// <summary> The provisioning state of the application gateway private link configuration. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

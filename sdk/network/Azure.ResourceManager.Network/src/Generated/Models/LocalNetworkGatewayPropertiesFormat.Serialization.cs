@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            AddressSpace localNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace localNetworkAddressSpace = default;
             string gatewayIpAddress = default;
             string fqdn = default;
             BgpSettings bgpSettings = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    localNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("gatewayIpAddress"u8))

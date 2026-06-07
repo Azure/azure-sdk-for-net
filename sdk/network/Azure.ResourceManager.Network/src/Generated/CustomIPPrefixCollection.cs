@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CustomIpPrefixResource"/> and their operations.
-    /// Each <see cref="CustomIpPrefixResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="CustomIpPrefixCollection"/> instance call the GetCustomIpPrefixes method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="CustomIPPrefixResource"/> and their operations.
+    /// Each <see cref="CustomIPPrefixResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CustomIPPrefixCollection"/> instance call the GetCustomIPPrefixes method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class CustomIpPrefixCollection : ArmCollection, IEnumerable<CustomIpPrefixResource>, IAsyncEnumerable<CustomIpPrefixResource>
+    public partial class CustomIPPrefixCollection : ArmCollection, IEnumerable<CustomIPPrefixResource>, IAsyncEnumerable<CustomIPPrefixResource>
     {
         private readonly ClientDiagnostics _customIPPrefixesClientDiagnostics;
         private readonly CustomIPPrefixes _customIPPrefixesRestClient;
 
-        /// <summary> Initializes a new instance of CustomIpPrefixCollection for mocking. </summary>
-        protected CustomIpPrefixCollection()
+        /// <summary> Initializes a new instance of CustomIPPrefixCollection for mocking. </summary>
+        protected CustomIPPrefixCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CustomIpPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CustomIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CustomIpPrefixResource.ResourceType, out string customIpPrefixApiVersion);
-            _customIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIpPrefixResource.ResourceType.Namespace, Diagnostics);
-            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Endpoint, customIpPrefixApiVersion ?? "2025-07-01");
+            TryGetApiVersion(CustomIPPrefixResource.ResourceType, out string customIPPrefixApiVersion);
+            _customIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefixResource.ResourceType.Namespace, Diagnostics);
+            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Endpoint, customIPPrefixApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CustomIpPrefixResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customIpPrefixName, CustomIpPrefixData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CustomIPPrefixResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customIpPrefixName, CustomIPPrefixData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, CustomIpPrefixData.ToRequestContent(data), context);
+                HttpMessage message = _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, CustomIPPrefixData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkArmOperation<CustomIpPrefixResource> operation = new NetworkArmOperation<CustomIpPrefixResource>(
-                    new CustomIpPrefixResourceOperationSource(Client),
+                NetworkArmOperation<CustomIPPrefixResource> operation = new NetworkArmOperation<CustomIPPrefixResource>(
+                    new CustomIPPrefixResourceOperationSource(Client),
                     _customIPPrefixesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CustomIpPrefixResource> CreateOrUpdate(WaitUntil waitUntil, string customIpPrefixName, CustomIpPrefixData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CustomIPPrefixResource> CreateOrUpdate(WaitUntil waitUntil, string customIpPrefixName, CustomIPPrefixData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, CustomIpPrefixData.ToRequestContent(data), context);
+                HttpMessage message = _customIPPrefixesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, CustomIPPrefixData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkArmOperation<CustomIpPrefixResource> operation = new NetworkArmOperation<CustomIpPrefixResource>(
-                    new CustomIpPrefixResourceOperationSource(Client),
+                NetworkArmOperation<CustomIPPrefixResource> operation = new NetworkArmOperation<CustomIPPrefixResource>(
+                    new CustomIPPrefixResourceOperationSource(Client),
                     _customIPPrefixesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CustomIpPrefixResource>> GetAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> GetAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.Get");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.Get");
             scope.Start();
             try
             {
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CustomIpPrefixResource> Get(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> Get(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.Get");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.Get");
             scope.Start();
             try
             {
@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomIpPrefixData> response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                Response<CustomIPPrefixData> response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomIpPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CustomIPPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomIpPrefixData, CustomIpPrefixResource>(new CustomIPPrefixesListAsyncCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIpPrefixCollection.GetAll"), data => new CustomIpPrefixResource(Client, data));
+            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListAsyncCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -317,14 +317,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomIpPrefixResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CustomIPPrefixResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomIpPrefixData, CustomIpPrefixResource>(new CustomIPPrefixesListCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIpPrefixCollection.GetAll"), data => new CustomIpPrefixResource(Client, data));
+            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.Exists");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.Exists");
             scope.Start();
             try
             {
@@ -364,14 +364,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CustomIpPrefixData> response = default;
+                Response<CustomIPPrefixData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                        response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomIpPrefixData)null, result);
+                        response = Response.FromValue((CustomIPPrefixData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.Exists");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.Exists");
             scope.Start();
             try
             {
@@ -422,14 +422,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CustomIpPrefixData> response = default;
+                Response<CustomIPPrefixData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                        response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomIpPrefixData)null, result);
+                        response = Response.FromValue((CustomIPPrefixData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -465,11 +465,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CustomIpPrefixResource>> GetIfExistsAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CustomIPPrefixResource>> GetIfExistsAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.GetIfExists");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -480,23 +480,23 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CustomIpPrefixData> response = default;
+                Response<CustomIPPrefixData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                        response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomIpPrefixData)null, result);
+                        response = Response.FromValue((CustomIPPrefixData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CustomIpPrefixResource>(response.GetRawResponse());
+                    return new NoValueResponse<CustomIPPrefixResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -527,11 +527,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CustomIpPrefixResource> GetIfExists(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CustomIPPrefixResource> GetIfExists(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
 
-            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefixCollection.GetIfExists");
+            using DiagnosticScope scope = _customIPPrefixesClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -542,23 +542,23 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _customIPPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customIpPrefixName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CustomIpPrefixData> response = default;
+                Response<CustomIPPrefixData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomIpPrefixData.FromResponse(result), result);
+                        response = Response.FromValue(CustomIPPrefixData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomIpPrefixData)null, result);
+                        response = Response.FromValue((CustomIPPrefixData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CustomIpPrefixResource>(response.GetRawResponse());
+                    return new NoValueResponse<CustomIPPrefixResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomIpPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<CustomIpPrefixResource> IEnumerable<CustomIpPrefixResource>.GetEnumerator()
+        IEnumerator<CustomIPPrefixResource> IEnumerable<CustomIPPrefixResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<CustomIpPrefixResource> IAsyncEnumerable<CustomIpPrefixResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CustomIPPrefixResource> IAsyncEnumerable<CustomIPPrefixResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

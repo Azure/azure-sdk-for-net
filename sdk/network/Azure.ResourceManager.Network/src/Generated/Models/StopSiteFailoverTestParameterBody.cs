@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="StopSiteFailoverTestParameterBody"/>. </summary>
         /// <param name="stopParameters"> Parameters supplied to stop the failover simulation on the express route gateway. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stopParameters"/> is null. </exception>
-        public StopSiteFailoverTestParameterBody(ExpressRouteFailoverStopApiParameters stopParameters)
+        public StopSiteFailoverTestParameterBody(ExpressRouteFailoverStopApiContent stopParameters)
         {
             Argument.AssertNotNull(stopParameters, nameof(stopParameters));
 
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="StopSiteFailoverTestParameterBody"/>. </summary>
         /// <param name="stopParameters"> Parameters supplied to stop the failover simulation on the express route gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StopSiteFailoverTestParameterBody(ExpressRouteFailoverStopApiParameters stopParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StopSiteFailoverTestParameterBody(ExpressRouteFailoverStopApiContent stopParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StopParameters = stopParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Parameters supplied to stop the failover simulation on the express route gateway. </summary>
-        public ExpressRouteFailoverStopApiParameters StopParameters { get; }
+        public ExpressRouteFailoverStopApiContent StopParameters { get; }
     }
 }

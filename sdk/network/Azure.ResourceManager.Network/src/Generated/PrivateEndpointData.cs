@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the private endpoint. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal PrivateEndpointData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointProperties properties, ExtendedLocation extendedLocation, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointProperties properties, ExtendedLocation extendedLocation, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The ID of the subnet from which the private IP will be allocated. </summary>
         public SubnetData Subnet
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A grouping of information about the connection to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections
+        public IList<NetworkPrivateLinkServiceConnection> PrivateLinkServiceConnections
         {
             get
             {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections
+        public IList<NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections
         {
             get
             {
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> An array of custom dns configurations. </summary>
-        public IList<CustomDnsConfigPropertiesFormat> CustomDnsConfigs
+        public IList<CustomDnsConfigProperties> CustomDnsConfigs
         {
             get
             {

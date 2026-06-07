@@ -7,40 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP Configuration of a VPN Gateway Resource. </summary>
-    public partial class VpnGatewayIpConfiguration
+    public partial class VpnGatewayIPConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VpnGatewayIpConfiguration"/>. </summary>
-        internal VpnGatewayIpConfiguration()
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayIPConfiguration"/>. </summary>
+        internal VpnGatewayIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VpnGatewayIpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> The identifier of the IP configuration for a VPN Gateway. </param>
-        /// <param name="publicIpAddress"> The public IP address of this IP configuration. </param>
-        /// <param name="privateIpAddress"> The private IP address of this IP configuration. </param>
+        /// <param name="publicIPAddress"> The public IP address of this IP configuration. </param>
+        /// <param name="privateIPAddress"> The private IP address of this IP configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnGatewayIpConfiguration(string id, string publicIpAddress, string privateIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnGatewayIPConfiguration(ResourceIdentifier id, string publicIPAddress, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identifier of the IP configuration for a VPN Gateway. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The public IP address of this IP configuration. </summary>
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
 
         /// <summary> The private IP address of this IP configuration. </summary>
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
     }
 }

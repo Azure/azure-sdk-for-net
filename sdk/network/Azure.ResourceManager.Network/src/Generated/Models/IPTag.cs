@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains the IpTag associated with the object. </summary>
-    public partial class IpTag
+    public partial class IPTag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpTag"/>. </summary>
-        public IpTag()
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        public IPTag()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
         /// <param name="ipTagType"> The IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> The value of the IP tag associated with the public IP. Example: SQL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpTagType = ipTagType;
             Tag = tag;

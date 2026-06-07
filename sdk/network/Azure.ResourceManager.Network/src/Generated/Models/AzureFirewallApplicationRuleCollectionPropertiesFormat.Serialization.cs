@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (AzureFirewallApplicationRule item in Rules)
+                foreach (AzureFirewallApplicationRuleCollectionData item in Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             int? priority = default;
             AzureFirewallRCAction action = default;
-            IList<AzureFirewallApplicationRule> rules = default;
+            IList<AzureFirewallApplicationRuleCollectionData> rules = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<AzureFirewallApplicationRule> array = new List<AzureFirewallApplicationRule>();
+                    List<AzureFirewallApplicationRuleCollectionData> array = new List<AzureFirewallApplicationRuleCollectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallApplicationRule.DeserializeAzureFirewallApplicationRule(item, options));
+                        array.Add(AzureFirewallApplicationRuleCollectionData.DeserializeAzureFirewallApplicationRuleCollectionData(item, options));
                     }
                     rules = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureFirewallApplicationRuleCollectionPropertiesFormat(priority, action, rules ?? new ChangeTrackingList<AzureFirewallApplicationRule>(), provisioningState, additionalBinaryDataProperties);
+            return new AzureFirewallApplicationRuleCollectionPropertiesFormat(priority, action, rules ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

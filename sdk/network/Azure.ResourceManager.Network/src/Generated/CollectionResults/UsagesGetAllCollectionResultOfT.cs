@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
                 {
                     yield break;
                 }
-                UsagesListResult result = UsagesListResult.FromResponse(response);
+                NetworkUsagesListResult result = NetworkUsagesListResult.FromResponse(response);
                 yield return Page<NetworkUsage>.FromValues((IReadOnlyList<NetworkUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

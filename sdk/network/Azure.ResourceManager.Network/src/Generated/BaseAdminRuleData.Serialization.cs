@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.Network
                 switch (discriminator.GetString())
                 {
                     case "Custom":
-                        return AdminRule.DeserializeAdminRule(element, options);
+                        return NetworkAdminRule.DeserializeNetworkAdminRule(element, options);
                     case "Default":
-                        return DefaultAdminRule.DeserializeDefaultAdminRule(element, options);
+                        return NetworkDefaultAdminRule.DeserializeNetworkDefaultAdminRule(element, options);
                 }
             }
             return UnknownBaseAdminRule.DeserializeUnknownBaseAdminRule(element, options);

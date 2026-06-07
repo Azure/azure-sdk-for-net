@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PoolUsage>> GetPoolUsageAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IpamPoolUsage>> GetPoolUsageAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _ipamPoolsClientDiagnostics.CreateScope("IpamPoolResource.GetPoolUsage");
             scope.Start();
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _ipamPoolsRestClient.CreateGetPoolUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PoolUsage> response = Response.FromValue(PoolUsage.FromResponse(result), result);
+                Response<IpamPoolUsage> response = Response.FromValue(IpamPoolUsage.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PoolUsage> GetPoolUsage(CancellationToken cancellationToken = default)
+        public virtual Response<IpamPoolUsage> GetPoolUsage(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _ipamPoolsClientDiagnostics.CreateScope("IpamPoolResource.GetPoolUsage");
             scope.Start();
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _ipamPoolsRestClient.CreateGetPoolUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PoolUsage> response = Response.FromValue(PoolUsage.FromResponse(result), result);
+                Response<IpamPoolUsage> response = Response.FromValue(IpamPoolUsage.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -508,8 +508,8 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PoolAssociation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PoolAssociation> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IpamPoolAssociation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IpamPoolAssociation> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -547,8 +547,8 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PoolAssociation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PoolAssociation> GetAssociatedResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IpamPoolAssociation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IpamPoolAssociation> GetAssociatedResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (GatewayCustomBgpIpAddressIpConfiguration item in GatewayCustomBgpIpAddresses)
+                foreach (GatewayCustomBgpIPAddressIPConfiguration item in GatewayCustomBgpIpAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
-                foreach (IpsecPolicy item in IpsecPolicies)
+                foreach (IPsecPolicy item in IpsecPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.Network.Models
             long? ingressBytesTransferred = default;
             NetworkSubResource peer = default;
             bool? enableBgp = default;
-            IList<GatewayCustomBgpIpAddressIpConfiguration> gatewayCustomBgpIpAddresses = default;
+            IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIpAddresses = default;
             bool? usePolicyBasedTrafficSelectors = default;
-            IList<IpsecPolicy> ipsecPolicies = default;
+            IList<IPsecPolicy> ipsecPolicies = default;
             IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
             string resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
@@ -412,10 +412,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<GatewayCustomBgpIpAddressIpConfiguration> array = new List<GatewayCustomBgpIpAddressIpConfiguration>();
+                    List<GatewayCustomBgpIPAddressIPConfiguration> array = new List<GatewayCustomBgpIPAddressIPConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GatewayCustomBgpIpAddressIpConfiguration.DeserializeGatewayCustomBgpIpAddressIpConfiguration(item, options));
+                        array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item, options));
                     }
                     gatewayCustomBgpIpAddresses = array;
                     continue;
@@ -435,10 +435,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IpsecPolicy> array = new List<IpsecPolicy>();
+                    List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpsecPolicy.DeserializeIpsecPolicy(item, options));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
                     ipsecPolicies = array;
                     continue;
@@ -519,9 +519,9 @@ namespace Azure.ResourceManager.Network.Models
                 ingressBytesTransferred,
                 peer,
                 enableBgp,
-                gatewayCustomBgpIpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>(),
+                gatewayCustomBgpIpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
                 usePolicyBasedTrafficSelectors,
-                ipsecPolicies ?? new ChangeTrackingList<IpsecPolicy>(),
+                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
                 resourceGuid,
                 provisioningState,

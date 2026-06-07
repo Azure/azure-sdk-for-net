@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Verifier Workspace resource. </param>
         /// <param name="eTag"> String representing unique etag for the resource document. </param>
-        internal VerifierWorkspaceData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, VerifierWorkspaceProperties properties, string eTag) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
+        internal VerifierWorkspaceData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, NetworkVerifierWorkspaceProperties properties, string eTag) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
         {
             Properties = properties;
             ETag = eTag;
         }
 
         /// <summary> Properties of Verifier Workspace resource. </summary>
-        public VerifierWorkspaceProperties Properties { get; set; }
+        public NetworkVerifierWorkspaceProperties Properties { get; set; }
 
         /// <summary> String representing unique etag for the resource document. </summary>
         public string ETag { get; }

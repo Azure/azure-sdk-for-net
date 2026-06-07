@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostPropertiesFormat properties, IList<string> zones, string eTag, NetworkSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostPropertiesFormat properties, IList<string> zones, ETag? eTag, NetworkSku sku) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Zones = zones;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network
         public IList<string> Zones { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The sku of this Bastion Host. </summary>
         internal NetworkSku Sku { get; set; }

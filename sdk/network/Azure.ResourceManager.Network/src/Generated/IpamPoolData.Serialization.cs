@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, string> tags = default;
             string location = default;
             IpamPoolProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -207,7 +207,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

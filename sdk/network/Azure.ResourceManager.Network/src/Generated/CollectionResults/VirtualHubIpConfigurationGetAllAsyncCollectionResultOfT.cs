@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class VirtualHubIpConfigurationGetAllAsyncCollectionResultOfT : AsyncPageable<HubIpConfigurationData>
+    internal partial class VirtualHubIpConfigurationGetAllAsyncCollectionResultOfT : AsyncPageable<HubIPConfigurationData>
     {
         private readonly VirtualHubIpConfiguration _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VirtualHubIpConfigurationGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<HubIpConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HubIPConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                 {
                     yield break;
                 }
-                ListVirtualHubIpConfigurationResults result = ListVirtualHubIpConfigurationResults.FromResponse(response);
-                yield return Page<HubIpConfigurationData>.FromValues((IReadOnlyList<HubIpConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ListVirtualHubIPConfigurationResults result = ListVirtualHubIPConfigurationResults.FromResponse(response);
+                yield return Page<HubIPConfigurationData>.FromValues((IReadOnlyList<HubIPConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

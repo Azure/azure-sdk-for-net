@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            AddressSpace addressSpace = default;
+            VirtualNetworkAddressSpace addressSpace = default;
             DhcpOptions dhcpOptions = default;
             int? flowTimeoutInMinutes = default;
             IList<SubnetData> subnets = default;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<FlowLogData> flowLogs = default;
             PrivateEndpointVNetPolicies? privateEndpointVNetPolicies = default;
             NetworkSubResource defaultPublicNatGateway = default;
-            AddressSpace summarizedGatewayPrefixes = default;
+            VirtualNetworkAddressSpace summarizedGatewayPrefixes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    addressSpace = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    addressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dhcpOptions"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    summarizedGatewayPrefixes = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    summarizedGatewayPrefixes = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

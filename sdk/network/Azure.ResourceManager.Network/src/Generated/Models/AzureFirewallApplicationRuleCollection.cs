@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Collection of rules used by a application rule collection. </summary>
-        public IList<AzureFirewallApplicationRule> Rules
+        public IList<AzureFirewallApplicationRuleCollectionData> Rules
         {
             get
             {

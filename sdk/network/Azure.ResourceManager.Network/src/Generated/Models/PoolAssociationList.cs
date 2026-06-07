@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="PoolAssociationList"/>. </summary>
         /// <param name="value"> The PoolAssociation items on this page. </param>
-        internal PoolAssociationList(IEnumerable<PoolAssociation> value)
+        internal PoolAssociationList(IEnumerable<IpamPoolAssociation> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value"> The PoolAssociation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolAssociationList(IList<PoolAssociation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolAssociationList(IList<IpamPoolAssociation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The PoolAssociation items on this page. </summary>
-        public IList<PoolAssociation> Value { get; }
+        public IList<IpamPoolAssociation> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

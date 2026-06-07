@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network.Models
             string gatewayManagerEtag = default;
             string lastModifiedBy = default;
             NetworkSubResource routeFilter = default;
-            Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
+            IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
             ExpressRouteConnectionId expressRouteConnection = default;
             IList<ExpressRouteCircuitConnectionData> connections = default;
             IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipv6PeeringConfig = Ipv6ExpressRouteCircuitPeeringConfig.DeserializeIpv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
+                    ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("expressRouteConnection"u8))

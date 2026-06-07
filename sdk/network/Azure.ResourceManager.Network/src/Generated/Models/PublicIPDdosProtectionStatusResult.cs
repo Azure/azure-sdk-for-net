@@ -7,30 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetPublicIpAddressDdosProtectionStatusOperation API service call. </summary>
-    public partial class PublicIpDdosProtectionStatusResult
+    public partial class PublicIPDdosProtectionStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PublicIpDdosProtectionStatusResult"/>. </summary>
-        internal PublicIpDdosProtectionStatusResult()
+        /// <summary> Initializes a new instance of <see cref="PublicIPDdosProtectionStatusResult"/>. </summary>
+        internal PublicIPDdosProtectionStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PublicIpDdosProtectionStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPDdosProtectionStatusResult"/>. </summary>
         /// <param name="publicIpAddressId"> Public IP ARM resource ID. </param>
-        /// <param name="publicIpAddress"> IP Address of the Public IP Resource. </param>
+        /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
         /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
         /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIpDdosProtectionStatusResult(string publicIpAddressId, string publicIpAddress, IsWorkloadProtected? isWorkloadProtected, string ddosProtectionPlanId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPDdosProtectionStatusResult(string publicIpAddressId, IPAddress publicIPAddress, Models.WorkloadProtectedFlag? isWorkloadProtected, ResourceIdentifier ddosProtectionPlanId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIpAddressId = publicIpAddressId;
-            PublicIpAddress = publicIpAddress;
+            PublicIPAddress = publicIPAddress;
             IsWorkloadProtected = isWorkloadProtected;
             DdosProtectionPlanId = ddosProtectionPlanId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,12 +42,12 @@ namespace Azure.ResourceManager.Network.Models
         public string PublicIpAddressId { get; }
 
         /// <summary> IP Address of the Public IP Resource. </summary>
-        public string PublicIpAddress { get; }
+        public IPAddress PublicIPAddress { get; }
 
         /// <summary> Value indicating whether the IP address is DDoS workload protected or not. </summary>
-        public IsWorkloadProtected? IsWorkloadProtected { get; }
+        public Models.WorkloadProtectedFlag? IsWorkloadProtected { get; }
 
         /// <summary> DDoS protection plan Resource Id of a if IP address is protected through a plan. </summary>
-        public string DdosProtectionPlanId { get; }
+        public ResourceIdentifier DdosProtectionPlanId { get; }
     }
 }

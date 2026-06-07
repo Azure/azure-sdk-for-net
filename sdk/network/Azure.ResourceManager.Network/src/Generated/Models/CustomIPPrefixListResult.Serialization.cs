@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (CustomIpPrefixData item in Value)
+            foreach (CustomIPPrefixData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<CustomIpPrefixData> value = default;
+            IList<CustomIPPrefixData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CustomIpPrefixData> array = new List<CustomIpPrefixData>();
+                    List<CustomIPPrefixData> array = new List<CustomIPPrefixData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomIpPrefixData.DeserializeCustomIpPrefixData(item, options));
+                        array.Add(CustomIPPrefixData.DeserializeCustomIPPrefixData(item, options));
                     }
                     value = array;
                     continue;

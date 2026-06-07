@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network.Models
             SourceAddresses = new ChangeTrackingList<string>();
             DestinationAddresses = new ChangeTrackingList<string>();
             DestinationPorts = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
-            DestinationIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
+            DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/>. </summary>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourceAddresses"> List of source IP addresses or ranges for this rule. </param>
         /// <param name="destinationAddresses"> List of destination IP addresses or ranges for this rule. </param>
         /// <param name="destinationPorts"> List of destination ports or ranges. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="destinationIpGroups"> List of destination IpGroups for this rule. </param>
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(string name, string description, FirewallPolicyIntrusionDetectionProtocol? protocol, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIpGroups, IList<string> destinationIpGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(string name, string description, FirewallPolicyIntrusionDetectionProtocol? protocol, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Network.Models
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
             DestinationPorts = destinationPorts;
-            SourceIpGroups = sourceIpGroups;
-            DestinationIpGroups = destinationIpGroups;
+            SourceIPGroups = sourceIPGroups;
+            DestinationIPGroups = destinationIPGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Network.Models
         public IList<string> DestinationPorts { get; }
 
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
 
         /// <summary> List of destination IpGroups for this rule. </summary>
-        public IList<string> DestinationIpGroups { get; }
+        public IList<string> DestinationIPGroups { get; }
     }
 }

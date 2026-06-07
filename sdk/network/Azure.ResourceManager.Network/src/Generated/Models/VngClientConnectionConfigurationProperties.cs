@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="virtualNetworkGatewayPolicyGroups"> List of references to virtualNetworkGatewayPolicyGroups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnClientAddressPool"/> or <paramref name="virtualNetworkGatewayPolicyGroups"/> is null. </exception>
-        public VngClientConnectionConfigurationProperties(AddressSpace vpnClientAddressPool, IEnumerable<NetworkSubResource> virtualNetworkGatewayPolicyGroups)
+        public VngClientConnectionConfigurationProperties(VirtualNetworkAddressSpace vpnClientAddressPool, IEnumerable<NetworkSubResource> virtualNetworkGatewayPolicyGroups)
         {
             Argument.AssertNotNull(vpnClientAddressPool, nameof(vpnClientAddressPool));
             Argument.AssertNotNull(virtualNetworkGatewayPolicyGroups, nameof(virtualNetworkGatewayPolicyGroups));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualNetworkGatewayPolicyGroups"> List of references to virtualNetworkGatewayPolicyGroups. </param>
         /// <param name="provisioningState"> The provisioning state of the VngClientConnectionConfiguration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VngClientConnectionConfigurationProperties(AddressSpace vpnClientAddressPool, IList<NetworkSubResource> virtualNetworkGatewayPolicyGroups, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VngClientConnectionConfigurationProperties(VirtualNetworkAddressSpace vpnClientAddressPool, IList<NetworkSubResource> virtualNetworkGatewayPolicyGroups, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VirtualNetworkGatewayPolicyGroups = virtualNetworkGatewayPolicyGroups;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
-        public AddressSpace VpnClientAddressPool { get; set; }
+        public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
 
         /// <summary> List of references to virtualNetworkGatewayPolicyGroups. </summary>
         public IList<NetworkSubResource> VirtualNetworkGatewayPolicyGroups { get; } = new ChangeTrackingList<NetworkSubResource>();

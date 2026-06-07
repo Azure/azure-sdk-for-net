@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private link service ip configuration. </summary>
-    public partial class PrivateLinkServiceIpConfiguration : NetworkSubResource
+    public partial class PrivateLinkServiceIPConfiguration : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIpConfiguration"/>. </summary>
-        public PrivateLinkServiceIpConfiguration()
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfiguration"/>. </summary>
+        public PrivateLinkServiceIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the private link service ip configuration. </param>
         /// <param name="name"> The name of private link service ip configuration. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> The resource type. </param>
-        internal PrivateLinkServiceIpConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkServiceIpConfigurationProperties properties, string name, string eTag, string @type) : base(id, additionalBinaryDataProperties)
+        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkServiceIpConfigurationProperties properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The resource type. </summary>
         public string Type { get; }

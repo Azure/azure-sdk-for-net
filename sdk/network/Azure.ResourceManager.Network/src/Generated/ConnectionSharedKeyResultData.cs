@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the shared key. </param>
-        internal ConnectionSharedKeyResultData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, SharedKeyProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ConnectionSharedKeyResultData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnLinkConnectionSharedKeyProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
         }
 
         /// <summary> Properties of the shared key. </summary>
-        public SharedKeyProperties Properties { get; set; }
+        public VpnLinkConnectionSharedKeyProperties Properties { get; set; }
     }
 }

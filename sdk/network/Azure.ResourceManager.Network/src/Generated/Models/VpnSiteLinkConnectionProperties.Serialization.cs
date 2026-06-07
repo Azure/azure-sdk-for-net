@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("vpnGatewayCustomBgpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (GatewayCustomBgpIpAddressIpConfiguration item in VpnGatewayCustomBgpAddresses)
+                foreach (GatewayCustomBgpIPAddressIPConfiguration item in VpnGatewayCustomBgpAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
-                foreach (IpsecPolicy item in IpsecPolicies)
+                foreach (IPsecPolicy item in IpsecPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.Network.Models
             int? connectionBandwidth = default;
             string sharedKey = default;
             bool? enableBgp = default;
-            IList<GatewayCustomBgpIpAddressIpConfiguration> vpnGatewayCustomBgpAddresses = default;
+            IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses = default;
             bool? usePolicyBasedTrafficSelectors = default;
-            IList<IpsecPolicy> ipsecPolicies = default;
+            IList<IPsecPolicy> ipsecPolicies = default;
             bool? enableRateLimiting = default;
             bool? useLocalAzureIpAddress = default;
             NetworkProvisioningState? provisioningState = default;
@@ -345,10 +345,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<GatewayCustomBgpIpAddressIpConfiguration> array = new List<GatewayCustomBgpIpAddressIpConfiguration>();
+                    List<GatewayCustomBgpIPAddressIPConfiguration> array = new List<GatewayCustomBgpIPAddressIPConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GatewayCustomBgpIpAddressIpConfiguration.DeserializeGatewayCustomBgpIpAddressIpConfiguration(item, options));
+                        array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item, options));
                     }
                     vpnGatewayCustomBgpAddresses = array;
                     continue;
@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IpsecPolicy> array = new List<IpsecPolicy>();
+                    List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpsecPolicy.DeserializeIpsecPolicy(item, options));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
                     ipsecPolicies = array;
                     continue;
@@ -456,9 +456,9 @@ namespace Azure.ResourceManager.Network.Models
                 connectionBandwidth,
                 sharedKey,
                 enableBgp,
-                vpnGatewayCustomBgpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>(),
+                vpnGatewayCustomBgpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
                 usePolicyBasedTrafficSelectors,
-                ipsecPolicies ?? new ChangeTrackingList<IpsecPolicy>(),
+                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 enableRateLimiting,
                 useLocalAzureIpAddress,
                 provisioningState,

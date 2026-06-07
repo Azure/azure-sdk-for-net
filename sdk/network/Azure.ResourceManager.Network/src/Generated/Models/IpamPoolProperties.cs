@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(addressPrefixes, nameof(addressPrefixes));
 
-            IpAddressType = new ChangeTrackingList<IpType>();
+            IPAddressType = new ChangeTrackingList<Models.IpamIPType>();
             AddressPrefixes = addressPrefixes.ToList();
         }
 
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
         /// <param name="provisioningState"> Provisioning states of a resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolProperties(string description, string displayName, IReadOnlyList<IpType> ipAddressType, string parentPoolName, IList<string> addressPrefixes, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IpamPoolProperties(string description, string displayName, IReadOnlyList<Models.IpamIPType> ipAddressType, string parentPoolName, IList<string> addressPrefixes, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DisplayName = displayName;
-            IpAddressType = ipAddressType;
+            IPAddressType = ipAddressType;
             ParentPoolName = parentPoolName;
             AddressPrefixes = addressPrefixes;
             ProvisioningState = provisioningState;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         public string DisplayName { get; set; }
 
         /// <summary> List of IP address type for the IpamPool. </summary>
-        public IReadOnlyList<IpType> IpAddressType { get; }
+        public IReadOnlyList<Models.IpamIPType> IPAddressType { get; }
 
         /// <summary> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </summary>
         public string ParentPoolName { get; set; }

@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="ingressBytesTransferred"> The Ingress Bytes Transferred in this connection. </param>
         /// <param name="egressBytesTransferred"> The Egress Bytes Transferred in this connection. </param>
-        /// <param name="lastConnectionEstablishedUtcTime"> The time at which connection was established in Utc format. </param>
+        /// <param name="lastConnectionEstablishedOn"> The time at which connection was established in Utc format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedUtcTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tunnel = tunnel;
             ConnectionStatus = connectionStatus;
             IngressBytesTransferred = ingressBytesTransferred;
             EgressBytesTransferred = egressBytesTransferred;
-            LastConnectionEstablishedUtcTime = lastConnectionEstablishedUtcTime;
+            LastConnectionEstablishedOn = lastConnectionEstablishedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Network.Models
         public long? EgressBytesTransferred { get; }
 
         /// <summary> The time at which connection was established in Utc format. </summary>
-        public string LastConnectionEstablishedUtcTime { get; }
+        public string LastConnectionEstablishedOn { get; }
     }
 }

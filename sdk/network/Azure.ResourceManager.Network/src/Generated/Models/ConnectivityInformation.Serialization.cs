@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
+            if (options.Format != "W" && Optional.IsDefined(NetworkConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
-                writer.WriteStringValue(ConnectionStatus.Value.ToString());
+                writer.WriteStringValue(NetworkConnectionStatus.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(AvgLatencyInMs))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<Models.ConnectivityHopInfo> hops = default;
-            ConnectionStatus? connectionStatus = default;
+            Models.NetworkConnectionStatus? networkConnectionStatus = default;
             int? avgLatencyInMs = default;
             int? minLatencyInMs = default;
             int? maxLatencyInMs = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    connectionStatus = new ConnectionStatus(prop.Value.GetString());
+                    networkConnectionStatus = new Models.NetworkConnectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("avgLatencyInMs"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new ConnectivityInformation(
                 hops ?? new ChangeTrackingList<Models.ConnectivityHopInfo>(),
-                connectionStatus,
+                networkConnectionStatus,
                 avgLatencyInMs,
                 minLatencyInMs,
                 maxLatencyInMs,

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal P2SConnectionConfigurationProperties(AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IList<NetworkSubResource> configurationPolicyGroupAssociations, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal P2SConnectionConfigurationProperties(VirtualNetworkAddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IList<NetworkSubResource> configurationPolicyGroupAssociations, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             RoutingConfiguration = routingConfiguration;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
-        public AddressSpace VpnClientAddressPool { get; set; }
+        public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
 
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         public RoutingConfiguration RoutingConfiguration { get; set; }

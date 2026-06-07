@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionProperties"/>. </summary>
         public AzureFirewallNatRuleCollectionProperties()
         {
-            Rules = new ChangeTrackingList<AzureFirewallNatRule>();
+            Rules = new ChangeTrackingList<AzureFirewallNatRuleCollectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionProperties"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rules"> Collection of rules used by a NAT rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT rule collection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallNatRuleCollectionProperties(int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallNatRuleCollectionProperties(int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRuleCollectionData> rules, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             Action = action;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         internal AzureFirewallNatRCAction Action { get; set; }
 
         /// <summary> Collection of rules used by a NAT rule collection. </summary>
-        public IList<AzureFirewallNatRule> Rules { get; } = new ChangeTrackingList<AzureFirewallNatRule>();
+        public IList<AzureFirewallNatRuleCollectionData> Rules { get; } = new ChangeTrackingList<AzureFirewallNatRuleCollectionData>();
 
         /// <summary> The provisioning state of the NAT rule collection resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             string gatewayManagerEtag = default;
             string lastModifiedBy = default;
-            Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
+            IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipv6PeeringConfig = Ipv6ExpressRouteCircuitPeeringConfig.DeserializeIpv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
+                    ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

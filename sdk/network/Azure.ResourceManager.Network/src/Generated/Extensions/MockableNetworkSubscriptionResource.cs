@@ -413,14 +413,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApplicationGatewayAvailableSslOptionsResource"/>. </description>
+        /// <description> <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> object. </returns>
-        public virtual ApplicationGatewayAvailableSslOptionsResource GetApplicationGatewayAvailableSslOptions()
+        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> object. </returns>
+        public virtual ApplicationGatewayAvailableSslOptionsInfoResource GetApplicationGatewayAvailableSslOptionsInfo()
         {
-            return new ApplicationGatewayAvailableSslOptionsResource(Client, Id.AppendProviderResource("Microsoft.Network", "applicationGatewayAvailableSslOptions", "default"));
+            return new ApplicationGatewayAvailableSslOptionsInfoResource(Client, Id.AppendProviderResource("Microsoft.Network", "applicationGatewayAvailableSslOptions", "default"));
         }
 
         /// <summary> Gets a collection of ExpressRouteProviderPorts in the <see cref="SubscriptionResource"/>. </summary>
@@ -2621,14 +2621,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWANResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualWANResource> GetVirtualWANsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualWanResource> GetVirtualWansAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualWANData, VirtualWANResource>(new VirtualWansGetAllAsyncCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWANs"), data => new VirtualWANResource(Client, data));
+            return new AsyncPageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetAllAsyncCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWans"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>
@@ -2649,14 +2649,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWANResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualWANResource> GetVirtualWANs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualWanResource> GetVirtualWans(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualWANData, VirtualWANResource>(new VirtualWansGetAllCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWANs"), data => new VirtualWANResource(Client, data));
+            return new PageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetAllCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWans"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>
@@ -3125,14 +3125,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomIpPrefixResource> GetCustomIpPrefixesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CustomIPPrefixResource> GetCustomIPPrefixesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomIpPrefixData, CustomIpPrefixResource>(new CustomIPPrefixesListAllAsyncCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIpPrefixes"), data => new CustomIpPrefixResource(Client, data));
+            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListAllAsyncCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -3153,14 +3153,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomIpPrefixResource> GetCustomIpPrefixes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CustomIPPrefixResource> GetCustomIPPrefixes(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomIpPrefixData, CustomIpPrefixResource>(new CustomIPPrefixesListAllCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIpPrefixes"), data => new CustomIpPrefixResource(Client, data));
+            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListAllCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -3553,7 +3553,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> SwapPublicIpAddressesAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapPublicIpAddressesAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3565,7 +3565,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapRequest.ToRequestContent(content), context);
+                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(LoadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3603,7 +3603,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation SwapPublicIpAddresses(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapPublicIpAddresses(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3615,7 +3615,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapRequest.ToRequestContent(content), context);
+                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(LoadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -4424,8 +4424,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="PerimeterAssociableResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PerimeterAssociableResource> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterAssociableResourceType> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -4457,8 +4457,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="PerimeterAssociableResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PerimeterAssociableResource> GetAll(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterAssociableResourceType> GetAll(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -4590,8 +4590,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="NspServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NspServiceTagsResource> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Models.NetworkSecurityPerimeterServiceTags> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -4623,8 +4623,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="NspServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NspServiceTagsResource> GetAll(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Models.NetworkSecurityPerimeterServiceTags> GetAll(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 

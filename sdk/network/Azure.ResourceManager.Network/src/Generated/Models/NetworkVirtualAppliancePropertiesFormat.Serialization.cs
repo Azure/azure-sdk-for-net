@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<NetworkSubResource> inboundSecurityRules = default;
             NetworkProvisioningState? provisioningState = default;
             string deploymentType = default;
-            DelegationProperties delegation = default;
+            VirtualApplianceDelegationProperties delegation = default;
             PartnerManagedResourceProperties partnerManagedResource = default;
             IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
             string privateIpAddress = default;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    delegation = DelegationProperties.DeserializeDelegationProperties(prop.Value, options);
+                    delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("partnerManagedResource"u8))

@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The IPv6 peering configuration. </summary>
-        public Ipv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig
+        public IPv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig
         {
             get
             {

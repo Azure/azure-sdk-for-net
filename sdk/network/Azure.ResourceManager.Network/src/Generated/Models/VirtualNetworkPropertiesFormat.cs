@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultPublicNatGateway"> A reference to the default public nat gateway being used by this virtual network resource. </param>
         /// <param name="summarizedGatewayPrefixes"> A configurable list of summarized gateway prefixes advertised for the virtual network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPropertiesFormat(AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, string resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<NetworkSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVNetPolicies? privateEndpointVNetPolicies, NetworkSubResource defaultPublicNatGateway, AddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPropertiesFormat(VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, string resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<NetworkSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVNetPolicies? privateEndpointVNetPolicies, NetworkSubResource defaultPublicNatGateway, VirtualNetworkAddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressSpace = addressSpace;
             DhcpOptions = dhcpOptions;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </summary>
-        public AddressSpace AddressSpace { get; set; }
+        public VirtualNetworkAddressSpace AddressSpace { get; set; }
 
         /// <summary> The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network. </summary>
         internal DhcpOptions DhcpOptions { get; set; }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkSubResource DefaultPublicNatGateway { get; }
 
         /// <summary> A configurable list of summarized gateway prefixes advertised for the virtual network. </summary>
-        public AddressSpace SummarizedGatewayPrefixes { get; set; }
+        public VirtualNetworkAddressSpace SummarizedGatewayPrefixes { get; set; }
 
         /// <summary> The list of DNS servers IP addresses. </summary>
         public IList<string> DhcpOptionsDnsServers

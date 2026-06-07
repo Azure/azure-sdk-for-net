@@ -13,14 +13,9 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Parameters that define the configuration of flow log. </summary>
-    internal partial class FlowLogProperties : IJsonModel<FlowLogProperties>
+    /// <summary> Parameters that define the flow log format. </summary>
+    public partial class FlowLogProperties : IJsonModel<FlowLogProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="FlowLogProperties"/> for deserialization. </summary>
-        internal FlowLogProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FlowLogProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -79,29 +74,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(FlowLogProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("storageId"u8);
-            writer.WriteStringValue(StorageId);
-            if (Optional.IsDefined(EnabledFilteringCriteria))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("enabledFilteringCriteria"u8);
-                writer.WriteStringValue(EnabledFilteringCriteria);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(RecordTypes))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("recordTypes"u8);
-                writer.WriteStringValue(RecordTypes);
-            }
-            writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
-            if (Optional.IsDefined(RetentionPolicy))
-            {
-                writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy, options);
-            }
-            if (Optional.IsDefined(Format))
-            {
-                writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format, options);
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,51 +126,27 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string storageId = default;
-            string enabledFilteringCriteria = default;
-            string recordTypes = default;
-            bool enabled = default;
-            RetentionPolicyParameters retentionPolicy = default;
-            FlowLogFormatParameters format = default;
+            FlowLogFormatType? @type = default;
+            int? version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("storageId"u8))
-                {
-                    storageId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("enabledFilteringCriteria"u8))
-                {
-                    enabledFilteringCriteria = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("recordTypes"u8))
-                {
-                    recordTypes = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("enabled"u8))
-                {
-                    enabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("retentionPolicy"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(prop.Value, options);
+                    @type = new FlowLogFormatType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("format"u8))
+                if (prop.NameEquals("version"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(prop.Value, options);
+                    version = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,14 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FlowLogProperties(
-                storageId,
-                enabledFilteringCriteria,
-                recordTypes,
-                enabled,
-                retentionPolicy,
-                format,
-                additionalBinaryDataProperties);
+            return new FlowLogProperties(@type, version, additionalBinaryDataProperties);
         }
     }
 }

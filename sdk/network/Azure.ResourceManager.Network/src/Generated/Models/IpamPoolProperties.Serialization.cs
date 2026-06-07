@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpAddressType))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStartArray();
-                foreach (IpType item in IpAddressType)
+                foreach (Models.IpamIPType item in IPAddressType)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string description = default;
             string displayName = default;
-            IReadOnlyList<IpType> ipAddressType = default;
+            IReadOnlyList<Models.IpamIPType> ipAddressType = default;
             string parentPoolName = default;
             IList<string> addressPrefixes = default;
             NetworkProvisioningState? provisioningState = default;
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IpType> array = new List<IpType>();
+                    List<Models.IpamIPType> array = new List<Models.IpamIPType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new IpType(item.GetString()));
+                        array.Add(new Models.IpamIPType(item.GetString()));
                     }
                     ipAddressType = array;
                     continue;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
             return new IpamPoolProperties(
                 description,
                 displayName,
-                ipAddressType ?? new ChangeTrackingList<IpType>(),
+                ipAddressType ?? new ChangeTrackingList<Models.IpamIPType>(),
                 parentPoolName,
                 addressPrefixes,
                 provisioningState,

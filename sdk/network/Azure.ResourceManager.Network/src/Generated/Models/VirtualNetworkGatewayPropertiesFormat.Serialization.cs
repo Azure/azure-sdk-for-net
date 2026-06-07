@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network.Models
             VpnClientConfiguration vpnClientConfiguration = default;
             IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = default;
             BgpSettings bgpSettings = default;
-            AddressSpace customRoutes = default;
+            VirtualNetworkAddressSpace customRoutes = default;
             string resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             bool? enableDnsForwarding = default;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    customRoutes = AddressSpace.DeserializeAddressSpace(prop.Value, options);
+                    customRoutes = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceGuid"u8))

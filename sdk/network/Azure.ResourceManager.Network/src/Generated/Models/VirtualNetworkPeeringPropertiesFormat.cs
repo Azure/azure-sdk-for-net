@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
         /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, NetworkSubResource remoteVirtualNetwork, AddressSpace localAddressSpace, AddressSpace localVirtualNetworkAddressSpace, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, string resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, NetworkSubResource remoteVirtualNetwork, VirtualNetworkAddressSpace localAddressSpace, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace, VirtualNetworkAddressSpace remoteAddressSpace, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, string resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
             AllowForwardedTraffic = allowForwardedTraffic;
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkSubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary> The local address space of the local virtual network that is peered. </summary>
-        public AddressSpace LocalAddressSpace { get; set; }
+        public VirtualNetworkAddressSpace LocalAddressSpace { get; set; }
 
         /// <summary> The current local address space of the local virtual network that is peered. </summary>
-        public AddressSpace LocalVirtualNetworkAddressSpace { get; set; }
+        public VirtualNetworkAddressSpace LocalVirtualNetworkAddressSpace { get; set; }
 
         /// <summary> The reference to the address space peered with the remote virtual network. </summary>
-        public AddressSpace RemoteAddressSpace { get; set; }
+        public VirtualNetworkAddressSpace RemoteAddressSpace { get; set; }
 
         /// <summary> The reference to the current address space of the remote virtual network. </summary>
-        public AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
+        public VirtualNetworkAddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
 
         /// <summary> The reference to the remote virtual network's Bgp Communities. </summary>
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedUtcTime))
+            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedOn))
             {
                 writer.WritePropertyName("lastConnectionEstablishedUtcTime"u8);
-                writer.WriteStringValue(LastConnectionEstablishedUtcTime);
+                writer.WriteStringValue(LastConnectionEstablishedOn);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
             long? ingressBytesTransferred = default;
             long? egressBytesTransferred = default;
-            string lastConnectionEstablishedUtcTime = default;
+            string lastConnectionEstablishedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("lastConnectionEstablishedUtcTime"u8))
                 {
-                    lastConnectionEstablishedUtcTime = prop.Value.GetString();
+                    lastConnectionEstablishedOn = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectionStatus,
                 ingressBytesTransferred,
                 egressBytesTransferred,
-                lastConnectionEstablishedUtcTime,
+                lastConnectionEstablishedOn,
                 additionalBinaryDataProperties);
         }
     }

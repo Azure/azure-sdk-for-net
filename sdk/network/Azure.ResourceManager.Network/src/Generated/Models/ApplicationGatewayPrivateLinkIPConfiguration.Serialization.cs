@@ -9,57 +9,58 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The application gateway private link ip configuration. </summary>
-    public partial class ApplicationGatewayPrivateLinkIpConfiguration : NetworkSubResource, IJsonModel<ApplicationGatewayPrivateLinkIpConfiguration>
+    public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkSubResource, IJsonModel<ApplicationGatewayPrivateLinkIPConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationGatewayPrivateLinkIpConfiguration(document.RootElement, options);
+                        return DeserializeApplicationGatewayPrivateLinkIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIpConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIpConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationGatewayPrivateLinkIpConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApplicationGatewayPrivateLinkIPConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationGatewayPrivateLinkIpConfiguration IPersistableModel<ApplicationGatewayPrivateLinkIpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationGatewayPrivateLinkIpConfiguration)PersistableModelCreateCore(data, options);
+        ApplicationGatewayPrivateLinkIPConfiguration IPersistableModel<ApplicationGatewayPrivateLinkIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationGatewayPrivateLinkIPConfiguration)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationGatewayPrivateLinkIpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplicationGatewayPrivateLinkIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationGatewayPrivateLinkIpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplicationGatewayPrivateLinkIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +71,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIpConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIPConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Type))
             {
@@ -100,24 +101,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationGatewayPrivateLinkIpConfiguration IJsonModel<ApplicationGatewayPrivateLinkIpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationGatewayPrivateLinkIpConfiguration)JsonModelCreateCore(ref reader, options);
+        ApplicationGatewayPrivateLinkIPConfiguration IJsonModel<ApplicationGatewayPrivateLinkIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationGatewayPrivateLinkIPConfiguration)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIpConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkIPConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationGatewayPrivateLinkIpConfiguration(document.RootElement, options);
+            return DeserializeApplicationGatewayPrivateLinkIPConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationGatewayPrivateLinkIpConfiguration DeserializeApplicationGatewayPrivateLinkIpConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApplicationGatewayPrivateLinkIPConfiguration DeserializeApplicationGatewayPrivateLinkIPConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApplicationGatewayPrivateLinkIpConfigurationProperties properties = default;
             string name = default;
-            string eTag = default;
+            ETag? eTag = default;
             string @type = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +157,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -169,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationGatewayPrivateLinkIpConfiguration(
+            return new ApplicationGatewayPrivateLinkIPConfiguration(
                 id,
                 additionalBinaryDataProperties,
                 properties,

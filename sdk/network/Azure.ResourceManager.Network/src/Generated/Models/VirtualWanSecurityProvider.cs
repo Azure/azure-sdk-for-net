@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualWanSecurityProvider"/>. </summary>
         /// <param name="name"> Name of the security provider. </param>
         /// <param name="uri"> Url of the security provider. </param>
-        /// <param name="type"> Name of the security provider. </param>
+        /// <param name="providerType"> Name of the security provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualWanSecurityProvider(string name, Uri uri, VirtualWanSecurityProviderType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualWanSecurityProvider(string name, Uri uri, VirtualWanSecurityProviderType? providerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Uri = uri;
-            Type = @type;
+            ProviderType = providerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Network.Models
         public Uri Uri { get; }
 
         /// <summary> Name of the security provider. </summary>
-        public VirtualWanSecurityProviderType? Type { get; }
+        public VirtualWanSecurityProviderType? ProviderType { get; }
     }
 }

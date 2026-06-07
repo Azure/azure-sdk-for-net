@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="logScrubbing"> To scrub sensitive log fields. </param>
         /// <param name="jsChallengeCookieExpirationInMins"> Web Application Firewall JavaScript Challenge Cookie Expiration time in minutes. </param>
-        /// <param name="captchaExpirationInMins"> Web Application Firewall CAPTCHA Cookie Expiration time in minutes. </param>
+        /// <param name="captchaCookieExpirationInMins"> Web Application Firewall CAPTCHA Cookie Expiration time in minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, int? jsChallengeCookieExpirationInMins, int? captchaExpirationInMins, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, int? jsChallengeCookieExpirationInMins, int? captchaCookieExpirationInMins, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Mode = mode;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             CustomBlockResponseBody = customBlockResponseBody;
             LogScrubbing = logScrubbing;
             JsChallengeCookieExpirationInMins = jsChallengeCookieExpirationInMins;
-            CaptchaExpirationInMins = captchaExpirationInMins;
+            CaptchaCookieExpirationInMins = captchaCookieExpirationInMins;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.Network.Models
         public int? JsChallengeCookieExpirationInMins { get; set; }
 
         /// <summary> Web Application Firewall CAPTCHA Cookie Expiration time in minutes. </summary>
-        public int? CaptchaExpirationInMins { get; set; }
+        public int? CaptchaCookieExpirationInMins { get; set; }
     }
 }

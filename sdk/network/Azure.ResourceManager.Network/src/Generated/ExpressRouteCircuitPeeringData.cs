@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the express route circuit peering. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ExpressRouteCircuitPeeringData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteCircuitPeeringPropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ExpressRouteCircuitPeeringData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteCircuitPeeringPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteCircuitPeeringPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The peering type. </summary>
         public ExpressRoutePeeringType? PeeringType
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The IPv6 peering configuration. </summary>
-        public Ipv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig
+        public IPv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig
         {
             get
             {

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary></summary>
-    internal partial class VirtualWANResourceOperationSource : IOperationSource<VirtualWANResource>
+    internal partial class VirtualWanResourceOperationSource : IOperationSource<VirtualWanResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal VirtualWANResourceOperationSource(ArmClient client)
+        internal VirtualWanResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        VirtualWANResource IOperationSource<VirtualWANResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualWanResource IOperationSource<VirtualWanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualWANData data = VirtualWANData.DeserializeVirtualWANData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualWANResource(_client, data);
+            VirtualWanData data = VirtualWanData.DeserializeVirtualWanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualWanResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<VirtualWANResource> IOperationSource<VirtualWANResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualWanResource> IOperationSource<VirtualWanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualWANData data = VirtualWANData.DeserializeVirtualWANData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualWANResource(_client, data);
+            VirtualWanData data = VirtualWanData.DeserializeVirtualWanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualWanResource(_client, data);
         }
     }
 }

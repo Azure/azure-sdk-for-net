@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IPv6 Circuit Connection properties for global reach. </summary>
-    public partial class Ipv6CircuitConnectionConfig
+    public partial class IPv6CircuitConnectionConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Ipv6CircuitConnectionConfig"/>. </summary>
-        public Ipv6CircuitConnectionConfig()
+        /// <summary> Initializes a new instance of <see cref="IPv6CircuitConnectionConfig"/>. </summary>
+        public IPv6CircuitConnectionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Ipv6CircuitConnectionConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6CircuitConnectionConfig"/>. </summary>
         /// <param name="addressPrefix"> /125 IP address space to carve out customer addresses for global reach. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Ipv6CircuitConnectionConfig(string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPv6CircuitConnectionConfig(string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefix = addressPrefix;
             CircuitConnectionStatus = circuitConnectionStatus;

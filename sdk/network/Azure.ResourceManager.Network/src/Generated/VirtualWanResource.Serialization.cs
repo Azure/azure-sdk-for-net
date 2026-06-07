@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Network
 {
     /// <summary></summary>
-    public partial class VirtualWANResource : IJsonModel<VirtualWANData>
+    public partial class VirtualWanResource : IJsonModel<VirtualWanData>
     {
-        private static IJsonModel<VirtualWANData> s_dataDeserializationInstance;
+        private static IJsonModel<VirtualWanData> s_dataDeserializationInstance;
 
-        private static IJsonModel<VirtualWANData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualWANData();
+        private static IJsonModel<VirtualWanData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualWanData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualWANData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWANData>)Data).Write(writer, options);
+        void IJsonModel<VirtualWanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWanData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualWANData IJsonModel<VirtualWANData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        VirtualWanData IJsonModel<VirtualWanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualWANData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualWANData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualWanData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualWANData IPersistableModel<VirtualWANData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWANData>(data, options, AzureResourceManagerNetworkContext.Default);
+        VirtualWanData IPersistableModel<VirtualWanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWanData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualWANData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<VirtualWanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

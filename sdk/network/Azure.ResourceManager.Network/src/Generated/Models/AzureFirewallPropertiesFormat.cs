@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             NatRuleCollections = new ChangeTrackingList<AzureFirewallNatRuleCollection>();
             NetworkRuleCollections = new ChangeTrackingList<AzureFirewallNetworkRuleCollection>();
             IpConfigurations = new ChangeTrackingList<AzureFirewallIPConfiguration>();
-            IpGroups = new ChangeTrackingList<AzureFirewallIpGroups>();
+            IpGroups = new ChangeTrackingList<AzureFirewallIPGroups>();
             AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
         /// <param name="afcConfiguration"> AFC configuration for the Azure Firewall. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallPropertiesFormat(IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, NetworkSubResource virtualHub, NetworkSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIpGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, AfcConfiguration afcConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallPropertiesFormat(IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, NetworkSubResource virtualHub, NetworkSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, AfcConfiguration afcConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationRuleCollections = applicationRuleCollections;
             NatRuleCollections = natRuleCollections;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
         public HubIPAddresses HubIPAddresses { get; set; }
 
         /// <summary> IpGroups associated with AzureFirewall. </summary>
-        public IReadOnlyList<AzureFirewallIpGroups> IpGroups { get; } = new ChangeTrackingList<AzureFirewallIpGroups>();
+        public IReadOnlyList<AzureFirewallIPGroups> IpGroups { get; } = new ChangeTrackingList<AzureFirewallIPGroups>();
 
         /// <summary> The Azure Firewall Resource SKU. </summary>
         public AzureFirewallSku Sku { get; set; }

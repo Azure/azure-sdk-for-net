@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Will contain the properties of the resource (the actual signature overrides). </param>
-        internal SignaturesOverridesData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SignaturesOverridesProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal SignaturesOverridesData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicySignaturesOverridesForIdpsProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Will contain the properties of the resource (the actual signature overrides). </summary>
-        internal SignaturesOverridesProperties Properties { get; set; }
+        internal PolicySignaturesOverridesForIdpsProperties Properties { get; set; }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Signatures
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new SignaturesOverridesProperties();
+                    Properties = new PolicySignaturesOverridesForIdpsProperties();
                 }
                 return Properties.Signatures;
             }

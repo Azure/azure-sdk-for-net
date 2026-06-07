@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRuleCollectionPropertiesFormat"/>. </summary>
         public AzureFirewallApplicationRuleCollectionPropertiesFormat()
         {
-            Rules = new ChangeTrackingList<AzureFirewallApplicationRule>();
+            Rules = new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRuleCollectionPropertiesFormat"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rules"> Collection of rules used by a application rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallApplicationRuleCollectionPropertiesFormat(int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRule> rules, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallApplicationRuleCollectionPropertiesFormat(int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRuleCollectionData> rules, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             Action = action;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         internal AzureFirewallRCAction Action { get; set; }
 
         /// <summary> Collection of rules used by a application rule collection. </summary>
-        public IList<AzureFirewallApplicationRule> Rules { get; } = new ChangeTrackingList<AzureFirewallApplicationRule>();
+        public IList<AzureFirewallApplicationRuleCollectionData> Rules { get; } = new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>();
 
         /// <summary> The provisioning state of the application rule collection resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorWorkspaceSettings"/>. </summary>
         /// <param name="workspaceResourceId"> Log analytics workspace resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorWorkspaceSettings(string workspaceResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorWorkspaceSettings(ResourceIdentifier workspaceResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceResourceId = workspaceResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Log analytics workspace resource ID. </summary>
-        public string WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
     }
 }

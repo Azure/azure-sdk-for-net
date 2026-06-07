@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             ConnectionType = connectionType;
             TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
-            GatewayCustomBgpIpAddresses = new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>();
-            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            GatewayCustomBgpIpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
+            IpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The routing configuration indicating the associated and propagated route tables for this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayConnectionListEntityPropertiesFormat(string authorizationKey, VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, VirtualNetworkConnectionGatewayReference virtualNetworkGateway2, VirtualNetworkConnectionGatewayReference localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, NetworkSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIpAddressIpConfiguration> gatewayCustomBgpIpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayConnectionListEntityPropertiesFormat(string authorizationKey, VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, VirtualNetworkConnectionGatewayReference virtualNetworkGateway2, VirtualNetworkConnectionGatewayReference localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, NetworkSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationKey = authorizationKey;
             VirtualNetworkGateway1 = virtualNetworkGateway1;
@@ -132,13 +132,13 @@ namespace Azure.ResourceManager.Network.Models
         public bool? EnableBgp { get; }
 
         /// <summary> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </summary>
-        public IList<GatewayCustomBgpIpAddressIpConfiguration> GatewayCustomBgpIpAddresses { get; } = new ChangeTrackingList<GatewayCustomBgpIpAddressIpConfiguration>();
+        public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIpAddresses { get; } = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
 
         /// <summary> Enable policy-based traffic selectors. </summary>
         public bool? UsePolicyBasedTrafficSelectors { get; }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IpsecPolicy>();
+        public IList<IPsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
 
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
         public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; } = new ChangeTrackingList<TrafficSelectorPolicy>();

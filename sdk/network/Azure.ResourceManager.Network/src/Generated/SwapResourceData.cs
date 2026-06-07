@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Swap resource properties. </param>
-        internal SwapResourceData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SwapResourceProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal SwapResourceData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CloudServiceSwapProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Swap resource properties. </summary>
-        internal SwapResourceProperties Properties { get; set; }
+        internal CloudServiceSwapProperties Properties { get; set; }
 
         /// <summary> Specifies slot info on a cloud service. </summary>
-        public SlotType? SwapResourceSlotType
+        public SwapSlotType? CloudServiceSwapSlotType
         {
             get
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new SwapResourceProperties();
+                    Properties = new CloudServiceSwapProperties();
                 }
                 Properties.SlotType = value;
             }

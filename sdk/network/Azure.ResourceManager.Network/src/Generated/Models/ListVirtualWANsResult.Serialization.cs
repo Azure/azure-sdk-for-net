@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VirtualWANData item in Value)
+            foreach (VirtualWanData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<VirtualWANData> value = default;
+            IList<VirtualWanData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VirtualWANData> array = new List<VirtualWANData>();
+                    List<VirtualWanData> array = new List<VirtualWanData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualWANData.DeserializeVirtualWANData(item, options));
+                        array.Add(VirtualWanData.DeserializeVirtualWanData(item, options));
                     }
                     value = array;
                     continue;

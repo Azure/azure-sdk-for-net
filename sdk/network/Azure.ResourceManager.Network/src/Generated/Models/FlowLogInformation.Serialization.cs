@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            FlowLogProperties properties = default;
+            FlowLogInformationProperties properties = default;
             TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             ResourceManager.Models.ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = FlowLogProperties.DeserializeFlowLogProperties(prop.Value, options);
+                    properties = FlowLogInformationProperties.DeserializeFlowLogInformationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("flowAnalyticsConfiguration"u8))

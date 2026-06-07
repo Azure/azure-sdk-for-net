@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peeringLocation"> Peering location of the test. </param>
         /// <param name="circuits"> All circuits in the peering location. </param>
         /// <param name="status"> The current status of the test. </param>
-        /// <param name="startTime"> Time when the test was started. </param>
-        /// <param name="endTime"> Time when the test was completed. </param>
+        /// <param name="startOn"> Time when the test was started. </param>
+        /// <param name="endOn"> Time when the test was completed. </param>
         /// <param name="connections"> All connections to the circuits in the peering location. </param>
         /// <param name="testGuid"> The unique GUID associated with the test. </param>
         /// <param name="testType"> The type of failover test. </param>
         /// <param name="issues"> A list of all issues with the test. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteFailoverTestDetails(string peeringLocation, IReadOnlyList<ExpressRouteFailoverCircuitResourceDetails> circuits, FailoverTestStatus? status, string startTime, string endTime, IReadOnlyList<ExpressRouteFailoverConnectionResourceDetails> connections, Guid? testGuid, FailoverTestType? testType, IReadOnlyList<string> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteFailoverTestDetails(string peeringLocation, IReadOnlyList<ExpressRouteFailoverCircuitResourceDetails> circuits, FailoverTestStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExpressRouteFailoverConnectionResourceDetails> connections, Guid? testGuid, FailoverTestType? testType, IReadOnlyList<string> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringLocation = peeringLocation;
             Circuits = circuits;
             Status = status;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Connections = connections;
             TestGuid = testGuid;
             TestType = testType;
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Network.Models
         public FailoverTestStatus? Status { get; }
 
         /// <summary> Time when the test was started. </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> Time when the test was completed. </summary>
-        public string EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> All connections to the circuits in the peering location. </summary>
         public IReadOnlyList<ExpressRouteFailoverConnectionResourceDetails> Connections { get; }

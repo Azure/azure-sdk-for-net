@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("vpnConnectionDuration"u8);
                 writer.WriteNumberValue(VpnConnectionDurationInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnConnectionTime))
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionOn))
             {
                 writer.WritePropertyName("vpnConnectionTime"u8);
-                writer.WriteStringValue(VpnConnectionTime);
+                writer.WriteStringValue(VpnConnectionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(VpnUserName))
             {
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             string vpnConnectionId = default;
             long? vpnConnectionDurationInSeconds = default;
-            string vpnConnectionTime = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
+            DateTimeOffset? vpnConnectionOn = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             string vpnUserName = default;
             long? maxBandwidth = default;
             long? egressPacketsTransferred = default;
@@ -207,17 +207,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("vpnConnectionTime"u8))
                 {
-                    vpnConnectionTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vpnConnectionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("vpnUserName"u8))
@@ -287,9 +291,9 @@ namespace Azure.ResourceManager.Network.Models
             return new VpnClientConnectionHealthDetail(
                 vpnConnectionId,
                 vpnConnectionDurationInSeconds,
-                vpnConnectionTime,
-                publicIpAddress,
-                privateIpAddress,
+                vpnConnectionOn,
+                publicIPAddress,
+                privateIPAddress,
                 vpnUserName,
                 maxBandwidth,
                 egressPacketsTransferred,

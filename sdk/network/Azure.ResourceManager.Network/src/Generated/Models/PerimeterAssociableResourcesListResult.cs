@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="PerimeterAssociableResourcesListResult"/>. </summary>
         /// <param name="value"> The PerimeterAssociableResource items on this page. </param>
-        internal PerimeterAssociableResourcesListResult(IEnumerable<PerimeterAssociableResource> value)
+        internal PerimeterAssociableResourcesListResult(IEnumerable<NetworkSecurityPerimeterAssociableResourceType> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value"> The PerimeterAssociableResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerimeterAssociableResourcesListResult(IList<PerimeterAssociableResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PerimeterAssociableResourcesListResult(IList<NetworkSecurityPerimeterAssociableResourceType> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The PerimeterAssociableResource items on this page. </summary>
-        public IList<PerimeterAssociableResource> Value { get; }
+        public IList<NetworkSecurityPerimeterAssociableResourceType> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

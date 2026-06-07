@@ -13,18 +13,18 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Custom IP prefix resource. </summary>
-    public partial class CustomIpPrefixData : NetworkTrackedResourceData
+    public partial class CustomIPPrefixData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixData"/>. </summary>
-        public CustomIpPrefixData()
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixData"/>. </summary>
+        public CustomIPPrefixData()
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="extendedLocation"> The extended location of the custom IP prefix. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
-        internal CustomIpPrefixData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomIpPrefixPropertiesFormat properties, ExtendedLocation extendedLocation, string eTag, IList<string> zones) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal CustomIPPrefixData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomIpPrefixPropertiesFormat properties, ExtendedLocation extendedLocation, string eTag, IList<string> zones) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class VirtualWansGetAllCollectionResultOfT : Pageable<VirtualWANData>
+    internal partial class VirtualWansGetAllCollectionResultOfT : Pageable<VirtualWanData>
     {
         private readonly VirtualWans _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VirtualWansGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualWANData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<VirtualWanData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListVirtualWANsResult result = ListVirtualWANsResult.FromResponse(response);
-                yield return Page<VirtualWANData>.FromValues((IReadOnlyList<VirtualWANData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<VirtualWanData>.FromValues((IReadOnlyList<VirtualWanData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

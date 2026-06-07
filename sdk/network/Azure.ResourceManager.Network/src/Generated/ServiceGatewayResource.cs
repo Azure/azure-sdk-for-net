@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the create or updates address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAddressLocationsAsync(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAddressLocationsAsync(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsRequest.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the create or updates address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpdateAddressLocations(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpdateAddressLocations(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsRequest.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the create or updates services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateServicesAsync(WaitUntil waitUntil, ServiceGatewayUpdateServicesRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateServicesAsync(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesRequest.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the create or updates services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpdateServices(WaitUntil waitUntil, ServiceGatewayUpdateServicesRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpdateServices(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesRequest.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

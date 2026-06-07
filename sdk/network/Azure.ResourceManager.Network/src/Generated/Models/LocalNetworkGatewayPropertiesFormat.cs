@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalNetworkGatewayPropertiesFormat(AddressSpace localNetworkAddressSpace, string gatewayIpAddress, string fqdn, BgpSettings bgpSettings, string resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalNetworkGatewayPropertiesFormat(VirtualNetworkAddressSpace localNetworkAddressSpace, string gatewayIpAddress, string fqdn, BgpSettings bgpSettings, string resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocalNetworkAddressSpace = localNetworkAddressSpace;
             GatewayIpAddress = gatewayIpAddress;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Local network site address space. </summary>
-        public AddressSpace LocalNetworkAddressSpace { get; set; }
+        public VirtualNetworkAddressSpace LocalNetworkAddressSpace { get; set; }
 
         /// <summary> IP address of local network gateway. </summary>
         public string GatewayIpAddress { get; set; }

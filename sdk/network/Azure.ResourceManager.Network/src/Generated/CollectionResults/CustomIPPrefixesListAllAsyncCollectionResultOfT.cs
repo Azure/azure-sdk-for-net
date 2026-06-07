@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class CustomIPPrefixesListAllAsyncCollectionResultOfT : AsyncPageable<CustomIpPrefixData>
+    internal partial class CustomIPPrefixesListAllAsyncCollectionResultOfT : AsyncPageable<CustomIPPrefixData>
     {
         private readonly CustomIPPrefixes _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CustomIPPrefixesListAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CustomIpPrefixData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CustomIPPrefixData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 CustomIpPrefixListResult result = CustomIpPrefixListResult.FromResponse(response);
-                yield return Page<CustomIpPrefixData>.FromValues((IReadOnlyList<CustomIpPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CustomIPPrefixData>.FromValues((IReadOnlyList<CustomIPPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

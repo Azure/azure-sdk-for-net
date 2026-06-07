@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NextHopResult"/>. </summary>
         /// <param name="nextHopType"> Next hop type. </param>
-        /// <param name="nextHopIpAddress"> Next hop IP Address. </param>
+        /// <param name="nextHopIPAddress"> Next hop IP Address. </param>
         /// <param name="routeTableId"> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NextHopResult(NextHopType? nextHopType, string nextHopIpAddress, ResourceIdentifier routeTableId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NextHopResult(NextHopType? nextHopType, string nextHopIPAddress, ResourceIdentifier routeTableId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextHopType = nextHopType;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             RouteTableId = routeTableId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public NextHopType? NextHopType { get; }
 
         /// <summary> Next hop IP Address. </summary>
-        public string NextHopIpAddress { get; }
+        public string NextHopIPAddress { get; }
 
         /// <summary> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </summary>
         public ResourceIdentifier RouteTableId { get; }

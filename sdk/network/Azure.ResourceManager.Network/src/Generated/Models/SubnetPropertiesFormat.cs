@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public SubnetPropertiesFormat()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            ServiceEndpoints = new ChangeTrackingList<ServiceEndpointPropertiesFormat>();
+            ServiceEndpoints = new ChangeTrackingList<ServiceEndpointProperties>();
             ServiceEndpointPolicies = new ChangeTrackingList<ServiceEndpointPolicyData>();
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointData>();
             IpConfigurations = new ChangeTrackingList<NetworkIPConfiguration>();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             IpAllocations = new ChangeTrackingList<NetworkSubResource>();
             ResourceNavigationLinks = new ChangeTrackingList<ResourceNavigationLink>();
             ServiceAssociationLinks = new ChangeTrackingList<ServiceAssociationLink>();
-            Delegations = new ChangeTrackingList<Delegation>();
+            Delegations = new ChangeTrackingList<ServiceDelegation>();
             ApplicationGatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
             IpamPoolPrefixAllocations = new ChangeTrackingList<IpamPoolPrefixAllocation>();
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools for allocating IP address prefixes. </param>
         /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetPropertiesFormat(string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, NetworkSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<NetworkSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, NetworkSubResource serviceGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubnetPropertiesFormat(string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, NetworkSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<NetworkSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, NetworkSubResource serviceGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefix = addressPrefix;
             AddressPrefixes = addressPrefixes;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkSubResource NatGateway { get; set; }
 
         /// <summary> An array of service endpoints. </summary>
-        public IList<ServiceEndpointPropertiesFormat> ServiceEndpoints { get; } = new ChangeTrackingList<ServiceEndpointPropertiesFormat>();
+        public IList<ServiceEndpointProperties> ServiceEndpoints { get; } = new ChangeTrackingList<ServiceEndpointProperties>();
 
         /// <summary> An array of service endpoint policies. </summary>
         public IList<ServiceEndpointPolicyData> ServiceEndpointPolicies { get; } = new ChangeTrackingList<ServiceEndpointPolicyData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
         public IReadOnlyList<ServiceAssociationLink> ServiceAssociationLinks { get; } = new ChangeTrackingList<ServiceAssociationLink>();
 
         /// <summary> An array of references to the delegations on the subnet. </summary>
-        public IList<Delegation> Delegations { get; } = new ChangeTrackingList<Delegation>();
+        public IList<ServiceDelegation> Delegations { get; } = new ChangeTrackingList<ServiceDelegation>();
 
         /// <summary> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </summary>
         public string Purpose { get; }

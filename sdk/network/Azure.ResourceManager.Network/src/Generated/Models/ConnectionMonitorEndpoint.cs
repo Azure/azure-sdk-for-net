@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
-        /// <param name="type"> The endpoint type. </param>
+        /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="resourceId"> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </param>
         /// <param name="address"> Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine, MMAWorkspaceMachine endpoint type. </param>
         /// <param name="filter"> Filter field is getting deprecated and should not be used. Instead use Include/Exclude scope fields for it. </param>
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="locationDetails"> Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains region details. </param>
         /// <param name="subscriptionId"> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorEndpoint(string name, EndpointType? @type, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, ConnectionMonitorEndpointLocationDetails locationDetails, Guid? subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorEndpoint(string name, Models.ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, ConnectionMonitorEndpointLocationDetails locationDetails, Guid? subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            EndpointType = endpointType;
             ResourceId = resourceId;
             Address = address;
             Filter = filter;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get; set; }
 
         /// <summary> The endpoint type. </summary>
-        public EndpointType? Type { get; set; }
+        public Models.ConnectionMonitorEndpointType? EndpointType { get; set; }
 
         /// <summary> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </summary>
         public ResourceIdentifier ResourceId { get; set; }

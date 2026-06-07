@@ -12,18 +12,18 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains bgp community information offered in Service Community resources. </summary>
-    public partial class BGPCommunity
+    public partial class BgpCommunity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BGPCommunity"/>. </summary>
-        internal BGPCommunity()
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
+        internal BgpCommunity()
         {
             CommunityPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BGPCommunity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
         /// <param name="serviceSupportedRegion"> The region which the service support. e.g. For O365, region is Global. </param>
         /// <param name="communityName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="communityValue"> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="isAuthorizedToUse"> Customer is authorized to use bgp community or not. </param>
         /// <param name="serviceGroup"> The service group of the bgp community contains. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BGPCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BgpCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceSupportedRegion = serviceSupportedRegion;
             CommunityName = communityName;

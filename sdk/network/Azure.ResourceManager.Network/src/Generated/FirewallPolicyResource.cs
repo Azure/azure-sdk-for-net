@@ -528,12 +528,12 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="signatureOverridesFilterValuesQuery"></param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signatureOverridesFilterValuesQuery"/> is null. </exception>
-        public virtual async Task<Response<SignatureOverridesFilterValuesResponse>> GetAllAsync(SignatureOverridesFilterValuesQuery signatureOverridesFilterValuesQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SignatureOverridesFilterValuesResult>> GetAllAsync(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(signatureOverridesFilterValuesQuery, nameof(signatureOverridesFilterValuesQuery));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
             scope.Start();
@@ -543,9 +543,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQuery.ToRequestContent(signatureOverridesFilterValuesQuery), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQueryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SignatureOverridesFilterValuesResponse> response = Response.FromValue(SignatureOverridesFilterValuesResponse.FromResponse(result), result);
+                Response<SignatureOverridesFilterValuesResult> response = Response.FromValue(SignatureOverridesFilterValuesResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -580,12 +580,12 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="signatureOverridesFilterValuesQuery"></param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signatureOverridesFilterValuesQuery"/> is null. </exception>
-        public virtual Response<SignatureOverridesFilterValuesResponse> GetAll(SignatureOverridesFilterValuesQuery signatureOverridesFilterValuesQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SignatureOverridesFilterValuesResult> GetAll(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(signatureOverridesFilterValuesQuery, nameof(signatureOverridesFilterValuesQuery));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
             scope.Start();
@@ -595,9 +595,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQuery.ToRequestContent(signatureOverridesFilterValuesQuery), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQueryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SignatureOverridesFilterValuesResponse> response = Response.FromValue(SignatureOverridesFilterValuesResponse.FromResponse(result), result);
+                Response<SignatureOverridesFilterValuesResult> response = Response.FromValue(SignatureOverridesFilterValuesResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -632,12 +632,12 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="idpsQueryObject"></param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="idpsQueryObject"/> is null. </exception>
-        public virtual async Task<Response<QueryResults>> GetAllAsync(IDPSQueryObject idpsQueryObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<IdpsSignatureListResult>> GetAllAsync(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(idpsQueryObject, nameof(idpsQueryObject));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
             scope.Start();
@@ -647,9 +647,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IDPSQueryObject.ToRequestContent(idpsQueryObject), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdpsQueryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<QueryResults> response = Response.FromValue(QueryResults.FromResponse(result), result);
+                Response<IdpsSignatureListResult> response = Response.FromValue(IdpsSignatureListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -684,12 +684,12 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="idpsQueryObject"></param>
+        /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="idpsQueryObject"/> is null. </exception>
-        public virtual Response<QueryResults> GetAll(IDPSQueryObject idpsQueryObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<IdpsSignatureListResult> GetAll(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(idpsQueryObject, nameof(idpsQueryObject));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
             scope.Start();
@@ -699,9 +699,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IDPSQueryObject.ToRequestContent(idpsQueryObject), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdpsQueryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<QueryResults> response = Response.FromValue(QueryResults.FromResponse(result), result);
+                Response<IdpsSignatureListResult> response = Response.FromValue(IdpsSignatureListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SignaturesOverridesList>> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicySignaturesOverridesForIdpsListResult>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
             scope.Start();
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SignaturesOverridesList> response = Response.FromValue(SignaturesOverridesList.FromResponse(result), result);
+                Response<PolicySignaturesOverridesForIdpsListResult> response = Response.FromValue(PolicySignaturesOverridesForIdpsListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SignaturesOverridesList> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<PolicySignaturesOverridesForIdpsListResult> GetAll(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
             scope.Start();
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SignaturesOverridesList> response = Response.FromValue(SignaturesOverridesList.FromResponse(result), result);
+                Response<PolicySignaturesOverridesForIdpsListResult> response = Response.FromValue(PolicySignaturesOverridesForIdpsListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

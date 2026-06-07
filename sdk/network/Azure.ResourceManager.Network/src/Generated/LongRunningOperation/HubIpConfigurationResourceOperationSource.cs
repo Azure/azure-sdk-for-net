@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary></summary>
-    internal partial class HubIpConfigurationResourceOperationSource : IOperationSource<HubIpConfigurationResource>
+    internal partial class HubIPConfigurationResourceOperationSource : IOperationSource<HubIPConfigurationResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HubIpConfigurationResourceOperationSource(ArmClient client)
+        internal HubIPConfigurationResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HubIpConfigurationResource IOperationSource<HubIpConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HubIPConfigurationResource IOperationSource<HubIPConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HubIpConfigurationData data = HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HubIpConfigurationResource(_client, data);
+            HubIPConfigurationData data = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HubIPConfigurationResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HubIpConfigurationResource> IOperationSource<HubIpConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HubIPConfigurationResource> IOperationSource<HubIPConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HubIpConfigurationData data = HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HubIpConfigurationResource(_client, data);
+            HubIPConfigurationData data = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HubIPConfigurationResource(_client, data);
         }
     }
 }

@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.Network.Models
             AzureFirewallThreatIntelMode? threatIntelMode = default;
             FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default;
             FirewallPolicyInsights insights = default;
-            FirewallPolicySNAT snat = default;
+            FirewallPolicySnat snat = default;
             FirewallPolicySQL sql = default;
             DnsSettings dnsSettings = default;
-            ExplicitProxy explicitProxy = default;
+            FirewallPolicyExplicitProxy explicitProxy = default;
             FirewallPolicyIntrusionDetection intrusionDetection = default;
             FirewallPolicyTransportSecurity transportSecurity = default;
             FirewallPolicySku sku = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    snat = FirewallPolicySNAT.DeserializeFirewallPolicySNAT(prop.Value, options);
+                    snat = FirewallPolicySnat.DeserializeFirewallPolicySnat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sql"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    explicitProxy = ExplicitProxy.DeserializeExplicitProxy(prop.Value, options);
+                    explicitProxy = FirewallPolicyExplicitProxy.DeserializeFirewallPolicyExplicitProxy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("intrusionDetection"u8))

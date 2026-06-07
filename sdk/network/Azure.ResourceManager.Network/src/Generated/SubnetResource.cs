@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> PrepareNetworkPoliciesAsync(WaitUntil waitUntil, PrepareNetworkPoliciesRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PrepareNetworkPoliciesAsync(WaitUntil waitUntil, PrepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subnetsRestClient.CreatePrepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrepareNetworkPoliciesRequest.ToRequestContent(content), context);
+                HttpMessage message = _subnetsRestClient.CreatePrepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrepareNetworkPoliciesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_subnetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation PrepareNetworkPolicies(WaitUntil waitUntil, PrepareNetworkPoliciesRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PrepareNetworkPolicies(WaitUntil waitUntil, PrepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subnetsRestClient.CreatePrepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrepareNetworkPoliciesRequest.ToRequestContent(content), context);
+                HttpMessage message = _subnetsRestClient.CreatePrepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrepareNetworkPoliciesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_subnetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UnprepareNetworkPoliciesAsync(WaitUntil waitUntil, UnprepareNetworkPoliciesRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UnprepareNetworkPoliciesAsync(WaitUntil waitUntil, UnprepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subnetsRestClient.CreateUnprepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnprepareNetworkPoliciesRequest.ToRequestContent(content), context);
+                HttpMessage message = _subnetsRestClient.CreateUnprepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnprepareNetworkPoliciesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_subnetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UnprepareNetworkPolicies(WaitUntil waitUntil, UnprepareNetworkPoliciesRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UnprepareNetworkPolicies(WaitUntil waitUntil, UnprepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subnetsRestClient.CreateUnprepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnprepareNetworkPoliciesRequest.ToRequestContent(content), context);
+                HttpMessage message = _subnetsRestClient.CreateUnprepareNetworkPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnprepareNetworkPoliciesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_subnetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

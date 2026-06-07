@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="path"> The path component of the URI. For instance, "/dir1/dir2". </param>
         /// <param name="requestHeaders"> The HTTP headers to transmit with the request. </param>
         /// <param name="validStatusCodeRanges"> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </param>
-        /// <param name="preferHTTPS"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
+        /// <param name="preferHttps"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorHttpConfiguration(int? port, NetworkHttpConfigurationMethod? @method, string path, IList<NetworkWatcherHttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHTTPS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorHttpConfiguration(int? port, NetworkHttpConfigurationMethod? @method, string path, IList<NetworkWatcherHttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHttps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
             Method = @method;
             Path = path;
             RequestHeaders = requestHeaders;
             ValidStatusCodeRanges = validStatusCodeRanges;
-            PreferHTTPS = preferHTTPS;
+            PreferHttps = preferHttps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.Network.Models
         public IList<string> ValidStatusCodeRanges { get; }
 
         /// <summary> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </summary>
-        public bool? PreferHTTPS { get; set; }
+        public bool? PreferHttps { get; set; }
     }
 }

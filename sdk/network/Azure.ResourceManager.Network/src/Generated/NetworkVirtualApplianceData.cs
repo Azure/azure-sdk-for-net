@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Network Virtual Appliance. </param>
         /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkVirtualAppliancePropertiesFormat properties, ManagedServiceIdentity identity, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkVirtualAppliancePropertiesFormat properties, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Network Virtual Appliance SKU. </summary>
         public VirtualApplianceSkuProperties NvaSku
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </summary>
-        public DelegationProperties Delegation
+        public VirtualApplianceDelegationProperties Delegation
         {
             get
             {

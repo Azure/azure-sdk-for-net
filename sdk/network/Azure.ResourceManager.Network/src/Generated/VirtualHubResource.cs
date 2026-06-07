@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<VirtualHubEffectiveRouteList>> GetVirtualHubEffectiveRoutesAsync(WaitUntil waitUntil, EffectiveRoutesParameters content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualHubEffectiveRouteList>> GetVirtualHubEffectiveRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualHubsClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubEffectiveRoutes");
             scope.Start();
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubEffectiveRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EffectiveRoutesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubEffectiveRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EffectiveRoutesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VirtualHubEffectiveRouteList> operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(
                     new VirtualHubEffectiveRouteListOperationSource(),
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<VirtualHubEffectiveRouteList> GetVirtualHubEffectiveRoutes(WaitUntil waitUntil, EffectiveRoutesParameters content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualHubEffectiveRouteList> GetVirtualHubEffectiveRoutes(WaitUntil waitUntil, EffectiveRoutesContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualHubsClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubEffectiveRoutes");
             scope.Start();
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubEffectiveRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EffectiveRoutesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubEffectiveRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EffectiveRoutesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VirtualHubEffectiveRouteList> operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(
                     new VirtualHubEffectiveRouteListOperationSource(),
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubInboundRoutesAsync(WaitUntil waitUntil, GetInboundRoutesParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubInboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GetInboundRoutesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubInboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualHubInboundRoutesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<EffectiveRouteMapRouteList> operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(
                     new EffectiveRouteMapRouteListOperationSource(),
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubInboundRoutes(WaitUntil waitUntil, GetInboundRoutesParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubInboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GetInboundRoutesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubInboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualHubInboundRoutesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<EffectiveRouteMapRouteList> operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(
                     new EffectiveRouteMapRouteListOperationSource(),
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubOutboundRoutesAsync(WaitUntil waitUntil, GetOutboundRoutesParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubOutboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GetOutboundRoutesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubOutboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualHubOutboundRoutesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<EffectiveRouteMapRouteList> operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(
                     new EffectiveRouteMapRouteListOperationSource(),
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubOutboundRoutes(WaitUntil waitUntil, GetOutboundRoutesParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubOutboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GetOutboundRoutesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualHubsRestClient.CreateGetVirtualHubOutboundRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualHubOutboundRoutesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<EffectiveRouteMapRouteList> operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(
                     new EffectiveRouteMapRouteListOperationSource(),
@@ -1981,11 +1981,11 @@ namespace Azure.ResourceManager.Network
             return GetBgpConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HubIpConfigurations in the <see cref="VirtualHubResource"/>. </summary>
-        /// <returns> An object representing collection of HubIpConfigurations and their operations over a HubIpConfigurationResource. </returns>
-        public virtual HubIpConfigurationCollection GetHubIpConfigurations()
+        /// <summary> Gets a collection of HubIPConfigurations in the <see cref="VirtualHubResource"/>. </summary>
+        /// <returns> An object representing collection of HubIPConfigurations and their operations over a HubIPConfigurationResource. </returns>
+        public virtual HubIPConfigurationCollection GetHubIPConfigurations()
         {
-            return GetCachedClient(client => new HubIpConfigurationCollection(client, Id));
+            return GetCachedClient(client => new HubIPConfigurationCollection(client, Id));
         }
 
         /// <summary> Retrieves the details of a Virtual Hub Ip configuration. </summary>
@@ -1994,11 +1994,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HubIpConfigurationResource>> GetHubIpConfigurationAsync(string ipConfigName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HubIPConfigurationResource>> GetHubIPConfigurationAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            return await GetHubIpConfigurations().GetAsync(ipConfigName, cancellationToken).ConfigureAwait(false);
+            return await GetHubIPConfigurations().GetAsync(ipConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves the details of a Virtual Hub Ip configuration. </summary>
@@ -2007,11 +2007,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HubIpConfigurationResource> GetHubIpConfiguration(string ipConfigName, CancellationToken cancellationToken = default)
+        public virtual Response<HubIPConfigurationResource> GetHubIPConfiguration(string ipConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            return GetHubIpConfigurations().Get(ipConfigName, cancellationToken);
+            return GetHubIPConfigurations().Get(ipConfigName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RoutingIntents in the <see cref="VirtualHubResource"/>. </summary>

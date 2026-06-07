@@ -9,57 +9,58 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private link service ip configuration. </summary>
-    public partial class PrivateLinkServiceIpConfiguration : NetworkSubResource, IJsonModel<PrivateLinkServiceIpConfiguration>
+    public partial class PrivateLinkServiceIPConfiguration : NetworkSubResource, IJsonModel<PrivateLinkServiceIPConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateLinkServiceIpConfiguration(document.RootElement, options);
+                        return DeserializePrivateLinkServiceIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkServiceIpConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkServiceIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkServiceIpConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkServiceIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateLinkServiceIpConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateLinkServiceIPConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkServiceIpConfiguration IPersistableModel<PrivateLinkServiceIpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkServiceIpConfiguration)PersistableModelCreateCore(data, options);
+        PrivateLinkServiceIPConfiguration IPersistableModel<PrivateLinkServiceIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkServiceIPConfiguration)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateLinkServiceIpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateLinkServiceIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateLinkServiceIpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateLinkServiceIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +71,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkServiceIpConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkServiceIPConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Type))
             {
@@ -100,24 +101,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkServiceIpConfiguration IJsonModel<PrivateLinkServiceIpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkServiceIpConfiguration)JsonModelCreateCore(ref reader, options);
+        PrivateLinkServiceIPConfiguration IJsonModel<PrivateLinkServiceIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkServiceIPConfiguration)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkServiceIpConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkServiceIPConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateLinkServiceIpConfiguration(document.RootElement, options);
+            return DeserializePrivateLinkServiceIPConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateLinkServiceIpConfiguration DeserializePrivateLinkServiceIpConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateLinkServiceIPConfiguration DeserializePrivateLinkServiceIPConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PrivateLinkServiceIpConfigurationProperties properties = default;
             string name = default;
-            string eTag = default;
+            ETag? eTag = default;
             string @type = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +157,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -169,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateLinkServiceIpConfiguration(
+            return new PrivateLinkServiceIPConfiguration(
                 id,
                 additionalBinaryDataProperties,
                 properties,

@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="connectionMonitor"> Parameters that define the operation to create a connection monitor. </param>
+        /// <param name="content"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="connectionMonitor"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConnectionMonitorResultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitor connectionMonitor, string migrate = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConnectionMonitorResultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(connectionMonitor, nameof(connectionMonitor));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _connectionMonitorsClientDiagnostics.CreateScope("ConnectionMonitorResultCollection.CreateOrUpdate");
             scope.Start();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitor.ToRequestContent(connectionMonitor), migrate, context);
+                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ConnectionMonitorResultResource> operation = new NetworkArmOperation<ConnectionMonitorResultResource>(
                     new ConnectionMonitorResultResourceOperationSource(Client),
@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="connectionMonitor"> Parameters that define the operation to create a connection monitor. </param>
+        /// <param name="content"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="connectionMonitor"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConnectionMonitorResultResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitor connectionMonitor, string migrate = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConnectionMonitorResultResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(connectionMonitor, nameof(connectionMonitor));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _connectionMonitorsClientDiagnostics.CreateScope("ConnectionMonitorResultCollection.CreateOrUpdate");
             scope.Start();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitor.ToRequestContent(connectionMonitor), migrate, context);
+                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ConnectionMonitorResultResource> operation = new NetworkArmOperation<ConnectionMonitorResultResource>(
                     new ConnectionMonitorResultResourceOperationSource(Client),

@@ -422,13 +422,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="activeConfigurationParameter"> Active Configuration Parameter. </param>
+        /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activeConfigurationParameter"/> is null. </exception>
-        public virtual async Task<Response<ActiveConnectivityConfigurationsListResult>> GetActiveConnectivityConfigurationsAsync(ActiveConfigurationParameter activeConfigurationParameter, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ActiveConnectivityConfigurationsListResult>> GetActiveConnectivityConfigurationsAsync(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(activeConfigurationParameter, nameof(activeConfigurationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.GetActiveConnectivityConfigurations");
             scope.Start();
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagersRestClient.CreateGetActiveConnectivityConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationParameter.ToRequestContent(activeConfigurationParameter), top, context);
+                HttpMessage message = _networkManagersRestClient.CreateGetActiveConnectivityConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationContent.ToRequestContent(content), top, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ActiveConnectivityConfigurationsListResult> response = Response.FromValue(ActiveConnectivityConfigurationsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -475,13 +475,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="activeConfigurationParameter"> Active Configuration Parameter. </param>
+        /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activeConfigurationParameter"/> is null. </exception>
-        public virtual Response<ActiveConnectivityConfigurationsListResult> GetActiveConnectivityConfigurations(ActiveConfigurationParameter activeConfigurationParameter, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ActiveConnectivityConfigurationsListResult> GetActiveConnectivityConfigurations(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(activeConfigurationParameter, nameof(activeConfigurationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.GetActiveConnectivityConfigurations");
             scope.Start();
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagersRestClient.CreateGetActiveConnectivityConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationParameter.ToRequestContent(activeConfigurationParameter), top, context);
+                HttpMessage message = _networkManagersRestClient.CreateGetActiveConnectivityConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationContent.ToRequestContent(content), top, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ActiveConnectivityConfigurationsListResult> response = Response.FromValue(ActiveConnectivityConfigurationsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -528,13 +528,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="activeConfigurationParameter"> Active Configuration Parameter. </param>
+        /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activeConfigurationParameter"/> is null. </exception>
-        public virtual async Task<Response<ActiveSecurityAdminRulesListResult>> GetActiveSecurityAdminRulesAsync(ActiveConfigurationParameter activeConfigurationParameter, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ActiveSecurityAdminRulesListResult>> GetActiveSecurityAdminRulesAsync(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(activeConfigurationParameter, nameof(activeConfigurationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.GetActiveSecurityAdminRules");
             scope.Start();
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagersRestClient.CreateGetActiveSecurityAdminRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationParameter.ToRequestContent(activeConfigurationParameter), top, context);
+                HttpMessage message = _networkManagersRestClient.CreateGetActiveSecurityAdminRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationContent.ToRequestContent(content), top, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ActiveSecurityAdminRulesListResult> response = Response.FromValue(ActiveSecurityAdminRulesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -581,13 +581,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="activeConfigurationParameter"> Active Configuration Parameter. </param>
+        /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activeConfigurationParameter"/> is null. </exception>
-        public virtual Response<ActiveSecurityAdminRulesListResult> GetActiveSecurityAdminRules(ActiveConfigurationParameter activeConfigurationParameter, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ActiveSecurityAdminRulesListResult> GetActiveSecurityAdminRules(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(activeConfigurationParameter, nameof(activeConfigurationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.GetActiveSecurityAdminRules");
             scope.Start();
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagersRestClient.CreateGetActiveSecurityAdminRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationParameter.ToRequestContent(activeConfigurationParameter), top, context);
+                HttpMessage message = _networkManagersRestClient.CreateGetActiveSecurityAdminRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActiveConfigurationContent.ToRequestContent(content), top, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ActiveSecurityAdminRulesListResult> response = Response.FromValue(ActiveSecurityAdminRulesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -634,13 +634,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkManagerDeploymentStatusParameter"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerDeploymentStatusParameter"/> is null. </exception>
-        public virtual async Task<Response<NetworkManagerDeploymentStatusListResult>> GetAllAsync(NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<NetworkManagerDeploymentStatusListResult>> GetAllAsync(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkManagerDeploymentStatusParameter, nameof(networkManagerDeploymentStatusParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkManagerDeploymentStatusClientDiagnostics.CreateScope("NetworkManagerResource.GetAll");
             scope.Start();
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusParameter.ToRequestContent(networkManagerDeploymentStatusParameter), top, context);
+                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusContent.ToRequestContent(content), top, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkManagerDeploymentStatusListResult> response = Response.FromValue(NetworkManagerDeploymentStatusListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -687,13 +687,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkManagerDeploymentStatusParameter"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerDeploymentStatusParameter"/> is null. </exception>
-        public virtual Response<NetworkManagerDeploymentStatusListResult> GetAll(NetworkManagerDeploymentStatusParameter networkManagerDeploymentStatusParameter, int? top = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<NetworkManagerDeploymentStatusListResult> GetAll(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkManagerDeploymentStatusParameter, nameof(networkManagerDeploymentStatusParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkManagerDeploymentStatusClientDiagnostics.CreateScope("NetworkManagerResource.GetAll");
             scope.Start();
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusParameter.ToRequestContent(networkManagerDeploymentStatusParameter), top, context);
+                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusContent.ToRequestContent(content), top, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkManagerDeploymentStatusListResult> response = Response.FromValue(NetworkManagerDeploymentStatusListResult.FromResponse(result), result);
                 if (response.Value == null)

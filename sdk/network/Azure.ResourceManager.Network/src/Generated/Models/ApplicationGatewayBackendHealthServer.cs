@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfigurationData ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Address = address;
-            IpConfiguration = ipConfiguration;
+            IPConfiguration = ipConfiguration;
             Health = health;
             HealthProbeLog = healthProbeLog;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Address { get; }
 
         /// <summary> Reference to IP configuration of backend server. </summary>
-        public NetworkInterfaceIPConfigurationData IpConfiguration { get; }
+        public NetworkInterfaceIPConfigurationData IPConfiguration { get; }
 
         /// <summary> Health of backend server. </summary>
         public ApplicationGatewayBackendHealthServerHealth? Health { get; }
