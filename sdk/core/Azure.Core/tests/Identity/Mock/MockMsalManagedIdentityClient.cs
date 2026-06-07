@@ -3,15 +3,15 @@
 
 using System;
 using System.Globalization;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Identity;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.ManagedIdentity;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.Mock
 {
     internal class MockMsalManagedIdentityClient : MsalManagedIdentityClient
@@ -74,10 +74,18 @@ namespace Azure.Core.Tests.Identity.Mock
 #pragma warning disable CS0618 // GetManagedIdentitySource is obsolete
             _detectedSource = ManagedIdentityApplication.GetManagedIdentitySource();
 #pragma warning restore CS0618
-            // ManagedIdentityCapabilities has no public constructor; use reflection to create an instance for testing.
-            var ctor = typeof(ManagedIdentityCapabilities).GetConstructors(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)[0];
-            var capabilities = (ManagedIdentityCapabilities)ctor.Invoke(new object[] { _detectedSource, null, null });
-            return new ValueTask<ManagedIdentityCapabilities>(capabilities);
+            return new ValueTask<ManagedIdentityCapabilities>(CreateManagedIdentityCapabilities(_detectedSource));
+        }
+
+        private static ManagedIdentityCapabilities CreateManagedIdentityCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source)
+        {
+            ConstructorInfo ctor = typeof(ManagedIdentityCapabilities).GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                binder: null,
+            types: [typeof(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource), typeof(Microsoft.Identity.Client.AppConfig.MtlsBindingStrength), typeof(string)],
+                modifiers: null);
+
+            return (ManagedIdentityCapabilities)ctor.Invoke([source, Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None, null]);
         }
 
         private AuthenticationResult SendDirectImdsRequest(TokenRequestContext requestContext, CancellationToken cancellationToken)
@@ -128,7 +136,11 @@ namespace Azure.Core.Tests.Identity.Mock
 
             if (response.IsError)
             {
-                string body = response.Content?.ToString() ?? string.Empty;
+                string body = response.Content?.ToString();
+                if (string.IsNullOrEmpty(body))
+                {
+                    body = "Managed identity request failed.";
+                }
                 throw new MsalServiceException(
                     MsalError.ManagedIdentityRequestFailed,
                     body,
