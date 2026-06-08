@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             FleetManagedNamespaceProvisioningState? provisioningState = default;
-            ManagedNamespaceProperties managedNamespaceProperties = default;
+            ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default;
             ContainerServiceFleetAdoptionPolicy adoptionPolicy = default;
             ContainerServiceFleetDeletePolicy deletePolicy = default;
             ContainerServiceFleetPropagationPolicy propagationPolicy = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    managedNamespaceProperties = ManagedNamespaceProperties.DeserializeManagedNamespaceProperties(prop.Value, options);
+                    managedNamespaceProperties = ContainerServiceFleetManagedNamespaceProperties.DeserializeContainerServiceFleetManagedNamespaceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("adoptionPolicy"u8))

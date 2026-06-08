@@ -78,6 +78,8 @@ namespace Azure.Generator.Provisioning.Providers
         private FieldProvider? _parentField;
         private PropertyProvider? _parentProperty;
         private CSharpType? _parentType;
+        private FieldProvider? _scopeField;
+        private PropertyProvider? _scopeProperty;
 
         /// <summary>
         /// Gets the provisioning resource projection, if this is a base resource type.
@@ -88,7 +90,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
         /// </summary>
         private CSharpType? ParentResourceType
-            => _resourceProjection?.ParentResourceId is { } parentId
+            => _resourceProjection is { IsExtensionResource: false, ParentResourceId: { } parentId }
                 ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)?.Type
                 : null;
 
@@ -142,6 +144,8 @@ namespace Azure.Generator.Provisioning.Providers
             _parentField = null;
             _parentProperty = null;
             _parentType = null;
+            _scopeField = null;
+            _scopeProperty = null;
         }
 
         protected override string BuildNamespace()
@@ -180,6 +184,10 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 fields.Add(_parentField);
             }
+            if (_scopeField != null)
+            {
+                fields.Add(_scopeField);
+            }
             return [.. fields];
         }
 
@@ -206,6 +214,17 @@ namespace Azure.Generator.Provisioning.Providers
                 properties.Add(_parentProperty);
             }
 
+            if (_resourceProjection?.IsExtensionResource == true)
+            {
+                _scopeField = new FieldProvider(
+                    FieldModifiers.Private,
+                    new CSharpType(typeof(ResourceReference<>), typeof(ProvisionableResource)),
+                    "_scope",
+                    this);
+                _scopeProperty = BuildScopeProperty(_scopeField);
+                properties.Add(_scopeProperty);
+            }
+
             return [.. properties];
         }
 
@@ -230,6 +249,30 @@ namespace Azure.Generator.Provisioning.Providers
                 nullableParentType,
                 "Parent",
                 new MethodPropertyBody(parentGetter, parentSetter),
+                this);
+        }
+
+        private PropertyProvider BuildScopeProperty(FieldProvider scopeField)
+        {
+            var nullableScopeType = new CSharpType(typeof(ProvisionableResource)).WithNullable(true);
+
+            MethodBodyStatement[] scopeGetter =
+            [
+                This.Invoke("Initialize").Terminate(),
+                Return(scopeField.AsValueExpression.Property("Value"))
+            ];
+            MethodBodyStatement[] scopeSetter =
+            [
+                This.Invoke("Initialize").Terminate(),
+                scopeField.AsValueExpression.Property("Value").Assign(Value).Terminate()
+            ];
+
+            return new PropertyProvider(
+                null,
+                MethodSignatureModifiers.Public,
+                nullableScopeType,
+                "Scope",
+                new MethodPropertyBody(scopeGetter, scopeSetter),
                 this);
         }
 
@@ -433,8 +476,13 @@ namespace Azure.Generator.Provisioning.Providers
                 if (seen.Contains(serializedName)) continue;
                 seen.Add(serializedName);
 
-                // Skip "type" property
-                if (SkipProperties.Contains(serializedName)) continue;
+                // Skip "type" property and extension-resource language-level scope.
+                if (SkipProperties.Contains(serializedName)
+                    || (_resourceProjection?.IsExtensionResource == true
+                        && string.Equals(serializedName, "scope", StringComparison.OrdinalIgnoreCase)))
+                {
+                    continue;
+                }
 
                 var bicepPath = basePath != null
                     ? [.. basePath, serializedName]
@@ -545,6 +593,21 @@ namespace Azure.Generator.Provisioning.Providers
                             new PositionalParameterReferenceExpression("isRequired", Literal(true))
                         ],
                         [_parentType],
+                        false)
+                ).Terminate());
+            }
+
+            // Add DefineResource call for scope on extension resources.
+            if (_scopeField != null)
+            {
+                statements.Add(_scopeField.Assign(
+                    This.Invoke(
+                        "DefineResource",
+                        [
+                            Nameof(Identifier("Scope")),
+                            New.Array(typeof(string), [Literal("scope")])
+                        ],
+                        [typeof(ProvisionableResource)],
                         false)
                 ).Terminate());
             }
