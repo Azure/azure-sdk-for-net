@@ -44,7 +44,12 @@ public abstract class CredentialResolver
     /// (including caching, normalization, and ordering). Returns the resolved
     /// <see cref="AuthenticationTokenProvider"/>, or <see langword="null"/> if
     /// no resolver in the chain claims the child section. Always non-null;
-    /// resolvers that do not need the chain can ignore the callback.</param>
+    /// resolvers that do not need the chain can ignore the callback.
+    /// Must only be invoked synchronously during this call. The engine
+    /// classifies a resolver as chain-dependent by observing whether
+    /// <paramref name="resolveChild"/> is invoked here; capturing the
+    /// callback and invoking it after <c>TryResolve</c> returns will throw
+    /// <see cref="InvalidOperationException"/>.</param>
     /// <param name="provider">When this method returns <see langword="true"/>,
     /// contains the constructed provider; otherwise <see langword="null"/>.</param>
     /// <returns><see langword="true"/> if this resolver recognized and handled

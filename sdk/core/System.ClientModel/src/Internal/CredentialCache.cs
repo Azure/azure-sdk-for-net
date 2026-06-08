@@ -67,18 +67,10 @@ internal static class CredentialCache
         string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
         if (sectionKey.Length == 0)
         {
-            // ComputeKey returns the empty string only for a null section.
-            // The engine guards against this before reaching the cache, but if
-            // some future caller bypasses the engine and passes null we have
-            // no meaningful cache key and no resolver could produce a useful
-            // provider from a null section. Return null instead of invoking
-            // the resolver.
             return null;
         }
 
-        // Reference-identity hash bypasses any user GetHashCode override on
-        // the resolver and gives a stable identifier for the lifetime of the
-        // resolver object.
+        // RuntimeHelpers.GetHashCode bypasses user GetHashCode overrides.
         string cacheKey = sectionKey + "::" + RuntimeHelpers.GetHashCode(resolver).ToString(Globalization.CultureInfo.InvariantCulture);
 
         if (s_cache.TryGetValue(cacheKey, out CredentialSettings? existing))
@@ -86,22 +78,36 @@ internal static class CredentialCache
             return existing;
         }
 
-        // Wrap resolveChild with a tracker that flips a flag on invocation.
-        // The flag determines whether this resolver is a chain owner: a chain
-        // owner's output depends on the active chain, so we must not cache it
-        // (a future caller with a different chain would receive the wrong
-        // provider). Leaf resolvers — including ones that inherit the default
-        // chain-aware overload, which forwards to the legacy 2-arg TryResolve
-        // and never touches resolveChild — are chain-independent and safe to
-        // cache.
+        // Chain owners — resolvers that invoke resolveChild during TryResolve —
+        // are not cached because their output depends on the active chain.
+        // The tryResolveReturned guard turns lazy capture into a fail-fast
+        // error so chain-ownership classification stays sound.
         bool isChainOwner = false;
+        bool tryResolveReturned = false;
         Func<IConfigurationSection, AuthenticationTokenProvider?> trackedResolveChild = section =>
         {
+            if (tryResolveReturned)
+            {
+                throw new InvalidOperationException(
+                    "resolveChild was invoked after TryResolve returned. The callback must only be " +
+                    "called synchronously during TryResolve.");
+            }
             isChainOwner = true;
             return resolveChild(section);
         };
 
-        if (!resolver.TryResolve(mergedSection, trackedResolveChild, out AuthenticationTokenProvider? provider) || provider is null)
+        bool matched;
+        AuthenticationTokenProvider? provider;
+        try
+        {
+            matched = resolver.TryResolve(mergedSection, trackedResolveChild, out provider);
+        }
+        finally
+        {
+            tryResolveReturned = true;
+        }
+
+        if (!matched || provider is null)
         {
             return null;
         }
@@ -111,24 +117,13 @@ internal static class CredentialCache
             TokenProvider = provider,
         };
 
-        // Defensive: if the produced provider owns disposable resources, do not
-        // cache the settings. A cached IDisposable provider could be disposed
-        // by one consumer (e.g., a DI host shutting down) and then handed out
-        // to another consumer from the cache, producing ObjectDisposedException.
-        // The cost is losing token-cache sharing for disposable providers,
-        // which in practice is rare (TokenCredential / AuthenticationTokenProvider
-        // base contracts are not IDisposable).
+        // Disposable providers aren't cached: a consumer disposing one would
+        // poison later cache hits with ObjectDisposedException.
         if (provider is IDisposable || provider is IAsyncDisposable)
         {
             return created;
         }
 
-        // Chain owners don't go in the cache — they're rebuilt on every call
-        // so each caller gets a wrapper bound to its own active chain. The
-        // wrapper itself is cheap; the cost it would otherwise carry (token
-        // acquisition) lives on the leaf providers it composes via
-        // resolveChild, and those leaves DO hit this cache, so cross-chain
-        // sharing is preserved where it matters.
         if (isChainOwner)
         {
             return created;

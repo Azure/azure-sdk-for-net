@@ -1430,24 +1430,85 @@ public class CredentialResolverTests
     }
 
     [Test]
+    public void Engine_LazyCapture_ThrowsWhenResolveChildInvokedAfterTryResolveReturns()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "LazyOnly",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var lazyOnly = new LazyCaptureOnlyResolver("LazyOnly", section => section.GetSection("Inner"));
+        var fooA = new FooCredResolver("FooCred", respectsBar: true);
+
+        CredentialSettings? settings = config.GetCredentialSettings("Cred", lazyOnly, fooA);
+        var provider = (LazyCaptureProvider)settings!.TokenProvider!;
+
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => provider.ResolveInner());
+        Assert.That(ex!.Message, Does.Contain("resolveChild was invoked after TryResolve returned"));
+    }
+
+    // Captures resolveChild during TryResolve without invoking it.
+    private sealed class LazyCaptureOnlyResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly Func<IConfigurationSection, IConfigurationSection> _selectChild;
+
+        public LazyCaptureOnlyResolver(
+            string matchSource,
+            Func<IConfigurationSection, IConfigurationSection> selectChild)
+        {
+            _matchSource = matchSource;
+            _selectChild = selectChild;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = _selectChild(credentialSection);
+            provider = new LazyCaptureProvider(child, resolveChild);
+            return true;
+        }
+    }
+
+    private sealed class LazyCaptureProvider : AuthenticationTokenProvider
+    {
+        private readonly IConfigurationSection _child;
+        private readonly Func<IConfigurationSection, AuthenticationTokenProvider?> _resolveChild;
+
+        public LazyCaptureProvider(
+            IConfigurationSection child,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild)
+        {
+            _child = child;
+            _resolveChild = resolveChild;
+        }
+
+        public AuthenticationTokenProvider? ResolveInner() => _resolveChild(_child);
+
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+    }
+
+    [Test]
     public void Engine_ChainCache_ChainOwner_AlwaysBuildsFreshWrapper_LeavesStaySharedAcrossChains()
     {
-        // Repro and resolution for PR #59480 review comment 3326531354
-        // ("lazy-chain caching trap").
-        //
-        // Design: chain-owning resolvers — detected at runtime by invoking
-        // resolveChild during TryResolve — are NOT cached. Each call rebuilds
-        // the wrapper bound to the active chain. The wrapper itself is cheap;
-        // the expensive token-layer cache lives on the leaf providers it
-        // composes via resolveChild, and those leaves DO hit the cache.
-        //
-        // Result: two calls with the same parent chain-owner but different
-        // downstream leaves get distinct wrapper instances composed over the
-        // distinct leaves — no cross-chain leak — AND a single shared leaf
-        // resolver still hands the same cached provider to every wrapper that
-        // composes it. This satisfies both correctness (chain-A wrapper
-        // cannot leak into a chain-B caller) and efficiency (leaf token
-        // caches are reused across chains).
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["Cred:CredentialSource"] = "MyChain",
@@ -1486,10 +1547,6 @@ public class CredentialResolverTests
     [Test]
     public void Engine_ChainCache_ChainOwner_NotCached_EvenWithIdenticalDownstream()
     {
-        // Companion to the above: same chain owner + same downstream leaf =
-        // still a fresh wrapper per call, because chain owners are never
-        // cached. The leaf inside is shared (token cache preserved); only
-        // the wrapper is rebuilt.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["Cred:CredentialSource"] = "MyChain",
