@@ -290,14 +290,14 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.Target))
+            TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.Target))
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails)),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(options.Transferee),
+                Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 SourceCallerIdNumber = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber)
             };
@@ -394,7 +394,7 @@ namespace Azure.Communication.CallAutomation
             // validate ParticipantToAdd is not null
             Argument.AssertNotNull(options.ParticipantToAdd, nameof(options.ParticipantToAdd));
 
-            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.ParticipantToAdd.Target))
+            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                     options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
@@ -551,7 +551,7 @@ namespace Azure.Communication.CallAutomation
                 // validate RequestInitiator is not null or empty
                 Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.ParticipantToRemove));
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
 
                 request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
@@ -600,7 +600,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.ParticipantToRemove));
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
 
                 options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
@@ -650,7 +650,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant) });
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(targetParticipant) });
 
                 var response = RestClient.Mute(
                     CallConnectionId,
@@ -681,7 +681,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant) });
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
 
                 var response = RestClient.Mute(
                     CallConnectionId,
@@ -731,7 +731,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant) });
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
 
                 request.OperationContext = options.OperationContext;
 
@@ -957,7 +957,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(options.TargetParticipants, nameof(options.TargetParticipants));
             Argument.AssertNotNull(options.FromCallId, nameof(options.FromCallId));
             MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
-                options.TargetParticipants.Select(p => CommunicationIdentifierSerializer_2025_06_30.Serialize(p)),
+                options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
                 options.FromCallId)
             {
                 OperationContext = options.OperationContext ?? Guid.NewGuid().ToString(),
