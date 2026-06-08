@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Shares
     {
         public ShareClientSettings() { }
         public Azure.Storage.Files.Shares.ShareClientOptions Options { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } set { } }
+        public System.Uri ShareUri { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class ShareDirectoryClient

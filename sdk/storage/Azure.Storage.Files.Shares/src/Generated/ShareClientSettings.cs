@@ -16,9 +16,6 @@ namespace Azure.Storage.Files.Shares
     [Experimental("SCME0002")]
     public partial class ShareClientSettings : ClientSettings
     {
-        /// <summary> Gets or sets the Url. </summary>
-        public Uri Url { get; set; }
-
         /// <summary> Gets or sets the Options. </summary>
         public ShareClientOptions Options { get; set; }
 
@@ -28,7 +25,7 @@ namespace Azure.Storage.Files.Shares
         {
             if (Uri.TryCreate(section["Url"], UriKind.Absolute, out Uri url))
             {
-                Url = url;
+                ShareUri = url;
             }
             string connectionString = section["ConnectionString"];
             if (!string.IsNullOrEmpty(connectionString))
