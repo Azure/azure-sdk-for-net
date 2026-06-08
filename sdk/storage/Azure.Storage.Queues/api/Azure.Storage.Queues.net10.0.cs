@@ -131,7 +131,7 @@ namespace Azure.Storage.Queues
     {
         public QueueClientSettings() { }
         public Azure.Storage.Queues.QueueClientOptions Options { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } set { } }
+        public System.Uri QueueUri { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs

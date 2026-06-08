@@ -16,9 +16,6 @@ namespace Azure.Storage.Queues
     [Experimental("SCME0002")]
     public partial class QueueClientSettings : ClientSettings
     {
-        /// <summary> Gets or sets the Url. </summary>
-        public Uri Url { get; set; }
-
         /// <summary> Gets or sets the Options. </summary>
         public QueueClientOptions Options { get; set; }
 
@@ -28,7 +25,7 @@ namespace Azure.Storage.Queues
         {
             if (Uri.TryCreate(section["Url"], UriKind.Absolute, out Uri url))
             {
-                Url = url;
+                QueueUri = url;
             }
             string connectionString = section["ConnectionString"];
             if (!string.IsNullOrEmpty(connectionString))
