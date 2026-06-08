@@ -14,56 +14,56 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The properties of the Update Run that the Gate is targeting. </summary>
-    public partial class UpdateRunGateTargetProperties : IJsonModel<UpdateRunGateTargetProperties>
+    public partial class ContainerServiceFleetUpdateRunGateTargetProperties : IJsonModel<ContainerServiceFleetUpdateRunGateTargetProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UpdateRunGateTargetProperties"/> for deserialization. </summary>
-        internal UpdateRunGateTargetProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunGateTargetProperties"/> for deserialization. </summary>
+        internal ContainerServiceFleetUpdateRunGateTargetProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateRunGateTargetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetUpdateRunGateTargetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpdateRunGateTargetProperties(document.RootElement, options);
+                        return DeserializeContainerServiceFleetUpdateRunGateTargetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateRunGateTargetProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunGateTargetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateRunGateTargetProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunGateTargetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateRunGateTargetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceFleetUpdateRunGateTargetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateRunGateTargetProperties IPersistableModel<UpdateRunGateTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceFleetUpdateRunGateTargetProperties IPersistableModel<ContainerServiceFleetUpdateRunGateTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateRunGateTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetUpdateRunGateTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpdateRunGateTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetUpdateRunGateTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateRunGateTargetProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunGateTargetProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateRunGateTargetProperties IJsonModel<UpdateRunGateTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceFleetUpdateRunGateTargetProperties IJsonModel<ContainerServiceFleetUpdateRunGateTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateRunGateTargetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetUpdateRunGateTargetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunGateTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateRunGateTargetProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunGateTargetProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdateRunGateTargetProperties(document.RootElement, options);
+            return DeserializeContainerServiceFleetUpdateRunGateTargetProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpdateRunGateTargetProperties DeserializeUpdateRunGateTargetProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceFleetUpdateRunGateTargetProperties DeserializeContainerServiceFleetUpdateRunGateTargetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateRunGateTargetProperties(name, stage, @group, timing, additionalBinaryDataProperties);
+            return new ContainerServiceFleetUpdateRunGateTargetProperties(name, stage, @group, timing, additionalBinaryDataProperties);
         }
     }
 }
