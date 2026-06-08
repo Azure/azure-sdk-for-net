@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -15,7 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
     /// Each <see cref="MachineLearningCodeVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningCodeContainerResource" />.
     /// To get a <see cref="MachineLearningCodeVersionCollection" /> instance call the GetMachineLearningCodeVersions method from an instance of <see cref="MachineLearningCodeContainerResource" />.
     /// </summary>
-    public partial class MachineLearningCodeVersionCollection : ArmCollection, IEnumerable<MachineLearningCodeVersionResource>, IAsyncEnumerable<MachineLearningCodeVersionResource>
+    // Customized: preserve the legacy MachineLearning-prefixed collection name.
+    [CodeGenType("CodeVersionCollection")]
+    public partial class MachineLearningCodeVersionCollection
     {
         /// <summary>
         /// List versions.

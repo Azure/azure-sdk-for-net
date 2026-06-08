@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AmlComputeNodeInformation : IUtf8JsonSerializable, IJsonModel<AmlComputeNodeInformation>
+    /// <summary> Compute node information related to a AmlCompute. </summary>
+    public partial class AmlComputeNodeInformation : IJsonModel<AmlComputeNodeInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlComputeNodeInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AmlComputeNodeInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAmlComputeNodeInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AmlComputeNodeInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AmlComputeNodeInformation IPersistableModel<AmlComputeNodeInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AmlComputeNodeInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AmlComputeNodeInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,40 +69,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
             {
-                if (PrivateIPAddress != null)
-                {
-                    writer.WritePropertyName("privateIpAddress"u8);
-                    writer.WriteStringValue(PrivateIPAddress.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("privateIpAddress");
-                }
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteStringValue(PrivateIpAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
             {
-                if (PublicIPAddress != null)
-                {
-                    writer.WritePropertyName("publicIpAddress"u8);
-                    writer.WriteStringValue(PublicIPAddress.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("publicIpAddress");
-                }
+                writer.WritePropertyName("publicIpAddress"u8);
+                writer.WriteStringValue(PublicIpAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(Port))
             {
@@ -77,25 +101,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsDefined(RunId))
             {
-                if (RunId != null)
-                {
-                    writer.WritePropertyName("runId"u8);
-                    writer.WriteStringValue(RunId);
-                }
-                else
-                {
-                    writer.WriteNull("runId");
-                }
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -104,257 +121,106 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        AmlComputeNodeInformation IJsonModel<AmlComputeNodeInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AmlComputeNodeInformation IJsonModel<AmlComputeNodeInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AmlComputeNodeInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAmlComputeNodeInformation(document.RootElement, options);
         }
 
-        internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string nodeId = default;
-            IPAddress privateIPAddress = default;
-            IPAddress publicIPAddress = default;
+            string privateIpAddress = default;
+            string publicIpAddress = default;
             int? port = default;
             MachineLearningNodeState? nodeState = default;
             string runId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeId"u8))
+                if (prop.NameEquals("nodeId"u8))
                 {
-                    nodeId = property.Value.GetString();
+                    nodeId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"u8))
+                if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        privateIPAddress = null;
+                        privateIpAddress = null;
                         continue;
                     }
-                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
+                    privateIpAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicIpAddress"u8))
+                if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        publicIPAddress = null;
+                        publicIpAddress = null;
                         continue;
                     }
-                    publicIPAddress = IPAddress.Parse(property.Value.GetString());
+                    publicIpAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"u8))
+                if (prop.NameEquals("port"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    port = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("nodeState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeState = new MachineLearningNodeState(property.Value.GetString());
+                    port = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("runId"u8))
+                if (prop.NameEquals("nodeState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeState = new MachineLearningNodeState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("runId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         runId = null;
                         continue;
                     }
-                    runId = property.Value.GetString();
+                    runId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AmlComputeNodeInformation(
                 nodeId,
-                privateIPAddress,
-                publicIPAddress,
+                privateIpAddress,
+                publicIpAddress,
                 port,
                 nodeState,
                 runId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeId))
-                {
-                    builder.Append("  nodeId: ");
-                    if (NodeId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NodeId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NodeId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateIPAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  privateIpAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateIPAddress))
-                {
-                    builder.Append("  privateIpAddress: ");
-                    builder.AppendLine($"'{PrivateIPAddress.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicIPAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  publicIpAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicIPAddress))
-                {
-                    builder.Append("  publicIpAddress: ");
-                    builder.AppendLine($"'{PublicIPAddress.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  port: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Port))
-                {
-                    builder.Append("  port: ");
-                    builder.AppendLine($"{Port.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeState))
-                {
-                    builder.Append("  nodeState: ");
-                    builder.AppendLine($"'{NodeState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  runId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RunId))
-                {
-                    builder.Append("  runId: ");
-                    if (RunId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RunId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RunId}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AmlComputeNodeInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AmlComputeNodeInformation IPersistableModel<AmlComputeNodeInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAmlComputeNodeInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AmlComputeNodeInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,13 +7,14 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     // Fix the responsed error type "environments" to "Microsoft.MachineLearningServices/registries/environments"
     // Issue:https://github.com/Azure/azure-sdk-for-net/issues/45884
     [CodeGenSerialization(nameof(ResourceType), DeserializationValueHook = nameof(DeserializeTypeValue))]
-    public partial class MachineLearningEnvironmentContainerData
+    public partial class EnvironmentContainerData
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeTypeValue(JsonProperty property, ref ResourceType type)

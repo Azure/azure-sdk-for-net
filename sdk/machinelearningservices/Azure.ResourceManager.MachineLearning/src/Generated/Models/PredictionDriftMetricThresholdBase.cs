@@ -7,76 +7,59 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// Please note <see cref="PredictionDriftMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CategoricalPredictionDriftMetricThreshold"/> and <see cref="NumericalPredictionDriftMetricThreshold"/>.
+    /// The PredictionDriftMetricThresholdBase.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CategoricalPredictionDriftMetricThreshold"/> and <see cref="NumericalPredictionDriftMetricThreshold"/>.
     /// </summary>
     public abstract partial class PredictionDriftMetricThresholdBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PredictionDriftMetricThresholdBase"/>. </summary>
-        protected PredictionDriftMetricThresholdBase()
+        /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
+        private protected PredictionDriftMetricThresholdBase(MonitoringFeatureDataType dataType)
         {
+            DataType = dataType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PredictionDriftMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PredictionDriftMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionDriftMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataType = dataType;
             Threshold = threshold;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> [Required] Specifies the data type of the metric threshold. </summary>
+        [WirePath("dataType")]
         internal MonitoringFeatureDataType DataType { get; set; }
+
         /// <summary> The threshold value. If null, a default value will be set depending on the selected metric. </summary>
+        [WirePath("threshold")]
         internal MonitoringThreshold Threshold { get; set; }
+
         /// <summary> The threshold value. If null, the set default is dependent on the metric type. </summary>
         [WirePath("threshold.value")]
         public double? ThresholdValue
         {
-            get => Threshold is null ? default : Threshold.Value;
+            get
+            {
+                return Threshold is null ? default : Threshold.Value;
+            }
             set
             {
                 if (Threshold is null)
+                {
                     Threshold = new MonitoringThreshold();
+                }
                 Threshold.Value = value;
             }
         }

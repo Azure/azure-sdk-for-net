@@ -3,29 +3,89 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary>
-    /// A class representing the MachineLearningWorkspace data model.
-    /// An object that represents a machine learning workspace.
-    /// </summary>
+    // Customized: restore legacy constructors and alias properties over the generated TypeSpec workspace data shape.
+    [CodeGenSuppress("Encryption")]
+    [CodeGenSuppress("PublicNetworkAccess")]
     public partial class MachineLearningWorkspaceData : TrackedResourceData
     {
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public MachineLearningPublicNetworkAccess? PublicNetworkAccess
+        public MachineLearningWorkspaceData(AzureLocation location)
+            : base(location)
+        {
+        }
+
+        /// <summary> Gets or sets the CosmosDbCollectionsThroughput. </summary>
+        [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public int? CosmosDbCollectionsThroughput
+        {
+            get => ServiceManagedResourcesCosmosDbCollectionsThroughput;
+            set => ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
+        }
+
+        /// <summary> Gets or sets the Encryption. </summary>
+        [WirePath("properties.encryption")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public MachineLearningEncryptionSetting Encryption
         {
             get
             {
-                return PublicNetworkAccessType.ToString();
+                if (Properties?.Encryption is null)
+                {
+                    return default;
+                }
+
+                if (Properties.Encryption is MachineLearningEncryptionSetting encryptionSetting)
+                {
+                    return encryptionSetting;
+                }
+
+                if (Properties.Encryption.KeyVaultProperties is null)
+                {
+                    return default;
+                }
+
+                Azure.ResourceManager.MachineLearning.Models.KeyVaultProperties keyVaultProperties = Properties.Encryption.KeyVaultProperties;
+                var legacyKeyVaultProperties = keyVaultProperties as MachineLearningEncryptionKeyVaultProperties
+                    ?? new MachineLearningEncryptionKeyVaultProperties(keyVaultProperties.KeyIdentifier, keyVaultProperties.KeyVaultArmId);
+                return new MachineLearningEncryptionSetting(Properties.Encryption.Status, legacyKeyVaultProperties)
+                {
+                    CosmosDbResourceId = Properties.Encryption.CosmosDbResourceId,
+                    SearchAccountResourceId = Properties.Encryption.SearchAccountResourceId,
+                    StorageAccountResourceId = Properties.Encryption.StorageAccountResourceId,
+                    UserAssignedIdentity = Properties.Encryption.UserAssignedIdentity is null ? null : new ResourceIdentifier(Properties.Encryption.UserAssignedIdentity)
+                };
             }
             set
             {
-                PublicNetworkAccessType = value.ToString();
+                Properties ??= new WorkspaceProperties();
+                Properties.Encryption = value;
             }
         }
+
+        /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public PublicNetworkAccess? PublicNetworkAccessType
+        {
+            get => PublicNetworkAccess.HasValue ? new PublicNetworkAccess(PublicNetworkAccess.Value.ToString()) : null;
+            set => PublicNetworkAccess = value.HasValue ? new MachineLearningPublicNetworkAccess(value.Value.ToString()) : null;
+        }
+
+        /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public MachineLearningPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

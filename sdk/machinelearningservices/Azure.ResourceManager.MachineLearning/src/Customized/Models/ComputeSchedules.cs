@@ -6,8 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-[assembly: CodeGenSuppressType("ComputeSchedules")]
+// TODO: stale suppression kept only for regeneration; disabled for current build.
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The list of schedules to be applied on the computes. </summary>

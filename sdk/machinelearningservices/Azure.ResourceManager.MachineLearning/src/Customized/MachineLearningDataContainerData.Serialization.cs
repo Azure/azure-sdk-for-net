@@ -7,13 +7,14 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     // Fix the responsed error type "data" to "Microsoft.MachineLearningServices/registries/data"
     // Issue:https://github.com/Azure/azure-sdk-for-net/issues/45884
     [CodeGenSerialization(nameof(ResourceType), DeserializationValueHook = nameof(DeserializeTypeValue))]
-    public partial class MachineLearningDataContainerData
+    public partial class DataContainerData
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeTypeValue(JsonProperty property, ref ResourceType type)

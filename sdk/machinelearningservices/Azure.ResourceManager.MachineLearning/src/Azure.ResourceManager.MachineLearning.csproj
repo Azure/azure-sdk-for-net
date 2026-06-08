@@ -7,11 +7,18 @@
     <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
     <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- CS0109: 'new' keyword in serialization workaround for generator bug -->
+    <NoWarn>$(NoWarn);CS1591;CS0109</NoWarn>
   </PropertyGroup>
+
+  <!-- Generator bug: WorkspaceConnectionPropertiesV2BasicResourceData inherits ArmResource
+       instead of ResourceData, so the generated 'override void JsonModelWriteCore' fails.
+       A fixed copy with 'new' is in Customized/. -->
+  <ItemGroup>
+    <Compile Remove="Generated/WorkspaceConnectionPropertiesV2BasicResourceData.Serialization.cs" />
+  </ItemGroup>
 </Project>

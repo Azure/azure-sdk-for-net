@@ -6,7 +6,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using Azure;
 using Azure.ResourceManager.MachineLearning.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -15,7 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
     /// Each <see cref="MachineLearningDataVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningDataContainerResource" />.
     /// To get a <see cref="MachineLearningDataVersionCollection" /> instance call the GetMachineLearningDataVersions method from an instance of <see cref="MachineLearningDataContainerResource" />.
     /// </summary>
-    public partial class MachineLearningDataVersionCollection : ArmCollection, IEnumerable<MachineLearningDataVersionResource>, IAsyncEnumerable<MachineLearningDataVersionResource>
+    // Customized: preserve the legacy MachineLearning-prefixed collection name.
+    [CodeGenType("DataVersionCollection")]
+    public partial class MachineLearningDataVersionCollection
     {
         /// <summary>
         /// List data versions in the data container
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         ///                               If topCount &gt; page size, results with be default page size count will be returned
         /// </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="listViewType"> [MachineLearningListViewType.ActiveOnly, MachineLearningListViewType.ArchivedOnly, MachineLearningListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning
         ///                               If topCount &gt; page size, results with be default page size count will be returned
         /// </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="listViewType"> [MachineLearningListViewType.ActiveOnly, MachineLearningListViewType.ArchivedOnly, MachineLearningListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
