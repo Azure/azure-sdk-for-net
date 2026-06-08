@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _agentPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudAgentPoolPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudAgentPoolResource> operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(
-                    new NetworkCloudAgentPoolOperationSource(Client),
+                    new NetworkCloudAgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _agentPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudAgentPoolPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudAgentPoolResource> operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(
-                    new NetworkCloudAgentPoolOperationSource(Client),
+                    new NetworkCloudAgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

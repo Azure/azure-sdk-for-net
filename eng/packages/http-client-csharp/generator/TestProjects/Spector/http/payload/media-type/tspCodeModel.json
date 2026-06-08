@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "text/plain",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,12 +34,13 @@
         "decorators": []
       },
       "value": "text/plain",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "getAsTextContentType",
+      "name": "SendAsTextRequestContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -49,12 +51,13 @@
         "decorators": []
       },
       "value": "text/plain",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "SendAsTextRequestContentType2",
+      "name": "SendAsTextRequestContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "text/plain",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,12 +102,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "getAsJsonContentType",
+      "name": "SendAsJsonRequestContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -113,12 +119,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "SendAsJsonRequestContentType2",
+      "name": "SendAsJsonRequestContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -138,6 +146,7 @@
       "$id": "17",
       "kind": "client",
       "name": "MediaTypeClient",
+      "isExactName": false,
       "namespace": "Payload.MediaType",
       "doc": "Test the payload with different media types and different types of the payload itself.",
       "methods": [],
@@ -170,7 +179,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.MediaType.endpoint"
+          "crossLanguageDefinitionId": "Payload.MediaType.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -182,17 +192,20 @@
           "$id": "21",
           "kind": "client",
           "name": "StringBody",
+          "isExactName": false,
           "namespace": "Payload.MediaType.StringBody",
           "methods": [
             {
               "$id": "22",
               "kind": "basic",
               "name": "sendAsText",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "23",
                 "name": "sendAsText",
+                "isExactName": false,
                 "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
@@ -227,9 +240,11 @@
                         "crossLanguageDefinitionId": "Payload.MediaType.StringBody.sendAsText.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "26",
@@ -273,9 +288,12 @@
                         "crossLanguageDefinitionId": "Payload.MediaType.StringBody.sendAsText.text",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -284,7 +302,8 @@
                       200
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -318,11 +337,13 @@
               "$id": "30",
               "kind": "basic",
               "name": "getAsText",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "31",
                 "name": "getAsText",
+                "isExactName": false,
                 "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
@@ -357,9 +378,11 @@
                         "crossLanguageDefinitionId": "Payload.MediaType.StringBody.getAsText.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -386,7 +409,8 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "text/plain"
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "GET",
@@ -418,11 +442,13 @@
               "$id": "35",
               "kind": "basic",
               "name": "sendAsJson",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "36",
                 "name": "sendAsJson",
+                "isExactName": false,
                 "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
@@ -457,9 +483,11 @@
                         "crossLanguageDefinitionId": "Payload.MediaType.StringBody.sendAsJson.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "39",
@@ -503,9 +531,16 @@
                         "crossLanguageDefinitionId": "Payload.MediaType.StringBody.sendAsJson.text",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "text"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -514,7 +549,8 @@
                       200
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -548,11 +584,13 @@
               "$id": "43",
               "kind": "basic",
               "name": "getAsJson",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "44",
                 "name": "getAsJson",
+                "isExactName": false,
                 "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
@@ -587,9 +625,11 @@
                         "crossLanguageDefinitionId": "Payload.MediaType.StringBody.getAsJson.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -616,7 +656,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -674,7 +719,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.MediaType.StringBody.endpoint"
+              "crossLanguageDefinitionId": "Payload.MediaType.StringBody.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
-                    new HciVmNetworkSecurityGroupOperationSource(Client),
+                    new HciVmNetworkSecurityGroupResourceOperationSource(Client),
                     _networkSecurityGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
-                    new HciVmNetworkSecurityGroupOperationSource(Client),
+                    new HciVmNetworkSecurityGroupResourceOperationSource(Client),
                     _networkSecurityGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

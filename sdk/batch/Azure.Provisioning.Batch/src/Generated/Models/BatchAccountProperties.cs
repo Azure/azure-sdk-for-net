@@ -18,18 +18,18 @@ namespace Azure.Provisioning.Batch
         private BicepValue<BatchProvisioningState> _provisioningState;
         private BicepValue<BatchAccountPoolAllocationMode> _poolAllocationMode;
         private BatchKeyVaultReference _keyVaultReference;
-        private BicepValue<BicepValue<BatchPublicNetworkAccess>> _publicNetworkAccess;
-        private BicepValue<BatchNetworkProfile> _networkProfile;
-        private BicepValue<BicepList<BatchPrivateEndpointConnection>> _privateEndpointConnections;
+        private BicepValue<BatchPublicNetworkAccess> _publicNetworkAccess;
+        private BatchNetworkProfile _networkProfile;
+        private BicepList<BatchPrivateEndpointConnection> _privateEndpointConnections;
         private BatchAccountAutoStorageConfiguration _autoStorage;
         private BatchAccountEncryptionConfiguration _encryption;
-        private BicepValue<BicepValue<int>> _dedicatedCoreQuota;
-        private BicepValue<BicepValue<int>> _lowPriorityCoreQuota;
-        private BicepValue<BicepList<BatchVmFamilyCoreQuota>> _dedicatedCoreQuotaPerVmFamily;
+        private BicepValue<int> _dedicatedCoreQuota;
+        private BicepValue<int> _lowPriorityCoreQuota;
+        private BicepList<BatchVmFamilyCoreQuota> _dedicatedCoreQuotaPerVmFamily;
         private BicepValue<bool> _isDedicatedCoreQuotaPerVmFamilyEnforced;
         private BicepValue<int> _poolQuota;
         private BicepValue<int> _activeJobAndJobScheduleQuota;
-        private BicepValue<BicepList<BatchAuthenticationMode>> _allowedAuthenticationModes;
+        private BicepList<BatchAuthenticationMode> _allowedAuthenticationModes;
 
         /// <summary> Creates a new BatchAccountProperties. </summary>
         public BatchAccountProperties()
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<BicepValue<BatchPublicNetworkAccess>> PublicNetworkAccess
+        public BicepValue<BatchPublicNetworkAccess> PublicNetworkAccess
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets or sets the NetworkProfile. </summary>
-        public BicepValue<BatchNetworkProfile> NetworkProfile
+        public BatchNetworkProfile NetworkProfile
         {
             get
             {
@@ -112,12 +112,12 @@ namespace Azure.Provisioning.Batch
             set
             {
                 Initialize();
-                _networkProfile.Assign(value);
+                AssignOrReplace(ref _networkProfile, value);
             }
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepValue<BicepList<BatchPrivateEndpointConnection>> PrivateEndpointConnections
+        public BicepList<BatchPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -147,7 +147,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the DedicatedCoreQuota. </summary>
-        public BicepValue<BicepValue<int>> DedicatedCoreQuota
+        public BicepValue<int> DedicatedCoreQuota
         {
             get
             {
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the LowPriorityCoreQuota. </summary>
-        public BicepValue<BicepValue<int>> LowPriorityCoreQuota
+        public BicepValue<int> LowPriorityCoreQuota
         {
             get
             {
@@ -167,7 +167,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the DedicatedCoreQuotaPerVmFamily. </summary>
-        public BicepValue<BicepList<BatchVmFamilyCoreQuota>> DedicatedCoreQuotaPerVmFamily
+        public BicepList<BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily
         {
             get
             {
@@ -207,7 +207,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the AllowedAuthenticationModes. </summary>
-        public BicepValue<BicepList<BatchAuthenticationMode>> AllowedAuthenticationModes
+        public BicepList<BatchAuthenticationMode> AllowedAuthenticationModes
         {
             get
             {
@@ -225,18 +225,18 @@ namespace Azure.Provisioning.Batch
             _provisioningState = DefineProperty<BatchProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _poolAllocationMode = DefineProperty<BatchAccountPoolAllocationMode>(nameof(PoolAllocationMode), new string[] { "poolAllocationMode" }, isOutput: true);
             _keyVaultReference = DefineModelProperty<BatchKeyVaultReference>(nameof(KeyVaultReference), new string[] { "keyVaultReference" }, isOutput: true);
-            _publicNetworkAccess = DefineProperty<BicepValue<BatchPublicNetworkAccess>>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _networkProfile = DefineProperty<BatchNetworkProfile>(nameof(NetworkProfile), new string[] { "networkProfile" });
-            _privateEndpointConnections = DefineProperty<BicepList<BatchPrivateEndpointConnection>>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _publicNetworkAccess = DefineProperty<BatchPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
+            _networkProfile = DefineModelProperty<BatchNetworkProfile>(nameof(NetworkProfile), new string[] { "networkProfile" });
+            _privateEndpointConnections = DefineListProperty<BatchPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _autoStorage = DefineModelProperty<BatchAccountAutoStorageConfiguration>(nameof(AutoStorage), new string[] { "autoStorage" }, isOutput: true);
             _encryption = DefineModelProperty<BatchAccountEncryptionConfiguration>(nameof(Encryption), new string[] { "encryption" }, isOutput: true);
-            _dedicatedCoreQuota = DefineProperty<BicepValue<int>>(nameof(DedicatedCoreQuota), new string[] { "dedicatedCoreQuota" }, isOutput: true);
-            _lowPriorityCoreQuota = DefineProperty<BicepValue<int>>(nameof(LowPriorityCoreQuota), new string[] { "lowPriorityCoreQuota" }, isOutput: true);
-            _dedicatedCoreQuotaPerVmFamily = DefineProperty<BicepList<BatchVmFamilyCoreQuota>>(nameof(DedicatedCoreQuotaPerVmFamily), new string[] { "dedicatedCoreQuotaPerVMFamily" }, isOutput: true);
+            _dedicatedCoreQuota = DefineProperty<int>(nameof(DedicatedCoreQuota), new string[] { "dedicatedCoreQuota" }, isOutput: true);
+            _lowPriorityCoreQuota = DefineProperty<int>(nameof(LowPriorityCoreQuota), new string[] { "lowPriorityCoreQuota" }, isOutput: true);
+            _dedicatedCoreQuotaPerVmFamily = DefineListProperty<BatchVmFamilyCoreQuota>(nameof(DedicatedCoreQuotaPerVmFamily), new string[] { "dedicatedCoreQuotaPerVMFamily" }, isOutput: true);
             _isDedicatedCoreQuotaPerVmFamilyEnforced = DefineProperty<bool>(nameof(IsDedicatedCoreQuotaPerVmFamilyEnforced), new string[] { "dedicatedCoreQuotaPerVMFamilyEnforced" }, isOutput: true);
             _poolQuota = DefineProperty<int>(nameof(PoolQuota), new string[] { "poolQuota" }, isOutput: true);
             _activeJobAndJobScheduleQuota = DefineProperty<int>(nameof(ActiveJobAndJobScheduleQuota), new string[] { "activeJobAndJobScheduleQuota" }, isOutput: true);
-            _allowedAuthenticationModes = DefineProperty<BicepList<BatchAuthenticationMode>>(nameof(AllowedAuthenticationModes), new string[] { "allowedAuthenticationModes" }, isOutput: true);
+            _allowedAuthenticationModes = DefineListProperty<BatchAuthenticationMode>(nameof(AllowedAuthenticationModes), new string[] { "allowedAuthenticationModes" }, isOutput: true);
         }
     }
 }

@@ -193,6 +193,18 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(InterimResponse))
+            {
+                writer.WritePropertyName("interim_response"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(InterimResponse);
+#else
+                using (JsonDocument document = JsonDocument.Parse(InterimResponse))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -250,6 +262,7 @@ namespace Azure.AI.VoiceLive
             AssistantMessageItem preGeneratedAssistantMessage = default;
             ReasoningEffort? reasoningEffort = default;
             IDictionary<string, string> metadata = default;
+            BinaryData interimResponse = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -412,6 +425,15 @@ namespace Azure.AI.VoiceLive
                     metadata = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("interim_response"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interimResponse = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -433,6 +455,7 @@ namespace Azure.AI.VoiceLive
                 preGeneratedAssistantMessage,
                 reasoningEffort,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
+                interimResponse,
                 additionalBinaryDataProperties);
         }
     }

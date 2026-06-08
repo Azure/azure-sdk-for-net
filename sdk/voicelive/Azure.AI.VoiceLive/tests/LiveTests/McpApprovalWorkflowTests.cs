@@ -34,6 +34,11 @@ namespace Azure.AI.VoiceLive.Tests
     /// </summary>
     public class McpApprovalWorkflowTests : VoiceLiveTestBase
     {
+        // Shadow base TimeoutToken so each MCP test gets its own 3-minute budget,
+        // independent of how long sibling tests ran on the shared class instance.
+        private CancellationTokenSource? _testCts;
+        protected new CancellationToken TimeoutToken => _testCts?.Token ?? base.TimeoutToken;
+
         public McpApprovalWorkflowTests() : base(true)
         {
         }
@@ -42,13 +47,27 @@ namespace Azure.AI.VoiceLive.Tests
         {
         }
 
-        private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(MCPApprovalType? requireApproval = null)
+        [SetUp]
+        public void ResetMcpTestTimeout()
+        {
+            _testCts?.Dispose();
+            _testCts = new CancellationTokenSource(TimeSpan.FromMinutes(3));
+        }
+
+        [TearDown]
+        public void CleanupMcpTestTimeout()
+        {
+            _testCts?.Dispose();
+            _testCts = null;
+        }
+
+        private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(McpApprovalKind? requireApproval = null)
         {
             return new VoiceLiveMcpServerDefinition(
                 serverLabel: TestConstants.MicrosoftLearnMcpServerLabel,
                 serverUrl: TestConstants.MicrosoftLearnMcpServerUrl)
             {
-                RequireApproval = requireApproval ?? MCPApprovalType.Never
+                RequireApproval = requireApproval ?? McpApprovalKind.Never
             };
         }
 
@@ -58,7 +77,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
 
-            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Always);
+            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: McpApprovalKind.Always);
 
             var options = new VoiceLiveSessionOptions
             {
@@ -144,7 +163,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
 
-            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Always);
+            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: McpApprovalKind.Always);
 
             var options = new VoiceLiveSessionOptions
             {
@@ -407,7 +426,7 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task ShouldHandleToolApprovalDenied()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
-            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Always);
+            var mcpServerWithApproval = CreateMicrosoftLearnMcpServer(requireApproval: McpApprovalKind.Always);
 
             var options = new VoiceLiveSessionOptions { Model = "gpt-4o" };
             options.Tools.Add(mcpServerWithApproval);
@@ -462,17 +481,22 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Service-side issue: require_approval='never' setting may not be working correctly. Tool execution still requires approval even when configured not to.")]
         public async Task ShouldNotRequestApprovalWhenRequireApprovalNever()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
-            var mcpServerNoApproval = CreateMicrosoftLearnMcpServer(requireApproval: MCPApprovalType.Never);
+            var mcpServerNoApproval = CreateMicrosoftLearnMcpServer(requireApproval: McpApprovalKind.Never);
 
             var options = new VoiceLiveSessionOptions { Model = "gpt-4o" };
             options.Tools.Add(mcpServerNoApproval);
 
             await using var session = await client.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateMcpListToolsInProgress>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateMcpListToolsCompleted>(updatesEnum).ConfigureAwait(false);
 
             var userMessage = new UserMessageItem(new InputTextContentPart(
                 "Use Microsoft Learn tools to search for Azure Speech SDK documentation."));

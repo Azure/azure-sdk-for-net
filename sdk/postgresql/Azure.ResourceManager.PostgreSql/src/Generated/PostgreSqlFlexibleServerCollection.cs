@@ -28,16 +28,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     {
         private readonly ClientDiagnostics _serversClientDiagnostics;
         private readonly Servers _serversRestClient;
-        private readonly ClientDiagnostics _replicasClientDiagnostics;
-        private readonly Replicas _replicasRestClient;
-        private readonly ClientDiagnostics _migrationsClientDiagnostics;
-        private readonly Migrations _migrationsRestClient;
-        private readonly ClientDiagnostics _backupsLongTermRetentionClientDiagnostics;
-        private readonly BackupsLongTermRetention _backupsLongTermRetentionRestClient;
-        private readonly ClientDiagnostics _capabilitiesByServerClientDiagnostics;
-        private readonly CapabilitiesByServer _capabilitiesByServerRestClient;
-        private readonly ClientDiagnostics _capturedLogsClientDiagnostics;
-        private readonly CapturedLogs _capturedLogsRestClient;
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCollection for mocking. </summary>
         protected PostgreSqlFlexibleServerCollection()
@@ -52,16 +42,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             TryGetApiVersion(PostgreSqlFlexibleServerResource.ResourceType, out string postgreSqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
             _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
-            _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
-            _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
-            _backupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _backupsLongTermRetentionRestClient = new BackupsLongTermRetention(_backupsLongTermRetentionClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
-            _capabilitiesByServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _capabilitiesByServerRestClient = new CapabilitiesByServer(_capabilitiesByServerClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
-            _capturedLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _capturedLogsRestClient = new CapturedLogs(_capturedLogsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -114,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serverName, PostgreSqlFlexibleServerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(
-                    new PostgreSqlFlexibleServerOperationSource(Client),
+                    new PostgreSqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -172,7 +152,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serverName, PostgreSqlFlexibleServerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(
-                    new PostgreSqlFlexibleServerOperationSource(Client),
+                    new PostgreSqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -42,7 +42,7 @@ public class Sample_HostedAgent : SamplesBase
             memory: "1Gi"
         )
         {
-            Image = dockerImage,
+            ContainerConfiguration = new(dockerImage),
         };
         return agentDefinition;
     }
@@ -61,6 +61,7 @@ public class Sample_HostedAgent : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
+        #region Snippet:Sample_Agents_Deployment_HostedAgent
         Uri uriEndpoint = new(projectEndpoint);
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
@@ -80,8 +81,9 @@ public class Sample_HostedAgent : SamplesBase
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
-            throw new InvalidOperationException($"Agent deployment failes, status: {agentVersion.Status}.");
+            throw new InvalidOperationException($"Agent deployment failed, status: {agentVersion.Status}.");
         }
+        #endregion
         Console.WriteLine($"Deployed hosted agent {agentVersion.Name}, version {agentVersion.Version}.");
         // Do not do this occasionally.
         await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -120,7 +122,7 @@ public class Sample_HostedAgent : SamplesBase
         }
         if (agentVersion.Status != AgentVersionStatus.Active)
         {
-            throw new InvalidOperationException($"Agent deployment failes, status: {agentVersion.Status}.");
+            throw new InvalidOperationException($"Agent deployment failed, status: {agentVersion.Status}.");
         }
         Console.WriteLine($"Deployed hosted agent {agentVersion.Name}, version {agentVersion.Version}.");
         // Do not do this occasionally.

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing the ContainerAppSourceControl data model.
-    /// Container App SourceControl.
-    /// </summary>
+    /// <summary> Container App SourceControl. </summary>
     public partial class ContainerAppSourceControlData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppSourceControlData"/>. </summary>
         public ContainerAppSourceControlData()
@@ -57,43 +25,88 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppSourceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationState"> Current provisioning State of the operation. </param>
-        /// <param name="repoUri"> The repo url which will be integrated to ContainerApp. </param>
-        /// <param name="branch"> The branch which will trigger the auto deployment. </param>
-        /// <param name="gitHubActionConfiguration">
-        /// Container App Revision Template with all possible settings and the
-        /// defaults if user did not provide them. The defaults are populated
-        /// as they were at the creation time
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppSourceControlOperationState? operationState, Uri repoUri, string branch, ContainerAppGitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SourceControl resource specific properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SourceControlProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            OperationState = operationState;
-            RepoUri = repoUri;
-            Branch = branch;
-            GitHubActionConfiguration = gitHubActionConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> SourceControl resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SourceControlProperties Properties { get; set; }
 
         /// <summary> Current provisioning State of the operation. </summary>
         [WirePath("properties.operationState")]
-        public ContainerAppSourceControlOperationState? OperationState { get; }
+        public ContainerAppSourceControlOperationState? OperationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationState;
+            }
+        }
+
         /// <summary> The repo url which will be integrated to ContainerApp. </summary>
         [WirePath("properties.repoUrl")]
-        public Uri RepoUri { get; set; }
+        public Uri RepoUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepoUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.RepoUri = value;
+            }
+        }
+
         /// <summary> The branch which will trigger the auto deployment. </summary>
         [WirePath("properties.branch")]
-        public string Branch { get; set; }
+        public string Branch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Branch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.Branch = value;
+            }
+        }
+
         /// <summary>
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </summary>
         [WirePath("properties.githubActionConfiguration")]
-        public ContainerAppGitHubActionConfiguration GitHubActionConfiguration { get; set; }
+        public ContainerAppGitHubActionConfiguration GitHubActionConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GitHubActionConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.GitHubActionConfiguration = value;
+            }
+        }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _bucketsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, bucketName, NetAppBucketData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppBucketResource> operation = new NetAppArmOperation<NetAppBucketResource>(
-                    new NetAppBucketOperationSource(Client),
+                    new NetAppBucketResourceOperationSource(Client),
                     _bucketsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _bucketsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, bucketName, NetAppBucketData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppBucketResource> operation = new NetAppArmOperation<NetAppBucketResource>(
-                    new NetAppBucketOperationSource(Client),
+                    new NetAppBucketResourceOperationSource(Client),
                     _bucketsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -4,9 +4,8 @@ license: MIT
 metadata:
   version: "1.1.0"
   distribution: shared
-description: "Generate, build, and test Azure SDKs locally from TypeSpec with automatic customization. WHEN: \"generate SDK locally\", \"build SDK\", \"run SDK tests\", \"update changelog\", \"fix SDK build errors\", \"fix breaking changes\", \"resolve SDK generation errors\", \"customize TypeSpec\", \"rename SDK client\", \"rename SDK model\", \"hide operation from SDK\", \"fix analyzer errors\", \"resolve customization drift\", \"create subclient\", \"update metadata\", \"update version\". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version."
-compatibility:
-  requires: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
+description: "Generate, build, and test Azure SDKs locally from TypeSpec with automatic customization. WHEN: \"generate SDK locally\", \"build SDK\", \"run SDK tests\", \"run CI checks\", \"validate package\", \"run checks\", \"update changelog\", \"fix SDK build errors\", \"fix breaking changes\", \"resolve SDK generation errors\", \"customize TypeSpec\", \"rename SDK client\", \"rename SDK model\", \"hide operation from SDK\", \"fix analyzer errors\", \"resolve customization drift\", \"create subclient\", \"update metadata\", \"update version\". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version."
+compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
 # Generate SDK Locally
@@ -45,10 +44,17 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 
 [SDK repos](references/sdk-repos.md) | [Customization workflow](references/customization-workflow.md) | [Detailed workflow](references/detailed-workflow.md)
 
+## Guardrails
+
+- **NEVER modify generated SDK code files directly for customizations.** Always use `azure-sdk-mcp:azsdk_customized_code_update`. It handles classification, TypeSpec decorators, code patches, regeneration, and build as a single atomic workflow.
+- If `azure-sdk-mcp:azsdk_customized_code_update` fails or times out, **report the error to the user** and suggest retrying. Do not attempt to replicate its behavior by editing files manually.
+- Only the customization tool understands the correct layering of TypeSpec decorators vs code patches and ensures regenerated code stays consistent.
+
 ## Examples
 
 - "Generate the SDK locally for my TypeSpec service"
 - "Build and test the Python SDK package"
+- "Run CI checks for my SDK package"
 - "Fix the SDK build errors on this PR"
 - "The SDK generation has breaking changes, resolve them"
 - "Rename FooClient to BarClient for .NET"
@@ -66,4 +72,5 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 - Run `azure-sdk-mcp:azsdk_verify_setup` to confirm MCP and tools.
 - If build fails with type conflicts, breaking changes, analyzer errors, or customization drift, use `azure-sdk-mcp:azsdk_customized_code_update` to apply customizations.
 - The customization tool uses a two-phase approach: TypeSpec decorators first (Phase A), then code repairs if needed (Phase B).
+- If `azure-sdk-mcp:azsdk_customized_code_update` fails or times out, report the error and retry. Do not manually edit generated SDK code — manual edits will be overwritten on the next regeneration.
 - Without MCP, use `npx tsp-client` CLI.

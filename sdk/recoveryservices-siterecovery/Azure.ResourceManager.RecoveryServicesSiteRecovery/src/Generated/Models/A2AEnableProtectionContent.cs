@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,19 +18,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="A2AEnableProtectionContent"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricObjectId"/> is null. </exception>
-        public A2AEnableProtectionContent(ResourceIdentifier fabricObjectId)
+        public A2AEnableProtectionContent(ResourceIdentifier fabricObjectId) : base("A2A")
         {
             Argument.AssertNotNull(fabricObjectId, nameof(fabricObjectId));
 
             FabricObjectId = fabricObjectId;
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();
             VmManagedDisks = new ChangeTrackingList<A2AVmManagedDiskDetails>();
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
         /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
@@ -49,8 +49,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoverySubnetName"> The recovery subnet name. </param>
         /// <param name="recoveryVirtualMachineScaleSetId"> The virtual machine scale set Id. </param>
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
+        /// <param name="platformFaultDomain"> the platform fault domain. </param>
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
-        internal A2AEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier protectionClusterId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk) : base(instanceType, serializedAdditionalRawData)
+        internal A2AEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier protectionClusterId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, int? platformFaultDomain, AutoProtectionOfDataDisk? autoProtectionOfDataDisk) : base(instanceType, additionalBinaryDataProperties)
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
@@ -71,53 +72,70 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoverySubnetName = recoverySubnetName;
             RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
+            PlatformFaultDomain = platformFaultDomain;
             AutoProtectionOfDataDisk = autoProtectionOfDataDisk;
-            InstanceType = instanceType ?? "A2A";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="A2AEnableProtectionContent"/> for deserialization. </summary>
-        internal A2AEnableProtectionContent()
-        {
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
         public ResourceIdentifier FabricObjectId { get; }
+
         /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
+
         /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
         public ResourceIdentifier RecoveryResourceGroupId { get; set; }
+
         /// <summary> The recovery cloud service Id. Valid for V1 scenarios. </summary>
         public string RecoveryCloudServiceId { get; set; }
+
         /// <summary> The recovery availability set Id. </summary>
         public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
+
         /// <summary> The recovery proximity placement group Id. </summary>
         public ResourceIdentifier RecoveryProximityPlacementGroupId { get; set; }
+
         /// <summary> The list of vm disk details. </summary>
         public IList<A2AVmDiskDetails> VmDisks { get; }
+
         /// <summary> The list of vm managed disk details. </summary>
         public IList<A2AVmManagedDiskDetails> VmManagedDisks { get; }
+
         /// <summary> The multi vm group name. </summary>
         public string MultiVmGroupName { get; set; }
+
         /// <summary> The multi vm group id. </summary>
         public string MultiVmGroupId { get; set; }
+
         /// <summary> The replication protection cluster Id. </summary>
         public ResourceIdentifier ProtectionClusterId { get; set; }
+
         /// <summary> The boot diagnostic storage account. </summary>
         public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; set; }
+
         /// <summary> The recovery disk encryption information (for two pass flows). </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
+
         /// <summary> The recovery availability zone. </summary>
         public string RecoveryAvailabilityZone { get; set; }
+
         /// <summary> The recovery extended location. </summary>
         public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; set; }
+
         /// <summary> The recovery Azure virtual network ARM id. </summary>
         public ResourceIdentifier RecoveryAzureNetworkId { get; set; }
+
         /// <summary> The recovery subnet name. </summary>
         public string RecoverySubnetName { get; set; }
+
         /// <summary> The virtual machine scale set Id. </summary>
         public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; set; }
+
         /// <summary> The recovery capacity reservation group Id. </summary>
         public ResourceIdentifier RecoveryCapacityReservationGroupId { get; set; }
+
+        /// <summary> the platform fault domain. </summary>
+        public int? PlatformFaultDomain { get; set; }
+
         /// <summary> A value indicating whether the auto protection is enabled. </summary>
         public AutoProtectionOfDataDisk? AutoProtectionOfDataDisk { get; set; }
     }

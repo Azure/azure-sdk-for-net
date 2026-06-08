@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinDatabaseCreateAndUpdate()
         {
@@ -90,9 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyGremlinDatabases(database, database2);
 
-            var updateOptions = new GremlinDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
+            var updateOptions = new GremlinDatabaseCreateOrUpdateContent(AzureLocation.WestUS, database.Data.Resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             database = await (await GremlinDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Started, _databaseName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
@@ -100,7 +97,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyGremlinDatabases(database, database2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinDatabaseRestoreTest()
         {
@@ -137,9 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 CreateMode = CosmosDBAccountCreateMode.Restore
             };
 
-            var updateOptions = new GremlinDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, resource, new CosmosDBCreateUpdateConfig(), null);
+            var updateOptions = new GremlinDatabaseCreateOrUpdateContent(AzureLocation.WestUS, resource) { Options = new CosmosDBCreateUpdateConfig() };
 
             GremlinDatabaseResource database3 = await (await GremlinDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Started, _databaseName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
@@ -152,7 +146,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsFalse(exists);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinDatabaseList()
         {
@@ -165,7 +158,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyGremlinDatabases(databases[0], database);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinDatabaseThroughput()
         {
@@ -183,9 +175,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task GremlinDatabaseMigrateToAutoscale()
         {
             var database = await CreateGremlinDatabase(null);
@@ -196,9 +188,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task GremlinDatabaseMigrateToManual()
         {
             var database = await CreateGremlinDatabase(new AutoscaleSettings()
@@ -213,7 +205,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinDatabaseDelete()
         {
