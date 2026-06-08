@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.NetApp
     {
         private readonly ClientDiagnostics _backupsClientDiagnostics;
         private readonly Backups _backupsRestClient;
-        private readonly ClientDiagnostics _backupsUnderBackupVaultClientDiagnostics;
-        private readonly BackupsUnderBackupVault _backupsUnderBackupVaultRestClient;
 
         /// <summary> Initializes a new instance of NetAppBackupVaultBackupCollection for mocking. </summary>
         protected NetAppBackupVaultBackupCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.NetApp
             TryGetApiVersion(NetAppBackupVaultBackupResource.ResourceType, out string netAppBackupVaultBackupApiVersion);
             _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppBackupVaultBackupResource.ResourceType.Namespace, Diagnostics);
             _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-01-15-preview");
-            _backupsUnderBackupVaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppBackupVaultBackupResource.ResourceType.Namespace, Diagnostics);
-            _backupsUnderBackupVaultRestClient = new BackupsUnderBackupVault(_backupsUnderBackupVaultClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -97,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppBackupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppBackupVaultBackupResource> operation = new NetAppArmOperation<NetAppBackupVaultBackupResource>(
-                    new NetAppBackupVaultBackupOperationSource(Client),
+                    new NetAppBackupVaultBackupResourceOperationSource(Client),
                     _backupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -155,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppBackupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppBackupVaultBackupResource> operation = new NetAppArmOperation<NetAppBackupVaultBackupResource>(
-                    new NetAppBackupVaultBackupOperationSource(Client),
+                    new NetAppBackupVaultBackupResourceOperationSource(Client),
                     _backupsClientDiagnostics,
                     Pipeline,
                     message.Request,

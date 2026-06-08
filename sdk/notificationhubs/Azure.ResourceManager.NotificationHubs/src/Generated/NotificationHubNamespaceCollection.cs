@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.NotificationHubs
     {
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly Namespaces _namespacesRestClient;
-        private readonly ClientDiagnostics _namespaceResourcesClientDiagnostics;
-        private readonly NamespaceResources _namespaceResourcesRestClient;
 
         /// <summary> Initializes a new instance of NotificationHubNamespaceCollection for mocking. </summary>
         protected NotificationHubNamespaceCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.NotificationHubs
             TryGetApiVersion(NotificationHubNamespaceResource.ResourceType, out string notificationHubNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceResource.ResourceType.Namespace, Diagnostics);
             _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, notificationHubNamespaceApiVersion ?? "2023-10-01-preview");
-            _namespaceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespaceResourcesRestClient = new NamespaceResources(_namespaceResourcesClientDiagnostics, Pipeline, Endpoint, notificationHubNamespaceApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, NotificationHubNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NotificationHubsArmOperation<NotificationHubNamespaceResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(
-                    new NotificationHubNamespaceOperationSource(Client),
+                    new NotificationHubNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, NotificationHubNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NotificationHubsArmOperation<NotificationHubNamespaceResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(
-                    new NotificationHubNamespaceOperationSource(Client),
+                    new NotificationHubNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,

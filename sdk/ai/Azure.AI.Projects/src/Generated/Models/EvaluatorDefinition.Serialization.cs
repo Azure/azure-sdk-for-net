@@ -166,7 +166,7 @@ namespace Azure.AI.Projects.Evaluation
                         return CodeBasedEvaluatorDefinition.DeserializeCodeBasedEvaluatorDefinition(element, options);
                     case "prompt":
                         return PromptBasedEvaluatorDefinition.DeserializePromptBasedEvaluatorDefinition(element, options);
-                    case "rubrics":
+                    case "rubric":
                         return RubricBasedEvaluatorDefinition.DeserializeRubricBasedEvaluatorDefinition(element, options);
                 }
             }

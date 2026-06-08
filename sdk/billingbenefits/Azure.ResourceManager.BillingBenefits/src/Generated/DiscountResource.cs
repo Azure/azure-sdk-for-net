@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountsClientDiagnostics,
                     Pipeline,
                     message.Request,

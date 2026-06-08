@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct InMageV2RpRecoveryPointType : IEquatable<InMageV2RpRecoveryPointType>
     {
         private readonly string _value;
+        /// <summary> Latest. </summary>
+        private const string LatestValue = "Latest";
+        /// <summary> LatestApplicationConsistent. </summary>
+        private const string LatestApplicationConsistentValue = "LatestApplicationConsistent";
+        /// <summary> LatestCrashConsistent. </summary>
+        private const string LatestCrashConsistentValue = "LatestCrashConsistent";
+        /// <summary> LatestProcessed. </summary>
+        private const string LatestProcessedValue = "LatestProcessed";
 
         /// <summary> Initializes a new instance of <see cref="InMageV2RpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InMageV2RpRecoveryPointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LatestValue = "Latest";
-        private const string LatestApplicationConsistentValue = "LatestApplicationConsistent";
-        private const string LatestCrashConsistentValue = "LatestCrashConsistent";
-        private const string LatestProcessedValue = "LatestProcessed";
+            _value = value;
+        }
 
         /// <summary> Latest. </summary>
         public static InMageV2RpRecoveryPointType Latest { get; } = new InMageV2RpRecoveryPointType(LatestValue);
+
         /// <summary> LatestApplicationConsistent. </summary>
         public static InMageV2RpRecoveryPointType LatestApplicationConsistent { get; } = new InMageV2RpRecoveryPointType(LatestApplicationConsistentValue);
+
         /// <summary> LatestCrashConsistent. </summary>
         public static InMageV2RpRecoveryPointType LatestCrashConsistent { get; } = new InMageV2RpRecoveryPointType(LatestCrashConsistentValue);
+
         /// <summary> LatestProcessed. </summary>
         public static InMageV2RpRecoveryPointType LatestProcessed { get; } = new InMageV2RpRecoveryPointType(LatestProcessedValue);
+
         /// <summary> Determines if two <see cref="InMageV2RpRecoveryPointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InMageV2RpRecoveryPointType left, InMageV2RpRecoveryPointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InMageV2RpRecoveryPointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InMageV2RpRecoveryPointType left, InMageV2RpRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InMageV2RpRecoveryPointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InMageV2RpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InMageV2RpRecoveryPointType(string value) => new InMageV2RpRecoveryPointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InMageV2RpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InMageV2RpRecoveryPointType?(string value) => value == null ? null : new InMageV2RpRecoveryPointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InMageV2RpRecoveryPointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InMageV2RpRecoveryPointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

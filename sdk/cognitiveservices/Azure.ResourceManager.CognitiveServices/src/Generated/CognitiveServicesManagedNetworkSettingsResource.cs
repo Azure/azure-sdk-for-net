@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
-                    new CognitiveServicesManagedNetworkSettingsOperationSource(Client),
+                    new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
-                    new CognitiveServicesManagedNetworkSettingsOperationSource(Client),
+                    new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -422,11 +422,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The Managed Network Settings object of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CognitiveServicesOutboundRuleListResult>> UpdateOutboundRulesAsync(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
+        internal async Task<ArmOperation<CognitiveServicesOutboundRuleListResult>> UpdateOutboundRulesAsync(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("CognitiveServicesManagedNetworkSettingsResource.UpdateOutboundRules");
             scope.Start();
             try
@@ -481,11 +478,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The Managed Network Settings object of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CognitiveServicesOutboundRuleListResult> UpdateOutboundRules(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
+        internal ArmOperation<CognitiveServicesOutboundRuleListResult> UpdateOutboundRules(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("CognitiveServicesManagedNetworkSettingsResource.UpdateOutboundRules");
             scope.Start();
             try

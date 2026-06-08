@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CosmosDBSqlClientEncryptionKeyResource : IJsonModel<CosmosDBSqlClientEncryptionKeyData>
     {
-        private static CosmosDBSqlClientEncryptionKeyData s_dataDeserializationInstance;
-        private static CosmosDBSqlClientEncryptionKeyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CosmosDBSqlClientEncryptionKeyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CosmosDBSqlClientEncryptionKeyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CosmosDBSqlClientEncryptionKeyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBSqlClientEncryptionKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlClientEncryptionKeyData>)Data).Write(writer, options);
 
-        CosmosDBSqlClientEncryptionKeyData IJsonModel<CosmosDBSqlClientEncryptionKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlClientEncryptionKeyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlClientEncryptionKeyData IJsonModel<CosmosDBSqlClientEncryptionKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlClientEncryptionKeyData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosDBSqlClientEncryptionKeyData IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlClientEncryptionKeyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

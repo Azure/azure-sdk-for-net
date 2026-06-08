@@ -31,7 +31,7 @@ Typical triggers:
 
 1. **Never edit `src/Generated/` or `metadata.json` by hand.**
 2. **Never add `ApiCompatBaseline.txt` entries or disable ApiCompat/package validation.**
-3. **Prefer spec-side decorators first**: `@@clientName`, `@@access`, `@@alternateType`, `@@markAsPageable`.
+3. **Prefer spec-side decorators first**: `@@clientName`, `@@alternateType`, `@@markAsPageable`.
 4. **Use MCP tools first for deterministic custom-code edits**; hand-edit only the remaining shim logic.
 5. **Use SDK customizations only** for backward-compat shims or when decorators cannot express the fix.
 
@@ -59,7 +59,7 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
    ```
    Verification semantics — every GA resource must exist in the new SDK with the same `ResourceType`, parent set, scope, and singleton flag. Class-name renames are reported but not blocking.
    - Exit `0` → hierarchy matches; continue.
-   - Exit `1` → **structural drift** (missing resource / parent / scope / singleton flip). Block and fix spec-side first (typespec-azure decorators such as `@parentResource`, `@singleton`, `@@hierarchyBuilding`, scope-defining templates) **before** entering the Phase 2 build-fix loop, otherwise downstream ApiCompat work will compound.
+   - Exit `1` → **structural drift** (missing resource / parent / scope / singleton flip). Block and fix spec-side first (typespec-azure decorators such as `@parentResource`, `@singleton`, scope-defining templates) **before** entering the Phase 2 build-fix loop, otherwise downstream ApiCompat work will compound. For C# base-model/base-type compatibility, do **not** use `@@hierarchyBuilding`; use SDK-side custom code after the generated surface is stable.
    - Exit `2` → **class-name renames only**, structural hierarchy is intact. Non-blocking; record the renames in the migration status and address them during Phase 2 alongside other surface-level fixes.
 8. Build — expect errors, proceed to Phase 2.
 
@@ -101,11 +101,9 @@ Treat deleted custom code as **suspect by default**. Re-add only the smallest co
 |---------|-----------|
 | Wrong property type | `@@alternateType(Model.prop, targetType, "csharp")` |
 | Wrong name | `@@clientName(target, "NewName", "csharp")` |
-| Type should be public | `@@access(Model, Access.public, "csharp")` |
 | Model should be input and output | `@@usage(Model, Usage.input, "csharp")` (decorator appends; only specify the missing flag) |
 | Needs pageable return type | `@@markAsPageable(Interface.op, "csharp")` |
 | Flatten properties envelope | `@@flattenProperty(Model.properties, "csharp")` |
-| Change base type | `@@hierarchyBuilding(Model, TargetBase, "csharp")` |
 | Wrong operation parameter type | `@@alternateType(Interface.op::parameters.param, targetType, "csharp")` |
 | Operation name collision | `@@clientLocation(Interface.op, "GroupName", "csharp")` |
 
@@ -121,6 +119,7 @@ This preserves the purpose of model factories: callers can provide arbitrary val
 
 | Problem | Fix |
 |---------|-----|
+| Base model/base type changed | Add a custom partial model in `src/Customization/` that declares the intended base model (use `[CodeGenType]` only when the custom type name differs from the generated/TypeSpec name), then regenerate so the generator honors the customization. Do **not** use `@@hierarchyBuilding`. |
 | Flattened properties lost (polymorphic type) | Shim properties delegating to `Properties` bag |
 | Protected constructor missing (discriminated base) | `protected` ctor in partial class |
 | Property lost due to `@@alternateType` model swap | Add property in partial class |

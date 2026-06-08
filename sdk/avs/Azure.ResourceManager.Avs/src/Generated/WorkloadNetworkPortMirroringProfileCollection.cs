@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkPortMirroringProfileResource> operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(
-                    new WorkloadNetworkPortMirroringProfileOperationSource(Client),
+                    new WorkloadNetworkPortMirroringProfileResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, portMirroringId, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkPortMirroringProfileResource> operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(
-                    new WorkloadNetworkPortMirroringProfileOperationSource(Client),
+                    new WorkloadNetworkPortMirroringProfileResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

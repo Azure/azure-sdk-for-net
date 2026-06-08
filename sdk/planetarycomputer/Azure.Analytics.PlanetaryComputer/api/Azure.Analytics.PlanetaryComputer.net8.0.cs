@@ -2579,12 +2579,3 @@ namespace Azure.Analytics.PlanetaryComputer
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.VariableMatrixWidth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class PlanetaryComputerClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-    }
-}
