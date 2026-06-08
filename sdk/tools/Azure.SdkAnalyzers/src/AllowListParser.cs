@@ -79,14 +79,8 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
-            // Split into CODE and optional target on the first literal space.
-            // We use a literal ' ' (not generic whitespace) so the parser stays
-            // consistent with eng/AnalyzerAllowList.targets, which checks for a
-            // space character to decide whether an entry is whole-assembly or
-            // scoped. See eng/analyzerallowlist/README.md.
-            int wsIndex = line.IndexOf(' ');
-            int bodyStart = NoWarnPrefix.Length;
             // Skip leading spaces between "nowarn:" and CODE (lenient).
+            int bodyStart = NoWarnPrefix.Length;
             while (bodyStart < line.Length && line[bodyStart] == ' ')
             {
                 bodyStart++;
@@ -96,7 +90,13 @@ namespace Azure.SdkAnalyzers
             {
                 return null;
             }
-            wsIndex = body.IndexOf(' ');
+
+            // Split into CODE and optional target on the first literal space. We
+            // use a literal ' ' (not generic whitespace) so the parser stays
+            // consistent with eng/AnalyzerAllowList.targets, which checks for a
+            // space character to decide whether an entry is whole-assembly or
+            // scoped. See eng/analyzerallowlist/README.md.
+            int wsIndex = body.IndexOf(' ');
             string code;
             string targetPart;
             if (wsIndex < 0)
