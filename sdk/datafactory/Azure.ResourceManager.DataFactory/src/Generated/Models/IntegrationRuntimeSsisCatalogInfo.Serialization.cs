@@ -159,11 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("catalogAdminPassword"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    catalogAdminPassword = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
+                    ReadCatalogAdminPassword(prop, ref catalogAdminPassword);
                     continue;
                 }
                 if (prop.NameEquals("catalogPricingTier"u8))

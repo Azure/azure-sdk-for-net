@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Hive Server linked service properties. </summary>
-    internal partial class HiveLinkedServiceTypeProperties : IJsonModel<HiveLinkedServiceTypeProperties>
+    public partial class HiveLinkedServiceTypeProperties : IJsonModel<HiveLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HiveLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HiveLinkedServiceTypeProperties()
@@ -287,11 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("httpPath"u8))

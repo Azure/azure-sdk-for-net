@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Web table dataset properties. </summary>
-    internal partial class WebTableDatasetTypeProperties : IJsonModel<WebTableDatasetTypeProperties>
+    public partial class WebTableDatasetTypeProperties : IJsonModel<WebTableDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="WebTableDatasetTypeProperties"/> for deserialization. </summary>
         internal WebTableDatasetTypeProperties()
@@ -141,11 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("path"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    path = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPath(prop, ref path);
                     continue;
                 }
                 if (options.Format != "W")

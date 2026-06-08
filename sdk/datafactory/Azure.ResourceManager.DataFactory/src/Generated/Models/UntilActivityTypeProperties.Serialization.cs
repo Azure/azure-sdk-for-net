@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Until activity properties. </summary>
-    internal partial class UntilActivityTypeProperties : IJsonModel<UntilActivityTypeProperties>
+    public partial class UntilActivityTypeProperties : IJsonModel<UntilActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="UntilActivityTypeProperties"/> for deserialization. </summary>
         internal UntilActivityTypeProperties()
@@ -149,11 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("timeout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeout = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadTimeout(prop, ref timeout);
                     continue;
                 }
                 if (prop.NameEquals("activities"u8))

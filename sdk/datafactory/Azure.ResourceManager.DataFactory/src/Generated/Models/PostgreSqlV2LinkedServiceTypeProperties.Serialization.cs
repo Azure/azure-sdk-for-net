@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> PostgreSqlV2 linked service properties. </summary>
-    internal partial class PostgreSqlV2LinkedServiceTypeProperties : IJsonModel<PostgreSqlV2LinkedServiceTypeProperties>
+    public partial class PostgreSqlV2LinkedServiceTypeProperties : IJsonModel<PostgreSqlV2LinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlV2LinkedServiceTypeProperties"/> for deserialization. </summary>
         internal PostgreSqlV2LinkedServiceTypeProperties()
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))
@@ -260,11 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("schema"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schema = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadSchema(prop, ref schema);
                     continue;
                 }
                 if (prop.NameEquals("pooling"u8))

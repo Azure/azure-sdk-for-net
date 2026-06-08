@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Oracle Service Cloud linked service properties. </summary>
-    internal partial class OracleServiceCloudLinkedServiceTypeProperties : IJsonModel<OracleServiceCloudLinkedServiceTypeProperties>
+    public partial class OracleServiceCloudLinkedServiceTypeProperties : IJsonModel<OracleServiceCloudLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal OracleServiceCloudLinkedServiceTypeProperties()
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))

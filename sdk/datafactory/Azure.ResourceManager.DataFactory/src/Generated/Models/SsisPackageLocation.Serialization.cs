@@ -140,11 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("packagePath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    packagePath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPackagePath(prop, ref packagePath);
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

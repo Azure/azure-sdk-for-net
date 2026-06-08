@@ -143,38 +143,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("project"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    project = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadProject(prop, ref project);
                     continue;
                 }
                 if (prop.NameEquals("sort"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sort = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSort(prop, ref sort);
                     continue;
                 }
                 if (prop.NameEquals("skip"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    skip = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSkip(prop, ref skip);
                     continue;
                 }
                 if (prop.NameEquals("limit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    limit = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadLimit(prop, ref limit);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

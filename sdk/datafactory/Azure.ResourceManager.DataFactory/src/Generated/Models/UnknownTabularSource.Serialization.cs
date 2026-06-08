@@ -7,14 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownTabularSource : TabularSource, IJsonModel<TabularSource>
+    /// <summary> Unknown variant of TabularSource. </summary>
+    public partial class UnknownTabularSource : TabularSource, IJsonModel<TabularSource>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTabularSource"/> for deserialization. </summary>
         internal UnknownTabularSource()
@@ -56,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TabularSource IPersistableModel<TabularSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownTabularSource)PersistableModelCreateCore(data, options);
+        TabularSource IPersistableModel<TabularSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (TabularSource)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TabularSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TabularSource IJsonModel<TabularSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownTabularSource)JsonModelCreateCore(ref reader, options);
+        TabularSource IJsonModel<TabularSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (TabularSource)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -97,99 +102,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTabularSource(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownTabularSource DeserializeUnknownTabularSource(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string @type = "unknown";
-            DataFactoryElement<int> sourceRetryCount = default;
-            DataFactoryElement<string> sourceRetryWait = default;
-            DataFactoryElement<int> maxConcurrentConnections = default;
-            DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DataFactoryElement<string> queryTimeout = default;
-            BinaryData additionalColumns = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("sourceRetryCount"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("sourceRetryWait"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryWait = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("queryTimeout"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryTimeout = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("additionalColumns"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalColumns = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new UnknownTabularSource(
-                @type,
-                sourceRetryCount,
-                sourceRetryWait,
-                maxConcurrentConnections,
-                disableMetricsCollection,
-                additionalProperties,
-                queryTimeout,
-                additionalColumns);
         }
     }
 }

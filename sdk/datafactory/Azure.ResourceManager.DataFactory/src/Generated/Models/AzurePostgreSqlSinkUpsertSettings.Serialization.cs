@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Database for PostgreSQL upsert option settings. </summary>
-    internal partial class AzurePostgreSqlSinkUpsertSettings : IJsonModel<AzurePostgreSqlSinkUpsertSettings>
+    public partial class AzurePostgreSqlSinkUpsertSettings : IJsonModel<AzurePostgreSqlSinkUpsertSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -128,11 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("keys"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    keys = ModelReaderWriter.Read<DataFactoryElement<IList<string>>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadKeys(prop, ref keys);
                     continue;
                 }
                 if (options.Format != "W")

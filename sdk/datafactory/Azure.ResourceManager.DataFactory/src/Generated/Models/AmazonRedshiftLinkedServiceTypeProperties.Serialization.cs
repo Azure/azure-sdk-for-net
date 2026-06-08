@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Amazon Redshift linked service properties. </summary>
-    internal partial class AmazonRedshiftLinkedServiceTypeProperties : IJsonModel<AmazonRedshiftLinkedServiceTypeProperties>
+    public partial class AmazonRedshiftLinkedServiceTypeProperties : IJsonModel<AmazonRedshiftLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AmazonRedshiftLinkedServiceTypeProperties()
@@ -156,11 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))

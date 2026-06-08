@@ -120,11 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("preserveCompressionFileNameAsFolder"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    preserveCompressionFileNameAsFolder = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPreserveCompressionFileNameAsFolder(prop, ref preserveCompressionFileNameAsFolder);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

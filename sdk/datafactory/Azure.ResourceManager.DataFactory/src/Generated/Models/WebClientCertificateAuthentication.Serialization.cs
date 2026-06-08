@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("pfx"u8))
                 {
-                    pfx = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
+                    ReadPfx(prop, ref pfx);
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
                 {
-                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
+                    ReadPassword(prop, ref password);
                     continue;
                 }
                 if (options.Format != "W")

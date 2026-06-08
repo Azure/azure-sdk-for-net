@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Phoenix server linked service properties. </summary>
-    internal partial class PhoenixLinkedServiceTypeProperties : IJsonModel<PhoenixLinkedServiceTypeProperties>
+    public partial class PhoenixLinkedServiceTypeProperties : IJsonModel<PhoenixLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PhoenixLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal PhoenixLinkedServiceTypeProperties()
@@ -215,11 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("enableSsl"u8))

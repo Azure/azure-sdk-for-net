@@ -7,14 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownExecutionActivity : ExecutionActivity, IJsonModel<ExecutionActivity>
+    /// <summary> Unknown variant of ExecutionActivity. </summary>
+    public partial class UnknownExecutionActivity : ExecutionActivity, IJsonModel<ExecutionActivity>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExecutionActivity"/> for deserialization. </summary>
         internal UnknownExecutionActivity()
@@ -56,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecutionActivity IPersistableModel<ExecutionActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownExecutionActivity)PersistableModelCreateCore(data, options);
+        ExecutionActivity IPersistableModel<ExecutionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (ExecutionActivity)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExecutionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecutionActivity IJsonModel<ExecutionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownExecutionActivity)JsonModelCreateCore(ref reader, options);
+        ExecutionActivity IJsonModel<ExecutionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (ExecutionActivity)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -97,123 +102,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExecutionActivity(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownExecutionActivity DeserializeUnknownExecutionActivity(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            string @type = "unknown";
-            string description = default;
-            PipelineActivityState? state = default;
-            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
-            IList<PipelineActivityDependency> dependsOn = default;
-            IList<PipelineActivityUserProperty> userProperties = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DataFactoryLinkedServiceReference linkedServiceName = default;
-            PipelineActivityPolicy policy = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("state"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new PipelineActivityState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("onInactiveMarkAs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("dependsOn"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
-                    }
-                    dependsOn = array;
-                    continue;
-                }
-                if (prop.NameEquals("userProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
-                    }
-                    userProperties = array;
-                    continue;
-                }
-                if (prop.NameEquals("linkedServiceName"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("policy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new UnknownExecutionActivity(
-                name,
-                @type,
-                description,
-                state,
-                onInactiveMarkAs,
-                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
-                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
-                additionalProperties,
-                linkedServiceName,
-                policy);
         }
     }
 }

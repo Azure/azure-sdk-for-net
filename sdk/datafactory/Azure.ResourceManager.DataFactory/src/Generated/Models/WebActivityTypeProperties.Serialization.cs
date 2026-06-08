@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Web activity type properties. </summary>
-    internal partial class WebActivityTypeProperties : IJsonModel<WebActivityTypeProperties>
+    public partial class WebActivityTypeProperties : IJsonModel<WebActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="WebActivityTypeProperties"/> for deserialization. </summary>
         internal WebActivityTypeProperties()
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("headers"u8))
@@ -262,11 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("httpRequestTimeout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    httpRequestTimeout = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadHttpRequestTimeout(prop, ref httpRequestTimeout);
                     continue;
                 }
                 if (prop.NameEquals("turnOffAsync"u8))

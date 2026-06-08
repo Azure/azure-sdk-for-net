@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sap ECC OData resource dataset properties. </summary>
-    internal partial class SapEccResourceDatasetTypeProperties
+    public partial class SapEccResourceDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

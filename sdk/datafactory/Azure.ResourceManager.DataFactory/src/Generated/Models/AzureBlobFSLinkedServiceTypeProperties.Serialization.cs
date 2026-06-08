@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Data Lake Storage Gen2 linked service properties. </summary>
-    internal partial class AzureBlobFSLinkedServiceTypeProperties : IJsonModel<AzureBlobFSLinkedServiceTypeProperties>
+    public partial class AzureBlobFSLinkedServiceTypeProperties : IJsonModel<AzureBlobFSLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -176,11 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("accountKey"u8))
@@ -194,11 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))

@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.DataFactory;
 
@@ -99,108 +98,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppendVariableActivity(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppendVariableActivity DeserializeAppendVariableActivity(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            string @type = "AppendVariable";
-            string description = default;
-            PipelineActivityState? state = default;
-            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
-            IList<PipelineActivityDependency> dependsOn = default;
-            IList<PipelineActivityUserProperty> userProperties = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AppendVariableActivityTypeProperties typeProperties = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("state"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new PipelineActivityState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("onInactiveMarkAs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("dependsOn"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
-                    }
-                    dependsOn = array;
-                    continue;
-                }
-                if (prop.NameEquals("userProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
-                    }
-                    userProperties = array;
-                    continue;
-                }
-                if (prop.NameEquals("typeProperties"u8))
-                {
-                    typeProperties = AppendVariableActivityTypeProperties.DeserializeAppendVariableActivityTypeProperties(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new AppendVariableActivity(
-                name,
-                @type,
-                description,
-                state,
-                onInactiveMarkAs,
-                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
-                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
-                additionalProperties,
-                typeProperties);
         }
     }
 }

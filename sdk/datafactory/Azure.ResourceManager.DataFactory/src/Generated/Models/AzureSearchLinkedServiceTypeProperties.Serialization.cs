@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Windows Azure Search Service linked service properties. </summary>
-    internal partial class AzureSearchLinkedServiceTypeProperties : IJsonModel<AzureSearchLinkedServiceTypeProperties>
+    public partial class AzureSearchLinkedServiceTypeProperties : IJsonModel<AzureSearchLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureSearchLinkedServiceTypeProperties()
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

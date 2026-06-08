@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("packagePath"u8))
                 {
-                    packagePath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPackagePath(prop, ref packagePath);
                     continue;
                 }
                 if (prop.NameEquals("packageName"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("packageContent"u8))
                 {
-                    packageContent = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPackageContent(prop, ref packageContent);
                     continue;
                 }
                 if (prop.NameEquals("packageLastModifiedDate"u8))

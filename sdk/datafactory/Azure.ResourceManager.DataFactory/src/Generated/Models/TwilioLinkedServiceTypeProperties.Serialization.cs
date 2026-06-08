@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Twilio linked service type properties. </summary>
-    internal partial class TwilioLinkedServiceTypeProperties : IJsonModel<TwilioLinkedServiceTypeProperties>
+    public partial class TwilioLinkedServiceTypeProperties : IJsonModel<TwilioLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="TwilioLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal TwilioLinkedServiceTypeProperties()
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("userName"u8))
                 {
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (options.Format != "W")

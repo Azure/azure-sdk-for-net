@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Presto server linked service properties. </summary>
-    internal partial class PrestoLinkedServiceTypeProperties
+    public partial class PrestoLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

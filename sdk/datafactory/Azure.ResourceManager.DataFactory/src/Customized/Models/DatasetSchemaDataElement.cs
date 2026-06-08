@@ -9,12 +9,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Expressions.DataFactory;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
+    // generator treats this Dfe<T>-wrapped model as output-only and emits getter-only properties
+    // plus a read-only additional-properties bag, but the GA contract exposed mutable members.
+    // TODO: remove once the generator honors input usage through DataFactoryElement<T> wrappers (#59298).
     [JsonConverter(typeof(DatasetSchemaDataElement.DatasetSchemaDataElementConverter))]
     public partial class DatasetSchemaDataElement
     {
@@ -23,6 +30,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             _additionalBinaryDataProperties = new global::Azure.ResourceManager.DataFactory.ChangeTrackingDictionary<string, BinaryData>();
         }
+
+        /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
+        [CodeGenMember("SchemaColumnName")]
+        public DataFactoryElement<string> SchemaColumnName { get; set; }
+
+        /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
+        [CodeGenMember("SchemaColumnType")]
+        public DataFactoryElement<string> SchemaColumnType { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        [CodeGenMember("AdditionalProperties")]
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
 
         internal sealed class DatasetSchemaDataElementConverter : JsonConverter<DatasetSchemaDataElement>
         {

@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
@@ -85,17 +84,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(SchemaColumnType, options);
             }
-            foreach (var item in AdditionalProperties)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
@@ -114,42 +116,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatasetSchemaDataElement(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatasetSchemaDataElement DeserializeDatasetSchemaDataElement(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            DataFactoryElement<string> schemaColumnName = default;
-            DataFactoryElement<string> schemaColumnType = default;
-            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("name"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schemaColumnName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schemaColumnType = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-            }
-            return new DatasetSchemaDataElement(schemaColumnName, schemaColumnType, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
     }
 }

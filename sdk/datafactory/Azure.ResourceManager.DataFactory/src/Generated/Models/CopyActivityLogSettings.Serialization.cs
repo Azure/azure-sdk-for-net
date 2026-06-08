@@ -134,20 +134,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("logLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    logLevel = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadLogLevel(prop, ref logLevel);
                     continue;
                 }
                 if (prop.NameEquals("enableReliableLogging"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableReliableLogging = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadEnableReliableLogging(prop, ref enableReliableLogging);
                     continue;
                 }
                 if (options.Format != "W")

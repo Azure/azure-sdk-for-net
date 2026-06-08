@@ -12,9 +12,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
+    // generator treats this Dfe<T>-wrapped model as output-only and emits a getter-only Name,
+    // but the GA contract exposed a setter. CodeGenMember is required to replace the generated property.
+    // TODO: remove once the generator honors input usage through DataFactoryElement<T> wrappers (#59298).
     [JsonConverter(typeof(Office365TableOutputColumn.Office365TableOutputColumnConverter))]
     public partial class Office365TableOutputColumn
     {
@@ -22,6 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Office365TableOutputColumn()
         {
         }
+
+        /// <summary> Name of the table column. Type: string. </summary>
+        [CodeGenMember("Name")]
+        public string Name { get; set; }
 
         internal sealed class Office365TableOutputColumnConverter : JsonConverter<Office365TableOutputColumn>
         {

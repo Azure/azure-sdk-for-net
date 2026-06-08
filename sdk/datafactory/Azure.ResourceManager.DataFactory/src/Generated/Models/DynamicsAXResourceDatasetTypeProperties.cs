@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Dynamics AX OData resource dataset properties. </summary>
-    internal partial class DynamicsAXResourceDatasetTypeProperties
+    public partial class DynamicsAXResourceDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

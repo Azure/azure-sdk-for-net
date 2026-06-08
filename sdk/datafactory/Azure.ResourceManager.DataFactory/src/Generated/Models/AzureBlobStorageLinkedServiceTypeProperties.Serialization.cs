@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Blob Storage linked service properties. </summary>
-    internal partial class AzureBlobStorageLinkedServiceTypeProperties : IJsonModel<AzureBlobStorageLinkedServiceTypeProperties>
+    public partial class AzureBlobStorageLinkedServiceTypeProperties : IJsonModel<AzureBlobStorageLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -215,11 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))

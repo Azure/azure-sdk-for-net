@@ -14,7 +14,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> WebHook activity type properties. </summary>
-    internal partial class WebHookActivityTypeProperties
+    public partial class WebHookActivityTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

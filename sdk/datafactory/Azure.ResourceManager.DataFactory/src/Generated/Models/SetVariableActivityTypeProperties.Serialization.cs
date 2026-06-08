@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SetVariable activity properties. </summary>
-    internal partial class SetVariableActivityTypeProperties : IJsonModel<SetVariableActivityTypeProperties>
+    public partial class SetVariableActivityTypeProperties : IJsonModel<SetVariableActivityTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -145,11 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    value = ModelReaderWriter.Read<DataFactoryElement<BinaryData>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadValue(prop, ref value);
                     continue;
                 }
                 if (prop.NameEquals("setSystemVariable"u8))

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> TeamDesk linked service type properties. </summary>
-    internal partial class TeamDeskLinkedServiceTypeProperties : IJsonModel<TeamDeskLinkedServiceTypeProperties>
+    public partial class TeamDeskLinkedServiceTypeProperties : IJsonModel<TeamDeskLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="TeamDeskLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal TeamDeskLinkedServiceTypeProperties()
@@ -150,16 +150,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

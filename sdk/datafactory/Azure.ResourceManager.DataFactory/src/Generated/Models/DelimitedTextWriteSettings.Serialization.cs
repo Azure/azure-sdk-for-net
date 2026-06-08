@@ -140,34 +140,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("quoteAllText"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    quoteAllText = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadQuoteAllText(prop, ref quoteAllText);
                     continue;
                 }
                 if (prop.NameEquals("fileExtension"u8))
                 {
-                    fileExtension = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFileExtension(prop, ref fileExtension);
                     continue;
                 }
                 if (prop.NameEquals("maxRowsPerFile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxRowsPerFile = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadMaxRowsPerFile(prop, ref maxRowsPerFile);
                     continue;
                 }
                 if (prop.NameEquals("fileNamePrefix"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fileNamePrefix = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFileNamePrefix(prop, ref fileNamePrefix);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

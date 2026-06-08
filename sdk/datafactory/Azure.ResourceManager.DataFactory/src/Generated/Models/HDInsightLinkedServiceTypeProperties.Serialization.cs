@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HDInsight linked service properties. </summary>
-    internal partial class HDInsightLinkedServiceTypeProperties : IJsonModel<HDInsightLinkedServiceTypeProperties>
+    public partial class HDInsightLinkedServiceTypeProperties : IJsonModel<HDInsightLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HDInsightLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HDInsightLinkedServiceTypeProperties()
@@ -180,11 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -203,11 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("fileSystem"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fileSystem = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadFileSystem(prop, ref fileSystem);
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

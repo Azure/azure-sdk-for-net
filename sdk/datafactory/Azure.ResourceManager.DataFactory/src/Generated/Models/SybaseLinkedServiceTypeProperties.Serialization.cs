@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sybase linked service properties. </summary>
-    internal partial class SybaseLinkedServiceTypeProperties : IJsonModel<SybaseLinkedServiceTypeProperties>
+    public partial class SybaseLinkedServiceTypeProperties : IJsonModel<SybaseLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SybaseLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SybaseLinkedServiceTypeProperties()
@@ -167,11 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("schema"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schema = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadSchema(prop, ref schema);
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))
@@ -185,11 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

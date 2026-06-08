@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SSIS package location properties. </summary>
-    internal partial class SSISPackageLocationTypeProperties
+    public partial class SSISPackageLocationTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Excel dataset properties. </summary>
-    internal partial class ExcelDatasetTypeProperties : IJsonModel<ExcelDatasetTypeProperties>
+    public partial class ExcelDatasetTypeProperties : IJsonModel<ExcelDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ExcelDatasetTypeProperties"/> for deserialization. </summary>
         internal ExcelDatasetTypeProperties()
@@ -198,11 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("firstRowAsHeader"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    firstRowAsHeader = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadFirstRowAsHeader(prop, ref firstRowAsHeader);
                     continue;
                 }
                 if (prop.NameEquals("compression"u8))
@@ -216,11 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("nullValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nullValue = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadNullValue(prop, ref nullValue);
                     continue;
                 }
                 if (options.Format != "W")

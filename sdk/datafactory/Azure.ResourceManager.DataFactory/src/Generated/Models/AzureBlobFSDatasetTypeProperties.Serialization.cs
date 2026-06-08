@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Data Lake Storage Gen2 dataset properties. </summary>
-    internal partial class AzureBlobFSDatasetTypeProperties : IJsonModel<AzureBlobFSDatasetTypeProperties>
+    public partial class AzureBlobFSDatasetTypeProperties : IJsonModel<AzureBlobFSDatasetTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -146,20 +146,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("folderPath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    folderPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadFolderPath(prop, ref folderPath);
                     continue;
                 }
                 if (prop.NameEquals("fileName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fileName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadFileName(prop, ref fileName);
                     continue;
                 }
                 if (prop.NameEquals("format"u8))

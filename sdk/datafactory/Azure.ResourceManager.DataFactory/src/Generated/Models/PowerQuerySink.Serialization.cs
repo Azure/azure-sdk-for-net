@@ -145,11 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("linkedService"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
+                    ReadLinkedService(prop, ref linkedService);
                     continue;
                 }
                 if (prop.NameEquals("flowlet"u8))
@@ -163,20 +159,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("schemaLinkedService"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schemaLinkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
+                    ReadSchemaLinkedService(prop, ref schemaLinkedService);
                     continue;
                 }
                 if (prop.NameEquals("rejectedDataLinkedService"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rejectedDataLinkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
+                    ReadRejectedDataLinkedService(prop, ref rejectedDataLinkedService);
                     continue;
                 }
                 if (prop.NameEquals("script"u8))

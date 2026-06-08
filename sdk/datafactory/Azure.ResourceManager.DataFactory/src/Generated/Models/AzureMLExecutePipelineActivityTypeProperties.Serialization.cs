@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure ML Execute Pipeline activity properties. </summary>
-    internal partial class AzureMLExecutePipelineActivityTypeProperties : IJsonModel<AzureMLExecutePipelineActivityTypeProperties>
+    public partial class AzureMLExecutePipelineActivityTypeProperties : IJsonModel<AzureMLExecutePipelineActivityTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -195,11 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    version = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadVersion(prop, ref version);
                     continue;
                 }
                 if (prop.NameEquals("experimentName"u8))

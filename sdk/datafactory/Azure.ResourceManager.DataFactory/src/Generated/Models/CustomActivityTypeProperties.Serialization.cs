@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom activity properties. </summary>
-    internal partial class CustomActivityTypeProperties : IJsonModel<CustomActivityTypeProperties>
+    public partial class CustomActivityTypeProperties : IJsonModel<CustomActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CustomActivityTypeProperties"/> for deserialization. </summary>
         internal CustomActivityTypeProperties()
@@ -190,11 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("folderPath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    folderPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadFolderPath(prop, ref folderPath);
                     continue;
                 }
                 if (prop.NameEquals("referenceObjects"u8))

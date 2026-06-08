@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> MongoDB linked service properties. </summary>
-    internal partial class MongoDbLinkedServiceTypeProperties : IJsonModel<MongoDbLinkedServiceTypeProperties>
+    public partial class MongoDbLinkedServiceTypeProperties : IJsonModel<MongoDbLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDbLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal MongoDbLinkedServiceTypeProperties()
@@ -194,11 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("authSource"u8))

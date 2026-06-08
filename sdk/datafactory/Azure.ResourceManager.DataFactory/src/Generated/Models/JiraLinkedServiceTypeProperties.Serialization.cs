@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Jira Service linked service properties. </summary>
-    internal partial class JiraLinkedServiceTypeProperties : IJsonModel<JiraLinkedServiceTypeProperties>
+    public partial class JiraLinkedServiceTypeProperties : IJsonModel<JiraLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="JiraLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal JiraLinkedServiceTypeProperties()
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))

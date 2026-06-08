@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
-    internal partial class SapOpenHubTableDatasetTypeProperties : IJsonModel<SapOpenHubTableDatasetTypeProperties>
+    public partial class SapOpenHubTableDatasetTypeProperties : IJsonModel<SapOpenHubTableDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDatasetTypeProperties"/> for deserialization. </summary>
         internal SapOpenHubTableDatasetTypeProperties()
@@ -147,20 +147,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("excludeLastRequest"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    excludeLastRequest = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadExcludeLastRequest(prop, ref excludeLastRequest);
                     continue;
                 }
                 if (prop.NameEquals("baseRequestId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    baseRequestId = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadBaseRequestId(prop, ref baseRequestId);
                     continue;
                 }
                 if (options.Format != "W")

@@ -153,20 +153,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalId = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("servicePrincipalKey"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalKey = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
+                    ReadServicePrincipalKey(prop, ref servicePrincipalKey);
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

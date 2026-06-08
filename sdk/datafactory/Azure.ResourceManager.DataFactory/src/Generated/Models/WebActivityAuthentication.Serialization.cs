@@ -169,47 +169,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("pfx"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    pfx = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
+                    ReadPfx(prop, ref pfx);
                     continue;
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
+                    ReadPassword(prop, ref password);
                     continue;
                 }
                 if (prop.NameEquals("resource"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resource = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadResource(prop, ref resource);
                     continue;
                 }
                 if (prop.NameEquals("userTenant"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userTenant = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadUserTenant(prop, ref userTenant);
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

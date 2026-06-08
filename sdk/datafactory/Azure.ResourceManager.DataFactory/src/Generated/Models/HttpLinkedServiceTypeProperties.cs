@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Properties specific to this linked service type. </summary>
-    internal partial class HttpLinkedServiceTypeProperties
+    public partial class HttpLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

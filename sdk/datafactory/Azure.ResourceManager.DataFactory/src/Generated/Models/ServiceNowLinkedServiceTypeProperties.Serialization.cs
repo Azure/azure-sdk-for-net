@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> ServiceNow server linked service properties. </summary>
-    internal partial class ServiceNowLinkedServiceTypeProperties : IJsonModel<ServiceNowLinkedServiceTypeProperties>
+    public partial class ServiceNowLinkedServiceTypeProperties : IJsonModel<ServiceNowLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ServiceNowLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ServiceNowLinkedServiceTypeProperties()
@@ -179,11 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))

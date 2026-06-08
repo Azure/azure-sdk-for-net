@@ -11,7 +11,8 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownTabularSource : TabularSource
+    /// <summary> Unknown variant of TabularSource. </summary>
+    public partial class UnknownTabularSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTabularSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

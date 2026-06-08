@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DataFactory
                 HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
-                    new DataFactoryIntegrationRuntimeOperationSource(Client),
+                    new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
                     _integrationRuntimeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.DataFactory
                 HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
-                    new DataFactoryIntegrationRuntimeOperationSource(Client),
+                    new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
                     _integrationRuntimeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.DataFactory
                 HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
-                    new DataFactoryIntegrationRuntimeOperationSource(Client),
+                    new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
                     _integrationRuntimeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.DataFactory
                 HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
-                    new DataFactoryIntegrationRuntimeOperationSource(Client),
+                    new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
                     _integrationRuntimeClientDiagnostics,
                     Pipeline,
                     message.Request,

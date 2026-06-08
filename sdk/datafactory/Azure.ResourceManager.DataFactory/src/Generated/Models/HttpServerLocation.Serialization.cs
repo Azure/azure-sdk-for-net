@@ -122,29 +122,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("folderPath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    folderPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFolderPath(prop, ref folderPath);
                     continue;
                 }
                 if (prop.NameEquals("fileName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fileName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFileName(prop, ref fileName);
                     continue;
                 }
                 if (prop.NameEquals("relativeUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    relativeUri = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadRelativeUri(prop, ref relativeUri);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

@@ -134,20 +134,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("fileMissing"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fileMissing = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFileMissing(prop, ref fileMissing);
                     continue;
                 }
                 if (prop.NameEquals("dataInconsistency"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataInconsistency = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDataInconsistency(prop, ref dataInconsistency);
                     continue;
                 }
                 if (options.Format != "W")

@@ -167,83 +167,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("sourceRetryCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSourceRetryCount(prop, ref sourceRetryCount);
                     continue;
                 }
                 if (prop.NameEquals("sourceRetryWait"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryWait = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSourceRetryWait(prop, ref sourceRetryWait);
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadMaxConcurrentConnections(prop, ref maxConcurrentConnections);
                     continue;
                 }
                 if (prop.NameEquals("disableMetricsCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
                     continue;
                 }
                 if (prop.NameEquals("requestMethod"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requestMethod = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadRequestMethod(prop, ref requestMethod);
                     continue;
                 }
                 if (prop.NameEquals("requestBody"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requestBody = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadRequestBody(prop, ref requestBody);
                     continue;
                 }
                 if (prop.NameEquals("additionalHeaders"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalHeaders = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadAdditionalHeaders(prop, ref additionalHeaders);
                     continue;
                 }
                 if (prop.NameEquals("paginationRules"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    paginationRules = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPaginationRules(prop, ref paginationRules);
                     continue;
                 }
                 if (prop.NameEquals("httpRequestTimeout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    httpRequestTimeout = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadHttpRequestTimeout(prop, ref httpRequestTimeout);
                     continue;
                 }
                 if (prop.NameEquals("requestInterval"u8))
@@ -257,11 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("additionalColumns"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalColumns = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadAdditionalColumns(prop, ref additionalColumns);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

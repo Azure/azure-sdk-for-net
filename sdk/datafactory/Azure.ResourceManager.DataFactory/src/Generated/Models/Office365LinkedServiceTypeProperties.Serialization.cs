@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Office365 linked service properties. </summary>
-    internal partial class Office365LinkedServiceTypeProperties : IJsonModel<Office365LinkedServiceTypeProperties>
+    public partial class Office365LinkedServiceTypeProperties : IJsonModel<Office365LinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="Office365LinkedServiceTypeProperties"/> for deserialization. </summary>
         internal Office365LinkedServiceTypeProperties()
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("servicePrincipalCredentialType"u8))

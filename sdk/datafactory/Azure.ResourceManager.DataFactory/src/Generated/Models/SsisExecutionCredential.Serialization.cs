@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("domain"u8))
                 {
-                    domain = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDomain(prop, ref domain);
                     continue;
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    userName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
                 {
-                    password = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
+                    ReadPassword(prop, ref password);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sap Cloud For Customer OData resource dataset properties. </summary>
-    internal partial class SapCloudForCustomerResourceDatasetTypeProperties : IJsonModel<SapCloudForCustomerResourceDatasetTypeProperties>
+    public partial class SapCloudForCustomerResourceDatasetTypeProperties : IJsonModel<SapCloudForCustomerResourceDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDatasetTypeProperties"/> for deserialization. </summary>
         internal SapCloudForCustomerResourceDatasetTypeProperties()
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("path"u8))
                 {
-                    path = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPath(prop, ref path);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Dynamics AX linked service properties. </summary>
-    internal partial class DynamicsAXLinkedServiceTypeProperties : IJsonModel<DynamicsAXLinkedServiceTypeProperties>
+    public partial class DynamicsAXLinkedServiceTypeProperties : IJsonModel<DynamicsAXLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal DynamicsAXLinkedServiceTypeProperties()
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))

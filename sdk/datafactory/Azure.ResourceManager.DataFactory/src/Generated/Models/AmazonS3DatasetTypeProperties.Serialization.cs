@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Amazon S3 dataset properties. </summary>
-    internal partial class AmazonS3DatasetTypeProperties : IJsonModel<AmazonS3DatasetTypeProperties>
+    public partial class AmazonS3DatasetTypeProperties : IJsonModel<AmazonS3DatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AmazonS3DatasetTypeProperties"/> for deserialization. </summary>
         internal AmazonS3DatasetTypeProperties()
@@ -172,52 +172,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("bucketName"u8))
                 {
-                    bucketName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadBucketName(prop, ref bucketName);
                     continue;
                 }
                 if (prop.NameEquals("key"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    key = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadKey(prop, ref key);
                     continue;
                 }
                 if (prop.NameEquals("prefix"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    prefix = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPrefix(prop, ref prefix);
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    version = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadVersion(prop, ref version);
                     continue;
                 }
                 if (prop.NameEquals("modifiedDatetimeStart"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    modifiedDatetimeStart = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadModifiedDatetimeStart(prop, ref modifiedDatetimeStart);
                     continue;
                 }
                 if (prop.NameEquals("modifiedDatetimeEnd"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    modifiedDatetimeEnd = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadModifiedDatetimeEnd(prop, ref modifiedDatetimeEnd);
                     continue;
                 }
                 if (prop.NameEquals("format"u8))

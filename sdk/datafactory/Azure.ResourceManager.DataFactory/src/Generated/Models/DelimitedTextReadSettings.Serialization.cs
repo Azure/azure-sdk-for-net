@@ -126,11 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("skipLineCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    skipLineCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSkipLineCount(prop, ref skipLineCount);
                     continue;
                 }
                 if (prop.NameEquals("compressionProperties"u8))

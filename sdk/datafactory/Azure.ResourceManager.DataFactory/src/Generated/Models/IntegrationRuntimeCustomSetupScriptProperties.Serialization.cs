@@ -143,11 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("sasToken"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sasToken = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
+                    ReadSasToken(prop, ref sasToken);
                     continue;
                 }
                 if (options.Format != "W")

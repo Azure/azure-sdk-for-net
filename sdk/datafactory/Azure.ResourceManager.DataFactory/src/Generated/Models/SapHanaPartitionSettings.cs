@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
-    internal partial class SapHanaPartitionSettings
+    public partial class SapHanaPartitionSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

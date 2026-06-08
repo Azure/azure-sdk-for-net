@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
@@ -103,121 +102,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceNowV2Source(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServiceNowV2Source DeserializeServiceNowV2Source(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string @type = "ServiceNowV2Source";
-            DataFactoryElement<int> sourceRetryCount = default;
-            DataFactoryElement<string> sourceRetryWait = default;
-            DataFactoryElement<int> maxConcurrentConnections = default;
-            DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DataFactoryElement<string> queryTimeout = default;
-            BinaryData additionalColumns = default;
-            DataFactoryExpressionV2 expression = default;
-            DataFactoryElement<int> pageSize = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("sourceRetryCount"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("sourceRetryWait"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryWait = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("queryTimeout"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryTimeout = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("additionalColumns"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalColumns = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("expression"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expression = DataFactoryExpressionV2.DeserializeDataFactoryExpressionV2(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("pageSize"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    pageSize = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new ServiceNowV2Source(
-                @type,
-                sourceRetryCount,
-                sourceRetryWait,
-                maxConcurrentConnections,
-                disableMetricsCollection,
-                additionalProperties,
-                queryTimeout,
-                additionalColumns,
-                expression,
-                pageSize);
         }
     }
 }

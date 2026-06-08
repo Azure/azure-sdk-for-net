@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Delete activity properties. </summary>
-    internal partial class DeleteActivityTypeProperties : IJsonModel<DeleteActivityTypeProperties>
+    public partial class DeleteActivityTypeProperties : IJsonModel<DeleteActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteActivityTypeProperties"/> for deserialization. </summary>
         internal DeleteActivityTypeProperties()
@@ -160,11 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("recursive"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recursive = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadRecursive(prop, ref recursive);
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Zendesk linked service type properties. </summary>
-    internal partial class ZendeskLinkedServiceTypeProperties : IJsonModel<ZendeskLinkedServiceTypeProperties>
+    public partial class ZendeskLinkedServiceTypeProperties : IJsonModel<ZendeskLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ZendeskLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ZendeskLinkedServiceTypeProperties()
@@ -150,16 +150,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

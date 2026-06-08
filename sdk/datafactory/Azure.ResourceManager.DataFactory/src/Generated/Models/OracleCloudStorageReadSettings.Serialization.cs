@@ -176,110 +176,62 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadMaxConcurrentConnections(prop, ref maxConcurrentConnections);
                     continue;
                 }
                 if (prop.NameEquals("disableMetricsCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
                     continue;
                 }
                 if (prop.NameEquals("recursive"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recursive = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadRecursive(prop, ref recursive);
                     continue;
                 }
                 if (prop.NameEquals("wildcardFolderPath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    wildcardFolderPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadWildcardFolderPath(prop, ref wildcardFolderPath);
                     continue;
                 }
                 if (prop.NameEquals("wildcardFileName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    wildcardFileName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadWildcardFileName(prop, ref wildcardFileName);
                     continue;
                 }
                 if (prop.NameEquals("prefix"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    prefix = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPrefix(prop, ref prefix);
                     continue;
                 }
                 if (prop.NameEquals("fileListPath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fileListPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFileListPath(prop, ref fileListPath);
                     continue;
                 }
                 if (prop.NameEquals("enablePartitionDiscovery"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enablePartitionDiscovery = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadEnablePartitionDiscovery(prop, ref enablePartitionDiscovery);
                     continue;
                 }
                 if (prop.NameEquals("partitionRootPath"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionRootPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPartitionRootPath(prop, ref partitionRootPath);
                     continue;
                 }
                 if (prop.NameEquals("deleteFilesAfterCompletion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deleteFilesAfterCompletion = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDeleteFilesAfterCompletion(prop, ref deleteFilesAfterCompletion);
                     continue;
                 }
                 if (prop.NameEquals("modifiedDatetimeStart"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    modifiedDatetimeStart = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadModifiedDatetimeStart(prop, ref modifiedDatetimeStart);
                     continue;
                 }
                 if (prop.NameEquals("modifiedDatetimeEnd"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    modifiedDatetimeEnd = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadModifiedDatetimeEnd(prop, ref modifiedDatetimeEnd);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

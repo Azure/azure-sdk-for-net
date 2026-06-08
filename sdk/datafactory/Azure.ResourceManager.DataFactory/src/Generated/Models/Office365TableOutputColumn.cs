@@ -24,8 +24,5 @@ namespace Azure.ResourceManager.DataFactory.Models
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Name of the table column. Type: string. </summary>
-        public string Name { get; set; }
     }
 }

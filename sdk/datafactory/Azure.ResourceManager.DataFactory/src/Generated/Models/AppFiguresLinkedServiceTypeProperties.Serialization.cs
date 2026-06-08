@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> AppFigures linked service type properties. </summary>
-    internal partial class AppFiguresLinkedServiceTypeProperties : IJsonModel<AppFiguresLinkedServiceTypeProperties>
+    public partial class AppFiguresLinkedServiceTypeProperties : IJsonModel<AppFiguresLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AppFiguresLinkedServiceTypeProperties()
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("userName"u8))
                 {
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (options.Format != "W")

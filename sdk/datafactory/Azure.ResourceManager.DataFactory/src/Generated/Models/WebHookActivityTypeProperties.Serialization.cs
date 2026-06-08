@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> WebHook activity type properties. </summary>
-    internal partial class WebHookActivityTypeProperties : IJsonModel<WebHookActivityTypeProperties>
+    public partial class WebHookActivityTypeProperties : IJsonModel<WebHookActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="WebHookActivityTypeProperties"/> for deserialization. </summary>
         internal WebHookActivityTypeProperties()
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("timeout"u8))

@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("filePath"u8))
                 {
-                    filePath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFilePath(prop, ref filePath);
                     continue;
                 }
                 if (prop.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
+                    ReadLinkedServiceName(prop, ref linkedServiceName);
                     continue;
                 }
                 if (options.Format != "W")

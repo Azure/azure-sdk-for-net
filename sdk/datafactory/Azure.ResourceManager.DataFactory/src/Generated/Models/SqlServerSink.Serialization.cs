@@ -181,83 +181,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("writeBatchSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchSize = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadWriteBatchSize(prop, ref writeBatchSize);
                     continue;
                 }
                 if (prop.NameEquals("writeBatchTimeout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchTimeout = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadWriteBatchTimeout(prop, ref writeBatchTimeout);
                     continue;
                 }
                 if (prop.NameEquals("sinkRetryCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSinkRetryCount(prop, ref sinkRetryCount);
                     continue;
                 }
                 if (prop.NameEquals("sinkRetryWait"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryWait = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSinkRetryWait(prop, ref sinkRetryWait);
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadMaxConcurrentConnections(prop, ref maxConcurrentConnections);
                     continue;
                 }
                 if (prop.NameEquals("disableMetricsCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
                     continue;
                 }
                 if (prop.NameEquals("sqlWriterStoredProcedureName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sqlWriterStoredProcedureName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSqlWriterStoredProcedureName(prop, ref sqlWriterStoredProcedureName);
                     continue;
                 }
                 if (prop.NameEquals("sqlWriterTableType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sqlWriterTableType = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSqlWriterTableType(prop, ref sqlWriterTableType);
                     continue;
                 }
                 if (prop.NameEquals("preCopyScript"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    preCopyScript = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPreCopyScript(prop, ref preCopyScript);
                     continue;
                 }
                 if (prop.NameEquals("storedProcedureParameters"u8))
@@ -271,38 +235,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("storedProcedureTableTypeParameterName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storedProcedureTableTypeParameterName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadStoredProcedureTableTypeParameterName(prop, ref storedProcedureTableTypeParameterName);
                     continue;
                 }
                 if (prop.NameEquals("tableOption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tableOption = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadTableOption(prop, ref tableOption);
                     continue;
                 }
                 if (prop.NameEquals("sqlWriterUseTableLock"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sqlWriterUseTableLock = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSqlWriterUseTableLock(prop, ref sqlWriterUseTableLock);
                     continue;
                 }
                 if (prop.NameEquals("writeBehavior"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBehavior = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadWriteBehavior(prop, ref writeBehavior);
                     continue;
                 }
                 if (prop.NameEquals("upsertSettings"u8))

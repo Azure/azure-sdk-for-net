@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Databricks linked service properties. </summary>
-    internal partial class AzureDatabricksLinkedServiceTypeProperties : IJsonModel<AzureDatabricksLinkedServiceTypeProperties>
+    public partial class AzureDatabricksLinkedServiceTypeProperties : IJsonModel<AzureDatabricksLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDatabricksLinkedServiceTypeProperties()
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("domain"u8))
                 {
-                    domain = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadDomain(prop, ref domain);
                     continue;
                 }
                 if (prop.NameEquals("authentication"u8))

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sql Server family connector common linked service properties. </summary>
-    internal partial class SqlServerBaseLinkedServiceTypeProperties : IJsonModel<SqlServerBaseLinkedServiceTypeProperties>
+    public partial class SqlServerBaseLinkedServiceTypeProperties : IJsonModel<SqlServerBaseLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -389,11 +389,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("packetSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    packetSize = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPacketSize(prop, ref packetSize);
                     continue;
                 }
                 if (prop.NameEquals("pooling"u8))

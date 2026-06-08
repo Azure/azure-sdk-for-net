@@ -142,11 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("enableCopyActivityLog"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableCopyActivityLog = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadEnableCopyActivityLog(prop, ref enableCopyActivityLog);
                     continue;
                 }
                 if (prop.NameEquals("copyActivityLogSettings"u8))

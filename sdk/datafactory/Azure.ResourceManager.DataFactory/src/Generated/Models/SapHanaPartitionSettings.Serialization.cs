@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
-    internal partial class SapHanaPartitionSettings : IJsonModel<SapHanaPartitionSettings>
+    public partial class SapHanaPartitionSettings : IJsonModel<SapHanaPartitionSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -128,11 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("partitionColumnName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionColumnName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPartitionColumnName(prop, ref partitionColumnName);
                     continue;
                 }
                 if (options.Format != "W")

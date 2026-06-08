@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HDInsight ondemand linked service properties. </summary>
-    internal partial class HDInsightOnDemandLinkedServiceTypeProperties : IJsonModel<HDInsightOnDemandLinkedServiceTypeProperties>
+    public partial class HDInsightOnDemandLinkedServiceTypeProperties : IJsonModel<HDInsightOnDemandLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HDInsightOnDemandLinkedServiceTypeProperties()
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    version = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadVersion(prop, ref version);
                     continue;
                 }
                 if (prop.NameEquals("hostSubscriptionId"u8))
@@ -385,11 +385,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))

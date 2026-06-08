@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Cmdkey command custom setup type properties. </summary>
-    internal partial class CmdkeySetupTypeProperties : IJsonModel<CmdkeySetupTypeProperties>
+    public partial class CmdkeySetupTypeProperties : IJsonModel<CmdkeySetupTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CmdkeySetupTypeProperties"/> for deserialization. </summary>
         internal CmdkeySetupTypeProperties()
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (options.Format != "W")

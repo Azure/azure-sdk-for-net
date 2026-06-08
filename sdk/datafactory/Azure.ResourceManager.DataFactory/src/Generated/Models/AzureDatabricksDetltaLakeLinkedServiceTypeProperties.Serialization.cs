@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Databricks Delta Lake linked service properties. </summary>
-    internal partial class AzureDatabricksDetltaLakeLinkedServiceTypeProperties : IJsonModel<AzureDatabricksDetltaLakeLinkedServiceTypeProperties>
+    public partial class AzureDatabricksDetltaLakeLinkedServiceTypeProperties : IJsonModel<AzureDatabricksDetltaLakeLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksDetltaLakeLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDatabricksDetltaLakeLinkedServiceTypeProperties()
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("domain"u8))
                 {
-                    domain = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadDomain(prop, ref domain);
                     continue;
                 }
                 if (prop.NameEquals("clusterId"u8))

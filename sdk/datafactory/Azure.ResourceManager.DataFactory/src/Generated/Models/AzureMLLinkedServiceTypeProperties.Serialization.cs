@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure ML Studio Web Service linked service properties. </summary>
-    internal partial class AzureMLLinkedServiceTypeProperties : IJsonModel<AzureMLLinkedServiceTypeProperties>
+    public partial class AzureMLLinkedServiceTypeProperties : IJsonModel<AzureMLLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureMLLinkedServiceTypeProperties()
@@ -174,11 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))

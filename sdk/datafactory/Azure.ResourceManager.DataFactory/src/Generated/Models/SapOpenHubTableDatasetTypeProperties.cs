@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
-    internal partial class SapOpenHubTableDatasetTypeProperties
+    public partial class SapOpenHubTableDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

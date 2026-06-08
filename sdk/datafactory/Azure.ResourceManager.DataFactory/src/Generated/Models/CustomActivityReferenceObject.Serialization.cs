@@ -144,16 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("linkedServices"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(default); /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */
-                    }
-                    linkedServices = array;
+                    ReadLinkedServices(prop, ref linkedServices);
                     continue;
                 }
                 if (prop.NameEquals("datasets"u8))

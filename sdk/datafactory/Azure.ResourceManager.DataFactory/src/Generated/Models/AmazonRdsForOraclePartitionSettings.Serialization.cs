@@ -162,29 +162,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("partitionColumnName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionColumnName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPartitionColumnName(prop, ref partitionColumnName);
                     continue;
                 }
                 if (prop.NameEquals("partitionUpperBound"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionUpperBound = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPartitionUpperBound(prop, ref partitionUpperBound);
                     continue;
                 }
                 if (prop.NameEquals("partitionLowerBound"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionLowerBound = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadPartitionLowerBound(prop, ref partitionLowerBound);
                     continue;
                 }
                 if (options.Format != "W")

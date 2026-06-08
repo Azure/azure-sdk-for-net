@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HDFS linked service properties. </summary>
-    internal partial class HdfsLinkedServiceTypeProperties : IJsonModel<HdfsLinkedServiceTypeProperties>
+    public partial class HdfsLinkedServiceTypeProperties : IJsonModel<HdfsLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HdfsLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HdfsLinkedServiceTypeProperties()
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))
@@ -167,11 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (options.Format != "W")

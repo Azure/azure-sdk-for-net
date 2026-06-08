@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Informix linked service properties. </summary>
-    internal partial class InformixLinkedServiceTypeProperties : IJsonModel<InformixLinkedServiceTypeProperties>
+    public partial class InformixLinkedServiceTypeProperties : IJsonModel<InformixLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="InformixLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal InformixLinkedServiceTypeProperties()
@@ -162,11 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

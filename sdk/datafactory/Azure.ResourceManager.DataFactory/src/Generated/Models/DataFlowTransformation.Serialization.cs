@@ -173,11 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("linkedService"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
+                    ReadLinkedService(prop, ref linkedService);
                     continue;
                 }
                 if (prop.NameEquals("flowlet"u8))

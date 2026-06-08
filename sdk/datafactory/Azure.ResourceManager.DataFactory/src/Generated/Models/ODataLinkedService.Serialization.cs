@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -82,6 +83,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteObjectValue(TypeProperties, options);
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,6 +128,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ODataLinkedServiceTypeProperties typeProperties = default;
+            DataFactorySecret password = default;
+            DataFactorySecret servicePrincipalKey = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -183,6 +196,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                     typeProperties = ODataLinkedServiceTypeProperties.DeserializeODataLinkedServiceTypeProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    ReadPassword(prop, ref password);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    ReadServicePrincipalKey(prop, ref servicePrincipalKey);
+                    continue;
+                }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new ODataLinkedService(
@@ -193,7 +216,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                typeProperties);
+                typeProperties,
+                password,
+                servicePrincipalKey);
         }
     }
 }

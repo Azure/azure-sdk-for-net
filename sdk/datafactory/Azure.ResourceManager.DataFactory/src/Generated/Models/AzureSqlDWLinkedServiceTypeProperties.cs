@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure SQL Data Warehouse linked service properties. </summary>
-    internal partial class AzureSqlDWLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties
+    public partial class AzureSqlDWLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureSqlDWLinkedServiceTypeProperties"/>. </summary>
         public AzureSqlDWLinkedServiceTypeProperties()

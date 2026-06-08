@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HBase server linked service properties. </summary>
-    internal partial class HBaseLinkedServiceTypeProperties : IJsonModel<HBaseLinkedServiceTypeProperties>
+    public partial class HBaseLinkedServiceTypeProperties : IJsonModel<HBaseLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HBaseLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HBaseLinkedServiceTypeProperties()
@@ -209,11 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("enableSsl"u8))

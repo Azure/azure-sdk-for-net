@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Database for PostgreSQL upsert option settings. </summary>
-    internal partial class AzurePostgreSqlSinkUpsertSettings
+    public partial class AzurePostgreSqlSinkUpsertSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

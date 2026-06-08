@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Spark Server linked service properties. </summary>
-    internal partial class SparkLinkedServiceTypeProperties : IJsonModel<SparkLinkedServiceTypeProperties>
+    public partial class SparkLinkedServiceTypeProperties : IJsonModel<SparkLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SparkLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SparkLinkedServiceTypeProperties()
@@ -235,11 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("httpPath"u8))

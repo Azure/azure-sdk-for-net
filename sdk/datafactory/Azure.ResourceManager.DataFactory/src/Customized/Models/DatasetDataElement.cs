@@ -12,9 +12,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Expressions.DataFactory;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
+    // generator treats this Dfe<T>-wrapped model as output-only and emits getter-only properties,
+    // but the GA contract exposed setters. CodeGenMember is required to replace the generated properties.
+    // TODO: remove once the generator honors input usage through DataFactoryElement<T> wrappers (#59298).
     [JsonConverter(typeof(DatasetDataElement.DatasetDataElementConverter))]
     public partial class DatasetDataElement
     {
@@ -23,6 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             _additionalBinaryDataProperties = new global::Azure.ResourceManager.DataFactory.ChangeTrackingDictionary<string, BinaryData>();
         }
+
+        /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
+        [CodeGenMember("ColumnName")]
+        public DataFactoryElement<string> ColumnName { get; set; }
+
+        /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
+        [CodeGenMember("ColumnType")]
+        public DataFactoryElement<string> ColumnType { get; set; }
 
         internal sealed class DatasetDataElementConverter : JsonConverter<DatasetDataElement>
         {

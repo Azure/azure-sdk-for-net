@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Sap Cloud For Customer OData resource dataset properties. </summary>
-    internal partial class SapCloudForCustomerResourceDatasetTypeProperties
+    public partial class SapCloudForCustomerResourceDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

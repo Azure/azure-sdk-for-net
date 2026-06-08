@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Quickbase linked service type properties. </summary>
-    internal partial class QuickbaseLinkedServiceTypeProperties : IJsonModel<QuickbaseLinkedServiceTypeProperties>
+    public partial class QuickbaseLinkedServiceTypeProperties : IJsonModel<QuickbaseLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal QuickbaseLinkedServiceTypeProperties()
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

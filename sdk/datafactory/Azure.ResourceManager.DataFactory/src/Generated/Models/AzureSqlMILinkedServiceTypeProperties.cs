@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure SQL Managed Instance linked service properties. </summary>
-    internal partial class AzureSqlMILinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties
+    public partial class AzureSqlMILinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureSqlMILinkedServiceTypeProperties"/>. </summary>
         public AzureSqlMILinkedServiceTypeProperties()

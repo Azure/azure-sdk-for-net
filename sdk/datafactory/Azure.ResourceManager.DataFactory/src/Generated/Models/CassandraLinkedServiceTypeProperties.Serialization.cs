@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Cassandra linked service properties. </summary>
-    internal partial class CassandraLinkedServiceTypeProperties : IJsonModel<CassandraLinkedServiceTypeProperties>
+    public partial class CassandraLinkedServiceTypeProperties : IJsonModel<CassandraLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CassandraLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal CassandraLinkedServiceTypeProperties()
@@ -177,11 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

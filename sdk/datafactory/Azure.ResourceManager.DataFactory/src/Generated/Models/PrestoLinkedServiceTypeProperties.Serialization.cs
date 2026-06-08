@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Presto server linked service properties. </summary>
-    internal partial class PrestoLinkedServiceTypeProperties : IJsonModel<PrestoLinkedServiceTypeProperties>
+    public partial class PrestoLinkedServiceTypeProperties : IJsonModel<PrestoLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PrestoLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal PrestoLinkedServiceTypeProperties()
@@ -235,11 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("enableSsl"u8))

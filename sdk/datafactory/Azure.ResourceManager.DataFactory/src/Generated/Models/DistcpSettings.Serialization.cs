@@ -139,21 +139,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("resourceManagerEndpoint"u8))
                 {
-                    resourceManagerEndpoint = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadResourceManagerEndpoint(prop, ref resourceManagerEndpoint);
                     continue;
                 }
                 if (prop.NameEquals("tempScriptPath"u8))
                 {
-                    tempScriptPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadTempScriptPath(prop, ref tempScriptPath);
                     continue;
                 }
                 if (prop.NameEquals("distcpOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    distcpOptions = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDistcpOptions(prop, ref distcpOptions);
                     continue;
                 }
                 if (options.Format != "W")

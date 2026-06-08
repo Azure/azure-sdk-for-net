@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="typeProperties"> Blob Trigger properties. </param>
-        internal DataFactoryBlobTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, BlobTriggerTypeProperties typeProperties) : base(@type, description, runtimeState, annotations, additionalProperties, pipelines)
+        /// <param name="linkedService"></param>
+        internal DataFactoryBlobTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, BlobTriggerTypeProperties typeProperties, DataFactoryLinkedServiceReference linkedService) : base(@type, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             TypeProperties = typeProperties;
+            LinkedService = linkedService;
         }
 
         /// <summary> Blob Trigger properties. </summary>

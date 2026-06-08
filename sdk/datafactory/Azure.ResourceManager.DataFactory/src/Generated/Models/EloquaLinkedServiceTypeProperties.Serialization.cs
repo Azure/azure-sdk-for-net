@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Eloqua server linked service properties. </summary>
-    internal partial class EloquaLinkedServiceTypeProperties : IJsonModel<EloquaLinkedServiceTypeProperties>
+    public partial class EloquaLinkedServiceTypeProperties : IJsonModel<EloquaLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="EloquaLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal EloquaLinkedServiceTypeProperties()
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))

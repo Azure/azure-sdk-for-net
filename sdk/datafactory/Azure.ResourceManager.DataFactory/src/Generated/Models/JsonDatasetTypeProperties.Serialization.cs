@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Json dataset properties. </summary>
-    internal partial class JsonDatasetTypeProperties : IJsonModel<JsonDatasetTypeProperties>
+    public partial class JsonDatasetTypeProperties : IJsonModel<JsonDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="JsonDatasetTypeProperties"/> for deserialization. </summary>
         internal JsonDatasetTypeProperties()
@@ -147,11 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("encodingName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encodingName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadEncodingName(prop, ref encodingName);
                     continue;
                 }
                 if (prop.NameEquals("compression"u8))

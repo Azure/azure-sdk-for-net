@@ -170,101 +170,57 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("serializer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSerializer(prop, ref serializer);
                     continue;
                 }
                 if (prop.NameEquals("deserializer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deserializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDeserializer(prop, ref deserializer);
                     continue;
                 }
                 if (prop.NameEquals("columnDelimiter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    columnDelimiter = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadColumnDelimiter(prop, ref columnDelimiter);
                     continue;
                 }
                 if (prop.NameEquals("rowDelimiter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rowDelimiter = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadRowDelimiter(prop, ref rowDelimiter);
                     continue;
                 }
                 if (prop.NameEquals("escapeChar"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    escapeChar = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadEscapeChar(prop, ref escapeChar);
                     continue;
                 }
                 if (prop.NameEquals("quoteChar"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    quoteChar = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadQuoteChar(prop, ref quoteChar);
                     continue;
                 }
                 if (prop.NameEquals("nullValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nullValue = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadNullValue(prop, ref nullValue);
                     continue;
                 }
                 if (prop.NameEquals("encodingName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encodingName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadEncodingName(prop, ref encodingName);
                     continue;
                 }
                 if (prop.NameEquals("treatEmptyAsNull"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    treatEmptyAsNull = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadTreatEmptyAsNull(prop, ref treatEmptyAsNull);
                     continue;
                 }
                 if (prop.NameEquals("skipLineCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    skipLineCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSkipLineCount(prop, ref skipLineCount);
                     continue;
                 }
                 if (prop.NameEquals("firstRowAsHeader"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    firstRowAsHeader = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadFirstRowAsHeader(prop, ref firstRowAsHeader);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

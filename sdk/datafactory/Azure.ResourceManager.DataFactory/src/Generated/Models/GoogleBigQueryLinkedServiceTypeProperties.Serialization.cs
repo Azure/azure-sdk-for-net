@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Google BigQuery service linked service properties. </summary>
-    internal partial class GoogleBigQueryLinkedServiceTypeProperties : IJsonModel<GoogleBigQueryLinkedServiceTypeProperties>
+    public partial class GoogleBigQueryLinkedServiceTypeProperties : IJsonModel<GoogleBigQueryLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal GoogleBigQueryLinkedServiceTypeProperties()
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("project"u8))
                 {
-                    project = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadProject(prop, ref project);
                     continue;
                 }
                 if (prop.NameEquals("additionalProjects"u8))

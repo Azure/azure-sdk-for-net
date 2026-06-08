@@ -140,29 +140,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("continuationTtlInMinutes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    continuationTtlInMinutes = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadContinuationTtlInMinutes(prop, ref continuationTtlInMinutes);
                     continue;
                 }
                 if (prop.NameEquals("idleCondition"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    idleCondition = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadIdleCondition(prop, ref idleCondition);
                     continue;
                 }
                 if (prop.NameEquals("customizedCheckpointKey"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    customizedCheckpointKey = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadCustomizedCheckpointKey(prop, ref customizedCheckpointKey);
                     continue;
                 }
                 if (options.Format != "W")

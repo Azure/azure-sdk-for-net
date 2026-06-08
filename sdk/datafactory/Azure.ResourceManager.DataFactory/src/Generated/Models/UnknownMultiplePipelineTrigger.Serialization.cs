@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownMultiplePipelineTrigger : MultiplePipelineTrigger, IJsonModel<MultiplePipelineTrigger>
+    /// <summary> Unknown variant of MultiplePipelineTrigger. </summary>
+    public partial class UnknownMultiplePipelineTrigger : MultiplePipelineTrigger, IJsonModel<MultiplePipelineTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMultiplePipelineTrigger"/> for deserialization. </summary>
         internal UnknownMultiplePipelineTrigger()
@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultiplePipelineTrigger IPersistableModel<MultiplePipelineTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownMultiplePipelineTrigger)PersistableModelCreateCore(data, options);
+        MultiplePipelineTrigger IPersistableModel<MultiplePipelineTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (MultiplePipelineTrigger)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MultiplePipelineTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultiplePipelineTrigger IJsonModel<MultiplePipelineTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownMultiplePipelineTrigger)JsonModelCreateCore(ref reader, options);
+        MultiplePipelineTrigger IJsonModel<MultiplePipelineTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (MultiplePipelineTrigger)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -96,90 +102,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMultiplePipelineTrigger(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownMultiplePipelineTrigger DeserializeUnknownMultiplePipelineTrigger(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string @type = "unknown";
-            string description = default;
-            DataFactoryTriggerRuntimeState? runtimeState = default;
-            IList<BinaryData> annotations = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<TriggerPipelineReference> pipelines = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("runtimeState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    runtimeState = new DataFactoryTriggerRuntimeState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("annotations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
-                        }
-                    }
-                    annotations = array;
-                    continue;
-                }
-                if (prop.NameEquals("pipelines"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
-                    }
-                    pipelines = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new UnknownMultiplePipelineTrigger(
-                @type,
-                description,
-                runtimeState,
-                annotations ?? new ChangeTrackingList<BinaryData>(),
-                additionalProperties,
-                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>());
         }
     }
 }

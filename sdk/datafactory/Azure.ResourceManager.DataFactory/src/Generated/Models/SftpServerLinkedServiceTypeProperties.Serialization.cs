@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Properties specific to this linked service type. </summary>
-    internal partial class SftpServerLinkedServiceTypeProperties : IJsonModel<SftpServerLinkedServiceTypeProperties>
+    public partial class SftpServerLinkedServiceTypeProperties : IJsonModel<SftpServerLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SftpServerLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SftpServerLinkedServiceTypeProperties()
@@ -195,11 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUserName(prop, ref userName);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

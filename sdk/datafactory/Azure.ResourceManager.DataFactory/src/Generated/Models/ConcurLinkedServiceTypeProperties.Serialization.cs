@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Concur Service linked service properties. </summary>
-    internal partial class ConcurLinkedServiceTypeProperties : IJsonModel<ConcurLinkedServiceTypeProperties>
+    public partial class ConcurLinkedServiceTypeProperties : IJsonModel<ConcurLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ConcurLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ConcurLinkedServiceTypeProperties()
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))

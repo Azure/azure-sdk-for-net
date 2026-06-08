@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> DelimitedText dataset properties. </summary>
-    internal partial class DelimitedTextDatasetTypeProperties : IJsonModel<DelimitedTextDatasetTypeProperties>
+    public partial class DelimitedTextDatasetTypeProperties : IJsonModel<DelimitedTextDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DelimitedTextDatasetTypeProperties"/> for deserialization. </summary>
         internal DelimitedTextDatasetTypeProperties()
@@ -189,29 +189,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("columnDelimiter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    columnDelimiter = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadColumnDelimiter(prop, ref columnDelimiter);
                     continue;
                 }
                 if (prop.NameEquals("rowDelimiter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rowDelimiter = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadRowDelimiter(prop, ref rowDelimiter);
                     continue;
                 }
                 if (prop.NameEquals("encodingName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encodingName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadEncodingName(prop, ref encodingName);
                     continue;
                 }
                 if (prop.NameEquals("compressionCodec"u8))
@@ -234,38 +222,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("quoteChar"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    quoteChar = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadQuoteChar(prop, ref quoteChar);
                     continue;
                 }
                 if (prop.NameEquals("escapeChar"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    escapeChar = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadEscapeChar(prop, ref escapeChar);
                     continue;
                 }
                 if (prop.NameEquals("firstRowAsHeader"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    firstRowAsHeader = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadFirstRowAsHeader(prop, ref firstRowAsHeader);
                     continue;
                 }
                 if (prop.NameEquals("nullValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nullValue = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadNullValue(prop, ref nullValue);
                     continue;
                 }
                 if (options.Format != "W")

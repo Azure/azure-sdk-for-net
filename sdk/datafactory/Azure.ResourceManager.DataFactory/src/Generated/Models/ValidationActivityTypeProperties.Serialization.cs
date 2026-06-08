@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Validation activity properties. </summary>
-    internal partial class ValidationActivityTypeProperties : IJsonModel<ValidationActivityTypeProperties>
+    public partial class ValidationActivityTypeProperties : IJsonModel<ValidationActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ValidationActivityTypeProperties"/> for deserialization. </summary>
         internal ValidationActivityTypeProperties()
@@ -154,11 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("timeout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeout = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadTimeout(prop, ref timeout);
                     continue;
                 }
                 if (prop.NameEquals("sleep"u8))

@@ -31,9 +31,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="type"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="typeProperties"> Cmdkey command custom setup type properties. </param>
-        internal CmdkeySetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CmdkeySetupTypeProperties typeProperties) : base(@type, additionalBinaryDataProperties)
+        /// <param name="password"></param>
+        internal CmdkeySetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CmdkeySetupTypeProperties typeProperties, DataFactorySecret password) : base(@type, additionalBinaryDataProperties)
         {
             TypeProperties = typeProperties;
+            Password = password;
         }
 
         /// <summary> Cmdkey command custom setup type properties. </summary>

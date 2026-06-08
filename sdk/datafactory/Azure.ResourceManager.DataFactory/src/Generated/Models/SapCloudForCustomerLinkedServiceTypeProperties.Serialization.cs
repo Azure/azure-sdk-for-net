@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP Cloud for Customer linked service properties. </summary>
-    internal partial class SapCloudForCustomerLinkedServiceTypeProperties : IJsonModel<SapCloudForCustomerLinkedServiceTypeProperties>
+    public partial class SapCloudForCustomerLinkedServiceTypeProperties : IJsonModel<SapCloudForCustomerLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SapCloudForCustomerLinkedServiceTypeProperties()
@@ -142,16 +142,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadUsername(prop, ref username);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))

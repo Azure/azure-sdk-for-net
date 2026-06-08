@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownMultiplePipelineTrigger : MultiplePipelineTrigger
+    /// <summary> Unknown variant of MultiplePipelineTrigger. </summary>
+    public partial class UnknownMultiplePipelineTrigger : MultiplePipelineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMultiplePipelineTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>

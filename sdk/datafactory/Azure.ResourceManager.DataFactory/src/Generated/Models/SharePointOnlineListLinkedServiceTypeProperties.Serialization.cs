@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SharePoint Online List linked service properties. </summary>
-    internal partial class SharePointOnlineListLinkedServiceTypeProperties : IJsonModel<SharePointOnlineListLinkedServiceTypeProperties>
+    public partial class SharePointOnlineListLinkedServiceTypeProperties : IJsonModel<SharePointOnlineListLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SharePointOnlineListLinkedServiceTypeProperties()
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("servicePrincipalCredentialType"u8))

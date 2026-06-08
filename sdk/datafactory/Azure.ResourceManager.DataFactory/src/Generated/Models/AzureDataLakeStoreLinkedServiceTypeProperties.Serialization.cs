@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Data Lake Store linked service properties. </summary>
-    internal partial class AzureDataLakeStoreLinkedServiceTypeProperties : IJsonModel<AzureDataLakeStoreLinkedServiceTypeProperties>
+    public partial class AzureDataLakeStoreLinkedServiceTypeProperties : IJsonModel<AzureDataLakeStoreLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDataLakeStoreLinkedServiceTypeProperties()
@@ -183,11 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))

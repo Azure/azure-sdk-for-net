@@ -160,20 +160,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("serializer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadSerializer(prop, ref serializer);
                     continue;
                 }
                 if (prop.NameEquals("deserializer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deserializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadDeserializer(prop, ref deserializer);
                     continue;
                 }
                 if (prop.NameEquals("filePattern"u8))
@@ -187,29 +179,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("nestingSeparator"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nestingSeparator = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadNestingSeparator(prop, ref nestingSeparator);
                     continue;
                 }
                 if (prop.NameEquals("encodingName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encodingName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadEncodingName(prop, ref encodingName);
                     continue;
                 }
                 if (prop.NameEquals("jsonNodeReference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jsonNodeReference = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadJsonNodeReference(prop, ref jsonNodeReference);
                     continue;
                 }
                 if (prop.NameEquals("jsonPathDefinition"u8))

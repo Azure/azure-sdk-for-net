@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Data Explorer (Kusto) linked service properties. </summary>
-    internal partial class AzureDataExplorerLinkedServiceTypeProperties : IJsonModel<AzureDataExplorerLinkedServiceTypeProperties>
+    public partial class AzureDataExplorerLinkedServiceTypeProperties : IJsonModel<AzureDataExplorerLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDataExplorerLinkedServiceTypeProperties()
@@ -156,11 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))

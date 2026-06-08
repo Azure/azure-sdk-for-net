@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> OData dataset properties. </summary>
-    internal partial class ODataResourceDatasetTypeProperties : IJsonModel<ODataResourceDatasetTypeProperties>
+    public partial class ODataResourceDatasetTypeProperties : IJsonModel<ODataResourceDatasetTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -128,11 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("path"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    path = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPath(prop, ref path);
                     continue;
                 }
                 if (options.Format != "W")

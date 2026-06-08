@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.DataFactory;
 
@@ -99,97 +98,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomEventsTrigger(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CustomEventsTrigger DeserializeCustomEventsTrigger(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string @type = "CustomEventsTrigger";
-            string description = default;
-            DataFactoryTriggerRuntimeState? runtimeState = default;
-            IList<BinaryData> annotations = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<TriggerPipelineReference> pipelines = default;
-            CustomEventsTriggerTypeProperties typeProperties = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("runtimeState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    runtimeState = new DataFactoryTriggerRuntimeState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("annotations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
-                        }
-                    }
-                    annotations = array;
-                    continue;
-                }
-                if (prop.NameEquals("pipelines"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
-                    }
-                    pipelines = array;
-                    continue;
-                }
-                if (prop.NameEquals("typeProperties"u8))
-                {
-                    typeProperties = CustomEventsTriggerTypeProperties.DeserializeCustomEventsTriggerTypeProperties(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new CustomEventsTrigger(
-                @type,
-                description,
-                runtimeState,
-                annotations ?? new ChangeTrackingList<BinaryData>(),
-                additionalProperties,
-                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
-                typeProperties);
         }
     }
 }

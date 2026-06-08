@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadUri(prop, ref uri);
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))

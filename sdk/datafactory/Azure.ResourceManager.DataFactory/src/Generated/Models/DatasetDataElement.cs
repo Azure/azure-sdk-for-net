@@ -27,11 +27,5 @@ namespace Azure.ResourceManager.DataFactory.Models
             ColumnType = columnType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ColumnName { get; set; }
-
-        /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ColumnType { get; set; }
     }
 }

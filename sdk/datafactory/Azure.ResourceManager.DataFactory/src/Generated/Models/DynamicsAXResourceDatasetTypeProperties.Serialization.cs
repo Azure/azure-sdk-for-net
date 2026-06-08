@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Dynamics AX OData resource dataset properties. </summary>
-    internal partial class DynamicsAXResourceDatasetTypeProperties : IJsonModel<DynamicsAXResourceDatasetTypeProperties>
+    public partial class DynamicsAXResourceDatasetTypeProperties : IJsonModel<DynamicsAXResourceDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDatasetTypeProperties"/> for deserialization. </summary>
         internal DynamicsAXResourceDatasetTypeProperties()
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("path"u8))
                 {
-                    path = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPath(prop, ref path);
                     continue;
                 }
                 if (options.Format != "W")

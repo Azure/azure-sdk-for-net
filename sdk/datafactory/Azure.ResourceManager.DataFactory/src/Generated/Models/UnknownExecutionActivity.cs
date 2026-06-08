@@ -11,7 +11,8 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownExecutionActivity : ExecutionActivity
+    /// <summary> Unknown variant of ExecutionActivity. </summary>
+    public partial class UnknownExecutionActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>

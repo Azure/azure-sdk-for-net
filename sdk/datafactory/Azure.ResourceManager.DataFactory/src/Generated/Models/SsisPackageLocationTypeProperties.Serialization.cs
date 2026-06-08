@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SSIS package location properties. </summary>
-    internal partial class SSISPackageLocationTypeProperties : IJsonModel<SSISPackageLocationTypeProperties>
+    public partial class SSISPackageLocationTypeProperties : IJsonModel<SSISPackageLocationTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -201,11 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("packageContent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    packageContent = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    ReadPackageContent(prop, ref packageContent);
                     continue;
                 }
                 if (prop.NameEquals("packageLastModifiedDate"u8))

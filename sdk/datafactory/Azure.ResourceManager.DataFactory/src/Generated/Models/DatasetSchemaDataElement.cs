@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
@@ -29,14 +28,5 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaColumnType = schemaColumnType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
-
-        /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaColumnName { get; set; }
-
-        /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaColumnType { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

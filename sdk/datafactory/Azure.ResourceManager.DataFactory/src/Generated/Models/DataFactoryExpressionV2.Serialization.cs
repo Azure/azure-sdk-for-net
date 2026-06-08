@@ -165,25 +165,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    v2Value = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    ReadV2Value(prop, ref v2Value);
                     continue;
                 }
                 if (prop.NameEquals("operators"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DataFactoryElement<string>> array = new List<DataFactoryElement<string>>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(default); /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */
-                    }
-                    operators = array;
+                    ReadOperators(prop, ref operators);
                     continue;
                 }
                 if (prop.NameEquals("operands"u8))
