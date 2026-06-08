@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB SQL container event. </summary>
     public partial class ExtendedRestorableSqlContainerResourceInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExtendedRestorableSqlContainerResourceInfo"/>. </summary>
         internal ExtendedRestorableSqlContainerResourceInfo()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="containerName"> The name of this SQL container. </param>
         /// <param name="containerId"> The resource ID of this SQL container. </param>
         /// <param name="container"> Cosmos DB SQL container resource object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string containerName, string containerId, RestorableSqlContainerPropertiesResourceContainer container, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string containerName, string containerId, RestorableSqlContainerPropertiesResourceContainer container, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rid = rid;
             OperationType = operationType;
@@ -70,30 +42,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ContainerName = containerName;
             ContainerId = containerId;
             Container = container;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         [WirePath("_rid")]
         public string Rid { get; }
+
         /// <summary> The operation type of this container event. </summary>
         [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
+
         /// <summary> A state of this container to identify if this container is restorable in same account. </summary>
         [WirePath("canUndelete")]
         public string CanUndelete { get; }
+
         /// <summary> The reason why this container can not be restored in same account. </summary>
         [WirePath("canUndeleteReason")]
         public string CanUndeleteReason { get; }
+
         /// <summary> The when this container event happened. </summary>
         [WirePath("eventTimestamp")]
         public string EventTimestamp { get; }
+
         /// <summary> The name of this SQL container. </summary>
         [WirePath("ownerId")]
         public string ContainerName { get; }
+
         /// <summary> The resource ID of this SQL container. </summary>
         [WirePath("ownerResourceId")]
         public string ContainerId { get; }
+
         /// <summary> Cosmos DB SQL container resource object. </summary>
         [WirePath("container")]
         public RestorableSqlContainerPropertiesResourceContainer Container { get; }
