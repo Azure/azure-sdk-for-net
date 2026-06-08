@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningError"/>. </summary>
         public static MachineLearningError MachineLearningError(ResponseError error = default)
         {
-            return new MachineLearningError(error);
+            return new MachineLearningError(error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpointsProperties"/>. </summary>
         public static MachineLearningFqdnEndpointsProperties MachineLearningFqdnEndpointsProperties(string category = default, IEnumerable<MachineLearningFqdnEndpoint> endpoints = default)
         {
-            return new MachineLearningFqdnEndpointsProperties(MachineLearningFqdnEndpoints(category, endpoints));
+            return new MachineLearningFqdnEndpointsProperties(category, endpoints is null ? null : new List<MachineLearningFqdnEndpoint>(endpoints), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningContainerRegistryCredentials"/>. </summary>
         public static MachineLearningContainerRegistryCredentials MachineLearningContainerRegistryCredentials(AzureLocation? location = default, string username = default, IEnumerable<MachineLearningPasswordDetail> passwords = default)
         {
-            return new MachineLearningContainerRegistryCredentials(location, username, passwords);
+            return new MachineLearningContainerRegistryCredentials(location, username, passwords is null ? null : new List<MachineLearningPasswordDetail>(passwords), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeStartStopSchedule"/>. </summary>
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 provisioningStatus,
                 status,
                 action,
-                triggerType.HasValue ? new ComputeTriggerType(triggerType.Value.ToString()) : null,
+                triggerType,
                 recurrenceSchedule,
                 cronSchedule,
                 schedule,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeProperties"/>. </summary>
@@ -124,10 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="Models.RegistryPrivateEndpoint"/>. </summary>
         public static RegistryPrivateEndpoint RegistryPrivateEndpoint(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
         {
-            return new RegistryPrivateEndpoint(id)
-            {
-                SubnetArmId = subnetArmId
-            };
+            return new RegistryPrivateEndpoint(id, serializedAdditionalRawData: null, subnetArmId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceConnectionProperties"/>. </summary>
@@ -165,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSweepJob"/>. </summary>
         public static MachineLearningSweepJob MachineLearningSweepJob(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, BinaryData searchSpace = default, SamplingAlgorithm samplingAlgorithm = default, MachineLearningSweepJobLimits limits = default, MachineLearningEarlyTerminationPolicy earlyTermination = default, MachineLearningObjective objective = default, MachineLearningTrialComponent trial = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? jobTier = default)
         {
-            return new MachineLearningSweepJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, notificationSetting, services, status, earlyTermination, inputs, limits, objective, outputs, new QueueSettings(jobTier, additionalBinaryDataProperties: null), samplingAlgorithm, searchSpace, trial);
+            return new MachineLearningSweepJob(description, tags, properties, serializedAdditionalRawData: null, JobType.Sweep, displayName, status, experimentName, services, computeId, isArchived, identity, componentId, notificationSetting, searchSpace, samplingAlgorithm, limits, earlyTermination, objective, trial, inputs, outputs, new JobQueueSettings(jobTier, serializedAdditionalRawData: null));
         }
     }
 }

@@ -110,10 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
                 return Properties.PrivateEndpoint is RegistryPrivateEndpoint registryPrivateEndpoint
                     ? registryPrivateEndpoint
-                    : new RegistryPrivateEndpoint(Properties.PrivateEndpoint.Id)
-                    {
-                        SubnetArmId = Properties.PrivateEndpoint.SubnetArmId
-                    };
+                    : new RegistryPrivateEndpoint(Properties.PrivateEndpoint.Id, serializedAdditionalRawData: null, Properties.PrivateEndpoint.SubnetArmId);
             }
             set
             {
@@ -233,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the FQDN endpoint property bag. </summary>
         [WirePath("properties")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public MachineLearningFqdnEndpointsProperties Properties => new MachineLearningFqdnEndpointsProperties(this);
+        public MachineLearningFqdnEndpointsProperties Properties => new MachineLearningFqdnEndpointsProperties(Category, Endpoints is null ? null : new List<MachineLearningFqdnEndpoint>(Endpoints), serializedAdditionalRawData: null);
     }
 
     public partial class MountBindOptions

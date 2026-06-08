@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeStartStopSchedule> array = new List<MachineLearningComputeStartStopSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeStartStopSchedule.DeserializeComputeStartStopSchedule(item, options));
+                        array.Add(MachineLearningComputeStartStopSchedule.DeserializeMachineLearningComputeStartStopSchedule(item, options));
                     }
                     computeStartStop = array;
                     continue;

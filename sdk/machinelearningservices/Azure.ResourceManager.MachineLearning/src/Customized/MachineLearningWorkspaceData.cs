@@ -46,31 +46,32 @@ namespace Azure.ResourceManager.MachineLearning
                     return default;
                 }
 
-                if (Properties.Encryption is MachineLearningEncryptionSetting encryptionSetting)
-                {
-                    return encryptionSetting;
-                }
-
                 if (Properties.Encryption.KeyVaultProperties is null)
                 {
                     return default;
                 }
 
                 Azure.ResourceManager.MachineLearning.Models.KeyVaultProperties keyVaultProperties = Properties.Encryption.KeyVaultProperties;
-                var legacyKeyVaultProperties = keyVaultProperties as MachineLearningEncryptionKeyVaultProperties
-                    ?? new MachineLearningEncryptionKeyVaultProperties(keyVaultProperties.KeyIdentifier, keyVaultProperties.KeyVaultArmId);
-                return new MachineLearningEncryptionSetting(Properties.Encryption.Status, legacyKeyVaultProperties)
+                var legacyKeyVaultProperties = new MachineLearningEncryptionKeyVaultProperties(keyVaultProperties.KeyVaultArmId, keyVaultProperties.KeyIdentifier)
                 {
-                    CosmosDbResourceId = Properties.Encryption.CosmosDbResourceId,
-                    SearchAccountResourceId = Properties.Encryption.SearchAccountResourceId,
-                    StorageAccountResourceId = Properties.Encryption.StorageAccountResourceId,
-                    UserAssignedIdentity = Properties.Encryption.UserAssignedIdentity is null ? null : new ResourceIdentifier(Properties.Encryption.UserAssignedIdentity)
+                    IdentityClientId = keyVaultProperties.IdentityClientId
                 };
+                return new MachineLearningEncryptionSetting(Properties.Encryption.Status, Properties.Encryption.UserAssignedIdentity is null ? null : new MachineLearningCmkIdentity(new ResourceIdentifier(Properties.Encryption.UserAssignedIdentity), serializedAdditionalRawData: null), legacyKeyVaultProperties, serializedAdditionalRawData: null);
             }
             set
             {
                 Properties ??= new WorkspaceProperties();
-                Properties.Encryption = value;
+                Properties.Encryption = value is null ? null : new EncryptionProperty(
+                    cosmosDbResourceId: default,
+                    identity: value.UserAssignedIdentity is null ? null : new IdentityForCmk(value.UserAssignedIdentity.ToString(), additionalBinaryDataProperties: null),
+                    keyVaultProperties: value.KeyVaultProperties is null ? null : new Azure.ResourceManager.MachineLearning.Models.KeyVaultProperties(value.KeyVaultProperties.KeyIdentifier, value.KeyVaultProperties.KeyVaultArmId)
+                    {
+                        IdentityClientId = value.KeyVaultProperties.IdentityClientId
+                    },
+                    searchAccountResourceId: default,
+                    status: value.Status,
+                    storageAccountResourceId: default,
+                    additionalBinaryDataProperties: null);
             }
         }
 

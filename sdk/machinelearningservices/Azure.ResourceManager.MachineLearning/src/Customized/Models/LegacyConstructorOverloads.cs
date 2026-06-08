@@ -37,15 +37,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
     }
 
-    public partial class MachineLearningEncryptionKeyVaultProperties
-    {
-        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
-        public MachineLearningEncryptionKeyVaultProperties(Azure.Core.ResourceIdentifier keyVaultArmId, string keyIdentifier)
-            : this(keyIdentifier, keyVaultArmId)
-        {
-        }
-    }
-
     public partial class MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreProperties"/>. </summary>
