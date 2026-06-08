@@ -54,12 +54,22 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         {
             nameof(OpenAIClientOptions) => (T)new OpenAIClientOptions(),
             nameof(ProjectOpenAIClientOptions) => (T)(object)new ProjectOpenAIClientOptions(),
-            nameof(ProjectResponsesClientOptions) => (T)(object)new ProjectResponsesClientOptions(),
             _ => throw new NotImplementedException()
         };
         options.Endpoint = endpoint;
         options.RetryPolicy = new ClientRetryPolicy(maxRetries: 0);
         options.NetworkTimeout = TimeSpan.FromMinutes(2);
+        return GetConfiguredOptions(options, instrument);
+    }
+
+    protected ProjectOAIResponsesClientOptions CreateTestProjectOAIResponsesClientOptions(Uri endpoint = null, bool instrument = true)
+    {
+        ProjectOAIResponsesClientOptions options = new()
+        {
+            Endpoint = endpoint,
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 0),
+            NetworkTimeout = TimeSpan.FromMinutes(2),
+        };
         return GetConfiguredOptions(options, instrument);
     }
 
@@ -103,7 +113,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
-        ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
+        ProjectOAIResponsesClientOptions clientOptions = CreateTestProjectOAIResponsesClientOptions(
             endpoint: endpointInOptions ? new Uri($"{TestEnvironment.FOUNDRY_PROJECT_ENDPOINT}/openai/v1") : null);
 
         AgentReference defaultAgent = null;
@@ -133,7 +143,8 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected ResponsesClient GetTestBaseResponsesClient(Uri overrideEndpoint = null)
     {
-        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+        ResponsesClientOptions options = new() { Endpoint = overrideEndpoint };
+        options = GetConfiguredOptions(options, instrument: true);
 
         return CreateProxyFromClient(
             new ResponsesClient(
