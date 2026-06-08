@@ -97,8 +97,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
                         else
                         {
-                            _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter);
+                            // Process the transmission result to determine the final state (e.g., server-side dropped telemetry is not a permanent failure)
+                            var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter);
+                            result = transmissionResult.ExportResult;
+                            if (result == ExportResult.Failure)
+                            {
+                                // If still in a failure state, enable back off
+                                _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+                            }
                             break;
                         }
                     }
