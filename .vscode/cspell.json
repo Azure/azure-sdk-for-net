@@ -282,13 +282,6 @@
       ]
     },
     {
-      "filename": "**/sdk/azureresiliencemanagement/**/*.cs",
-      "words": [
-        "mobo",
-        "reprotect"
-      ]
-    },
-    {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
         "adou",
