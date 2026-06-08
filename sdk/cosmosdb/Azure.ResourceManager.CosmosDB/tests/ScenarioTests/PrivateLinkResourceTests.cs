@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _databaseAccount = await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).GetAsync();
         }
 
-        [Test]
         [RecordedTest]
         public async Task PrivateLinkResourceListAndGet()
         {

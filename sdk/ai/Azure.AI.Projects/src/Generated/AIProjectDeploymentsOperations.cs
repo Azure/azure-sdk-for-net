@@ -36,7 +36,7 @@ namespace Azure.AI.Projects
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Get a deployed model.
+        /// [Protocol Method] Gets a deployed model.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -58,7 +58,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get a deployed model.
+        /// [Protocol Method] Gets a deployed model.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get a deployed model. </summary>
+        /// <summary> Gets a deployed model. </summary>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -93,7 +93,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((AIProjectDeployment)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a deployed model. </summary>
+        /// <summary> Gets a deployed model. </summary>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] List all deployed models in the project
+        /// [Protocol Method] Returns the deployed models available in the current project, optionally filtered by publisher, model name, or deployment type.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] List all deployed models in the project
+        /// [Protocol Method] Returns the deployed models available in the current project, optionally filtered by publisher, model name, or deployment type.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects
             return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResult(this, modelPublisher, modelName, deploymentType, options);
         }
 
-        /// <summary> List all deployed models in the project. </summary>
+        /// <summary> Returns the deployed models available in the current project, optionally filtered by publisher, model name, or deployment type. </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects
             return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResultOfT(this, modelPublisher, modelName, deploymentType?.ToString(), cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all deployed models in the project. </summary>
+        /// <summary> Returns the deployed models available in the current project, optionally filtered by publisher, model name, or deployment type. </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>

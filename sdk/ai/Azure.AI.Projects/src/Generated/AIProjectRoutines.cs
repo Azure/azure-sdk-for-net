@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Create or update a routine.
+        /// [Protocol Method] Creates a new routine or replaces an existing routine with the supplied definition.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update a routine.
+        /// [Protocol Method] Creates a new routine or replaces an existing routine with the supplied definition.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -76,7 +76,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create or update a routine. </summary>
+        /// <summary> Creates a new routine or replaces an existing routine with the supplied definition. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="description"> A human-readable description of the routine. </param>
         /// <param name="enabled"> Whether the routine is enabled. </param>
@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
-        /// <summary> Create or update a routine. </summary>
+        /// <summary> Creates a new routine or replaces an existing routine with the supplied definition. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="description"> A human-readable description of the routine. </param>
         /// <param name="enabled"> Whether the routine is enabled. </param>
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a routine.
+        /// [Protocol Method] Retrieves the specified routine and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a routine.
+        /// [Protocol Method] Retrieves the specified routine and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -146,7 +146,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Retrieve a routine. </summary>
+        /// <summary> Retrieves the specified routine and its current configuration. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -157,7 +157,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieve a routine. </summary>
+        /// <summary> Retrieves the specified routine and its current configuration. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Enable a routine.
+        /// [Protocol Method] Enables the specified routine so it can be dispatched.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -188,7 +188,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Enable a routine.
+        /// [Protocol Method] Enables the specified routine so it can be dispatched.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -206,7 +206,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Enable a routine. </summary>
+        /// <summary> Enables the specified routine so it can be dispatched. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -217,7 +217,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
-        /// <summary> Enable a routine. </summary>
+        /// <summary> Enables the specified routine so it can be dispatched. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -229,7 +229,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Disable a routine.
+        /// [Protocol Method] Disables the specified routine so it no longer runs.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -248,7 +248,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Disable a routine.
+        /// [Protocol Method] Disables the specified routine so it no longer runs.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -266,7 +266,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Disable a routine. </summary>
+        /// <summary> Disables the specified routine so it no longer runs. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -277,7 +277,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
-        /// <summary> Disable a routine. </summary>
+        /// <summary> Disables the specified routine so it no longer runs. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -289,7 +289,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a routine.
+        /// [Protocol Method] Deletes the specified routine.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -308,7 +308,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a routine.
+        /// [Protocol Method] Deletes the specified routine.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -326,7 +326,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete a routine. </summary>
+        /// <summary> Deletes the specified routine. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -336,7 +336,7 @@ namespace Azure.AI.Projects
             return DeleteRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete a routine. </summary>
+        /// <summary> Deletes the specified routine. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -347,7 +347,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Queue an asynchronous routine dispatch.
+        /// [Protocol Method] Queues an asynchronous dispatch for the specified routine.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -367,7 +367,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Queue an asynchronous routine dispatch.
+        /// [Protocol Method] Queues an asynchronous dispatch for the specified routine.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -386,7 +386,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Queue an asynchronous routine dispatch. </summary>
+        /// <summary> Queues an asynchronous dispatch for the specified routine. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="payload"> A direct action-input override sent downstream when testing a routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -399,7 +399,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((DispatchRoutineResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Queue an asynchronous routine dispatch. </summary>
+        /// <summary> Queues an asynchronous dispatch for the specified routine. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="payload"> A direct action-input override sent downstream when testing a routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
