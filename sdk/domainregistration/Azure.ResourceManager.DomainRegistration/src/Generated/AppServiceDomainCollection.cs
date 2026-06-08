@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 HttpMessage message = _domainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, AppServiceDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DomainRegistrationArmOperation<AppServiceDomainResource> operation = new DomainRegistrationArmOperation<AppServiceDomainResource>(
-                    new AppServiceDomainOperationSource(Client),
+                    new AppServiceDomainResourceOperationSource(Client),
                     _domainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 HttpMessage message = _domainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, AppServiceDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DomainRegistrationArmOperation<AppServiceDomainResource> operation = new DomainRegistrationArmOperation<AppServiceDomainResource>(
-                    new AppServiceDomainOperationSource(Client),
+                    new AppServiceDomainResourceOperationSource(Client),
                     _domainsClientDiagnostics,
                     Pipeline,
                     message.Request,

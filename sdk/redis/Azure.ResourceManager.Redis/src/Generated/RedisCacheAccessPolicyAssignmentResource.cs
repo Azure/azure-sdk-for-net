@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisCacheAccessPolicyAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisCacheAccessPolicyAssignmentResource> operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(
-                    new RedisCacheAccessPolicyAssignmentOperationSource(Client),
+                    new RedisCacheAccessPolicyAssignmentResourceOperationSource(Client),
                     _redisCacheAccessPolicyAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisCacheAccessPolicyAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisCacheAccessPolicyAssignmentResource> operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(
-                    new RedisCacheAccessPolicyAssignmentOperationSource(Client),
+                    new RedisCacheAccessPolicyAssignmentResourceOperationSource(Client),
                     _redisCacheAccessPolicyAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,

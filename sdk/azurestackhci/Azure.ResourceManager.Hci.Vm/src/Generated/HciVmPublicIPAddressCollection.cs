@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicIPAddressName, HciVmPublicIPAddressData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicIPAddressName, HciVmPublicIPAddressData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,

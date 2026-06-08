@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string fleetUpdateStrategyApiVersion);
             _fleetUpdateStrategiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _fleetUpdateStrategiesRestClient = new FleetUpdateStrategies(_fleetUpdateStrategiesClientDiagnostics, Pipeline, Endpoint, fleetUpdateStrategyApiVersion ?? "2026-02-01-preview");
+            _fleetUpdateStrategiesRestClient = new FleetUpdateStrategies(_fleetUpdateStrategiesClientDiagnostics, Pipeline, Endpoint, fleetUpdateStrategyApiVersion ?? "2026-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<FleetUpdateStrategyResource> operation = new ContainerServiceFleetArmOperation<FleetUpdateStrategyResource>(
-                    new FleetUpdateStrategyOperationSource(Client),
+                    new FleetUpdateStrategyResourceOperationSource(Client),
                     _fleetUpdateStrategiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<FleetUpdateStrategyResource> operation = new ContainerServiceFleetArmOperation<FleetUpdateStrategyResource>(
-                    new FleetUpdateStrategyOperationSource(Client),
+                    new FleetUpdateStrategyResourceOperationSource(Client),
                     _fleetUpdateStrategiesClientDiagnostics,
                     Pipeline,
                     message.Request,

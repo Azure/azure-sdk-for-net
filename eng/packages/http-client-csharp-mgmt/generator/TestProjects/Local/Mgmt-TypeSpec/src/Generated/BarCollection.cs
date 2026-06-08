@@ -97,7 +97,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +156,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,

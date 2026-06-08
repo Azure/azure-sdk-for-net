@@ -71,7 +71,7 @@ namespace Azure.AI.VoiceLive
         {
             if (element.ValueKind == JsonValueKind.String)
             {
-                return new RequireApprovalOption(new MCPApprovalType(element.GetString()));
+                return new RequireApprovalOption(new McpApprovalKind(element.GetString()));
             }
             if (element.ValueKind == JsonValueKind.Object)
             {

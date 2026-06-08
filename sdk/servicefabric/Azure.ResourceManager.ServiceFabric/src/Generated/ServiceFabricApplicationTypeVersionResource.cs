@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricApplicationTypeVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(
-                    new ServiceFabricApplicationTypeVersionOperationSource(Client),
+                    new ServiceFabricApplicationTypeVersionResourceOperationSource(Client),
                     _applicationTypeVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricApplicationTypeVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(
-                    new ServiceFabricApplicationTypeVersionOperationSource(Client),
+                    new ServiceFabricApplicationTypeVersionResourceOperationSource(Client),
                     _applicationTypeVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

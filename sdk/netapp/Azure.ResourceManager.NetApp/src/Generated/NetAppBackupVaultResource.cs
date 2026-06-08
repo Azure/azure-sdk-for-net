@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupVaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetAppBackupVaultPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppBackupVaultResource> operation = new NetAppArmOperation<NetAppBackupVaultResource>(
-                    new NetAppBackupVaultOperationSource(Client),
+                    new NetAppBackupVaultResourceOperationSource(Client),
                     _backupVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupVaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetAppBackupVaultPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppBackupVaultResource> operation = new NetAppArmOperation<NetAppBackupVaultResource>(
-                    new NetAppBackupVaultOperationSource(Client),
+                    new NetAppBackupVaultResourceOperationSource(Client),
                     _backupVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
