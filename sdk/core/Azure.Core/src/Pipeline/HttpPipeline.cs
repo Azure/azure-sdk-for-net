@@ -64,7 +64,7 @@ namespace Azure.Core.Pipeline
                 // If the policy implements ISupportsTransportCertificateUpdate, we need to subscribe to its TransportUpdated event
                 if (policies[i] is ISupportsTransportUpdate transportUpdated)
                 {
-                    AzureCoreEventSource.Singleton.TokenBinding("HttpPipeline wired up to listen for transport option updates from policy: " + policies[i].GetType().FullName);
+                    AzureCoreEventSource.Singleton.TokenBinding("HttpPipeline subscribed to transport option updates.");
                     transportUpdated.TransportOptionsChanged += options => _transport.Update(options);
                     break;
                 }

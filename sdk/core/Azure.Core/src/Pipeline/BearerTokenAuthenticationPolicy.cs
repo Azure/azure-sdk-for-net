@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -26,6 +27,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Event that is triggered when the transport needs to be updated.
         /// </summary>
+        [Experimental("AZID0004")]
         public event Action<HttpPipelineTransportOptions>? TransportOptionsChanged;
 
         /// <summary>
@@ -41,6 +43,7 @@ namespace Azure.Core.Pipeline
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to be included in acquired tokens.</param>
         /// <param name="transportOptions">The <see cref="HttpPipelineTransportOptions"/> to use as a base when updating transport options. If provided, a clone of this instance will be used when updating the transport with new client certificates.</param>
+        [Experimental("AZID0004")]
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope, HttpPipelineTransportOptions transportOptions) : this(credential, new[] { scope }, transportOptions) { }
 
         /// <summary>
@@ -60,6 +63,7 @@ namespace Azure.Core.Pipeline
         /// <param name="scopes">Scopes to be included in acquired tokens.</param>
         /// <param name="transportOptions">The <see cref="HttpPipelineTransportOptions"/> to use as a base when updating transport options. If provided, a clone of this instance will be used when updating the transport with new client certificates.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
+        [Experimental("AZID0004")]
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, HttpPipelineTransportOptions transportOptions)
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30), transportOptions)
         { }
@@ -252,6 +256,7 @@ namespace Azure.Core.Pipeline
         /// This can be used to trigger transport updates when token refreshes happen in the background and new tokens have different requirements for the transport, such as a different client certificate.
         /// </summary>
         /// <param name="options"></param>
+        [Experimental("AZID0004")]
         protected void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
         {
             TransportOptionsChanged?.Invoke(options);
@@ -273,8 +278,10 @@ namespace Azure.Core.Pipeline
             _lastBindingCertificate = newCert;
             var options = _transportOptions?.Clone() ?? new HttpPipelineTransportOptions();
             options.ClientCertificates.Add(newCert);
-            AzureCoreEventSource.Singleton.TokenBinding("Updating transport options with new binding certificate. Certificate Thumbprint: " + newCert.Thumbprint);
+            AzureCoreEventSource.Singleton.TokenBinding("Updating transport options with a new binding certificate.");
+#pragma warning disable AZID0004 // Internal usage of experimental token binding API
             OnTransportOptionsChanged(options);
+#pragma warning restore AZID0004
         }
 
         internal class AccessTokenCache
@@ -462,7 +469,10 @@ namespace Azure.Core.Pipeline
                     false when _tokenRefreshOffset.Ticks > token.ExpiresOn.Ticks => token.ExpiresOn,
                     _ => token.ExpiresOn - _tokenRefreshOffset
                 };
-                AzureCoreEventSource.Singleton.TokenBinding($"Fetched new token with new binding certificate. Certificate Thumbprint: {token.BindingCertificate?.Thumbprint}, tokenType: {token.TokenType}, expiresOn: {token.ExpiresOn}, refreshOn: {refreshOn}");
+                if (token.BindingCertificate != null)
+                {
+                    AzureCoreEventSource.Singleton.TokenBinding("Token acquired with a binding certificate.");
+                }
                 targetTcs.SetResult(new AuthHeaderValueInfo(token.TokenType + " " + token.Token, token.ExpiresOn, refreshOn, token.BindingCertificate));
             }
 
