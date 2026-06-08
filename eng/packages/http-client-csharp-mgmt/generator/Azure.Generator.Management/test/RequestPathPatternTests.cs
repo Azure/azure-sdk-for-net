@@ -131,6 +131,27 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
+        public void Equals_NonStrictTreatsVariableNamesAsEqual()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(first.Equals(second), Is.True);
+            Assert.That(first.Equals(second, strict: false), Is.True);
+        }
+
+        [Test]
+        public void Equals_StrictComparesVariableNames()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+            var same = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+
+            Assert.That(first.Equals(second, strict: true), Is.False);
+            Assert.That(first.Equals(same, strict: true), Is.True);
+        }
+
+        [Test]
         public void GetHashCode_DifferentPatternsUseDifferentHashCodes()
         {
             var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");

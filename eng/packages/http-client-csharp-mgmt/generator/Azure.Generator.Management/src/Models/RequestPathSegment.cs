@@ -25,9 +25,20 @@ namespace Azure.Generator.Management.Models
 
         /// <inheritdoc />
         public bool Equals(RequestPathSegment? other)
+            => Equals(other, strict: false);
+
+        /// <summary>
+        /// Determines whether this segment equals another segment.
+        /// </summary>
+        /// <param name="other">The other segment to compare.</param>
+        /// <param name="strict">Whether variable segment names must match exactly.</param>
+        /// <returns><c>true</c> if the segments are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(RequestPathSegment? other, bool strict)
         {
             if (other is null)
                 return false;
+            if (strict)
+                return _value == other._value;
             if (!IsConstant && !other.IsConstant)
                 return true;
             return _value == other._value;

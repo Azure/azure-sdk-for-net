@@ -198,12 +198,21 @@ namespace Azure.Generator.Management.Models
 
         /// <inheritdoc />
         public bool Equals(RequestPathPattern? other)
+            => Equals(other, strict: false);
+
+        /// <summary>
+        /// Determines whether this path pattern equals another path pattern.
+        /// </summary>
+        /// <param name="other">The other path pattern to compare.</param>
+        /// <param name="strict">Whether variable segment names must match exactly.</param>
+        /// <returns><c>true</c> if the path patterns are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(RequestPathPattern? other, bool strict)
         {
             if (Count != other?.Count)
                 return false;
             for (int i = 0; i < Count; i++)
             {
-                if (!this[i].Equals(other[i]))
+                if (!this[i].Equals(other[i], strict))
                     return false;
             }
             return true;
