@@ -33,34 +33,32 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentsServiceClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentsServiceClientOptions())
+        public DocumentsServiceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentsServiceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentsServiceClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentsServiceClientOptions())
+        public DocumentsServiceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentsServiceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DocumentsServiceClient(HttpPipelinePolicy authenticationPolicy, string endpoint, DocumentsServiceClientOptions options)
+        internal DocumentsServiceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentsServiceClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new DocumentsServiceClientOptions();
 
-            _endpoint = new Uri($"{endpoint}/language");
+            _endpoint = endpoint;
             if (authenticationPolicy != null)
             {
                 Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
@@ -74,22 +72,20 @@ namespace Azure.AI.Language.Documents
         }
 
         /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentsServiceClient(string endpoint, AzureKeyCredential credential, DocumentsServiceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        public DocumentsServiceClient(Uri endpoint, AzureKeyCredential credential, DocumentsServiceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
         /// <summary> Initializes a new instance of DocumentsServiceClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentsServiceClient(string endpoint, TokenCredential credential, DocumentsServiceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        public DocumentsServiceClient(Uri endpoint, TokenCredential credential, DocumentsServiceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ namespace Azure.AI.Language.Documents
     public partial class DocumentsServiceClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
-        public string Endpoint { get; set; }
+        public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
         public DocumentsServiceClientOptions Options { get; set; }
@@ -25,8 +26,7 @@ namespace Azure.AI.Language.Documents
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
         {
-            string endpoint = section["Endpoint"];
-            if (!string.IsNullOrEmpty(endpoint))
+            if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
             {
                 Endpoint = endpoint;
             }

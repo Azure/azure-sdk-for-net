@@ -10,6 +10,7 @@
           "properties": {
             "Endpoint": {
               "type": "string",
+              "format": "uri",
               "description": "Gets or sets the Endpoint."
             },
             "Credential": {
