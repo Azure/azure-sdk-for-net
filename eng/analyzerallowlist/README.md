@@ -32,7 +32,7 @@ nowarn:CS1591
 # Per-symbol entries — handled by AllowListDiagnosticSuppressor in Azure.SdkAnalyzers
 nowarn:AZC0034 T:Azure.Foo.Bar                       # all sites inside type Foo.Bar
 nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String)  # one specific member
-nowarn:CS0618  N:Azure.Foo.Models                    # everything in namespace + descendants
+nowarn:CS0618 N:Azure.Foo.Models                     # everything in namespace + descendants
 ```
 
 ### `nowarn:CODE`
