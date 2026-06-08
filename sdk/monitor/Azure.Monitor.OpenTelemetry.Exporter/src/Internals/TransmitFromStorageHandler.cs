@@ -97,12 +97,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
                         else
                         {
-                            // Process the transmission result to determine the final state (e.g., server-side dropped telemetry is not a permanent failure)
                             var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter);
-                            result = transmissionResult.ExportResult;
-                            if (result == ExportResult.Failure)
+                            if (transmissionResult.WillRetry)
                             {
-                                // If still in a failure state, enable back off
+                                // WillRetry is set to true if there was a transient failure sending telemetry; in these cases, we want to retain the telemetry in storage and enable backoff.
                                 _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
                             }
                             break;
