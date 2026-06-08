@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+Regenerated against `2026-06-01-preview` VoiceLive TypeSpec.
 
 ## 1.1.0 (2026-06-03)
  
