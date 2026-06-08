@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _scriptExecutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scriptExecutionName, ScriptExecutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<ScriptExecutionResource> operation = new AvsArmOperation<ScriptExecutionResource>(
-                    new ScriptExecutionOperationSource(Client),
+                    new ScriptExecutionResourceOperationSource(Client),
                     _scriptExecutionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _scriptExecutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scriptExecutionName, ScriptExecutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<ScriptExecutionResource> operation = new AvsArmOperation<ScriptExecutionResource>(
-                    new ScriptExecutionOperationSource(Client),
+                    new ScriptExecutionResourceOperationSource(Client),
                     _scriptExecutionsClientDiagnostics,
                     Pipeline,
                     message.Request,

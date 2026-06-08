@@ -10,9 +10,11 @@ namespace Azure.AI.Projects.Evaluation;
 public partial class EvaluatorDefinition
 {
     // Customization: retain BinaryData despite Record<unknown> basis
+    /// <summary> The JSON schema (Draft 2020-12) for the evaluator's input parameters. </summary>
     [CodeGenMember("init_parameters")]
     public BinaryData InitParameters { get; set; }
 
+    /// <summary> The JSON schema (Draft 2020-12) for the evaluator's input data. </summary>
     [CodeGenMember("data_schema")]
     public BinaryData DataSchema { get; set; }
 }

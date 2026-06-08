@@ -493,6 +493,13 @@ namespace Azure.Compute.Batch
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Compute.Batch.UploadBatchServiceLogsResult>> UploadNodeLogsAsync(string poolId, string nodeId, Azure.Compute.Batch.UploadBatchServiceLogsOptions uploadOptions, System.TimeSpan? timeout = default(System.TimeSpan?), System.DateTimeOffset? requestDate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadNodeLogsAsync(string poolId, string nodeId, Azure.Core.RequestContent content, System.TimeSpan? timeout = default(System.TimeSpan?), System.DateTimeOffset? requestDate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
     }
+    public static partial class BatchClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Compute.Batch.BatchClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Compute.Batch.BatchClientSettings> configureSettings) { throw null; }
+    }
     public partial class BatchClientOptions : Azure.Core.ClientOptions
     {
         public BatchClientOptions(Azure.Compute.Batch.BatchClientOptions.ServiceVersion version = Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2025_06_01) { }

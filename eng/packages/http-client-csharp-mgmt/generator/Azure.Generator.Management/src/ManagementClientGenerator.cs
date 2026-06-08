@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Visitors;
+using Azure.Generator.Management.Providers;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
@@ -42,6 +45,29 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
+
+        /// <inheritdoc/>
+        public override TypeProviderWriter GetWriter(TypeProvider provider)
+        {
+            if (provider is ModelFactoryProvider modelFactory)
+            {
+                // Run model-factory repairs at write time, after all visitors have finalized model constructor
+                // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
+                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            }
+            else
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
+            }
+
+            foreach (var serialization in provider.SerializationProviders)
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
+            }
+
+            return base.GetWriter(provider);
+        }
 
         /// <summary>
         /// Customize the generation output for Azure client SDK.

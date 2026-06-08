@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a ReplicationEligibilityResult along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicationEligibilityResultResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetReplicationEligibilityResultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetReplicationEligibilityResult method.
+    /// A class representing a ReplicationEligibilityResult along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicationEligibilityResultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetReplicationEligibilityResult method.
     /// </summary>
     public partial class ReplicationEligibilityResultResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReplicationEligibilityResultResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="virtualMachineName"> The virtualMachineName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _replicationEligibilityResultClientDiagnostics;
-        private readonly ReplicationEligibilityResultsRestOperations _replicationEligibilityResultRestClient;
+        private readonly ClientDiagnostics _replicationEligibilityResultsClientDiagnostics;
+        private readonly ReplicationEligibilityResults _replicationEligibilityResultsRestClient;
         private readonly ReplicationEligibilityResultData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/replicationEligibilityResults";
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicationEligibilityResultResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ReplicationEligibilityResultResource for mocking. </summary>
         protected ReplicationEligibilityResultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicationEligibilityResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReplicationEligibilityResultResource(ArmClient client, ReplicationEligibilityResultData data) : this(client, data.Id)
@@ -54,71 +43,92 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicationEligibilityResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ReplicationEligibilityResultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicationEligibilityResultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string replicationEligibilityResultApiVersion);
-            _replicationEligibilityResultRestClient = new ReplicationEligibilityResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicationEligibilityResultApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _replicationEligibilityResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            _replicationEligibilityResultsRestClient = new ReplicationEligibilityResults(_replicationEligibilityResultsClientDiagnostics, Pipeline, Endpoint, replicationEligibilityResultApiVersion ?? "2026-02-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ReplicationEligibilityResultData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Validates whether a given VM can be protected or not in which case returns list of errors.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEligibilityResults_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReplicationEligibilityResultsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationEligibilityResultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReplicationEligibilityResultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReplicationEligibilityResultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationEligibilityResultClientDiagnostics.CreateScope("ReplicationEligibilityResultResource.Get");
+            using DiagnosticScope scope = _replicationEligibilityResultsClientDiagnostics.CreateScope("ReplicationEligibilityResultResource.Get");
             scope.Start();
             try
             {
-                var response = await _replicationEligibilityResultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationEligibilityResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReplicationEligibilityResultData> response = Response.FromValue(ReplicationEligibilityResultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +142,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Validates whether a given VM can be protected or not in which case returns list of errors.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEligibilityResults_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReplicationEligibilityResultsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationEligibilityResultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReplicationEligibilityResultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReplicationEligibilityResultResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationEligibilityResultClientDiagnostics.CreateScope("ReplicationEligibilityResultResource.Get");
+            using DiagnosticScope scope = _replicationEligibilityResultsClientDiagnostics.CreateScope("ReplicationEligibilityResultResource.Get");
             scope.Start();
             try
             {
-                var response = _replicationEligibilityResultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationEligibilityResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReplicationEligibilityResultData> response = Response.FromValue(ReplicationEligibilityResultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

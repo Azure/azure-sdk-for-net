@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NewRelicMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource> operation = new NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource>(
-                    new NewRelicMonitoredSubscriptionOperationSource(Client),
+                    new NewRelicMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NewRelicMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource> operation = new NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource>(
-                    new NewRelicMonitoredSubscriptionOperationSource(Client),
+                    new NewRelicMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation run by name.
+        /// [Protocol Method] Retrieves the specified evaluation taxonomy.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation run by name.
+        /// [Protocol Method] Retrieves the specified evaluation taxonomy.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get an evaluation run by name. </summary>
+        /// <summary> Retrieves the specified evaluation taxonomy. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -94,7 +94,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
         }
 
-        /// <summary> Get an evaluation run by name. </summary>
+        /// <summary> Retrieves the specified evaluation taxonomy. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List evaluation taxonomies
+        /// [Protocol Method] Returns the evaluation taxonomies available in the project, optionally filtered by input name or input type.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List evaluation taxonomies
+        /// [Protocol Method] Returns the evaluation taxonomies available in the project, optionally filtered by input name or input type.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Evaluation
             return new EvaluationTaxonomiesGetAllAsyncCollectionResult(this, inputName, inputType, options);
         }
 
-        /// <summary> List evaluation taxonomies. </summary>
+        /// <summary> Returns the evaluation taxonomies available in the project, optionally filtered by input name or input type. </summary>
         /// <param name="inputName"> Filter by the evaluation input name. </param>
         /// <param name="inputType"> Filter by taxonomy input type. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -154,7 +154,7 @@ namespace Azure.AI.Projects.Evaluation
             return new EvaluationTaxonomiesGetAllCollectionResultOfT(this, inputName, inputType, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List evaluation taxonomies. </summary>
+        /// <summary> Returns the evaluation taxonomies available in the project, optionally filtered by input name or input type. </summary>
         /// <param name="inputName"> Filter by the evaluation input name. </param>
         /// <param name="inputType"> Filter by taxonomy input type. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -165,7 +165,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Delete an evaluation taxonomy by name.
+        /// [Protocol Method] Removes the specified evaluation taxonomy from the project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -187,7 +187,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Delete an evaluation taxonomy by name.
+        /// [Protocol Method] Removes the specified evaluation taxonomy from the project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -208,7 +208,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete an evaluation taxonomy by name. </summary>
+        /// <summary> Removes the specified evaluation taxonomy from the project. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -221,7 +221,7 @@ namespace Azure.AI.Projects.Evaluation
             return Delete(name, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete an evaluation taxonomy by name. </summary>
+        /// <summary> Removes the specified evaluation taxonomy from the project. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -235,7 +235,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Create an evaluation taxonomy.
+        /// [Protocol Method] Creates or replaces the specified evaluation taxonomy with the provided definition.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -259,7 +259,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Create an evaluation taxonomy.
+        /// [Protocol Method] Creates or replaces the specified evaluation taxonomy with the provided definition.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -282,35 +282,35 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create an evaluation taxonomy. </summary>
+        /// <summary> Creates or replaces the specified evaluation taxonomy with the provided definition. </summary>
         /// <param name="name"> The name of the evaluation taxonomy. </param>
-        /// <param name="body"> The evaluation taxonomy. </param>
+        /// <param name="taxonomy"> The evaluation taxonomy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="taxonomy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluationTaxonomy> Create(string name, EvaluationTaxonomy body, CancellationToken cancellationToken = default)
+        public virtual ClientResult<EvaluationTaxonomy> Create(string name, EvaluationTaxonomy taxonomy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(taxonomy, nameof(taxonomy));
 
-            ClientResult result = Create(name, body, cancellationToken.ToRequestOptions());
+            ClientResult result = Create(name, taxonomy, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
         }
 
-        /// <summary> Create an evaluation taxonomy. </summary>
+        /// <summary> Creates or replaces the specified evaluation taxonomy with the provided definition. </summary>
         /// <param name="name"> The name of the evaluation taxonomy. </param>
-        /// <param name="body"> The evaluation taxonomy. </param>
+        /// <param name="taxonomy"> The evaluation taxonomy. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="taxonomy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluationTaxonomy>> CreateAsync(string name, EvaluationTaxonomy body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<EvaluationTaxonomy>> CreateAsync(string name, EvaluationTaxonomy taxonomy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(taxonomy, nameof(taxonomy));
 
-            ClientResult result = await CreateAsync(name, body, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateAsync(name, taxonomy, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
         }
 

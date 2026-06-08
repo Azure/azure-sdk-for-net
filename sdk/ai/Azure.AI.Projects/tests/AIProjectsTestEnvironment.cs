@@ -47,6 +47,7 @@ namespace Azure.AI.Projects.Tests
         public string OPENAPI_PROJECT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(OPENAPI_PROJECT_CONNECTION_ID));
         public string SHAREPOINT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_ID));
         public string FABRIC_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_ID));
+        public string FABRIC_IQ_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_IQ_CONNECTION_ID));
         public string A2A_CONNECTION_ID => GetRecordedOptionalVariable(nameof(A2A_CONNECTION_ID));
         public string REMOTE_A2A_CONNECTION_ID => GetRecordedOptionalVariable("A2A_SPECIAL_CONNECTION_ID");
         public string A2A_BASE_URI => GetRecordedOptionalVariable("A2A_BASE_URI");
@@ -64,6 +65,7 @@ namespace Azure.AI.Projects.Tests
         public string FOUNDRY_AGENT_ID => GetRecordedVariable(nameof(FOUNDRY_AGENT_ID));
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
+        public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }

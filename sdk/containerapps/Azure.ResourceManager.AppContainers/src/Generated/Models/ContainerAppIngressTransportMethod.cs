@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppIngressTransportMethod : IEquatable<ContainerAppIngressTransportMethod>
     {
         private readonly string _value;
+        /// <summary> auto. </summary>
+        private const string AutoValue = "auto";
+        /// <summary> http. </summary>
+        private const string HttpValue = "http";
+        /// <summary> http2. </summary>
+        private const string Http2Value = "http2";
+        /// <summary> tcp. </summary>
+        private const string TcpValue = "tcp";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppIngressTransportMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppIngressTransportMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutoValue = "auto";
-        private const string HttpValue = "http";
-        private const string Http2Value = "http2";
-        private const string TcpValue = "tcp";
+            _value = value;
+        }
 
         /// <summary> auto. </summary>
         public static ContainerAppIngressTransportMethod Auto { get; } = new ContainerAppIngressTransportMethod(AutoValue);
+
         /// <summary> http. </summary>
         public static ContainerAppIngressTransportMethod Http { get; } = new ContainerAppIngressTransportMethod(HttpValue);
+
         /// <summary> http2. </summary>
         public static ContainerAppIngressTransportMethod Http2 { get; } = new ContainerAppIngressTransportMethod(Http2Value);
+
         /// <summary> tcp. </summary>
         public static ContainerAppIngressTransportMethod Tcp { get; } = new ContainerAppIngressTransportMethod(TcpValue);
+
         /// <summary> Determines if two <see cref="ContainerAppIngressTransportMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppIngressTransportMethod left, ContainerAppIngressTransportMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppIngressTransportMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppIngressTransportMethod left, ContainerAppIngressTransportMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppIngressTransportMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppIngressTransportMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppIngressTransportMethod(string value) => new ContainerAppIngressTransportMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppIngressTransportMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppIngressTransportMethod?(string value) => value == null ? null : new ContainerAppIngressTransportMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppIngressTransportMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppIngressTransportMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

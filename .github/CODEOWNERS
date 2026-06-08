@@ -40,6 +40,7 @@
 
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
+/sdk/core/Azure.Core/**/Identity/                                  @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Core
 # ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
@@ -121,10 +122,10 @@
 /sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash @m-redding
 
 # PRLabel: %Batch
-/sdk/batch/    @cRui861 @dpwatrous @skapur12 @wanghoppe @wiboris
+/sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
 
 # ServiceLabel: %Batch
-# ServiceOwners: @dpwatrous @wiboris
+# ServiceOwners: @dpwatrous @iwang2 @lilinvictorms @wiboris @xingwu1
 
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/    @conhua @juaduan @mengaims @moreOver0
@@ -192,8 +193,11 @@
 # PRLabel: %Cognitive - Translator
 /sdk/translation/    @jrjrguo
 
+# PRLabel: %Cognitive - Translator
+/sdk/translation/Azure.AI.Translation.Text/    @jrjrguo @quentinRobinson
+
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners: @jrjrguo
+# ServiceOwners: @jrjrguo @quentinRobinson
 
 # PRLabel: %Communication
 /sdk/communication/    @acsdevx-msft
@@ -208,10 +212,10 @@
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Common/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Identity/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/    @besh2014 @gfeitosa-msft @ihuseynov-msft @ilyapaliakou-msft @kirill-linnik @phermanov-msft
@@ -261,6 +265,16 @@
 # ServiceLabel: %Digital Twins
 # ServiceOwners: @Aashish93-stack @abhinav-ghai @efriesner @johngallardo @Satya-Kolluri @sjiherzig
 
+# PRLabel: %EngSys
+/sdk/template/    @danieljurek @weshaggard
+
+# PRLabel: %EngSys
+/sdk/template/Azure.Template/    @danieljurek
+
+# AzureSdkOwners: @danieljurek @weshaggard
+# ServiceLabel: %EngSys
+# ServiceOwners: @danieljurek @weshaggard
+
 # PRLabel: %Event Grid
 /sdk/eventgrid/    @Kishp01 @rajeshka @shankarsama
 
@@ -271,17 +285,17 @@
 # ServiceOwners: @Kishp01 @rajeshka @shankarsama
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/    @axisc @hmlam @j7nw4r @jsquire @sjkwak
+/sdk/eventhub/    @axisc @hmlam @j7nw4r @jsquire @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @jsquire @sjkwak
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @jsquire @sagar0207 @sjkwak @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Event Hubs
-# ServiceOwners: @axisc @hmlam @j7nw4r @sjkwak
+# ServiceOwners: @axisc @hmlam @j7nw4r @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Functions %Service Bus
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
@@ -414,11 +428,11 @@
 # ServiceOwners: @efrainretana @mattgotteiner
 
 # PRLabel: %Service Bus
-/sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
+/sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Service Bus
-# ServiceOwners: @EldertGrootenboer @j7nw4r @skarri-microsoft
+# ServiceOwners: @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom
 
 # PRLabel: %SignalR
 /sdk/signalr/    @chenkennt @JialinXin @vicancy @Y-Sindo
@@ -1212,7 +1226,7 @@
 ################
 
 # GitHub integration, CODEOWNERS, and bot rules
-/.github/                                                          @jsquire @ronniegeraghty @m-redding @ArthurMa1978
+/.github/                                                          @jsquire @m-redding @ArthurMa1978
 /.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
@@ -1229,7 +1243,7 @@
 /.config/1espt/                                                    @benbp @weshaggard
 /.vscode/                                                          @jsquire @m-redding
 /.devcontainer/                                                    @jsquire @m-redding
-/doc/                                                              @jsquire @scottaddie
+/doc/                                                              @jsquire
 /samples/                                                          @jsquire @m-redding
 
 # Repository configuration that should not be overridden

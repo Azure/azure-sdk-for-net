@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 HttpMessage message = _containerGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation<ContainerGroupResource> operation = new ContainerInstanceArmOperation<ContainerGroupResource>(
-                    new ContainerGroupOperationSource(Client),
+                    new ContainerGroupResourceOperationSource(Client),
                     _containerGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 HttpMessage message = _containerGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation<ContainerGroupResource> operation = new ContainerInstanceArmOperation<ContainerGroupResource>(
-                    new ContainerGroupOperationSource(Client),
+                    new ContainerGroupResourceOperationSource(Client),
                     _containerGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
                 _containerGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
                 _containerGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

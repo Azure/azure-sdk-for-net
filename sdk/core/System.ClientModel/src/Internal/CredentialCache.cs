@@ -1,0 +1,158 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Configuration;
+
+namespace System.ClientModel.Primitives;
+
+/// <summary>
+/// Process-wide cache of resolved <see cref="CredentialSettings"/> instances
+/// keyed by a hash of the merged credential section content. Resolver-matched
+/// entries are additionally keyed by the reference-identity hash of the
+/// resolver instance that produced the provider, so two callers with
+/// identical effective config that share a resolver instance also share one
+/// settings instance (and the token-layer cache inside the provider).
+/// Distinct resolver instances (even of the same type) get distinct cache
+/// entries — a custom resolver carrying instance state (e.g., per-host
+/// secrets) cannot leak its provider into another caller's chain. Inline
+/// credential sections that no resolver claims are cached under a single
+/// section-only key, so the inline-ApiKey path benefits from caching too.
+/// </summary>
+[Experimental("SCME0002")]
+internal static class CredentialCache
+{
+    private const string InlineKeySuffix = "::inline";
+
+    private static readonly ConcurrentDictionary<string, CredentialSettings> s_cache = new();
+
+    /// <summary>
+    /// Look up a cached <see cref="CredentialSettings"/> for
+    /// (<paramref name="mergedSection"/>, <paramref name="resolver"/>); on
+    /// miss, call <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>.
+    /// If the resolver matches and produces a non-null, non-disposable provider,
+    /// build and cache a <see cref="CredentialSettings"/> for it. Returns
+    /// <see langword="null"/> when the resolver does not match (the no-match
+    /// case is handled by <see cref="GetOrCreateInline"/>).
+    /// </summary>
+    /// <param name="mergedSection">The credential section to resolve (already
+    /// merged with any overrides).</param>
+    /// <param name="resolver">The resolver to invoke on cache miss.</param>
+    /// <param name="resolveChild">A callback that recursively resolves child
+    /// sections through the active engine. Passed straight through to the
+    /// chain-aware <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>
+    /// overload so chain-owning resolvers can recurse without re-implementing
+    /// engine logic. Required — callers without a chain pass a no-op
+    /// (<c><![CDATA[static _ => null]]></c>) to honor the resolver's non-null contract.</param>
+    /// <param name="chainKey">Stable identifier for the active resolver chain
+    /// composition. Used as a discriminator when the resolver actually invokes
+    /// <paramref name="resolveChild"/> during <c>TryResolve</c> — the produced
+    /// provider then depends on the chain, so it must be cached per chain.
+    /// Resolvers that do not invoke <paramref name="resolveChild"/> get a
+    /// single shared cache entry (chain-independent), preserving cross-chain
+    /// sharing for the common non-chain case.</param>
+    public static CredentialSettings? GetOrTryResolve(
+        IConfigurationSection mergedSection,
+        CredentialResolver resolver,
+        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+        string chainKey)
+    {
+        string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
+        if (sectionKey.Length == 0)
+        {
+            // ComputeKey returns the empty string only for a null section.
+            // The engine guards against this before reaching the cache, but if
+            // some future caller bypasses the engine and passes null we have
+            // no meaningful cache key and no resolver could produce a useful
+            // provider from a null section. Return null instead of invoking
+            // the resolver.
+            return null;
+        }
+
+        // Reference-identity hash bypasses any user GetHashCode override on
+        // the resolver and gives a stable identifier for the lifetime of the
+        // resolver object.
+        string resolverPart = sectionKey + "::" + RuntimeHelpers.GetHashCode(resolver).ToString(Globalization.CultureInfo.InvariantCulture);
+        string sharedKey = resolverPart;
+        string chainSpecificKey = resolverPart + "::" + chainKey;
+
+        // Lookup order:
+        //   1. Shared slot — populated when a prior resolve completed without
+        //      invoking resolveChild. The cached provider is chain-independent
+        //      and safe to share across every chain composition.
+        //   2. Chain-specific slot — populated when a prior resolve DID invoke
+        //      resolveChild. Only valid for this exact chain composition.
+        if (s_cache.TryGetValue(sharedKey, out CredentialSettings? existing) ||
+            s_cache.TryGetValue(chainSpecificKey, out existing))
+        {
+            return existing;
+        }
+
+        // Track whether the resolver consumes downstream chain results during
+        // this invocation. Wrap the engine-supplied resolveChild with a thin
+        // delegate that sets a local flag before forwarding; the flag drives
+        // which slot the result goes into below.
+        bool usedChild = false;
+        Func<IConfigurationSection, AuthenticationTokenProvider?> trackedResolveChild = section =>
+        {
+            usedChild = true;
+            return resolveChild(section);
+        };
+
+        // Always invoke the chain-aware overload. Resolvers that don't override
+        // it inherit the default implementation, which forwards to the legacy
+        // (section, out provider) overload — and never touches resolveChild, so
+        // usedChild stays false and the result lands in the shared slot.
+        if (!resolver.TryResolve(mergedSection, trackedResolveChild, out AuthenticationTokenProvider? provider) || provider is null)
+        {
+            return null;
+        }
+
+        CredentialSettings created = new(mergedSection)
+        {
+            TokenProvider = provider,
+        };
+
+        // Defensive: if the produced provider owns disposable resources, do not
+        // cache the settings. A cached IDisposable provider could be disposed
+        // by one consumer (e.g., a DI host shutting down) and then handed out
+        // to another consumer from the cache, producing ObjectDisposedException.
+        // The cost is losing token-cache sharing for disposable providers,
+        // which in practice is rare (TokenCredential / AuthenticationTokenProvider
+        // base contracts are not IDisposable).
+        if (provider is IDisposable || provider is IAsyncDisposable)
+        {
+            return created;
+        }
+
+        // Slot selection: chain-independent results go to the shared slot
+        // (cross-chain reuse for the common case). Chain-dependent results
+        // go to the chain-specific slot so a future call with a different
+        // downstream chain re-resolves through the new chain.
+        string storeKey = usedChild ? chainSpecificKey : sharedKey;
+        return s_cache.GetOrAdd(storeKey, created);
+    }
+
+    /// <summary>
+    /// Returns a cached <see cref="CredentialSettings"/> for the inline
+    /// credential data in <paramref name="mergedSection"/> — the no-resolver
+    /// match path. The settings has <see cref="CredentialSettings.TokenProvider"/>
+    /// set to <see langword="null"/> and exposes the section's bound
+    /// metadata (<c>Key</c>, <c>CredentialSource</c>, <c>AdditionalProperties</c>,
+    /// indexer). Repeated calls for the same section content return the same
+    /// instance.
+    /// </summary>
+    public static CredentialSettings GetOrCreateInline(IConfigurationSection mergedSection)
+    {
+        string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
+        if (sectionKey.Length == 0)
+        {
+            // No meaningful cache key — fall back to a one-shot instance.
+            return new CredentialSettings(mergedSection);
+        }
+
+        return s_cache.GetOrAdd(sectionKey + InlineKeySuffix, _ => new CredentialSettings(mergedSection));
+    }
+}

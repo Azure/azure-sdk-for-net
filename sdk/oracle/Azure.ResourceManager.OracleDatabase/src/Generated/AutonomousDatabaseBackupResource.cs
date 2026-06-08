@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabaseBackupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutonomousDatabaseBackupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseBackupResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseBackupResource>(
-                    new AutonomousDatabaseBackupOperationSource(Client),
+                    new AutonomousDatabaseBackupResourceOperationSource(Client),
                     _autonomousDatabaseBackupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabaseBackupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutonomousDatabaseBackupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseBackupResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseBackupResource>(
-                    new AutonomousDatabaseBackupOperationSource(Client),
+                    new AutonomousDatabaseBackupResourceOperationSource(Client),
                     _autonomousDatabaseBackupsClientDiagnostics,
                     Pipeline,
                     message.Request,

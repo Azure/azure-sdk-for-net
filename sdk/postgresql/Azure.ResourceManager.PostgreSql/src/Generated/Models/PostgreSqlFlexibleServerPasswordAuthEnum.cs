@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerPasswordAuthEnum : IEquatable<PostgreSqlFlexibleServerPasswordAuthEnum>
     {
         private readonly string _value;
+        /// <summary> Server supports password based authentication. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Server does not support password based authentication. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerPasswordAuthEnum(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Server supports password based authentication. </summary>
         public static PostgreSqlFlexibleServerPasswordAuthEnum Enabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Server does not support password based authentication. </summary>
         public static PostgreSqlFlexibleServerPasswordAuthEnum Disabled { get; } = new PostgreSqlFlexibleServerPasswordAuthEnum(DisabledValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerPasswordAuthEnum left, PostgreSqlFlexibleServerPasswordAuthEnum right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerPasswordAuthEnum left, PostgreSqlFlexibleServerPasswordAuthEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerPasswordAuthEnum(string value) => new PostgreSqlFlexibleServerPasswordAuthEnum(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerPasswordAuthEnum?(string value) => value == null ? null : new PostgreSqlFlexibleServerPasswordAuthEnum(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerPasswordAuthEnum other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerPasswordAuthEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadRecoveryPoint IPersistableModel<WorkloadRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownWorkloadRecoveryPoint)PersistableModelCreateCore(data, options);
+        WorkloadRecoveryPoint IPersistableModel<WorkloadRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (WorkloadRecoveryPoint)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkloadRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadRecoveryPoint IJsonModel<WorkloadRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownWorkloadRecoveryPoint)JsonModelCreateCore(ref reader, options);
+        WorkloadRecoveryPoint IJsonModel<WorkloadRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (WorkloadRecoveryPoint)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -107,8 +113,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string objectType = "unknown";
-            RecoveryPointThreatStatus? threatStatus = default;
-            IList<RecoveryPointThreatInformation> threatInfo = default;
+            BackupThreatStatus? threatStatus = default;
+            IList<BackupThreatInfo> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DateTimeOffset? recoveryPointCreatedOn = default;
             RestorePointType? restorePointType = default;
@@ -128,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatStatus = new RecoveryPointThreatStatus(prop.Value.GetString());
+                    threatStatus = new BackupThreatStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatInfo"u8))
@@ -137,10 +143,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<RecoveryPointThreatInformation> array = new List<RecoveryPointThreatInformation>();
+                    List<BackupThreatInfo> array = new List<BackupThreatInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointThreatInformation.DeserializeRecoveryPointThreatInformation(item, options));
+                        array.Add(BackupThreatInfo.DeserializeBackupThreatInfo(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -208,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new UnknownWorkloadRecoveryPoint(
                 objectType,
                 threatStatus,
-                threatInfo ?? new ChangeTrackingList<RecoveryPointThreatInformation>(),
+                threatInfo ?? new ChangeTrackingList<BackupThreatInfo>(),
                 additionalBinaryDataProperties,
                 recoveryPointCreatedOn,
                 restorePointType,

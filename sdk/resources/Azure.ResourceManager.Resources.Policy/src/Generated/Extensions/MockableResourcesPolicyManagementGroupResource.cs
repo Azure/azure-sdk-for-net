@@ -23,12 +23,8 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
     {
         private ClientDiagnostics _policyAssignmentsClientDiagnostics;
         private PolicyAssignments _policyAssignmentsRestClient;
-        private ClientDiagnostics _policyDefinitionVersionsClientDiagnostics;
-        private PolicyDefinitionVersions _policyDefinitionVersionsRestClient;
         private ClientDiagnostics _policyExemptionsClientDiagnostics;
         private PolicyExemptions _policyExemptionsRestClient;
-        private ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
-        private PolicySetDefinitionVersions _policySetDefinitionVersionsRestClient;
         private ClientDiagnostics _policyTokensClientDiagnostics;
         private PolicyTokens _policyTokensRestClient;
 
@@ -48,17 +44,9 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
 
         private PolicyAssignments PolicyAssignmentsRestClient => _policyAssignmentsRestClient ??= new PolicyAssignments(PolicyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
-        private ClientDiagnostics PolicyDefinitionVersionsClientDiagnostics => _policyDefinitionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PolicyDefinitionVersions PolicyDefinitionVersionsRestClient => _policyDefinitionVersionsRestClient ??= new PolicyDefinitionVersions(PolicyDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
         private ClientDiagnostics PolicyExemptionsClientDiagnostics => _policyExemptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PolicyExemptions PolicyExemptionsRestClient => _policyExemptionsRestClient ??= new PolicyExemptions(PolicyExemptionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics PolicySetDefinitionVersionsClientDiagnostics => _policySetDefinitionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PolicySetDefinitionVersions PolicySetDefinitionVersionsRestClient => _policySetDefinitionVersionsRestClient ??= new PolicySetDefinitionVersions(PolicySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics PolicyTokensClientDiagnostics => _policyTokensClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -141,94 +129,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         }
 
         /// <summary>
-        /// This operation lists all the policy definition versions for all policy definitions at the management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicyDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitionVersionsOperationGroup_ListAllAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyDefinitionVersionListResult>> GetPolicyDefinitionsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyManagementGroupResource.GetPolicyDefinitions");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyDefinitionVersionsRestClient.CreateGetAllAtManagementGroupRequest(Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyDefinitionVersionListResult> response = Response.FromValue(PolicyDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation lists all the policy definition versions for all policy definitions at the management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicyDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitionVersionsOperationGroup_ListAllAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyDefinitionVersionListResult> GetPolicyDefinitions(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyManagementGroupResource.GetPolicyDefinitions");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyDefinitionVersionsRestClient.CreateGetAllAtManagementGroupRequest(Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyDefinitionVersionListResult> response = Response.FromValue(PolicyDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// This operation retrieves the list of all policy exemptions applicable to the management group that match the given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter=atScope() is provided, the returned list includes all policy exemptions that are assigned to the management group or the management group's ancestors.
         /// <list type="bullet">
         /// <item>
@@ -284,94 +184,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetForManagementGroupCollectionResultOfT(PolicyExemptionsRestClient, Id.Name, filter, context, "MockableResourcesPolicyManagementGroupResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
-        }
-
-        /// <summary>
-        /// This operation lists all the policy set definition versions for all policy set definitions at the management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAllAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicySetDefinitionVersionListResult>> GetPolicySetDefinitionsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyManagementGroupResource.GetPolicySetDefinitions");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicySetDefinitionVersionsRestClient.CreateGetAllAtManagementGroupRequest(Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation lists all the policy set definition versions for all policy set definitions at the management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAllAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicySetDefinitionVersionListResult> GetPolicySetDefinitions(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyManagementGroupResource.GetPolicySetDefinitions");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicySetDefinitionVersionsRestClient.CreateGetAllAtManagementGroupRequest(Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
