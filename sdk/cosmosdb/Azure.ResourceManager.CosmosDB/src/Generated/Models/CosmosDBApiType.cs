@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBApiType : IEquatable<CosmosDBApiType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBApiType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBApiType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MongoDBValue = "MongoDB";
         private const string GremlinValue = "Gremlin";
         private const string CassandraValue = "Cassandra";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string SqlValue = "Sql";
         private const string GremlinV2Value = "GremlinV2";
 
-        /// <summary> MongoDB. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBApiType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBApiType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the MongoDB. </summary>
         public static CosmosDBApiType MongoDB { get; } = new CosmosDBApiType(MongoDBValue);
-        /// <summary> Gremlin. </summary>
+
+        /// <summary> Gets the Gremlin. </summary>
         public static CosmosDBApiType Gremlin { get; } = new CosmosDBApiType(GremlinValue);
-        /// <summary> Cassandra. </summary>
+
+        /// <summary> Gets the Cassandra. </summary>
         public static CosmosDBApiType Cassandra { get; } = new CosmosDBApiType(CassandraValue);
-        /// <summary> Table. </summary>
+
+        /// <summary> Gets the Table. </summary>
         public static CosmosDBApiType Table { get; } = new CosmosDBApiType(TableValue);
-        /// <summary> Sql. </summary>
+
+        /// <summary> Gets the Sql. </summary>
         public static CosmosDBApiType Sql { get; } = new CosmosDBApiType(SqlValue);
-        /// <summary> GremlinV2. </summary>
+
+        /// <summary> Gets the GremlinV2. </summary>
         public static CosmosDBApiType GremlinV2 { get; } = new CosmosDBApiType(GremlinV2Value);
+
         /// <summary> Determines if two <see cref="CosmosDBApiType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBApiType left, CosmosDBApiType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBApiType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBApiType left, CosmosDBApiType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBApiType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBApiType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBApiType(string value) => new CosmosDBApiType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBApiType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBApiType?(string value) => value == null ? null : new CosmosDBApiType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBApiType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBApiType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
