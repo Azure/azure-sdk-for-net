@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelProperties"/>. </summary>
         internal IoTSecuritySolutionAnalyticsModelProperties()
         {
-            DevicesMetrics = new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>();
-            TopAlertedDevices = new ChangeTrackingList<IoTSecurityAlertedDevice>();
-            MostPrevalentDeviceAlerts = new ChangeTrackingList<IoTSecurityDeviceAlert>();
-            MostPrevalentDeviceRecommendations = new ChangeTrackingList<IoTSecurityDeviceRecommendation>();
+            DevicesMetrics = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
+            TopAlertedDevices = new ChangeTrackingList<IotSecurityAlertedDevice>();
+            MostPrevalentDeviceAlerts = new ChangeTrackingList<IotSecurityDeviceAlert>();
+            MostPrevalentDeviceRecommendations = new ChangeTrackingList<IotSecurityDeviceRecommendation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
         /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecuritySolutionAnalyticsModelProperties(IoTSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics, IList<IoTSecurityAlertedDevice> topAlertedDevices, IList<IoTSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IoTSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IoTSecuritySolutionAnalyticsModelProperties(IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metrics = metrics;
             UnhealthyDeviceCount = unhealthyDeviceCount;
@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Security analytics of your IoT Security solution. </summary>
-        public IoTSeverityMetrics Metrics { get; }
+        public IotSeverityMetrics Metrics { get; }
 
         /// <summary> Number of unhealthy devices within your IoT Security solution. </summary>
         public long? UnhealthyDeviceCount { get; }
 
         /// <summary> List of device metrics by the aggregation date. </summary>
-        public IReadOnlyList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> DevicesMetrics { get; } = new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>();
+        public IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> DevicesMetrics { get; } = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
 
         /// <summary> List of the 3 devices with the most alerts. </summary>
-        public IList<IoTSecurityAlertedDevice> TopAlertedDevices { get; } = new ChangeTrackingList<IoTSecurityAlertedDevice>();
+        public IList<IotSecurityAlertedDevice> TopAlertedDevices { get; } = new ChangeTrackingList<IotSecurityAlertedDevice>();
 
         /// <summary> List of the 3 most prevalent device alerts. </summary>
-        public IList<IoTSecurityDeviceAlert> MostPrevalentDeviceAlerts { get; } = new ChangeTrackingList<IoTSecurityDeviceAlert>();
+        public IList<IotSecurityDeviceAlert> MostPrevalentDeviceAlerts { get; } = new ChangeTrackingList<IotSecurityDeviceAlert>();
 
         /// <summary> List of the 3 most prevalent device recommendations. </summary>
-        public IList<IoTSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get; } = new ChangeTrackingList<IoTSecurityDeviceRecommendation>();
+        public IList<IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get; } = new ChangeTrackingList<IotSecurityDeviceRecommendation>();
     }
 }

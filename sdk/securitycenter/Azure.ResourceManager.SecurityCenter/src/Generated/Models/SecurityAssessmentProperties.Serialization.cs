@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IDictionary<string, string> additionalData = default;
             AssessmentLinks links = default;
             SecurityAssessmentMetadataProperties metadata = default;
-            SecurityAssessmentPartnerInfo partnersData = default;
+            SecurityAssessmentPartner partnersData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SecurityAssessmentStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    partnersData = SecurityAssessmentPartnerInfo.DeserializeSecurityAssessmentPartnerInfo(prop.Value, options);
+                    partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

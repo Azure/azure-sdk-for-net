@@ -14,24 +14,19 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Security analytics of your IoT Security solution. </summary>
-    public partial class IoTSecuritySolutionAnalyticsModelData : ResourceData
+    public partial class IotSecuritySolutionAnalyticsModelData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelData"/>. </summary>
-        internal IoTSecuritySolutionAnalyticsModelData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Security Solution  Aggregated Alert data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IoTSecuritySolutionAnalyticsModelProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IoTSecuritySolutionAnalyticsModelProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter
         internal IoTSecuritySolutionAnalyticsModelProperties Properties { get; }
 
         /// <summary> Security analytics of your IoT Security solution. </summary>
-        public IoTSeverityMetrics Metrics
+        public IotSeverityMetrics Metrics
         {
             get
             {
@@ -59,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of device metrics by the aggregation date. </summary>
-        public IReadOnlyList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> DevicesMetrics
+        public IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> DevicesMetrics
         {
             get
             {
@@ -68,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of the 3 devices with the most alerts. </summary>
-        public IList<IoTSecurityAlertedDevice> TopAlertedDevices
+        public IList<IotSecurityAlertedDevice> TopAlertedDevices
         {
             get
             {
@@ -77,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of the 3 most prevalent device alerts. </summary>
-        public IList<IoTSecurityDeviceAlert> MostPrevalentDeviceAlerts
+        public IList<IotSecurityDeviceAlert> MostPrevalentDeviceAlerts
         {
             get
             {
@@ -86,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of the 3 most prevalent device recommendations. </summary>
-        public IList<IoTSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations
+        public IList<IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations
         {
             get
             {

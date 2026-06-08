@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
-        public SecurityTaskData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -55,23 +50,6 @@ namespace Azure.ResourceManager.SecurityCenter
             get
             {
                 return Properties is null ? default : Properties.CreatedOn;
-            }
-        }
-
-        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskProperties SecurityTaskParameters
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecurityTaskParameters;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SecurityTaskPropertiesGenerated();
-                }
-                Properties.SecurityTaskParameters = value;
             }
         }
 

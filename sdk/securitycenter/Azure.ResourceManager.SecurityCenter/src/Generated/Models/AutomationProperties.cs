@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="AutomationProperties"/>. </summary>
         public AutomationProperties()
         {
-            Scopes = new ChangeTrackingList<AutomationScope>();
-            Sources = new ChangeTrackingList<AutomationSource>();
-            Actions = new ChangeTrackingList<AutomationAction>();
+            Scopes = new ChangeTrackingList<SecurityAutomationScope>();
+            Sources = new ChangeTrackingList<SecurityAutomationSource>();
+            Actions = new ChangeTrackingList<SecurityAutomationAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationProperties"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions"> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationProperties(string description, bool? isEnabled, IList<AutomationScope> scopes, IList<AutomationSource> sources, IList<AutomationAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationProperties(string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             IsEnabled = isEnabled;
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public bool? IsEnabled { get; set; }
 
         /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
-        public IList<AutomationScope> Scopes { get; } = new ChangeTrackingList<AutomationScope>();
+        public IList<SecurityAutomationScope> Scopes { get; } = new ChangeTrackingList<SecurityAutomationScope>();
 
         /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
-        public IList<AutomationSource> Sources { get; } = new ChangeTrackingList<AutomationSource>();
+        public IList<SecurityAutomationSource> Sources { get; } = new ChangeTrackingList<SecurityAutomationSource>();
 
         /// <summary> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </summary>
-        public IList<AutomationAction> Actions { get; } = new ChangeTrackingList<AutomationAction>();
+        public IList<SecurityAutomationAction> Actions { get; } = new ChangeTrackingList<SecurityAutomationAction>();
     }
 }

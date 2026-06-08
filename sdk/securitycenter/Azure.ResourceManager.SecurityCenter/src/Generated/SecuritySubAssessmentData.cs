@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentData"/>. </summary>
-        internal SecuritySubAssessmentData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -55,15 +50,6 @@ namespace Azure.ResourceManager.SecurityCenter
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
-            }
-        }
-
-        /// <summary> Status of the sub-assessment. </summary>
-        public SubAssessmentStatus Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -109,24 +95,6 @@ namespace Azure.ResourceManager.SecurityCenter
             get
             {
                 return Properties is null ? default : Properties.TimeGenerated;
-            }
-        }
-
-        /// <summary> Details of the resource that was assessed. </summary>
-        public SecurityCenterResourceDetails ResourceDetails
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceDetails;
-            }
-        }
-
-        /// <summary> Details of the sub-assessment. </summary>
-        public SecuritySubAssessmentAdditionalInfo AdditionalData
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AdditionalData;
             }
         }
     }

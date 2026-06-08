@@ -1955,21 +1955,21 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="IotSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetIoTSecuritySolutionAnalyticsModelResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetIotSecuritySolutionAnalyticsModelResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> object. </returns>
-        public static IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
+        public static IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetIoTSecuritySolutionAnalyticsModelResource(id);
+            return GetMockableSecurityCenterArmClient(client).GetIotSecuritySolutionAnalyticsModelResource(id);
         }
 
         /// <summary>
@@ -2471,24 +2471,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a collection of ResourceGroupSecurityAlerts in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityAlerts(AzureLocation)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="ascLocation"> The ascLocation for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceGroupSecurityAlerts and their operations over a ResourceGroupSecurityAlertResource. </returns>
-        public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
-        }
-
-        /// <summary>
         /// Get an alert that is associated a resource group or a resource in a resource group
         /// <item>
         /// <term> Mocking. </term>
@@ -2918,24 +2900,6 @@ namespace Azure.ResourceManager.SecurityCenter
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAssignment(assignmentId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ResourceGroupSecurityTasks in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityTasks(AzureLocation)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="ascLocation"> The ascLocation for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
-        public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
         }
 
         /// <summary>
@@ -4402,7 +4366,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetTasksAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -4410,18 +4374,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityTaskData> GetAllAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SecurityTaskData> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllAsync(filter, cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTasksAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAll(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetTasks(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -4429,11 +4393,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityTaskData> GetAll(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<SecurityTaskData> GetTasks(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAll(filter, cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTasks(filter, cancellationToken);
         }
 
         /// <summary>

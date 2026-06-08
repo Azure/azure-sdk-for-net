@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="AutoProvisioningSettingProperties"/>. </summary>
         /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
-        public AutoProvisioningSettingProperties(AutoProvision autoProvision)
+        public AutoProvisioningSettingProperties(AutoProvisionState autoProvision)
         {
             AutoProvision = autoProvision;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="AutoProvisioningSettingProperties"/>. </summary>
         /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoProvisioningSettingProperties(AutoProvision autoProvision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoProvisioningSettingProperties(AutoProvisionState autoProvision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoProvision = autoProvision;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes what kind of security agent provisioning action to take. </summary>
-        public AutoProvision AutoProvision { get; set; }
+        public AutoProvisionState AutoProvision { get; set; }
     }
 }

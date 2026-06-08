@@ -11,22 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Statistical information about the number of alerts per alert type during last set number of days. </summary>
-    public partial class IoTSecurityDeviceAlert
+    public partial class IotSecurityDeviceAlert
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecurityDeviceAlert"/>. </summary>
-        internal IoTSecurityDeviceAlert()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IoTSecurityDeviceAlert"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceAlert"/>. </summary>
         /// <param name="alertDisplayName"> Display name of the alert. </param>
         /// <param name="reportedSeverity"> Assessed Alert severity. </param>
         /// <param name="alertsCount"> Number of alerts raised for this alert type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecurityDeviceAlert(string alertDisplayName, ReportedSeverity? reportedSeverity, long? alertsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotSecurityDeviceAlert(string alertDisplayName, ReportedSeverity? reportedSeverity, long? alertsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertDisplayName = alertDisplayName;
             ReportedSeverity = reportedSeverity;

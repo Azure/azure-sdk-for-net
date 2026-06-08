@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         internal AutoProvisioningSettingProperties Properties { get; set; }
 
         /// <summary> Describes what kind of security agent provisioning action to take. </summary>
-        public AutoProvision? AutoProvision
+        public AutoProvisionState? AutoProvision
         {
             get
             {

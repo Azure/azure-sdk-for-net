@@ -769,11 +769,11 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it in the <see cref="IotSecuritySolutionResource"/>. </summary>
-        /// <returns> Returns a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> object. </returns>
-        public virtual IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModel()
+        /// <summary> Gets an object representing a <see cref="IotSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it in the <see cref="IotSecuritySolutionResource"/>. </summary>
+        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
+        public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModel()
         {
-            return new IoTSecuritySolutionAnalyticsModelResource(Client, Id.AppendChildResource("analyticsModels", "default"));
+            return new IotSecuritySolutionAnalyticsModelResource(Client, Id.AppendChildResource("analyticsModels", "default"));
         }
     }
 }

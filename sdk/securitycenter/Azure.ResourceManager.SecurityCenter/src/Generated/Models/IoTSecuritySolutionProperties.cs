@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Argument.AssertNotNull(iotHubs, nameof(iotHubs));
 
             DisplayName = displayName;
-            Export = new ChangeTrackingList<ExportData>();
-            DisabledDataSources = new ChangeTrackingList<DataSource>();
+            Export = new ChangeTrackingList<IotSecuritySolutionExportOption>();
+            DisabledDataSources = new ChangeTrackingList<IotSecuritySolutionDataSource>();
             IotHubs = iotHubs.ToList();
             AutoDiscoveredResources = new ChangeTrackingList<string>();
             RecommendationsConfiguration = new ChangeTrackingList<RecommendationConfigurationProperties>();
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
         /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
-        /// <param name="unmaskedIpLoggingStatus"> Unmasked IP address logging status. </param>
+        /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
         /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecuritySolutionProperties(string workspace, string displayName, SecuritySolutionStatus? status, IList<ExportData> export, IList<DataSource> disabledDataSources, IList<string> iotHubs, UserDefinedResourcesProperties userDefinedResources, IReadOnlyList<string> autoDiscoveredResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, UnmaskedIpLoggingStatus? unmaskedIpLoggingStatus, IList<AdditionalWorkspacesProperties> additionalWorkspaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IoTSecuritySolutionProperties(string workspace, string displayName, SecuritySolutionStatus? status, IList<IotSecuritySolutionExportOption> export, IList<IotSecuritySolutionDataSource> disabledDataSources, IList<string> iotHubs, UserDefinedResourcesProperties userDefinedResources, IReadOnlyList<string> autoDiscoveredResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus, IList<AdditionalWorkspacesProperties> additionalWorkspaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Workspace = workspace;
             DisplayName = displayName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             UserDefinedResources = userDefinedResources;
             AutoDiscoveredResources = autoDiscoveredResources;
             RecommendationsConfiguration = recommendationsConfiguration;
-            UnmaskedIpLoggingStatus = unmaskedIpLoggingStatus;
+            UnmaskedIPLoggingStatus = unmaskedIPLoggingStatus;
             AdditionalWorkspaces = additionalWorkspaces;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecuritySolutionStatus? Status { get; set; }
 
         /// <summary> List of additional options for exporting to workspace data. </summary>
-        public IList<ExportData> Export { get; } = new ChangeTrackingList<ExportData>();
+        public IList<IotSecuritySolutionExportOption> Export { get; } = new ChangeTrackingList<IotSecuritySolutionExportOption>();
 
         /// <summary> Disabled data sources. Disabling these data sources compromises the system. </summary>
-        public IList<DataSource> DisabledDataSources { get; } = new ChangeTrackingList<DataSource>();
+        public IList<IotSecuritySolutionDataSource> DisabledDataSources { get; } = new ChangeTrackingList<IotSecuritySolutionDataSource>();
 
         /// <summary> IoT Hub resource IDs. </summary>
         public IList<string> IotHubs { get; } = new ChangeTrackingList<string>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<RecommendationConfigurationProperties> RecommendationsConfiguration { get; } = new ChangeTrackingList<RecommendationConfigurationProperties>();
 
         /// <summary> Unmasked IP address logging status. </summary>
-        public UnmaskedIpLoggingStatus? UnmaskedIpLoggingStatus { get; set; }
+        public UnmaskedIPLoggingStatus? UnmaskedIPLoggingStatus { get; set; }
 
         /// <summary> List of additional workspaces. </summary>
         public IList<AdditionalWorkspacesProperties> AdditionalWorkspaces { get; } = new ChangeTrackingList<AdditionalWorkspacesProperties>();

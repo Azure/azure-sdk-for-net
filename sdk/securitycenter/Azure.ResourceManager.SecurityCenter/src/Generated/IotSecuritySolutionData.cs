@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of additional options for exporting to workspace data. </summary>
-        public IList<ExportData> Export
+        public IList<IotSecuritySolutionExportOption> Export
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Disabled data sources. Disabling these data sources compromises the system. </summary>
-        public IList<DataSource> DisabledDataSources
+        public IList<IotSecuritySolutionDataSource> DisabledDataSources
         {
             get
             {
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Unmasked IP address logging status. </summary>
-        public UnmaskedIpLoggingStatus? UnmaskedIpLoggingStatus
+        public UnmaskedIPLoggingStatus? UnmaskedIPLoggingStatus
         {
             get
             {
-                return Properties is null ? default : Properties.UnmaskedIpLoggingStatus;
+                return Properties is null ? default : Properties.UnmaskedIPLoggingStatus;
             }
             set
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     Properties = new IoTSecuritySolutionProperties();
                 }
-                Properties.UnmaskedIpLoggingStatus = value;
+                Properties.UnmaskedIPLoggingStatus = value;
             }
         }
 

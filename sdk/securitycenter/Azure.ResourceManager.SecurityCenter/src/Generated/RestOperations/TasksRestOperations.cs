@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateGetTasksRequest(Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

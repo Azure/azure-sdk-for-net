@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a IoTSecuritySolutionAnalyticsModel along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionResource"/> using the GetIoTSecuritySolutionAnalyticsModel method.
+    /// A class representing a IotSecuritySolutionAnalyticsModel along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotSecuritySolutionAnalyticsModelResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionResource"/> using the GetIotSecuritySolutionAnalyticsModel method.
     /// </summary>
-    public partial class IoTSecuritySolutionAnalyticsModelResource : ArmResource
+    public partial class IotSecuritySolutionAnalyticsModelResource : ArmResource
     {
         private readonly ClientDiagnostics _iotSecuritySolutionAnalyticsClientDiagnostics;
         private readonly IotSecuritySolutionAnalytics _iotSecuritySolutionAnalyticsRestClient;
-        private readonly IoTSecuritySolutionAnalyticsModelData _data;
+        private readonly IotSecuritySolutionAnalyticsModelData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels";
 
-        /// <summary> Initializes a new instance of IoTSecuritySolutionAnalyticsModelResource for mocking. </summary>
-        protected IoTSecuritySolutionAnalyticsModelResource()
+        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelResource for mocking. </summary>
+        protected IotSecuritySolutionAnalyticsModelResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IoTSecuritySolutionAnalyticsModelResource(ArmClient client, IoTSecuritySolutionAnalyticsModelData data) : this(client, data.Id)
+        internal IotSecuritySolutionAnalyticsModelResource(ArmClient client, IotSecuritySolutionAnalyticsModelData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal IoTSecuritySolutionAnalyticsModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal IotSecuritySolutionAnalyticsModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string ioTSecuritySolutionAnalyticsModelApiVersion);
+            TryGetApiVersion(ResourceType, out string iotSecuritySolutionAnalyticsModelApiVersion);
             _iotSecuritySolutionAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _iotSecuritySolutionAnalyticsRestClient = new IotSecuritySolutionAnalytics(_iotSecuritySolutionAnalyticsClientDiagnostics, Pipeline, Endpoint, ioTSecuritySolutionAnalyticsModelApiVersion ?? "2019-08-01");
+            _iotSecuritySolutionAnalyticsRestClient = new IotSecuritySolutionAnalytics(_iotSecuritySolutionAnalyticsClientDiagnostics, Pipeline, Endpoint, iotSecuritySolutionAnalyticsModelApiVersion ?? "2019-08-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual IoTSecuritySolutionAnalyticsModelData Data
+        public virtual IotSecuritySolutionAnalyticsModelData Data
         {
             get
             {
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IoTSecuritySolutionAnalyticsModelResource"/>. </description>
+        /// <description> <see cref="IotSecuritySolutionAnalyticsModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IoTSecuritySolutionAnalyticsModelResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotSecuritySolutionAnalyticsModelResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IoTSecuritySolutionAnalyticsModelResource.Get");
+            using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IotSecuritySolutionAnalyticsModelResource.Get");
             scope.Start();
             try
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _iotSecuritySolutionAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IoTSecuritySolutionAnalyticsModelData> response = Response.FromValue(IoTSecuritySolutionAnalyticsModelData.FromResponse(result), result);
+                Response<IotSecuritySolutionAnalyticsModelData> response = Response.FromValue(IotSecuritySolutionAnalyticsModelData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new IoTSecuritySolutionAnalyticsModelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionAnalyticsModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IoTSecuritySolutionAnalyticsModelResource"/>. </description>
+        /// <description> <see cref="IotSecuritySolutionAnalyticsModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IoTSecuritySolutionAnalyticsModelResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<IotSecuritySolutionAnalyticsModelResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IoTSecuritySolutionAnalyticsModelResource.Get");
+            using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IotSecuritySolutionAnalyticsModelResource.Get");
             scope.Start();
             try
             {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _iotSecuritySolutionAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<IoTSecuritySolutionAnalyticsModelData> response = Response.FromValue(IoTSecuritySolutionAnalyticsModelData.FromResponse(result), result);
+                Response<IotSecuritySolutionAnalyticsModelData> response = Response.FromValue(IotSecuritySolutionAnalyticsModelData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new IoTSecuritySolutionAnalyticsModelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionAnalyticsModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Gets a collection of IotSecurityAggregatedAlerts in the <see cref="IoTSecuritySolutionAnalyticsModelResource"/>. </summary>
+        /// <summary> Gets a collection of IotSecurityAggregatedAlerts in the <see cref="IotSecuritySolutionAnalyticsModelResource"/>. </summary>
         /// <returns> An object representing collection of IotSecurityAggregatedAlerts and their operations over a IotSecurityAggregatedAlertResource. </returns>
         public virtual IotSecurityAggregatedAlertCollection GetIotSecurityAggregatedAlerts()
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetIotSecurityAggregatedAlerts().Get(aggregatedAlertName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IotSecurityAggregatedRecommendations in the <see cref="IoTSecuritySolutionAnalyticsModelResource"/>. </summary>
+        /// <summary> Gets a collection of IotSecurityAggregatedRecommendations in the <see cref="IotSecuritySolutionAnalyticsModelResource"/>. </summary>
         /// <returns> An object representing collection of IotSecurityAggregatedRecommendations and their operations over a IotSecurityAggregatedRecommendationResource. </returns>
         public virtual IotSecurityAggregatedRecommendationCollection GetIotSecurityAggregatedRecommendations()
         {

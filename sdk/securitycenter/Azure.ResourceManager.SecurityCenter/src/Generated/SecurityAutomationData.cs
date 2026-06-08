@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
-        public IList<AutomationScope> Scopes
+        public IList<SecurityAutomationScope> Scopes
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
-        public IList<AutomationSource> Sources
+        public IList<SecurityAutomationSource> Sources
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </summary>
-        public IList<AutomationAction> Actions
+        public IList<SecurityAutomationAction> Actions
         {
             get
             {

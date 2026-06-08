@@ -11,22 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Statistical information about the number of recommendations per device, per recommendation type. </summary>
-    public partial class IoTSecurityDeviceRecommendation
+    public partial class IotSecurityDeviceRecommendation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecurityDeviceRecommendation"/>. </summary>
-        internal IoTSecurityDeviceRecommendation()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IoTSecurityDeviceRecommendation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceRecommendation"/>. </summary>
         /// <param name="recommendationDisplayName"> Display name of the recommendation. </param>
         /// <param name="reportedSeverity"> Assessed recommendation severity. </param>
         /// <param name="devicesCount"> Number of devices with this recommendation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecurityDeviceRecommendation(string recommendationDisplayName, ReportedSeverity? reportedSeverity, long? devicesCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotSecurityDeviceRecommendation(string recommendationDisplayName, ReportedSeverity? reportedSeverity, long? devicesCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecommendationDisplayName = recommendationDisplayName;
             ReportedSeverity = reportedSeverity;

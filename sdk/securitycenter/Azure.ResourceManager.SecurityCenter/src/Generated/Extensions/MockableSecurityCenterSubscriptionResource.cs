@@ -1594,13 +1594,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityTaskData> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityTaskData> GetTasksAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TasksGetAllAsyncCollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetAll");
+            return new TasksGetTasksAsyncCollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetTasks");
         }
 
         /// <summary>
@@ -1623,13 +1623,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityTaskData> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityTaskData> GetTasks(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TasksGetAllCollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetAll");
+            return new TasksGetTasksCollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetTasks");
         }
 
         /// <summary>

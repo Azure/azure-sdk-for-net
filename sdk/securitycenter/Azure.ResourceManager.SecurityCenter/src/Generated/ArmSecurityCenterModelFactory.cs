@@ -167,37 +167,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AlertSimulatorBundlesRequestProperties(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (bundles ?? new ChangeTrackingList<BundleType>()).ToList());
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
-        /// <param name="lastModifiedUtc"> The last time this rule was modified. </param>
-        /// <param name="expirationDateUtc"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
-        /// <param name="reason"> The reason for dismissing the alert. </param>
-        /// <param name="state"> Possible states of the rule. </param>
-        /// <param name="comment"> Any comment regarding the rule. </param>
-        /// <param name="suppressionAlertsScopeAllOf"> All the conditions inside need to be true in order to suppress the alert. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityAlertsSuppressionRuleData"/> instance for mocking. </returns>
-        public static SecurityAlertsSuppressionRuleData SecurityAlertsSuppressionRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertType = default, DateTimeOffset? lastModifiedUtc = default, DateTimeOffset? expirationDateUtc = default, string reason = default, RuleState? state = default, string comment = default, IEnumerable<SuppressionAlertsScopeElement> suppressionAlertsScopeAllOf = default)
-        {
-            return new SecurityAlertsSuppressionRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                alertType is null && lastModifiedUtc is null && expirationDateUtc is null && reason is null && state is null && comment is null && suppressionAlertsScopeAllOf is null ? default : new AlertsSuppressionRuleProperties(
-                    alertType,
-                    lastModifiedUtc,
-                    expirationDateUtc,
-                    reason,
-                    state.GetValueOrDefault(),
-                    comment,
-                    new SuppressionAlertsScope((suppressionAlertsScopeAllOf ?? new ChangeTrackingList<SuppressionAlertsScopeElement>()).ToList(), default),
-                    default),
-                default);
-        }
-
         /// <param name="field"> The alert entity type to suppress by. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.SuppressionAlertsScopeElement"/> instance for mocking. </returns>
@@ -386,7 +355,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, IEnumerable<AutomationScope> scopes = default, IEnumerable<AutomationSource> sources = default, IEnumerable<AutomationAction> actions = default, string kind = default, ETag? eTag = default)
+        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -400,9 +369,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
                     description,
                     isEnabled,
-                    (scopes ?? new ChangeTrackingList<AutomationScope>()).ToList(),
-                    (sources ?? new ChangeTrackingList<AutomationSource>()).ToList(),
-                    (actions ?? new ChangeTrackingList<AutomationAction>()).ToList(),
+                    (scopes ?? new ChangeTrackingList<SecurityAutomationScope>()).ToList(),
+                    (sources ?? new ChangeTrackingList<SecurityAutomationSource>()).ToList(),
+                    (actions ?? new ChangeTrackingList<SecurityAutomationAction>()).ToList(),
                     default),
                 kind,
                 eTag,
@@ -411,64 +380,64 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="description"> The resources scope description. </param>
         /// <param name="scopePath"> The resources scope path. Can be the subscription on which the automation is defined on or a resource group under that subscription (fully qualified Azure resource IDs). </param>
-        /// <returns> A new <see cref="Models.AutomationScope"/> instance for mocking. </returns>
-        public static AutomationScope AutomationScope(string description = default, string scopePath = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationScope"/> instance for mocking. </returns>
+        public static SecurityAutomationScope SecurityAutomationScope(string description = default, string scopePath = default)
         {
-            return new AutomationScope(description, scopePath, default);
+            return new SecurityAutomationScope(description, scopePath, default);
         }
 
         /// <param name="eventSource"> A valid event source type. </param>
         /// <param name="ruleSets"> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or'). </param>
-        /// <returns> A new <see cref="Models.AutomationSource"/> instance for mocking. </returns>
-        public static AutomationSource AutomationSource(EventSource? eventSource = default, IEnumerable<AutomationRuleSet> ruleSets = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationSource"/> instance for mocking. </returns>
+        public static SecurityAutomationSource SecurityAutomationSource(SecurityEventSource? eventSource = default, IEnumerable<SecurityAutomationRuleSet> ruleSets = default)
         {
-            ruleSets ??= new ChangeTrackingList<AutomationRuleSet>();
+            ruleSets ??= new ChangeTrackingList<SecurityAutomationRuleSet>();
 
-            return new AutomationSource(eventSource, (ruleSets ?? new ChangeTrackingList<AutomationRuleSet>()).ToList(), default);
+            return new SecurityAutomationSource(eventSource, (ruleSets ?? new ChangeTrackingList<SecurityAutomationRuleSet>()).ToList(), default);
         }
 
         /// <param name="rules"></param>
-        /// <returns> A new <see cref="Models.AutomationRuleSet"/> instance for mocking. </returns>
-        public static AutomationRuleSet AutomationRuleSet(IEnumerable<AutomationTriggeringRule> rules = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationRuleSet"/> instance for mocking. </returns>
+        public static SecurityAutomationRuleSet SecurityAutomationRuleSet(IEnumerable<SecurityAutomationTriggeringRule> rules = default)
         {
-            rules ??= new ChangeTrackingList<AutomationTriggeringRule>();
+            rules ??= new ChangeTrackingList<SecurityAutomationTriggeringRule>();
 
-            return new AutomationRuleSet((rules ?? new ChangeTrackingList<AutomationTriggeringRule>()).ToList(), default);
+            return new SecurityAutomationRuleSet((rules ?? new ChangeTrackingList<SecurityAutomationTriggeringRule>()).ToList(), default);
         }
 
         /// <param name="propertyJPath"> The JPath of the entity model property that should be checked. </param>
         /// <param name="propertyType"> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </param>
         /// <param name="expectedValue"> The expected value. </param>
         /// <param name="operator"> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </param>
-        /// <returns> A new <see cref="Models.AutomationTriggeringRule"/> instance for mocking. </returns>
-        public static AutomationTriggeringRule AutomationTriggeringRule(string propertyJPath = default, PropertyType? propertyType = default, string expectedValue = default, Operator? @operator = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationTriggeringRule"/> instance for mocking. </returns>
+        public static SecurityAutomationTriggeringRule SecurityAutomationTriggeringRule(string propertyJPath = default, AutomationTriggeringRulePropertyType? propertyType = default, string expectedValue = default, AutomationTriggeringRuleOperator? @operator = default)
         {
-            return new AutomationTriggeringRule(propertyJPath, propertyType, expectedValue, @operator, default);
+            return new SecurityAutomationTriggeringRule(propertyJPath, propertyType, expectedValue, @operator, default);
         }
 
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
-        /// <returns> A new <see cref="Models.AutomationAction"/> instance for mocking. </returns>
-        public static AutomationAction AutomationAction(string actionType = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationAction"/> instance for mocking. </returns>
+        public static SecurityAutomationAction SecurityAutomationAction(string actionType = default)
         {
-            return new UnknownAutomationAction(default, default);
+            return new UnknownSecurityAutomationAction(default, default);
         }
 
         /// <param name="logicAppResourceId"> The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given that you have permissions to trigger the Logic App. </param>
         /// <param name="uri"> The Logic App trigger URI endpoint (it will not be included in any response). </param>
-        /// <returns> A new <see cref="Models.AutomationActionLogicApp"/> instance for mocking. </returns>
-        public static AutomationActionLogicApp AutomationActionLogicApp(string logicAppResourceId = default, Uri uri = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationActionLogicApp"/> instance for mocking. </returns>
+        public static SecurityAutomationActionLogicApp SecurityAutomationActionLogicApp(ResourceIdentifier logicAppResourceId = default, Uri uri = default)
         {
-            return new AutomationActionLogicApp(default, default, logicAppResourceId, uri);
+            return new SecurityAutomationActionLogicApp(default, default, logicAppResourceId, uri);
         }
 
         /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
         /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>
         /// <param name="connectionString"> The target Event Hub connection string (it will not be included in any response). </param>
         /// <param name="isTrustedServiceEnabled"> Indicates whether the trusted service is enabled or not. </param>
-        /// <returns> A new <see cref="Models.AutomationActionEventHub"/> instance for mocking. </returns>
-        public static AutomationActionEventHub AutomationActionEventHub(string eventHubResourceId = default, string sasPolicyName = default, string connectionString = default, bool? isTrustedServiceEnabled = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationActionEventHub"/> instance for mocking. </returns>
+        public static SecurityAutomationActionEventHub SecurityAutomationActionEventHub(ResourceIdentifier eventHubResourceId = default, string sasPolicyName = default, string connectionString = default, bool? isTrustedServiceEnabled = default)
         {
-            return new AutomationActionEventHub(
+            return new SecurityAutomationActionEventHub(
                 default,
                 default,
                 eventHubResourceId,
@@ -478,10 +447,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="workspaceResourceId"> The fully qualified Log Analytics Workspace Azure Resource ID. </param>
-        /// <returns> A new <see cref="Models.AutomationActionWorkspace"/> instance for mocking. </returns>
-        public static AutomationActionWorkspace AutomationActionWorkspace(string workspaceResourceId = default)
+        /// <returns> A new <see cref="Models.SecurityAutomationActionWorkspace"/> instance for mocking. </returns>
+        public static SecurityAutomationActionWorkspace SecurityAutomationActionWorkspace(ResourceIdentifier workspaceResourceId = default)
         {
-            return new AutomationActionWorkspace(default, default, workspaceResourceId);
+            return new SecurityAutomationActionWorkspace(default, default, workspaceResourceId);
         }
 
         /// <param name="tags"> A list of key value pairs that describe the resource. </param>
@@ -491,16 +460,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions"> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </param>
         /// <returns> A new <see cref="Models.SecurityAutomationPatch"/> instance for mocking. </returns>
-        public static SecurityAutomationPatch SecurityAutomationPatch(IDictionary<string, string> tags = default, string description = default, bool? isEnabled = default, IEnumerable<AutomationScope> scopes = default, IEnumerable<AutomationSource> sources = default, IEnumerable<AutomationAction> actions = default)
+        public static SecurityAutomationPatch SecurityAutomationPatch(IDictionary<string, string> tags = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SecurityAutomationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
                 description,
                 isEnabled,
-                (scopes ?? new ChangeTrackingList<AutomationScope>()).ToList(),
-                (sources ?? new ChangeTrackingList<AutomationSource>()).ToList(),
-                (actions ?? new ChangeTrackingList<AutomationAction>()).ToList(),
+                (scopes ?? new ChangeTrackingList<SecurityAutomationScope>()).ToList(),
+                (sources ?? new ChangeTrackingList<SecurityAutomationSource>()).ToList(),
+                (actions ?? new ChangeTrackingList<SecurityAutomationAction>()).ToList(),
                 default));
         }
 
@@ -976,7 +945,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
         /// <returns> A new <see cref="SecurityCenter.AutoProvisioningSettingData"/> instance for mocking. </returns>
-        public static AutoProvisioningSettingData AutoProvisioningSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutoProvision? autoProvision = default)
+        public static AutoProvisioningSettingData AutoProvisioningSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutoProvisionState? autoProvision = default)
         {
             return new AutoProvisioningSettingData(
                 id,
@@ -2651,7 +2620,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> Location where the resource is stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         /// <returns> A new <see cref="SecurityCenter.JitNetworkAccessPolicyData"/> instance for mocking. </returns>
-        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default, IEnumerable<JitNetworkAccessContent> requests = default, string provisioningState = default, string kind = default, AzureLocation? location = default)
+        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default, IEnumerable<JitNetworkAccessRequestInfo> requests = default, string provisioningState = default, string kind = default, AzureLocation? location = default)
         {
             return new JitNetworkAccessPolicyData(
                 id,
@@ -2698,12 +2667,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="startTimeUtc"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
         /// <param name="justification"> The justification for making the initiate request. </param>
-        /// <returns> A new <see cref="Models.JitNetworkAccessContent"/> instance for mocking. </returns>
-        public static JitNetworkAccessContent JitNetworkAccessContent(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines = default, DateTimeOffset startTimeUtc = default, string requestor = default, string justification = default)
+        /// <returns> A new <see cref="Models.JitNetworkAccessRequestInfo"/> instance for mocking. </returns>
+        public static JitNetworkAccessRequestInfo JitNetworkAccessRequestInfo(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines = default, DateTimeOffset startTimeUtc = default, string requestor = default, string justification = default)
         {
             virtualMachines ??= new ChangeTrackingList<JitNetworkAccessRequestVirtualMachine>();
 
-            return new JitNetworkAccessContent((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessRequestVirtualMachine>()).ToList(), startTimeUtc, requestor, justification, default);
+            return new JitNetworkAccessRequestInfo((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessRequestVirtualMachine>()).ToList(), startTimeUtc, requestor, justification, default);
         }
 
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
@@ -3395,7 +3364,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="linksAzurePortalUri"> Link to assessment in Azure Portal. </param>
         /// <param name="status"> The result of the assessment. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAssessmentData"/> instance for mocking. </returns>
-        public static SecurityAssessmentData SecurityAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartnerInfo partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatusResult status = default)
+        public static SecurityAssessmentData SecurityAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartner partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatusResult status = default)
         {
             return new SecurityAssessmentData(
                 id,
@@ -3545,10 +3514,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="partnerName"> Name of the company of the partner. </param>
         /// <param name="secret"> secret to authenticate the partner - write only. </param>
-        /// <returns> A new <see cref="Models.SecurityAssessmentPartnerInfo"/> instance for mocking. </returns>
-        public static SecurityAssessmentPartnerInfo SecurityAssessmentPartnerInfo(string partnerName = default, string secret = default)
+        /// <returns> A new <see cref="Models.SecurityAssessmentPartner"/> instance for mocking. </returns>
+        public static SecurityAssessmentPartner SecurityAssessmentPartner(string partnerName = default, string secret = default)
         {
-            return new SecurityAssessmentPartnerInfo(partnerName, secret, default);
+            return new SecurityAssessmentPartner(partnerName, secret, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3564,7 +3533,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="linksAzurePortalUri"> Link to assessment in Azure Portal. </param>
         /// <param name="status"> The result of the assessment. </param>
         /// <returns> A new <see cref="Models.SecurityAssessmentGenerated"/> instance for mocking. </returns>
-        public static SecurityAssessmentGenerated SecurityAssessmentGenerated(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartnerInfo partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatus status = default)
+        public static SecurityAssessmentGenerated SecurityAssessmentGenerated(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartner partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatus status = default)
         {
             return new SecurityAssessmentGenerated(
                 id,
@@ -3758,10 +3727,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="topAlertedDevices"> List of the 3 devices with the most alerts. </param>
         /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
         /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
-        /// <returns> A new <see cref="SecurityCenter.IoTSecuritySolutionAnalyticsModelData"/> instance for mocking. </returns>
-        public static IoTSecuritySolutionAnalyticsModelData IoTSecuritySolutionAnalyticsModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IoTSeverityMetrics metrics = default, long? unhealthyDeviceCount = default, IEnumerable<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics = default, IEnumerable<IoTSecurityAlertedDevice> topAlertedDevices = default, IEnumerable<IoTSecurityDeviceAlert> mostPrevalentDeviceAlerts = default, IEnumerable<IoTSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default)
+        /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionAnalyticsModelData"/> instance for mocking. </returns>
+        public static IotSecuritySolutionAnalyticsModelData IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotSeverityMetrics metrics = default, long? unhealthyDeviceCount = default, IEnumerable<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics = default, IEnumerable<IotSecurityAlertedDevice> topAlertedDevices = default, IEnumerable<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts = default, IEnumerable<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default)
         {
-            return new IoTSecuritySolutionAnalyticsModelData(
+            return new IotSecuritySolutionAnalyticsModelData(
                 id,
                 name,
                 resourceType,
@@ -3769,10 +3738,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 metrics is null && unhealthyDeviceCount is null && devicesMetrics is null && topAlertedDevices is null && mostPrevalentDeviceAlerts is null && mostPrevalentDeviceRecommendations is null ? default : new IoTSecuritySolutionAnalyticsModelProperties(
                     metrics,
                     unhealthyDeviceCount,
-                    (devicesMetrics ?? new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>()).ToList(),
-                    (topAlertedDevices ?? new ChangeTrackingList<IoTSecurityAlertedDevice>()).ToList(),
-                    (mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IoTSecurityDeviceAlert>()).ToList(),
-                    (mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IoTSecurityDeviceRecommendation>()).ToList(),
+                    (devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>()).ToList(),
+                    (topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>()).ToList(),
+                    (mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>()).ToList(),
+                    (mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IotSecurityDeviceRecommendation>()).ToList(),
                     default),
                 default);
         }
@@ -3780,54 +3749,54 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="high"> Count of high severity alerts/recommendations. </param>
         /// <param name="medium"> Count of medium severity alerts/recommendations. </param>
         /// <param name="low"> Count of low severity alerts/recommendations. </param>
-        /// <returns> A new <see cref="Models.IoTSeverityMetrics"/> instance for mocking. </returns>
-        public static IoTSeverityMetrics IoTSeverityMetrics(long? high = default, long? medium = default, long? low = default)
+        /// <returns> A new <see cref="Models.IotSeverityMetrics"/> instance for mocking. </returns>
+        public static IotSeverityMetrics IotSeverityMetrics(long? high = default, long? medium = default, long? low = default)
         {
-            return new IoTSeverityMetrics(high, medium, low, default);
+            return new IotSeverityMetrics(high, medium, low, default);
         }
 
         /// <param name="date"> Aggregation of IoT Security solution device alert metrics by date. </param>
         /// <param name="devicesMetrics"> Device alert count by severity. </param>
-        /// <returns> A new <see cref="Models.IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem"/> instance for mocking. </returns>
-        public static IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem(DateTimeOffset? date = default, IoTSeverityMetrics devicesMetrics = default)
+        /// <returns> A new <see cref="Models.IotSecuritySolutionAnalyticsModelDevicesMetrics"/> instance for mocking. </returns>
+        public static IotSecuritySolutionAnalyticsModelDevicesMetrics IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset? date = default, IotSeverityMetrics devicesMetrics = default)
         {
-            return new IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem(date, devicesMetrics, default);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(date, devicesMetrics, default);
         }
 
         /// <param name="deviceId"> Device identifier. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
-        /// <returns> A new <see cref="Models.IoTSecurityAlertedDevice"/> instance for mocking. </returns>
-        public static IoTSecurityAlertedDevice IoTSecurityAlertedDevice(string deviceId = default, long? alertsCount = default)
+        /// <returns> A new <see cref="Models.IotSecurityAlertedDevice"/> instance for mocking. </returns>
+        public static IotSecurityAlertedDevice IotSecurityAlertedDevice(string deviceId = default, long? alertsCount = default)
         {
-            return new IoTSecurityAlertedDevice(deviceId, alertsCount, default);
+            return new IotSecurityAlertedDevice(deviceId, alertsCount, default);
         }
 
         /// <param name="alertDisplayName"> Display name of the alert. </param>
         /// <param name="reportedSeverity"> Assessed Alert severity. </param>
         /// <param name="alertsCount"> Number of alerts raised for this alert type. </param>
-        /// <returns> A new <see cref="Models.IoTSecurityDeviceAlert"/> instance for mocking. </returns>
-        public static IoTSecurityDeviceAlert IoTSecurityDeviceAlert(string alertDisplayName = default, ReportedSeverity? reportedSeverity = default, long? alertsCount = default)
+        /// <returns> A new <see cref="Models.IotSecurityDeviceAlert"/> instance for mocking. </returns>
+        public static IotSecurityDeviceAlert IotSecurityDeviceAlert(string alertDisplayName = default, ReportedSeverity? reportedSeverity = default, long? alertsCount = default)
         {
-            return new IoTSecurityDeviceAlert(alertDisplayName, reportedSeverity, alertsCount, default);
+            return new IotSecurityDeviceAlert(alertDisplayName, reportedSeverity, alertsCount, default);
         }
 
         /// <param name="recommendationDisplayName"> Display name of the recommendation. </param>
         /// <param name="reportedSeverity"> Assessed recommendation severity. </param>
         /// <param name="devicesCount"> Number of devices with this recommendation. </param>
-        /// <returns> A new <see cref="Models.IoTSecurityDeviceRecommendation"/> instance for mocking. </returns>
-        public static IoTSecurityDeviceRecommendation IoTSecurityDeviceRecommendation(string recommendationDisplayName = default, ReportedSeverity? reportedSeverity = default, long? devicesCount = default)
+        /// <returns> A new <see cref="Models.IotSecurityDeviceRecommendation"/> instance for mocking. </returns>
+        public static IotSecurityDeviceRecommendation IotSecurityDeviceRecommendation(string recommendationDisplayName = default, ReportedSeverity? reportedSeverity = default, long? devicesCount = default)
         {
-            return new IoTSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, default);
+            return new IotSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, default);
         }
 
         /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.IoTSecuritySolutionAnalyticsModelList"/> instance for mocking. </returns>
-        public static IoTSecuritySolutionAnalyticsModelList IoTSecuritySolutionAnalyticsModelList(IEnumerable<IoTSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
+        public static IoTSecuritySolutionAnalyticsModelList IoTSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelData>();
+            value ??= new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>();
 
-            return new IoTSecuritySolutionAnalyticsModelList((value ?? new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelData>()).ToList(), nextLink, default);
+            return new IoTSecuritySolutionAnalyticsModelList((value ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3845,10 +3814,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
         /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
-        /// <param name="unmaskedIpLoggingStatus"> Unmasked IP address logging status. </param>
+        /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
         /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
         /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionData"/> instance for mocking. </returns>
-        public static IotSecuritySolutionData IotSecuritySolutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string workspace = default, string displayName = default, SecuritySolutionStatus? status = default, IEnumerable<ExportData> export = default, IEnumerable<DataSource> disabledDataSources = default, IEnumerable<string> iotHubs = default, UserDefinedResourcesProperties userDefinedResources = default, IEnumerable<string> autoDiscoveredResources = default, IEnumerable<RecommendationConfigurationProperties> recommendationsConfiguration = default, UnmaskedIpLoggingStatus? unmaskedIpLoggingStatus = default, IEnumerable<AdditionalWorkspacesProperties> additionalWorkspaces = default)
+        public static IotSecuritySolutionData IotSecuritySolutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string workspace = default, string displayName = default, SecuritySolutionStatus? status = default, IEnumerable<IotSecuritySolutionExportOption> export = default, IEnumerable<IotSecuritySolutionDataSource> disabledDataSources = default, IEnumerable<string> iotHubs = default, UserDefinedResourcesProperties userDefinedResources = default, IEnumerable<string> autoDiscoveredResources = default, IEnumerable<RecommendationConfigurationProperties> recommendationsConfiguration = default, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = default, IEnumerable<AdditionalWorkspacesProperties> additionalWorkspaces = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3859,17 +3828,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                workspace is null && displayName is null && status is null && export is null && disabledDataSources is null && iotHubs is null && userDefinedResources is null && autoDiscoveredResources is null && recommendationsConfiguration is null && unmaskedIpLoggingStatus is null && additionalWorkspaces is null ? default : new IoTSecuritySolutionProperties(
+                workspace is null && displayName is null && status is null && export is null && disabledDataSources is null && iotHubs is null && userDefinedResources is null && autoDiscoveredResources is null && recommendationsConfiguration is null && unmaskedIPLoggingStatus is null && additionalWorkspaces is null ? default : new IoTSecuritySolutionProperties(
                     workspace,
                     displayName,
                     status,
-                    (export ?? new ChangeTrackingList<ExportData>()).ToList(),
-                    (disabledDataSources ?? new ChangeTrackingList<DataSource>()).ToList(),
+                    (export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>()).ToList(),
+                    (disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>()).ToList(),
                     (iotHubs ?? new ChangeTrackingList<string>()).ToList(),
                     userDefinedResources,
                     (autoDiscoveredResources ?? new ChangeTrackingList<string>()).ToList(),
                     (recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>()).ToList(),
-                    unmaskedIpLoggingStatus,
+                    unmaskedIPLoggingStatus,
                     (additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>()).ToList(),
                     default),
                 default);
@@ -3944,7 +3913,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="topDevicesList"> 10 devices with the highest number of occurrences of this alert type, on this day. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="SecurityCenter.IotSecurityAggregatedAlertData"/> instance for mocking. </returns>
-        public static IotSecurityAggregatedAlertData IotSecurityAggregatedAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertType = default, string alertDisplayName = default, DateTimeOffset? aggregatedDateUtc = default, string vendorName = default, ReportedSeverity? reportedSeverity = default, string remediationSteps = default, string description = default, long? count = default, string effectedResourceType = default, string systemSource = default, string actionTaken = default, string logAnalyticsQuery = default, IEnumerable<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList = default, IDictionary<string, string> tags = default)
+        public static IotSecurityAggregatedAlertData IotSecurityAggregatedAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertType = default, string alertDisplayName = default, DateTimeOffset? aggregatedDateUtc = default, string vendorName = default, ReportedSeverity? reportedSeverity = default, string remediationSteps = default, string description = default, long? count = default, string effectedResourceType = default, string systemSource = default, string actionTaken = default, string logAnalyticsQuery = default, IEnumerable<IotSecurityAggregatedAlertTopDevice> topDevicesList = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3966,7 +3935,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     systemSource,
                     actionTaken,
                     logAnalyticsQuery,
-                    (topDevicesList ?? new ChangeTrackingList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>()).ToList(),
+                    (topDevicesList ?? new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>()).ToList(),
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -3975,10 +3944,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="deviceId"> Name of the device. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
-        /// <returns> A new <see cref="Models.IoTSecurityAggregatedAlertPropertiesTopDevicesListItem"/> instance for mocking. </returns>
-        public static IoTSecurityAggregatedAlertPropertiesTopDevicesListItem IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(string deviceId = default, long? alertsCount = default, string lastOccurrence = default)
+        /// <returns> A new <see cref="Models.IotSecurityAggregatedAlertTopDevice"/> instance for mocking. </returns>
+        public static IotSecurityAggregatedAlertTopDevice IotSecurityAggregatedAlertTopDevice(string deviceId = default, long? alertsCount = default, string lastOccurrence = default)
         {
-            return new IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(deviceId, alertsCount, lastOccurrence, default);
+            return new IotSecurityAggregatedAlertTopDevice(deviceId, alertsCount, lastOccurrence, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -14,51 +14,51 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Statistical information about the number of recommendations per device, per recommendation type. </summary>
-    public partial class IoTSecurityDeviceRecommendation : IJsonModel<IoTSecurityDeviceRecommendation>
+    public partial class IotSecurityDeviceRecommendation : IJsonModel<IotSecurityDeviceRecommendation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IoTSecurityDeviceRecommendation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IotSecurityDeviceRecommendation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIoTSecurityDeviceRecommendation(document.RootElement, options);
+                        return DeserializeIotSecurityDeviceRecommendation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IoTSecurityDeviceRecommendation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IoTSecurityDeviceRecommendation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IoTSecurityDeviceRecommendation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IotSecurityDeviceRecommendation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IoTSecurityDeviceRecommendation IPersistableModel<IoTSecurityDeviceRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IotSecurityDeviceRecommendation IPersistableModel<IotSecurityDeviceRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IoTSecurityDeviceRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotSecurityDeviceRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IoTSecurityDeviceRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotSecurityDeviceRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IoTSecurityDeviceRecommendation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(RecommendationDisplayName))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IoTSecurityDeviceRecommendation IJsonModel<IoTSecurityDeviceRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IotSecurityDeviceRecommendation IJsonModel<IotSecurityDeviceRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IoTSecurityDeviceRecommendation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IotSecurityDeviceRecommendation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IoTSecurityDeviceRecommendation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIoTSecurityDeviceRecommendation(document.RootElement, options);
+            return DeserializeIotSecurityDeviceRecommendation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IoTSecurityDeviceRecommendation DeserializeIoTSecurityDeviceRecommendation(JsonElement element, ModelReaderWriterOptions options)
+        internal static IotSecurityDeviceRecommendation DeserializeIotSecurityDeviceRecommendation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IoTSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, additionalBinaryDataProperties);
+            return new IotSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, additionalBinaryDataProperties);
         }
     }
 }

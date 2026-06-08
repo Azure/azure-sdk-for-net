@@ -1114,13 +1114,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetDefenderForStorageSettings(scope).GetAsync(settingName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="IotSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> object. </returns>
-        public virtual IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
+        public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
         {
-            IoTSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
-            return new IoTSecuritySolutionAnalyticsModelResource(Client, id);
+            IotSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
+            return new IotSecuritySolutionAnalyticsModelResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="IotSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

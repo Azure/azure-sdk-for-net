@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Generator workaround and backward compatibility: keep the abstract base model writable/readable for derived offerings.
     public abstract partial class SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Unmasked IP address logging status. </summary>
-    public readonly partial struct UnmaskedIpLoggingStatus : IEquatable<UnmaskedIpLoggingStatus>
+    public readonly partial struct UnmaskedIPLoggingStatus : IEquatable<UnmaskedIPLoggingStatus>
     {
         private readonly string _value;
         /// <summary> Unmasked IP logging is disabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Unmasked IP logging is enabled. </summary>
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Initializes a new instance of <see cref="UnmaskedIpLoggingStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnmaskedIPLoggingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UnmaskedIpLoggingStatus(string value)
+        public UnmaskedIPLoggingStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Unmasked IP logging is disabled. </summary>
-        public static UnmaskedIpLoggingStatus Disabled { get; } = new UnmaskedIpLoggingStatus(DisabledValue);
+        public static UnmaskedIPLoggingStatus Disabled { get; } = new UnmaskedIPLoggingStatus(DisabledValue);
 
         /// <summary> Unmasked IP logging is enabled. </summary>
-        public static UnmaskedIpLoggingStatus Enabled { get; } = new UnmaskedIpLoggingStatus(EnabledValue);
+        public static UnmaskedIPLoggingStatus Enabled { get; } = new UnmaskedIPLoggingStatus(EnabledValue);
 
-        /// <summary> Determines if two <see cref="UnmaskedIpLoggingStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="UnmaskedIPLoggingStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UnmaskedIpLoggingStatus left, UnmaskedIpLoggingStatus right) => left.Equals(right);
+        public static bool operator ==(UnmaskedIPLoggingStatus left, UnmaskedIPLoggingStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UnmaskedIpLoggingStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="UnmaskedIPLoggingStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UnmaskedIpLoggingStatus left, UnmaskedIpLoggingStatus right) => !left.Equals(right);
+        public static bool operator !=(UnmaskedIPLoggingStatus left, UnmaskedIPLoggingStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UnmaskedIpLoggingStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="UnmaskedIPLoggingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UnmaskedIpLoggingStatus(string value) => new UnmaskedIpLoggingStatus(value);
+        public static implicit operator UnmaskedIPLoggingStatus(string value) => new UnmaskedIPLoggingStatus(value);
 
-        /// <summary> Converts a string to a <see cref="UnmaskedIpLoggingStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="UnmaskedIPLoggingStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UnmaskedIpLoggingStatus?(string value) => value == null ? null : new UnmaskedIpLoggingStatus(value);
+        public static implicit operator UnmaskedIPLoggingStatus?(string value) => value == null ? null : new UnmaskedIPLoggingStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UnmaskedIpLoggingStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is UnmaskedIPLoggingStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UnmaskedIpLoggingStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(UnmaskedIPLoggingStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

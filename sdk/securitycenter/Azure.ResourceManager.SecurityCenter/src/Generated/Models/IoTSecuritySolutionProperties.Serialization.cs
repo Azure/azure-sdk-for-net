@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("export"u8);
                 writer.WriteStartArray();
-                foreach (ExportData item in Export)
+                foreach (IotSecuritySolutionExportOption item in Export)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("disabledDataSources"u8);
                 writer.WriteStartArray();
-                foreach (DataSource item in DisabledDataSources)
+                foreach (IotSecuritySolutionDataSource item in DisabledDataSources)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UnmaskedIpLoggingStatus))
+            if (Optional.IsDefined(UnmaskedIPLoggingStatus))
             {
                 writer.WritePropertyName("unmaskedIpLoggingStatus"u8);
-                writer.WriteStringValue(UnmaskedIpLoggingStatus.Value.ToString());
+                writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AdditionalWorkspaces))
             {
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string workspace = default;
             string displayName = default;
             SecuritySolutionStatus? status = default;
-            IList<ExportData> export = default;
-            IList<DataSource> disabledDataSources = default;
+            IList<IotSecuritySolutionExportOption> export = default;
+            IList<IotSecuritySolutionDataSource> disabledDataSources = default;
             IList<string> iotHubs = default;
             UserDefinedResourcesProperties userDefinedResources = default;
             IReadOnlyList<string> autoDiscoveredResources = default;
             IList<RecommendationConfigurationProperties> recommendationsConfiguration = default;
-            UnmaskedIpLoggingStatus? unmaskedIpLoggingStatus = default;
+            UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = default;
             IList<AdditionalWorkspacesProperties> additionalWorkspaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<ExportData> array = new List<ExportData>();
+                    List<IotSecuritySolutionExportOption> array = new List<IotSecuritySolutionExportOption>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new ExportData(item.GetString()));
+                        array.Add(new IotSecuritySolutionExportOption(item.GetString()));
                     }
                     export = array;
                     continue;
@@ -263,10 +263,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<DataSource> array = new List<DataSource>();
+                    List<IotSecuritySolutionDataSource> array = new List<IotSecuritySolutionDataSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new DataSource(item.GetString()));
+                        array.Add(new IotSecuritySolutionDataSource(item.GetString()));
                     }
                     disabledDataSources = array;
                     continue;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    unmaskedIpLoggingStatus = new UnmaskedIpLoggingStatus(prop.Value.GetString());
+                    unmaskedIPLoggingStatus = new UnmaskedIPLoggingStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("additionalWorkspaces"u8))
@@ -364,13 +364,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 workspace,
                 displayName,
                 status,
-                export ?? new ChangeTrackingList<ExportData>(),
-                disabledDataSources ?? new ChangeTrackingList<DataSource>(),
+                export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(),
+                disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(),
                 iotHubs,
                 userDefinedResources,
                 autoDiscoveredResources ?? new ChangeTrackingList<string>(),
                 recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(),
-                unmaskedIpLoggingStatus,
+                unmaskedIPLoggingStatus,
                 additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>(),
                 additionalBinaryDataProperties);
         }

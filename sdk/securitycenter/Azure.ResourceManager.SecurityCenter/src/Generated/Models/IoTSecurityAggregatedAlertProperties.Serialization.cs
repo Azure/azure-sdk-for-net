@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("topDevicesList"u8);
                 writer.WriteStartArray();
-                foreach (IoTSecurityAggregatedAlertPropertiesTopDevicesListItem item in TopDevicesList)
+                foreach (IotSecurityAggregatedAlertTopDevice item in TopDevicesList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string systemSource = default;
             string actionTaken = default;
             string logAnalyticsQuery = default;
-            IReadOnlyList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList = default;
+            IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> array = new List<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>();
+                    List<IotSecurityAggregatedAlertTopDevice> array = new List<IotSecurityAggregatedAlertTopDevice>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IoTSecurityAggregatedAlertPropertiesTopDevicesListItem.DeserializeIoTSecurityAggregatedAlertPropertiesTopDevicesListItem(item, options));
+                        array.Add(IotSecurityAggregatedAlertTopDevice.DeserializeIotSecurityAggregatedAlertTopDevice(item, options));
                     }
                     topDevicesList = array;
                     continue;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemSource,
                 actionTaken,
                 logAnalyticsQuery,
-                topDevicesList ?? new ChangeTrackingList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>(),
+                topDevicesList ?? new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>(),
                 additionalBinaryDataProperties);
         }
     }

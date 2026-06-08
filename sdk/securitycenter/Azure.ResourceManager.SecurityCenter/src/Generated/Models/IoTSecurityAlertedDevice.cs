@@ -11,21 +11,16 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Statistical information about the number of alerts per device during last set number of days. </summary>
-    public partial class IoTSecurityAlertedDevice
+    public partial class IotSecurityAlertedDevice
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecurityAlertedDevice"/>. </summary>
-        internal IoTSecurityAlertedDevice()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IoTSecurityAlertedDevice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAlertedDevice"/>. </summary>
         /// <param name="deviceId"> Device identifier. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecurityAlertedDevice(string deviceId, long? alertsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotSecurityAlertedDevice(string deviceId, long? alertsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             AlertsCount = alertsCount;

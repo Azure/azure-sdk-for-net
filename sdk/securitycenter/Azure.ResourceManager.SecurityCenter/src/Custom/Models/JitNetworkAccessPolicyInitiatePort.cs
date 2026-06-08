@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Backward compatibility: preserve the legacy constructor and EndTimeUtc property name.
     public partial class JitNetworkAccessPolicyInitiatePort
     {
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>

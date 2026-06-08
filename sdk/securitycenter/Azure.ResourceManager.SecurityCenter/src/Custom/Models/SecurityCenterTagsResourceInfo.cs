@@ -11,6 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Generator workaround and backward compatibility: keep tags and MRW support on the base resource-info model.
     public partial class SecurityCenterTagsResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="SecurityCenterTagsResourceInfo"/>. </summary>

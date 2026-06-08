@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Data regarding 3rd party partner integration. </summary>
-        public SecurityAssessmentPartnerInfo PartnersData
+        public SecurityAssessmentPartner PartnersData
         {
             get
             {

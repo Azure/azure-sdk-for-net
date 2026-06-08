@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
 
             VirtualMachines = virtualMachines.ToList();
-            Requests = new ChangeTrackingList<JitNetworkAccessContent>();
+            Requests = new ChangeTrackingList<JitNetworkAccessRequestInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="requests"></param>
         /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessPolicyProperties(IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessContent> requests, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitNetworkAccessPolicyProperties(IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessRequestInfo> requests, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachines = virtualMachines;
             Requests = requests;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<JitNetworkAccessPolicyVirtualMachine> VirtualMachines { get; } = new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>();
 
         /// <summary> Gets the Requests. </summary>
-        public IList<JitNetworkAccessContent> Requests { get; } = new ChangeTrackingList<JitNetworkAccessContent>();
+        public IList<JitNetworkAccessRequestInfo> Requests { get; } = new ChangeTrackingList<JitNetworkAccessRequestInfo>();
 
         /// <summary> Gets the provisioning state of the Just-in-Time policy. </summary>
         public string ProvisioningState { get; }

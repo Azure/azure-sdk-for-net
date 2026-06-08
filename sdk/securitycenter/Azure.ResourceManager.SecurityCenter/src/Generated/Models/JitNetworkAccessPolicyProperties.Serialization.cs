@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteStartArray();
-                foreach (JitNetworkAccessContent item in Requests)
+                foreach (JitNetworkAccessRequestInfo item in Requests)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default;
-            IList<JitNetworkAccessContent> requests = default;
+            IList<JitNetworkAccessRequestInfo> requests = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<JitNetworkAccessContent> array = new List<JitNetworkAccessContent>();
+                    List<JitNetworkAccessRequestInfo> array = new List<JitNetworkAccessRequestInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessContent.DeserializeJitNetworkAccessContent(item, options));
+                        array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item, options));
                     }
                     requests = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JitNetworkAccessPolicyProperties(virtualMachines, requests ?? new ChangeTrackingList<JitNetworkAccessContent>(), provisioningState, additionalBinaryDataProperties);
+            return new JitNetworkAccessPolicyProperties(virtualMachines, requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

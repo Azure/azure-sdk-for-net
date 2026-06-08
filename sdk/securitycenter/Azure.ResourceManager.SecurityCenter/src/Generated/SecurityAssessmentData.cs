@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentData"/>. </summary>
-        internal SecurityAssessmentData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -49,15 +44,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Details of the resource that was assessed. </summary>
-        public SecurityCenterResourceDetails ResourceDetails
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceDetails;
-            }
-        }
-
         /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName
         {
@@ -76,39 +62,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Describes properties of an assessment metadata. </summary>
-        public SecurityAssessmentMetadataProperties Metadata
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Metadata;
-            }
-        }
-
-        /// <summary> Data regarding 3rd party partner integration. </summary>
-        public SecurityAssessmentPartnerInfo PartnersData
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PartnersData;
-            }
-        }
-
         /// <summary> Link to assessment in Azure Portal. </summary>
         public string LinksAzurePortalUri
         {
             get
             {
                 return Properties is null ? default : Properties.LinksAzurePortalUri;
-            }
-        }
-
-        /// <summary> The result of the assessment. </summary>
-        public SecurityAssessmentStatusResult Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
             }
         }
     }
