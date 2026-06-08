@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.SdkAnalyzers.csproj" />
-    <ProjectReference Include="..\..\codefixes\Azure.SdkAnalyzers.CodeFixes.csproj" />
+    <ProjectReference Include="..\..\src\Azure.SdkAnalyzers.csproj" SetTargetFramework="TargetFramework=netstandard2.0" />
+    <ProjectReference Include="..\..\codefixes\Azure.SdkAnalyzers.CodeFixes.csproj" SetTargetFramework="TargetFramework=netstandard2.0" />
   </ItemGroup>
 
   <ItemGroup>
