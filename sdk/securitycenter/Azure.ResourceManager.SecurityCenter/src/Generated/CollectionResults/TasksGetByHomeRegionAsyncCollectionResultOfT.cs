@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly Tasks _client;
         private readonly Guid _subscriptionId;
-        private readonly AzureLocation _ascLocation;
+        private readonly string _ascLocation;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TasksGetByHomeRegionAsyncCollectionResultOfT(Tasks client, Guid subscriptionId, AzureLocation ascLocation, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public TasksGetByHomeRegionAsyncCollectionResultOfT(Tasks client, Guid subscriptionId, string ascLocation, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

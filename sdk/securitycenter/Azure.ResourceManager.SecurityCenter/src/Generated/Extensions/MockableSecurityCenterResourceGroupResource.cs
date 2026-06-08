@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of ResourceGroupSecurityAlerts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityAlerts and their operations over a ResourceGroupSecurityAlertResource. </returns>
-        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(AzureLocation ascLocation)
+        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(string ascLocation)
         {
             return GetCachedClient(client => new ResourceGroupSecurityAlertCollection(client, Id, ascLocation));
         }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of ResourceGroupSecurityTasks in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
-        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(AzureLocation ascLocation)
+        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
         {
             return GetCachedClient(client => new ResourceGroupSecurityTaskCollection(client, Id, ascLocation));
         }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 

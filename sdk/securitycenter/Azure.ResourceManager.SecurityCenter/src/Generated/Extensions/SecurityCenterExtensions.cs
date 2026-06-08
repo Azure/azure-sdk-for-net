@@ -2471,10 +2471,28 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
+        /// Gets a collection of ResourceGroupSecurityAlerts in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityAlerts(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ResourceGroupSecurityAlerts and their operations over a ResourceGroupSecurityAlertResource. </returns>
+        public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, string ascLocation)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
+        }
+
+        /// <summary>
         /// Get an alert that is associated a resource group or a resource in a resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityAlertAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityAlertAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2483,7 +2501,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this ResourceGroupResource resourceGroupResource, string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -2494,7 +2512,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get an alert that is associated a resource group or a resource in a resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityAlert(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityAlert(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2503,7 +2521,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this ResourceGroupResource resourceGroupResource, string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -2903,10 +2921,28 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
+        /// Gets a collection of ResourceGroupSecurityTasks in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityTasks(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
+        public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, string ascLocation)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
+        }
+
+        /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityTaskAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityTaskAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2915,7 +2951,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this ResourceGroupResource resourceGroupResource, string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -2926,7 +2962,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityTask(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetResourceGroupSecurityTask(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2935,7 +2971,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this ResourceGroupResource resourceGroupResource, string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

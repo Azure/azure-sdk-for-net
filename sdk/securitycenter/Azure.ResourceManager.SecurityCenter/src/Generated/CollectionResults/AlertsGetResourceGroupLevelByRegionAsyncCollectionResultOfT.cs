@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly Alerts _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly AzureLocation _ascLocation;
+        private readonly string _ascLocation;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(Alerts client, Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(Alerts client, Guid subscriptionId, string resourceGroupName, string ascLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
