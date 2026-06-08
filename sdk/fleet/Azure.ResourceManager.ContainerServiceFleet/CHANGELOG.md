@@ -1,14 +1,19 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.4 (2026-06-04)
 
 ### Features Added
 
+- Upgraded api-version to `2026-03-02-preview`.
+- Added Cluster Mesh Profile support, including `ClusterMeshProfileResource` and the related Cilium-based mesh member status surfaced on `ContainerServiceFleetMemberResource`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Renamed `AutoUpgradeProfileProperties.LongTermSupport` to `IsLongTermSupport` to follow the .NET boolean property naming guideline.
+- Renamed three types to use the package-consistent `ContainerServiceFleet*` prefix:
+  - `ManagedNamespaceProperties` → `ContainerServiceFleetManagedNamespaceProperties`
+  - `UpdateRunGateStatus` → `ContainerServiceFleetUpdateRunGateStatus`
+  - `UpdateRunGateTargetProperties` → `ContainerServiceFleetUpdateRunGateTargetProperties`
 
 ## 1.2.0-beta.3 (2026-04-14)
 
