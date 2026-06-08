@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,24 +21,24 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetProperties"/>. </summary>
         public AvailabilitySetProperties()
         {
-            VirtualMachines = new ChangeTrackingList<WritableSubResource>();
+            VirtualMachineResources = new ChangeTrackingList<ComputeWriteableSubResourceData>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetProperties"/>. </summary>
         /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
         /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
+        /// <param name="virtualMachineResources"> A list of references to all virtual machines in the availability set. </param>
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
         /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilitySetProperties(int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, ComputeWriteableSubResourceData proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilitySetProperties(int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<ComputeWriteableSubResourceData> virtualMachineResources, ComputeWriteableSubResourceData proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
             PlatformFaultDomainCount = platformFaultDomainCount;
-            VirtualMachines = virtualMachines;
+            VirtualMachineResources = virtualMachineResources;
             ProximityPlacementGroup = proximityPlacementGroup;
             Statuses = statuses;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomainCount { get; set; }
 
         /// <summary> A list of references to all virtual machines in the availability set. </summary>
-        public IList<WritableSubResource> VirtualMachines { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<ComputeWriteableSubResourceData> VirtualMachineResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </summary>
         internal ComputeWriteableSubResourceData ProximityPlacementGroup { get; set; }

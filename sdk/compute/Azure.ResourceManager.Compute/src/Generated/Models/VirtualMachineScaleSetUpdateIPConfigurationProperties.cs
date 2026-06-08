@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,10 +21,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfigurationProperties"/>. </summary>
         public VirtualMachineScaleSetUpdateIPConfigurationProperties()
         {
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
+            ApplicationGatewayBackendAddressPoolResources = new ChangeTrackingList<ComputeWriteableSubResourceData>();
+            ApplicationSecurityGroupResources = new ChangeTrackingList<ComputeWriteableSubResourceData>();
+            LoadBalancerBackendAddressPoolResources = new ChangeTrackingList<ComputeWriteableSubResourceData>();
+            LoadBalancerInboundNatPoolResources = new ChangeTrackingList<ComputeWriteableSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfigurationProperties"/>. </summary>
@@ -33,21 +32,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> The application gateway backend address pools. </param>
-        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
-        /// <param name="loadBalancerBackendAddressPools"> The load balancer backend address pools. </param>
-        /// <param name="loadBalancerInboundNatPools"> The load balancer inbound nat pools. </param>
+        /// <param name="applicationGatewayBackendAddressPoolResources"> The application gateway backend address pools. </param>
+        /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
+        /// <param name="loadBalancerBackendAddressPoolResources"> The load balancer backend address pools. </param>
+        /// <param name="loadBalancerInboundNatPoolResources"> The load balancer inbound nat pools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             PrivateIPAddressVersion = privateIPAddressVersion;
-            ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
-            ApplicationSecurityGroups = applicationSecurityGroups;
-            LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
-            LoadBalancerInboundNatPools = loadBalancerInboundNatPools;
+            ApplicationGatewayBackendAddressPoolResources = applicationGatewayBackendAddressPoolResources;
+            ApplicationSecurityGroupResources = applicationSecurityGroupResources;
+            LoadBalancerBackendAddressPoolResources = loadBalancerBackendAddressPoolResources;
+            LoadBalancerInboundNatPoolResources = loadBalancerInboundNatPoolResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,16 +63,16 @@ namespace Azure.ResourceManager.Compute.Models
         public IPVersion? PrivateIPAddressVersion { get; set; }
 
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<ComputeWriteableSubResourceData> ApplicationSecurityGroupResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<ComputeWriteableSubResourceData> LoadBalancerInboundNatPoolResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public ResourceIdentifier SubnetId

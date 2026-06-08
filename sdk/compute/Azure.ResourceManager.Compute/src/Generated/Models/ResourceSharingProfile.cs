@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,19 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
         public ResourceSharingProfile()
         {
-            SubscriptionIds = new ChangeTrackingList<WritableSubResource>();
+            SharingSubscriptionResources = new ChangeTrackingList<ComputeWriteableSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
-        /// <param name="subscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
+        /// <param name="sharingSubscriptionResources"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSharingProfile(IList<WritableSubResource> subscriptionIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceSharingProfile(IList<ComputeWriteableSubResourceData> sharingSubscriptionResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SubscriptionIds = subscriptionIds;
+            SharingSubscriptionResources = sharingSubscriptionResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IList<WritableSubResource> SubscriptionIds { get; }
+        public IList<ComputeWriteableSubResourceData> SharingSubscriptionResources { get; }
     }
 }

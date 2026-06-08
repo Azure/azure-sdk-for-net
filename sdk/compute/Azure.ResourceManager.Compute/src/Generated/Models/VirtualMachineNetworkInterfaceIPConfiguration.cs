@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups
+        public IList<ComputeWriteableSubResourceData> ApplicationSecurityGroupResources
         {
             get
             {
@@ -106,12 +105,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
                 }
-                return Properties.ApplicationSecurityGroups;
+                return Properties.ApplicationSecurityGroupResources;
             }
         }
 
         /// <summary> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools
+        public IList<ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources
         {
             get
             {
@@ -119,12 +118,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
                 }
-                return Properties.ApplicationGatewayBackendAddressPools;
+                return Properties.ApplicationGatewayBackendAddressPoolResources;
             }
         }
 
         /// <summary> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools
+        public IList<ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources
         {
             get
             {
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
                 }
-                return Properties.LoadBalancerBackendAddressPools;
+                return Properties.LoadBalancerBackendAddressPoolResources;
             }
         }
 

@@ -578,7 +578,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(WindowsVmGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     [ModelReaderWriterBuildable(typeof(WinRMListener))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(ZoneMovement))]
     public partial class AzureResourceManagerComputeContext : ModelReaderWriterContext

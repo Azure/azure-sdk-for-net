@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -83,18 +81,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("platformFaultDomainCount"u8);
             writer.WriteNumberValue(PlatformFaultDomainCount);
-            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedHosts))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedHostResources))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in DedicatedHosts)
+                foreach (ComputeSubResourceData item in DedicatedHostResources)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int platformFaultDomainCount = default;
-            IReadOnlyList<SubResource> dedicatedHosts = default;
+            IReadOnlyList<ComputeSubResourceData> dedicatedHostResources = default;
             DedicatedHostGroupInstanceView instanceView = default;
             bool? supportAutomaticPlacement = default;
             DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities = default;
@@ -174,19 +167,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
-                        }
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
-                    dedicatedHosts = array;
+                    dedicatedHostResources = array;
                     continue;
                 }
                 if (prop.NameEquals("instanceView"u8))
@@ -223,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new DedicatedHostGroupProperties(
                 platformFaultDomainCount,
-                dedicatedHosts ?? new ChangeTrackingList<SubResource>(),
+                dedicatedHostResources ?? new ChangeTrackingList<ComputeSubResourceData>(),
                 instanceView,
                 supportAutomaticPlacement,
                 additionalCapabilities,

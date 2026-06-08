@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,24 +20,24 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProperties"/>. </summary>
         public CapacityReservationProperties()
         {
-            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
+            AssociatedVirtualMachineResources = new ChangeTrackingList<ComputeSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProperties"/>. </summary>
         /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
         /// <param name="platformFaultDomainCount"> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. <b>Note:</b> The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </param>
-        /// <param name="virtualMachinesAssociated"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
+        /// <param name="associatedVirtualMachineResources"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
         /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The Capacity reservation instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="scheduleProfile"> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationProperties(string reservationId, int? platformFaultDomainCount, IReadOnlyList<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated, ScheduleProfile scheduleProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationProperties(string reservationId, int? platformFaultDomainCount, IReadOnlyList<ComputeSubResourceData> associatedVirtualMachineResources, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated, ScheduleProfile scheduleProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReservationId = reservationId;
             PlatformFaultDomainCount = platformFaultDomainCount;
-            VirtualMachinesAssociated = virtualMachinesAssociated;
+            AssociatedVirtualMachineResources = associatedVirtualMachineResources;
             ProvisioningOn = provisioningOn;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomainCount { get; }
 
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; } = new ChangeTrackingList<SubResource>();
+        public IReadOnlyList<ComputeSubResourceData> AssociatedVirtualMachineResources { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> The date time when the capacity reservation was last updated. </summary>
         public DateTimeOffset? ProvisioningOn { get; }

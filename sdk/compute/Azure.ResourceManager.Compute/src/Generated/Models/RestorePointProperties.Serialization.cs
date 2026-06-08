@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -76,18 +74,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(RestorePointProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ExcludeDisks))
+            if (Optional.IsCollectionDefined(ExcludedDisks))
             {
                 writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in ExcludeDisks)
+                foreach (ApiEntityReference item in ExcludedDisks)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<WritableSubResource> excludeDisks = default;
+            IList<ApiEntityReference> excludedDisks = default;
             RestorePointSourceMetadata sourceMetadata = default;
             string provisioningState = default;
             ConsistencyModeType? consistencyMode = default;
@@ -185,19 +178,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<ApiEntityReference> array = new List<ApiEntityReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
-                        }
+                        array.Add(ApiEntityReference.DeserializeApiEntityReference(item, options));
                     }
-                    excludeDisks = array;
+                    excludedDisks = array;
                     continue;
                 }
                 if (prop.NameEquals("sourceMetadata"u8))
@@ -265,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new RestorePointProperties(
-                excludeDisks ?? new ChangeTrackingList<WritableSubResource>(),
+                excludedDisks ?? new ChangeTrackingList<ApiEntityReference>(),
                 sourceMetadata,
                 provisioningState,
                 consistencyMode,

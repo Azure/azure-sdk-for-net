@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools
+        public IList<ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources
         {
             get
             {
@@ -103,12 +102,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetIPConfigurationProperties();
                 }
-                return Properties.ApplicationGatewayBackendAddressPools;
+                return Properties.ApplicationGatewayBackendAddressPoolResources;
             }
         }
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups
+        public IList<ComputeWriteableSubResourceData> ApplicationSecurityGroupResources
         {
             get
             {
@@ -116,12 +115,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetIPConfigurationProperties();
                 }
-                return Properties.ApplicationSecurityGroups;
+                return Properties.ApplicationSecurityGroupResources;
             }
         }
 
         /// <summary> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools
+        public IList<ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources
         {
             get
             {
@@ -129,12 +128,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetIPConfigurationProperties();
                 }
-                return Properties.LoadBalancerBackendAddressPools;
+                return Properties.LoadBalancerBackendAddressPoolResources;
             }
         }
 
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<WritableSubResource> LoadBalancerInboundNatPools
+        public IList<ComputeWriteableSubResourceData> LoadBalancerInboundNatPoolResources
         {
             get
             {
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetIPConfigurationProperties();
                 }
-                return Properties.LoadBalancerInboundNatPools;
+                return Properties.LoadBalancerInboundNatPoolResources;
             }
         }
 

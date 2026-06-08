@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -91,18 +89,13 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachineResources))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in VirtualMachines)
+                foreach (ComputeSubResourceData item in VirtualMachineResources)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? platformFaultDomain = default;
             bool? autoReplaceOnFailure = default;
             string hostId = default;
-            IReadOnlyList<SubResource> virtualMachines = default;
+            IReadOnlyList<ComputeSubResourceData> virtualMachineResources = default;
             DedicatedHostLicenseType? licenseType = default;
             DateTimeOffset? provisioningOn = default;
             string provisioningState = default;
@@ -214,19 +207,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
-                        }
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
-                    virtualMachines = array;
+                    virtualMachineResources = array;
                     continue;
                 }
                 if (prop.NameEquals("licenseType"u8))
@@ -279,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Models
                 platformFaultDomain,
                 autoReplaceOnFailure,
                 hostId,
-                virtualMachines ?? new ChangeTrackingList<SubResource>(),
+                virtualMachineResources ?? new ChangeTrackingList<ComputeSubResourceData>(),
                 licenseType,
                 provisioningOn,
                 provisioningState,

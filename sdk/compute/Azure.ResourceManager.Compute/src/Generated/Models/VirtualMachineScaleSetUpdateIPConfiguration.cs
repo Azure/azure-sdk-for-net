@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools
+        public IList<ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources
         {
             get
             {
@@ -97,12 +96,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
                 }
-                return Properties.ApplicationGatewayBackendAddressPools;
+                return Properties.ApplicationGatewayBackendAddressPoolResources;
             }
         }
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups
+        public IList<ComputeWriteableSubResourceData> ApplicationSecurityGroupResources
         {
             get
             {
@@ -110,12 +109,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
                 }
-                return Properties.ApplicationSecurityGroups;
+                return Properties.ApplicationSecurityGroupResources;
             }
         }
 
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools
+        public IList<ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources
         {
             get
             {
@@ -123,12 +122,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
                 }
-                return Properties.LoadBalancerBackendAddressPools;
+                return Properties.LoadBalancerBackendAddressPoolResources;
             }
         }
 
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<WritableSubResource> LoadBalancerInboundNatPools
+        public IList<ComputeWriteableSubResourceData> LoadBalancerInboundNatPoolResources
         {
             get
             {
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
                 }
-                return Properties.LoadBalancerInboundNatPools;
+                return Properties.LoadBalancerInboundNatPoolResources;
             }
         }
 

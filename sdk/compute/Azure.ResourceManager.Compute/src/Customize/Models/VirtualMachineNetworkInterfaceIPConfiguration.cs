@@ -8,9 +8,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    // Backward compatibility: this model previously inherited ComputeWriteableSubResourceData and its virtual Id property.
-    // Without this base type, ApiCompat reports the removed base class and missing inherited Id accessors.
-    public partial class VirtualMachineScaleSetIPConfiguration : ComputeWriteableSubResourceData
+    public partial class VirtualMachineNetworkInterfaceIPConfiguration
     {
         // Backward compatibility: the generated Compute-local property is named ApplicationGatewayBackendAddressPoolResources
         // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
@@ -26,10 +24,5 @@ namespace Azure.ResourceManager.Compute.Models
         // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
         /// <summary> Specifies an array of references to backend address pools of load balancers. </summary>
         public IList<WritableSubResource> LoadBalancerBackendAddressPools => LoadBalancerBackendAddressPoolResources.ToWritableSubResources();
-
-        // Backward compatibility: the generated Compute-local property is named LoadBalancerInboundNatPoolResources
-        // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
-        /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. </summary>
-        public IList<WritableSubResource> LoadBalancerInboundNatPools => LoadBalancerInboundNatPoolResources.ToWritableSubResources();
     }
 }

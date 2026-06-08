@@ -5,6 +5,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<SubResource> Hosts
         {
-            get => DedicatedHosts;
+            get => DedicatedHostResources?.Select(host => ResourceManagerModelFactory.SubResource(host.Id)).ToList();
         }
     }
 }

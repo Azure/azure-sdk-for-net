@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -76,33 +74,23 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(CapacityReservationGroupProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservationResources))
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in CapacityReservations)
+                foreach (ComputeSubResourceData item in CapacityReservationResources)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedVirtualMachineResources))
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in VirtualMachinesAssociated)
+                foreach (ComputeSubResourceData item in AssociatedVirtualMachineResources)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,8 +151,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IReadOnlyList<SubResource> capacityReservations = default;
-            IReadOnlyList<SubResource> virtualMachinesAssociated = default;
+            IReadOnlyList<ComputeSubResourceData> capacityReservationResources = default;
+            IReadOnlyList<ComputeSubResourceData> associatedVirtualMachineResources = default;
             CapacityReservationGroupInstanceView instanceView = default;
             ResourceSharingProfile sharingProfile = default;
             CapacityReservationType? reservationType = default;
@@ -177,19 +165,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
-                        }
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
-                    capacityReservations = array;
+                    capacityReservationResources = array;
                     continue;
                 }
                 if (prop.NameEquals("virtualMachinesAssociated"u8))
@@ -198,19 +179,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
-                        }
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
-                    virtualMachinesAssociated = array;
+                    associatedVirtualMachineResources = array;
                     continue;
                 }
                 if (prop.NameEquals("instanceView"u8))
@@ -246,8 +220,8 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new CapacityReservationGroupProperties(
-                capacityReservations ?? new ChangeTrackingList<SubResource>(),
-                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                capacityReservationResources ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                associatedVirtualMachineResources ?? new ChangeTrackingList<ComputeSubResourceData>(),
                 instanceView,
                 sharingProfile,
                 reservationType,

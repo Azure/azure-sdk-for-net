@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,26 +20,26 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DedicatedHostProperties"/>. </summary>
         public DedicatedHostProperties()
         {
-            VirtualMachines = new ChangeTrackingList<SubResource>();
+            VirtualMachineResources = new ChangeTrackingList<ComputeSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostProperties"/>. </summary>
         /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
         /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
         /// <param name="hostId"> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the Dedicated Host. </param>
+        /// <param name="virtualMachineResources"> A list of references to all virtual machines in the Dedicated Host. </param>
         /// <param name="licenseType"> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </param>
         /// <param name="provisioningOn"> The date when the host was first provisioned. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The dedicated host instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostProperties(int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHostProperties(int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<ComputeSubResourceData> virtualMachineResources, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformFaultDomain = platformFaultDomain;
             AutoReplaceOnFailure = autoReplaceOnFailure;
             HostId = hostId;
-            VirtualMachines = virtualMachines;
+            VirtualMachineResources = virtualMachineResources;
             LicenseType = licenseType;
             ProvisioningOn = provisioningOn;
             ProvisioningState = provisioningState;
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string HostId { get; }
 
         /// <summary> A list of references to all virtual machines in the Dedicated Host. </summary>
-        public IReadOnlyList<SubResource> VirtualMachines { get; } = new ChangeTrackingList<SubResource>();
+        public IReadOnlyList<ComputeSubResourceData> VirtualMachineResources { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
         public DedicatedHostLicenseType? LicenseType { get; set; }

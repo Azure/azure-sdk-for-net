@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -76,18 +74,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(SubscriptionIds))
+            if (Optional.IsCollectionDefined(SharingSubscriptionResources))
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in SubscriptionIds)
+                foreach (ComputeWriteableSubResourceData item in SharingSubscriptionResources)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<WritableSubResource> subscriptionIds = default;
+            IList<ComputeWriteableSubResourceData> sharingSubscriptionResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,19 +136,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
-                        }
+                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
                     }
-                    subscriptionIds = array;
+                    sharingSubscriptionResources = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceSharingProfile(subscriptionIds ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
+            return new ResourceSharingProfile(sharingSubscriptionResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(), additionalBinaryDataProperties);
         }
     }
 }

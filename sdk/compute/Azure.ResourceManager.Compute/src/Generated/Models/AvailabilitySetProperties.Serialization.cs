@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -86,18 +84,13 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualMachines))
+            if (Optional.IsCollectionDefined(VirtualMachineResources))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in VirtualMachines)
+                foreach (ComputeWriteableSubResourceData item in VirtualMachineResources)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? platformUpdateDomainCount = default;
             int? platformFaultDomainCount = default;
-            IList<WritableSubResource> virtualMachines = default;
+            IList<ComputeWriteableSubResourceData> virtualMachineResources = default;
             ComputeWriteableSubResourceData proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
@@ -202,19 +195,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
-                        }
+                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
                     }
-                    virtualMachines = array;
+                    virtualMachineResources = array;
                     continue;
                 }
                 if (prop.NameEquals("proximityPlacementGroup"u8))
@@ -266,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new AvailabilitySetProperties(
                 platformUpdateDomainCount,
                 platformFaultDomainCount,
-                virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualMachineResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 proximityPlacementGroup,
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
                 scheduledEventsPolicy,

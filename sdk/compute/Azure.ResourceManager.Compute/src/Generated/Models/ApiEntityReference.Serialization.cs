@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The API entity reference. </summary>
-    internal partial class ApiEntityReference : IJsonModel<ApiEntityReference>
+    public partial class ApiEntityReference : IJsonModel<ApiEntityReference>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

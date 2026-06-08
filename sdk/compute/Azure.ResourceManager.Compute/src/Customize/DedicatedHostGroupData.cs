@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -21,5 +22,10 @@ namespace Azure.ResourceManager.Compute
                 return Properties is null ? new ChangeTrackingList<DedicatedHostInstanceViewWithName>() : (IReadOnlyList<DedicatedHostInstanceViewWithName>)Properties.InstanceViewHosts;
             }
         }
+
+        // Backward compatibility: the generated Compute-local property is named DedicatedHostResources and uses
+        // ComputeSubResourceData. Restore the old DedicatedHosts property with ARM common SubResource.
+        /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
+        public IReadOnlyList<SubResource> DedicatedHosts => DedicatedHostResources.ToSubResources();
     }
 }

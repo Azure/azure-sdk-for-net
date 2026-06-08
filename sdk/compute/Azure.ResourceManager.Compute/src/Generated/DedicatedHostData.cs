@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> A list of references to all virtual machines in the Dedicated Host. </summary>
-        public IReadOnlyList<SubResource> VirtualMachines
+        public IReadOnlyList<ComputeSubResourceData> VirtualMachineResources
         {
             get
             {
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DedicatedHostProperties();
                 }
-                return Properties.VirtualMachines;
+                return Properties.VirtualMachineResources;
             }
         }
 
