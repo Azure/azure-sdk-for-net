@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
         public TerminalServerConfiguration()
+            : this(default, default, default, null, default, default, default, default, default, new ChangeTrackingList<NetworkFabricSecretRotationStatus>())
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
         public TerminalServerConfiguration(string primaryIPv4Prefix, string secondaryIPv4Prefix)
+            : this(default, default, default, null, primaryIPv4Prefix, default, secondaryIPv4Prefix, default, default, new ChangeTrackingList<NetworkFabricSecretRotationStatus>())
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.");
         }
 
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]

@@ -61,14 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Route Policy statements. </summary>
         public IList<RoutePolicyStatementProperties> Statements
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RoutePolicyPatchableProperties();
-                }
-                return NetworkFabricRoutePolicyPatchContent.ToStatements(Properties.StatementSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use StatementSettings instead.");
         }
 
         /// <param name="data"> The data to parse. </param>

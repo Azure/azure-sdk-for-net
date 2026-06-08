@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkFabricControllerId"> Resource ID of the network fabric controller. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId)
+        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : this(location, networkFabricControllerId)
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
+            InternetGatewayType = typePropertiesType;
         }
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>

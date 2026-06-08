@@ -565,21 +565,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             throw new NotSupportedException("This overload uses a parameter type from a previous API version. Use Upgrade with UpgradeNetworkFabricProperties instead.");
         }
-
-        private static UpgradeNetworkFabricProperties ToUpgradeNetworkFabricProperties(NetworkFabricUpdateVersionContent content)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return new UpgradeNetworkFabricProperties(content.Version, additionalBinaryDataProperties: null, action: null);
-        }
-
-        private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)
-            => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
-
-        private static DeviceUpdateCommonPostActionResult ToDeviceUpdateResult(ResponseError error)
-            => new DeviceUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null, successfulDevices: Array.Empty<string>(), failedDevices: Array.Empty<string>());
-
-        private static ValidateConfigurationResult ToValidateConfigurationResult(ResponseError error, Uri uri)
-            => new ValidateConfigurationResult(error, additionalBinaryDataProperties: null, configurationState: null, uri);
     }
 }

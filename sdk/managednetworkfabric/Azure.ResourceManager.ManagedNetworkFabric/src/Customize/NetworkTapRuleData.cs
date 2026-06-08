@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkTapRuleData(AzureLocation location)
+        public NetworkTapRuleData(AzureLocation location) : base(location)
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
+            Properties = new NetworkTapRuleProperties();
         }
 
         /// <summary> Input method to configure Network Tap Rule. </summary>

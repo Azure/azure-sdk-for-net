@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public InternetGatewayRules(InternetGatewayRuleAction action, IEnumerable<string> addressList)
+        public InternetGatewayRules(InternetGatewayRuleAction action, IEnumerable<string> addressList) : this(action)
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
         }
     }
 }

@@ -89,24 +89,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.");
         }
 
-        private static NetworkTapPatchableParametersDestinationsItem FromDestinationPatchProperties(NetworkTapDestinationPatchProperties value)
-            => value is null ? null : new NetworkTapPatchableParametersDestinationsItem(
-                value.Name,
-                value.DestinationType,
-                value.DestinationId,
-                value.IsolationDomainProperties is null ? null : new IsolationDomainProperties(value.IsolationDomainProperties.Encapsulation, value.IsolationDomainProperties.NeighborGroupIds.ToList(), additionalBinaryDataProperties: null),
-                value.DestinationTapRuleId,
-                additionalBinaryDataProperties: null);
-
-        private static NetworkTapDestinationPatchProperties ToDestinationPatchProperties(NetworkTapPatchableParametersDestinationsItem value)
-            => value is null ? null : new NetworkTapDestinationPatchProperties(
-                value.Name,
-                value.DestinationType,
-                value.DestinationId,
-                value.IsolationDomainProperties is null ? null : new IsolationDomainPatchProperties(value.IsolationDomainProperties.Encapsulation, value.IsolationDomainProperties.NeighborGroupIds.ToList(), additionalBinaryDataProperties: null),
-                value.DestinationTapRuleId,
-                additionalBinaryDataProperties: null);
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkRackPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

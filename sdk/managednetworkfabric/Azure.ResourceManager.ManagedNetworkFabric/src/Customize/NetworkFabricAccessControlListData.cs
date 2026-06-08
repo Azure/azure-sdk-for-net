@@ -21,9 +21,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The geo-location where the resource lives. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkFabricAccessControlListData(AzureLocation location)
+        public NetworkFabricAccessControlListData(AzureLocation location) : this(location, default)
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>

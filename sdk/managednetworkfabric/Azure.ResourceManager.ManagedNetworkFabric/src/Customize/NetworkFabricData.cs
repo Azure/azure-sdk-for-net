@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use the constructor with NetworkFabricTerminalServerConfiguration instead.")]
         public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string iPv4Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration)
+            : this(location, networkFabricSku, networkFabricControllerId, serverCountPerRack, iPv4Prefix, fabricAsn, terminalServerConfiguration?.ToNetworkFabricTerminalServerConfiguration(), managementNetworkConfiguration)
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use the constructor with NetworkFabricTerminalServerConfiguration instead.");
         }
 
         /// <summary> Network and credentials configuration currently applied to terminal server. </summary>

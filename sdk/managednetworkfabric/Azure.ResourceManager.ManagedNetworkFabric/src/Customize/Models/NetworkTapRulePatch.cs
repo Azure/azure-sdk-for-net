@@ -100,27 +100,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> List of match configurations. </summary>
         public IList<NetworkTapRuleMatchConfiguration> MatchConfigurations
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkTapRulePatchProperties();
-                }
-                return NetworkTapRulePatchContent.ToMatchConfigurations(Properties.MatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.");
         }
 
         /// <summary> List of dynamic match configurations. </summary>
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkTapRulePatchProperties();
-                }
-                return NetworkTapRulePatchContent.ToDynamicMatchConfigurations(Properties.DynamicMatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.");
         }
 
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>

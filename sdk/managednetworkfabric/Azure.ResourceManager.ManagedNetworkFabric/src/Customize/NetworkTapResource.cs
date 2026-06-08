@@ -96,11 +96,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.");
         }
-
-        private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)
-            => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
-
-        private static DeviceUpdateCommonPostActionResult ToDeviceUpdateResult(ResponseError error)
-            => new DeviceUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null, successfulDevices: Array.Empty<string>(), failedDevices: Array.Empty<string>());
     }
 }

@@ -7,7 +7,6 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -36,8 +35,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.");
         }
-
-        private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)
-            => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
     }
 }

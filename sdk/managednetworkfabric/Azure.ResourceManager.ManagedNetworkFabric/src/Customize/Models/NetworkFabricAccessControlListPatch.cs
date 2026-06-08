@@ -67,21 +67,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> List of match configurations. </summary>
         public IList<AccessControlListMatchConfiguration> MatchConfigurations
         {
-            get
-            {
-                Properties ??= new AccessControlListPatchProperties();
-                return NetworkFabricAccessControlListPatchContent.ToMatchConfigurations(Properties.MatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.");
         }
 
         /// <summary> List of dynamic match configurations. </summary>
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
         {
-            get
-            {
-                Properties ??= new AccessControlListPatchProperties();
-                return NetworkFabricAccessControlListPatchContent.ToDynamicMatchConfigurations(Properties.DynamicMatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.");
         }
 
         /// <summary> Access Control List (ACL) configurations. </summary>
@@ -159,14 +151,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             content.ConfigurationType = ConfigurationType;
             content.AclsUri = AclsUri;
             content.DefaultAction = DefaultAction;
-            foreach (AccessControlListMatchConfiguration item in MatchConfigurations)
-            {
-                content.MatchConfigurationSettings.Add(NetworkFabricAccessControlListPatchContent.ToMatchConfigurationPatch(item));
-            }
-            foreach (CommonDynamicMatchConfiguration item in DynamicMatchConfigurations)
-            {
-                content.DynamicMatchConfigurationSettings.Add(NetworkFabricAccessControlListPatchContent.ToDynamicMatchConfigurationPatch(item));
-            }
             foreach (ControlPlaneAclPatchProperties item in ControlPlaneAclConfiguration)
             {
                 content.ControlPlaneAclConfiguration.Add(item);

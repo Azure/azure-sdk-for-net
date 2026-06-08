@@ -60,47 +60,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
             set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
         }
-
-        private static L3OptionBProperties ToL3OptionBProperties(L3OptionBPatchProperties value)
-            => value is null ? null : new L3OptionBProperties(
-                value.ImportRouteTargets.ToList(),
-                value.ExportRouteTargets.ToList(),
-                ToRouteTargetInformation(value.RouteTargets),
-                additionalBinaryDataProperties: null);
-
-        private static L3OptionBPatchProperties ToL3OptionBPatchProperties(L3OptionBProperties value)
-            => value is null ? null : new L3OptionBPatchProperties(
-                value.ImportRouteTargets.ToList(),
-                value.ExportRouteTargets.ToList(),
-                ToRouteTargetPatchInformation(value.RouteTargets),
-                additionalBinaryDataProperties: null);
-
-        private static RouteTargetInformation ToRouteTargetInformation(RouteTargetPatchInformation value)
-            => value is null ? null : new RouteTargetInformation(
-                value.ImportIPv4RouteTargets.ToList(),
-                value.ImportIPv6RouteTargets.ToList(),
-                value.ExportIPv4RouteTargets.ToList(),
-                value.ExportIPv6RouteTargets.ToList(),
-                additionalBinaryDataProperties: null);
-
-        private static RouteTargetPatchInformation ToRouteTargetPatchInformation(RouteTargetInformation value)
-            => value is null ? null : new RouteTargetPatchInformation(
-                value.ImportIPv4RouteTargets.ToList(),
-                value.ImportIPv6RouteTargets.ToList(),
-                value.ExportIPv4RouteTargets.ToList(),
-                value.ExportIPv6RouteTargets.ToList(),
-                additionalBinaryDataProperties: null);
-
-        private static ImportRoutePolicy ToImportRoutePolicy(ImportRoutePolicyPatch value)
-            => value is null ? null : new ImportRoutePolicy(value.ImportIPv4RoutePolicyId, value.ImportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
-
-        private static ImportRoutePolicyPatch ToImportRoutePolicyPatch(ImportRoutePolicy value)
-            => value is null ? null : new ImportRoutePolicyPatch(value.ImportIPv4RoutePolicyId, value.ImportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
-
-        private static ExportRoutePolicy ToExportRoutePolicy(ExportRoutePolicyPatch value)
-            => value is null ? null : new ExportRoutePolicy(value.ExportIPv4RoutePolicyId, value.ExportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
-
-        private static ExportRoutePolicyPatch ToExportRoutePolicyPatch(ExportRoutePolicy value)
-            => value is null ? null : new ExportRoutePolicyPatch(value.ExportIPv4RoutePolicyId, value.ExportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
     }
 }

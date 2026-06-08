@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use VpnOptionAProperties instead.")]
         public VpnConfigurationOptionAProperties()
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use VpnOptionAProperties instead.");
         }
 
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use VpnOptionAProperties instead.")]

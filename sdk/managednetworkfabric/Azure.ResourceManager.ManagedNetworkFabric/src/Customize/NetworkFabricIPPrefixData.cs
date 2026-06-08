@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkFabricIPPrefixData(AzureLocation location)
+        public NetworkFabricIPPrefixData(AzureLocation location) : this(location, Array.Empty<IPPrefixRule>())
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
         }
     }
 }

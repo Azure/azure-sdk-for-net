@@ -22,9 +22,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="destinations"> List of destinations to send the filter traffic. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkTapDestinationProperties for destinations instead.")]
-        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations)
+        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations) : this(location, networkPacketBrokerId, destinations?.Cast<NetworkTapDestinationProperties>())
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use NetworkTapDestinationProperties for destinations instead.");
         }
 
         // Backward compatibility shim for the TypeSpec migration. The current generated property
@@ -36,9 +35,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.");
         }
-
-        private static NetworkTapDestinationProperties ToDestinationProperties(NetworkTapPropertiesDestinationsItem value)
-            => value;
 #pragma warning restore CS0618
     }
 }

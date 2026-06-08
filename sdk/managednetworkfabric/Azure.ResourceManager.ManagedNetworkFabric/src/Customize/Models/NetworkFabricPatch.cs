@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricPatchContent instead.")]
         public NetworkFabricPatch()
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use NetworkFabricPatchContent instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>

@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
         public TerminalServerPatchableProperties()
         {
-            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.");
         }
 
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
