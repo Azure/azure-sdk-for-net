@@ -5,7 +5,6 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using YamlDotNet.Serialization;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -163,8 +162,7 @@ internal static class CandidateResolver
                     fmDict["description"] = descProp.GetString()!;
                 }
 
-                var serializer = new SerializerBuilder().Build();
-                string fmText = serializer.Serialize(fmDict).TrimEnd('\n', '\r');
+                string fmText = SimpleYamlParser.SerializeKeyValuePairs(fmDict).TrimEnd('\n', '\r');
                 var parts = new List<string> { $"---\n{fmText}\n---" };
 
                 if (skill.TryGetProperty("body", out var bodyProp) && bodyProp.ValueKind == JsonValueKind.String)

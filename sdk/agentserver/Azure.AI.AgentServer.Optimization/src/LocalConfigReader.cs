@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using YamlDotNet.Serialization;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -125,11 +124,9 @@ internal static class LocalConfigReader
             try
             {
                 string yamlContent = File.ReadAllText(metadataFilePath);
-                var deserializer = new DeserializerBuilder().Build();
-                var parsed = deserializer.Deserialize<Dictionary<string, object?>>(yamlContent);
-                raw = parsed ?? new Dictionary<string, object?>();
+                raw = SimpleYamlParser.ParseKeyValuePairs(yamlContent);
             }
-            catch (Exception ex) when (ex is YamlDotNet.Core.YamlException or IOException)
+            catch (Exception ex) when (ex is FormatException or IOException)
             {
                 throw new InvalidOperationException($"Invalid metadata file {metadataFilePath}: {ex.Message}", ex);
             }
@@ -219,16 +216,9 @@ internal static class LocalConfigReader
 
         try
         {
-            var deserializer = new DeserializerBuilder().Build();
-            var parsed = deserializer.Deserialize<Dictionary<string, object?>>(fmText);
-            if (parsed is null)
-            {
-                return (new Dictionary<string, object?>(), body);
-            }
-
-            return (parsed, body);
+            return (SimpleYamlParser.ParseKeyValuePairs(fmText), body);
         }
-        catch (YamlDotNet.Core.YamlException)
+        catch (FormatException)
         {
             return (new Dictionary<string, object?>(), body);
         }

@@ -11,6 +11,5 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="YamlDotNet" />
   </ItemGroup>
 </Project>
