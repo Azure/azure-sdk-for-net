@@ -44,13 +44,7 @@ namespace Azure.ResourceManager.CloudHealth.Samples
             string healthModelName = "model1";
             HealthModelData data = new HealthModelData(new AzureLocation("eastus2"))
             {
-                Properties = new HealthModelProperties
-                {
-                    Discovery = new ModelDiscoverySettings("/providers/Microsoft.Management/serviceGroups/myServiceGroup", DiscoveryRuleRecommendedSignalsBehavior.Enabled)
-                    {
-                        Identity = "SystemAssigned",
-                    },
-                },
+                Properties = new HealthModelProperties(),
                 Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
                 {
                     UserAssignedIdentities =
