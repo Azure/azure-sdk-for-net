@@ -492,11 +492,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<StorageCacheAscOperationInfo>> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageCacheAscOperationInfo>> GetStorageCacheAscOperationAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = AscOperationsClientDiagnostics.CreateScope("MockableStorageCacheSubscriptionResource.Get");
+            using DiagnosticScope scope = AscOperationsClientDiagnostics.CreateScope("MockableStorageCacheSubscriptionResource.GetStorageCacheAscOperation");
             scope.Start();
             try
             {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AscOperationsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
+                HttpMessage message = AscOperationsRestClient.CreateGetStorageCacheAscOperationRequest(Id.SubscriptionId, location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageCacheAscOperationInfo> response = Response.FromValue(StorageCacheAscOperationInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -542,11 +542,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<StorageCacheAscOperationInfo> Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<StorageCacheAscOperationInfo> GetStorageCacheAscOperation(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = AscOperationsClientDiagnostics.CreateScope("MockableStorageCacheSubscriptionResource.Get");
+            using DiagnosticScope scope = AscOperationsClientDiagnostics.CreateScope("MockableStorageCacheSubscriptionResource.GetStorageCacheAscOperation");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AscOperationsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
+                HttpMessage message = AscOperationsRestClient.CreateGetStorageCacheAscOperationRequest(Id.SubscriptionId, location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageCacheAscOperationInfo> response = Response.FromValue(StorageCacheAscOperationInfo.FromResponse(result), result);
                 if (response.Value == null)

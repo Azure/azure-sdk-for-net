@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="error"> The error detail of the operation if any. </param>
         /// <param name="properties"> Additional operation-specific properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheAscOperationInfo(string id, string name, string startTime, string endTime, string status, StorageCacheAscOperationErrorResponseResult error, AscOperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageCacheAscOperationInfo(string id, string name, string startTime, string endTime, string status, StorageCacheAscOperationError error, AscOperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public string Status { get; }
 
         /// <summary> The error detail of the operation if any. </summary>
-        public StorageCacheAscOperationErrorResponseResult Error { get; }
+        public StorageCacheAscOperationError Error { get; }
 
         /// <summary> Additional operation-specific properties. </summary>
         internal AscOperationProperties Properties { get; }

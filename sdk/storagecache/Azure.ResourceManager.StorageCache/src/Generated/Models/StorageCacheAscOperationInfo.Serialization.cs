@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             string startTime = default;
             string endTime = default;
             string status = default;
-            StorageCacheAscOperationErrorResponseResult error = default;
+            StorageCacheAscOperationError error = default;
             AscOperationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    error = StorageCacheAscOperationErrorResponseResult.DeserializeStorageCacheAscOperationErrorResponseResult(prop.Value, options);
+                    error = StorageCacheAscOperationError.DeserializeStorageCacheAscOperationError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.StorageCache
         /// Gets the status of an asynchronous operation for the Azure HPC Cache
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCacheAscOperationAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -502,18 +502,18 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<StorageCacheAscOperationInfo>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<StorageCacheAscOperationInfo>> GetStorageCacheAscOperationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCacheAscOperationAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the status of an asynchronous operation for the Azure HPC Cache
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.Get(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCacheAscOperation(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<StorageCacheAscOperationInfo> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public static Response<StorageCacheAscOperationInfo> GetStorageCacheAscOperation(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCacheAscOperation(location, operationId, cancellationToken);
         }
 
         /// <summary>

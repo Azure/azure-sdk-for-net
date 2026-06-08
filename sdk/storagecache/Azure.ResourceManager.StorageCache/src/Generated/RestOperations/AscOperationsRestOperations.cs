@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string operationId, RequestContext context)
+        internal HttpMessage CreateGetStorageCacheAscOperationRequest(string subscriptionId, AzureLocation location, string operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

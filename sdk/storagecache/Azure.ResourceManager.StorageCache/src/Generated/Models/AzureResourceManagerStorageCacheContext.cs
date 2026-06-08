@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettings))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettingsCredentials))]
-    [ModelReaderWriterBuildable(typeof(StorageCacheAscOperationErrorResponseResult))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheAscOperationError))]
     [ModelReaderWriterBuildable(typeof(StorageCacheAscOperationInfo))]
     [ModelReaderWriterBuildable(typeof(StorageCacheData))]
     [ModelReaderWriterBuildable(typeof(StorageCacheDirectorySettings))]

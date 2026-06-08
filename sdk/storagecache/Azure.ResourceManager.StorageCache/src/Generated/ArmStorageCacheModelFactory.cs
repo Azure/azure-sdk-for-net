@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="error"> The error detail of the operation if any. </param>
         /// <param name="output"> Additional operation-specific output. </param>
         /// <returns> A new <see cref="Models.StorageCacheAscOperationInfo"/> instance for mocking. </returns>
-        public static StorageCacheAscOperationInfo StorageCacheAscOperationInfo(string id = default, string name = default, string startTime = default, string endTime = default, string status = default, StorageCacheAscOperationErrorResponseResult error = default, IDictionary<string, BinaryData> output = default)
+        public static StorageCacheAscOperationInfo StorageCacheAscOperationInfo(string id = default, string name = default, string startTime = default, string endTime = default, string status = default, StorageCacheAscOperationError error = default, IDictionary<string, BinaryData> output = default)
         {
             return new StorageCacheAscOperationInfo(
                 id,
@@ -971,10 +971,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
-        /// <returns> A new <see cref="Models.StorageCacheAscOperationErrorResponseResult"/> instance for mocking. </returns>
-        public static StorageCacheAscOperationErrorResponseResult StorageCacheAscOperationErrorResponseResult(string code = default, string message = default)
+        /// <returns> A new <see cref="Models.StorageCacheAscOperationError"/> instance for mocking. </returns>
+        public static StorageCacheAscOperationError StorageCacheAscOperationError(string code = default, string message = default)
         {
-            return new StorageCacheAscOperationErrorResponseResult(code, message, default);
+            return new StorageCacheAscOperationError(code, message, default);
         }
 
         /// <param name="limit"> The limit (quota) for this resource. </param>

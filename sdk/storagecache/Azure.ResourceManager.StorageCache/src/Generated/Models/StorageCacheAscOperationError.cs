@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Describes the format of Error response. </summary>
-    public partial class StorageCacheAscOperationErrorResponseResult
+    public partial class StorageCacheAscOperationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageCacheAscOperationErrorResponseResult"/>. </summary>
-        internal StorageCacheAscOperationErrorResponseResult()
+        /// <summary> Initializes a new instance of <see cref="StorageCacheAscOperationError"/>. </summary>
+        internal StorageCacheAscOperationError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageCacheAscOperationErrorResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheAscOperationError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheAscOperationErrorResponseResult(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageCacheAscOperationError(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
