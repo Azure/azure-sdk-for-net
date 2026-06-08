@@ -1,26 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!--
+    Code-fix providers split off from Azure.SdkAnalyzers so that assembly stays
+    free of Microsoft.CodeAnalysis.Workspaces (a CodeFix dependency). Workspaces
+    isn't provided by csc at command-line build time, and any analyzer assembly
+    that references it has its DiagnosticAnalyzer / DiagnosticSuppressor types
+    silently skipped by Roslyn's loader (see RS1038). Internal-use only — not
+    packaged.
+  -->
   <PropertyGroup>
-    <!-- Treated the same as the analyzer project (netstandard2.0 only). The repo
-         auto-detects analyzer projects via $(MSBuildProjectName.EndsWith('Analyzers'))
-         in eng/Directory.Build.Common.props, but this project name ends with
-         "CodeFixes" so we declare the TFM and analyzer treatment explicitly. -->
     <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <IsAnalzyer>true</IsAnalzyer>
     <OutputItemType>Analyzer</OutputItemType>
     <AnalyzerLanguage>cs</AnalyzerLanguage>
-    <!-- Code-fix providers live in their own assembly so the analyzer assembly
-         can be free of the Microsoft.CodeAnalysis.Workspaces reference. Workspaces
-         is not provided by csc at command-line build time; an analyzer assembly
-         that references it has its compiler-extension types (DiagnosticAnalyzer
-         AND DiagnosticSuppressor) silently skipped by Roslyn's analyzer loader.
-         See https://github.com/dotnet/roslyn-analyzers/blob/main/docs/rules/RS1038.md.
-
-         This assembly is consumed only from within azure-sdk-for-net (wired in via
-         eng/Directory.Build.Common.targets as a ProjectReference Analyzer). The
-         shipping Azure.SdkAnalyzers NuGet package is built from src/ only and does
-         not include the code-fix providers. -->
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsPackable>false</IsPackable>
@@ -35,8 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Reference the analyzer assembly for shared helper types like
-         TypeNameSuggestionHelper / GeneratedFolderHelper / Descriptors. -->
     <ProjectReference Include="..\src\Azure.SdkAnalyzers.csproj" PrivateAssets="All" />
   </ItemGroup>
 

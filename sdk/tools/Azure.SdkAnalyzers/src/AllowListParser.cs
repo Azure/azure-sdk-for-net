@@ -8,31 +8,13 @@ using System.IO;
 namespace Azure.SdkAnalyzers
 {
     /// <summary>
-    /// Parses the per-package analyzer allow-list file format used by
-    /// <c>eng/analyzerallowlist/&lt;Project&gt;.txt</c>.
+    /// Parses the per-package allow-list file format (<c>eng/analyzerallowlist/&lt;Project&gt;.txt</c>).
+    /// See <c>eng/analyzerallowlist/README.md</c> for the format.
     /// </summary>
-    /// <remarks>
-    /// Format (line-oriented, very permissive):
-    /// <list type="bullet">
-    ///   <item>Blank lines and lines whose first non-whitespace char is <c>#</c> are ignored.</item>
-    ///   <item>An entry starts with <c>nowarn:</c> (case-insensitive). The rest of the line is
-    ///     <c>CODE [Prefix:Target]</c>, separated by a single space character.</item>
-    ///   <item><c>CODE</c> is a diagnostic ID (e.g., <c>AZC0034</c>, <c>CS0618</c>).</item>
-    ///   <item>If only <c>CODE</c> is present, it's a whole-assembly suppression
-    ///     (current historical behavior).</item>
-    ///   <item>If a target follows, it's a Roslyn DocumentationCommentId
-    ///     (<c>T:</c>, <c>M:</c>, <c>N:</c>, <c>P:</c>, <c>F:</c>, <c>E:</c>, <c>!:</c>),
-    ///     optionally preceded by a <c>~</c> (tolerated for muscle-memory compat with the
-    ///     <c>[SuppressMessage(Target = "~T:Foo")]</c> attribute form).</item>
-    /// </list>
-    /// </remarks>
     internal static class AllowListParser
     {
         private const string NoWarnPrefix = "nowarn:";
 
-        /// <summary>
-        /// Parses all <c>nowarn:</c> entries from <paramref name="text"/>.
-        /// </summary>
         public static IReadOnlyList<AllowListEntry> Parse(string text)
         {
             var results = new List<AllowListEntry>();
@@ -57,10 +39,6 @@ namespace Azure.SdkAnalyzers
             return results;
         }
 
-        /// <summary>
-        /// Parses one line. Returns null for blank lines, comments, and lines that aren't
-        /// recognized <c>nowarn:</c> entries.
-        /// </summary>
         internal static AllowListEntry ParseLine(string rawLine, int lineNumber)
         {
             if (rawLine == null)
@@ -79,7 +57,6 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
-            // Skip leading spaces between "nowarn:" and CODE (lenient).
             int bodyStart = NoWarnPrefix.Length;
             while (bodyStart < line.Length && line[bodyStart] == ' ')
             {
@@ -91,11 +68,8 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
-            // Split into CODE and optional target on the first literal space. We
-            // use a literal ' ' (not generic whitespace) so the parser stays
-            // consistent with eng/AnalyzerAllowList.targets, which checks for a
-            // space character to decide whether an entry is whole-assembly or
-            // scoped. See eng/analyzerallowlist/README.md.
+            // Split on the first literal space — kept in sync with
+            // eng/AnalyzerAllowList.targets, which also splits on a literal space.
             int wsIndex = body.IndexOf(' ');
             string code;
             string targetPart;
@@ -120,22 +94,22 @@ namespace Azure.SdkAnalyzers
             }
 
             string target = NormalizeTarget(targetPart);
+            if (targetPart != null && target == null)
+            {
+                // Target supplied but not a valid DocId — reject the line so the
+                // author isn't left with a silent no-op (MSBuild would also skip
+                // this line, since it still contains a space).
+                return null;
+            }
+
             return new AllowListEntry(code, target, lineNumber);
         }
 
         /// <summary>
-        /// Normalizes a raw target string into a canonical Roslyn DocumentationCommentId
-        /// (e.g., <c>T:Foo</c>). Returns <c>null</c> if <paramref name="raw"/> is null/empty
-        /// or doesn't start with a recognized DocId prefix.
+        /// Returns the canonical DocId (e.g. <c>T:Foo</c>) or <c>null</c> if the
+        /// input isn't a recognized DocId. A leading <c>~</c> is tolerated for
+        /// parity with the <c>[SuppressMessage(Target = "~T:Foo")]</c> attribute form.
         /// </summary>
-        /// <remarks>
-        /// Accepted forms (all map to the same canonical id):
-        /// <list type="bullet">
-        ///   <item><c>T:Foo</c></item>
-        ///   <item><c>~T:Foo</c> — leading tilde tolerated for parity with the
-        ///     <c>[SuppressMessage(Target = "~T:Foo")]</c> attribute form.</item>
-        /// </list>
-        /// </remarks>
         internal static string NormalizeTarget(string raw)
         {
             if (string.IsNullOrEmpty(raw))
@@ -149,7 +123,6 @@ namespace Azure.SdkAnalyzers
                 s = s.Substring(1);
             }
 
-            // DocId is "<kind-char>:<rest>" with kind in T M N P F E !
             if (s.Length < 3 || s[1] != ':')
             {
                 return null;
@@ -166,11 +139,8 @@ namespace Azure.SdkAnalyzers
         }
 
         /// <summary>
-        /// Removes a trailing inline comment (anything after a <c>#</c> that is
-        /// preceded by a literal space). Required because Roslyn
-        /// DocumentationCommentIds contain raw <c>#</c> in tokens like
-        /// <c>#ctor</c>; only treating <c> #</c> as a comment delimiter when
-        /// it is clearly outside an identifier keeps those DocIds intact.
+        /// Strips a trailing <c> #...</c> comment. The space-before-hash rule
+        /// keeps DocId tokens like <c>M:Foo.#ctor(...)</c> intact.
         /// </summary>
         internal static string StripTrailingInlineComment(string line)
         {

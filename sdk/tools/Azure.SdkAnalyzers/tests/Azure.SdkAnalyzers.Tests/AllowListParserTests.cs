@@ -97,23 +97,16 @@ nowarn:AZC0102
         [Test]
         public void Parse_TildePrefixIsStripped()
         {
-            // ~ tolerated for parity with [SuppressMessage(Target = "~T:Foo")]
             var result = AllowListParser.Parse("nowarn:AZC0034 ~T:Azure.Foo.Bar");
             Assert.That(result, Has.Count.EqualTo(1));
             Assert.That(result[0].Target, Is.EqualTo("T:Azure.Foo.Bar"));
         }
 
         [Test]
-        public void Parse_InvalidTargetPrefix_StillKeepsCode_DropsTarget()
+        public void Parse_InvalidTargetPrefix_RejectsTheLine()
         {
-            // Target with an unknown kind char is not a valid DocId; we drop the target
-            // but keep the code so it acts as a whole-assembly entry rather than silently
-            // dropping the line. (Parsing is permissive; the suppressor does the strict work.)
             var result = AllowListParser.Parse("nowarn:AZC0034 X:Azure.Foo.Bar");
-            Assert.That(result, Has.Count.EqualTo(1));
-            Assert.That(result[0].Code, Is.EqualTo("AZC0034"));
-            Assert.That(result[0].Target, Is.Null);
-            Assert.That(result[0].IsScoped, Is.False);
+            Assert.That(result, Is.Empty);
         }
 
         [Test]
@@ -151,10 +144,6 @@ nowarn:CS0618 N:Azure.Foo.Models
             var result = AllowListParser.Parse("nowarn:");
             Assert.That(result, Is.Empty);
         }
-
-        // Inline trailing comments must be stripped on entry lines, but only when
-        // '#' is preceded by whitespace — DocIds like "M:Foo.#ctor(...)" must
-        // survive intact.
 
         [Test]
         public void Parse_UnscopedEntry_StripsTrailingInlineComment()

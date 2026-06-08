@@ -19,10 +19,7 @@ using NUnit.Framework;
 namespace Azure.SdkAnalyzers.Tests
 {
     /// <summary>
-    /// End-to-end tests for <see cref="AllowListDiagnosticSuppressor"/>: build a
-    /// compilation, attach a fake analyzer that fires <c>AZC0034</c> on every type,
-    /// attach the suppressor with an allow-list AdditionalText, and verify that
-    /// only the scoped targets are reported as <see cref="Diagnostic.IsSuppressed"/>.
+    /// In-process Roslyn tests for <see cref="AllowListDiagnosticSuppressor"/>.
     /// </summary>
     public class AllowListDiagnosticSuppressorTests
     {
@@ -82,7 +79,6 @@ namespace TestNs
     public class A { }
     public class B { }
 }";
-            // No matching AdditionalFile at all.
             IReadOnlyList<Diagnostic> diagnostics = await RunAsync(source, allowListText: null);
 
             Assert.That(diagnostics.Where(d => d.Id == "AZC0034").All(d => !d.IsSuppressed), Is.True);
@@ -91,9 +87,7 @@ namespace TestNs
         [Test]
         public async Task WholeAssemblyEntry_DoesNotTriggerSuppression()
         {
-            // The build pipeline handles whole-assembly entries via $(NoWarn); the
-            // suppressor should ignore them and leave the diagnostics alone (so the
-            // build's NoWarn injection is what masks them, not double-suppression).
+            // Whole-assembly entries are handled by $(NoWarn) injection, not by this suppressor.
             const string source = @"
 namespace TestNs
 {
@@ -102,16 +96,12 @@ namespace TestNs
             string allowList = "nowarn:AZC0034";
             IReadOnlyList<Diagnostic> diagnostics = await RunAsync(source, allowList);
 
-            Diagnostic d = SingleFor(diagnostics, "A");
-            Assert.That(d.IsSuppressed, Is.False,
-                "Whole-assembly nowarn entries are handled by $(NoWarn) injection at build time, " +
-                "not by the suppressor.");
+            Assert.That(SingleFor(diagnostics, "A").IsSuppressed, Is.False);
         }
 
         [Test]
         public async Task UnknownDiagnosticId_NotSuppressed()
         {
-            // Code in the allow-list isn't in SupportedSuppressions; suppression should be a no-op.
             const string source = @"
 namespace TestNs
 {
@@ -120,24 +110,13 @@ namespace TestNs
             string allowList = "nowarn:TESTXXXX T:TestNs.A";
             IReadOnlyList<Diagnostic> diagnostics = await RunAsync(source, allowList);
 
-            Diagnostic d = SingleFor(diagnostics, "A");
-            Assert.That(d.IsSuppressed, Is.False);
+            Assert.That(SingleFor(diagnostics, "A").IsSuppressed, Is.False);
         }
 
-        // ------------- Severity / warn-as-error scenarios --------------------
-        //
-        // Findings from these tests (intentionally documented in code):
-        //   1. WarnAsError DOES NOT block suppression. The suppressor still
-        //      runs, and a Suppression on a promoted-to-Error diagnostic is
-        //      honored — the warning never reaches the compiler's error list.
-        //   2. The DESCRIPTOR severity is what matters. If the analyzer ships
-        //      with DiagnosticSeverity.Error in its DiagnosticDescriptor, then
-        //      the suppressor is bypassed entirely.
+        // WarnAsError does NOT block suppression — Roslyn dispatches to the suppressor
+        // based on the descriptor's default severity, not the effective severity after
+        // promotion. Descriptor-Error severity, however, bypasses the suppressor entirely.
 
-        /// <summary>
-        /// Baseline: the test analyzer reports AZC0034 as Warning (its default).
-        /// Suppression works as expected.
-        /// </summary>
         [Test]
         public async Task DefaultSeverityWarning_ScopedSuppressionWorks()
         {
@@ -151,13 +130,6 @@ namespace TestNs
             Assert.That(SingleFor(diagnostics, "A").IsSuppressed, Is.True);
         }
 
-        /// <summary>
-        /// Blanket WarnAsError via <see cref="ReportDiagnostic.Error"/>
-        /// (the equivalent of repo-wide <c>TreatWarningsAsErrors+</c>).
-        /// Suppression STILL works — the diagnostic is reported with
-        /// Severity=Error AND IsSuppressed=true, and a suppressed Error is
-        /// invisible to the compiler's error count.
-        /// </summary>
         [Test]
         public async Task WarnAsErrorAll_DoesNotBlockSuppression()
         {
@@ -173,18 +145,10 @@ namespace TestNs
                 generalDiagnosticOption: ReportDiagnostic.Error);
 
             Diagnostic d = SingleFor(diagnostics, "A");
-            Assert.That(d.Severity, Is.EqualTo(DiagnosticSeverity.Error),
-                "WarnAsError should have promoted the diagnostic.");
-            Assert.That(d.IsSuppressed, Is.True,
-                "Roslyn invokes suppressors based on the descriptor's default severity, " +
-                "not the effective post-WarnAsError severity. A suppressed diagnostic " +
-                "still won't fail the build.");
+            Assert.That(d.Severity, Is.EqualTo(DiagnosticSeverity.Error));
+            Assert.That(d.IsSuppressed, Is.True);
         }
 
-        /// <summary>
-        /// Per-id WarnAsError (compiler equivalent of <c>/warnaserror+:AZC0034</c>).
-        /// Same result as the blanket case — suppression still works.
-        /// </summary>
         [Test]
         public async Task PerIdWarnAsError_DoesNotBlockSuppression()
         {
@@ -207,13 +171,6 @@ namespace TestNs
             Assert.That(d.IsSuppressed, Is.True);
         }
 
-        /// <summary>
-        /// Compiler-emitted CS0618 (use of obsolete API). This is fundamentally
-        /// different from analyzer-emitted diagnostics — it's reported by the
-        /// C# compiler itself, not by any IDiagnosticAnalyzer instance.
-        /// Documenting whether DiagnosticSuppressor can suppress it informs the
-        /// fix path for Azure.ResourceManager.Batch / Azure.ResourceManager.ContainerRegistry.
-        /// </summary>
         [Test]
         public async Task CompilerCS0618_CanBeSuppressed()
         {
@@ -234,17 +191,10 @@ namespace TestNs
             string allowList = "nowarn:CS0618 T:TestNs.Consumer";
             IReadOnlyList<Diagnostic> diagnostics = await RunAsync(source, allowList);
 
-            // The compiler emits CS0618 at the OldType.Make() call site inside Consumer.
             Diagnostic cs0618 = diagnostics.Single(d => d.Id == "CS0618");
-            Assert.That(cs0618.IsSuppressed, Is.True,
-                "Compiler-emitted CS0618 should be suppressible via DiagnosticSuppressor when scoped to the consuming type.");
+            Assert.That(cs0618.IsSuppressed, Is.True);
         }
 
-        /// <summary>
-        /// Same as above but with blanket WarnAsError. If both this test and
-        /// <see cref="WarnAsErrorAll_DoesNotBlockSuppression"/> pass, then csc-side
-        /// failures must be due to discovery / wiring, not severity at all.
-        /// </summary>
         [Test]
         public async Task CompilerCS0618_WithWarnAsError_CanBeSuppressed()
         {
@@ -270,17 +220,9 @@ namespace TestNs
 
             Diagnostic cs0618 = diagnostics.Single(d => d.Id == "CS0618");
             Assert.That(cs0618.Severity, Is.EqualTo(DiagnosticSeverity.Error));
-            Assert.That(cs0618.IsSuppressed, Is.True,
-                "Compiler-emitted CS0618 should be suppressible even after WarnAsError promotion.");
+            Assert.That(cs0618.IsSuppressed, Is.True);
         }
 
-        /// <summary>
-        /// The actual blocker: when the analyzer's <see cref="DiagnosticDescriptor"/>
-        /// declares <c>DiagnosticSeverity.Error</c> (rather than Warning), Roslyn
-        /// skips the suppressor entirely — there's no way to suppress it via
-        /// <see cref="DiagnosticSuppressor"/>. This matches the production
-        /// AZC0034 descriptor in Azure.ClientSdk.Analyzers (azure-sdk-tools).
-        /// </summary>
         [Test]
         public async Task DescriptorSeverityError_BlocksSuppression()
         {
@@ -289,9 +231,6 @@ namespace TestNs
 {
     public class A { }
 }";
-            // AZC0035 is in AllowListDiagnosticSuppressor.SupportedDiagnosticIds too —
-            // here we hook it up to a Error-severity descriptor in our test analyzer
-            // to isolate whether descriptor severity is what blocks suppression.
             string allowList = "nowarn:AZC0035 T:TestNs.A";
             IReadOnlyList<Diagnostic> diagnostics = await RunAsync(
                 source,
@@ -300,9 +239,7 @@ namespace TestNs
 
             Diagnostic d = diagnostics.Single(x => x.Id == "AZC0035");
             Assert.That(d.Severity, Is.EqualTo(DiagnosticSeverity.Error));
-            Assert.That(d.IsSuppressed, Is.False,
-                "Diagnostics whose descriptor declares Error severity cannot be " +
-                "suppressed via DiagnosticSuppressor.");
+            Assert.That(d.IsSuppressed, Is.False);
         }
 
         private static Diagnostic SingleFor(IReadOnlyList<Diagnostic> diagnostics, string typeName)
@@ -366,14 +303,8 @@ namespace TestNs
 
         // ----- Test infrastructure ------------------------------------------------
 
-        /// <summary>
-        /// Fires AZC0034 (one of the suppressor's SupportedDiagnosticIds) on every
-        /// named type. The message embeds the type name so tests can locate
-        /// individual diagnostics. The exact text of AZC0034 doesn't matter here —
-        /// we just need the same ID so the suppressor recognizes it.
-        /// </summary>
-#pragma warning disable RS1036 // EnforceExtendedAnalyzerRules not relevant for a test-only synthetic analyzer
-#pragma warning disable RS2008 // Release-tracking not relevant for a test-only synthetic analyzer
+#pragma warning disable RS1036
+#pragma warning disable RS2008
         [DiagnosticAnalyzer(LanguageNames.CSharp)]
         private sealed class TestTypeAzc0034Analyzer : DiagnosticAnalyzer
         {
@@ -409,11 +340,6 @@ namespace TestNs
 
 #pragma warning disable RS1036
 #pragma warning disable RS2008
-        /// <summary>
-        /// Same as <see cref="TestTypeAzc0034Analyzer"/> but the descriptor declares
-        /// <see cref="DiagnosticSeverity.Error"/>. Used to pin down whether
-        /// descriptor-level Error severity blocks suppression.
-        /// </summary>
         [DiagnosticAnalyzer(LanguageNames.CSharp)]
         private sealed class TestErrorSeverityAzc0034Analyzer : DiagnosticAnalyzer
         {
@@ -447,9 +373,6 @@ namespace TestNs
 #pragma warning restore RS2008
 #pragma warning restore RS1036
 
-        /// <summary>
-        /// In-memory <see cref="AdditionalText"/> for the allow-list content.
-        /// </summary>
         private sealed class InMemoryAdditionalText : AdditionalText
         {
             private readonly string _text;
@@ -466,11 +389,6 @@ namespace TestNs
                 SourceText.From(_text);
         }
 
-        /// <summary>
-        /// Options provider that surfaces <c>build_metadata.AdditionalFiles.AzureSdkAllowList=true</c>
-        /// for the one path that matches; the suppressor uses that metadata to identify
-        /// its input file among all AdditionalFiles.
-        /// </summary>
         private sealed class AllowListMarkerOptionsProvider : AnalyzerConfigOptionsProvider
         {
             private readonly string? _allowListPath;

@@ -14,34 +14,18 @@ using Microsoft.CodeAnalysis.Text;
 namespace Azure.SdkAnalyzers
 {
     /// <summary>
-    /// Programmatic <see cref="DiagnosticSuppressor"/> that honors per-package
-    /// allow-list entries from <c>eng/analyzerallowlist/&lt;Project&gt;.txt</c>.
+    /// Honors scoped allow-list entries (<c>nowarn:CODE T:Foo</c> etc.) in
+    /// <c>eng/analyzerallowlist/&lt;Project&gt;.txt</c>. Whole-assembly entries are
+    /// handled separately by <c>eng/AnalyzerAllowList.targets</c> via
+    /// <c>$(NoWarn)</c> injection.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// The build pipeline (<c>eng/AnalyzerAllowList.targets</c>) handles whole-assembly
-    /// entries (<c>nowarn:CODE</c>) by injecting them into <c>$(NoWarn)</c>. This
-    /// suppressor handles the <em>scoped</em> form — entries with a target DocId
-    /// (<c>nowarn:CODE T:Foo</c>, <c>nowarn:CODE M:Foo.Bar</c>,
-    /// <c>nowarn:CODE N:Foo.Models</c>) — and suppresses matching diagnostics
-    /// in-place. The result is the same as adding a per-symbol
-    /// <c>[SuppressMessage]</c> attribute, but without touching the project's source.
-    /// </para>
-    /// <para>
-    /// The set of diagnostic IDs this suppressor can scope is fixed at build time
-    /// via <see cref="SupportedDiagnosticIds"/>. Roslyn requires
-    /// <see cref="SupportedSuppressions"/> to be a stable, non-changing array, so new
-    /// codes need to be added here explicitly.
-    /// </para>
+    /// <see cref="SupportedDiagnosticIds"/> is fixed at build time; add new IDs to
+    /// opt them into scoped suppression.
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class AllowListDiagnosticSuppressor : DiagnosticSuppressor
     {
-        /// <summary>
-        /// Diagnostic IDs that this suppressor knows how to suppress via scoped
-        /// allow-list entries. Add new IDs here as point-suppression replaces
-        /// assembly-wide <c>nowarn:</c> entries for them.
-        /// </summary>
         private static readonly string[] SupportedDiagnosticIds = new[]
         {
             "AZC0007",
@@ -72,8 +56,6 @@ namespace Azure.SdkAnalyzers
                 return;
             }
 
-            // Bucket scoped entries by diagnostic id so we don't re-scan the whole file
-            // for each reported diagnostic.
             Dictionary<string, List<AllowListEntry>> scopedByCode = BuildScopedIndex(entries);
             if (scopedByCode.Count == 0)
             {
@@ -98,8 +80,6 @@ namespace Azure.SdkAnalyzers
 
                 if (!descriptorIndex.TryGetValue(new SuppressionKey(diagnostic.Id), out SuppressionDescriptor descriptor))
                 {
-                    // Defensive: SupportedSuppressions and SupportedDiagnosticIds should agree;
-                    // skip silently if they don't rather than throwing inside an analyzer.
                     continue;
                 }
 
@@ -191,14 +171,10 @@ namespace Azure.SdkAnalyzers
                 return false;
             }
 
-            char kind = docId[0];
-
-            // Namespace targets get the "namespace and descendants" treatment — we don't
-            // walk source spans, we just check the chain of enclosing symbols at the
-            // diagnostic location.
-            if (kind == 'N')
+            // Namespace targets match the namespace and all descendants.
+            if (docId[0] == 'N')
             {
-                return NamespaceContainsLocation(docId, location, compilation);
+                return NamespaceContainsLocation(docId, location);
             }
 
             ImmutableArray<ISymbol> symbols = DocumentationCommentId.GetSymbolsForDeclarationId(docId, compilation);
@@ -218,9 +194,8 @@ namespace Azure.SdkAnalyzers
             return false;
         }
 
-        private static bool NamespaceContainsLocation(string docId, Location location, Compilation compilation)
+        private static bool NamespaceContainsLocation(string docId, Location location)
         {
-            // Strip "N:" prefix to get the target namespace's display name.
             string targetNs = docId.Substring(2);
             if (string.IsNullOrEmpty(targetNs))
             {
@@ -233,14 +208,9 @@ namespace Azure.SdkAnalyzers
                 return false;
             }
 
-            SyntaxNode root = tree.GetRoot();
-            SyntaxNode node = root.FindNode(location.SourceSpan, getInnermostNodeForTie: true);
+            SyntaxNode node = tree.GetRoot().FindNode(location.SourceSpan, getInnermostNodeForTie: true);
 
-            // Walk up from the diagnostic node, accumulating namespace-declaration names.
-            // For nested namespaces the names appear inner-first, so we build a stack and
-            // then check if any suffix of the joined chain matches the target. This also
-            // handles the dotted-form `namespace Foo.Bar { }` since the syntax already
-            // exposes the full dotted name as a single declaration.
+            // Build the fully-qualified enclosing namespace from outer to inner.
             var enclosing = new Stack<string>();
             for (SyntaxNode current = node; current != null; current = current.Parent)
             {
@@ -256,7 +226,6 @@ namespace Azure.SdkAnalyzers
                 return false;
             }
 
-            // Build the fully-qualified enclosing namespace by joining outer-to-inner.
             string fullNs = string.Join(".", enclosing);
             return fullNs.Equals(targetNs, StringComparison.Ordinal) ||
                    fullNs.StartsWith(targetNs + ".", StringComparison.Ordinal);

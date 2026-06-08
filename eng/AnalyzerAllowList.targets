@@ -21,13 +21,7 @@
     <_AnalyzerAllowListFile>$(_AnalyzerAllowListDir)$(MSBuildProjectName).txt</_AnalyzerAllowListFile>
   </PropertyGroup>
 
-  <!--
-    Expose the allow-list file to the AllowListDiagnosticSuppressor analyzer in
-    Azure.SdkAnalyzers. The suppressor finds it by enumerating AdditionalFiles
-    and filtering on the AzureSdkAllowList="true" metadata, which is surfaced
-    via build_metadata.AdditionalFiles.AzureSdkAllowList by the corresponding
-    CompilerVisibleItemMetadata below.
-  -->
+  <!-- Expose the allow-list file to AllowListDiagnosticSuppressor via the AzureSdkAllowList metadata. -->
   <ItemGroup Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(_AnalyzerAllowListFile)')">
     <AdditionalFiles Include="$(_AnalyzerAllowListFile)" AzureSdkAllowList="true" Visible="false" />
   </ItemGroup>
@@ -70,13 +64,10 @@
     </ItemGroup>
 
     <!--
-      Strip the 7-char `nowarn:` prefix, then also strip any trailing inline
-      comment (everything from ` #` onward). Inline comments are part of the
-      documented allow-list format (`nowarn:AZC0102 # justification`); failing
-      to strip them here would cause MSBuild to treat such entries as scoped
-      (because they "contain a space") and exclude them from the $(NoWarn)
-      injection — a silent no-op since the suppressor also drops the entry
-      (no valid DocId target).
+      Strip the "nowarn:" prefix into Code, then strip any trailing inline
+      comment (" #...") into CodeNoComment. The comment strip must run before
+      the scoped-vs-whole-assembly split below so that entries like
+      "nowarn:AZC0102 # reason" are still classified as whole-assembly.
     -->
     <ItemGroup>
       <_AllowListNoWarn>
@@ -89,14 +80,9 @@
     </ItemGroup>
 
     <!--
-      Split each entry into whole-assembly vs scoped:
-        whole-assembly: just `CODE`     (e.g., `AZC0102`)
-        scoped:         `CODE Target`   (e.g., `AZC0034 T:Foo`)
-      Only whole-assembly entries are auto-injected into $(NoWarn); scoped entries
-      are handled at-site by Azure.SdkAnalyzers' AllowListDiagnosticSuppressor,
-      which reads the same allow-list file via AdditionalFiles. Injecting scoped
-      entries into $(NoWarn) would silence the diagnostic globally, defeating the
-      whole point of point-suppression.
+      Whole-assembly entries (just CODE) flow into $(NoWarn) below. Scoped
+      entries (CODE Target) are handled at-site by AllowListDiagnosticSuppressor
+      and intentionally NOT injected here — that would defeat point-suppression.
     -->
     <ItemGroup>
       <_AllowListWholeAssembly Include="%(_AllowListNoWarn.CodeNoComment)"
