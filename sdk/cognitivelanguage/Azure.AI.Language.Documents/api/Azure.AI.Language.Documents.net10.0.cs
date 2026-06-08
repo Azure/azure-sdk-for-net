@@ -398,6 +398,14 @@ namespace Azure.AI.Language.Documents
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Documents.DocumentsServiceClient, Azure.AI.Language.Documents.DocumentsServiceClientOptions> AddDocumentsServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DocumentsServiceClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentsServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentsServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.Documents.DocumentsServiceClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentsServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentsServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.Documents.DocumentsServiceClientSettings> configureSettings) { throw null; }
+    }
     public partial class DocumentsServiceClientOptions : Azure.Core.ClientOptions
     {
         public DocumentsServiceClientOptions(Azure.AI.Language.Documents.DocumentsServiceClientOptions.ServiceVersion version = Azure.AI.Language.Documents.DocumentsServiceClientOptions.ServiceVersion.V2026_05_15_Preview) { }
