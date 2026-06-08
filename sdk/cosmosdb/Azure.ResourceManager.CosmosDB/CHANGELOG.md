@@ -1,5 +1,17 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Migrated from Swagger to TypeSpec-based generation
+
 ## 1.4.1 (2026-06-03)
 
 ### Other Changes

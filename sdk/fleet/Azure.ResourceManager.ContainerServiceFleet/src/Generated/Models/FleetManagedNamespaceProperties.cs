@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="status"> Status information of the last operation for fleet managed namespace. </param>
         /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetManagedNamespaceProperties(FleetManagedNamespaceProvisioningState? provisioningState, ManagedNamespaceProperties managedNamespaceProperties, ContainerServiceFleetAdoptionPolicy adoptionPolicy, ContainerServiceFleetDeletePolicy deletePolicy, ContainerServiceFleetPropagationPolicy propagationPolicy, FleetManagedNamespaceStatus status, string portalFqdn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetManagedNamespaceProperties(FleetManagedNamespaceProvisioningState? provisioningState, ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties, ContainerServiceFleetAdoptionPolicy adoptionPolicy, ContainerServiceFleetDeletePolicy deletePolicy, ContainerServiceFleetPropagationPolicy propagationPolicy, FleetManagedNamespaceStatus status, string portalFqdn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedNamespaceProperties = managedNamespaceProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public FleetManagedNamespaceProvisioningState? ProvisioningState { get; }
 
         /// <summary> The namespace properties for the fleet managed namespace. </summary>
-        public ManagedNamespaceProperties ManagedNamespaceProperties { get; set; }
+        public ContainerServiceFleetManagedNamespaceProperties ManagedNamespaceProperties { get; set; }
 
         /// <summary> Action if the managed namespace with the same name already exists. Default is Never. </summary>
         public ContainerServiceFleetAdoptionPolicy AdoptionPolicy { get; set; }

@@ -878,9 +878,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///              - `Always` Always restart
-        ///              - `OnFailure` Restart on failure
-        ///              - `Never` Never restart
+        ///                          - `Always` Always restart
+        ///                          - `OnFailure` Restart on failure
+        ///                          - `Never` Never restart
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
@@ -949,9 +949,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///              - `Always` Always restart
-        ///              - `OnFailure` Restart on failure
-        ///              - `Never` Never restart
+        ///                          - `Always` Always restart
+        ///                          - `OnFailure` Restart on failure
+        ///                          - `Never` Never restart
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
         /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
@@ -1092,9 +1092,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///              - `Always` Always restart
-        ///              - `OnFailure` Restart on failure
-        ///              - `Never` Never restart
+        ///                          - `Always` Always restart
+        ///                          - `OnFailure` Restart on failure
+        ///                          - `Never` Never restart
         /// </param>
         /// <param name="shutdownGracePeriod"> Shutdown grace period for containers in a container group. </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
