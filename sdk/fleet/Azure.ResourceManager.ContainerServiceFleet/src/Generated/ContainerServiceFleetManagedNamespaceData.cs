@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> The namespace properties for the fleet managed namespace. </summary>
-        public ManagedNamespaceProperties ManagedNamespaceProperties
+        public ContainerServiceFleetManagedNamespaceProperties ManagedNamespaceProperties
         {
             get
             {

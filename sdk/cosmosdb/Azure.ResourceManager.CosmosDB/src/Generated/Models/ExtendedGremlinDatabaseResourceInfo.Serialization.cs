@@ -8,16 +8,62 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedGremlinDatabaseResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedGremlinDatabaseResourceInfo>
+    /// <summary> The ExtendedGremlinDatabaseResourceInfo. </summary>
+    public partial class ExtendedGremlinDatabaseResourceInfo : GremlinDatabaseResourceInfo, IJsonModel<ExtendedGremlinDatabaseResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedGremlinDatabaseResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExtendedGremlinDatabaseResourceInfo"/> for deserialization. </summary>
+        internal ExtendedGremlinDatabaseResourceInfo()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GremlinDatabaseResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExtendedGremlinDatabaseResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedGremlinDatabaseResourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedGremlinDatabaseResourceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExtendedGremlinDatabaseResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendedGremlinDatabaseResourceInfo IPersistableModel<ExtendedGremlinDatabaseResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExtendedGremlinDatabaseResourceInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExtendedGremlinDatabaseResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExtendedGremlinDatabaseResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +75,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtendedGremlinDatabaseResourceInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Rid))
             {
@@ -53,250 +98,99 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        ExtendedGremlinDatabaseResourceInfo IJsonModel<ExtendedGremlinDatabaseResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendedGremlinDatabaseResourceInfo IJsonModel<ExtendedGremlinDatabaseResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExtendedGremlinDatabaseResourceInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GremlinDatabaseResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtendedGremlinDatabaseResourceInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExtendedGremlinDatabaseResourceInfo(document.RootElement, options);
         }
 
-        internal static ExtendedGremlinDatabaseResourceInfo DeserializeExtendedGremlinDatabaseResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExtendedGremlinDatabaseResourceInfo DeserializeExtendedGremlinDatabaseResourceInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string rid = default;
-            float? ts = default;
-            ETag? etag = default;
-            string id = default;
+            string databaseName = default;
             ResourceRestoreParameters restoreParameters = default;
             CosmosDBAccountCreateMode? createMode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string rid = default;
+            float? timestamp = default;
+            ETag? eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("_rid"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    rid = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_ts"u8))
+                if (prop.NameEquals("restoreParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ts = property.Value.GetSingle();
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("_etag"u8))
+                if (prop.NameEquals("createMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    createMode = new CosmosDBAccountCreateMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("_rid"u8))
                 {
-                    id = property.Value.GetString();
+                    rid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restoreParameters"u8))
+                if (prop.NameEquals("_ts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
+                    timestamp = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("createMode"u8))
+                if (prop.NameEquals("_etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExtendedGremlinDatabaseResourceInfo(
-                id,
+                databaseName,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 rid,
-                ts,
-                etag);
+                timestamp,
+                eTag);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  _rid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Rid))
-                {
-                    builder.Append("  _rid: ");
-                    if (Rid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Rid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Rid}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  _ts: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Timestamp))
-                {
-                    builder.Append("  _ts: ");
-                    builder.AppendLine($"'{Timestamp.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  _etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  _etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatabaseName))
-                {
-                    builder.Append("  id: ");
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatabaseName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreParameters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restoreParameters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestoreParameters))
-                {
-                    builder.Append("  restoreParameters: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RestoreParameters, options, 2, false, "  restoreParameters: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreateMode))
-                {
-                    builder.Append("  createMode: ");
-                    builder.AppendLine($"'{CreateMode.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExtendedGremlinDatabaseResourceInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExtendedGremlinDatabaseResourceInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExtendedGremlinDatabaseResourceInfo IPersistableModel<ExtendedGremlinDatabaseResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExtendedGremlinDatabaseResourceInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExtendedGremlinDatabaseResourceInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExtendedGremlinDatabaseResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
