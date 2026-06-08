@@ -16,14 +16,14 @@
          that references it has its compiler-extension types (DiagnosticAnalyzer
          AND DiagnosticSuppressor) silently skipped by Roslyn's analyzer loader.
          See https://github.com/dotnet/roslyn-analyzers/blob/main/docs/rules/RS1038.md.
-    -->
-    <Version>1.0.0-beta.1</Version>
-    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
+
+         This assembly is consumed only from within azure-sdk-for-net (wired in via
+         eng/Directory.Build.Common.targets as a ProjectReference Analyzer). The
+         shipping Azure.SdkAnalyzers NuGet package is built from src/ only and does
+         not include the code-fix providers. -->
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-    <IsPackable>true</IsPackable>
-    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <IsPackable>false</IsPackable>
     <DevelopmentDependency>true</DevelopmentDependency>
     <RootNamespace>Azure.SdkAnalyzers</RootNamespace>
   </PropertyGroup>
@@ -38,12 +38,6 @@
     <!-- Reference the analyzer assembly for shared helper types like
          TypeNameSuggestionHelper / GeneratedFolderHelper / Descriptors. -->
     <ProjectReference Include="..\src\Azure.SdkAnalyzers.csproj" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Package the code-fix assembly alongside the analyzer in the same
-         analyzers/dotnet/cs directory so both load together for IDE consumers. -->
-    <None Include="$(OutputPath)netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
 </Project>
