@@ -80,34 +80,14 @@ internal static class CredentialCache
 
         // Chain owners — resolvers that invoke resolveChild during TryResolve —
         // are not cached because their output depends on the active chain.
-        // The tryResolveReturned guard turns lazy capture into a fail-fast
-        // error so chain-ownership classification stays sound.
         bool isChainOwner = false;
-        bool tryResolveReturned = false;
         Func<IConfigurationSection, AuthenticationTokenProvider?> trackedResolveChild = section =>
         {
-            if (tryResolveReturned)
-            {
-                throw new InvalidOperationException(
-                    "resolveChild was invoked after TryResolve returned. The callback must only be " +
-                    "called synchronously during TryResolve.");
-            }
             isChainOwner = true;
             return resolveChild(section);
         };
 
-        bool matched;
-        AuthenticationTokenProvider? provider;
-        try
-        {
-            matched = resolver.TryResolve(mergedSection, trackedResolveChild, out provider);
-        }
-        finally
-        {
-            tryResolveReturned = true;
-        }
-
-        if (!matched || provider is null)
+        if (!resolver.TryResolve(mergedSection, trackedResolveChild, out AuthenticationTokenProvider? provider) || provider is null)
         {
             return null;
         }

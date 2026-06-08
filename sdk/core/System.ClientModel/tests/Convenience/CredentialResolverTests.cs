@@ -1468,7 +1468,7 @@ public class CredentialResolverTests
             return false;
         }
 
-        public override bool TryResolve(
+        protected override bool TryResolveCore(
             IConfigurationSection credentialSection,
             Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
             [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
@@ -1699,7 +1699,7 @@ public class CredentialResolverTests
             return false;
         }
 
-        public override bool TryResolve(
+        protected override bool TryResolveCore(
             IConfigurationSection credentialSection,
             Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
             [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
@@ -1741,7 +1741,7 @@ public class CredentialResolverTests
             return false;
         }
 
-        public override bool TryResolve(
+        protected override bool TryResolveCore(
             IConfigurationSection credentialSection,
             Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
             [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
@@ -1788,7 +1788,7 @@ public class CredentialResolverTests
             return false;
         }
 
-        public override bool TryResolve(
+        protected override bool TryResolveCore(
             IConfigurationSection credentialSection,
             Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
             [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
@@ -1835,7 +1835,7 @@ public class CredentialResolverTests
             return false;
         }
 
-        public override bool TryResolve(
+        protected override bool TryResolveCore(
             IConfigurationSection credentialSection,
             Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
             [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
