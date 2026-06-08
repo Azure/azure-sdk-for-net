@@ -2,4 +2,6 @@ import:
   - ../../.vscode/cspell.json
 words:
   - azprovision
+  - tacr
+  - wdatpexcludelinuxpublicpreview
   - wdatpunifiedsolution
