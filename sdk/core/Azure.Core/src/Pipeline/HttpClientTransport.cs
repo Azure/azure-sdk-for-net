@@ -364,6 +364,19 @@ namespace Azure.Core.Pipeline
                 httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
                 httpHandler.SslOptions.ClientCertificates!.Add(cert);
             }
+
+            // Ensure the first available client certificate is selected during TLS handshake
+            if (options.ClientCertificates.Count > 0)
+            {
+                httpHandler.SslOptions.LocalCertificateSelectionCallback = (sender, targetHost, localCerts, remoteCert, acceptableIssuers) =>
+                {
+                    if (localCerts.Count > 0)
+                    {
+                        return localCerts[0];
+                    }
+                    return null!;
+                };
+            }
 #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
         }
