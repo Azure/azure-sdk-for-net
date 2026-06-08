@@ -174,6 +174,54 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(serializationContent, Does.Not.Contain("global::Samples.Models.ResponseTypeData"));
         }
 
+        [Test]
+        public void DerivedSerializationFromResponseHidesBaseWithNewModifier()
+        {
+            var baseModel = InputFactory.Model(
+                "NetworkInterface",
+                properties: [InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true)],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var derivedModel = InputFactory.Model(
+                "VirtualMachineScaleSetNetworkInterface",
+                properties: [InputFactory.Property("parentId", InputPrimitiveType.String, isReadOnly: true)],
+                baseModel: baseModel,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var getBaseOperation = InputFactory.Operation(
+                "getBase",
+                responses: [InputFactory.OperationResponse([200], baseModel)],
+                path: "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/networkInterfaces/{networkInterfaceName}");
+            var getBaseMethod = InputFactory.BasicServiceMethod(
+                "getBase",
+                getBaseOperation,
+                response: InputFactory.ServiceMethodResponse(baseModel, null));
+            var getDerivedOperation = InputFactory.Operation(
+                "getDerived",
+                responses: [InputFactory.OperationResponse([200], derivedModel)],
+                path: "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/networkInterfaces/{networkInterfaceName}");
+            var getDerivedMethod = InputFactory.BasicServiceMethod(
+                "getDerived",
+                getDerivedOperation,
+                response: InputFactory.ServiceMethodResponse(derivedModel, null));
+            var client = InputFactory.Client("TestClient", methods: [getBaseMethod, getDerivedMethod]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel], clients: () => [client]);
+            var baseProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var derivedProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            var baseSerialization = baseProvider.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var derivedSerialization = derivedProvider.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var visitor = new TestableSerializationVisitor();
+
+            foreach (var method in derivedSerialization.Methods)
+            {
+                visitor.InvokeVisitMethod(method);
+            }
+
+            var baseResponseOperator = baseSerialization.Methods.Single(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator)
+                && m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit));
+            var derivedFromResponse = derivedSerialization.Methods.Single(m => m.Signature.Name == SerializationVisitor.FromResponseMethodName);
+            Assert.That(baseResponseOperator.Signature.Name, Is.Not.EqualTo(SerializationVisitor.FromResponseMethodName));
+            Assert.That(derivedFromResponse.Signature.Modifiers.HasFlag(MethodSignatureModifiers.New), Is.True);
+        }
+
         private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
         {
             public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
@@ -187,6 +235,14 @@ namespace Azure.Generator.Mgmt.Tests
             public TypeProvider? InvokeVisitType(TypeProvider type)
             {
                 return base.VisitType(type);
+            }
+        }
+
+        private class TestableSerializationVisitor : SerializationVisitor
+        {
+            public MethodProvider? InvokeVisitMethod(MethodProvider method)
+            {
+                return base.VisitMethod(method);
             }
         }
     }
