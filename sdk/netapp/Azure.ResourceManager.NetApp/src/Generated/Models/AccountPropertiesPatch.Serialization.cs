@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("nfsV4IDDomain"u8);
                 writer.WriteStringValue(NfsV4IdDomain);
             }
-            if (Optional.IsDefined(LdapConfiguration))
-            {
-                writer.WritePropertyName("ldapConfiguration"u8);
-                writer.WriteObjectValue(LdapConfiguration, options);
-            }
             if (Optional.IsDefined(EntraIdConfig))
             {
                 writer.WritePropertyName("entraIdConfig"u8);
                 writer.WriteObjectValue(EntraIdConfig, options);
+            }
+            if (Optional.IsDefined(LdapConfiguration))
+            {
+                writer.WritePropertyName("ldapConfiguration"u8);
+                writer.WriteObjectValue(LdapConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.NetApp.Models
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
             NetAppAccountEncryption encryption = default;
             string nfsV4IdDomain = default;
-            LdapConfiguration ldapConfiguration = default;
             EntraIdConfigPatch entraIdConfig = default;
+            LdapConfigurationPatch ldapConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,15 +187,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     nfsV4IdDomain = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ldapConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("entraIdConfig"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -203,6 +194,15 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     entraIdConfig = EntraIdConfigPatch.DeserializeEntraIdConfigPatch(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("ldapConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ldapConfiguration = LdapConfigurationPatch.DeserializeLdapConfigurationPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
                 encryption,
                 nfsV4IdDomain,
-                ldapConfiguration,
                 entraIdConfig,
+                ldapConfiguration,
                 additionalBinaryDataProperties);
         }
     }

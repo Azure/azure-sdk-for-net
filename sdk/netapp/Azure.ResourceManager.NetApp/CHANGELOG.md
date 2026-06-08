@@ -1,17 +1,12 @@
 # Release History
 
-
-## 1.17.0-beta.1 (Unreleased)
+## 1.17.0 (2026-06-08)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-- Migrated from AutoRest to TypeSpec-based code generation.
+- Upgraded api-version tag from 'package-2026-01-01' to 'package-2026-04-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/04869e1f580276ee3e7e51b74dd7e23df50902b8/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `CacheFileAccessLogs` model.
+- Added read-only `FileAccessLogs` property to `NetAppCacheProperties`.
 
 ## 1.16.0 (2026-05-01)
 

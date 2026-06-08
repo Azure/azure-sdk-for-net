@@ -14,52 +14,57 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
-    public partial class CredentialsKeyVaultDetails : IJsonModel<CredentialsKeyVaultDetails>
+    /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
+    public partial class BindPasswordAkvConfig : IJsonModel<BindPasswordAkvConfig>
     {
+        /// <summary> Initializes a new instance of <see cref="BindPasswordAkvConfig"/> for deserialization. </summary>
+        internal BindPasswordAkvConfig()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialsKeyVaultDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BindPasswordAkvConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialsKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCredentialsKeyVaultDetails(document.RootElement, options);
+                        return DeserializeBindPasswordAkvConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialsKeyVaultDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BindPasswordAkvConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialsKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialsKeyVaultDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BindPasswordAkvConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CredentialsKeyVaultDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BindPasswordAkvConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialsKeyVaultDetails IPersistableModel<CredentialsKeyVaultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BindPasswordAkvConfig IPersistableModel<BindPasswordAkvConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CredentialsKeyVaultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BindPasswordAkvConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CredentialsKeyVaultDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BindPasswordAkvConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,21 +75,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialsKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialsKeyVaultDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BindPasswordAkvConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CredentialsKeyVaultUri))
-            {
-                writer.WritePropertyName("credentialsKeyVaultUri"u8);
-                writer.WriteStringValue(CredentialsKeyVaultUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(SecretName))
-            {
-                writer.WritePropertyName("secretName"u8);
-                writer.WriteStringValue(SecretName);
-            }
+            writer.WritePropertyName("azureKeyVaultUri"u8);
+            writer.WriteStringValue(AzureKeyVaultUri.AbsoluteUri);
+            writer.WritePropertyName("secretName"u8);
+            writer.WriteStringValue(SecretName);
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
@@ -109,42 +108,38 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialsKeyVaultDetails IJsonModel<CredentialsKeyVaultDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BindPasswordAkvConfig IJsonModel<BindPasswordAkvConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialsKeyVaultDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BindPasswordAkvConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialsKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialsKeyVaultDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BindPasswordAkvConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCredentialsKeyVaultDetails(document.RootElement, options);
+            return DeserializeBindPasswordAkvConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CredentialsKeyVaultDetails DeserializeCredentialsKeyVaultDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static BindPasswordAkvConfig DeserializeBindPasswordAkvConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri credentialsKeyVaultUri = default;
+            Uri azureKeyVaultUri = default;
             string secretName = default;
             ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("credentialsKeyVaultUri"u8))
+                if (prop.NameEquals("azureKeyVaultUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    credentialsKeyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    azureKeyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("secretName"u8))
@@ -166,7 +161,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CredentialsKeyVaultDetails(credentialsKeyVaultUri, secretName, userAssignedIdentity, additionalBinaryDataProperties);
+            return new BindPasswordAkvConfig(azureKeyVaultUri, secretName, userAssignedIdentity, additionalBinaryDataProperties);
         }
     }
 }

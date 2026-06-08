@@ -94,23 +94,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfiguration LdapConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LdapConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.LdapConfiguration = value;
-            }
-        }
-
         /// <summary> Entra ID configuration for the account. </summary>
         public EntraIdConfigPatch EntraIdConfig
         {
@@ -125,6 +108,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     Properties = new AccountPropertiesPatch();
                 }
                 Properties.EntraIdConfig = value;
+            }
+        }
+
+        /// <summary> LDAP Configuration for the account. </summary>
+        public LdapConfigurationPatch LdapConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LdapConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                Properties.LdapConfiguration = value;
             }
         }
     }

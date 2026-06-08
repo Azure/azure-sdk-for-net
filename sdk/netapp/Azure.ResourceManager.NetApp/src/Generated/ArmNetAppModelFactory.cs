@@ -1294,10 +1294,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="certificateKeyVaultUri"> The base URI of the Azure Key Vault that is used when retrieving the bucket certificate. </param>
         /// <param name="certificateName"> The name of the bucket server certificate stored in the Azure Key Vault. </param>
+        /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
         /// <returns> A new <see cref="Models.CertificateKeyVaultDetails"/> instance for mocking. </returns>
-        public static CertificateKeyVaultDetails CertificateKeyVaultDetails(Uri certificateKeyVaultUri = default, string certificateName = default)
+        public static CertificateKeyVaultDetails CertificateKeyVaultDetails(Uri certificateKeyVaultUri = default, string certificateName = default, ResourceIdentifier userAssignedIdentity = default)
         {
-            return new CertificateKeyVaultDetails(certificateKeyVaultUri, certificateName, default);
+            return new CertificateKeyVaultDetails(certificateKeyVaultUri, certificateName, userAssignedIdentity, default);
         }
 
         /// <param name="credentialsKeyVaultUri"> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </param>
@@ -1308,10 +1309,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// "secret_access_key": "&lt;REDACTED&gt;"
         /// }
         /// </param>
+        /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
         /// <returns> A new <see cref="Models.CredentialsKeyVaultDetails"/> instance for mocking. </returns>
-        public static CredentialsKeyVaultDetails CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri = default, string secretName = default)
+        public static CredentialsKeyVaultDetails CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
         {
-            return new CredentialsKeyVaultDetails(credentialsKeyVaultUri, secretName, default);
+            return new CredentialsKeyVaultDetails(credentialsKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1430,8 +1432,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
+        /// <param name="fileAccessLogs"> Flag indicating whether file access logs are enabled for the Cache, based on active diagnostic settings present on the Cache. </param>
         /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
-        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default)
+        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default, CacheFileAccessLogs? fileAccessLogs = default)
         {
             protocolTypes ??= new ChangeTrackingList<NetAppProtocolType>();
             mountTargets ??= new ChangeTrackingList<NetAppCacheMountTargetProperties>();
@@ -1461,6 +1464,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 cifsChangeNotifications,
                 globalFileLocking,
                 writeBack,
+                fileAccessLogs,
                 default);
         }
 
@@ -2471,8 +2475,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
+        /// <param name="bindAuthenticationLevel"> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </param>
+        /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
+        /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default)
+        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordAkvConfig bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
 
@@ -2482,7 +2489,19 @@ namespace Azure.ResourceManager.NetApp.Models
                 isLdapOverTlsEnabled,
                 serverCACertificate,
                 certificateCNHost,
+                bindAuthenticationLevel,
+                bindDN,
+                bindPasswordAkvConfig,
                 default);
+        }
+
+        /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
+        /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
+        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
+        /// <returns> A new <see cref="Models.BindPasswordAkvConfig"/> instance for mocking. </returns>
+        public static BindPasswordAkvConfig BindPasswordAkvConfig(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new BindPasswordAkvConfig(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2495,10 +2514,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
+        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, string nfsV4IdDomain = default, LdapConfiguration ldapConfiguration = default, EntraIdConfigPatch entraIdConfig = default)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, string nfsV4IdDomain = default, EntraIdConfigPatch entraIdConfig = default, LdapConfigurationPatch ldapConfiguration = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2510,12 +2529,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                activeDirectories is null && encryption is null && nfsV4IdDomain is null && ldapConfiguration is null && entraIdConfig is null ? default : new AccountPropertiesPatch(
+                activeDirectories is null && encryption is null && nfsV4IdDomain is null && entraIdConfig is null && ldapConfiguration is null ? default : new AccountPropertiesPatch(
                     (activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>()).ToList(),
                     encryption,
                     nfsV4IdDomain,
-                    ldapConfiguration,
                     entraIdConfig,
+                    ldapConfiguration,
                     default),
                 default);
         }
@@ -2537,6 +2556,40 @@ namespace Azure.ResourceManager.NetApp.Models
         public static EntraIdAkvConfigPatch EntraIdAkvConfigPatch(Uri azureKeyVaultUri = default, string certificateName = default, ResourceIdentifier userAssignedIdentity = default)
         {
             return new EntraIdAkvConfigPatch(azureKeyVaultUri, certificateName, userAssignedIdentity, default);
+        }
+
+        /// <param name="domain"> Name of the LDAP configuration domain. </param>
+        /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
+        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
+        /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
+        /// <param name="bindAuthenticationLevel"> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </param>
+        /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
+        /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
+        /// <returns> A new <see cref="Models.LdapConfigurationPatch"/> instance for mocking. </returns>
+        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordAkvConfigPatch bindPasswordAkvConfig = default)
+        {
+            ldapServers ??= new ChangeTrackingList<IPAddress>();
+
+            return new LdapConfigurationPatch(
+                domain,
+                (ldapServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                isLdapOverTlsEnabled,
+                serverCACertificate,
+                certificateCNHost,
+                bindAuthenticationLevel,
+                bindDN,
+                bindPasswordAkvConfig,
+                default);
+        }
+
+        /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
+        /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
+        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
+        /// <returns> A new <see cref="Models.BindPasswordAkvConfigPatch"/> instance for mocking. </returns>
+        public static BindPasswordAkvConfigPatch BindPasswordAkvConfigPatch(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new BindPasswordAkvConfigPatch(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
         /// <param name="virtualNetworkId"> Identifier for the virtual network. </param>
@@ -2914,6 +2967,64 @@ namespace Azure.ResourceManager.NetApp.Models
                     (volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>()).ToList(),
                     default),
                 etag,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppCacheProperties"/>. </summary>
+        /// <param name="filePath"> The file path of the Cache. </param>
+        /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
+        /// <param name="exportRules"> Set of export policy rules. </param>
+        /// <param name="protocolTypes"> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="cacheState"> Azure NetApp Files Cache lifecycle management. </param>
+        /// <param name="cacheSubnetResourceId"> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </param>
+        /// <param name="peeringSubnetResourceId"> The Azure Resource URI for a delegated subnet that will be used for ANF Intercluster Interface IP addresses. </param>
+        /// <param name="mountTargets"> List of mount targets that can be used to mount this cache. </param>
+        /// <param name="kerberos"> Describe if a cache is Kerberos enabled. </param>
+        /// <param name="smbSettings"> SMB information for the cache. </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </param>
+        /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
+        /// <param name="encryptionKeySource"> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
+        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
+        /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. </param>
+        /// <param name="encryption"> Specifies if the cache is encryption or not. </param>
+        /// <param name="language"> Language supported for volume. </param>
+        /// <param name="ldap"> Specifies whether LDAP is enabled or not for flexcache volume. </param>
+        /// <param name="ldapServerType"> Specifies the type of LDAP server for flexcache volume. </param>
+        /// <param name="originClusterInformation"> Origin cluster information. </param>
+        /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
+        /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
+        /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
+        /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = 0L, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default)
+        {
+            return new NetAppCacheProperties(
+                filePath,
+                size,
+                exportRules is null ? default : new NetAppCachePropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                (protocolTypes ?? new ChangeTrackingList<NetAppProtocolType>()).ToList(),
+                provisioningState,
+                cacheState,
+                cacheSubnetResourceId,
+                peeringSubnetResourceId,
+                (mountTargets ?? new ChangeTrackingList<NetAppCacheMountTargetProperties>()).ToList(),
+                kerberos,
+                smbSettings,
+                throughputMibps,
+                actualThroughputMibps,
+                encryptionKeySource,
+                keyVaultPrivateEndpointResourceId,
+                maximumNumberOfFiles,
+                encryption,
+                language,
+                ldap,
+                ldapServerType,
+                originClusterInformation,
+                cifsChangeNotifications,
+                globalFileLocking,
+                writeBack,
+                default,
                 default);
         }
 
