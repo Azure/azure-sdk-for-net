@@ -17,6 +17,7 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsPackable>false</IsPackable>
+    <IsShippingLibrary>false</IsShippingLibrary>
     <DevelopmentDependency>true</DevelopmentDependency>
     <RootNamespace>Azure.SdkAnalyzers</RootNamespace>
   </PropertyGroup>
