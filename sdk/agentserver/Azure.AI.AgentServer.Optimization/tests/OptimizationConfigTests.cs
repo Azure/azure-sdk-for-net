@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Optimization.Tests;
@@ -49,6 +48,22 @@ public class OptimizationConfigTests
         Assert.That(config.ToolDefinitions.Count, Is.EqualTo(1));
         Assert.That(config.Source, Is.EqualTo("env:OPTIMIZATION_CONFIG"));
         Assert.That(config.CandidateId, Is.EqualTo("candidate-1"));
+    }
+
+    [Test]
+    public void MetadataConfig_FromDictionary_ParsesAdditionalNumericTypes()
+    {
+        var longConfig = MetadataConfig.FromDictionary(new Dictionary<string, object?>
+        {
+            ["temperature"] = 2L,
+        });
+        var decimalConfig = MetadataConfig.FromDictionary(new Dictionary<string, object?>
+        {
+            ["temperature"] = 0.25m,
+        });
+
+        Assert.That(longConfig.Temperature, Is.EqualTo(2d));
+        Assert.That(decimalConfig.Temperature, Is.EqualTo(0.25d));
     }
 
     [Test]

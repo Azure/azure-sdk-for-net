@@ -11,7 +11,7 @@ Config loader for optimization-ready Azure AI Hosted Agents. Resolves optimized 
 
 ### Install the package
 
-```bash
+```dotnetcli
 dotnet add package Azure.AI.AgentServer.Optimization --prerelease
 ```
 
@@ -35,7 +35,7 @@ An immutable config object containing:
 - `Skills` — list of learned skills
 - `ToolDefinitions` — tool definitions in OpenAI function-calling format
 
-### Skill
+### OptimizationSkill
 
 Represents a single learned skill with `Name`, `Description`, and `Body`.
 
@@ -73,12 +73,7 @@ OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync(opti
 
 ## Troubleshooting
 
-Enable logging to see which config source was resolved:
-
-```csharp
-using var listener = AzureEventSourceListener.CreateConsoleLogger();
-OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync();
-```
+Set the relevant environment variables for your intended source and check which source was resolved via the `Source` property on the returned config.
 
 ## Contributing
 

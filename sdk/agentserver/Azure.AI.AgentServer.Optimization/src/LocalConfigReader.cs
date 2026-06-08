@@ -18,14 +18,21 @@ internal static class LocalConfigReader
     {
         string localDir = ResolveLocalDir(configDir);
         if (!Directory.Exists(localDir))
+        {
             return null;
+        }
 
         string? candidatePath = ResolveCandidateFolder(localDir, candidateId);
         if (candidatePath is null)
+        {
             return null;
+        }
 
+        string? resolvedCandidateId = !string.IsNullOrEmpty(candidateId) && IsValidCandidateId(candidateId)
+            ? candidateId
+            : null;
         string metadataFilePath = Path.Combine(candidatePath, OptimizationConfig.MetadataFile);
-        return LoadCandidateFromMetadata(candidatePath, metadataFilePath, candidateId);
+        return LoadCandidateFromMetadata(candidatePath, metadataFilePath, resolvedCandidateId);
     }
 
     /// <summary>
@@ -34,14 +41,18 @@ internal static class LocalConfigReader
     public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDir)
     {
         if (!Directory.Exists(skillsDir))
+        {
             return Array.Empty<OptimizationSkill>();
+        }
 
         var skills = new List<OptimizationSkill>();
         foreach (var skillFolder in Directory.GetDirectories(skillsDir).OrderBy(d => d))
         {
             string skillFile = Path.Combine(skillFolder, OptimizationConfig.SkillFile);
             if (!File.Exists(skillFile))
+            {
                 continue;
+            }
 
             try
             {
@@ -75,22 +86,28 @@ internal static class LocalConfigReader
     internal static string ResolveLocalDir(string? configDir)
     {
         if (configDir is not null)
+        {
             return Path.GetFullPath(configDir);
+        }
 
         string envDir = Environment.GetEnvironmentVariable(OptimizationConfig.EnvLocalDir)?.Trim() ?? "";
         if (!string.IsNullOrEmpty(envDir))
+        {
             return Path.GetFullPath(envDir);
+        }
 
         return Path.GetFullPath(OptimizationConfig.DefaultLocalDir);
     }
 
     private static string? ResolveCandidateFolder(string localDir, string? candidateId)
     {
-        if (!string.IsNullOrEmpty(candidateId))
+        if (!string.IsNullOrEmpty(candidateId) && IsValidCandidateId(candidateId))
         {
             string exact = Path.Combine(localDir, candidateId);
             if (Directory.Exists(exact))
+            {
                 return exact;
+            }
         }
 
         string baseline = Path.Combine(localDir, OptimizationConfig.BaselineDir);
@@ -135,6 +152,9 @@ internal static class LocalConfigReader
         string? skillsDirectory = Directory.Exists(skillsPath)
             ? Path.GetFullPath(skillsPath)
             : null;
+        IReadOnlyList<OptimizationSkill> skills = skillsDirectory is not null
+            ? LoadSkillsFromDirectory(skillsDirectory)
+            : Array.Empty<OptimizationSkill>();
 
         // Load tool definitions
         string toolFilePath = Path.Combine(candidatePath, meta.ToolFile);
@@ -144,6 +164,7 @@ internal static class LocalConfigReader
             instructions: instructions,
             model: meta.Model,
             temperature: meta.Temperature,
+            skills: skills,
             skillsDirectory: skillsDirectory,
             toolDefinitions: toolDefinitions,
             source: $"local:{candidatePath}",
@@ -153,20 +174,25 @@ internal static class LocalConfigReader
     private static IReadOnlyList<BinaryData> LoadToolDefinitions(string toolFilePath)
     {
         if (!File.Exists(toolFilePath))
+        {
             return Array.Empty<BinaryData>();
+        }
 
         try
         {
             string json = File.ReadAllText(toolFilePath);
             using var doc = JsonDocument.Parse(json);
             if (doc.RootElement.ValueKind != JsonValueKind.Array)
+            {
                 return Array.Empty<BinaryData>();
+            }
 
             var tools = new List<BinaryData>();
             foreach (var item in doc.RootElement.EnumerateArray())
             {
                 tools.Add(BinaryData.FromString(item.GetRawText()));
             }
+
             return tools;
         }
         catch (Exception ex) when (ex is JsonException or IOException)
@@ -178,11 +204,15 @@ internal static class LocalConfigReader
     internal static (Dictionary<string, object?> Frontmatter, string Body) ParseSkillFrontmatter(string content)
     {
         if (!content.StartsWith("---"))
+        {
             return (new Dictionary<string, object?>(), content);
+        }
 
         int end = content.IndexOf("---", 3, StringComparison.Ordinal);
         if (end == -1)
+        {
             return (new Dictionary<string, object?>(), content);
+        }
 
         string fmText = content[3..end].Trim();
         string body = content[(end + 3)..].Trim();
@@ -192,12 +222,22 @@ internal static class LocalConfigReader
             var deserializer = new DeserializerBuilder().Build();
             var parsed = deserializer.Deserialize<Dictionary<string, object?>>(fmText);
             if (parsed is null)
+            {
                 return (new Dictionary<string, object?>(), body);
+            }
+
             return (parsed, body);
         }
         catch (YamlDotNet.Core.YamlException)
         {
             return (new Dictionary<string, object?>(), body);
         }
+    }
+
+    private static bool IsValidCandidateId(string candidateId)
+    {
+        return !candidateId.Contains("..", StringComparison.Ordinal) &&
+            candidateId.IndexOf(Path.DirectorySeparatorChar) < 0 &&
+            candidateId.IndexOf(Path.AltDirectorySeparatorChar) < 0;
     }
 }

@@ -114,7 +114,9 @@ public class OptimizationConfigLoaderTests
         finally
         {
             if (Directory.Exists(tempDir))
+            {
                 Directory.Delete(tempDir, recursive: true);
+            }
         }
     }
 
@@ -140,7 +142,9 @@ public class OptimizationConfigLoaderTests
         finally
         {
             if (Directory.Exists(tempDir))
+            {
                 Directory.Delete(tempDir, recursive: true);
+            }
         }
     }
 
@@ -175,7 +179,9 @@ public class OptimizationConfigLoaderTests
         finally
         {
             if (Directory.Exists(tempDir))
+            {
                 Directory.Delete(tempDir, recursive: true);
+            }
         }
     }
 

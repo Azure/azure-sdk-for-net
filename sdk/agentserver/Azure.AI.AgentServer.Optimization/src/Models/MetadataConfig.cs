@@ -32,7 +32,9 @@ internal record MetadataConfig
                 {
                     double d => d,
                     int i => i,
+                    long l => l,
                     float f => f,
+                    decimal m => (double)m,
                     string s when double.TryParse(s, out var parsed) => parsed,
                     _ => null,
                 }

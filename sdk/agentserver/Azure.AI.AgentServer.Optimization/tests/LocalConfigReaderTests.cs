@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Optimization.Tests;
@@ -22,7 +21,9 @@ public class LocalConfigReaderTests
     public void TearDown()
     {
         if (Directory.Exists(_tempDir))
+        {
             Directory.Delete(_tempDir, recursive: true);
+        }
     }
 
     [Test]
@@ -87,6 +88,23 @@ public class LocalConfigReaderTests
         Assert.That(result!.Model, Is.EqualTo("gpt-4o"));
     }
 
+    [TestCase("..\\evil")]
+    [TestCase("evil\\child")]
+    [TestCase("evil/child")]
+    public void Load_FallsBackToBaseline_WhenCandidateIdIsInvalid(string candidateId)
+    {
+        string baseline = Path.Combine(_tempDir, "baseline");
+        Directory.CreateDirectory(baseline);
+        File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "model: gpt-4o\n");
+
+        var result = LocalConfigReader.Load(candidateId, _tempDir);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result!.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(result.CandidateId, Is.Null);
+        Assert.That(result.Source, Does.Contain("baseline"));
+    }
+
     [Test]
     public void Load_LoadsToolDefinitions()
     {
@@ -104,17 +122,22 @@ public class LocalConfigReaderTests
     }
 
     [Test]
-    public void Load_SetsSkillsDirectory_WhenSkillsFolderExists()
+    public void Load_LoadsSkills_WhenSkillsFolderExists()
     {
         string baseline = Path.Combine(_tempDir, "baseline");
         string skillsDir = Path.Combine(baseline, "skills");
-        Directory.CreateDirectory(skillsDir);
+        string skillDir = Path.Combine(skillsDir, "budget-checker");
+        Directory.CreateDirectory(skillDir);
         File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "");
+        File.WriteAllText(Path.Combine(skillDir, "SKILL.md"),
+            "---\nname: budget-checker\ndescription: Checks budget limits\n---\nSkill body here.");
 
         var result = LocalConfigReader.Load(null, _tempDir);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.SkillsDirectory, Is.Not.Null);
+        Assert.That(result.Skills.Count, Is.EqualTo(1));
+        Assert.That(result.Skills[0].Name, Is.EqualTo("budget-checker"));
     }
 
     [Test]
