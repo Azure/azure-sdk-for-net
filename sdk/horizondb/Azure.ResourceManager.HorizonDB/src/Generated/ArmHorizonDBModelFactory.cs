@@ -259,17 +259,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="horizonDBPrivateEndpointConnectionPatchProperties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnectionPatch"/> instance for mocking. </returns>
-        public static HorizonDBPrivateEndpointConnectionPatch HorizonDBPrivateEndpointConnectionPatch(OptionalPropertiesUpdateableProperties horizonDBPrivateEndpointConnectionPatchProperties = default)
+        public static HorizonDBPrivateEndpointConnectionPatch HorizonDBPrivateEndpointConnectionPatch(HorizonDBPrivateEndpointConnectionPatchProperties horizonDBPrivateEndpointConnectionPatchProperties = default)
         {
             return new HorizonDBPrivateEndpointConnectionPatch(horizonDBPrivateEndpointConnectionPatchProperties, default);
         }
 
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <returns> A new <see cref="Models.OptionalPropertiesUpdateableProperties"/> instance for mocking. </returns>
-        public static OptionalPropertiesUpdateableProperties OptionalPropertiesUpdateableProperties(ResourceIdentifier privateEndpointId = default, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
+        /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnectionPatchProperties"/> instance for mocking. </returns>
+        public static HorizonDBPrivateEndpointConnectionPatchProperties HorizonDBPrivateEndpointConnectionPatchProperties(ResourceIdentifier privateEndpointId = default, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
         {
-            return new OptionalPropertiesUpdateableProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, default);
+            return new HorizonDBPrivateEndpointConnectionPatchProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnectionPatch"/>. </summary>
         /// <param name="horizonDBPrivateEndpointConnectionPatchProperties"> The private endpoint connection properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBPrivateEndpointConnectionPatch(OptionalPropertiesUpdateableProperties horizonDBPrivateEndpointConnectionPatchProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBPrivateEndpointConnectionPatch(HorizonDBPrivateEndpointConnectionPatchProperties horizonDBPrivateEndpointConnectionPatchProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HorizonDBPrivateEndpointConnectionPatchProperties = horizonDBPrivateEndpointConnectionPatchProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The private endpoint connection properties. </summary>
-        public OptionalPropertiesUpdateableProperties HorizonDBPrivateEndpointConnectionPatchProperties { get; set; }
+        public HorizonDBPrivateEndpointConnectionPatchProperties HorizonDBPrivateEndpointConnectionPatchProperties { get; set; }
     }
 }
