@@ -74,7 +74,7 @@ public abstract class CredentialResolver
         bool returned = false;
         Func<IConfigurationSection, AuthenticationTokenProvider?> guarded = section =>
         {
-            if (returned)
+            if (Threading.Volatile.Read(ref returned))
             {
                 throw new InvalidOperationException(
                     "resolveChild was invoked after TryResolve returned. The callback must only be " +
@@ -89,7 +89,7 @@ public abstract class CredentialResolver
         }
         finally
         {
-            returned = true;
+            Threading.Volatile.Write(ref returned, true);
         }
     }
 

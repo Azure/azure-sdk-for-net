@@ -1430,6 +1430,45 @@ public class CredentialResolverTests
     }
 
     [Test]
+    public void Engine_LazyCapture_ThrowsAcrossThreads()
+    {
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "LazyOnly",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var lazyOnly = new LazyCaptureOnlyResolver("LazyOnly", section => section.GetSection("Inner"));
+        var foo = new FooCredResolver("FooCred", respectsBar: true);
+
+        Type cacheType = typeof(AuthenticationTokenProvider).Assembly
+            .GetType("System.ClientModel.Primitives.CredentialCache", throwOnError: true)!;
+        var cacheField = cacheType.GetField("s_cache", BindingFlags.NonPublic | BindingFlags.Static)!;
+
+        int missed = 0;
+        const int iterations = 2000;
+        for (int i = 0; i < iterations; i++)
+        {
+            ((System.Collections.IDictionary)cacheField.GetValue(null)!).Clear();
+
+            CredentialSettings? settings = config.GetCredentialSettings("Cred", lazyOnly, foo);
+            var provider = (LazyCaptureProvider)settings!.TokenProvider!;
+
+            bool threw = false;
+            var t = new Threading.Thread(() =>
+            {
+                try { provider.ResolveInner(); }
+                catch (InvalidOperationException) { threw = true; }
+            });
+            t.Start();
+            t.Join();
+            if (!threw) missed++;
+        }
+        Assert.That(missed, Is.Zero,
+            $"{missed} of {iterations} cross-thread invocations did not throw — memory-ordering race in the guard flag.");
+    }
+
+    [Test]
     public void Engine_LazyCapture_ThrowsWhenResolveChildInvokedAfterTryResolveReturns()
     {
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
