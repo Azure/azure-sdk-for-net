@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Resources;
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         protected SecurityInsightsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreOperationalInsightsDependencyVersion();
         }
 
         public ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
@@ -34,6 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         protected SecurityInsightsManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreOperationalInsightsDependencyVersion();
         }
 
         [SetUp]
@@ -41,6 +44,19 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+        }
+
+        private void IgnoreOperationalInsightsDependencyVersion()
+        {
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.OperationalInsights\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
+            {
+                GroupForReplace = "group",
+                Value = "**"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/resourceGroups/")
+            {
+                Value = "/resourcegroups/"
+            });
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
@@ -67,6 +83,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
                     groupName = rgOp.Value.Data.Name;
                 }
             }
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Existing recordings were captured with an older OperationalInsights client that issued one additional setup request.
+                // Keep the deterministic asset-name sequence aligned while matching those recordings against the regenerated client.
+                Recording.Random.NewGuid();
+            }
             return rgOp.Value;
         }
         #region workspace
@@ -81,6 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
             };
             return data;
         }
+
         #endregion
     }
 }
