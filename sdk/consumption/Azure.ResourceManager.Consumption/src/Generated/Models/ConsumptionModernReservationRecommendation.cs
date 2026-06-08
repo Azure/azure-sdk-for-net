@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
-        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, ModernReservationRecommendationProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, sku, eTag, tags, kind)
+        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ModernReservationRecommendationProperties properties) : base(id, name, resourceType, systemData, location, sku, eTag, tags, kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

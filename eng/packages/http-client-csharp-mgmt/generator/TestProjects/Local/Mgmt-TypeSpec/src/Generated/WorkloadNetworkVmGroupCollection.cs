@@ -98,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
+                    new WorkloadNetworkVmGroupResourceOperationSource(Client),
                     _workloadNetworkVmGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -157,7 +157,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
+                    new WorkloadNetworkVmGroupResourceOperationSource(Client),
                     _workloadNetworkVmGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

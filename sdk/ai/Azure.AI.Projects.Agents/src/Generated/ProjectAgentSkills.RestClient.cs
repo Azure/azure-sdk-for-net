@@ -11,47 +11,8 @@ namespace Azure.AI.Projects.Agents
     public partial class ProjectAgentSkills
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
-        private static PipelineMessageClassifier _pipelineMessageClassifier201;
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
-
-        internal PipelineMessage CreateCreateSkillRequest(BinaryContent content, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/skills", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
-            PipelineRequest request = message.Request;
-            request.Headers.Set("Content-Type", "application/json");
-            request.Headers.Set("Accept", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateCreateSkillFromPackageRequest(BinaryContent content, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/skills:import", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
-            PipelineRequest request = message.Request;
-            request.Headers.Set("Content-Type", "application/zip");
-            request.Headers.Set("Accept", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
 
         internal PipelineMessage CreateGetSkillRequest(string name, RequestOptions options)
         {
@@ -66,24 +27,6 @@ namespace Azure.AI.Projects.Agents
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateDownloadSkillRequest(string name, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath(":download", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            request.Headers.Set("Accept", "application/zip");
             message.Apply(options);
             return message;
         }
@@ -145,6 +88,156 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/skills/", false);
             uri.AppendPath(name, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateCreateSkillVersionRequest(string name, BinaryContent content, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skills/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateCreateSkillVersionFromFilesRequest(string name, BinaryContent content, string contentType, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skills/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Content-Type", contentType);
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetSkillVersionsRequest(string name, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skills/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetSkillVersionRequest(string name, string version, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skills/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetSkillContentRequest(string name, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skills/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/content", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/zip");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetSkillVersionContentRequest(string name, string version, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skills/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/content", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/zip");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateDeleteSkillVersionRequest(string name, string version, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/skills/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

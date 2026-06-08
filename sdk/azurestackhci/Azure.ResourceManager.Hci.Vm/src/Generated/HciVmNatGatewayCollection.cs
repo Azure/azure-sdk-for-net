@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _natGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, natGatewayName, HciVmNatGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNatGatewayResource> operation = new VmArmOperation<HciVmNatGatewayResource>(
-                    new HciVmNatGatewayOperationSource(Client),
+                    new HciVmNatGatewayResourceOperationSource(Client),
                     _natGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _natGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, natGatewayName, HciVmNatGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNatGatewayResource> operation = new VmArmOperation<HciVmNatGatewayResource>(
-                    new HciVmNatGatewayOperationSource(Client),
+                    new HciVmNatGatewayResourceOperationSource(Client),
                     _natGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,

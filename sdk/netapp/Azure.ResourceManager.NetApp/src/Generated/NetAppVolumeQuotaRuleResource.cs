@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _volumeQuotaRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumeQuotaRulePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppVolumeQuotaRuleResource> operation = new NetAppArmOperation<NetAppVolumeQuotaRuleResource>(
-                    new NetAppVolumeQuotaRuleOperationSource(Client),
+                    new NetAppVolumeQuotaRuleResourceOperationSource(Client),
                     _volumeQuotaRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _volumeQuotaRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumeQuotaRulePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppVolumeQuotaRuleResource> operation = new NetAppArmOperation<NetAppVolumeQuotaRuleResource>(
-                    new NetAppVolumeQuotaRuleOperationSource(Client),
+                    new NetAppVolumeQuotaRuleResourceOperationSource(Client),
                     _volumeQuotaRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

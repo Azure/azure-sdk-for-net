@@ -63,7 +63,6 @@ docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 
 ```C# Snippet:Sample_CreateAgentClient_HostedAgent
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
 var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 Uri uriEndpoint = new(projectEndpoint);
 DefaultAzureCredential credential = new();
@@ -81,7 +80,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage)
     };
     return agentDefinition;
 }
@@ -197,10 +196,10 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:DeleteHostedAgent_HostedAgent_Sync
-projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
+projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteHostedAgent_HostedAgent_Async
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
+await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
 ```

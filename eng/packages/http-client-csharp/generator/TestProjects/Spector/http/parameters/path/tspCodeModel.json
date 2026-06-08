@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "PathClient",
+      "isExactName": false,
       "namespace": "Parameters.Path",
       "doc": "Test for path parameters cases.",
       "methods": [
@@ -16,11 +17,13 @@
           "$id": "2",
           "kind": "basic",
           "name": "normal",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "normal",
+            "isExactName": false,
             "resourceName": "Path",
             "accessibility": "public",
             "parameters": [
@@ -66,9 +69,11 @@
                     "crossLanguageDefinitionId": "Parameters.Path.normal.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -106,11 +111,13 @@
           "$id": "8",
           "kind": "basic",
           "name": "optional",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "9",
             "name": "optional",
+            "isExactName": false,
             "resourceName": "Path",
             "accessibility": "public",
             "parameters": [
@@ -156,9 +163,11 @@
                     "crossLanguageDefinitionId": "Parameters.Path.optional.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -222,7 +231,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Path.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Path.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

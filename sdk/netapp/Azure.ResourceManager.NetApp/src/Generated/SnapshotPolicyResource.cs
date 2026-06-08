@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _snapshotPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SnapshotPolicyPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<SnapshotPolicyResource> operation = new NetAppArmOperation<SnapshotPolicyResource>(
-                    new SnapshotPolicyOperationSource(Client),
+                    new SnapshotPolicyResourceOperationSource(Client),
                     _snapshotPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _snapshotPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SnapshotPolicyPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<SnapshotPolicyResource> operation = new NetAppArmOperation<SnapshotPolicyResource>(
-                    new SnapshotPolicyOperationSource(Client),
+                    new SnapshotPolicyResourceOperationSource(Client),
                     _snapshotPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

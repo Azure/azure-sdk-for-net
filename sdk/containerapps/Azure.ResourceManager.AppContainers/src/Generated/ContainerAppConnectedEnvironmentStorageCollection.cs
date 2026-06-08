@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, ContainerAppConnectedEnvironmentStorageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(
-                    new ContainerAppConnectedEnvironmentStorageOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentStorageResourceOperationSource(Client),
                     _connectedEnvironmentsStoragesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, ContainerAppConnectedEnvironmentStorageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(
-                    new ContainerAppConnectedEnvironmentStorageOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentStorageResourceOperationSource(Client),
                     _connectedEnvironmentsStoragesClientDiagnostics,
                     Pipeline,
                     message.Request,

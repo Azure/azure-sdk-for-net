@@ -105,7 +105,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutinesRequest(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetRoutinesRequest(string foundryFeatures, int? limit, string after, string before, string order, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -114,10 +114,6 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
-            {
-                uri.AppendQuery("order", order, true);
-            }
             if (after != null)
             {
                 uri.AppendQuery("after", after, true);
@@ -125,6 +121,10 @@ namespace Azure.AI.Projects
             if (before != null)
             {
                 uri.AppendQuery("before", before, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
             }
             if (_apiVersion != null)
             {
@@ -161,7 +161,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutineRunsRequest(string routineName, string foundryFeatures, string filter, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetRoutineRunsRequest(string routineName, string foundryFeatures, string filter, int? limit, string after, string before, string order, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -176,10 +176,6 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
             }
-            if (order != null)
-            {
-                uri.AppendQuery("order", order, true);
-            }
             if (after != null)
             {
                 uri.AppendQuery("after", after, true);
@@ -187,6 +183,10 @@ namespace Azure.AI.Projects
             if (before != null)
             {
                 uri.AppendQuery("before", before, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
             }
             if (_apiVersion != null)
             {
@@ -203,7 +203,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDispatchRoutineAsyncRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDispatchAsyncRoutineRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

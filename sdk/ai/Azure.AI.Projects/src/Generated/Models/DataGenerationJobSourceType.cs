@@ -17,8 +17,6 @@ namespace Azure.AI.Projects
         private const string AgentValue = "agent";
         /// <summary> Traces source — conversation traces from Application Insights. </summary>
         private const string TracesValue = "traces";
-        /// <summary> Dataset source — reference to a dataset. </summary>
-        private const string DatasetValue = "dataset";
         /// <summary> File source — Azure OpenAI file. </summary>
         private const string FileValue = "file";
 
@@ -40,9 +38,6 @@ namespace Azure.AI.Projects
 
         /// <summary> Traces source — conversation traces from Application Insights. </summary>
         public static DataGenerationJobSourceType Traces { get; } = new DataGenerationJobSourceType(TracesValue);
-
-        /// <summary> Dataset source — reference to a dataset. </summary>
-        public static DataGenerationJobSourceType Dataset { get; } = new DataGenerationJobSourceType(DatasetValue);
 
         /// <summary> File source — Azure OpenAI file. </summary>
         public static DataGenerationJobSourceType File { get; } = new DataGenerationJobSourceType(FileValue);

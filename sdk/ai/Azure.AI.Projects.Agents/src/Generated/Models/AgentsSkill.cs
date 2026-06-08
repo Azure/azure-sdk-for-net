@@ -7,52 +7,50 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A skill object. </summary>
+    /// <summary> A skill resource. </summary>
     public partial class AgentsSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentsSkill"/>. </summary>
-        /// <param name="skillId"> The unique identifier of the skill. </param>
-        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
+        /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
-        internal AgentsSkill(string skillId, bool hasBlob, string name)
+        /// <param name="description"> A human-readable description of the skill. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
+        /// <param name="latestVersion"> The latest version for the skill. </param>
+        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdAt, string defaultVersion, string latestVersion)
         {
-            SkillId = skillId;
-            HasBlob = hasBlob;
+            Id = id;
             Name = name;
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Description = description;
+            CreatedAt = createdAt;
+            DefaultVersion = defaultVersion;
+            LatestVersion = latestVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentsSkill"/>. </summary>
-        /// <param name="skillId"> The unique identifier of the skill. </param>
-        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
+        /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
+        /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsSkill(string skillId, bool hasBlob, string name, string description, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdAt, string defaultVersion, string latestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SkillId = skillId;
-            HasBlob = hasBlob;
+            Id = id;
             Name = name;
             Description = description;
-            Metadata = metadata;
+            CreatedAt = createdAt;
+            DefaultVersion = defaultVersion;
+            LatestVersion = latestVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique identifier of the skill. </summary>
-        public string SkillId { get; }
-
-        /// <summary> Whether the skill was created from a zip blob package. </summary>
-        public bool HasBlob { get; }
+        public string Id { get; }
 
         /// <summary> The unique name of the skill. </summary>
         public string Name { get; }
@@ -60,13 +58,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A human-readable description of the skill. </summary>
         public string Description { get; }
 
-        /// <summary>
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; }
+        /// <summary> The Unix timestamp (seconds) when the skill was created. </summary>
+        public DateTimeOffset CreatedAt { get; }
+
+        /// <summary> The default version for the skill. Can be changed via updateSkill. </summary>
+        public string DefaultVersion { get; }
+
+        /// <summary> The latest version for the skill. </summary>
+        public string LatestVersion { get; }
     }
 }

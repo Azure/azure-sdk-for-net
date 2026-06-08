@@ -129,6 +129,13 @@ public partial class AIProjectMemoryStores
             cancellationToken.ToRequestOptions());
     }
 
+    /// <summary> Submit an update to the specified memory store. </summary>
+    /// <param name="memoryStoreName"> The ID of the memory store to update. </param>
+    /// <param name="options"> Memory update options. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="options"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="memoryStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<MemoryUpdateResult>> UpdateMemoriesAsync(string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(memoryStoreName, nameof(memoryStoreName));
@@ -138,6 +145,13 @@ public partial class AIProjectMemoryStores
         return ClientResult.FromValue((MemoryUpdateResult)protocolResult, protocolResult.GetRawResponse());
     }
 
+    /// <summary> Submit an update to the specified memory store. </summary>
+    /// <param name="memoryStoreName"> The ID of the memory store to update. </param>
+    /// <param name="options"> Memory update options. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="options"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="memoryStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<MemoryUpdateResult> UpdateMemories(string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(memoryStoreName, nameof(memoryStoreName));

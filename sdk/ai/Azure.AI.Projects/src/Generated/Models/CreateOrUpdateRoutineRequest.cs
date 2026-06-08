@@ -14,12 +14,9 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CreateOrUpdateRoutineRequest"/>. </summary>
-        /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
-        /// <param name="action"> The action executed when the routine fires. </param>
-        internal CreateOrUpdateRoutineRequest(IDictionary<string, RoutineTrigger> triggers, RoutineAction action)
+        internal CreateOrUpdateRoutineRequest()
         {
-            Triggers = triggers;
-            Action = action;
+            Triggers = new ChangeTrackingDictionary<string, RoutineTrigger>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateOrUpdateRoutineRequest"/>. </summary>
