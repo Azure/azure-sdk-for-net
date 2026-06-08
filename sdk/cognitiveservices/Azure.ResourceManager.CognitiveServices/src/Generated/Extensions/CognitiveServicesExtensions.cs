@@ -561,39 +561,39 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComputeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CognitiveServicesComputeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetComputeResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesComputeResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeResource"/> object. </returns>
-        public static ComputeResource GetComputeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesComputeResource"/> object. </returns>
+        public static CognitiveServicesComputeResource GetCognitiveServicesComputeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCognitiveServicesArmClient(client).GetComputeResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesComputeResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkbenchResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CognitiveServicesWorkbenchResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetWorkbenchResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesWorkbenchResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkbenchResource"/> object. </returns>
-        public static WorkbenchResource GetWorkbenchResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesWorkbenchResource"/> object. </returns>
+        public static CognitiveServicesWorkbenchResource GetCognitiveServicesWorkbenchResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCognitiveServicesArmClient(client).GetWorkbenchResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesWorkbenchResource(id);
         }
 
         /// <summary>

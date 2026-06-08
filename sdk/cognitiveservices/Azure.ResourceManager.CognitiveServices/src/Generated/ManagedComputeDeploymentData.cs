@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedComputeDeploymentProperties properties, CognitiveServicesSku sku, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ManagedComputeDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedComputeDeploymentProperties properties, CognitiveServicesSku sku, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Sku = sku;
@@ -51,6 +52,6 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
     }
 }

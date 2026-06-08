@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ComputeData item in Value)
+                foreach (CognitiveServicesComputeData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<ComputeData> value = default;
+            IList<CognitiveServicesComputeData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ComputeData> array = new List<ComputeData>();
+                    List<CognitiveServicesComputeData> array = new List<CognitiveServicesComputeData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeData.DeserializeComputeData(item, options));
+                        array.Add(CognitiveServicesComputeData.DeserializeCognitiveServicesComputeData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeListResult(nextLink, value ?? new ChangeTrackingList<ComputeData>(), additionalBinaryDataProperties);
+            return new ComputeListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesComputeData>(), additionalBinaryDataProperties);
         }
     }
 }

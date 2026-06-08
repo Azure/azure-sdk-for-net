@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             ContentFilters = new ChangeTrackingList<RaiPolicyContentFilter>();
             CustomBlocklists = new ChangeTrackingList<CustomBlocklistConfig>();
-            SafetyProviders = new ChangeTrackingList<SafetyProviderConfig>();
+            SafetyProviders = new ChangeTrackingList<RaiSafetyProviderSourceConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
         /// <param name="safetyProviders"> The list of Safety Providers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<SafetyProviderConfig> safetyProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<RaiSafetyProviderSourceConfig> safetyProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyType = policyType;
             Mode = mode;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The list of Safety Providers. </summary>
         [WirePath("safetyProviders")]
-        public IList<SafetyProviderConfig> SafetyProviders { get; }
+        public IList<RaiSafetyProviderSourceConfig> SafetyProviders { get; }
     }
 }

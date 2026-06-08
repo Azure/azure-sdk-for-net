@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ComputeListResult"/>. </summary>
         internal ComputeListResult()
         {
-            Value = new ChangeTrackingList<ComputeData>();
+            Value = new ChangeTrackingList<CognitiveServicesComputeData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of compute list. </param>
         /// <param name="value"> Gets the list of computes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeListResult(string nextLink, IList<ComputeData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeListResult(string nextLink, IList<CognitiveServicesComputeData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets the list of computes. </summary>
         [WirePath("value")]
-        public IList<ComputeData> Value { get; }
+        public IList<CognitiveServicesComputeData> Value { get; }
     }
 }

@@ -287,22 +287,22 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new ManagedComputeDeploymentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesComputeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComputeResource"/> object. </returns>
-        public virtual ComputeResource GetComputeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesComputeResource"/> object. </returns>
+        public virtual CognitiveServicesComputeResource GetCognitiveServicesComputeResource(ResourceIdentifier id)
         {
-            ComputeResource.ValidateResourceId(id);
-            return new ComputeResource(Client, id);
+            CognitiveServicesComputeResource.ValidateResourceId(id);
+            return new CognitiveServicesComputeResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WorkbenchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesWorkbenchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkbenchResource"/> object. </returns>
-        public virtual WorkbenchResource GetWorkbenchResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesWorkbenchResource"/> object. </returns>
+        public virtual CognitiveServicesWorkbenchResource GetCognitiveServicesWorkbenchResource(ResourceIdentifier id)
         {
-            WorkbenchResource.ValidateResourceId(id);
-            return new WorkbenchResource(Client, id);
+            CognitiveServicesWorkbenchResource.ValidateResourceId(id);
+            return new CognitiveServicesWorkbenchResource(Client, id);
         }
     }
 }

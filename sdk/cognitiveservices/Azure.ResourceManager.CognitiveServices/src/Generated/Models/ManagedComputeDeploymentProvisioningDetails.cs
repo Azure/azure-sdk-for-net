@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentProvisioningDetails"/>. </summary>
         /// <param name="message"> A human-readable status message from the last provisioning operation. </param>
-        /// <param name="lastOperationTimestamp"> Timestamp of the last provisioning operation. </param>
+        /// <param name="lastOperationOn"> Timestamp of the last provisioning operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentProvisioningDetails(string message, DateTimeOffset? lastOperationTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedComputeDeploymentProvisioningDetails(string message, DateTimeOffset? lastOperationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
-            LastOperationTimestamp = lastOperationTimestamp;
+            LastOperationOn = lastOperationOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Timestamp of the last provisioning operation. </summary>
         [WirePath("lastOperationTimestamp")]
-        public DateTimeOffset? LastOperationTimestamp { get; }
+        public DateTimeOffset? LastOperationOn { get; }
     }
 }

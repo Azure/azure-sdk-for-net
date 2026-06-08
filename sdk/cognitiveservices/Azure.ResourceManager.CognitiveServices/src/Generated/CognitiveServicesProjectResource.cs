@@ -778,11 +778,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCognitiveServicesAgentApplications().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Workbenches in the <see cref="CognitiveServicesProjectResource"/>. </summary>
-        /// <returns> An object representing collection of Workbenches and their operations over a WorkbenchResource. </returns>
-        public virtual WorkbenchCollection GetWorkbenches()
+        /// <summary> Gets a collection of CognitiveServicesWorkbenches in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesWorkbenches and their operations over a CognitiveServicesWorkbenchResource. </returns>
+        public virtual CognitiveServicesWorkbenchCollection GetCognitiveServicesWorkbenches()
         {
-            return GetCachedClient(client => new WorkbenchCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesWorkbenchCollection(client, Id));
         }
 
         /// <summary> Gets the specified workbench associated with the project. </summary>
@@ -791,11 +791,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkbenchResource>> GetWorkbenchAsync(string workbenchName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesWorkbenchResource>> GetCognitiveServicesWorkbenchAsync(string workbenchName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
 
-            return await GetWorkbenches().GetAsync(workbenchName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesWorkbenches().GetAsync(workbenchName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified workbench associated with the project. </summary>
@@ -804,11 +804,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkbenchResource> GetWorkbench(string workbenchName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesWorkbenchResource> GetCognitiveServicesWorkbench(string workbenchName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
 
-            return GetWorkbenches().Get(workbenchName, cancellationToken);
+            return GetCognitiveServicesWorkbenches().Get(workbenchName, cancellationToken);
         }
     }
 }

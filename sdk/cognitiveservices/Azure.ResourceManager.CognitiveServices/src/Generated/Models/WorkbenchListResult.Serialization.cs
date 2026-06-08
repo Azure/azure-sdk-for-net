@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (WorkbenchData item in Value)
+                foreach (CognitiveServicesWorkbenchData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<WorkbenchData> value = default;
+            IList<CognitiveServicesWorkbenchData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<WorkbenchData> array = new List<WorkbenchData>();
+                    List<CognitiveServicesWorkbenchData> array = new List<CognitiveServicesWorkbenchData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WorkbenchData.DeserializeWorkbenchData(item, options));
+                        array.Add(CognitiveServicesWorkbenchData.DeserializeCognitiveServicesWorkbenchData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkbenchListResult(nextLink, value ?? new ChangeTrackingList<WorkbenchData>(), additionalBinaryDataProperties);
+            return new WorkbenchListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesWorkbenchData>(), additionalBinaryDataProperties);
         }
     }
 }

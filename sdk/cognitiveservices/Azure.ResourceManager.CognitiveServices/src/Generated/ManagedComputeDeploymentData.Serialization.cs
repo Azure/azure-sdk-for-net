@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices
             SystemData systemData = default;
             ManagedComputeDeploymentProperties properties = default;
             CognitiveServicesSku sku = default;
-            string eTag = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

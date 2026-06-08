@@ -14,7 +14,7 @@ using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class WorkbenchesGetAllCollectionResultOfT : Pageable<WorkbenchData>
+    internal partial class WorkbenchesGetAllCollectionResultOfT : Pageable<CognitiveServicesWorkbenchData>
     {
         private readonly Workbenches _client;
         private readonly string _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkbenchesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WorkbenchData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesWorkbenchData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     yield break;
                 }
                 WorkbenchListResult result = WorkbenchListResult.FromResponse(response);
-                yield return Page<WorkbenchData>.FromValues((IReadOnlyList<WorkbenchData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CognitiveServicesWorkbenchData>.FromValues((IReadOnlyList<CognitiveServicesWorkbenchData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

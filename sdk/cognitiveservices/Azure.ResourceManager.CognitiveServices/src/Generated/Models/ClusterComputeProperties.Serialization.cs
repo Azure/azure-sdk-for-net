@@ -16,7 +16,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties for a Cluster (AKS-backed) compute resource. </summary>
-    public partial class ClusterComputeProperties : ComputeProperties, IJsonModel<ClusterComputeProperties>
+    public partial class ClusterComputeProperties : CognitiveServicesComputeProperties, IJsonModel<ClusterComputeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ClusterComputeProperties"/> for deserialization. </summary>
         internal ClusterComputeProperties()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CognitiveServicesComputeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClusterComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("pools"u8);
             writer.WriteStartArray();
-            foreach (Pool item in Pools)
+            foreach (CognitiveServicesComputePool item in Pools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CognitiveServicesComputeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClusterComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<Pool> pools = default;
+            IList<CognitiveServicesComputePool> pools = default;
             string subnetArmId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("pools"u8))
                 {
-                    List<Pool> array = new List<Pool>();
+                    List<CognitiveServicesComputePool> array = new List<CognitiveServicesComputePool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Pool.DeserializePool(item, options));
+                        array.Add(CognitiveServicesComputePool.DeserializeCognitiveServicesComputePool(item, options));
                     }
                     pools = array;
                     continue;

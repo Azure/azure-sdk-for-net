@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EvaluateDeploymentPoliciesResponse>> EvaluateDeploymentPoliciesAsync(EvaluateDeploymentPoliciesRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EvaluateDeploymentPoliciesResult>> EvaluateDeploymentPoliciesAsync(EvaluateDeploymentPoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -551,9 +551,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateEvaluateDeploymentPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EvaluateDeploymentPoliciesRequest.ToRequestContent(content), context);
+                HttpMessage message = _accountsRestClient.CreateEvaluateDeploymentPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EvaluateDeploymentPoliciesContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EvaluateDeploymentPoliciesResponse> response = Response.FromValue(EvaluateDeploymentPoliciesResponse.FromResponse(result), result);
+                Response<EvaluateDeploymentPoliciesResult> response = Response.FromValue(EvaluateDeploymentPoliciesResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EvaluateDeploymentPoliciesResponse> EvaluateDeploymentPolicies(EvaluateDeploymentPoliciesRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<EvaluateDeploymentPoliciesResult> EvaluateDeploymentPolicies(EvaluateDeploymentPoliciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -603,9 +603,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateEvaluateDeploymentPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EvaluateDeploymentPoliciesRequest.ToRequestContent(content), context);
+                HttpMessage message = _accountsRestClient.CreateEvaluateDeploymentPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EvaluateDeploymentPoliciesContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EvaluateDeploymentPoliciesResponse> response = Response.FromValue(EvaluateDeploymentPoliciesResponse.FromResponse(result), result);
+                Response<EvaluateDeploymentPoliciesResult> response = Response.FromValue(EvaluateDeploymentPoliciesResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1896,11 +1896,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetManagedComputeDeployments().Get(deploymentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Computes in the <see cref="CognitiveServicesAccountResource"/>. </summary>
-        /// <returns> An object representing collection of Computes and their operations over a ComputeResource. </returns>
-        public virtual ComputeCollection GetComputes()
+        /// <summary> Gets a collection of CognitiveServicesComputes in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesComputes and their operations over a CognitiveServicesComputeResource. </returns>
+        public virtual CognitiveServicesComputeCollection GetCognitiveServicesComputes()
         {
-            return GetCachedClient(client => new ComputeCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesComputeCollection(client, Id));
         }
 
         /// <summary> Gets the specified compute associated with the Cognitive Services account. </summary>
@@ -1909,11 +1909,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ComputeResource>> GetComputeAsync(string computeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesComputeResource>> GetCognitiveServicesComputeAsync(string computeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(computeName, nameof(computeName));
 
-            return await GetComputes().GetAsync(computeName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesComputes().GetAsync(computeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified compute associated with the Cognitive Services account. </summary>
@@ -1922,11 +1922,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ComputeResource> GetCompute(string computeName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesComputeResource> GetCognitiveServicesCompute(string computeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(computeName, nameof(computeName));
 
-            return GetComputes().Get(computeName, cancellationToken);
+            return GetCognitiveServicesComputes().Get(computeName, cancellationToken);
         }
     }
 }

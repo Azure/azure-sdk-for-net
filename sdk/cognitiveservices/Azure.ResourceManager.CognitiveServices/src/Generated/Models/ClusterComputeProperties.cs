@@ -14,12 +14,12 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties for a Cluster (AKS-backed) compute resource. </summary>
-    public partial class ClusterComputeProperties : ComputeProperties
+    public partial class ClusterComputeProperties : CognitiveServicesComputeProperties
     {
         /// <summary> Initializes a new instance of <see cref="ClusterComputeProperties"/>. </summary>
         /// <param name="pools"> Pools attached to this compute cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pools"/> is null. </exception>
-        public ClusterComputeProperties(IEnumerable<Pool> pools) : base(ComputeType.Cluster)
+        public ClusterComputeProperties(IEnumerable<CognitiveServicesComputePool> pools) : base(ComputeType.Cluster)
         {
             Argument.AssertNotNull(pools, nameof(pools));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pools"> Pools attached to this compute cluster. </param>
         /// <param name="subnetArmId"> ARM ID of the subnet used for compute. </param>
-        internal ClusterComputeProperties(ComputeType computeType, ComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Pool> pools, string subnetArmId) : base(computeType, provisioningState, errors, createdOn, additionalBinaryDataProperties)
+        internal ClusterComputeProperties(ComputeType computeType, ComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CognitiveServicesComputePool> pools, string subnetArmId) : base(computeType, provisioningState, errors, createdOn, additionalBinaryDataProperties)
         {
             Pools = pools;
             SubnetArmId = subnetArmId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Pools attached to this compute cluster. </summary>
         [WirePath("pools")]
-        public IList<Pool> Pools { get; }
+        public IList<CognitiveServicesComputePool> Pools { get; }
 
         /// <summary> ARM ID of the subnet used for compute. </summary>
         [WirePath("subnetArmId")]

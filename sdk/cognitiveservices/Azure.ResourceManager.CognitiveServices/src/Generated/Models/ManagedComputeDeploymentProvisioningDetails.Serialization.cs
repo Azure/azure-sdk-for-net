@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(LastOperationTimestamp))
+            if (Optional.IsDefined(LastOperationOn))
             {
                 writer.WritePropertyName("lastOperationTimestamp"u8);
-                writer.WriteStringValue(LastOperationTimestamp.Value, "O");
+                writer.WriteStringValue(LastOperationOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string message = default;
-            DateTimeOffset? lastOperationTimestamp = default;
+            DateTimeOffset? lastOperationOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    lastOperationTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastOperationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedComputeDeploymentProvisioningDetails(message, lastOperationTimestamp, additionalBinaryDataProperties);
+            return new ManagedComputeDeploymentProvisioningDetails(message, lastOperationOn, additionalBinaryDataProperties);
         }
     }
 }

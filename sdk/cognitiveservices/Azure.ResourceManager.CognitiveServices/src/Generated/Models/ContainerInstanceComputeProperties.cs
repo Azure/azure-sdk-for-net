@@ -13,7 +13,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties for a Container Instance compute resource. </summary>
-    public partial class ContainerInstanceComputeProperties : ComputeProperties
+    public partial class ContainerInstanceComputeProperties : CognitiveServicesComputeProperties
     {
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceComputeProperties"/>. </summary>
         /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this container instance. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle instance is automatically shut down (e.g., 'PT30M'). </param>
         /// <param name="sshSettings"> SSH configuration for remote access to the container instance. </param>
         /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the container instance. </param>
-        internal ContainerInstanceComputeProperties(ComputeType computeType, ComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string targetClusterId, string imageLink, string idleTimeBeforeShutdown, SshSettings sshSettings, ConnectivityEndpoints connectivityEndpoints) : base(computeType, provisioningState, errors, createdOn, additionalBinaryDataProperties)
+        internal ContainerInstanceComputeProperties(ComputeType computeType, ComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string targetClusterId, string imageLink, string idleTimeBeforeShutdown, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints) : base(computeType, provisioningState, errors, createdOn, additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             ImageLink = imageLink;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> SSH configuration for remote access to the container instance. </summary>
         [WirePath("sshSettings")]
-        public SshSettings SshSettings { get; set; }
+        public CognitiveServicesComputeSshSettings SshSettings { get; set; }
 
         /// <summary> Network connectivity endpoints assigned to the container instance. </summary>
         [WirePath("connectivityEndpoints")]
-        public ConnectivityEndpoints ConnectivityEndpoints { get; }
+        public CognitiveServicesComputeConnectivityEndpoints ConnectivityEndpoints { get; }
     }
 }

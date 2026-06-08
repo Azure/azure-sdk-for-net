@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="availableAccelerators"> The number of available accelerators in the region. </param>
         /// <param name="deploymentSizeCapacities"> Capacity information broken down by deployment size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeCapacityProperties(string acceleratorType, string location, int? availableAccelerators, IReadOnlyList<DeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedComputeCapacityProperties(string acceleratorType, AzureLocation? location, int? availableAccelerators, IReadOnlyList<DeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AcceleratorType = acceleratorType;
             Location = location;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The Azure region where the capacity is available. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The number of available accelerators in the region. </summary>
         [WirePath("availableAccelerators")]

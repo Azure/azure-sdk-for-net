@@ -16,7 +16,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties for a Container Instance compute resource. </summary>
-    public partial class ContainerInstanceComputeProperties : ComputeProperties, IJsonModel<ContainerInstanceComputeProperties>
+    public partial class ContainerInstanceComputeProperties : CognitiveServicesComputeProperties, IJsonModel<ContainerInstanceComputeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceComputeProperties"/> for deserialization. </summary>
         internal ContainerInstanceComputeProperties()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CognitiveServicesComputeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CognitiveServicesComputeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string targetClusterId = default;
             string imageLink = default;
             string idleTimeBeforeShutdown = default;
-            SshSettings sshSettings = default;
-            ConnectivityEndpoints connectivityEndpoints = default;
+            CognitiveServicesComputeSshSettings sshSettings = default;
+            CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("computeType"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    sshSettings = SshSettings.DeserializeSshSettings(prop.Value, options);
+                    sshSettings = CognitiveServicesComputeSshSettings.DeserializeCognitiveServicesComputeSshSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectivityEndpoints"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    connectivityEndpoints = ConnectivityEndpoints.DeserializeConnectivityEndpoints(prop.Value, options);
+                    connectivityEndpoints = CognitiveServicesComputeConnectivityEndpoints.DeserializeCognitiveServicesComputeConnectivityEndpoints(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

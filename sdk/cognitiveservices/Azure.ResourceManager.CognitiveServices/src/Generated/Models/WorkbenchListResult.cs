@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="WorkbenchListResult"/>. </summary>
         internal WorkbenchListResult()
         {
-            Value = new ChangeTrackingList<WorkbenchData>();
+            Value = new ChangeTrackingList<CognitiveServicesWorkbenchData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkbenchListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of workbench list. </param>
         /// <param name="value"> Gets the list of workbenches. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkbenchListResult(string nextLink, IList<WorkbenchData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkbenchListResult(string nextLink, IList<CognitiveServicesWorkbenchData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets the list of workbenches. </summary>
         [WirePath("value")]
-        public IList<WorkbenchData> Value { get; }
+        public IList<CognitiveServicesWorkbenchData> Value { get; }
     }
 }
