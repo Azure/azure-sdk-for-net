@@ -57,3 +57,5 @@ namespace Azure.AI.TextAnalytics
         public int? SentenceCount { get; set; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

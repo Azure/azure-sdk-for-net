@@ -105,3 +105,5 @@ namespace Azure.AI.DocumentIntelligence
         public ICollection<AnalyzeOutputOption> Output { get; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

@@ -94,3 +94,5 @@ namespace Azure.ResourceManager.Reservations
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
