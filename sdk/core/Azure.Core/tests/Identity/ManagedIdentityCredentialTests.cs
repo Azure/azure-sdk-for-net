@@ -296,7 +296,13 @@ namespace Azure.Core.Tests.Identity
                     return CreateSuccessResponse(ExpectedToken);
                 }
             });
-            var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: true);
+            // Build directly with MockMsalManagedIdentityClient so this test is not sensitive
+            // to MSAL static-cache state set by earlier tests (e.g. mTLS token-binding tests that
+            // populate ImdsV2ManagedIdentitySource.s_mtlsCertificateCache and cause MSAL to skip
+            // WithHttpClientFactory, bypassing the mock transport).
+            mockTransport.AutoHandleImdsProbeRequests = true;
+            var credOptions = new TokenCredentialOptions { Transport = mockTransport, IsChainedCredential = true };
+            var credential = BuildManagedIdentityCredential(credOptions, ResolveManagedIdentityId("mock-client-id"));
 
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             int probeCountAfterFirstRequest = probeCount;
