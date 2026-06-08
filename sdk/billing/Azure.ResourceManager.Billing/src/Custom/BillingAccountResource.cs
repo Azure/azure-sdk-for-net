@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +28,13 @@ namespace Azure.ResourceManager.Billing
     // emits methods with individual query parameters (Get*ByBillingAccount);
     // these shims forward the aggregate to the generated method so existing
     // call sites keep working. No tracking issue — purely a back-compat shim.
+    //
+    // GetByBillingAccountSavingsPlan{Async}: the C# emitter cannot generate this
+    // operation while the spec keeps `SavingsPlanModelListResult extends
+    // SavingsPlanModelList is Page<SavingsPlanModel>` unchanged for swagger.
+    // Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/59567
+    // TODO(#59567): delete the custom REST/paging shim once MPG resolves the
+    // inherited Page<> items-property lookup and the `!csharp` scope is removed.
     [CodeGenSuppress("CancelPaymentTermsAsync", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
     [CodeGenSuppress("CancelPaymentTerms", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
     public partial class BillingAccountResource
@@ -126,5 +132,97 @@ namespace Azure.ResourceManager.Billing
                 throw;
             }
         }
+
+        /// <summary>
+        /// List savings plans by billing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlans_ListByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlanAsync(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new BillingAccountResourceGetByBillingAccountSavingsPlanOptions();
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(
+                new SavingsPlansGetByBillingAccountAsyncCollectionResultOfT(BillingSavingsPlansClient, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.Take, options.SelectedState, options.RefreshSummary, context, "BillingAccountResource.GetByBillingAccountSavingsPlan"),
+                data => new BillingSavingsPlanModelResource(Client, data));
+        }
+
+        /// <summary>
+        /// List savings plans by billing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlans_ListByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingSavingsPlanModelResource> GetByBillingAccountSavingsPlan(BillingAccountResourceGetByBillingAccountSavingsPlanOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new BillingAccountResourceGetByBillingAccountSavingsPlanOptions();
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(
+                new SavingsPlansGetByBillingAccountCollectionResultOfT(BillingSavingsPlansClient, Id.Name, options.Filter, options.OrderBy, options.Skiptoken, options.Take, options.SelectedState, options.RefreshSummary, context, "BillingAccountResource.GetByBillingAccountSavingsPlan"),
+                data => new BillingSavingsPlanModelResource(Client, data));
+        }
+
+        private SavingsPlans BillingSavingsPlansClient
+        {
+            get
+            {
+                _billingSavingsPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSavingsPlanModelResource.ResourceType.Namespace, Diagnostics);
+                if (_billingSavingsPlansRestClient is null)
+                {
+                    TryGetApiVersion(BillingSavingsPlanModelResource.ResourceType, out string billingSavingsPlanModelApiVersion);
+                    _billingSavingsPlansRestClient = new SavingsPlans(_billingSavingsPlansClientDiagnostics, Pipeline, Endpoint, billingSavingsPlanModelApiVersion ?? "2024-04-01");
+                }
+
+                return _billingSavingsPlansRestClient;
+            }
+        }
+
+        private ClientDiagnostics _billingSavingsPlansClientDiagnostics;
+        private SavingsPlans _billingSavingsPlansRestClient;
     }
 }

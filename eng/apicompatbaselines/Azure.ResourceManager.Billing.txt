@@ -17,14 +17,3 @@ CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribu
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch.EnrollmentAccountStartOn' changed from '[WirePathAttribute("properties.enrollmentAccountStartDate")]' in the contract to '[WirePathAttribute("properties.enrollmentAccountSubscriptionDetails.enrollmentAccountStartDate")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch.SubscriptionEnrollmentAccountStatus' changed from '[WirePathAttribute("properties.subscriptionEnrollmentAccountStatus")]' in the contract to '[WirePathAttribute("properties.enrollmentAccountSubscriptionDetails.subscriptionEnrollmentAccountStatus")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.Models.ReservationPurchaseRequest.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility' changed from '[WirePathAttribute("properties.instanceFlexibility")]' in the contract to '[WirePathAttribute("properties.reservedResourceProperties.instanceFlexibility")]' in the implementation.
-
-# BillingAccountResource.GetByBillingAccountSavingsPlan{,Async} — the operation cannot be
-# emitted for C# because the spec's `SavingsPlanModelList is Page<SavingsPlanModel>` pattern
-# (via savingsPlansListByBillingAccount) is rejected by the management-plane emitter (it
-# cannot resolve inherited value/nextLink properties through the legacy Page<> envelope).
-# We drop the operation from C# emission via `@@scope(BillingAccounts.savingsPlansListByBillingAccount, "!csharp")`
-# in client.tsp; a Custom shim cannot replace it because the underlying REST client method
-# is also gone. GA 1.2.2 users of GetByBillingAccountSavingsPlan must migrate to
-# BillingSavingsPlanModelCollection.GetAll on a BillingAccountResource child collection.
-MembersMustExist : Member 'public Azure.Pageable<Azure.ResourceManager.Billing.BillingSavingsPlanModelResource> Azure.ResourceManager.Billing.BillingAccountResource.GetByBillingAccountSavingsPlan(Azure.ResourceManager.Billing.Models.BillingAccountResourceGetByBillingAccountSavingsPlanOptions, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.AsyncPageable<Azure.ResourceManager.Billing.BillingSavingsPlanModelResource> Azure.ResourceManager.Billing.BillingAccountResource.GetByBillingAccountSavingsPlanAsync(Azure.ResourceManager.Billing.Models.BillingAccountResourceGetByBillingAccountSavingsPlanOptions, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
