@@ -16,6 +16,7 @@ internal static class CandidateResolver
     private const string ApiVersion = "2025-11-15-preview";
     private const string AuthScope = "https://ai.azure.com/.default";
 
+    private static readonly object s_lock = new();
     private static readonly HashSet<string> s_downloaded = new();
 
     /// <summary>
@@ -28,11 +29,14 @@ internal static class CandidateResolver
         TokenCredential? credential,
         CancellationToken cancellationToken = default)
     {
-        if (s_downloaded.Contains(candidateId))
+        lock (s_lock)
         {
-            if (localDir is not null && Directory.Exists(Path.Combine(localDir, candidateId)))
-                return null;
-            s_downloaded.Remove(candidateId);
+            if (s_downloaded.Contains(candidateId))
+            {
+                if (localDir is not null && Directory.Exists(Path.Combine(localDir, candidateId)))
+                    return null;
+                s_downloaded.Remove(candidateId);
+            }
         }
 
         var pipeline = BuildPipeline(endpoint, credential);
@@ -53,7 +57,10 @@ internal static class CandidateResolver
             }
         }
 
-        s_downloaded.Add(candidateId);
+        lock (s_lock)
+        {
+            s_downloaded.Add(candidateId);
+        }
         return config;
     }
 

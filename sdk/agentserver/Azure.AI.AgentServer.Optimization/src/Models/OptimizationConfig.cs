@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text;
+using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -11,11 +12,23 @@ namespace Azure.AI.AgentServer.Optimization;
 /// </summary>
 public class OptimizationConfig
 {
-    // ── Environment variable names ──────────────────────────────────
-    internal const string EnvCandidateId = "OPTIMIZATION_CANDIDATE_ID";
-    internal const string EnvConfig = "OPTIMIZATION_CONFIG";
-    internal const string EnvLocalDir = "OPTIMIZATION_LOCAL_DIR";
-    internal const string EnvResolveEndpoint = "OPTIMIZATION_RESOLVE_ENDPOINT";
+    /// <summary>Environment variable name for inline JSON config (Priority 1).</summary>
+    public const string EnvironmentVariableConfig = "OPTIMIZATION_CONFIG";
+
+    /// <summary>Environment variable name for the candidate ID (Priority 2).</summary>
+    public const string EnvironmentVariableCandidateId = "OPTIMIZATION_CANDIDATE_ID";
+
+    /// <summary>Environment variable name for the resolver API endpoint (Priority 2).</summary>
+    public const string EnvironmentVariableResolveEndpoint = "OPTIMIZATION_RESOLVE_ENDPOINT";
+
+    /// <summary>Environment variable name for the local config directory override (Priority 3).</summary>
+    public const string EnvironmentVariableLocalDir = "OPTIMIZATION_LOCAL_DIR";
+
+    // ── Internal aliases for backward compat ────────────────────────
+    internal const string EnvCandidateId = EnvironmentVariableCandidateId;
+    internal const string EnvConfig = EnvironmentVariableConfig;
+    internal const string EnvLocalDir = EnvironmentVariableLocalDir;
+    internal const string EnvResolveEndpoint = EnvironmentVariableResolveEndpoint;
 
     // ── Default paths / filenames ───────────────────────────────────
     internal const string DefaultLocalDir = ".agent_configs";
@@ -74,7 +87,7 @@ public class OptimizationConfig
     public string? CandidateId { get; }
 
     /// <summary>
-    /// Whether this config carries any skill data (inline or via directory).
+    /// Gets a value indicating whether this config carries any skill data (inline or via directory).
     /// </summary>
     public bool HasSkills => Skills.Count > 0 || SkillsDirectory is not null;
 
@@ -89,18 +102,17 @@ public class OptimizationConfig
         {
             try
             {
-                using var doc = System.Text.Json.JsonDocument.Parse(tool);
-                var root = doc.RootElement;
-                if (root.TryGetProperty("function", out var func) &&
+                using var doc = JsonDocument.Parse(tool);
+                if (doc.RootElement.TryGetProperty("function", out var func) &&
                     func.TryGetProperty("name", out var nameProp) &&
-                    nameProp.ValueKind == System.Text.Json.JsonValueKind.String)
+                    nameProp.ValueKind == JsonValueKind.String)
                 {
                     string? name = nameProp.GetString();
                     if (!string.IsNullOrEmpty(name))
                         lookup[name] = tool;
                 }
             }
-            catch (System.Text.Json.JsonException)
+            catch (JsonException)
             {
                 // Skip malformed tool definitions
             }
@@ -113,25 +125,27 @@ public class OptimizationConfig
     /// </summary>
     /// <param name="functionName">The function name to look up.</param>
     /// <returns>The optimized description, or <c>null</c> if not found.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="functionName"/> is null.</exception>
     public string? GetToolDescription(string functionName)
     {
+        ArgumentException.ThrowIfNullOrEmpty(functionName, nameof(functionName));
+
         foreach (var tool in ToolDefinitions)
         {
             try
             {
-                using var doc = System.Text.Json.JsonDocument.Parse(tool);
-                var root = doc.RootElement;
-                if (root.TryGetProperty("function", out var func) &&
+                using var doc = JsonDocument.Parse(tool);
+                if (doc.RootElement.TryGetProperty("function", out var func) &&
                     func.TryGetProperty("name", out var nameProp) &&
-                    nameProp.ValueKind == System.Text.Json.JsonValueKind.String &&
+                    nameProp.ValueKind == JsonValueKind.String &&
                     nameProp.GetString() == functionName &&
                     func.TryGetProperty("description", out var descProp) &&
-                    descProp.ValueKind == System.Text.Json.JsonValueKind.String)
+                    descProp.ValueKind == JsonValueKind.String)
                 {
                     return descProp.GetString();
                 }
             }
-            catch (System.Text.Json.JsonException)
+            catch (JsonException)
             {
                 // Skip malformed tool definitions
             }
@@ -142,6 +156,7 @@ public class OptimizationConfig
     /// <summary>
     /// Returns instructions with a skill catalog appended (if any skills are present).
     /// </summary>
+    /// <returns>The composed instructions string.</returns>
     public string ComposeInstructions()
     {
         string baseInstructions = Instructions ?? "";
