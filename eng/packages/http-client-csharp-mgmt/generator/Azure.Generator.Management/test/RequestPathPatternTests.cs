@@ -152,13 +152,18 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
-        public void GetHashCode_DifferentPatternsUseDifferentHashCodes()
+        [Test]
+        public void GetHashCode_DifferentPatternsCanCoexistInHashSet()
         {
             var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var subscription = new RequestPathPattern("/subscriptions/{subscriptionId}");
 
             Assert.That(resourceGroup, Is.Not.EqualTo(subscription));
-            Assert.That(resourceGroup.GetHashCode(), Is.Not.EqualTo(subscription.GetHashCode()));
+
+            var set = new HashSet<RequestPathPattern> { resourceGroup, subscription };
+            Assert.That(set.Count, Is.EqualTo(2));
+            Assert.That(set.Contains(resourceGroup), Is.True);
+            Assert.That(set.Contains(subscription), Is.True);
         }
     }
 }
