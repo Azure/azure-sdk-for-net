@@ -15,7 +15,7 @@ namespace Azure.SdkAnalyzers
     /// nowarn:AZC0102                                       # whole-assembly
     /// nowarn:AZC0034 T:Azure.Foo.Bar                       # per-type
     /// nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String)  # per-member
-    /// nowarn:CS0618  N:Azure.Foo.Models                    # namespace + descendants
+    /// nowarn:CS0618 N:Azure.Foo.Models                     # namespace + descendants
     /// </code>
     /// The <see cref="Target"/> string is the Roslyn DocumentationCommentId for the
     /// symbol (the part after the optional leading <c>~</c>). When the target is
