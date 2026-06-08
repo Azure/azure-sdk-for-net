@@ -79,6 +79,67 @@ public class OptimizationConfig
     public bool HasSkills => Skills.Count > 0 || SkillsDirectory is not null;
 
     /// <summary>
+    /// Builds a lookup of optimized tool definitions keyed by function name.
+    /// </summary>
+    /// <returns>A dictionary mapping function name to the full tool definition JSON.</returns>
+    public IReadOnlyDictionary<string, BinaryData> GetToolDefinitionsByName()
+    {
+        var lookup = new Dictionary<string, BinaryData>(StringComparer.Ordinal);
+        foreach (var tool in ToolDefinitions)
+        {
+            try
+            {
+                using var doc = System.Text.Json.JsonDocument.Parse(tool);
+                var root = doc.RootElement;
+                if (root.TryGetProperty("function", out var func) &&
+                    func.TryGetProperty("name", out var nameProp) &&
+                    nameProp.ValueKind == System.Text.Json.JsonValueKind.String)
+                {
+                    string? name = nameProp.GetString();
+                    if (!string.IsNullOrEmpty(name))
+                        lookup[name] = tool;
+                }
+            }
+            catch (System.Text.Json.JsonException)
+            {
+                // Skip malformed tool definitions
+            }
+        }
+        return lookup;
+    }
+
+    /// <summary>
+    /// Gets the optimized description for a tool by function name.
+    /// </summary>
+    /// <param name="functionName">The function name to look up.</param>
+    /// <returns>The optimized description, or <c>null</c> if not found.</returns>
+    public string? GetToolDescription(string functionName)
+    {
+        foreach (var tool in ToolDefinitions)
+        {
+            try
+            {
+                using var doc = System.Text.Json.JsonDocument.Parse(tool);
+                var root = doc.RootElement;
+                if (root.TryGetProperty("function", out var func) &&
+                    func.TryGetProperty("name", out var nameProp) &&
+                    nameProp.ValueKind == System.Text.Json.JsonValueKind.String &&
+                    nameProp.GetString() == functionName &&
+                    func.TryGetProperty("description", out var descProp) &&
+                    descProp.ValueKind == System.Text.Json.JsonValueKind.String)
+                {
+                    return descProp.GetString();
+                }
+            }
+            catch (System.Text.Json.JsonException)
+            {
+                // Skip malformed tool definitions
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// Returns instructions with a skill catalog appended (if any skills are present).
     /// </summary>
     public string ComposeInstructions()

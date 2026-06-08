@@ -120,4 +120,81 @@ public class OptimizationConfigTests
         Assert.That(config.ToString(), Does.Contain("gpt-4o"));
         Assert.That(config.ToString(), Does.Contain("local:/path"));
     }
+
+    [Test]
+    public void GetToolDefinitionsByName_ReturnsLookup()
+    {
+        var tools = new[]
+        {
+            BinaryData.FromString("""{"type":"function","function":{"name":"search_flights","description":"Search flights"}}"""),
+            BinaryData.FromString("""{"type":"function","function":{"name":"get_hotels","description":"Get hotel prices"}}"""),
+        };
+        var config = new OptimizationConfig(toolDefinitions: tools);
+
+        var lookup = config.GetToolDefinitionsByName();
+
+        Assert.That(lookup.Count, Is.EqualTo(2));
+        Assert.That(lookup.ContainsKey("search_flights"), Is.True);
+        Assert.That(lookup.ContainsKey("get_hotels"), Is.True);
+    }
+
+    [Test]
+    public void GetToolDefinitionsByName_ReturnsEmpty_WhenNoTools()
+    {
+        var config = new OptimizationConfig();
+
+        var lookup = config.GetToolDefinitionsByName();
+
+        Assert.That(lookup, Is.Empty);
+    }
+
+    [Test]
+    public void GetToolDefinitionsByName_SkipsMalformedEntries()
+    {
+        var tools = new[]
+        {
+            BinaryData.FromString("""{"type":"function","function":{"name":"valid","description":"ok"}}"""),
+            BinaryData.FromString("""{"type":"function"}"""),
+            BinaryData.FromString("not json at all"),
+        };
+        var config = new OptimizationConfig(toolDefinitions: tools);
+
+        var lookup = config.GetToolDefinitionsByName();
+
+        Assert.That(lookup.Count, Is.EqualTo(1));
+        Assert.That(lookup.ContainsKey("valid"), Is.True);
+    }
+
+    [Test]
+    public void GetToolDescription_ReturnsDescription()
+    {
+        var tools = new[]
+        {
+            BinaryData.FromString("""{"type":"function","function":{"name":"search_flights","description":"Search for flights between cities"}}"""),
+        };
+        var config = new OptimizationConfig(toolDefinitions: tools);
+
+        var desc = config.GetToolDescription("search_flights");
+
+        Assert.That(desc, Is.EqualTo("Search for flights between cities"));
+    }
+
+    [Test]
+    public void GetToolDescription_ReturnsNull_WhenNotFound()
+    {
+        var config = new OptimizationConfig(toolDefinitions: new[]
+        {
+            BinaryData.FromString("""{"type":"function","function":{"name":"other","description":"x"}}"""),
+        });
+
+        Assert.That(config.GetToolDescription("nonexistent"), Is.Null);
+    }
+
+    [Test]
+    public void GetToolDescription_ReturnsNull_WhenNoTools()
+    {
+        var config = new OptimizationConfig();
+
+        Assert.That(config.GetToolDescription("anything"), Is.Null);
+    }
 }
