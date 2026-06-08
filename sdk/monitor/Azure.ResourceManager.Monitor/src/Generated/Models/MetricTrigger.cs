@@ -8,61 +8,33 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The trigger that results in a scaling action. </summary>
     public partial class MetricTrigger
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
-        /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>
+        /// <param name="metricResourceUri"> the resource identifier of the resource the rule monitors. </param>
         /// <param name="timeGrain"> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </param>
         /// <param name="statistic"> the metric statistic type. How the metrics from multiple instances are combined. </param>
         /// <param name="timeWindow"> the range of time in which instance data is collected. This value must be greater than the delay in metric collection, which can vary from resource-to-resource. Must be between 12 hours and 5 minutes. </param>
         /// <param name="timeAggregation"> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </param>
         /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="metricResourceId"/> is null. </exception>
-        public MetricTrigger(string metricName, ResourceIdentifier metricResourceId, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold)
+        /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="metricResourceUri"/> is null. </exception>
+        public MetricTrigger(string metricName, string metricResourceUri, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold)
         {
             Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(metricResourceId, nameof(metricResourceId));
+            Argument.AssertNotNull(metricResourceUri, nameof(metricResourceUri));
 
             MetricName = metricName;
-            MetricResourceId = metricResourceId;
+            MetricResourceUri = metricResourceUri;
             TimeGrain = timeGrain;
             Statistic = statistic;
             TimeWindow = timeWindow;
@@ -75,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
         /// <param name="metricNamespace"> the namespace of the metric that defines what the rule monitors. </param>
-        /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>
+        /// <param name="metricResourceUri"> the resource identifier of the resource the rule monitors. </param>
         /// <param name="metricResourceLocation"> the location of the resource the rule monitors. </param>
         /// <param name="timeGrain"> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </param>
         /// <param name="statistic"> the metric statistic type. How the metrics from multiple instances are combined. </param>
@@ -84,13 +56,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <param name="dimensions"> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </param>
-        /// <param name="isDividedPerInstance"> a value indicating whether metric should divide per instance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="dividePerInstance"> a value indicating whether metric should divide per instance. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MetricTrigger(string metricName, string metricNamespace, string metricResourceUri, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? dividePerInstance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetricName = metricName;
             MetricNamespace = metricNamespace;
-            MetricResourceId = metricResourceId;
+            MetricResourceUri = metricResourceUri;
             MetricResourceLocation = metricResourceLocation;
             TimeGrain = timeGrain;
             Statistic = statistic;
@@ -99,38 +71,44 @@ namespace Azure.ResourceManager.Monitor.Models
             Operator = @operator;
             Threshold = threshold;
             Dimensions = dimensions;
-            IsDividedPerInstance = isDividedPerInstance;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MetricTrigger"/> for deserialization. </summary>
-        internal MetricTrigger()
-        {
+            DividePerInstance = dividePerInstance;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> the name of the metric that defines what the rule monitors. </summary>
         public string MetricName { get; set; }
+
         /// <summary> the namespace of the metric that defines what the rule monitors. </summary>
         public string MetricNamespace { get; set; }
+
         /// <summary> the resource identifier of the resource the rule monitors. </summary>
-        public ResourceIdentifier MetricResourceId { get; set; }
+        public string MetricResourceUri { get; set; }
+
         /// <summary> the location of the resource the rule monitors. </summary>
         public AzureLocation? MetricResourceLocation { get; set; }
+
         /// <summary> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </summary>
         public TimeSpan TimeGrain { get; set; }
+
         /// <summary> the metric statistic type. How the metrics from multiple instances are combined. </summary>
         public MetricStatisticType Statistic { get; set; }
+
         /// <summary> the range of time in which instance data is collected. This value must be greater than the delay in metric collection, which can vary from resource-to-resource. Must be between 12 hours and 5 minutes. </summary>
         public TimeSpan TimeWindow { get; set; }
+
         /// <summary> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </summary>
         public MetricTriggerTimeAggregationType TimeAggregation { get; set; }
+
         /// <summary> the operator that is used to compare the metric data and the threshold. </summary>
         public MetricTriggerComparisonOperation Operator { get; set; }
+
         /// <summary> the threshold of the metric that triggers the scale action. </summary>
         public double Threshold { get; set; }
+
         /// <summary> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </summary>
-        public IList<AutoscaleRuleMetricDimension> Dimensions { get; set; }
+        public IList<AutoscaleRuleMetricDimension> Dimensions { get; }
+
         /// <summary> a value indicating whether metric should divide per instance. </summary>
-        public bool? IsDividedPerInstance { get; set; }
+        public bool? DividePerInstance { get; set; }
     }
 }

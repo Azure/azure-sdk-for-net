@@ -8,647 +8,62 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMonitorArmClient : ArmResource
     {
         private ClientDiagnostics _metricDefinitionsClientDiagnostics;
-        private MetricDefinitionsRestOperations _metricDefinitionsRestClient;
-        private ClientDiagnostics _metricsClientDiagnostics;
-        private MetricsRestOperations _metricsRestClient;
-        private ClientDiagnostics _baselinesClientDiagnostics;
-        private BaselinesRestOperations _baselinesRestClient;
+        private MetricDefinitions _metricDefinitionsRestClient;
         private ClientDiagnostics _metricNamespacesClientDiagnostics;
-        private MetricNamespacesRestOperations _metricNamespacesRestClient;
+        private MetricNamespaces _metricNamespacesRestClient;
+        private ClientDiagnostics _metricsClientDiagnostics;
+        private Metrics _metricsRestClient;
+        private ClientDiagnostics _alertRuleIncidentsClientDiagnostics;
+        private AlertRuleIncidents _alertRuleIncidentsRestClient;
+        private ClientDiagnostics _baselinesClientDiagnostics;
+        private Baselines _baselinesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMonitorArmClient for mocking. </summary>
         protected MockableMonitorArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMonitorArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMonitorArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableMonitorArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
+        private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MetricDefinitionsRestOperations MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MetricsRestOperations MetricsRestClient => _metricsRestClient ??= new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BaselinesClientDiagnostics => _baselinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BaselinesRestOperations BaselinesRestClient => _baselinesRestClient ??= new BaselinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics MetricNamespacesClientDiagnostics => _metricNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MetricNamespacesRestOperations MetricNamespacesRestClient => _metricNamespacesRestClient ??= new MetricNamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics MetricNamespacesClientDiagnostics => _metricNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
-        public virtual DiagnosticSettingCollection GetDiagnosticSettings(ResourceIdentifier scope)
-        {
-            return new DiagnosticSettingCollection(Client, scope);
-        }
+        private MetricNamespaces MetricNamespacesRestClient => _metricNamespacesRestClient ??= new MetricNamespaces(MetricNamespacesClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
-        /// <summary>
-        /// Gets the active diagnostic settings for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDiagnosticSettings(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
+        private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets the active diagnostic settings for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DiagnosticSettingResource> GetDiagnosticSetting(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return GetDiagnosticSettings(scope).Get(name, cancellationToken);
-        }
+        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
 
-        /// <summary> Gets a collection of DiagnosticSettingsCategoryResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DiagnosticSettingsCategoryResources and their operations over a DiagnosticSettingsCategoryResource. </returns>
-        public virtual DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(ResourceIdentifier scope)
-        {
-            return new DiagnosticSettingsCategoryCollection(Client, scope);
-        }
+        private ClientDiagnostics AlertRuleIncidentsClientDiagnostics => _alertRuleIncidentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets the diagnostic settings category for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettingsCategory_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDiagnosticSettingsCategories(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
+        private AlertRuleIncidents AlertRuleIncidentsRestClient => _alertRuleIncidentsRestClient ??= new AlertRuleIncidents(AlertRuleIncidentsClientDiagnostics, Pipeline, Endpoint, "2016-03-01");
 
-        /// <summary>
-        /// Gets the diagnostic settings category for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettingsCategory_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return GetDiagnosticSettingsCategories(scope).Get(name, cancellationToken);
-        }
+        private ClientDiagnostics BaselinesClientDiagnostics => _baselinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets an object representing a VmInsightsOnboardingStatusResource along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
-        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(ResourceIdentifier scope)
-        {
-            return new VmInsightsOnboardingStatusResource(Client, scope.AppendProviderResource("Microsoft.Insights", "vmInsightsOnboardingStatuses", "default"));
-        }
+        private Baselines BaselinesRestClient => _baselinesRestClient ??= new Baselines(BaselinesClientDiagnostics, Pipeline, Endpoint, "2019-03-01");
 
-        /// <summary> Gets a collection of DataCollectionRuleAssociationResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DataCollectionRuleAssociationResources and their operations over a DataCollectionRuleAssociationResource. </returns>
-        public virtual DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(ResourceIdentifier scope)
-        {
-            return new DataCollectionRuleAssociationCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Returns the specified association.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataCollectionRuleAssociationResource>> GetDataCollectionRuleAssociationAsync(ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataCollectionRuleAssociations(scope).GetAsync(associationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the specified association.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociation(ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
-        {
-            return GetDataCollectionRuleAssociations(scope).Get(associationName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the metric definitions for the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricDefinitions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(scope, metricnamespace);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorMetricDefinition.DeserializeMonitorMetricDefinition(e), MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the metric definitions for the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricDefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricDefinitions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(scope, metricnamespace);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorMetricDefinition.DeserializeMonitorMetricDefinition(e), MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/metrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metrics_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            options ??= new ArmResourceGetMonitorMetricsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(scope, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorMetric.DeserializeMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetrics", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/metrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metrics_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorMetric> GetMonitorMetrics(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            options ??= new ArmResourceGetMonitorMetricsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(scope, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorMetric.DeserializeMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetrics", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric baseline values for a resource**.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricBaselines</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Baselines_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(scope, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline(e), BaselinesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric baseline values for a resource**.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricBaselines</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Baselines_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(scope, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline(e), BaselinesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the metric namespaces for the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/microsoft.insights/metricNamespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricNamespaces_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-12-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MonitorMetricNamespace"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(scope, startTime);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorMetricNamespace.DeserializeMonitorMetricNamespace(e), MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the metric namespaces for the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/microsoft.insights/metricNamespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricNamespaces_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-12-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorMetricNamespace"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(scope, startTime);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorMetricNamespace.DeserializeMonitorMetricNamespace(e), MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
-        }
-        /// <summary>
-        /// Gets an object representing an <see cref="AutoscaleSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoscaleSettingResource.CreateResourceIdentifier" /> to create an <see cref="AutoscaleSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoscaleSettingResource"/> object. </returns>
-        public virtual AutoscaleSettingResource GetAutoscaleSettingResource(ResourceIdentifier id)
-        {
-            AutoscaleSettingResource.ValidateResourceId(id);
-            return new AutoscaleSettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AlertRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertRuleResource"/> object. </returns>
-        public virtual AlertRuleResource GetAlertRuleResource(ResourceIdentifier id)
-        {
-            AlertRuleResource.ValidateResourceId(id);
-            return new AlertRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LogProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogProfileResource.CreateResourceIdentifier" /> to create a <see cref="LogProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogProfileResource"/> object. </returns>
-        public virtual LogProfileResource GetLogProfileResource(ResourceIdentifier id)
-        {
-            LogProfileResource.ValidateResourceId(id);
-            return new LogProfileResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
-        public virtual DiagnosticSettingResource GetDiagnosticSettingResource(ResourceIdentifier id)
-        {
-            DiagnosticSettingResource.ValidateResourceId(id);
-            return new DiagnosticSettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingsCategoryResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsCategoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
-        public virtual DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(ResourceIdentifier id)
-        {
-            DiagnosticSettingsCategoryResource.ValidateResourceId(id);
-            return new DiagnosticSettingsCategoryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ActionGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActionGroupResource.CreateResourceIdentifier" /> to create an <see cref="ActionGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActionGroupResource"/> object. </returns>
-        public virtual ActionGroupResource GetActionGroupResource(ResourceIdentifier id)
-        {
-            ActionGroupResource.ValidateResourceId(id);
-            return new ActionGroupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MetricAlertResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetricAlertResource.CreateResourceIdentifier" /> to create a <see cref="MetricAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetricAlertResource"/> object. </returns>
-        public virtual MetricAlertResource GetMetricAlertResource(ResourceIdentifier id)
-        {
-            MetricAlertResource.ValidateResourceId(id);
-            return new MetricAlertResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduledQueryRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledQueryRuleResource"/> object. </returns>
-        public virtual ScheduledQueryRuleResource GetScheduledQueryRuleResource(ResourceIdentifier id)
-        {
-            ScheduledQueryRuleResource.ValidateResourceId(id);
-            return new ScheduledQueryRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VmInsightsOnboardingStatusResource.CreateResourceIdentifier" /> to create a <see cref="VmInsightsOnboardingStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
-        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(ResourceIdentifier id)
-        {
-            VmInsightsOnboardingStatusResource.ValidateResourceId(id);
-            return new VmInsightsOnboardingStatusResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource"/> object. </returns>
-        public virtual MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(ResourceIdentifier id)
-        {
-            MonitorPrivateLinkScopeResource.ValidateResourceId(id);
-            return new MonitorPrivateLinkScopeResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MonitorPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MonitorPrivateLinkResource"/> object. </returns>
         public virtual MonitorPrivateLinkResource GetMonitorPrivateLinkResource(ResourceIdentifier id)
@@ -657,10 +72,43 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new MonitorPrivateLinkResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="MonitorPrivateLinkCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MonitorPrivateLinkResource"/> objects. </returns>
+        public virtual MonitorPrivateLinkCollection GetMonitorPrivateLinks(ResourceIdentifier scope)
+        {
+            return new MonitorPrivateLinkCollection(Client, scope);
+        }
+
+        /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupName"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MonitorPrivateLinkResource> GetMonitorPrivateLink(ResourceIdentifier scope, string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            return GetMonitorPrivateLinks(scope).Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupName"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MonitorPrivateLinkResource>> GetMonitorPrivateLinkAsync(ResourceIdentifier scope, string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            return await GetMonitorPrivateLinks(scope).GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MonitorPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource"/> object. </returns>
         public virtual MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -669,34 +117,43 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new MonitorPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkScopedResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource"/> object. </returns>
-        public virtual MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(ResourceIdentifier id)
+        /// <summary> Gets a collection of <see cref="MonitorPrivateEndpointConnectionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MonitorPrivateEndpointConnectionResource"/> objects. </returns>
+        public virtual MonitorPrivateEndpointConnectionCollection GetMonitorPrivateEndpointConnections(ResourceIdentifier scope)
         {
-            MonitorPrivateLinkScopedResource.ValidateResourceId(id);
-            return new MonitorPrivateLinkScopedResource(Client, id);
+            return new MonitorPrivateEndpointConnectionCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ActivityLogAlertResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActivityLogAlertResource.CreateResourceIdentifier" /> to create an <see cref="ActivityLogAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActivityLogAlertResource"/> object. </returns>
-        public virtual ActivityLogAlertResource GetActivityLogAlertResource(ResourceIdentifier id)
+        /// <summary> Gets a private endpoint connection. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MonitorPrivateEndpointConnectionResource> GetMonitorPrivateEndpointConnection(ResourceIdentifier scope, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            ActivityLogAlertResource.ValidateResourceId(id);
-            return new ActivityLogAlertResource(Client, id);
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetMonitorPrivateEndpointConnections(scope).Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a private endpoint connection. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MonitorPrivateEndpointConnectionResource>> GetMonitorPrivateEndpointConnectionAsync(ResourceIdentifier scope, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetMonitorPrivateEndpointConnections(scope).GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataCollectionEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataCollectionEndpointResource"/> object. </returns>
         public virtual DataCollectionEndpointResource GetDataCollectionEndpointResource(ResourceIdentifier id)
@@ -705,22 +162,88 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new DataCollectionEndpointResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionRuleAssociationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionRuleAssociationResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleAssociationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource"/> object. </returns>
-        public virtual DataCollectionRuleAssociationResource GetDataCollectionRuleAssociationResource(ResourceIdentifier id)
+        /// <summary> Gets a collection of <see cref="DataCollectionEndpointResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DataCollectionEndpointResource"/> objects. </returns>
+        public virtual DataCollectionEndpointResourceCollection GetDataCollectionEndpointResources(ResourceIdentifier scope)
         {
-            DataCollectionRuleAssociationResource.ValidateResourceId(id);
-            return new DataCollectionRuleAssociationResource(Client, id);
+            return new DataCollectionEndpointResourceCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Returns the specified data collection endpoint. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataCollectionEndpointResource> GetDataCollectionEndpointResource(ResourceIdentifier scope, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            return GetDataCollectionEndpointResources(scope).Get(dataCollectionEndpointName, cancellationToken);
+        }
+
+        /// <summary> Returns the specified data collection endpoint. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataCollectionEndpointResource>> GetDataCollectionEndpointResourceAsync(ResourceIdentifier scope, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            return await GetDataCollectionEndpointResources(scope).GetAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> object. </returns>
+        public virtual DataCollectionRuleAssociationProxyOnlyResource GetDataCollectionRuleAssociationProxyOnlyResource(ResourceIdentifier id)
+        {
+            DataCollectionRuleAssociationProxyOnlyResource.ValidateResourceId(id);
+            return new DataCollectionRuleAssociationProxyOnlyResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DataCollectionRuleAssociationProxyOnlyResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> objects. </returns>
+        public virtual DataCollectionRuleAssociationProxyOnlyResourceCollection GetDataCollectionRuleAssociationProxyOnlyResources(ResourceIdentifier scope)
+        {
+            return new DataCollectionRuleAssociationProxyOnlyResourceCollection(Client, scope);
+        }
+
+        /// <summary> Returns the specified association. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataCollectionRuleAssociationProxyOnlyResource> GetDataCollectionRuleAssociationProxyOnlyResource(ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+
+            return GetDataCollectionRuleAssociationProxyOnlyResources(scope).Get(associationName, cancellationToken);
+        }
+
+        /// <summary> Returns the specified association. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataCollectionRuleAssociationProxyOnlyResource>> GetDataCollectionRuleAssociationProxyOnlyResourceAsync(ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+
+            return await GetDataCollectionRuleAssociationProxyOnlyResources(scope).GetAsync(associationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataCollectionRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataCollectionRuleResource"/> object. </returns>
         public virtual DataCollectionRuleResource GetDataCollectionRuleResource(ResourceIdentifier id)
@@ -729,28 +252,981 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new DataCollectionRuleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MonitorWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorWorkspaceResource"/> object. </returns>
-        public virtual MonitorWorkspaceResource GetMonitorWorkspaceResource(ResourceIdentifier id)
+        /// <summary> Gets a collection of <see cref="DataCollectionRuleResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DataCollectionRuleResource"/> objects. </returns>
+        public virtual DataCollectionRuleResourceCollection GetDataCollectionRuleResources(ResourceIdentifier scope)
         {
-            MonitorWorkspaceResource.ValidateResourceId(id);
-            return new MonitorWorkspaceResource(Client, id);
+            return new DataCollectionRuleResourceCollection(Client, scope);
+        }
+
+        /// <summary> Returns the specified data collection rule. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataCollectionRuleResource> GetDataCollectionRuleResource(ResourceIdentifier scope, string dataCollectionRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+
+            return GetDataCollectionRuleResources(scope).Get(dataCollectionRuleName, cancellationToken);
+        }
+
+        /// <summary> Returns the specified data collection rule. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataCollectionRuleResource>> GetDataCollectionRuleResourceAsync(ResourceIdentifier scope, string dataCollectionRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+
+            return await GetDataCollectionRuleResources(scope).GetAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MonitorPrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource"/> object. </returns>
+        public virtual MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(ResourceIdentifier id)
+        {
+            MonitorPrivateLinkScopeResource.ValidateResourceId(id);
+            return new MonitorPrivateLinkScopeResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MonitorPrivateLinkScopeCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MonitorPrivateLinkScopeResource"/> objects. </returns>
+        public virtual MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(ResourceIdentifier scope)
+        {
+            return new MonitorPrivateLinkScopeCollection(Client, scope);
+        }
+
+        /// <summary> Returns a Azure Monitor PrivateLinkScope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(ResourceIdentifier scope, string scopeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+
+            return GetMonitorPrivateLinkScopes(scope).Get(scopeName, cancellationToken);
+        }
+
+        /// <summary> Returns a Azure Monitor PrivateLinkScope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MonitorPrivateLinkScopeResource>> GetMonitorPrivateLinkScopeAsync(ResourceIdentifier scope, string scopeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+
+            return await GetMonitorPrivateLinkScopes(scope).GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MonitorPrivateLinkScopedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource"/> object. </returns>
+        public virtual MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(ResourceIdentifier id)
+        {
+            MonitorPrivateLinkScopedResource.ValidateResourceId(id);
+            return new MonitorPrivateLinkScopedResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MonitorPrivateLinkScopedCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MonitorPrivateLinkScopedResource"/> objects. </returns>
+        public virtual MonitorPrivateLinkScopedCollection GetMonitorPrivateLinkScopeds(ResourceIdentifier scope)
+        {
+            return new MonitorPrivateLinkScopedCollection(Client, scope);
+        }
+
+        /// <summary> Gets a scoped resource in a private link scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the scoped resource object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MonitorPrivateLinkScopedResource> GetMonitorPrivateLinkScoped(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetMonitorPrivateLinkScopeds(scope).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a scoped resource in a private link scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the scoped resource object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MonitorPrivateLinkScopedResource>> GetMonitorPrivateLinkScopedAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetMonitorPrivateLinkScopeds(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AutoscaleSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoscaleSettingResource"/> object. </returns>
+        public virtual AutoscaleSettingResource GetAutoscaleSettingResource(ResourceIdentifier id)
+        {
+            AutoscaleSettingResource.ValidateResourceId(id);
+            return new AutoscaleSettingResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="AutoscaleSettingResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="AutoscaleSettingResource"/> objects. </returns>
+        public virtual AutoscaleSettingResourceCollection GetAutoscaleSettingResources(ResourceIdentifier scope)
+        {
+            return new AutoscaleSettingResourceCollection(Client, scope);
+        }
+
+        /// <summary> Gets an autoscale setting. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutoscaleSettingResource> GetAutoscaleSettingResource(ResourceIdentifier scope, string autoscaleSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
+
+            return GetAutoscaleSettingResources(scope).Get(autoscaleSettingName, cancellationToken);
+        }
+
+        /// <summary> Gets an autoscale setting. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutoscaleSettingResource>> GetAutoscaleSettingResourceAsync(ResourceIdentifier scope, string autoscaleSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
+
+            return await GetAutoscaleSettingResources(scope).GetAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceDiagnosticSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceDiagnosticSettingsResource"/> object. </returns>
+        public virtual ServiceDiagnosticSettingsResource GetServiceDiagnosticSettingsResource(ResourceIdentifier id)
+        {
+            ServiceDiagnosticSettingsResource.ValidateResourceId(id);
+            return new ServiceDiagnosticSettingsResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ServiceDiagnosticSettingsResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ServiceDiagnosticSettingsResource"/> objects. </returns>
+        public virtual ServiceDiagnosticSettingsResourceCollection GetServiceDiagnosticSettingsResources(ResourceIdentifier scope)
+        {
+            return new ServiceDiagnosticSettingsResourceCollection(Client, scope);
+        }
+
+        /// <summary> Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="diagnosticSetting"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceDiagnosticSettingsResource> GetServiceDiagnosticSettingsResource(ResourceIdentifier scope, string diagnosticSetting, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
+
+            return GetServiceDiagnosticSettingsResources(scope).Get(diagnosticSetting, cancellationToken);
+        }
+
+        /// <summary> Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="diagnosticSetting"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceDiagnosticSettingsResource>> GetServiceDiagnosticSettingsResourceAsync(ResourceIdentifier scope, string diagnosticSetting, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
+
+            return await GetServiceDiagnosticSettingsResources(scope).GetAsync(diagnosticSetting, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LogProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LogProfileResource"/> object. </returns>
+        public virtual LogProfileResource GetLogProfileResource(ResourceIdentifier id)
+        {
+            LogProfileResource.ValidateResourceId(id);
+            return new LogProfileResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ActivityLogAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ActivityLogAlertResource"/> object. </returns>
+        public virtual ActivityLogAlertResource GetActivityLogAlertResource(ResourceIdentifier id)
+        {
+            ActivityLogAlertResource.ValidateResourceId(id);
+            return new ActivityLogAlertResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ActivityLogAlertResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ActivityLogAlertResource"/> objects. </returns>
+        public virtual ActivityLogAlertResourceCollection GetActivityLogAlertResources(ResourceIdentifier scope)
+        {
+            return new ActivityLogAlertResourceCollection(Client, scope);
+        }
+
+        /// <summary> Get an Activity Log Alert rule. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ActivityLogAlertResource> GetActivityLogAlertResource(ResourceIdentifier scope, string activityLogAlertName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
+
+            return GetActivityLogAlertResources(scope).Get(activityLogAlertName, cancellationToken);
+        }
+
+        /// <summary> Get an Activity Log Alert rule. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ActivityLogAlertResource>> GetActivityLogAlertResourceAsync(ResourceIdentifier scope, string activityLogAlertName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
+
+            return await GetActivityLogAlertResources(scope).GetAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MetricAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetricAlertResource"/> object. </returns>
+        public virtual MetricAlertResource GetMetricAlertResource(ResourceIdentifier id)
+        {
+            MetricAlertResource.ValidateResourceId(id);
+            return new MetricAlertResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MetricAlertResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MetricAlertResource"/> objects. </returns>
+        public virtual MetricAlertResourceCollection GetMetricAlertResources(ResourceIdentifier scope)
+        {
+            return new MetricAlertResourceCollection(Client, scope);
+        }
+
+        /// <summary> Retrieve an alert rule definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MetricAlertResource> GetMetricAlertResource(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return GetMetricAlertResources(scope).Get(ruleName, cancellationToken);
+        }
+
+        /// <summary> Retrieve an alert rule definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MetricAlertResource>> GetMetricAlertResourceAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return await GetMetricAlertResources(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScheduledQueryRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduledQueryRuleResource"/> object. </returns>
+        public virtual ScheduledQueryRuleResource GetScheduledQueryRuleResource(ResourceIdentifier id)
+        {
+            ScheduledQueryRuleResource.ValidateResourceId(id);
+            return new ScheduledQueryRuleResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ScheduledQueryRuleResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScheduledQueryRuleResource"/> objects. </returns>
+        public virtual ScheduledQueryRuleResourceCollection GetScheduledQueryRuleResources(ResourceIdentifier scope)
+        {
+            return new ScheduledQueryRuleResourceCollection(Client, scope);
+        }
+
+        /// <summary> Retrieve an scheduled query rule definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScheduledQueryRuleResource> GetScheduledQueryRuleResource(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return GetScheduledQueryRuleResources(scope).Get(ruleName, cancellationToken);
+        }
+
+        /// <summary> Retrieve an scheduled query rule definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleResourceAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return await GetScheduledQueryRuleResources(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ActionGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ActionGroupResource"/> object. </returns>
+        public virtual ActionGroupResource GetActionGroupResource(ResourceIdentifier id)
+        {
+            ActionGroupResource.ValidateResourceId(id);
+            return new ActionGroupResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ActionGroupResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ActionGroupResource"/> objects. </returns>
+        public virtual ActionGroupResourceCollection GetActionGroupResources(ResourceIdentifier scope)
+        {
+            return new ActionGroupResourceCollection(Client, scope);
+        }
+
+        /// <summary> Get an action group. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="actionGroupName"> The name of the action group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ActionGroupResource> GetActionGroupResource(ResourceIdentifier scope, string actionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+
+            return GetActionGroupResources(scope).Get(actionGroupName, cancellationToken);
+        }
+
+        /// <summary> Get an action group. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="actionGroupName"> The name of the action group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ActionGroupResource>> GetActionGroupResourceAsync(ResourceIdentifier scope, string actionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+
+            return await GetActionGroupResources(scope).GetAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PipelineGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PipelineGroupResource.CreateResourceIdentifier" /> to create a <see cref="PipelineGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Lists the metric definitions for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/metricDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricDefinitionsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PipelineGroupResource"/> object. </returns>
-        public virtual PipelineGroupResource GetPipelineGroupResource(ResourceIdentifier id)
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MetricDefinition"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricDefinition> GetMonitorMetricDefinitionsAsync(ResourceIdentifier scope, string metricnamespace = default, CancellationToken cancellationToken = default)
         {
-            PipelineGroupResource.ValidateResourceId(id);
-            return new PipelineGroupResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MetricDefinitionsGetMonitorMetricDefinitionsAsyncCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
+        }
+
+        /// <summary>
+        /// Lists the metric definitions for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/metricDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricDefinitionsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MetricDefinition"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricDefinition> GetMonitorMetricDefinitions(ResourceIdentifier scope, string metricnamespace = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MetricDefinitionsGetMonitorMetricDefinitionsCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
+        }
+
+        /// <summary>
+        /// Lists the metric namespaces for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/microsoft.insights/metricNamespaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricNamespacesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MetricNamespace"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricNamespace> GetMonitorMetricNamespacesAsync(ResourceIdentifier scope, string startTime = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MetricNamespacesGetMonitorMetricNamespacesAsyncCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
+        }
+
+        /// <summary>
+        /// Lists the metric namespaces for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/microsoft.insights/metricNamespaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricNamespacesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MetricNamespace"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricNamespace> GetMonitorMetricNamespaces(ResourceIdentifier scope, string startTime = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MetricNamespacesGetMonitorMetricNamespacesCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
+        }
+
+        /// <summary>
+        /// <b>Lists the metric values for a resource</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// <i>Examples: average, minimum, maximum</i>
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// <i>Examples: sum asc</i>
+        /// </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘<i>’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘</i>’ or B = ‘b2’<b>&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘<i>’ and C eq ‘</i>’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<Models.Response>> GetAllAsync(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, ResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = MetricsClientDiagnostics.CreateScope("MockableMonitorArmClient.GetAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricsRestClient.CreateGetAllRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <b>Lists the metric values for a resource</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// <i>Examples: average, minimum, maximum</i>
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// <i>Examples: sum asc</i>
+        /// </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘<i>’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘</i>’ or B = ‘b2’<b>&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘<i>’ and C eq ‘</i>’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<Models.Response> GetAll(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, ResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = MetricsClientDiagnostics.CreateScope("MockableMonitorArmClient.GetAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricsRestClient.CreateGetAllRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an incident associated to an alert rule
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules/{ruleName}/incidents/{incidentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleIncidentsOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="incidentName"> The name of the incident to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Incident>> GetAsync(ResourceIdentifier scope, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
+
+            using DiagnosticScope scope0 = AlertRuleIncidentsClientDiagnostics.CreateScope("MockableMonitorArmClient.Get");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(scope.Name, ruleName, incidentName, Guid.Parse(scope.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Incident> response = Response.FromValue(Incident.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an incident associated to an alert rule
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules/{ruleName}/incidents/{incidentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleIncidentsOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="incidentName"> The name of the incident to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Incident> Get(ResourceIdentifier scope, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
+
+            using DiagnosticScope scope0 = AlertRuleIncidentsClientDiagnostics.CreateScope("MockableMonitorArmClient.Get");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(scope.Name, ruleName, incidentName, Guid.Parse(scope.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Incident> response = Response.FromValue(Incident.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of incidents associated to an alert rule
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}/incidents. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleIncidentsOperationGroup_ListByAlertRule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Incident> GetByAlertRuleAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AlertRuleIncidentsGetByAlertRuleAsyncCollectionResultOfT(
+                AlertRuleIncidentsRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Name,
+                ruleName,
+                context,
+                "MockableMonitorArmClient.GetByAlertRule");
+        }
+
+        /// <summary>
+        /// Gets a list of incidents associated to an alert rule
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}/incidents. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleIncidentsOperationGroup_ListByAlertRule. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Incident> GetByAlertRule(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AlertRuleIncidentsGetByAlertRuleCollectionResultOfT(
+                AlertRuleIncidentsRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Name,
+                ruleName,
+                context,
+                "MockableMonitorArmClient.GetByAlertRule");
+        }
+
+        /// <summary>
+        /// <b>Lists the metric baseline values for a resource</b>.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/metricBaselines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BaselinesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be <b>'Metric%2Name1'</b>. </param>
+        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
+        /// <param name="sensitivities"> The list of sensitivities (comma separated) to retrieve. </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned. Example: Metric contains metadata A, B and C. - Return all time series of C where A = a1 and B = b1 or b2 **$filter=A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '<i>'<b> - Invalid variant: </b>$filter=A eq 'a1' and B eq 'b1' and C eq '</i>' or B = 'b2'<b> This is invalid because the logical or operator cannot separate two different metadata names. - Return all time series where A = a1, B = b1 and C = c1: </b>$filter=A eq 'a1' and B eq 'b1' and C eq 'c1'<b> - Return all time series where A = a1 </b>$filter=A eq 'a1' and B eq '<i>' and C eq '</i>'<b>. Special case: When dimension name or dimension value uses round brackets. Eg: When dimension name is </b>dim (test) 1** Instead of using $filter= "dim (test) 1 eq '*' " use **$filter= "dim %2528test%2529 1 eq '*' "<b> When dimension name is </b>dim (test) 3<b> and dimension value is </b>dim3 (test) val<b> Instead of using $filter= "dim (test) 3 eq 'dim3 (test) val' " use </b>$filter= "dim %2528test%2529 3 eq 'dim3 %2528test%2529 val' "**. </param>
+        /// <param name="resultType"> Allows retrieving only metadata of the baseline. On data request all information is retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="SingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SingleMetricBaseline> GetAllAsync(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, ResultType? resultType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BaselinesGetAllAsyncCollectionResultOfT(
+                BaselinesRestClient,
+                scope.ToString(),
+                metricnames,
+                metricnamespace,
+                timespan,
+                interval,
+                aggregation,
+                sensitivities,
+                filter,
+                resultType?.ToSerialString(),
+                context,
+                "MockableMonitorArmClient.GetAll");
+        }
+
+        /// <summary>
+        /// <b>Lists the metric baseline values for a resource</b>.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/metricBaselines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BaselinesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be <b>'Metric%2Name1'</b>. </param>
+        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
+        /// <param name="sensitivities"> The list of sensitivities (comma separated) to retrieve. </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned. Example: Metric contains metadata A, B and C. - Return all time series of C where A = a1 and B = b1 or b2 **$filter=A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '<i>'<b> - Invalid variant: </b>$filter=A eq 'a1' and B eq 'b1' and C eq '</i>' or B = 'b2'<b> This is invalid because the logical or operator cannot separate two different metadata names. - Return all time series where A = a1, B = b1 and C = c1: </b>$filter=A eq 'a1' and B eq 'b1' and C eq 'c1'<b> - Return all time series where A = a1 </b>$filter=A eq 'a1' and B eq '<i>' and C eq '</i>'<b>. Special case: When dimension name or dimension value uses round brackets. Eg: When dimension name is </b>dim (test) 1** Instead of using $filter= "dim (test) 1 eq '*' " use **$filter= "dim %2528test%2529 1 eq '*' "<b> When dimension name is </b>dim (test) 3<b> and dimension value is </b>dim3 (test) val<b> Instead of using $filter= "dim (test) 3 eq 'dim3 (test) val' " use </b>$filter= "dim %2528test%2529 3 eq 'dim3 %2528test%2529 val' "**. </param>
+        /// <param name="resultType"> Allows retrieving only metadata of the baseline. On data request all information is retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="SingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SingleMetricBaseline> GetAll(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, ResultType? resultType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BaselinesGetAllCollectionResultOfT(
+                BaselinesRestClient,
+                scope.ToString(),
+                metricnames,
+                metricnamespace,
+                timespan,
+                interval,
+                aggregation,
+                sensitivities,
+                filter,
+                resultType?.ToSerialString(),
+                context,
+                "MockableMonitorArmClient.GetAll");
         }
     }
 }

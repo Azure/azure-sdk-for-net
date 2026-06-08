@@ -7,126 +7,135 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a DataCollectionRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDataCollectionRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionRule method.
+    /// A class representing a DataCollectionRuleResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDataCollectionRuleResources method.
     /// </summary>
     public partial class DataCollectionRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataCollectionRuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="dataCollectionRuleName"> The dataCollectionRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataCollectionRuleName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dataCollectionRuleClientDiagnostics;
-        private readonly DataCollectionRulesRestOperations _dataCollectionRuleRestClient;
-        private readonly ClientDiagnostics _dataCollectionRuleAssociationClientDiagnostics;
-        private readonly DataCollectionRuleAssociationsRestOperations _dataCollectionRuleAssociationRestClient;
-        private readonly DataCollectionRuleData _data;
-
+        private readonly ClientDiagnostics _dataCollectionRulesClientDiagnostics;
+        private readonly DataCollectionRules _dataCollectionRulesRestClient;
+        private readonly ClientDiagnostics _dataCollectionRuleAssociationsClientDiagnostics;
+        private readonly DataCollectionRuleAssociations _dataCollectionRuleAssociationsRestClient;
+        private readonly DataCollectionRuleResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionRules";
 
-        /// <summary> Initializes a new instance of the <see cref="DataCollectionRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataCollectionRuleResource for mocking. </summary>
         protected DataCollectionRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataCollectionRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataCollectionRuleResource(ArmClient client, DataCollectionRuleData data) : this(client, data.Id)
+        internal DataCollectionRuleResource(ArmClient client, DataCollectionRuleResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataCollectionRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataCollectionRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataCollectionRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataCollectionRuleApiVersion);
-            _dataCollectionRuleRestClient = new DataCollectionRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionRuleApiVersion);
-            _dataCollectionRuleAssociationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleAssociationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataCollectionRuleAssociationResource.ResourceType, out string dataCollectionRuleAssociationApiVersion);
-            _dataCollectionRuleAssociationRestClient = new DataCollectionRuleAssociationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionRuleAssociationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string dataCollectionRuleResourceApiVersion);
+            _dataCollectionRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _dataCollectionRulesRestClient = new DataCollectionRules(_dataCollectionRulesClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleResourceApiVersion ?? "2024-03-11");
+            _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleResourceApiVersion ?? "2024-03-11");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataCollectionRuleData Data
+        public virtual DataCollectionRuleResourceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="dataCollectionRuleName"> The dataCollectionRuleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataCollectionRuleName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns the specified data collection rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataCollectionRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Get");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataCollectionRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,122 +149,42 @@ namespace Azure.ResourceManager.Monitor
         /// Returns the specified data collection rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataCollectionRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Get");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _dataCollectionRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a data collection rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _dataCollectionRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _dataCollectionRuleRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a data collection rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _dataCollectionRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _dataCollectionRuleRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -268,35 +197,42 @@ namespace Azure.ResourceManager.Monitor
         /// Updates part of a data collection rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<DataCollectionRuleResource>> UpdateAsync(ResourceForUpdate body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Update");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataCollectionRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,36 +246,147 @@ namespace Azure.ResourceManager.Monitor
         /// Updates part of a data collection rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<DataCollectionRuleResource> Update(ResourceForUpdate body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Update");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _dataCollectionRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a data collection rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteAssociations"> If set to 'true' then all associations of this data collection rule will also be deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? deleteAssociations = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, deleteAssociations, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a data collection rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteAssociations"> If set to 'true' then all associations of this data collection rule will also be deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? deleteAssociations = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, deleteAssociations, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -352,83 +399,87 @@ namespace Azure.ResourceManager.Monitor
         /// Lists associations for the specified data collection rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_ListByRule</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_ListByRule. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="skipToken"> (Optional) The continuation token for paginated responses. </param>
+        /// <param name="top"> (Optional) The max number of items to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsByRuleAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataCollectionRuleAssociationProxyOnlyResource> GetByRuleAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByRuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleResource.GetDataCollectionRuleAssociationsByRule", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationProxyOnlyResourceData, DataCollectionRuleAssociationProxyOnlyResource>(new DataCollectionRuleAssociationsGetByRuleAsyncCollectionResultOfT(
+                _dataCollectionRuleAssociationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                skipToken,
+                top,
+                context,
+                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationProxyOnlyResource(Client, data));
         }
 
         /// <summary>
         /// Lists associations for the specified data collection rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}/associations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_ListByRule</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_ListByRule. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataCollectionRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="skipToken"> (Optional) The continuation token for paginated responses. </param>
+        /// <param name="top"> (Optional) The max number of items to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsByRule(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataCollectionRuleAssociationProxyOnlyResource> GetByRule(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByRuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleResource.GetDataCollectionRuleAssociationsByRule", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataCollectionRuleAssociationProxyOnlyResourceData, DataCollectionRuleAssociationProxyOnlyResource>(new DataCollectionRuleAssociationsGetByRuleCollectionResultOfT(
+                _dataCollectionRuleAssociationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                skipToken,
+                top,
+                context,
+                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationProxyOnlyResource(Client, data));
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -438,29 +489,35 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.AddTag");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataCollectionRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataCollectionRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ResourceForUpdate();
-                    foreach (var tag in current.Tags)
+                    DataCollectionRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ResourceForUpdate patch = new ResourceForUpdate();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DataCollectionRuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -470,27 +527,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -500,29 +537,35 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.AddTag");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataCollectionRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataCollectionRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ResourceForUpdate();
-                    foreach (var tag in current.Tags)
+                    DataCollectionRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ResourceForUpdate patch = new ResourceForUpdate();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DataCollectionRuleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -532,54 +575,40 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DataCollectionRuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.SetTags");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataCollectionRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataCollectionRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ResourceForUpdate();
+                    DataCollectionRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ResourceForUpdate patch = new ResourceForUpdate();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DataCollectionRuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -589,54 +618,40 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataCollectionRuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.SetTags");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataCollectionRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataCollectionRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ResourceForUpdate();
+                    DataCollectionRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ResourceForUpdate patch = new ResourceForUpdate();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DataCollectionRuleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -646,27 +661,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -674,29 +669,35 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.RemoveTag");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataCollectionRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataCollectionRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ResourceForUpdate();
-                    foreach (var tag in current.Tags)
+                    DataCollectionRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ResourceForUpdate patch = new ResourceForUpdate();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DataCollectionRuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -706,27 +707,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -734,29 +715,35 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.RemoveTag");
+            using DiagnosticScope scope = _dataCollectionRulesClientDiagnostics.CreateScope("DataCollectionRuleResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataCollectionRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataCollectionRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ResourceForUpdate();
-                    foreach (var tag in current.Tags)
+                    DataCollectionRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ResourceForUpdate patch = new ResourceForUpdate();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DataCollectionRuleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

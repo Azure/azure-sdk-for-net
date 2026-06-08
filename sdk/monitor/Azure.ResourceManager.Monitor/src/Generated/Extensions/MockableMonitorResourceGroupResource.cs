@@ -8,828 +8,90 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMonitorResourceGroupResource : ArmResource
     {
         private ClientDiagnostics _privateLinkScopeOperationStatusClientDiagnostics;
-        private PrivateLinkScopeOperationStatusRestOperations _privateLinkScopeOperationStatusRestClient;
+        private PrivateLinkScopeOperationStatus _privateLinkScopeOperationStatusRestClient;
+        private ClientDiagnostics _metricAlertsStatusClientDiagnostics;
+        private MetricAlertsStatus _metricAlertsStatusRestClient;
+        private ClientDiagnostics _actionGroupsClientDiagnostics;
+        private ActionGroups _actionGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMonitorResourceGroupResource for mocking. </summary>
         protected MockableMonitorResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMonitorResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMonitorResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PrivateLinkScopeOperationStatusClientDiagnostics => _privateLinkScopeOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PrivateLinkScopeOperationStatusRestOperations PrivateLinkScopeOperationStatusRestClient => _privateLinkScopeOperationStatusRestClient ??= new PrivateLinkScopeOperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PrivateLinkScopeOperationStatusClientDiagnostics => _privateLinkScopeOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private PrivateLinkScopeOperationStatus PrivateLinkScopeOperationStatusRestClient => _privateLinkScopeOperationStatusRestClient ??= new PrivateLinkScopeOperationStatus(PrivateLinkScopeOperationStatusClientDiagnostics, Pipeline, Endpoint, "2023-06-01-preview");
 
-        /// <summary> Gets a collection of AutoscaleSettingResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
-        public virtual AutoscaleSettingCollection GetAutoscaleSettings()
-        {
-            return GetCachedClient(client => new AutoscaleSettingCollection(client, Id));
-        }
+        private ClientDiagnostics MetricAlertsStatusClientDiagnostics => _metricAlertsStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets an autoscale setting
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoscaleSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoscaleSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutoscaleSettingResource>> GetAutoscaleSettingAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutoscaleSettings().GetAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
-        }
+        private MetricAlertsStatus MetricAlertsStatusRestClient => _metricAlertsStatusRestClient ??= new MetricAlertsStatus(MetricAlertsStatusClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
 
-        /// <summary>
-        /// Gets an autoscale setting
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoscaleSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoscaleSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutoscaleSettingResource> GetAutoscaleSetting(string autoscaleSettingName, CancellationToken cancellationToken = default)
-        {
-            return GetAutoscaleSettings().Get(autoscaleSettingName, cancellationToken);
-        }
+        private ClientDiagnostics ActionGroupsClientDiagnostics => _actionGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of AlertRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AlertRuleResources and their operations over a AlertRuleResource. </returns>
-        public virtual AlertRuleCollection GetAlertRules()
-        {
-            return GetCachedClient(client => new AlertRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a classic metric alert rule
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AlertRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AlertRuleResource>> GetAlertRuleAsync(string ruleName, CancellationToken cancellationToken = default)
-        {
-            return await GetAlertRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a classic metric alert rule
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AlertRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AlertRuleResource> GetAlertRule(string ruleName, CancellationToken cancellationToken = default)
-        {
-            return GetAlertRules().Get(ruleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ActionGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ActionGroupResources and their operations over a ActionGroupResource. </returns>
-        public virtual ActionGroupCollection GetActionGroups()
-        {
-            return GetCachedClient(client => new ActionGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get an action group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ActionGroupResource>> GetActionGroupAsync(string actionGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetActionGroups().GetAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get an action group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ActionGroupResource> GetActionGroup(string actionGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetActionGroups().Get(actionGroupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of MetricAlertResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MetricAlertResources and their operations over a MetricAlertResource. </returns>
-        public virtual MetricAlertCollection GetMetricAlerts()
-        {
-            return GetCachedClient(client => new MetricAlertCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve an alert rule definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricAlerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MetricAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MetricAlertResource>> GetMetricAlertAsync(string ruleName, CancellationToken cancellationToken = default)
-        {
-            return await GetMetricAlerts().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve an alert rule definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricAlerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MetricAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MetricAlertResource> GetMetricAlert(string ruleName, CancellationToken cancellationToken = default)
-        {
-            return GetMetricAlerts().Get(ruleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
-        public virtual ScheduledQueryRuleCollection GetScheduledQueryRules()
-        {
-            return GetCachedClient(client => new ScheduledQueryRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve an scheduled query rule definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledQueryRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledQueryRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleAsync(string ruleName, CancellationToken cancellationToken = default)
-        {
-            return await GetScheduledQueryRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve an scheduled query rule definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledQueryRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledQueryRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ScheduledQueryRuleResource> GetScheduledQueryRule(string ruleName, CancellationToken cancellationToken = default)
-        {
-            return GetScheduledQueryRules().Get(ruleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
-        public virtual MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes()
-        {
-            return GetCachedClient(client => new MonitorPrivateLinkScopeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns a Azure Monitor PrivateLinkScope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MonitorPrivateLinkScopeResource>> GetMonitorPrivateLinkScopeAsync(string scopeName, CancellationToken cancellationToken = default)
-        {
-            return await GetMonitorPrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a Azure Monitor PrivateLinkScope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(string scopeName, CancellationToken cancellationToken = default)
-        {
-            return GetMonitorPrivateLinkScopes().Get(scopeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ActivityLogAlertResources and their operations over a ActivityLogAlertResource. </returns>
-        public virtual ActivityLogAlertCollection GetActivityLogAlerts()
-        {
-            return GetCachedClient(client => new ActivityLogAlertCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get an Activity Log Alert rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ActivityLogAlertResource>> GetActivityLogAlertAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
-        {
-            return await GetActivityLogAlerts().GetAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get an Activity Log Alert rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ActivityLogAlertResource> GetActivityLogAlert(string activityLogAlertName, CancellationToken cancellationToken = default)
-        {
-            return GetActivityLogAlerts().Get(activityLogAlertName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataCollectionEndpointResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DataCollectionEndpointResources and their operations over a DataCollectionEndpointResource. </returns>
-        public virtual DataCollectionEndpointCollection GetDataCollectionEndpoints()
-        {
-            return GetCachedClient(client => new DataCollectionEndpointCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the specified data collection endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionEndpoints_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataCollectionEndpointResource>> GetDataCollectionEndpointAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataCollectionEndpoints().GetAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the specified data collection endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionEndpoints_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataCollectionEndpointResource> GetDataCollectionEndpoint(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
-        {
-            return GetDataCollectionEndpoints().Get(dataCollectionEndpointName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataCollectionRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DataCollectionRuleResources and their operations over a DataCollectionRuleResource. </returns>
-        public virtual DataCollectionRuleCollection GetDataCollectionRules()
-        {
-            return GetCachedClient(client => new DataCollectionRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the specified data collection rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataCollectionRuleResource>> GetDataCollectionRuleAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataCollectionRules().GetAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the specified data collection rule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataCollectionRuleResource> GetDataCollectionRule(string dataCollectionRuleName, CancellationToken cancellationToken = default)
-        {
-            return GetDataCollectionRules().Get(dataCollectionRuleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
-        public virtual MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources()
-        {
-            return GetCachedClient(client => new MonitorWorkspaceResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the specific Azure Monitor workspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureMonitorWorkspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            return await GetMonitorWorkspaceResources().GetAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the specific Azure Monitor workspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureMonitorWorkspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MonitorWorkspaceResource> GetMonitorWorkspaceResource(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            return GetMonitorWorkspaceResources().Get(azureMonitorWorkspaceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PipelineGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PipelineGroupResources and their operations over a PipelineGroupResource. </returns>
-        public virtual PipelineGroupCollection GetPipelineGroups()
-        {
-            return GetCachedClient(client => new PipelineGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the specific pipeline group instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PipelineGroupResource>> GetPipelineGroupAsync(string pipelineGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetPipelineGroups().GetAsync(pipelineGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the specific pipeline group instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PipelineGroupResource> GetPipelineGroup(string pipelineGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetPipelineGroups().Get(pipelineGroupName, cancellationToken);
-        }
+        private ActionGroups ActionGroupsRestClient => _actionGroupsRestClient ??= new ActionGroups(ActionGroupsClientDiagnostics, Pipeline, Endpoint, "2024-10-01-preview");
 
         /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopeOperationStatuses/{asyncOperationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkScopeOperationStatusOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public virtual async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(string asyncOperationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationStatus>> GetAsync(string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus");
+            using DiagnosticScope scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await PrivateLinkScopeOperationStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, asyncOperationId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateLinkScopeOperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, asyncOperationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -843,32 +105,246 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopeOperationStatuses/{asyncOperationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkScopeOperationStatusOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public virtual Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(string asyncOperationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationStatus> Get(string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus");
+            using DiagnosticScope scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.Get");
             scope.Start();
             try
             {
-                var response = PrivateLinkScopeOperationStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, asyncOperationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateLinkScopeOperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, asyncOperationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve an alert rule status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricAlertResources_ListByName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="statusName"> The name of the status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MetricAlertStatusCollection>> GetByNameAsync(string ruleName, string statusName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
+
+            using DiagnosticScope scope = MetricAlertsStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetByName");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricAlertsStatusRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, statusName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve an alert rule status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricAlertResources_ListByName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="statusName"> The name of the status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MetricAlertStatusCollection> GetByName(string ruleName, string statusName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
+
+            using DiagnosticScope scope = MetricAlertsStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetByName");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricAlertsStatusRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, statusName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_GetTestNotificationsAtActionGroupResourceLevel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionGroupName"> The name of the action group. </param>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAtActionGroupResourceLevelAsync(string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            using DiagnosticScope scope = ActionGroupsClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ActionGroupsRestClient.CreateGetTestNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, actionGroupName, notificationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TestNotificationDetailsResponse> response = Response.FromValue(TestNotificationDetailsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_GetTestNotificationsAtActionGroupResourceLevel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionGroupName"> The name of the action group. </param>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TestNotificationDetailsResponse> GetTestNotificationsAtActionGroupResourceLevel(string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            using DiagnosticScope scope = ActionGroupsClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ActionGroupsRestClient.CreateGetTestNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, actionGroupName, notificationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TestNotificationDetailsResponse> response = Response.FromValue(TestNotificationDetailsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

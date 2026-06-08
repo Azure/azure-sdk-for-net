@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class AutoscaleSettingResource : IJsonModel<AutoscaleSettingData>
+    /// <summary></summary>
+    public partial class AutoscaleSettingResource : IJsonModel<AutoscaleSettingResourceData>
     {
-        private static AutoscaleSettingData s_dataDeserializationInstance;
-        private static AutoscaleSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutoscaleSettingResourceData> s_dataDeserializationInstance;
 
-        void IJsonModel<AutoscaleSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoscaleSettingData>)Data).Write(writer, options);
+        private static IJsonModel<AutoscaleSettingResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutoscaleSettingResourceData();
 
-        AutoscaleSettingData IJsonModel<AutoscaleSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoscaleSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<AutoscaleSettingResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoscaleSettingResourceData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<AutoscaleSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoscaleSettingData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoscaleSettingResourceData IJsonModel<AutoscaleSettingResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        AutoscaleSettingData IPersistableModel<AutoscaleSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoscaleSettingData>(data, options, AzureResourceManagerMonitorContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoscaleSettingResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoscaleSettingResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<AutoscaleSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoscaleSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoscaleSettingResourceData IPersistableModel<AutoscaleSettingResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoscaleSettingResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoscaleSettingResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

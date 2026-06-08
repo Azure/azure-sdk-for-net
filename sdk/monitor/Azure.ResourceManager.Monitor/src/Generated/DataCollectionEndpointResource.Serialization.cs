@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class DataCollectionEndpointResource : IJsonModel<DataCollectionEndpointData>
+    /// <summary></summary>
+    public partial class DataCollectionEndpointResource : IJsonModel<DataCollectionEndpointResourceData>
     {
-        private static DataCollectionEndpointData s_dataDeserializationInstance;
-        private static DataCollectionEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataCollectionEndpointResourceData> s_dataDeserializationInstance;
 
-        void IJsonModel<DataCollectionEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionEndpointData>)Data).Write(writer, options);
+        private static IJsonModel<DataCollectionEndpointResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataCollectionEndpointResourceData();
 
-        DataCollectionEndpointData IJsonModel<DataCollectionEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<DataCollectionEndpointResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionEndpointResourceData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<DataCollectionEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataCollectionEndpointData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionEndpointResourceData IJsonModel<DataCollectionEndpointResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        DataCollectionEndpointData IPersistableModel<DataCollectionEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionEndpointData>(data, options, AzureResourceManagerMonitorContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataCollectionEndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataCollectionEndpointResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<DataCollectionEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataCollectionEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionEndpointResourceData IPersistableModel<DataCollectionEndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionEndpointResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataCollectionEndpointResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

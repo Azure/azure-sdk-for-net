@@ -7,119 +7,130 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a LogProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogProfileResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLogProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLogProfile method.
+    /// A class representing a LogProfileResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLogProfileResources method.
     /// </summary>
     public partial class LogProfileResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LogProfileResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="logProfileName"> The logProfileName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string logProfileName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _logProfileClientDiagnostics;
-        private readonly LogProfilesRestOperations _logProfileRestClient;
-        private readonly LogProfileData _data;
-
+        private readonly ClientDiagnostics _logProfilesClientDiagnostics;
+        private readonly LogProfiles _logProfilesRestClient;
+        private readonly LogProfileResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/logprofiles";
 
-        /// <summary> Initializes a new instance of the <see cref="LogProfileResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LogProfileResource for mocking. </summary>
         protected LogProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogProfileResource(ArmClient client, LogProfileData data) : this(client, data.Id)
+        internal LogProfileResource(ArmClient client, LogProfileResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LogProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _logProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string logProfileApiVersion);
-            _logProfileRestClient = new LogProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logProfileApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string logProfileResourceApiVersion);
+            _logProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _logProfilesRestClient = new LogProfiles(_logProfilesClientDiagnostics, Pipeline, Endpoint, logProfileResourceApiVersion ?? "2016-03-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LogProfileData Data
+        public virtual LogProfileResourceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="logProfileName"> The logProfileName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string logProfileName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the log profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LogProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.Get");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,145 @@ namespace Azure.ResourceManager.Monitor
         /// Gets the log profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LogProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.Get");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<LogProfileResource>> UpdateAsync(LogProfileResourcePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, LogProfileResourcePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<LogProfileResource> Update(LogProfileResourcePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, LogProfileResourcePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +296,20 @@ namespace Azure.ResourceManager.Monitor
         /// Deletes the log profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +317,23 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.Delete");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = await _logProfileRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _logProfileRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +347,20 @@ namespace Azure.ResourceManager.Monitor
         /// Deletes the log profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,16 +368,23 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.Delete");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = _logProfileRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
-                var uri = _logProfileRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -257,111 +394,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<LogProfileResource>> UpdateAsync(LogProfilePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _logProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<LogProfileResource> Update(LogProfilePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _logProfileRestClient.Update(Id.SubscriptionId, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -371,29 +404,35 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.AddTag");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new LogProfilePatch();
-                    foreach (var tag in current.Tags)
+                    LogProfileResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<LogProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -403,27 +442,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -433,29 +452,35 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.AddTag");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new LogProfilePatch();
-                    foreach (var tag in current.Tags)
+                    LogProfileResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<LogProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -465,54 +490,40 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<LogProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.SetTags");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new LogProfilePatch();
+                    LogProfileResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<LogProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -522,54 +533,40 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<LogProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.SetTags");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new LogProfilePatch();
+                    LogProfileResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<LogProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -579,27 +576,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -607,29 +584,35 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.RemoveTag");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new LogProfilePatch();
-                    foreach (var tag in current.Tags)
+                    LogProfileResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<LogProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -639,27 +622,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -667,29 +630,35 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileResource.RemoveTag");
+            using DiagnosticScope scope = _logProfilesClientDiagnostics.CreateScope("LogProfileResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new LogProfilePatch();
-                    foreach (var tag in current.Tags)
+                    LogProfileResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<LogProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

@@ -15,49 +15,65 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct AlertSeverity : IEquatable<AlertSeverity>
     {
         private readonly long _value;
+        /// <summary> 0. </summary>
+        private const long _0Value = 0L;
+        /// <summary> 1. </summary>
+        private const long _1Value = 1L;
+        /// <summary> 2. </summary>
+        private const long _2Value = 2L;
+        /// <summary> 3. </summary>
+        private const long _3Value = 3L;
+        /// <summary> 4. </summary>
+        private const long _4Value = 4L;
 
         /// <summary> Initializes a new instance of <see cref="AlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public AlertSeverity(long value)
         {
             _value = value;
         }
 
-        private const long ZeroValue = 0L;
-        private const long OneValue = 1L;
-        private const long TwoValue = 2L;
-        private const long ThreeValue = 3L;
-        private const long FourValue = 4L;
-
         /// <summary> 0. </summary>
-        public static AlertSeverity Zero { get; } = new AlertSeverity(ZeroValue);
-        /// <summary> 1. </summary>
-        public static AlertSeverity One { get; } = new AlertSeverity(OneValue);
-        /// <summary> 2. </summary>
-        public static AlertSeverity Two { get; } = new AlertSeverity(TwoValue);
-        /// <summary> 3. </summary>
-        public static AlertSeverity Three { get; } = new AlertSeverity(ThreeValue);
-        /// <summary> 4. </summary>
-        public static AlertSeverity Four { get; } = new AlertSeverity(FourValue);
+        public static AlertSeverity _0 { get; } = new AlertSeverity(_0Value);
 
-        internal long ToSerialInt64() => _value;
+        /// <summary> 1. </summary>
+        public static AlertSeverity _1 { get; } = new AlertSeverity(_1Value);
+
+        /// <summary> 2. </summary>
+        public static AlertSeverity _2 { get; } = new AlertSeverity(_2Value);
+
+        /// <summary> 3. </summary>
+        public static AlertSeverity _3 { get; } = new AlertSeverity(_3Value);
+
+        /// <summary> 4. </summary>
+        public static AlertSeverity _4 { get; } = new AlertSeverity(_4Value);
 
         /// <summary> Determines if two <see cref="AlertSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlertSeverity left, AlertSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AlertSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlertSeverity left, AlertSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="long"/> to a <see cref="AlertSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AlertSeverity(long value) => new AlertSeverity(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AlertSeverity other) => Equals(_value, other._value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
     }
 }

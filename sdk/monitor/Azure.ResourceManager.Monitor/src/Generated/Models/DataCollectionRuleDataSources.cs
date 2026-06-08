@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDataSources"/>. </summary>
         /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
+        /// <param name="performanceCountersOTel"> The list of Open Telemetry performance counter data source configurations. </param>
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>
         /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
@@ -32,8 +33,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="prometheusForwarder"> The list of Prometheus forwarder data source configurations. </param>
         /// <param name="platformTelemetry"> The list of platform telemetry configurations. </param>
         /// <param name="dataImports"> Specifications of pull based data sources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(performanceCounters, windowsEventLogs, syslog, extensions, logFiles, iisLogs, windowsFirewallLogs, prometheusForwarder, platformTelemetry, dataImports, serializedAdditionalRawData)
+        /// <param name="otelLogs"> The list of Otel Logs data source configurations. </param>
+        /// <param name="otelTraces"> The list of Otel traces data source configurations. </param>
+        /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
+        /// <param name="etwProviders"> The list of ETW providers data source configurations. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters, IList<PerformanceCountersOTelDataSource> performanceCountersOTel, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IList<OtelLogsDataSource> otelLogs, IList<OtelTracesDataSource> otelTraces, IList<OtelMetricsDataSource> otelMetrics, IList<EtwProviderDataSource> etwProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(performanceCounters, performanceCountersOTel, windowsEventLogs, syslog, extensions, logFiles, iisLogs, windowsFirewallLogs, prometheusForwarder, platformTelemetry, dataImports, otelLogs, otelTraces, otelMetrics, etwProviders, additionalBinaryDataProperties)
         {
         }
     }

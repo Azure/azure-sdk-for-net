@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ScheduledQueryRuleResource : IJsonModel<ScheduledQueryRuleData>
+    /// <summary></summary>
+    public partial class ScheduledQueryRuleResource : IJsonModel<ScheduledQueryRuleResourceData>
     {
-        private static ScheduledQueryRuleData s_dataDeserializationInstance;
-        private static ScheduledQueryRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScheduledQueryRuleResourceData> s_dataDeserializationInstance;
 
-        void IJsonModel<ScheduledQueryRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledQueryRuleData>)Data).Write(writer, options);
+        private static IJsonModel<ScheduledQueryRuleResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScheduledQueryRuleResourceData();
 
-        ScheduledQueryRuleData IJsonModel<ScheduledQueryRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledQueryRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ScheduledQueryRuleResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledQueryRuleResourceData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<ScheduledQueryRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScheduledQueryRuleData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledQueryRuleResourceData IJsonModel<ScheduledQueryRuleResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        ScheduledQueryRuleData IPersistableModel<ScheduledQueryRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledQueryRuleData>(data, options, AzureResourceManagerMonitorContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScheduledQueryRuleResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScheduledQueryRuleResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<ScheduledQueryRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScheduledQueryRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledQueryRuleResourceData IPersistableModel<ScheduledQueryRuleResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledQueryRuleResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScheduledQueryRuleResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -13,71 +13,35 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log. </summary>
     public partial class LogSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
-        /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
-        public LogSettings(bool isEnabled)
+        /// <param name="enabled"> a value indicating whether this log is enabled. </param>
+        public LogSettings(bool enabled)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
         /// <param name="category"> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="categoryGroup"> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
+        /// <param name="enabled"> a value indicating whether this log is enabled. </param>
         /// <param name="retentionPolicy"> the retention policy for this log. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogSettings(string category, string categoryGroup, bool isEnabled, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LogSettings(string category, bool enabled, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
-            CategoryGroup = categoryGroup;
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             RetentionPolicy = retentionPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LogSettings"/> for deserialization. </summary>
-        internal LogSettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </summary>
         public string Category { get; set; }
-        /// <summary> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </summary>
-        public string CategoryGroup { get; set; }
+
         /// <summary> a value indicating whether this log is enabled. </summary>
-        public bool IsEnabled { get; set; }
+        public bool Enabled { get; set; }
+
         /// <summary> the retention policy for this log. </summary>
         public RetentionPolicy RetentionPolicy { get; set; }
     }

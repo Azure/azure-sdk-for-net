@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </param>
         /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="metricName"/> or <paramref name="failingPeriods"/> is null. </exception>
-        public DynamicMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods) : base(name, metricName, timeAggregation)
+        public DynamicMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods) : base(CriterionType.DynamicThresholdCriterion, name, metricName, timeAggregation)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(metricName, nameof(metricName));
@@ -30,7 +31,6 @@ namespace Azure.ResourceManager.Monitor.Models
             Operator = @operator;
             AlertSensitivity = alertSensitivity;
             FailingPeriods = failingPeriods;
-            CriterionType = CriterionType.DynamicThresholdCriterion;
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="operator"> The operator used to compare the metric value against the threshold. Previously undocumented values might be returned. </param>
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </param>
         /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. </param>
@@ -52,20 +52,17 @@ namespace Azure.ResourceManager.Monitor.Models
             AlertSensitivity = alertSensitivity;
             FailingPeriods = failingPeriods;
             IgnoreDataBefore = ignoreDataBefore;
-            CriterionType = criterionType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/> for deserialization. </summary>
-        internal DynamicMetricCriteria()
-        {
         }
 
         /// <summary> The operator used to compare the metric value against the threshold. Previously undocumented values might be returned. </summary>
         public DynamicThresholdOperator Operator { get; set; }
+
         /// <summary> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </summary>
         public DynamicThresholdSensitivity AlertSensitivity { get; set; }
+
         /// <summary> The minimum number of violations required within the selected lookback time window required to raise an alert. </summary>
         public DynamicThresholdFailingPeriods FailingPeriods { get; set; }
+
         /// <summary> Use this option to set the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format). </summary>
         public DateTimeOffset? IgnoreDataBefore { get; set; }
     }

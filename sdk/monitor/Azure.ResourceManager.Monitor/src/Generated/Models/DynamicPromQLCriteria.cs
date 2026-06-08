@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -19,41 +20,36 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> The operator used to compare the metric value against the threshold. Previously undocumented values might be returned. </param>
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="query"/> is null. </exception>
-        public DynamicPromQLCriteria(string name, string query, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity) : base(name, query)
+        public DynamicPromQLCriteria(string name, string query, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity) : base(CriterionType.DynamicThresholdCriterion, name, query)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(query, nameof(query));
 
             Operator = @operator;
             AlertSensitivity = alertSensitivity;
-            CriterionType = CriterionType.DynamicThresholdCriterion;
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicPromQLCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="operator"> The operator used to compare the metric value against the threshold. Previously undocumented values might be returned. </param>
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </param>
         /// <param name="ignoreDataBefore"> Use this option to set the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format). </param>
-        internal DynamicPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> serializedAdditionalRawData, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DateTimeOffset? ignoreDataBefore) : base(criterionType, name, query, serializedAdditionalRawData)
+        internal DynamicPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DateTimeOffset? ignoreDataBefore) : base(criterionType, name, query, additionalBinaryDataProperties)
         {
             Operator = @operator;
             AlertSensitivity = alertSensitivity;
             IgnoreDataBefore = ignoreDataBefore;
-            CriterionType = criterionType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DynamicPromQLCriteria"/> for deserialization. </summary>
-        internal DynamicPromQLCriteria()
-        {
         }
 
         /// <summary> The operator used to compare the metric value against the threshold. Previously undocumented values might be returned. </summary>
         public DynamicThresholdOperator Operator { get; set; }
+
         /// <summary> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </summary>
         public DynamicThresholdSensitivity AlertSensitivity { get; set; }
+
         /// <summary> Use this option to set the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format). </summary>
         public DateTimeOffset? IgnoreDataBefore { get; set; }
     }

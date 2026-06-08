@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleAssociationMetadata : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleAssociationMetadata>
+    /// <summary> Metadata about the resource. </summary>
+    public partial class DataCollectionRuleAssociationMetadata : Metadata, IJsonModel<DataCollectionRuleAssociationMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleAssociationMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Metadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataCollectionRuleAssociationMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataCollectionRuleAssociationMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionRuleAssociationMetadata IPersistableModel<DataCollectionRuleAssociationMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataCollectionRuleAssociationMetadata)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataCollectionRuleAssociationMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataCollectionRuleAssociationMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,89 +69,66 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionRuleAssociationMetadata)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        DataCollectionRuleAssociationMetadata IJsonModel<DataCollectionRuleAssociationMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionRuleAssociationMetadata IJsonModel<DataCollectionRuleAssociationMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataCollectionRuleAssociationMetadata)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Metadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionRuleAssociationMetadata)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataCollectionRuleAssociationMetadata(document.RootElement, options);
         }
 
-        internal static DataCollectionRuleAssociationMetadata DeserializeDataCollectionRuleAssociationMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataCollectionRuleAssociationMetadata DeserializeDataCollectionRuleAssociationMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string provisionedBy = default;
             string provisionedByResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string provisionedByImmutableId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisionedBy"u8))
+                if (prop.NameEquals("provisionedBy"u8))
                 {
-                    provisionedBy = property.Value.GetString();
+                    provisionedBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisionedByResourceId"u8))
+                if (prop.NameEquals("provisionedByResourceId"u8))
                 {
-                    provisionedByResourceId = property.Value.GetString();
+                    provisionedByResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisionedByImmutableId"u8))
+                {
+                    provisionedByImmutableId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataCollectionRuleAssociationMetadata(provisionedBy, provisionedByResourceId, serializedAdditionalRawData);
+            return new DataCollectionRuleAssociationMetadata(provisionedBy, provisionedByResourceId, provisionedByImmutableId, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataCollectionRuleAssociationMetadata>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataCollectionRuleAssociationMetadata IPersistableModel<DataCollectionRuleAssociationMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataCollectionRuleAssociationMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataCollectionRuleAssociationMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

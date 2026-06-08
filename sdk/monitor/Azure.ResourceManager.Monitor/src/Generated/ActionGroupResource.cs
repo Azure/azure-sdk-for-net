@@ -7,120 +7,135 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing an ActionGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ActionGroupResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetActionGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetActionGroup method.
+    /// A class representing a ActionGroupResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ActionGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetActionGroupResources method.
     /// </summary>
     public partial class ActionGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ActionGroupResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="actionGroupName"> The actionGroupName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string actionGroupName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _actionGroupClientDiagnostics;
-        private readonly ActionGroupsRestOperations _actionGroupRestClient;
-        private readonly ActionGroupData _data;
-
+        private readonly ClientDiagnostics _actionGroupsClientDiagnostics;
+        private readonly ActionGroups _actionGroupsRestClient;
+        private readonly ClientDiagnostics _nspActionGroupClientDiagnostics;
+        private readonly NspActionGroup _nspActionGroupRestClient;
+        private readonly ActionGroupResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/actionGroups";
 
-        /// <summary> Initializes a new instance of the <see cref="ActionGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ActionGroupResource for mocking. </summary>
         protected ActionGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ActionGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ActionGroupResource(ArmClient client, ActionGroupData data) : this(client, data.Id)
+        internal ActionGroupResource(ArmClient client, ActionGroupResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ActionGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActionGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _actionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string actionGroupApiVersion);
-            _actionGroupRestClient = new ActionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string actionGroupResourceApiVersion);
+            _actionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Endpoint, actionGroupResourceApiVersion ?? "2024-10-01-preview");
+            _nspActionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _nspActionGroupRestClient = new NspActionGroup(_nspActionGroupClientDiagnostics, Pipeline, Endpoint, actionGroupResourceApiVersion ?? "2021-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ActionGroupData Data
+        public virtual ActionGroupResourceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="actionGroupName"> The actionGroupName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string actionGroupName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get an action group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ActionGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.Get");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _actionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +149,145 @@ namespace Azure.ResourceManager.Monitor
         /// Get an action group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ActionGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.Get");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _actionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing action group's tags. To update other fields use the CreateOrUpdate method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ActionGroupResource>> UpdateAsync(ActionGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupResourcePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing action group's tags. To update other fields use the CreateOrUpdate method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ActionGroupResource> Update(ActionGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupResourcePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +301,20 @@ namespace Azure.ResourceManager.Monitor
         /// Delete an action group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,16 +322,23 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.Delete");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _actionGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _actionGroupRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,20 +352,20 @@ namespace Azure.ResourceManager.Monitor
         /// Delete an action group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,101 +373,24 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.Delete");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _actionGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _actionGroupRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing action group's tags. To update other fields use the CreateOrUpdate method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ActionGroupResource>> UpdateAsync(ActionGroupPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _actionGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing action group's tags. To update other fields use the CreateOrUpdate method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ActionGroupResource> Update(ActionGroupPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _actionGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -346,39 +403,52 @@ namespace Azure.ResourceManager.Monitor
         /// Send test notifications to a set of provided receivers
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/createNotifications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/createNotifications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_CreateNotificationsAtActionGroupResourceLevel</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_CreateNotificationsAtActionGroupResourceLevel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The notification request body which includes the contact details. </param>
+        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
+        public virtual async Task<ArmOperation<TestNotificationDetailsResponse>> CreateNotificationsAtActionGroupResourceLevelAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.CreateNotifications");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.CreateNotificationsAtActionGroupResourceLevel");
             scope.Start();
             try
             {
-                var response = await _actionGroupRestClient.CreateNotificationsAtActionGroupResourceLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, NotificationRequestBody.ToRequestContent(notificationRequest), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MonitorArmOperation<TestNotificationDetailsResponse> operation = new MonitorArmOperation<TestNotificationDetailsResponse>(
+                    new TestNotificationDetailsResponseOperationSource(),
+                    _actionGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -392,39 +462,52 @@ namespace Azure.ResourceManager.Monitor
         /// Send test notifications to a set of provided receivers
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/createNotifications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/createNotifications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_CreateNotificationsAtActionGroupResourceLevel</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_CreateNotificationsAtActionGroupResourceLevel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The notification request body which includes the contact details. </param>
+        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
+        public virtual ArmOperation<TestNotificationDetailsResponse> CreateNotificationsAtActionGroupResourceLevel(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.CreateNotifications");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.CreateNotificationsAtActionGroupResourceLevel");
             scope.Start();
             try
             {
-                var response = _actionGroupRestClient.CreateNotificationsAtActionGroupResourceLevel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, NotificationRequestBody.ToRequestContent(notificationRequest), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MonitorArmOperation<TestNotificationDetailsResponse> operation = new MonitorArmOperation<TestNotificationDetailsResponse>(
+                    new TestNotificationDetailsResponseOperationSource(),
+                    _actionGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -435,82 +518,43 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get the test notifications by the notification id
+        /// Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_GetTestNotificationsAtActionGroupResourceLevel</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_EnableReceiver. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> EnableReceiverAsync(EnableRequest content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
             scope.Start();
             try
             {
-                var response = await _actionGroupRestClient.GetTestNotificationsAtActionGroupResourceLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the test notifications by the notification id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_GetTestNotificationsAtActionGroupResourceLevel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="notificationId"> The notification id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
-
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
-            scope.Start();
-            try
-            {
-                var response = _actionGroupRestClient.GetTestNotificationsAtActionGroupResourceLevel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateEnableReceiverRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, EnableRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -524,35 +568,40 @@ namespace Azure.ResourceManager.Monitor
         /// Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_EnableReceiver</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_EnableReceiver. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> EnableReceiverAsync(ActionGroupEnableContent content, CancellationToken cancellationToken = default)
+        public virtual Response EnableReceiver(EnableRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
             scope.Start();
             try
             {
-                var response = await _actionGroupRestClient.EnableReceiverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateEnableReceiverRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, EnableRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -563,38 +612,49 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers.
+        /// Gets a specified NSP configuration for specified action group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_EnableReceiver</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_GetNSP. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The receiver to re-enable. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response EnableReceiver(ActionGroupEnableContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<NetworkSecurityPerimeterConfiguration>> GetNSPAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
+            using DiagnosticScope scope = _nspActionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetNSP");
             scope.Start();
             try
             {
-                var response = _actionGroupRestClient.EnableReceiver(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nspActionGroupRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -605,26 +665,243 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a specified NSP configuration for specified action group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_GetNSP. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<NetworkSecurityPerimeterConfiguration> GetNSP(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
+
+            using DiagnosticScope scope = _nspActionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetNSP");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nspActionGroupRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of NSP configurations for specified action group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/networkSecurityPerimeterConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ListNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetNSPAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NspActionGroupGetNSPAsyncCollectionResultOfT(
+                _nspActionGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ActionGroupResource.GetNSP");
+        }
+
+        /// <summary>
+        /// Gets a list of NSP configurations for specified action group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/networkSecurityPerimeterConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ListNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetNSP(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NspActionGroupGetNSPCollectionResultOfT(
+                _nspActionGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ActionGroupResource.GetNSP");
+        }
+
+        /// <summary>
+        /// Reconciles a specified NSP configuration for specified action group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}/reconcile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ReconcileNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> ReconcileNSPAsync(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
+
+            using DiagnosticScope scope = _nspActionGroupClientDiagnostics.CreateScope("ActionGroupResource.ReconcileNSP");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nspActionGroupRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MonitorArmOperation operation = new MonitorArmOperation(_nspActionGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reconciles a specified NSP configuration for specified action group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}/reconcile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ReconcileNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation ReconcileNSP(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
+
+            using DiagnosticScope scope = _nspActionGroupClientDiagnostics.CreateScope("ActionGroupResource.ReconcileNSP");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nspActionGroupRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MonitorArmOperation operation = new MonitorArmOperation(_nspActionGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -634,29 +911,35 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.AddTag");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _actionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ActionGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ActionGroupPatch();
-                    foreach (var tag in current.Tags)
+                    ActionGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ActionGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -666,27 +949,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -696,29 +959,35 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.AddTag");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _actionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ActionGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ActionGroupPatch();
-                    foreach (var tag in current.Tags)
+                    ActionGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ActionGroupResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -728,54 +997,40 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ActionGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.SetTags");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _actionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ActionGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ActionGroupPatch();
+                    ActionGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ActionGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -785,54 +1040,40 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ActionGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.SetTags");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _actionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ActionGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ActionGroupPatch();
+                    ActionGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ActionGroupResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -842,27 +1083,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -870,29 +1091,35 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.RemoveTag");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _actionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ActionGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ActionGroupPatch();
-                    foreach (var tag in current.Tags)
+                    ActionGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ActionGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -902,27 +1129,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -930,29 +1137,35 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.RemoveTag");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _actionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ActionGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ActionGroupPatch();
-                    foreach (var tag in current.Tags)
+                    ActionGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ActionGroupResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
