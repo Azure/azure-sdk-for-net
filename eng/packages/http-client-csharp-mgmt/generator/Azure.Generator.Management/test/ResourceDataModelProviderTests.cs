@@ -6,6 +6,7 @@ using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
 using Azure.Generator.Management;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -100,8 +101,8 @@ namespace Azure.Generator.Mgmt.Tests
             _ = resourceDataModel.Constructors;
             _ = resourceDataModel.SerializationProviders.SelectMany(s => s.Methods).ToArray();
 
-            var visitor = new TestableInheritableSystemObjectModelVisitor();
-            var result = visitor.InvokePreVisitModel(resourceModel, resourceDataModel);
+            RunVisitors(resourceDataModel);
+            var result = resourceDataModel;
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
@@ -125,6 +126,56 @@ namespace Azure.Generator.Mgmt.Tests
             var serializationContent = new TypeProviderWriter(serialization).Write().Content;
             Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
             Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
+        }
+
+        [Test]
+        public void ResourceDataModelWithCustomSourceBaseFiltersInheritedPropertiesAndOverridesSerialization()
+        {
+            var resourceModel = InputFactory.Model(
+                "ExternalSolution",
+                properties:
+                [
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("kind", InputPrimitiveType.String, isRequired: true, isDiscriminator: true),
+                    InputFactory.Property("properties", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel]);
+
+            var resourceDataModel = new ResourceDataModelProvider(resourceModel);
+            ManagementMockHelpers.SetCustomCodeView(resourceDataModel, new ExternalSolutionDataCustomCodeView(resourceDataModel));
+            Assert.That(resourceDataModel.BaseType, Is.Not.Null);
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataModel.BaseType!] =
+                new LegacyExternalSolutionCustomCodeView(resourceDataModel.BaseType!);
+
+            // Reproduce real generation ordering where constructors and serialization can be
+            // built before inherited custom-base members are reconciled.
+            _ = resourceDataModel.Constructors;
+            _ = resourceDataModel.SerializationProviders.SelectMany(s => s.Methods).ToArray();
+
+            RunVisitors(resourceDataModel);
+            var result = resourceDataModel;
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.BaseModelProvider, Is.Null, "The custom base is source-only, not a generated model provider.");
+
+            var propertyNames = result.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames, Does.Not.Contain("Name"));
+            Assert.That(propertyNames, Does.Not.Contain("Location"));
+            Assert.That(propertyNames, Does.Not.Contain("Kind"));
+            Assert.That(propertyNames, Does.Not.Contain("Properties"));
+
+            var modelContent = new TypeProviderWriter(result).Write().Content;
+            Assert.That(modelContent, Does.Contain("ExternalSolutionData : global::Azure.Generator.Mgmt.Tests.ResourceDataModelProviderTests.LegacyExternalSolution"));
+            Assert.That(modelContent, Does.Not.Contain("public string Name"));
+            Assert.That(modelContent, Does.Not.Contain("public string Kind"));
+
+            var serialization = result.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var serializationContent = new TypeProviderWriter(serialization).Write().Content;
+            Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
+            Assert.That(serializationContent, Does.Not.Contain("global::."));
         }
 
         [Test]
@@ -180,6 +231,11 @@ namespace Azure.Generator.Mgmt.Tests
             {
                 return base.PreVisitModel(inputType, type);
             }
+
+            public TypeProvider? InvokeVisitType(TypeProvider type)
+            {
+                return base.VisitType(type);
+            }
         }
 
         private class TestableResourceVisitor : ResourceVisitor
@@ -187,6 +243,65 @@ namespace Azure.Generator.Mgmt.Tests
             public TypeProvider? InvokeVisitType(TypeProvider type)
             {
                 return base.VisitType(type);
+            }
+        }
+
+        private static void RunVisitors(TypeProvider provider)
+        {
+            var visitTypeCore = typeof(Microsoft.TypeSpec.Generator.LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [provider]);
+            }
+        }
+
+        public class LegacyExternalSolution : ResourceData
+        {
+            public string? Kind { get; set; }
+            public AzureLocation? Location { get; }
+            public string? Properties { get; set; }
+        }
+
+        private class ExternalSolutionDataCustomCodeView : TypeProvider
+        {
+            private readonly string _name;
+
+            public ExternalSolutionDataCustomCodeView(TypeProvider enclosingType)
+            {
+                _name = enclosingType.Name;
+            }
+
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(LegacyExternalSolution));
+            protected override string BuildName() => _name;
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+        }
+
+        private class LegacyExternalSolutionCustomCodeView : TypeProvider
+        {
+            private readonly CSharpType _type;
+
+            public LegacyExternalSolutionCustomCodeView(CSharpType type)
+            {
+                _type = type;
+            }
+
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(ResourceData));
+            protected override string BuildName() => _type.Name;
+            protected override string BuildNamespace() => _type.Namespace;
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+
+            protected override PropertyProvider[] BuildProperties()
+            {
+                return
+                [
+                    new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(string), "Kind", new AutoPropertyBody(true), this),
+                    new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(AzureLocation?), "Location", new AutoPropertyBody(false), this),
+                    new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(string), "Properties", new AutoPropertyBody(true), this),
+                ];
             }
         }
     }

@@ -86,10 +86,15 @@ namespace Azure.Generator.Management.Tests.TestHelpers
 
         public static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
-            typeProvider.GetType().BaseType!.GetField(
-                    "_customCodeView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)?
-                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+            for (var type = typeProvider.GetType(); type is not null; type = type.BaseType)
+            {
+                var field = type.GetField("_customCodeView", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (field is not null)
+                {
+                    field.SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+                    return;
+                }
+            }
         }
     }
 }
