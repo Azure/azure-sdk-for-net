@@ -5,7 +5,8 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Backward-compat partial retained for the TypeSpec-renamed schedule properties model.
+    // Customized: retain legacy schedule properties constructor behavior after TypeSpec renamed
+    // the schedule properties model.
     public partial class MachineLearningScheduleProperties
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>

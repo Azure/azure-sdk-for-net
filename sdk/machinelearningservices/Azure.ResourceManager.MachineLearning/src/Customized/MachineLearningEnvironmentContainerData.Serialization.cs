@@ -11,8 +11,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Fix the responsed error type "environments" to "Microsoft.MachineLearningServices/registries/environments"
-    // Issue:https://github.com/Azure/azure-sdk-for-net/issues/45884
+    // Customized: fix the legacy service response resource type "environments" to
+    // "Microsoft.MachineLearningServices/registries/environments" during deserialization.
+    // Issue: https://github.com/Azure/azure-sdk-for-net/issues/45884
     [CodeGenSerialization(nameof(ResourceType), DeserializationValueHook = nameof(DeserializeTypeValue))]
     public partial class EnvironmentContainerData
     {

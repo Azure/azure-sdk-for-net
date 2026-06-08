@@ -5,7 +5,8 @@
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // TODO: stale customization no longer needed after TypeSpec regeneration.
+    // Customized: retained only as a temporary migration shim for collection customization drift;
+    // remove once regeneration no longer requires this partial.
     public partial class MachineLearningOnlineEndpointCollection
     {
     }

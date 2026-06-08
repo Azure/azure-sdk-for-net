@@ -10,6 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     // Customized: preserve legacy public model type names during TypeSpec migration.
+    // Most entries are generated fallback/unknown types rather than TypeSpec models, so
+    // @@clientName cannot target them; keep these CodeGenType stubs until the generator
+    // exposes a TypeSpec-level customization point for fallback type names.
     [CodeGenType("ComputeResourcePatch")]
     public partial class MachineLearningComputePatch { }
 

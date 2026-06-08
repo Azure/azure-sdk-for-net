@@ -13,6 +13,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    // Customized: centralizes legacy serialization behavior used by hand-written compatibility
+    // models whose wire shape differs from the latest generated model hierarchy.
     internal static class MachineLearningSerializationHelpers
     {
         public static RequestContent CreateEnumerableContent<T>(IEnumerable<T> values)

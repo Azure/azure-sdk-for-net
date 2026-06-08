@@ -8,6 +8,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: preserve the legacy keyIdentifier-only constructor that builds the nested
+    // key vault update payload expected by existing callers.
     /// <summary> The EncryptionUpdateProperties. </summary>
     public partial class EncryptionUpdateProperties
     {

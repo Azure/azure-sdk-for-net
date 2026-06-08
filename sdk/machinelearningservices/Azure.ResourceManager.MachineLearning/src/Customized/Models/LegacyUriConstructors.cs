@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Backward-compat overloads for constructors that changed URI parameter ordering or required discriminator parameters.
+    // Customized: restore URI constructor overloads whose legacy parameter shapes differ from
+    // the discriminator-first constructors emitted by TypeSpec.
     public partial class FixedInputData
     {
         /// <summary> Initializes a new instance of <see cref="FixedInputData"/>. </summary>

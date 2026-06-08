@@ -11,8 +11,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Fix the responsed error type "data" to "Microsoft.MachineLearningServices/registries/data"
-    // Issue:https://github.com/Azure/azure-sdk-for-net/issues/45884
+    // Customized: fix the legacy service response resource type "data" to
+    // "Microsoft.MachineLearningServices/registries/data" during deserialization.
+    // Issue: https://github.com/Azure/azure-sdk-for-net/issues/45884
     [CodeGenSerialization(nameof(ResourceType), DeserializationValueHook = nameof(DeserializeTypeValue))]
     public partial class DataContainerData
     {

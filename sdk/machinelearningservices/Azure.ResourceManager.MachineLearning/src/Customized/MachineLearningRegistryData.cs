@@ -9,7 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Backward-compat shim for registry collection properties that were previously settable.
+    // Customized: restore registry collection properties that were previously settable but are
+    // represented by generated internal backing properties after TypeSpec migration.
     public partial class MachineLearningRegistryData
     {
         /// <summary> Private endpoint connections info used for pending connections in private link portal. </summary>

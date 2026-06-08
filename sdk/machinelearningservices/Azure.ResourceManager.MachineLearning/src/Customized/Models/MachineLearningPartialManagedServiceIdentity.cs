@@ -11,6 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 // TODO: stale suppression kept only for regeneration; disabled for current build.
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: retain the legacy partial managed identity model used by patch requests; the
+    // generated identity type has a different construction/serialization contract.
     /// <summary>
     /// Managed service identity (system assigned and/or user assigned identities)
     /// </summary>

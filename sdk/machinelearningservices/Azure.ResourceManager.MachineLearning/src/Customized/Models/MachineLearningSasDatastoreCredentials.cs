@@ -7,7 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Backward-compat shim for the previous public secrets constructor/property.
+    // Customized: restore the previous public secrets constructor/property for SAS datastore
+    // credentials after TypeSpec normalized credential construction.
     [CodeGenSuppress("MachineLearningSasDatastoreCredentials", typeof(MachineLearningSasDatastoreSecrets))]
     public partial class MachineLearningSasDatastoreCredentials
     {

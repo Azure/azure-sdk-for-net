@@ -8,6 +8,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: restore the legacy extensible enum type for public network access; TypeSpec
+    // generated a differently named enum for the same wire values.
     /// <summary> Whether requests from Public Network are allowed. </summary>
     public readonly partial struct MachineLearningPublicNetworkAccess : IEquatable<MachineLearningPublicNetworkAccess>
     {

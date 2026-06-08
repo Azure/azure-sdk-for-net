@@ -10,7 +10,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Backward-compat overloads for constructor parameter ordering and formerly public simple constructors.
+    // Customized: restore constructor overloads for legacy parameter ordering and formerly public
+    // simple constructors that TypeSpec generation normalized.
     public partial class EncryptionUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="EncryptionUpdateProperties"/>. </summary>

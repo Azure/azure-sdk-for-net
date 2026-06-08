@@ -10,6 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: restore shipped constructors/properties that latest TypeSpec generation normalized
+    // but cannot remove from the GA API surface.
     public partial class MachineLearningCertificateDatastoreCredentials
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>

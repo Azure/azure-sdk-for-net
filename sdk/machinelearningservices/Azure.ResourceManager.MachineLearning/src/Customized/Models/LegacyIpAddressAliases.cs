@@ -10,7 +10,7 @@ using System.Net;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Backward-compat aliases for IP address casing/type changes from TypeSpec generation.
+    // Customized: restore legacy IP address aliases whose casing/type differs from TypeSpec naming.
     public partial class AmlComputeNodeInformation
     {
         /// <summary> Private IP address of the compute node. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IPAddress PublicIPAddress => PublicIpAddress is null ? null : IPAddress.Parse(PublicIpAddress);
     }
 
-    // Backward-compat aliases for IP address casing changes from TypeSpec generation.
+    // Customized: restore legacy IP address aliases whose casing differs from TypeSpec naming.
     public partial class MachineLearningComputeInstanceConnectivityEndpoints
     {
         /// <summary> Public IP Address of this ComputeInstance. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string PrivateIPAddress => PrivateIpAddress;
     }
 
-    // Backward-compat alias for IP address casing changes from TypeSpec generation.
+    // Customized: restore legacy IP address alias whose casing differs from TypeSpec naming.
     public partial class MachineLearningComputeSystemService
     {
         /// <summary> Public IP address. </summary>

@@ -9,7 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Backward-compat constructors for legacy extensible base models.
+    // Customized: restore protected constructors for legacy extensible base models that customers
+    // may subclass; TypeSpec generation does not emit these non-wire constructors.
     public abstract partial class AutoMLVertical
     {
         /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>

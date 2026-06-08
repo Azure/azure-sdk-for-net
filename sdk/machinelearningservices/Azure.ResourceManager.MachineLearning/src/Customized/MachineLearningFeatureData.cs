@@ -8,7 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Backward-compat shim for the previous public feature data constructor and settable properties.
+    // Customized: restore the previous public feature data constructor and settable properties
+    // that are not emitted by the TypeSpec-generated resource data model.
     [CodeGenSuppress("MachineLearningFeatureData", typeof(MachineLearningFeatureProperties))]
     public partial class MachineLearningFeatureData
     {

@@ -5,6 +5,8 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: preserve the legacy public constructor after TypeSpec generated a more
+    // explicit internal constructor including identity and raw-data parameters.
     public partial class MachineLearningEncryptionSetting
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>

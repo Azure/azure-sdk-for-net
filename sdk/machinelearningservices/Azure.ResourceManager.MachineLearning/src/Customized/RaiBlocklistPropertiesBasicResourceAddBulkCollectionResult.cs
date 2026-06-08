@@ -12,6 +12,8 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    // Customized: model the legacy add-bulk operation as a pageable result even though the
+    // generated operation returns a one-shot response.
     internal partial class RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult : Pageable<RaiBlocklistItemPropertiesBasicResourceData>
     {
         private readonly ConnectionRaiBlocklistItem _client;

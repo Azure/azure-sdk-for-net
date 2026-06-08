@@ -12,6 +12,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: preserve legacy partial managed identity serialization for the update payload
+    // shape that is not emitted by the generated identity model.
     public partial class MachineLearningPartialManagedServiceIdentity : IUtf8JsonSerializable, IJsonModel<MachineLearningPartialManagedServiceIdentity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningPartialManagedServiceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));

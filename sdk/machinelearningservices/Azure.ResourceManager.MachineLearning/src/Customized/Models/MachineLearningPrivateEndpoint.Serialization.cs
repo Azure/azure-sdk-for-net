@@ -11,6 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: preserve the legacy private endpoint serialization contract used by public
+    // compatibility aliases after TypeSpec renamed related private endpoint models.
     public partial class MachineLearningPrivateEndpoint : IUtf8JsonSerializable, IJsonModel<MachineLearningPrivateEndpoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningPrivateEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);

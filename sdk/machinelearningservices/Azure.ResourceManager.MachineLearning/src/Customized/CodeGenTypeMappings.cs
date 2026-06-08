@@ -11,6 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.MachineLearning
 {
     // Customized: preserve legacy public ARM resource type names during TypeSpec migration.
+    // These cannot be expressed with @@clientName because the generator creates these resource
+    // and collection helper types after TypeSpec compilation, so they are not TypeSpec symbols.
     [CodeGenType("CodeContainerCollection")]
     public partial class MachineLearningCodeContainerCollection { }
 

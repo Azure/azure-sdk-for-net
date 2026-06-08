@@ -5,6 +5,8 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: bridge the legacy MachineLearningWorkspacePatch overloads to the latest
+    // generated WorkspacePatch request model used by TypeSpec operations.
     public partial class MachineLearningWorkspacePatch
     {
         /// <summary> Converts a legacy workspace patch to the generated update type. </summary>
