@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(HorizonDBPrivateEndpointConnectionPatchProperties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue(HorizonDBPrivateEndpointConnectionPatchProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            HorizonDBPrivateEndpointConnectionPatchProperties properties = default;
+            OptionalPropertiesUpdateableProperties horizonDBPrivateEndpointConnectionPatchProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    properties = HorizonDBPrivateEndpointConnectionPatchProperties.DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(prop.Value, options);
+                    horizonDBPrivateEndpointConnectionPatchProperties = OptionalPropertiesUpdateableProperties.DeserializeOptionalPropertiesUpdateableProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBPrivateEndpointConnectionPatch(properties, additionalBinaryDataProperties);
+            return new HorizonDBPrivateEndpointConnectionPatch(horizonDBPrivateEndpointConnectionPatchProperties, additionalBinaryDataProperties);
         }
     }
 }

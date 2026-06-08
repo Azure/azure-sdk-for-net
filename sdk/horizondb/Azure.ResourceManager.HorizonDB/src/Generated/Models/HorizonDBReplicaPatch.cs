@@ -32,5 +32,22 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Properties of a HorizonDB replica for update operations. </summary>
         internal HorizonDBReplicaPropertiesForPatchUpdate Properties { get; set; }
+
+        /// <summary> Role of the replica. </summary>
+        public HorizonDBReplicaRole? HorizonDBReplicaPropertiesForPatchUpdateRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Role;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HorizonDBReplicaPropertiesForPatchUpdate();
+                }
+                Properties.Role = value;
+            }
+        }
     }
 }
