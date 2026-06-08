@@ -7,5 +7,7 @@ extends:
     ServiceDirectory: computebulkactions
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.Compute.BulkActions
+      safeName: AzureResourceManagerComputeBulkActions
     - name: Azure.ResourceManager.ComputeBulkActions
       safeName: AzureResourceManagerComputeBulkActions
