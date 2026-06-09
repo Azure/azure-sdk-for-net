@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Primitives.Tests;
 
+[NonParallelizable]
 public class CredentialResolverTests
 {
     [SetUp]
