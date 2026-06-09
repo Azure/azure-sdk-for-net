@@ -11,6 +11,7 @@ Config loader for optimization-ready Azure AI Hosted Agents. Resolves optimized 
 
 ### Install the package
 
+<!-- TODO: Convert to verified snippets -->
 ```dotnetcli
 dotnet add package Azure.AI.AgentServer.Optimization --prerelease
 ```
@@ -43,6 +44,7 @@ Represents a single learned skill with `Name`, `Description`, and `Body`.
 
 ### Load config with defaults
 
+<!-- TODO: Convert to verified snippets -->
 ```csharp
 using Azure.AI.AgentServer.Optimization;
 
@@ -58,6 +60,7 @@ if (config is not null)
 
 ### Load config with custom credential
 
+<!-- TODO: Convert to verified snippets -->
 ```csharp
 using Azure.Identity;
 using Azure.AI.AgentServer.Optimization;
@@ -73,7 +76,7 @@ OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync(opti
 
 ## Troubleshooting
 
-Set the relevant environment variables for your intended source and check which source was resolved via the `Source` property on the returned config.
+When troubleshooting configuration resolution, set the environment variables for the source that you intend to use and inspect the `Source` property on the returned `OptimizationConfig` to confirm which source was selected.
 
 ## Contributing
 

@@ -89,7 +89,7 @@ public class OptimizationConfig
     /// <summary>
     /// Gets a value indicating whether this config carries any skill data (inline or via directory).
     /// </summary>
-    public bool HasSkills => Skills.Count > 0 || SkillsDirectory is not null;
+    public bool HasSkills => Skills.Count > 0 || SkillsDirectory != null;
 
     /// <summary>
     /// Builds a lookup of optimized tool definitions keyed by function name.
@@ -107,9 +107,11 @@ public class OptimizationConfig
                     func.TryGetProperty("name", out var nameProp) &&
                     nameProp.ValueKind == JsonValueKind.String)
                 {
-                    string? name = nameProp.GetString();
-                    if (!string.IsNullOrEmpty(name))
+                    string name = nameProp.GetString()!;
+                    if (name.Length > 0)
+                    {
                         lookup[name] = tool;
+                    }
                 }
             }
             catch (JsonException)
@@ -128,7 +130,10 @@ public class OptimizationConfig
     /// <exception cref="ArgumentNullException"><paramref name="functionName"/> is null.</exception>
     public string? GetToolDescription(string functionName)
     {
-        ArgumentException.ThrowIfNullOrEmpty(functionName, nameof(functionName));
+        if (string.IsNullOrEmpty(functionName))
+        {
+            throw new ArgumentNullException(nameof(functionName));
+        }
 
         foreach (var tool in ToolDefinitions)
         {

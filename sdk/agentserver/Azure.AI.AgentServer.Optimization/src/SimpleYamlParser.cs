@@ -25,13 +25,13 @@ internal static class SimpleYamlParser
                 throw new FormatException($"Invalid key/value line: '{line}'");
             }
 
-            string key = line[..separatorIndex].Trim();
+            string key = line.Substring(0, separatorIndex).Trim();
             if (key.Length == 0)
             {
                 throw new FormatException($"Invalid key/value line: '{line}'");
             }
 
-            string value = line[(separatorIndex + 1)..].Trim();
+            string value = line.Substring(separatorIndex + 1).Trim();
             result[key] = value;
         }
 

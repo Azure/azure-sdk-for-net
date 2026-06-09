@@ -13,7 +13,7 @@ public class LocalConfigReaderTests
     [SetUp]
     public void SetUp()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), "opt-tests-" + Guid.NewGuid().ToString("N")[..8]);
+        _tempDir = Path.Combine(Path.GetTempPath(), "opt-tests-" + Guid.NewGuid().ToString("N").Substring(0, 8));
         Directory.CreateDirectory(_tempDir);
     }
 

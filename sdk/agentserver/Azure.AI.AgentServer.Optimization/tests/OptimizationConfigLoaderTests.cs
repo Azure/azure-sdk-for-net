@@ -31,9 +31,9 @@ public class OptimizationConfigLoaderTests
     public void TearDown()
     {
         // Restore env vars
-        foreach (var (key, value) in _savedEnvVars)
+        foreach (KeyValuePair<string, string?> environmentVariable in _savedEnvVars)
         {
-            Environment.SetEnvironmentVariable(key, value);
+            Environment.SetEnvironmentVariable(environmentVariable.Key, environmentVariable.Value);
         }
     }
 
@@ -94,7 +94,7 @@ public class OptimizationConfigLoaderTests
     public async Task LoadConfigAsync_EnvVarTakesPriority_OverLocalDir()
     {
         // Set up both env var AND local dir
-        string tempDir = Path.Combine(Path.GetTempPath(), "opt-priority-" + Guid.NewGuid().ToString("N")[..8]);
+        string tempDir = Path.Combine(Path.GetTempPath(), "opt-priority-" + Guid.NewGuid().ToString("N").Substring(0, 8));
         string baseline = Path.Combine(tempDir, "baseline");
         Directory.CreateDirectory(baseline);
         File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "model: local-model\n");
@@ -123,7 +123,7 @@ public class OptimizationConfigLoaderTests
     [Test]
     public async Task LoadConfigAsync_FallsBackToLocalDir_Priority3()
     {
-        string tempDir = Path.Combine(Path.GetTempPath(), "opt-local-" + Guid.NewGuid().ToString("N")[..8]);
+        string tempDir = Path.Combine(Path.GetTempPath(), "opt-local-" + Guid.NewGuid().ToString("N").Substring(0, 8));
         string baseline = Path.Combine(tempDir, "baseline");
         Directory.CreateDirectory(baseline);
         File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "model: local-gpt\n");
@@ -163,7 +163,7 @@ public class OptimizationConfigLoaderTests
     [Test]
     public void LoadSkillsFromDirectory_DelegatesToLocalConfigReader()
     {
-        string tempDir = Path.Combine(Path.GetTempPath(), "opt-skills-" + Guid.NewGuid().ToString("N")[..8]);
+        string tempDir = Path.Combine(Path.GetTempPath(), "opt-skills-" + Guid.NewGuid().ToString("N").Substring(0, 8));
         string skillDir = Path.Combine(tempDir, "my-skill");
         Directory.CreateDirectory(skillDir);
         File.WriteAllText(Path.Combine(skillDir, "SKILL.md"),

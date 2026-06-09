@@ -10,12 +10,12 @@ namespace Azure.AI.AgentServer.Optimization;
 /// </summary>
 internal class CandidateConfig
 {
-    public string? Name { get; init; }
-    public string? Instructions { get; init; }
-    public string? Model { get; init; }
-    public double? Temperature { get; init; }
-    public IReadOnlyList<OptimizationSkill> Skills { get; init; } = Array.Empty<OptimizationSkill>();
-    public IReadOnlyList<BinaryData> ToolDefinitions { get; init; } = Array.Empty<BinaryData>();
+    public string? Name { get; set; }
+    public string? Instructions { get; set; }
+    public string? Model { get; set; }
+    public double? Temperature { get; set; }
+    public IReadOnlyList<OptimizationSkill> Skills { get; set; } = Array.Empty<OptimizationSkill>();
+    public IReadOnlyList<BinaryData> ToolDefinitions { get; set; } = Array.Empty<BinaryData>();
 
     /// <summary>
     /// Parses a <see cref="CandidateConfig"/> from a raw API response dictionary.

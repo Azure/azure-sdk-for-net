@@ -27,9 +27,12 @@ internal static class LocalConfigReader
             return null;
         }
 
-        string? resolvedCandidateId = !string.IsNullOrEmpty(candidateId) && IsValidCandidateId(candidateId)
-            ? candidateId
-            : null;
+        string? resolvedCandidateId = null;
+        string? nonEmptyCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
+        if (nonEmptyCandidateId != null && IsValidCandidateId(nonEmptyCandidateId))
+        {
+            resolvedCandidateId = nonEmptyCandidateId;
+        }
         string metadataFilePath = Path.Combine(candidatePath, OptimizationConfig.MetadataFile);
         return LoadCandidateFromMetadata(candidatePath, metadataFilePath, resolvedCandidateId);
     }
@@ -66,7 +69,7 @@ internal static class LocalConfigReader
 
                 if (frontmatter.Count == 0 && !string.IsNullOrEmpty(body))
                 {
-                    var lines = body.Split('\n', 2);
+                    var lines = body.Split(new[] { '\n' }, 2);
                     description = lines[0].TrimStart('#').Trim();
                     body = lines.Length > 1 ? lines[1].Trim() : "";
                 }
@@ -84,7 +87,7 @@ internal static class LocalConfigReader
 
     internal static string ResolveLocalDir(string? configDir)
     {
-        if (configDir is not null)
+        if (configDir != null)
         {
             return Path.GetFullPath(configDir);
         }
@@ -100,9 +103,10 @@ internal static class LocalConfigReader
 
     private static string? ResolveCandidateFolder(string localDir, string? candidateId)
     {
-        if (!string.IsNullOrEmpty(candidateId) && IsValidCandidateId(candidateId))
+        string? nonEmptyCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
+        if (nonEmptyCandidateId != null && IsValidCandidateId(nonEmptyCandidateId))
         {
-            string exact = Path.Combine(localDir, candidateId);
+            string exact = Path.Combine(localDir, nonEmptyCandidateId);
             if (Directory.Exists(exact))
             {
                 return exact;
@@ -149,7 +153,7 @@ internal static class LocalConfigReader
         string? skillsDirectory = Directory.Exists(skillsPath)
             ? Path.GetFullPath(skillsPath)
             : null;
-        IReadOnlyList<OptimizationSkill> skills = skillsDirectory is not null
+        IReadOnlyList<OptimizationSkill> skills = skillsDirectory != null
             ? LoadSkillsFromDirectory(skillsDirectory)
             : Array.Empty<OptimizationSkill>();
 
@@ -211,8 +215,8 @@ internal static class LocalConfigReader
             return (new Dictionary<string, object?>(), content);
         }
 
-        string fmText = content[3..end].Trim();
-        string body = content[(end + 3)..].Trim();
+        string fmText = content.Substring(3, end - 3).Trim();
+        string body = content.Substring(end + 3).Trim();
 
         try
         {

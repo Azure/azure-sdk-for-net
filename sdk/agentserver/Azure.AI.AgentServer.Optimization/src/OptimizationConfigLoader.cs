@@ -97,7 +97,11 @@ public static class OptimizationConfigLoader
     /// <exception cref="ArgumentNullException"><paramref name="skillsDirectory"/> is null.</exception>
     public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDirectory)
     {
-        ArgumentException.ThrowIfNullOrEmpty(skillsDirectory, nameof(skillsDirectory));
+        if (string.IsNullOrEmpty(skillsDirectory))
+        {
+            throw new ArgumentNullException(nameof(skillsDirectory));
+        }
+
         return LocalConfigReader.LoadSkillsFromDirectory(skillsDirectory);
     }
 

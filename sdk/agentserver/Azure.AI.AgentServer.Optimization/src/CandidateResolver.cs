@@ -32,7 +32,7 @@ internal static class CandidateResolver
 
         if (s_downloaded.ContainsKey(candidateId))
         {
-            if (localDir is not null && Directory.Exists(Path.Combine(localDir, candidateId)))
+            if (localDir != null && Directory.Exists(Path.Combine(localDir, candidateId)))
             {
                 return null;
             }
@@ -44,7 +44,7 @@ internal static class CandidateResolver
 
         var config = await FetchCandidateConfigAsync(pipeline, endpoint, candidateId, cancellationToken).ConfigureAwait(false);
 
-        if (localDir is not null)
+        if (localDir != null)
         {
             string candidatePath = Path.Combine(localDir, candidateId);
             try
@@ -84,7 +84,13 @@ internal static class CandidateResolver
             throw new RequestFailedException(message.Response);
         }
 
-        using var doc = JsonDocument.Parse(message.Response.Content);
+        Stream? contentStream = message.Response.ContentStream;
+        if (contentStream == null)
+        {
+            throw new InvalidOperationException("Resolver response did not include a content stream.");
+        }
+
+        using var doc = JsonDocument.Parse(contentStream);
         return doc.RootElement.Clone();
     }
 
@@ -204,7 +210,13 @@ internal static class CandidateResolver
             throw new RequestFailedException(manifestMessage.Response);
         }
 
-        using var manifestDoc = JsonDocument.Parse(manifestMessage.Response.Content);
+        Stream? manifestContentStream = manifestMessage.Response.ContentStream;
+        if (manifestContentStream == null)
+        {
+            throw new InvalidOperationException("Resolver manifest response did not include a content stream.");
+        }
+
+        using var manifestDoc = JsonDocument.Parse(manifestContentStream);
         var manifest = manifestDoc.RootElement;
 
         if (!manifest.TryGetProperty("files", out var filesProp) || filesProp.ValueKind != JsonValueKind.Array)
@@ -252,7 +264,7 @@ internal static class CandidateResolver
             string prefix = OptimizationConfig.SkillsDir + "/";
             if (relPath.StartsWith(prefix, StringComparison.Ordinal))
             {
-                relPath = relPath[prefix.Length..];
+                relPath = relPath.Substring(prefix.Length);
             }
 
             // Path traversal protection
@@ -263,12 +275,15 @@ internal static class CandidateResolver
             }
 
             string? parentDir = Path.GetDirectoryName(outPath);
-            if (parentDir is not null)
+            if (parentDir != null)
             {
                 Directory.CreateDirectory(parentDir);
             }
 
-            await File.WriteAllTextAsync(outPath, content, cancellationToken).ConfigureAwait(false);
+            using (var writer = new StreamWriter(outPath, append: false))
+            {
+                await writer.WriteAsync(content).ConfigureAwait(false);
+            }
         }
     }
 
@@ -290,7 +305,10 @@ internal static class CandidateResolver
 
     private static void ValidateCandidateId(string candidateId)
     {
-        ArgumentException.ThrowIfNullOrEmpty(candidateId, nameof(candidateId));
+        if (string.IsNullOrEmpty(candidateId))
+        {
+            throw new ArgumentNullException(nameof(candidateId));
+        }
 
         if (candidateId.Contains("..", StringComparison.Ordinal) ||
             candidateId.IndexOf(Path.DirectorySeparatorChar) >= 0 ||
@@ -302,7 +320,7 @@ internal static class CandidateResolver
 
     private static HttpPipeline BuildPipeline(string endpoint, TokenCredential? credential)
     {
-        if (credential is null)
+        if (credential == null)
         {
             throw new InvalidOperationException(
                 "A TokenCredential must be provided via ConfigLoaderOptions.Credential when using the resolver API. " +

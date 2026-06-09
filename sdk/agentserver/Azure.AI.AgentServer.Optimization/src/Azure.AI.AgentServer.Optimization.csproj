@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Optimization</RootNamespace>
     <Version>1.0.0-beta.1</Version>
@@ -10,6 +9,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <!-- TODO: Consider migrating to System.ClientModel instead of Azure.Core. -->
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 </Project>

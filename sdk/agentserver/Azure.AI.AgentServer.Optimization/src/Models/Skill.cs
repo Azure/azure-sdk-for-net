@@ -33,7 +33,7 @@ public class OptimizationSkill : IEquatable<OptimizationSkill>
     /// <inheritdoc/>
     public bool Equals(OptimizationSkill? other)
     {
-        if (other is null) return false;
+        if (other == null) return false;
         return Name == other.Name
             && Description == other.Description
             && Body == other.Body;
@@ -43,7 +43,17 @@ public class OptimizationSkill : IEquatable<OptimizationSkill>
     public override bool Equals(object? obj) => Equals(obj as OptimizationSkill);
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(Name, Description, Body);
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hashCode = 17;
+            hashCode = (hashCode * 23) + Name.GetHashCode();
+            hashCode = (hashCode * 23) + Description.GetHashCode();
+            hashCode = (hashCode * 23) + Body.GetHashCode();
+            return hashCode;
+        }
+    }
 
     /// <inheritdoc/>
     public override string ToString() => $"OptimizationSkill(name={Name}, description={Description})";
