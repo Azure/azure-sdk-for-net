@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             // Idle checkpoint: when BatchCheckpointFrequency > 1, force a checkpoint after
             // this duration of no new events to prevent stale checkpoints from blocking scale-in.
-            private const int IdleCheckpointIntervalSeconds = 300;
+            private const int IdleCheckpointIntervalSeconds = 600;
             private EventData _lastProcessedEvent;
             private DateTimeOffset _lastBatchReceivedTime;
 

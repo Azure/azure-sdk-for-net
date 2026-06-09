@@ -897,7 +897,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Backdate _lastBatchReceivedTime to simulate the idle interval having passed.
             // We use reflection since the field is private.
             var field = typeof(EventHubListener.PartitionProcessor).GetField("_lastBatchReceivedTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            field.SetValue(eventProcessor, DateTimeOffset.UtcNow.AddSeconds(-301));
+            field.SetValue(eventProcessor, DateTimeOffset.UtcNow.AddSeconds(-601));
 
             // Now an empty batch should trigger the idle checkpoint.
             await eventProcessor.ProcessEventsAsync(partitionContext, Enumerable.Empty<EventData>());
