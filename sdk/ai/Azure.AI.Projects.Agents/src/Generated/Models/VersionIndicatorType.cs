@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The type of version indicator used to determine the agent version backing a session. </summary>
-    internal readonly partial struct VersionIndicatorType : IEquatable<VersionIndicatorType>
+    public readonly partial struct VersionIndicatorType : IEquatable<VersionIndicatorType>
     {
         private readonly string _value;
         /// <summary> Direct reference to a specific agent version. </summary>

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct ApplyPatchFileOperationType : IEquatable<ApplyPatchFileOperationType>
+    public readonly partial struct ApplyPatchFileOperationType : IEquatable<ApplyPatchFileOperationType>
     {
         private readonly string _value;
         private const string CreateFileValue = "create_file";
