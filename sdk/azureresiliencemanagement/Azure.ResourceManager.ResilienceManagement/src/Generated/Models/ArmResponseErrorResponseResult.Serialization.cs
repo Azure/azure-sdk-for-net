@@ -15,63 +15,63 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Azure operation completed successfully. </summary>
-    public partial class ArmResponseErrorResponse : IJsonModel<ArmResponseErrorResponse>
+    public partial class ArmResponseErrorResponseResult : IJsonModel<ArmResponseErrorResponseResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponse"/> for deserialization. </summary>
-        internal ArmResponseErrorResponse()
+        /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponseResult"/> for deserialization. </summary>
+        internal ArmResponseErrorResponseResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmResponseErrorResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ArmResponseErrorResponseResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeArmResponseErrorResponse(document.RootElement, options);
+                        return DeserializeArmResponseErrorResponseResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmResponseErrorResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResponseErrorResponseResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResilienceManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ArmResponseErrorResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResponseErrorResponseResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArmResponseErrorResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ArmResponseErrorResponseResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmResponseErrorResponse IPersistableModel<ArmResponseErrorResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ArmResponseErrorResponseResult IPersistableModel<ArmResponseErrorResponseResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArmResponseErrorResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmResponseErrorResponseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ArmResponseErrorResponse"/> from. </param>
-        internal static ArmResponseErrorResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ArmResponseErrorResponseResult"/> from. </param>
+        internal static ArmResponseErrorResponseResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeArmResponseErrorResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeArmResponseErrorResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ArmResponseErrorResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmResponseErrorResponseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmResponseErrorResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResponseErrorResponseResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("body"u8);
             writer.WriteObjectValue(Body, options);
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmResponseErrorResponse IJsonModel<ArmResponseErrorResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ArmResponseErrorResponseResult IJsonModel<ArmResponseErrorResponseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmResponseErrorResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ArmResponseErrorResponseResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmResponseErrorResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmResponseErrorResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResponseErrorResponseResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeArmResponseErrorResponse(document.RootElement, options);
+            return DeserializeArmResponseErrorResponseResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ArmResponseErrorResponse DeserializeArmResponseErrorResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ArmResponseErrorResponseResult DeserializeArmResponseErrorResponseResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArmResponseErrorResponse(body, additionalBinaryDataProperties);
+            return new ArmResponseErrorResponseResult(body, additionalBinaryDataProperties);
         }
     }
 }

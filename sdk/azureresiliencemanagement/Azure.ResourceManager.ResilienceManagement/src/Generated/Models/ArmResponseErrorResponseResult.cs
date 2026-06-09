@@ -12,22 +12,22 @@ using Azure;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Azure operation completed successfully. </summary>
-    public partial class ArmResponseErrorResponse
+    public partial class ArmResponseErrorResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponseResult"/>. </summary>
         /// <param name="body"> The body type of the operation request or response. </param>
-        internal ArmResponseErrorResponse(ErrorResponse body)
+        internal ArmResponseErrorResponseResult(ErrorResponse body)
         {
             Body = body;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponseResult"/>. </summary>
         /// <param name="body"> The body type of the operation request or response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmResponseErrorResponse(ErrorResponse body, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmResponseErrorResponseResult(ErrorResponse body, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Body = body;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -15,29 +15,29 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary></summary>
-    internal partial class ArmResponseErrorResponseOperationSource : IOperationSource<ArmResponseErrorResponse>
+    internal partial class ArmResponseErrorResponseResultOperationSource : IOperationSource<ArmResponseErrorResponseResult>
     {
         /// <summary></summary>
-        internal ArmResponseErrorResponseOperationSource()
+        internal ArmResponseErrorResponseResultOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ArmResponseErrorResponse IOperationSource<ArmResponseErrorResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArmResponseErrorResponseResult IOperationSource<ArmResponseErrorResponseResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ArmResponseErrorResponse.DeserializeArmResponseErrorResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return ArmResponseErrorResponseResult.DeserializeArmResponseErrorResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ArmResponseErrorResponse> IOperationSource<ArmResponseErrorResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArmResponseErrorResponseResult> IOperationSource<ArmResponseErrorResponseResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ArmResponseErrorResponse.DeserializeArmResponseErrorResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return ArmResponseErrorResponseResult.DeserializeArmResponseErrorResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

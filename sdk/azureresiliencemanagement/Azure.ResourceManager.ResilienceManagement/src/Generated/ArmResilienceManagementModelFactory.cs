@@ -341,10 +341,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="bodyError"> The error object. </param>
-        /// <returns> A new <see cref="Models.ArmResponseErrorResponse"/> instance for mocking. </returns>
-        public static ArmResponseErrorResponse ArmResponseErrorResponse(ResponseError bodyError = default)
+        /// <returns> A new <see cref="Models.ArmResponseErrorResponseResult"/> instance for mocking. </returns>
+        public static ArmResponseErrorResponseResult ArmResponseErrorResponseResult(ResponseError bodyError = default)
         {
-            return new ArmResponseErrorResponse(bodyError is null ? default : new ErrorResponse(bodyError, default), default);
+            return new ArmResponseErrorResponseResult(bodyError is null ? default : new ErrorResponse(bodyError, default), default);
         }
 
         /// <param name="resourcesToUpdate"> A list of recovery orchestration resources whose properties need to be updated. </param>

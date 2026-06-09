@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AddOrUpdateResourcesContent))]
-    [ModelReaderWriterBuildable(typeof(ArmResponseErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(ArmResponseErrorResponseResult))]
     [ModelReaderWriterBuildable(typeof(AssetPropertiesOfDrill))]
     [ModelReaderWriterBuildable(typeof(AssociatedIdentity))]
     [ModelReaderWriterBuildable(typeof(AttentionReason))]

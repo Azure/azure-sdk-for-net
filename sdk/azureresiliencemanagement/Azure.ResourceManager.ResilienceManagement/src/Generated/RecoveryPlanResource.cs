@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ArmResponseErrorResponse>> FinalizeAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArmResponseErrorResponseResult>> FinalizeAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -798,8 +798,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryPlanActionsRestClient.CreateFinalizeRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResilienceManagementArmOperation<ArmResponseErrorResponse> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponse>(
-                    new ArmResponseErrorResponseOperationSource(),
+                ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
+                    new ArmResponseErrorResponseResultOperationSource(),
                     _recoveryPlanActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ArmResponseErrorResponse> Finalize(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmResponseErrorResponseResult> Finalize(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -858,8 +858,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryPlanActionsRestClient.CreateFinalizeRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResilienceManagementArmOperation<ArmResponseErrorResponse> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponse>(
-                    new ArmResponseErrorResponseOperationSource(),
+                ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
+                    new ArmResponseErrorResponseResultOperationSource(),
                     _recoveryPlanActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ArmResponseErrorResponse>> ValidateForOperationAsync(WaitUntil waitUntil, string operationId, ValidateForOperationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArmResponseErrorResponseResult>> ValidateForOperationAsync(WaitUntil waitUntil, string operationId, ValidateForOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1658,8 +1658,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForOperationRequest(Id.Parent.Name, Id.Name, operationId, ValidateForOperationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResilienceManagementArmOperation<ArmResponseErrorResponse> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponse>(
-                    new ArmResponseErrorResponseOperationSource(),
+                ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
+                    new ArmResponseErrorResponseResultOperationSource(),
                     _recoveryPlanActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1705,7 +1705,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ArmResponseErrorResponse> ValidateForOperation(WaitUntil waitUntil, string operationId, ValidateForOperationContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmResponseErrorResponseResult> ValidateForOperation(WaitUntil waitUntil, string operationId, ValidateForOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1720,8 +1720,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForOperationRequest(Id.Parent.Name, Id.Name, operationId, ValidateForOperationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResilienceManagementArmOperation<ArmResponseErrorResponse> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponse>(
-                    new ArmResponseErrorResponseOperationSource(),
+                ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
+                    new ArmResponseErrorResponseResultOperationSource(),
                     _recoveryPlanActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
