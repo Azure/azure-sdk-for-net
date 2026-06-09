@@ -142,6 +142,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
 }
 
+namespace Azure.ResourceManager.SecurityCenter.Mocking
+{
+    public partial class MockableSecurityCenterResourceGroupResource
+    {
+        [Azure.Core.ForwardsClientCalls]
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(Azure.Core.AzureLocation ascLocation, string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityAlert(ascLocation.ToString(), alertName, cancellationToken);
+
+        [Azure.Core.ForwardsClientCalls]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(Azure.Core.AzureLocation ascLocation, string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityAlertAsync(ascLocation.ToString(), alertName, cancellationToken);
+
+        [Azure.Core.ForwardsClientCalls]
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(Azure.Core.AzureLocation ascLocation, string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityTask(ascLocation.ToString(), taskName, cancellationToken);
+
+        [Azure.Core.ForwardsClientCalls]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(Azure.Core.AzureLocation ascLocation, string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityTaskAsync(ascLocation.ToString(), taskName, cancellationToken);
+    }
+}
+
 namespace Azure.ResourceManager.SecurityCenter
 {
     public static partial class SecurityCenterExtensions
@@ -223,17 +245,21 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetResourceGroupSecurityAlert(resourceGroupResource, ascLocation.ToString(), alertName, cancellationToken);
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlert(ascLocation, alertName, cancellationToken);
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetResourceGroupSecurityAlertAsync(resourceGroupResource, ascLocation.ToString(), alertName, cancellationToken);
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlertAsync(ascLocation, alertName, cancellationToken);
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetResourceGroupSecurityTask(resourceGroupResource, ascLocation.ToString(), taskName, cancellationToken);
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTask(ascLocation, taskName, cancellationToken);
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetResourceGroupSecurityTaskAsync(resourceGroupResource, ascLocation.ToString(), taskName, cancellationToken);
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTaskAsync(ascLocation, taskName, cancellationToken);
+        [System.Obsolete("This API is no longer supported by the service.", false)]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetSecureScoreControlsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        [System.Obsolete("This API is no longer supported by the service.", false)]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetSecureScoreControls(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -251,8 +277,12 @@ namespace Azure.ResourceManager.SecurityCenter
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         [Azure.Core.ForwardsClientCalls]
+        [System.Obsolete("This API is no longer supported by the service.", false)]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource> GetSecurityAssessment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         [Azure.Core.ForwardsClientCalls]
+        [System.Obsolete("This API is no longer supported by the service.", false)]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource>> GetSecurityAssessmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
