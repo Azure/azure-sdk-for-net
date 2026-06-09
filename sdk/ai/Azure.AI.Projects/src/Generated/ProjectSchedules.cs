@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Delete a schedule.
+        /// [Protocol Method] Deletes the specified schedule resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a schedule.
+        /// [Protocol Method] Deletes the specified schedule resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete a schedule. </summary>
+        /// <summary> Deletes the specified schedule resource. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -93,7 +93,7 @@ namespace Azure.AI.Projects
             return Delete(id, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete a schedule. </summary>
+        /// <summary> Deletes the specified schedule resource. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -107,7 +107,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get a schedule by id.
+        /// [Protocol Method] Retrieves the specified schedule resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -129,7 +129,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get a schedule by id.
+        /// [Protocol Method] Retrieves the specified schedule resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -150,7 +150,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get a schedule by id. </summary>
+        /// <summary> Retrieves the specified schedule resource. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a schedule by id. </summary>
+        /// <summary> Retrieves the specified schedule resource. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] List all schedules.
+        /// [Protocol Method] Returns schedules that match the supplied type and enabled filters.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -197,7 +197,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] List all schedules.
+        /// [Protocol Method] Returns schedules that match the supplied type and enabled filters.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -214,7 +214,7 @@ namespace Azure.AI.Projects
             return new ProjectSchedulesGetAllAsyncCollectionResult(this, @type, enabled, options);
         }
 
-        /// <summary> List all schedules. </summary>
+        /// <summary> Returns schedules that match the supplied type and enabled filters. </summary>
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -224,7 +224,7 @@ namespace Azure.AI.Projects
             return new ProjectSchedulesGetAllCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all schedules. </summary>
+        /// <summary> Returns schedules that match the supplied type and enabled filters. </summary>
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -235,7 +235,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update operation template.
+        /// [Protocol Method] Creates a new schedule or updates an existing schedule with the supplied definition.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -259,7 +259,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update operation template.
+        /// [Protocol Method] Creates a new schedule or updates an existing schedule with the supplied definition.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -282,7 +282,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create or update operation template. </summary>
+        /// <summary> Creates a new schedule or updates an existing schedule with the supplied definition. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -298,7 +298,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
         }
 
-        /// <summary> Create or update operation template. </summary>
+        /// <summary> Creates a new schedule or updates an existing schedule with the supplied definition. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -315,7 +315,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get a schedule run by id.
+        /// [Protocol Method] Retrieves the specified run for a schedule.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -339,7 +339,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get a schedule run by id.
+        /// [Protocol Method] Retrieves the specified run for a schedule.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -362,7 +362,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get a schedule run by id. </summary>
+        /// <summary> Retrieves the specified run for a schedule. </summary>
         /// <param name="scheduleId"> The unique identifier of the schedule. </param>
         /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -378,7 +378,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ScheduleRun)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a schedule run by id. </summary>
+        /// <summary> Retrieves the specified run for a schedule. </summary>
         /// <param name="scheduleId"> The unique identifier of the schedule. </param>
         /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -395,7 +395,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] List all schedule runs.
+        /// [Protocol Method] Returns schedule runs that match the supplied filters.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -418,7 +418,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] List all schedule runs.
+        /// [Protocol Method] Returns schedule runs that match the supplied filters.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -440,7 +440,7 @@ namespace Azure.AI.Projects
             return new ProjectSchedulesGetRunsAsyncCollectionResult(this, id, @type, enabled, options);
         }
 
-        /// <summary> List all schedule runs. </summary>
+        /// <summary> Returns schedule runs that match the supplied filters. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
@@ -455,7 +455,7 @@ namespace Azure.AI.Projects
             return new ProjectSchedulesGetRunsCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all schedule runs. </summary>
+        /// <summary> Returns schedule runs that match the supplied filters. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>

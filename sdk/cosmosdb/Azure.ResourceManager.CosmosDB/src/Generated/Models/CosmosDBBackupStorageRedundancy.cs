@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBBackupStorageRedundancy : IEquatable<CosmosDBBackupStorageRedundancy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBBackupStorageRedundancy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string GeoValue = "Geo";
         private const string LocalValue = "Local";
         private const string ZoneValue = "Zone";
 
-        /// <summary> Geo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBBackupStorageRedundancy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Geo. </summary>
         public static CosmosDBBackupStorageRedundancy Geo { get; } = new CosmosDBBackupStorageRedundancy(GeoValue);
-        /// <summary> Local. </summary>
+
+        /// <summary> Gets the Local. </summary>
         public static CosmosDBBackupStorageRedundancy Local { get; } = new CosmosDBBackupStorageRedundancy(LocalValue);
-        /// <summary> Zone. </summary>
+
+        /// <summary> Gets the Zone. </summary>
         public static CosmosDBBackupStorageRedundancy Zone { get; } = new CosmosDBBackupStorageRedundancy(ZoneValue);
+
         /// <summary> Determines if two <see cref="CosmosDBBackupStorageRedundancy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBBackupStorageRedundancy left, CosmosDBBackupStorageRedundancy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBBackupStorageRedundancy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBBackupStorageRedundancy left, CosmosDBBackupStorageRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBBackupStorageRedundancy(string value) => new CosmosDBBackupStorageRedundancy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBBackupStorageRedundancy?(string value) => value == null ? null : new CosmosDBBackupStorageRedundancy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBBackupStorageRedundancy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBBackupStorageRedundancy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

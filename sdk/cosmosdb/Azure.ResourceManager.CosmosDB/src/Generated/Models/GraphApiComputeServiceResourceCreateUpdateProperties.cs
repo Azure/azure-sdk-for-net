@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GraphApiComputeServiceResourceCreateUpdateProperties : ServiceResourceCreateUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>. </summary>
-        public GraphApiComputeServiceResourceCreateUpdateProperties()
+        public GraphApiComputeServiceResourceCreateUpdateProperties() : base(CosmosDBServiceType.GraphApiCompute)
         {
-            ServiceType = CosmosDBServiceType.GraphApiCompute;
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>. </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GraphApiComputeServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceSize, instanceCount, serviceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GraphApiComputeServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceSize, instanceCount, serviceType, additionalBinaryDataProperties)
         {
-            ServiceType = serviceType;
         }
     }
 }

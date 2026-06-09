@@ -57,6 +57,13 @@ public partial class AgentAdministrationClient
     private ProjectAgentSkills _cachedAgentSkills;
     private AgentSessionFiles _cachedAgentSessionFiles;
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
+    /// <summary>
+    /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
+    /// service endpoint and authentication token provider.
+    /// </summary>
+    /// <param name="endpoint">The service endpoint to target.</param>
+    /// <param name="tokenProvider">The token provider used to authenticate requests.</param>
+    /// <param name="options">Optional client configuration options.</param>
     public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -162,6 +169,11 @@ public partial class AgentAdministrationClient
         return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
+    /// <summary> Creates a new version of an agent from an agent manifest. </summary>
+    /// <param name="agentName">The name of the agent to create a version for.</param>
+    /// <param name="manifestId">The identifier of the agent manifest to use.</param>
+    /// <param name="options">Options describing the manifest-based creation request.</param>
+    /// <param name="cancellationToken">The cancellation token to use.</param>
     public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromManifest(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -174,6 +186,11 @@ public partial class AgentAdministrationClient
         return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
+    /// <summary> Creates a new version of an agent from an agent manifest. </summary>
+    /// <param name="agentName">The name of the agent to create a version for.</param>
+    /// <param name="manifestId">The identifier of the agent manifest to use.</param>
+    /// <param name="options">Options describing the manifest-based creation request.</param>
+    /// <param name="cancellationToken">The cancellation token to use.</param>
     public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromManifestAsync(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -982,21 +999,25 @@ public partial class AgentAdministrationClient
         return result;
     }
 
+    /// <summary> Gets the lazily-initialized agent toolboxes sub-client. </summary>
     public virtual AgentToolboxes GetAgentToolboxes()
     {
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
+    /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
     public virtual ProjectAgentSkills GetAgentSkills()
     {
         return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
     }
 
+    /// <summary> Gets the lazily-initialized agent session files sub-client. </summary>
     public virtual AgentSessionFiles GetAgentSessionFiles()
     {
         return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
     }
 
+    /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;

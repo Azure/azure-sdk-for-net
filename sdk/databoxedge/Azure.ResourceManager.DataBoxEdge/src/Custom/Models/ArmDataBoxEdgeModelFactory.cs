@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                startOn is null && stopOn is null && rateInMbps is null && days is null ? default : new BandwidthScheduleProperties(startOn.Value, stopOn.Value, rateInMbps.Value, (days ?? new ChangeTrackingList<DataBoxEdgeDayOfWeek>()).ToList(), null));
+                startOn is null && stopOn is null && rateInMbps is null && days is null ? default : new BandwidthScheduleProperties(startOn.Value, stopOn.Value, rateInMbps.Value, (days ?? new ChangeTrackingList<DataBoxEdgeDayOfWeek>()).ToList(), null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeShareData"/>. </summary>
@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 description is null && shareStatus is null && monitoringStatus is null && azureContainerInfo is null && accessProtocol is null && userAccessRights is null && clientAccessRights is null && refreshDetails is null && shareMappings is null && dataPolicy is null ? default : new ShareProperties(
                     description,
                     shareStatus.Value,
@@ -82,7 +81,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     refreshDetails,
                     (shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>()).ToList(),
                     dataPolicy,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeStorageAccountCredentialData"/>. </summary>
@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 @alias is null && userName is null && accountKey is null && connectionString is null && sslStatus is null && blobDomainName is null && accountType is null && storageAccountId is null ? default : new StorageAccountCredentialProperties(
                     @alias,
                     userName,
@@ -103,7 +102,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     blobDomainName,
                     accountType.Value,
                     storageAccountId,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeStorageAccountData"/>. </summary>
@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 description is null && storageAccountStatus is null && dataPolicy is null && storageAccountCredentialId is null && blobEndpoint is null && containerCount is null ? default : new StorageAccountProperties(
                     description,
                     storageAccountStatus,
@@ -122,7 +121,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     storageAccountCredentialId,
                     blobEndpoint,
                     containerCount,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeStorageContainerData"/>. </summary>
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                containerStatus is null && dataFormat is null && refreshDetails is null && createdOn is null ? default : new ContainerProperties(containerStatus, dataFormat.Value, refreshDetails, createdOn, null));
+                containerStatus is null && dataFormat is null && refreshDetails is null && createdOn is null ? default : new ContainerProperties(containerStatus, dataFormat.Value, refreshDetails, createdOn, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeUserData"/>. </summary>
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                encryptedPassword is null && shareAccessRights is null && userType is null ? default : new UserProperties(encryptedPassword, (shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>()).ToList(), userType.Value, null));
+                encryptedPassword is null && shareAccessRights is null && userType is null ? default : new UserProperties(encryptedPassword, (shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>()).ToList(), userType.Value, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DiagnosticProactiveLogCollectionSettingData"/>. </summary>
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                userConsent is null ? default : new ProactiveLogCollectionSettingsProperties(userConsent.Value, null));
+                userConsent is null ? default : new ProactiveLogCollectionSettingsProperties(userConsent.Value, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeArcAddon"/>. </summary>
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 AddonType.ArcForKubernetes,
+                additionalBinaryDataProperties: null,
                 subscriptionId is null && resourceGroupName is null && resourceName is null && resourceLocation is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new ArcAddonProperties(
                     subscriptionId,
                     resourceGroupName,
