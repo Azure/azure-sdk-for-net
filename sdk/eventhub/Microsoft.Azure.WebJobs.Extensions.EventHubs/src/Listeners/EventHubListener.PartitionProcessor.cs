@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            public async Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
+            public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
                 if (reason == ProcessingStoppedReason.OwnershipLost)
                 {
@@ -91,6 +91,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 CachedEventsManager?.ClearEventCache();
 
                 _logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason}"));
+                return Task.CompletedTask;
             }
 
             public Task OpenAsync(EventProcessorHostPartition context)
@@ -139,7 +140,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
                     _batchCounter = 0;
                     _logger.LogDebug(GetOperationDetails(context, "IdleCheckpoint"));
-                    return;
                 }
 
                 if (eventCount > 0)
