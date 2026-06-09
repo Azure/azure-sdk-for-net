@@ -47,6 +47,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private readonly CancellationToken _functionExecutionToken;
             private readonly CancellationTokenSource _ownershipLostTokenSource;
 
+            // Idle checkpoint: when BatchCheckpointFrequency > 1, force a checkpoint after
+            // this duration of no new events to prevent stale checkpoints from blocking scale-in.
+            private const int IdleCheckpointIntervalSeconds = 300;
+            private EventData _lastProcessedEvent;
+            private DateTimeOffset _lastBatchReceivedTime;
+
             /// <summary>
             /// When we have a minimum batch size greater than 1, this class manages caching events.
             /// </summary>
@@ -74,18 +80,36 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
+            public async Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
                 if (reason == ProcessingStoppedReason.OwnershipLost)
                 {
                     _ownershipLostTokenSource.Cancel();
+                }
+                else if (_enableCheckpointing
+                    && _batchCheckpointFrequency > 1
+                    && _batchCounter > 0
+                    && _lastProcessedEvent != null
+                    && !_functionExecutionToken.IsCancellationRequested)
+                {
+                    // Flush un-checkpointed work on graceful shutdown (not ownership loss)
+                    // to prevent stale checkpoints from blocking scale-in.
+                    try
+                    {
+                        await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
+                        _batchCounter = 0;
+                        _logger.LogDebug(GetOperationDetails(context, "CloseAsync_FlushCheckpoint"));
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning($"Failed to flush checkpoint on close for partition '{context.PartitionId}': {ex.Message}");
+                    }
                 }
 
                 // clear the cached events
                 CachedEventsManager?.ClearEventCache();
 
                 _logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason}"));
-                return Task.CompletedTask;
             }
 
             public Task OpenAsync(EventProcessorHostPartition context)
@@ -118,6 +142,30 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 var acquiredSemaphore = false;
 
                 int eventCount = events.Length;
+
+                // Idle checkpoint: if no new events arrived and we have un-checkpointed work
+                // that is older than the idle interval, force a checkpoint to keep the blob
+                // current for accurate scale metrics.
+                if (eventCount == 0
+                    && _enableCheckpointing
+                    && _batchCheckpointFrequency > 1
+                    && _batchCounter > 0
+                    && _lastProcessedEvent != null
+                    && (DateTimeOffset.UtcNow - _lastBatchReceivedTime).TotalSeconds >= IdleCheckpointIntervalSeconds
+                    && !_listenerCancellationToken.IsCancellationRequested
+                    && !_functionExecutionToken.IsCancellationRequested
+                    && !_ownershipLostTokenSource.IsCancellationRequested)
+                {
+                    await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
+                    _batchCounter = 0;
+                    _logger.LogDebug(GetOperationDetails(context, "IdleCheckpoint"));
+                    return;
+                }
+
+                if (eventCount > 0)
+                {
+                    _lastBatchReceivedTime = DateTimeOffset.UtcNow;
+                }
 
                 if (_singleDispatch)
                 {
@@ -239,6 +287,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     && !_functionExecutionToken.IsCancellationRequested
                     && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
+                    _lastProcessedEvent = eventToCheckpoint;
                     await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                 }
             }
