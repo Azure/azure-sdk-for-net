@@ -30,14 +30,16 @@ internal static class CandidateResolver
     {
         ValidateCandidateId(candidateId);
 
-        if (s_downloaded.ContainsKey(candidateId))
+        string cacheKey = string.Concat(endpoint.TrimEnd('/'), "|", localDir ?? "", "|", candidateId);
+
+        if (s_downloaded.ContainsKey(cacheKey))
         {
             if (localDir != null && Directory.Exists(Path.Combine(localDir, candidateId)))
             {
                 return null;
             }
 
-            s_downloaded.TryRemove(candidateId, out _);
+            s_downloaded.TryRemove(cacheKey, out _);
         }
 
         var pipeline = BuildPipeline(credential);
@@ -58,7 +60,7 @@ internal static class CandidateResolver
             }
         }
 
-        s_downloaded.TryAdd(candidateId, 0);
+        s_downloaded.TryAdd(cacheKey, 0);
         return config;
     }
 
