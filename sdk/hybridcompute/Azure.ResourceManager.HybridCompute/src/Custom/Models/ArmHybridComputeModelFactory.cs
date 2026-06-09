@@ -122,9 +122,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 location,
                 properties,
                 new List<HybridComputeMachineExtensionData>(resources),
-                identity,
+                ToIdentity(identity),
                 kind,
                 additionalBinaryDataProperties: null);
+        }
+
+        private static Identity ToIdentity(ManagedServiceIdentity identity)
+        {
+            if (identity is null)
+            {
+                return null;
+            }
+
+            ResourceIdentityType? identityType = identity.ManagedServiceIdentityType == ManagedServiceIdentityType.SystemAssigned
+                ? ResourceIdentityType.SystemAssigned
+                : default(ResourceIdentityType?);
+            return new Identity(identity.PrincipalId?.ToString(), identity.TenantId?.ToString(), identityType, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
