@@ -351,9 +351,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 },
                 Parameters =
                 {
-                    new RunCommandInputParameter("param1","value1"), new RunCommandInputParameter("param2","value2")
+                    new RunCommandInputContent("param1","value1"), new RunCommandInputContent("param2","value2")
                 },
-                // AsyncExecution = false,
+                // IsAsyncExecution = false,
                 // RunAsUser = "user1",
                 // RunAsPassword = "<runAsPassword>",
                 // TimeoutInSeconds = 3600,
@@ -379,9 +379,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 },
                 Parameters =
                 {
-                    new RunCommandInputParameter("param1","value1"), new RunCommandInputParameter("param2","value2")
+                    new RunCommandInputContent("param1","value1"), new RunCommandInputContent("param2","value2")
                 },
-                // AsyncExecution = false,
+                // IsAsyncExecution = false,
                 // RunAsUser = "user1",
                 // RunAsPassword = "<runAsPassword>",
                 // TimeoutInSeconds = 3600,

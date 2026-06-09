@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                 {
                     Script = "Write-Host Hello World!",
                 },
-                Parameters = { new RunCommandInputParameter("param1", "value1"), new RunCommandInputParameter("param2", "value2") },
-                AsyncExecution = false,
+                Parameters = { new RunCommandInputContent("param1", "value1"), new RunCommandInputContent("param2", "value2") },
+                IsAsyncExecution = false,
                 RunAsUser = "user1",
                 RunAsPassword = "<runAsPassword>",
                 TimeoutInSeconds = 3600,

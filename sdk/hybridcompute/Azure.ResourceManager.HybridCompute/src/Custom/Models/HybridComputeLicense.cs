@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             => FromData(Azure.ResourceManager.HybridCompute.HybridComputeLicenseData.DeserializeHybridComputeLicenseData(element, options));
 
         internal Azure.ResourceManager.HybridCompute.HybridComputeLicenseData ToData()
-            => new Azure.ResourceManager.HybridCompute.HybridComputeLicenseData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Tags, Location, Properties);
+            => new Azure.ResourceManager.HybridCompute.HybridComputeLicenseData(Id, Name, ResourceType, SystemData, Tags, Location, Properties, _additionalBinaryDataProperties);
 
         void IJsonModel<HybridComputeLicense>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => ((IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeLicenseData>)ToData()).Write(writer, options);
