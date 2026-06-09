@@ -243,7 +243,7 @@ namespace Azure.Data.AppConfiguration
         public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : base (default(string), default(string), default(string)) { }
         public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label, Azure.ETag etag) : base (default(string), default(string), default(string)) { }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFilter> ClientFilters { get { throw null; } }
-        public new string Description { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string FeatureId { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
