@@ -41,42 +41,85 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task TestAgentCRUD()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestAgentCRUD(bool useExternalAgent)
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        ProjectsAgentDefinition emptyAgentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
+        ProjectsAgentDefinition emptyAgentDefinition = useExternalAgent ? new ExternalAgentDefinition() { OtelAgentId = "foo"} :  new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
-        const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
-        try
-        {
-            await agentsClient.DeleteAgentAsync(emptyPromptAgentName);
-        }
-        catch (ClientResultException)
-        {
-            // We do not have the agent to begin with.
-        }
         ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
-            emptyPromptAgentName,
+            AGENT_NAME2,
             new ProjectsAgentVersionCreationOptions(emptyAgentDefinition)
             {
                 Metadata = { ["delete_me"] = "please " },
             });
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
 
-        ProjectsAgentRecord retrievedAgent = await agentsClient.GetAgentAsync(emptyPromptAgentName);
+        ProjectsAgentRecord retrievedAgent = await agentsClient.GetAgentAsync(AGENT_NAME2);
         Assert.That(retrievedAgent?.Id, Is.EqualTo(newAgentVersion.Name));
-
-        await agentsClient.DeleteAgentAsync(newAgentVersion.Name);
 
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyAgentDefinition));
         Assert.That(AGENT_NAME, Is.EqualTo(agentVersion.Name));
-        ProjectsAgentVersion agentVersionObject_ = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        Assert.That(AGENT_NAME, Is.EqualTo(agentVersionObject_.Name));
-        Assert.That(agentVersion.Version, Is.EqualTo(agentVersionObject_.Version));
         Assert.That(agentVersion.Description, Is.Empty);
         Assert.That(agentVersion.Metadata, Is.Empty);
-        await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await agentsClient.GetAgentVersionAsync(agentVersion.Name, agentVersion.Version));
+        agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyAgentDefinition)
+        {
+            Metadata = { { "foo", "bar" } }
+        });
+        // Get Version
+        ProjectsAgentVersion agentVersionObject_ = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        ValidateDefinition(agentVersionObject_, useExternalAgent);
+        Assert.That(agentVersionObject_.Name, Is.EqualTo(AGENT_NAME));
+        Assert.That(agentVersionObject_.Version, Is.EqualTo(agentVersion.Version));
+        // Get
+        ProjectsAgentRecord agentObject_ = await agentsClient.GetAgentAsync(agentName: agentVersion.Name);
+        ValidateDefinition(agentObject_.Versions.Latest, useExternalAgent);
+        Assert.That(agentObject_.Name, Is.EqualTo(AGENT_NAME));
+        // List Agents
+        ProjectsAgentKind goodKind = useExternalAgent ? ProjectsAgentKind.External : ProjectsAgentKind.Prompt;
+        ProjectsAgentKind badKind = ProjectsAgentKind.Workflow;
+        List<ProjectsAgentRecord> records = await agentsClient.GetAgentsAsync(kind: badKind).ToListAsync();
+        List<ProjectsAgentRecord> test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME))];
+        Assert.That(test, Has.Count.EqualTo(0));
+        records = await agentsClient.GetAgentsAsync(kind: goodKind).ToListAsync();
+        test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME))];
+        Assert.That(test, Has.Count.EqualTo(1));
+        ValidateDefinition(test[0].Versions.Latest, useExternalAgent);
+        test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME2))];
+        Assert.That(test, Has.Count.EqualTo(1));
+        ValidateDefinition(test[0].Versions.Latest, useExternalAgent);
+
+        // List Versions
+        List<ProjectsAgentVersion> recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME2).ToListAsync();
+        Assert.That(recordVersions, Has.Count.EqualTo(1));
+        ValidateDefinition(recordVersions[0], useExternalAgent);
+
+        recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).ToListAsync();
+        Assert.That(recordVersions, Has.Count.EqualTo(2));
+        ValidateDefinition(recordVersions[0], useExternalAgent);
+        // DeleteVersion
+        string expectedVersion = recordVersions[1].Version;
+        await agentsClient.DeleteAgentVersionAsync(agentName: AGENT_NAME, agentVersion: recordVersions[0].Version);
+        recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).ToListAsync();
+        Assert.That(recordVersions, Has.Count.EqualTo(1));
+        Assert.That(recordVersions[0].Version, Is.EqualTo(expectedVersion));
+        // Delete
+        await agentsClient.DeleteAgentAsync(agentName: AGENT_NAME2);
+        records = await agentsClient.GetAgentsAsync(kind: goodKind).Where(x => string.Equals(x.Name, AGENT_NAME2)).ToListAsync();
+        Assert.That(records, Has.Count.EqualTo(0));
+    }
+
+    private static void ValidateDefinition(ProjectsAgentVersion agent, bool useExternalAgent)
+    {
+        if (useExternalAgent)
+        {
+            Assert.That(agent.Definition, Is.InstanceOf<ExternalAgentDefinition>());
+        }
+        else
+        {
+            Assert.That(agent.Definition, Is.InstanceOf<DeclarativeAgentDefinition>());
+        }
     }
 
     [RecordedTest]

@@ -309,8 +309,8 @@ namespace Azure.AI.Projects.Agents
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetCandidateFileAsync(string jobId, string candidateId, string path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.CandidateResults> GetCandidateResults(string jobId, string candidateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.CandidateResults>> GetCandidateResultsAsync(string jobId, string candidateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate> GetCandidates(string jobId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>> GetCandidatesAsync(string jobId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.OptimizationCandidate> GetCandidates(string jobId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.OptimizationCandidate> GetCandidatesAsync(string jobId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.PromoteCandidateResponse> PromoteCandidate(string jobId, string candidateId, Azure.AI.Projects.Agents.PromoteCandidateRequest candidateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.PromoteCandidateResponse>> PromoteCandidateAsync(string jobId, string candidateId, Azure.AI.Projects.Agents.PromoteCandidateRequest candidateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -349,24 +349,6 @@ namespace Azure.AI.Projects.Agents
         public static implicit operator Azure.AI.Projects.Agents.AgentSessionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.Agents.AgentSessionStatus left, Azure.AI.Projects.Agents.AgentSessionStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AgentsPagedResultOptimizationCandidate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>
-    {
-        internal AgentsPagedResultOptimizationCandidate() { }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.OptimizationCandidate> Data { get { throw null; } }
-        public string FirstId { get { throw null; } }
-        public bool HasMore { get { throw null; } }
-        public string LastId { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate (System.ClientModel.ClientResult result) { throw null; }
-        protected virtual Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AgentsSkill : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentsSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentsSkill>
     {
@@ -1847,7 +1829,6 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.AgentIdentifier AgentIdentifier(string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentIdentity AgentIdentity(string principalId = null, string clientId = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentManifestOptions AgentManifestOptions(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, string manifestId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValues = null) { throw null; }
-        public static Azure.AI.Projects.Agents.AgentsPagedResultOptimizationCandidate AgentsPagedResultOptimizationCandidate(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OptimizationCandidate> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.Projects.Agents.AgentsSkill AgentsSkill(string id = null, string name = null, string description = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string defaultVersion = null, string latestVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.AzureAISearchTool AzureAISearchTool(Azure.AI.Projects.Agents.AzureAISearchToolOptions options) { throw null; }
         public static Azure.AI.Projects.Agents.AzureAISearchTool AzureAISearchTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, Azure.AI.Projects.Agents.AzureAISearchToolOptions options = null) { throw null; }
