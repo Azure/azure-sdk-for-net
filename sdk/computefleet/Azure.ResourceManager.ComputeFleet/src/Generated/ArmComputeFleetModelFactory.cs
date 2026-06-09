@@ -1539,6 +1539,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default,
                 default,
                 default,
+                default,
                 default);
         }
     }
