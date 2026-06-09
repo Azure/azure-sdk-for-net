@@ -14,15 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult : MigrateSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>. </summary>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult()
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult() : base("MigrationDatabaseLevelValidationOutput")
         {
-            ResultType = "MigrationDatabaseLevelValidationOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="targetDatabaseName"> Name of the target database. </param>
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="schemaValidationResult"> Provides schema comparison result between source and target database. </param>
         /// <param name="queryAnalysisValidationResult"> Results of some of the query execution result between source and target database. </param>
         /// <param name="status"> Current status of validation at the database level. </param>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataIntegrityValidationResult dataIntegrityValidationResult, SchemaComparisonValidationResult schemaValidationResult, QueryAnalysisValidationResult queryAnalysisValidationResult, MigrationValidationStatus? status) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataIntegrityValidationResult dataIntegrityValidationResult, SchemaComparisonValidationResult schemaValidationResult, QueryAnalysisValidationResult queryAnalysisValidationResult, MigrationValidationStatus? status) : base(id, resultType, additionalBinaryDataProperties)
         {
             MigrationId = migrationId;
             SourceDatabaseName = sourceDatabaseName;
@@ -43,25 +42,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             SchemaValidationResult = schemaValidationResult;
             QueryAnalysisValidationResult = queryAnalysisValidationResult;
             Status = status;
-            ResultType = resultType ?? "MigrationDatabaseLevelValidationOutput";
         }
 
         /// <summary> Migration Identifier. </summary>
         public string MigrationId { get; }
+
         /// <summary> Name of the source database. </summary>
         public string SourceDatabaseName { get; }
+
         /// <summary> Name of the target database. </summary>
         public string TargetDatabaseName { get; }
+
         /// <summary> Validation start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Validation end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Provides data integrity validation result between the source and target tables that are migrated. </summary>
         public DataIntegrityValidationResult DataIntegrityValidationResult { get; }
+
         /// <summary> Provides schema comparison result between source and target database. </summary>
         public SchemaComparisonValidationResult SchemaValidationResult { get; }
+
         /// <summary> Results of some of the query execution result between source and target database. </summary>
         public QueryAnalysisValidationResult QueryAnalysisValidationResult { get; }
+
         /// <summary> Current status of validation at the database level. </summary>
         public MigrationValidationStatus? Status { get; }
     }
