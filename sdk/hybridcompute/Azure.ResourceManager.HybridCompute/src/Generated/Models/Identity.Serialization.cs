@@ -14,7 +14,7 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Identity for the resource. </summary>
-    public partial class Identity : IJsonModel<Identity>
+    internal partial class Identity : IJsonModel<Identity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
