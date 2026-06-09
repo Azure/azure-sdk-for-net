@@ -197,11 +197,11 @@ internal static class LocalConfigReader
         }
     }
 
-    private static IReadOnlyList<BinaryData> LoadToolDefinitions(string toolFilePath)
+    private static IReadOnlyList<ToolDefinition> LoadToolDefinitions(string toolFilePath)
     {
         if (!File.Exists(toolFilePath))
         {
-            return Array.Empty<BinaryData>();
+            return Array.Empty<ToolDefinition>();
         }
 
         try
@@ -210,21 +210,23 @@ internal static class LocalConfigReader
             using var doc = JsonDocument.Parse(json);
             if (doc.RootElement.ValueKind != JsonValueKind.Array)
             {
-                return Array.Empty<BinaryData>();
+                return Array.Empty<ToolDefinition>();
             }
 
-            var tools = new List<BinaryData>();
-            foreach (var item in doc.RootElement.EnumerateArray())
-            {
-                tools.Add(BinaryData.FromString(item.GetRawText()));
-            }
-
-            return tools;
+            // Reuse the same parsing logic as OptimizationConfig.FromJson
+            return OptimizationConfig.FromJson(
+                CreateToolsWrapper(doc.RootElement)).ToolDefinitions;
         }
         catch (Exception ex) when (ex is JsonException or IOException)
         {
-            return Array.Empty<BinaryData>();
+            return Array.Empty<ToolDefinition>();
         }
+    }
+
+    private static JsonElement CreateToolsWrapper(JsonElement toolsArray)
+    {
+        string wrappedJson = $"{{\"tools\":{toolsArray.GetRawText()}}}";
+        return JsonDocument.Parse(wrappedJson).RootElement;
     }
 
     internal static (Dictionary<string, object> Frontmatter, string Body) ParseSkillFrontmatter(string content)

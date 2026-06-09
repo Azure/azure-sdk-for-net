@@ -42,7 +42,7 @@ public class OptimizationConfig
         double? temperature = null,
         IReadOnlyList<OptimizationSkill> skills = null,
         string skillsDirectory = null,
-        IReadOnlyList<BinaryData> toolDefinitions = null,
+        IReadOnlyList<ToolDefinition> toolDefinitions = null,
         string source = "defaults",
         string candidateId = null)
     {
@@ -51,7 +51,7 @@ public class OptimizationConfig
         Temperature = temperature;
         Skills = skills ?? Array.Empty<OptimizationSkill>();
         SkillsDirectory = skillsDirectory;
-        ToolDefinitions = toolDefinitions ?? Array.Empty<BinaryData>();
+        ToolDefinitions = toolDefinitions ?? Array.Empty<ToolDefinition>();
         Source = source;
         CandidateId = candidateId;
     }
@@ -125,11 +125,13 @@ public class OptimizationConfig
         return skills;
     }
 
-    private static List<BinaryData> ParseToolDefinitions(JsonElement data)
+    private static List<ToolDefinition> ParseToolDefinitions(JsonElement data)
     {
+        var tools = new List<ToolDefinition>();
+
         if (!data.TryGetProperty("tools", out var toolsArray))
         {
-            return new List<BinaryData>();
+            return tools;
         }
 
         if (toolsArray.ValueKind != JsonValueKind.Array)
@@ -137,11 +139,36 @@ public class OptimizationConfig
             throw new InvalidOperationException($"Expected 'tools' to be an array, got {toolsArray.ValueKind}");
         }
 
-        var tools = new List<BinaryData>();
         foreach (var item in toolsArray.EnumerateArray())
         {
-            tools.Add(BinaryData.FromString(item.GetRawText()));
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                continue;
+            }
+
+            string type = item.TryGetProperty("type", out var typeProp) && typeProp.ValueKind == JsonValueKind.String
+                ? typeProp.GetString() ?? "function"
+                : "function";
+
+            if (item.TryGetProperty("function", out var func) && func.ValueKind == JsonValueKind.Object)
+            {
+                string name = func.TryGetProperty("name", out var nameProp) && nameProp.ValueKind == JsonValueKind.String
+                    ? nameProp.GetString()
+                    : null;
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    continue;
+                }
+
+                string description = func.TryGetProperty("description", out var descProp) && descProp.ValueKind == JsonValueKind.String
+                    ? descProp.GetString() ?? ""
+                    : "";
+
+                tools.Add(new ToolDefinition(type, name, description));
+            }
         }
+
         return tools;
     }
 
@@ -160,8 +187,8 @@ public class OptimizationConfig
     /// <summary>Path to a directory containing skill files for on-demand loading.</summary>
     public string SkillsDirectory { get; }
 
-    /// <summary>Tool definitions in OpenAI function-calling format, serialized as JSON.</summary>
-    public IReadOnlyList<BinaryData> ToolDefinitions { get; }
+    /// <summary>Optimized tool definitions.</summary>
+    public IReadOnlyList<ToolDefinition> ToolDefinitions { get; }
 
     /// <summary>Where the config was loaded from (e.g. "env:OPTIMIZATION_CONFIG", "api:candidate:abc", "local:/path").</summary>
     public string Source { get; }
@@ -173,73 +200,6 @@ public class OptimizationConfig
     /// Gets a value indicating whether this config carries any skill data (inline or via directory).
     /// </summary>
     public bool HasSkills => Skills.Count > 0 || SkillsDirectory != null;
-
-    /// <summary>
-    /// Builds a lookup of optimized tool definitions keyed by function name.
-    /// </summary>
-    /// <returns>A dictionary mapping function name to the full tool definition JSON.</returns>
-    public IReadOnlyDictionary<string, BinaryData> GetToolDefinitionsByName()
-    {
-        var lookup = new Dictionary<string, BinaryData>(StringComparer.Ordinal);
-        foreach (var tool in ToolDefinitions)
-        {
-            try
-            {
-                using var doc = JsonDocument.Parse(tool);
-                if (doc.RootElement.TryGetProperty("function", out var func) &&
-                    func.TryGetProperty("name", out var nameProp) &&
-                    nameProp.ValueKind == JsonValueKind.String)
-                {
-                    string name = nameProp.GetString();
-                    if (name.Length > 0)
-                    {
-                        lookup[name] = tool;
-                    }
-                }
-            }
-            catch (JsonException)
-            {
-                // Skip malformed tool definitions
-            }
-        }
-        return lookup;
-    }
-
-    /// <summary>
-    /// Gets the optimized description for a tool by function name.
-    /// </summary>
-    /// <param name="functionName">The function name to look up.</param>
-    /// <returns>The optimized description, or <c>null</c> if not found.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="functionName"/> is null.</exception>
-    public string GetToolDescription(string functionName)
-    {
-        if (string.IsNullOrEmpty(functionName))
-        {
-            throw new ArgumentNullException(nameof(functionName));
-        }
-
-        foreach (var tool in ToolDefinitions)
-        {
-            try
-            {
-                using var doc = JsonDocument.Parse(tool);
-                if (doc.RootElement.TryGetProperty("function", out var func) &&
-                    func.TryGetProperty("name", out var nameProp) &&
-                    nameProp.ValueKind == JsonValueKind.String &&
-                    nameProp.GetString() == functionName &&
-                    func.TryGetProperty("description", out var descProp) &&
-                    descProp.ValueKind == JsonValueKind.String)
-                {
-                    return descProp.GetString();
-                }
-            }
-            catch (JsonException)
-            {
-                // Skip malformed tool definitions
-            }
-        }
-        return null;
-    }
 
     /// <summary>
     /// Returns instructions with a skill catalog appended (if any skills are present).

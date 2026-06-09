@@ -28,7 +28,7 @@ public class OptimizationConfigTests
     public void Constructor_SetsAllProperties()
     {
         var skills = new[] { new OptimizationSkill("s1", "d1") };
-        var tools = new[] { BinaryData.FromString("{\"type\":\"function\"}") };
+        var tools = new[] { new ToolDefinition("function", "test_tool", "A test tool") };
 
         var config = new OptimizationConfig(
             instructions: "You are helpful.",
@@ -146,79 +146,52 @@ public class OptimizationConfigTests
     }
 
     [Test]
-    public void GetToolDefinitionsByName_ReturnsLookup()
+    public void ToolDefinitions_Contains_AddedTools()
     {
         var tools = new[]
         {
-            BinaryData.FromString("""{"type":"function","function":{"name":"search_flights","description":"Search flights"}}"""),
-            BinaryData.FromString("""{"type":"function","function":{"name":"get_hotels","description":"Get hotel prices"}}"""),
+            new ToolDefinition("function", "search_flights", "Search flights"),
+            new ToolDefinition("function", "get_hotels", "Get hotel prices"),
         };
         var config = new OptimizationConfig(toolDefinitions: tools);
 
-        var lookup = config.GetToolDefinitionsByName();
-
-        Assert.That(lookup.Count, Is.EqualTo(2));
-        Assert.That(lookup.ContainsKey("search_flights"), Is.True);
-        Assert.That(lookup.ContainsKey("get_hotels"), Is.True);
+        Assert.That(config.ToolDefinitions.Count, Is.EqualTo(2));
+        Assert.That(config.ToolDefinitions.Any(t => t.Name == "search_flights"), Is.True);
+        Assert.That(config.ToolDefinitions.Any(t => t.Name == "get_hotels"), Is.True);
     }
 
     [Test]
-    public void GetToolDefinitionsByName_ReturnsEmpty_WhenNoTools()
+    public void ToolDefinitions_IsEmpty_WhenNoTools()
     {
         var config = new OptimizationConfig();
 
-        var lookup = config.GetToolDefinitionsByName();
-
-        Assert.That(lookup, Is.Empty);
+        Assert.That(config.ToolDefinitions, Is.Empty);
     }
 
     [Test]
-    public void GetToolDefinitionsByName_SkipsMalformedEntries()
+    public void ToolDescription_CanBeAccessedViaLinq()
     {
         var tools = new[]
         {
-            BinaryData.FromString("""{"type":"function","function":{"name":"valid","description":"ok"}}"""),
-            BinaryData.FromString("""{"type":"function"}"""),
-            BinaryData.FromString("not json at all"),
+            new ToolDefinition("function", "search_flights", "Search for flights between cities"),
         };
         var config = new OptimizationConfig(toolDefinitions: tools);
 
-        var lookup = config.GetToolDefinitionsByName();
-
-        Assert.That(lookup.Count, Is.EqualTo(1));
-        Assert.That(lookup.ContainsKey("valid"), Is.True);
-    }
-
-    [Test]
-    public void GetToolDescription_ReturnsDescription()
-    {
-        var tools = new[]
-        {
-            BinaryData.FromString("""{"type":"function","function":{"name":"search_flights","description":"Search for flights between cities"}}"""),
-        };
-        var config = new OptimizationConfig(toolDefinitions: tools);
-
-        var desc = config.GetToolDescription("search_flights");
+        var desc = config.ToolDefinitions.FirstOrDefault(t => t.Name == "search_flights")?.Description;
 
         Assert.That(desc, Is.EqualTo("Search for flights between cities"));
     }
 
     [Test]
-    public void GetToolDescription_ReturnsNull_WhenNotFound()
+    public void ToolDescription_ReturnsNull_WhenNotFound()
     {
         var config = new OptimizationConfig(toolDefinitions: new[]
         {
-            BinaryData.FromString("""{"type":"function","function":{"name":"other","description":"x"}}"""),
+            new ToolDefinition("function", "other", "x"),
         });
 
-        Assert.That(config.GetToolDescription("nonexistent"), Is.Null);
-    }
+        var desc = config.ToolDefinitions.FirstOrDefault(t => t.Name == "nonexistent")?.Description;
 
-    [Test]
-    public void GetToolDescription_ReturnsNull_WhenNoTools()
-    {
-        var config = new OptimizationConfig();
-
-        Assert.That(config.GetToolDescription("anything"), Is.Null);
+        Assert.That(desc, Is.Null);
     }
 }
