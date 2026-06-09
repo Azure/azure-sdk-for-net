@@ -1,0 +1,185 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+#pragma warning disable CS1591
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EventGrid.Mocking;
+
+namespace Azure.ResourceManager.EventGrid
+{
+    public partial class EventGridTopicPrivateLinkResourceCollection : ArmCollection, IAsyncEnumerable<EventGridTopicPrivateLinkResource>, IEnumerable<EventGridTopicPrivateLinkResource>
+    {
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+
+        protected EventGridTopicPrivateLinkResourceCollection()
+        {
+        }
+
+        internal EventGridTopicPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            TryGetApiVersion(EventGridTopicPrivateLinkResource.ResourceType, out string apiVersion);
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, apiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
+        }
+
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != EventGridTopicResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventGridTopicResource.ResourceType), nameof(id));
+            }
+        }
+
+        public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            Response<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource> response = await resourceGroup.GetAsync("topics", Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToTopicResource(Client, response.Value));
+        }
+
+        public virtual Response<EventGridTopicPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            Response<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource> response = resourceGroup.Get("topics", Id.Name, privateLinkResourceName, cancellationToken);
+            return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToTopicResource(Client, response.Value));
+        }
+
+        public virtual AsyncPageable<EventGridTopicPrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            return new AsyncPageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, EventGridTopicPrivateLinkResource>(
+                resourceGroup.GetByResourceAsync("topics", Id.Name, filter, top, cancellationToken),
+                item => PrivateLinkResourceCompat.ToTopicResource(Client, item));
+        }
+
+        public virtual Pageable<EventGridTopicPrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            return new PageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, EventGridTopicPrivateLinkResource>(
+                resourceGroup.GetByResource("topics", Id.Name, filter, top, cancellationToken),
+                item => PrivateLinkResourceCompat.ToTopicResource(Client, item));
+        }
+
+        public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "topics", Id.Name, privateLinkResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(true, result),
+                    404 => Response.FromValue(false, result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "topics", Id.Name, privateLinkResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(true, result),
+                    404 => Response.FromValue(false, result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<NullableResponse<EventGridTopicPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "topics", Id.Name, privateLinkResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(PrivateLinkResourceCompat.ToTopicResource(Client, global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource.FromResponse(result)), result),
+                    404 => new NoValueResponse<EventGridTopicPrivateLinkResource>(result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual NullableResponse<EventGridTopicPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "topics", Id.Name, privateLinkResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(PrivateLinkResourceCompat.ToTopicResource(Client, global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource.FromResponse(result)), result),
+                    404 => new NoValueResponse<EventGridTopicPrivateLinkResource>(result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<EventGridTopicPrivateLinkResource> IEnumerable<EventGridTopicPrivateLinkResource>.GetEnumerator() => GetAll().GetEnumerator();
+
+        IAsyncEnumerator<EventGridTopicPrivateLinkResource> IAsyncEnumerable<EventGridTopicPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+    }
+}
