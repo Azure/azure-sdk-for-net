@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DataMigrationProjectFileCollection : ArmCollection, IEnumerable<DataMigrationProjectFileResource>, IAsyncEnumerable<DataMigrationProjectFileResource>
     {
-        private readonly ClientDiagnostics _dataMigrationProjectFileFilesClientDiagnostics;
-        private readonly FilesRestOperations _dataMigrationProjectFileFilesRestClient;
+        private readonly ClientDiagnostics _filesClientDiagnostics;
+        private readonly Files _filesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataMigrationProjectFileCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataMigrationProjectFileCollection for mocking. </summary>
         protected DataMigrationProjectFileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataMigrationProjectFileCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationProjectFileCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataMigrationProjectFileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataMigrationProjectFileFilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationProjectFileResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataMigrationProjectFileResource.ResourceType, out string dataMigrationProjectFileFilesApiVersion);
-            _dataMigrationProjectFileFilesRestClient = new FilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataMigrationProjectFileFilesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataMigrationProjectFileResource.ResourceType, out string dataMigrationProjectFileApiVersion);
+            _filesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationProjectFileResource.ResourceType.Namespace, Diagnostics);
+            _filesRestClient = new Files(_filesClientDiagnostics, Pipeline, Endpoint, dataMigrationProjectFileApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataMigrationProjectResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataMigrationProjectResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataMigrationProjectResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The PUT method creates a new file or updates an existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="data"> Information about the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DataMigrationProjectFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectFileFilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _dataMigrationProjectFileFilesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataMigrationArmOperation<DataMigrationProjectFileResource>(Response.FromValue(new DataMigrationProjectFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, DataMigrationProjectFileData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMigrationProjectFileData> response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataMigrationArmOperation<DataMigrationProjectFileResource> operation = new DataMigrationArmOperation<DataMigrationProjectFileResource>(Response.FromValue(new DataMigrationProjectFileResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.DataMigration
         /// The PUT method creates a new file or updates an existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="data"> Information about the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DataMigrationProjectFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectFileFilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data, cancellationToken);
-                var uri = _dataMigrationProjectFileFilesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataMigrationArmOperation<DataMigrationProjectFileResource>(Response.FromValue(new DataMigrationProjectFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, DataMigrationProjectFileData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMigrationProjectFileData> response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataMigrationArmOperation<DataMigrationProjectFileResource> operation = new DataMigrationArmOperation<DataMigrationProjectFileResource>(Response.FromValue(new DataMigrationProjectFileResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.DataMigration
         /// The files resource is a nested, proxy-only resource representing a file stored under the project resource. This method retrieves information about a file.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataMigrationProjectFileResource>> GetAsync(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Get");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectFileFilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMigrationProjectFileData> response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.DataMigration
         /// The files resource is a nested, proxy-only resource representing a file stored under the project resource. This method retrieves information about a file.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataMigrationProjectFileResource> Get(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Get");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectFileFilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMigrationProjectFileData> response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,51 @@ namespace Azure.ResourceManager.DataMigration
         /// The project resource is a nested resource representing a stored migration project. This method returns a list of files owned by a project resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMigrationProjectFileResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataMigrationProjectFileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMigrationProjectFileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationProjectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationProjectFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationProjectFileResource(Client, DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(e)), _dataMigrationProjectFileFilesClientDiagnostics, Pipeline, "DataMigrationProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataMigrationProjectFileData, DataMigrationProjectFileResource>(new FilesGetAllAsyncCollectionResultOfT(
+                _filesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataMigrationProjectFileCollection.GetAll"), data => new DataMigrationProjectFileResource(Client, data));
         }
 
         /// <summary>
         /// The project resource is a nested resource representing a stored migration project. This method returns a list of files owned by a project resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +318,68 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="DataMigrationProjectFileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMigrationProjectFileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationProjectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationProjectFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationProjectFileResource(Client, DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(e)), _dataMigrationProjectFileFilesClientDiagnostics, Pipeline, "DataMigrationProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataMigrationProjectFileData, DataMigrationProjectFileResource>(new FilesGetAllCollectionResultOfT(
+                _filesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataMigrationProjectFileCollection.GetAll"), data => new DataMigrationProjectFileResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Exists");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectFileFilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMigrationProjectFileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectFileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +393,50 @@ namespace Azure.ResourceManager.DataMigration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Exists");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectFileFilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMigrationProjectFileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectFileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +450,54 @@ namespace Azure.ResourceManager.DataMigration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataMigrationProjectFileResource>> GetIfExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.GetIfExists");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectFileFilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMigrationProjectFileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectFileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMigrationProjectFileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +511,54 @@ namespace Azure.ResourceManager.DataMigration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Files_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectFiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataMigrationProjectFileResource> GetIfExists(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _dataMigrationProjectFileFilesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.GetIfExists");
+            using DiagnosticScope scope = _filesClientDiagnostics.CreateScope("DataMigrationProjectFileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectFileFilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _filesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, fileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMigrationProjectFileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectFileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectFileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMigrationProjectFileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +578,7 @@ namespace Azure.ResourceManager.DataMigration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataMigrationProjectFileResource> IAsyncEnumerable<DataMigrationProjectFileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

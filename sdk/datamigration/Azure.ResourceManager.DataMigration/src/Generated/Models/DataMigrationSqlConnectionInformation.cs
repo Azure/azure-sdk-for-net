@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Source SQL Connection. </summary>
     public partial class DataMigrationSqlConnectionInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSqlConnectionInformation"/>. </summary>
         public DataMigrationSqlConnectionInformation()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="password"> Password to connect to source SQL. </param>
         /// <param name="shouldEncryptConnection"> Whether to encrypt connection or not. </param>
         /// <param name="shouldTrustServerCertificate"> Whether to trust server certificate or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationSqlConnectionInformation(string dataSource, string authentication, string userName, string password, bool? shouldEncryptConnection, bool? shouldTrustServerCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationSqlConnectionInformation(string dataSource, string authentication, string userName, string password, bool? shouldEncryptConnection, bool? shouldTrustServerCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataSource = dataSource;
             Authentication = authentication;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             Password = password;
             ShouldEncryptConnection = shouldEncryptConnection;
             ShouldTrustServerCertificate = shouldTrustServerCertificate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Data source. </summary>
         public string DataSource { get; set; }
+
         /// <summary> Authentication type. </summary>
         public string Authentication { get; set; }
+
         /// <summary> User name to connect to source SQL. </summary>
         public string UserName { get; set; }
+
         /// <summary> Password to connect to source SQL. </summary>
         public string Password { get; set; }
+
         /// <summary> Whether to encrypt connection or not. </summary>
         public bool? ShouldEncryptConnection { get; set; }
+
         /// <summary> Whether to trust server certificate or not. </summary>
         public bool? ShouldTrustServerCertificate { get; set; }
     }

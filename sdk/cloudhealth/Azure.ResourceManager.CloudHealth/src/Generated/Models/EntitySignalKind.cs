@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private const string AzureResourceMetricValue = "AzureResourceMetric";
         private const string LogAnalyticsQueryValue = "LogAnalyticsQuery";
         private const string PrometheusMetricsQueryValue = "PrometheusMetricsQuery";
+        private const string ExternalSignalValue = "External";
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,6 +38,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Gets the PrometheusMetricsQuery. </summary>
         public static EntitySignalKind PrometheusMetricsQuery { get; } = new EntitySignalKind(PrometheusMetricsQueryValue);
+
+        /// <summary> Gets the ExternalSignal. </summary>
+        public static EntitySignalKind ExternalSignal { get; } = new EntitySignalKind(ExternalSignalValue);
 
         /// <summary> Determines if two <see cref="EntitySignalKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

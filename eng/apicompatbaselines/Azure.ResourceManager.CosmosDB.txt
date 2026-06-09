@@ -1,0 +1,32 @@
+# The MPG (Management Plane Generator) does not emit a [WirePath] attribute on the
+# generated 'AdditionalProperties' dictionary that captures unknown JSON properties
+# (CosmosDBServiceProperties.AdditionalProperties => _additionalBinaryDataProperties).
+# The legacy AutoRest SDK did emit [WirePath("AdditionalProperties")] here, but that
+# value was a generator quirk: there is no single JSON wire path for spread/additional
+# properties — they are dynamic top-level keys, not a named field. The attribute
+# therefore carried no semantic meaning at runtime.
+#
+# Removing the attribute is technically an API-surface change, but it has no impact on
+# serialization, ARM PATCH path construction, or resource-graph mapping. The generated
+# property is a non-partial expression-bodied getter, so it cannot be redecorated from
+# an SDK-side custom partial class without a generator change.
+#
+# We attempted the canonical fix of suppressing AdditionalProperties on the polymorphic
+# base CosmosDBServiceProperties and re-emitting it with [WirePath]:
+#     [CodeGenSuppress("AdditionalProperties")]
+#     public partial class CosmosDBServiceProperties
+#     {
+#         [WirePath("AdditionalProperties")]
+#         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+#     }
+# but this triggers a generator bug that emits 15 CS0103 errors across all 5 derived
+# *ServiceProperties.Serialization.cs files — the deserializer local var is declared as
+# `additionalProperties` but the Add call references the non-existent identifier
+# `additionalBinaryDataProperties`. Tracked at
+# https://github.com/Azure/azure-sdk-for-net/issues/59501 — remove this baseline entry
+# once that fix lands.
+#
+# Precedent: the same baseline pattern already exists in
+# eng/apicompatbaselines/Azure.ResourceManager.CognitiveServices.txt for
+# CognitiveServices.Models.ServiceAccountApiProperties.AdditionalProperties.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.CosmosDB.WirePathAttribute' exists on 'Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties.AdditionalProperties' in the contract but not the implementation.

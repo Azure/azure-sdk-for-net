@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
             TroubleshooterInstanceProperties properties = new TroubleshooterInstanceProperties("e104dbdf-9e14-4c9f-bc78-21ac90382231", parameters, null, null, null);
-            var data = new SelfHelpTroubleshooterData(scope, null, resourceType, null, null, properties);
+            var data = new SelfHelpTroubleshooterData(scope, null, resourceType, null, properties, null);
 
             return data;
         }
