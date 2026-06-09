@@ -132,6 +132,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     && _enableCheckpointing
                     && _batchCheckpointFrequency > 1
                     && _batchCounter > 0
+                    && _lastProcessedEvent != null
                     && (DateTimeOffset.UtcNow - _lastBatchReceivedTime).TotalSeconds >= IdleCheckpointIntervalSeconds
                     && !_listenerCancellationToken.IsCancellationRequested
                     && !_functionExecutionToken.IsCancellationRequested
@@ -331,6 +332,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                         UpdateCheckpointContext(triggerEvents, _mostRecentPartitionContext);
                         await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
+                        _lastProcessedEvent = triggerEvents.Last();
                         if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
                         {
                             await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
