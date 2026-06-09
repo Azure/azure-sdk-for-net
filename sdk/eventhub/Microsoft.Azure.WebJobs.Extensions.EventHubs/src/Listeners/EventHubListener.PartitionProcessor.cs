@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             // this duration of no new events to prevent stale checkpoints from blocking scale-in.
             private const int IdleCheckpointIntervalSeconds = 600;
             private EventData _lastProcessedEvent;
-            private DateTimeOffset _lastBatchReceivedTime;
+            private DateTimeOffset _lastBatchProcessedTime;
 
             /// <summary>
             /// When we have a minimum batch size greater than 1, this class manages caching events.
@@ -133,19 +133,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     && _batchCheckpointFrequency > 1
                     && _batchCounter > 0
                     && _lastProcessedEvent != null
-                    && (DateTimeOffset.UtcNow - _lastBatchReceivedTime).TotalSeconds >= IdleCheckpointIntervalSeconds
+                    && (DateTimeOffset.UtcNow - _lastBatchProcessedTime).TotalSeconds >= IdleCheckpointIntervalSeconds
                     && !_listenerCancellationToken.IsCancellationRequested
                     && !_functionExecutionToken.IsCancellationRequested
                     && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
                     await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
                     _batchCounter = 0;
+                    _lastBatchProcessedTime = DateTimeOffset.UtcNow;
                     _logger.LogDebug(GetOperationDetails(context, "IdleCheckpoint"));
-                }
-
-                if (eventCount > 0)
-                {
-                    _lastBatchReceivedTime = DateTimeOffset.UtcNow;
                 }
 
                 if (_singleDispatch)
@@ -248,13 +244,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     // and wait to send until we receive enough events or total max wait time has passed.
                 }
 
-                // Track the last processed event for idle/close checkpoint, regardless
-                // of whether the batch-frequency gate triggers a checkpoint this cycle.
-                if (eventToCheckpoint != null)
-                {
-                    _lastProcessedEvent = eventToCheckpoint;
-                }
-
                 // If enabled, checkpoint if we processed any events, the listener is not stopping,
                 // and cancellation has not been signaled.  Don't checkpoint if no events. This
                 // can reset the sequence counter to 0.
@@ -332,7 +321,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                         UpdateCheckpointContext(triggerEvents, _mostRecentPartitionContext);
                         await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
-                        _lastProcessedEvent = triggerEvents.Last();
                         if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
                         {
                             await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
@@ -442,6 +430,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         {
                             isCheckpointingAfterInvocation = true;
                         }
+
+                        // Track the last processed event and time for idle checkpoint.
+                        // When batchCheckpointFrequency > 1, stale blob checkpoints can
+                        // block scale-in. The idle checkpoint in ProcessEventsAsync uses
+                        // these to force a checkpoint after a period of inactivity.
+                        _lastProcessedEvent = events.Last();
+                        _lastBatchProcessedTime = DateTimeOffset.UtcNow;
                     }
                 }
 
