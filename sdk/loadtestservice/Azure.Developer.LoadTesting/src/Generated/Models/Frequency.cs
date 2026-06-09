@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Frequency of recurrence for a trigger. </summary>
-    internal readonly partial struct Frequency : IEquatable<Frequency>
+    public readonly partial struct Frequency : IEquatable<Frequency>
     {
         private readonly string _value;
         /// <summary> Recurrence defined by a cron expression. </summary>

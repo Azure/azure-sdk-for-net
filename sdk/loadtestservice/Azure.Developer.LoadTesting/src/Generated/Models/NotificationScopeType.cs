@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Scope type of a notification rule. </summary>
-    internal readonly partial struct NotificationScopeType : IEquatable<NotificationScopeType>
+    public readonly partial struct NotificationScopeType : IEquatable<NotificationScopeType>
     {
         private readonly string _value;
         /// <summary> Notification rule is for Tests. </summary>
