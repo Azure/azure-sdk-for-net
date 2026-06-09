@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 arcSettings.Name,
                 arcSettings.ResourceType,
                 arcSettings.SystemData,
-                additionalBinaryDataProperties: null,
-                tenantId is null && gatewayProperties is null ? default : new SettingsProperties(tenantId, gatewayProperties, null));
+                tenantId is null && gatewayProperties is null ? default : new SettingsProperties(tenantId, gatewayProperties, null),
+                additionalBinaryDataProperties: null);
         }
 
         private static ArcSettings FromArcSettingsData(ArcSettingsData data)

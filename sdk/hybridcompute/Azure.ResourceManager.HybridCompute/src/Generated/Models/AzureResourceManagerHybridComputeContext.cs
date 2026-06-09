@@ -100,6 +100,7 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(HybridComputeSubnet))]
     [ModelReaderWriterBuildable(typeof(HybridComputeWindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(HybridComputeWindowsParameters))]
+    [ModelReaderWriterBuildable(typeof(Models.Identity))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileArmEsuProperties))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileArmProductProfileProperties))]
