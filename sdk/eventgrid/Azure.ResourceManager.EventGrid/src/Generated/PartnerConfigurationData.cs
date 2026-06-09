@@ -5,89 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary> Partner configuration information. </summary>
-    public partial class PartnerConfigurationData : ResourceData
+    public partial class PartnerConfigurationData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationData"/>. </summary>
-        public PartnerConfigurationData()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the partner configuration. </param>
-        /// <param name="tags"> Tags of the resource. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PartnerConfigurationProperties properties, IDictionary<string, string> tags, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
-        {
-            Properties = properties;
-            Tags = tags;
-            Location = location;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Properties of the partner configuration. </summary>
-        [WirePath("properties")]
-        internal PartnerConfigurationProperties Properties { get; set; }
-
-        /// <summary> Tags of the resource. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> Location of the resource. </summary>
-        [WirePath("location")]
-        public string Location { get; set; }
-
-        /// <summary> The details of authorized partners. </summary>
-        [WirePath("properties.partnerAuthorization")]
-        public PartnerAuthorization PartnerAuthorization
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PartnerAuthorization;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PartnerConfigurationProperties();
-                }
-                Properties.PartnerAuthorization = value;
-            }
-        }
-
-        /// <summary> Provisioning state of the partner configuration. </summary>
-        [WirePath("properties.provisioningState")]
-        public PartnerConfigurationProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PartnerConfigurationProperties();
-                }
-                Properties.ProvisioningState = value;
-            }
-        }
     }
 }

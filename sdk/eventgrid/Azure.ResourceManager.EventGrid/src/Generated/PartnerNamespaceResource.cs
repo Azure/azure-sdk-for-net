@@ -625,11 +625,11 @@ namespace Azure.ResourceManager.EventGrid
             return GetPartnerNamespaceChannels().Get(channelName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PartnerNamespacePrivateEndpointConnections in the <see cref="PartnerNamespaceResource"/>. </summary>
-        /// <returns> An object representing collection of PartnerNamespacePrivateEndpointConnections and their operations over a PartnerNamespacePrivateEndpointConnectionResource. </returns>
-        public virtual PartnerNamespacePrivateEndpointConnectionCollection GetPartnerNamespacePrivateEndpointConnections()
+        /// <summary> Gets a collection of EventGridPartnerNamespacePrivateEndpointConnections in the <see cref="PartnerNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridPartnerNamespacePrivateEndpointConnections and their operations over a EventGridPartnerNamespacePrivateEndpointConnectionResource. </returns>
+        public virtual EventGridPartnerNamespacePrivateEndpointConnectionCollection GetEventGridPartnerNamespacePrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PartnerNamespacePrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new EventGridPartnerNamespacePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace. </summary>
@@ -638,11 +638,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PartnerNamespacePrivateEndpointConnectionResource>> GetPartnerNamespacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetEventGridPartnerNamespacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetPartnerNamespacePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetEventGridPartnerNamespacePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace. </summary>
@@ -651,11 +651,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PartnerNamespacePrivateEndpointConnectionResource> GetPartnerNamespacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<EventGridPartnerNamespacePrivateEndpointConnectionResource> GetEventGridPartnerNamespacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPartnerNamespacePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetEventGridPartnerNamespacePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
     }
 }

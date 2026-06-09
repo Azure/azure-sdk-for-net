@@ -1528,16 +1528,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new TopicRegenerateKeyContent(keyName, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
         /// <param name="partnerAuthorization"> The details of authorized partners. </param>
         /// <param name="provisioningState"> Provisioning state of the partner configuration. </param>
-        /// <param name="tags"> Tags of the resource. </param>
-        /// <param name="location"> Location of the resource. </param>
         /// <returns> A new <see cref="EventGrid.PartnerConfigurationData"/> instance for mocking. </returns>
-        public static PartnerConfigurationData PartnerConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PartnerAuthorization partnerAuthorization = default, PartnerConfigurationProvisioningState? provisioningState = default, IDictionary<string, string> tags = default, string location = default)
+        public static PartnerConfigurationData PartnerConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PartnerAuthorization partnerAuthorization = default, PartnerConfigurationProvisioningState? provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1546,9 +1546,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 name,
                 resourceType,
                 systemData,
-                partnerAuthorization is null && provisioningState is null ? default : new PartnerConfigurationProperties(partnerAuthorization, provisioningState, default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                partnerAuthorization is null && provisioningState is null ? default : new PartnerConfigurationProperties(partnerAuthorization, provisioningState, default),
                 default);
         }
 
@@ -2867,30 +2867,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default,
                 identity,
                 default,
-                default,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EventGrid.PartnerConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="partnerAuthorization"> The details of authorized partners. </param>
-        /// <param name="provisioningState"> Provisioning state of the partner configuration. </param>
-        /// <returns> A new <see cref="EventGrid.PartnerConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PartnerConfigurationData PartnerConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PartnerAuthorization partnerAuthorization = default, PartnerConfigurationProvisioningState? provisioningState = default)
-        {
-            return new PartnerConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                partnerAuthorization is null && provisioningState is null ? default : new PartnerConfigurationProperties(partnerAuthorization, provisioningState, default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 default);
         }

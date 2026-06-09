@@ -695,11 +695,11 @@ namespace Azure.ResourceManager.EventGrid
             return GetDomainNetworkSecurityPerimeterConfigurations().Get(perimeterGuid, associationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DomainPrivateEndpointConnections in the <see cref="EventGridDomainResource"/>. </summary>
-        /// <returns> An object representing collection of DomainPrivateEndpointConnections and their operations over a DomainPrivateEndpointConnectionResource. </returns>
-        public virtual DomainPrivateEndpointConnectionCollection GetDomainPrivateEndpointConnections()
+        /// <summary> Gets a collection of EventGridDomainPrivateEndpointConnections in the <see cref="EventGridDomainResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridDomainPrivateEndpointConnections and their operations over a EventGridDomainPrivateEndpointConnectionResource. </returns>
+        public virtual EventGridDomainPrivateEndpointConnectionCollection GetEventGridDomainPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new DomainPrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new EventGridDomainPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace. </summary>
@@ -708,11 +708,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DomainPrivateEndpointConnectionResource>> GetDomainPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridDomainPrivateEndpointConnectionResource>> GetEventGridDomainPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetDomainPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetEventGridDomainPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace. </summary>
@@ -721,11 +721,11 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DomainPrivateEndpointConnectionResource> GetDomainPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<EventGridDomainPrivateEndpointConnectionResource> GetEventGridDomainPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetDomainPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetEventGridDomainPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
     }
 }

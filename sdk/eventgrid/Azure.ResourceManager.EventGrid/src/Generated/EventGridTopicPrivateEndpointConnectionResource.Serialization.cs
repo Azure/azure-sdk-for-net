@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary></summary>
-    public partial class NamespacePrivateEndpointConnectionResource : IJsonModel<EventGridPrivateEndpointConnectionData>
+    public partial class EventGridTopicPrivateEndpointConnectionResource : IJsonModel<EventGridPrivateEndpointConnectionData>
     {
         private static IJsonModel<EventGridPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
