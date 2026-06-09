@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Properties = properties;
             Resources = resources;
-            Identity = identity;
+            Identity = ToManagedServiceIdentity(identity);
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,7 +58,9 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public Models.Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
+
+        internal Models.Identity SerializedIdentity => ToIdentity(Identity);
 
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
         [WirePath("kind")]

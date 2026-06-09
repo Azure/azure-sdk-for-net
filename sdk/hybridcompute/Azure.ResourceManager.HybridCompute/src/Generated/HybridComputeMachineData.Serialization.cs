@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(SerializedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                writer.WriteObjectValue(SerializedIdentity, options);
             }
             if (Optional.IsDefined(Kind))
             {
