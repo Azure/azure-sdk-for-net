@@ -12,7 +12,7 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Identity for the resource. </summary>
-    public partial class Identity
+    internal partial class Identity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
