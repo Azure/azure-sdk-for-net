@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
                     default),
                 (resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>()).ToList(),
-                ToIdentity(identity),
+                identity,
                 kind,
                 default);
         }
@@ -596,15 +596,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 location,
                 properties,
                 default);
-        }
-
-        /// <param name="principalId"> The principal ID of resource identity. The value must be an UUID. </param>
-        /// <param name="tenantId"> The tenant ID of resource. The value must be an UUID. </param>
-        /// <param name="type"> The identity type. </param>
-        /// <returns> A new <see cref="Models.Identity"/> instance for mocking. </returns>
-        public static Identity Identity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default)
-        {
-            return new Identity(principalId, tenantId, @type, default);
         }
 
         /// <param name="tags"> Resource tags. </param>

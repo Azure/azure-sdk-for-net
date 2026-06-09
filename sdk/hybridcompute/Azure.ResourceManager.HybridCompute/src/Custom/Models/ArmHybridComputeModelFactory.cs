@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 location,
                 properties,
                 new List<HybridComputeMachineExtensionData>(resources),
-                ToIdentity(identity),
+                identity,
                 kind,
                 additionalBinaryDataProperties: null);
         }
@@ -134,8 +134,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, string cloudMetadataProvider, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IEnumerable<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IEnumerable<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, IEnumerable<HybridComputeNetworkInterface> networkInterfaces)
             => HybridComputeMachineData(id, name, resourceType, systemData, tags, location, resources, identity, kind, locationData, agentConfiguration, serviceStatuses, hardwareProfile: default, storageDisks: default, firmwareProfile: default, cloudMetadataProvider, agentUpgrade, osProfile, licenseProfile, provisioningState, status, lastStatusChange, errorDetails, agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, extensions, osSku, osEdition, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, msSqlDiscovered, detectedProperties, networkInterfaces);
-
-        private static Identity ToIdentity(ManagedServiceIdentity identity) => HybridCompute.HybridComputeMachineData.ToIdentity(identity);
 
         // Backward-compat justification: the GA model factory exposed the custom EsuKey licenseStatus constructor shape.
         /// <summary> Creates an EsuKey for mocking. </summary>

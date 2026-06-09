@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SerializedIdentity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(SerializedIdentity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HybridCompute
             AzureLocation location = default;
             MachineProperties properties = default;
             IReadOnlyList<HybridComputeMachineExtensionData> resources = default;
-            Models.Identity identity = default;
+            ManagedServiceIdentity identity = default;
             ArcKindEnum? kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    identity = Models.Identity.DeserializeIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridComputeContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
