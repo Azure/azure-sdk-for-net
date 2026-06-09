@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -16,39 +12,5 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> Domain Topic. </summary>
     public partial class DomainTopicData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DomainTopicData"/>. </summary>
-        internal DomainTopicData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DomainTopicData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the Domain Topic. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DomainTopicProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
-        {
-            Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Properties of the Domain Topic. </summary>
-        [WirePath("properties")]
-        internal DomainTopicProperties Properties { get; }
-
-        /// <summary> Provisioning state of the domain topic. </summary>
-        [WirePath("properties.provisioningState")]
-        public DomainTopicProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
     }
 }
