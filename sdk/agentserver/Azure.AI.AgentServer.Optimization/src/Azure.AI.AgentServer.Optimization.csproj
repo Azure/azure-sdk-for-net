@@ -6,7 +6,6 @@
     <Description>Config loader for optimization-ready Azure AI Hosted Agents — resolves optimized agent configurations from environment, remote API, or local directory.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Optimization Config</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.ClientModel" />

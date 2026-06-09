@@ -23,11 +23,11 @@ public static class OptimizationConfigLoader
     /// <summary>
     /// Loads optimization config asynchronously using the resolution waterfall.
     /// </summary>
-    /// <param name="credential">Optional credential for authenticating to the resolver API.</param>
+    /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static async Task<OptimizationConfig> LoadConfigAsync(
-        AuthenticationTokenProvider credential = null,
+    public static async Task<OptimizationConfig?> LoadConfigAsync(
+        AuthenticationTokenProvider? tokenProvider = null,
         CancellationToken cancellationToken = default)
     {
         string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableCandidateId)?.Trim() ?? "";
@@ -39,7 +39,7 @@ public static class OptimizationConfigLoader
             try
             {
                 var resolved = await CandidateResolver.ResolveAsync(
-                    candidateId, endpoint, credential, cancellationToken).ConfigureAwait(false);
+                    candidateId, endpoint, tokenProvider, cancellationToken).ConfigureAwait(false);
 
                 if (resolved.HasValue)
                 {
@@ -49,8 +49,9 @@ public static class OptimizationConfigLoader
                         candidateId: candidateId);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.Error.WriteLine($"Failed to resolve optimization config for candidate '{candidateId}' from '{endpoint}': {ex.Message}");
                 // Resolver failure is non-fatal — fall through to next priority
             }
         }
@@ -69,12 +70,12 @@ public static class OptimizationConfigLoader
     /// <summary>
     /// Loads optimization config synchronously using the resolution waterfall.
     /// </summary>
-    /// <param name="credential">Optional credential for authenticating to the resolver API.</param>
+    /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static OptimizationConfig LoadConfig(AuthenticationTokenProvider credential = null)
+    public static OptimizationConfig? LoadConfig(AuthenticationTokenProvider? tokenProvider = null)
     {
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
-        return LoadConfigAsync(credential).GetAwaiter().GetResult();
+        return LoadConfigAsync(tokenProvider).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
     }
 

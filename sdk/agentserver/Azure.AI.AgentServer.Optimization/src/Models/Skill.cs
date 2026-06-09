@@ -6,19 +6,19 @@ namespace Azure.AI.AgentServer.Optimization;
 /// <summary>
 /// A learned skill discovered during optimization.
 /// </summary>
-public class OptimizationSkill : IEquatable<OptimizationSkill>
+public readonly struct OptimizationSkill : IEquatable<OptimizationSkill>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="OptimizationSkill"/> class.
+    /// Initializes a new instance of the <see cref="OptimizationSkill"/> struct.
     /// </summary>
     /// <param name="name">The skill name.</param>
     /// <param name="description">A short description of the skill.</param>
     /// <param name="body">The skill body text.</param>
-    public OptimizationSkill(string name, string description, string body = "")
+    public OptimizationSkill(string name, string description, string? body = "")
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Description = description ?? throw new ArgumentNullException(nameof(description));
-        Body = body ?? "";
+        Body = body ?? string.Empty;
     }
 
     /// <summary>The skill name.</summary>
@@ -31,32 +31,22 @@ public class OptimizationSkill : IEquatable<OptimizationSkill>
     public string Body { get; }
 
     /// <inheritdoc/>
-    public bool Equals(OptimizationSkill other)
-    {
-        if (other == null)
-        {
-            return false;
-        }
-
-        return Name == other.Name
-            && Description == other.Description
-            && Body == other.Body;
-    }
+    public bool Equals(OptimizationSkill other) =>
+        Name == other.Name
+        && Description == other.Description
+        && Body == other.Body;
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) => Equals(obj as OptimizationSkill);
+    public override bool Equals(object? obj) => obj is OptimizationSkill other && Equals(other);
 
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        unchecked
-        {
-            int hashCode = 17;
-            hashCode = (hashCode * 23) + Name.GetHashCode();
-            hashCode = (hashCode * 23) + Description.GetHashCode();
-            hashCode = (hashCode * 23) + Body.GetHashCode();
-            return hashCode;
-        }
+#if NETSTANDARD2_0
+        return (Name?.GetHashCode() ?? 0) ^ (Description?.GetHashCode() ?? 0) ^ (Body?.GetHashCode() ?? 0);
+#else
+        return HashCode.Combine(Name, Description, Body);
+#endif
     }
 
     /// <inheritdoc/>

@@ -57,19 +57,30 @@ if (config is not null)
 }
 ```
 
-### Load config with custom credential
+### Load config with a custom token provider
 
 <!-- TODO: Convert to verified snippets -->
 ```csharp
-using Azure.Identity;
+using System.Collections.Generic;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.AgentServer.Optimization;
 
-var options = new ConfigLoaderOptions
-{
-    Credential = new DefaultAzureCredential(),
-};
+AuthenticationTokenProvider tokenProvider = new MyTokenProvider();
+OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync(tokenProvider);
 
-OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync(options);
+file sealed class MyTokenProvider : AuthenticationTokenProvider
+{
+    public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => new(properties);
+
+    public override AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
+
+    public override ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
+}
 ```
 
 ## Troubleshooting
