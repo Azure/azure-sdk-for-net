@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A Class representing a DomainNetworkSecurityPerimeterConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDomainNetworkSecurityPerimeterConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource"/> using the GetDomainNetworkSecurityPerimeterConfiguration method.
+    /// A class representing a DomainNetworkSecurityPerimeterConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource"/> using the GetDomainNetworkSecurityPerimeterConfigurations method.
     /// </summary>
     public partial class DomainNetworkSecurityPerimeterConfigurationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="perimeterGuid"> The perimeterGuid. </param>
-        /// <param name="associationName"> The associationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string perimeterGuid, string associationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}/./{associationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics;
-        private readonly NetworkSecurityPerimeterConfigurationsRestOperations _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient;
+        private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationsClientDiagnostics;
+        private readonly NetworkSecurityPerimeterConfigurations _networkSecurityPerimeterConfigurationsRestClient;
         private readonly NetworkSecurityPerimeterConfigurationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations/.";
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations";
 
-        /// <summary> Initializes a new instance of the <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DomainNetworkSecurityPerimeterConfigurationResource for mocking. </summary>
         protected DomainNetworkSecurityPerimeterConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DomainNetworkSecurityPerimeterConfigurationResource(ArmClient client, NetworkSecurityPerimeterConfigurationData data) : this(client, data.Id)
@@ -56,71 +43,100 @@ namespace Azure.ResourceManager.EventGrid
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DomainNetworkSecurityPerimeterConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsApiVersion);
-            _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string domainNetworkSecurityPerimeterConfigurationApiVersion);
+            _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, domainNetworkSecurityPerimeterConfigurationApiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkSecurityPerimeterConfigurationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="perimeterGuidAssociationName"> The perimeterGuid}.{associationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string perimeterGuidAssociationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuidAssociationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a specific network security perimeter configuration with a topic or domain.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
+        /// <param name="associationName"> Association name to association network security perimeter resource to profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DomainNetworkSecurityPerimeterConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DomainNetworkSecurityPerimeterConfigurationResource>> GetAsync(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Get");
+            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
+            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = await _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Parent.Name, perimeterGuid, associationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DomainNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,118 +150,49 @@ namespace Azure.ResourceManager.EventGrid
         /// Get a specific network security perimeter configuration with a topic or domain.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
+        /// <param name="associationName"> Association name to association network security perimeter resource to profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DomainNetworkSecurityPerimeterConfigurationResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DomainNetworkSecurityPerimeterConfigurationResource> Get(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Get");
+            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
+            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Parent.Name, perimeterGuid, associationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DomainNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reconcile a specific network security perimeter configuration for a given network security perimeter association with a topic or domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}/reconcile</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Reconcile</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DomainNetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Reconcile");
-            scope.Start();
-            try
-            {
-                var response = await _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.ReconcileAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<DomainNetworkSecurityPerimeterConfigurationResource>(new DomainNetworkSecurityPerimeterConfigurationOperationSource(Client), _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reconcile a specific network security perimeter configuration for a given network security perimeter association with a topic or domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}/reconcile</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Reconcile</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DomainNetworkSecurityPerimeterConfigurationResource> Reconcile(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Reconcile");
-            scope.Start();
-            try
-            {
-                var response = _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.Reconcile(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EventGridArmOperation<DomainNetworkSecurityPerimeterConfigurationResource>(new DomainNetworkSecurityPerimeterConfigurationOperationSource(Client), _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _domainNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

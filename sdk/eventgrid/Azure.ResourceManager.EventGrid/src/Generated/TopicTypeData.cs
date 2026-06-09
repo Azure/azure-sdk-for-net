@@ -13,112 +13,132 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the TopicType data model.
-    /// Properties of a topic type info.
-    /// </summary>
+    /// <summary> Properties of a topic type info. </summary>
     public partial class TopicTypeData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
-        public TopicTypeData()
+        internal TopicTypeData()
         {
-            SupportedLocations = new ChangeTrackingList<string>();
-            SupportedScopesForSource = new ChangeTrackingList<TopicTypeSourceScope>();
-            AdditionalEnforcedPermissions = new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provider"> Namespace of the provider of the topic type. </param>
-        /// <param name="displayName"> Display Name for the topic type. </param>
-        /// <param name="description"> Description of the topic type. </param>
-        /// <param name="resourceRegionType"> Region type of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the topic type. </param>
-        /// <param name="supportedLocations"> List of locations supported by this topic type. </param>
-        /// <param name="sourceResourceFormat"> Source resource format. </param>
-        /// <param name="supportedScopesForSource"> Supported source scopes. </param>
-        /// <param name="areRegionalAndGlobalSourcesSupported"> Flag to indicate that a topic type can support both regional or global system topics. </param>
-        /// <param name="additionalEnforcedPermissions"> Permissions which are enforced for creating and updating system topics of this this topic type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string displayName, string description, EventGridResourceRegionType? resourceRegionType, TopicTypeProvisioningState? provisioningState, IList<string> supportedLocations, string sourceResourceFormat, IList<TopicTypeSourceScope> supportedScopesForSource, bool? areRegionalAndGlobalSourcesSupported, IList<TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the topic type info. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TopicTypeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Provider = provider;
-            DisplayName = displayName;
-            Description = description;
-            ResourceRegionType = resourceRegionType;
-            ProvisioningState = provisioningState;
-            SupportedLocations = supportedLocations;
-            SourceResourceFormat = sourceResourceFormat;
-            SupportedScopesForSource = supportedScopesForSource;
-            AreRegionalAndGlobalSourcesSupported = areRegionalAndGlobalSourcesSupported;
-            AdditionalEnforcedPermissions = additionalEnforcedPermissions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the topic type info. </summary>
+        [WirePath("properties")]
+        internal TopicTypeProperties Properties { get; }
 
         /// <summary> Namespace of the provider of the topic type. </summary>
         [WirePath("properties.provider")]
-        public string Provider { get; set; }
+        public string Provider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Provider;
+            }
+        }
+
         /// <summary> Display Name for the topic type. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> Description of the topic type. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> Region type of the resource. </summary>
         [WirePath("properties.resourceRegionType")]
-        public EventGridResourceRegionType? ResourceRegionType { get; set; }
+        public EventGridResourceRegionType? ResourceRegionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceRegionType;
+            }
+        }
+
         /// <summary> Provisioning state of the topic type. </summary>
         [WirePath("properties.provisioningState")]
-        public TopicTypeProvisioningState? ProvisioningState { get; set; }
+        public TopicTypeProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> List of locations supported by this topic type. </summary>
         [WirePath("properties.supportedLocations")]
-        public IList<string> SupportedLocations { get; }
+        public IList<string> SupportedLocations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportedLocations;
+            }
+        }
+
         /// <summary> Source resource format. </summary>
         [WirePath("properties.sourceResourceFormat")]
-        public string SourceResourceFormat { get; set; }
+        public string SourceResourceFormat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceResourceFormat;
+            }
+        }
+
         /// <summary> Supported source scopes. </summary>
         [WirePath("properties.supportedScopesForSource")]
-        public IList<TopicTypeSourceScope> SupportedScopesForSource { get; }
+        public IList<TopicTypeSourceScope> SupportedScopesForSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportedScopesForSource;
+            }
+        }
+
         /// <summary> Flag to indicate that a topic type can support both regional or global system topics. </summary>
         [WirePath("properties.areRegionalAndGlobalSourcesSupported")]
-        public bool? AreRegionalAndGlobalSourcesSupported { get; set; }
+        public bool? AreRegionalAndGlobalSourcesSupported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AreRegionalAndGlobalSourcesSupported;
+            }
+        }
+
         /// <summary> Permissions which are enforced for creating and updating system topics of this this topic type. </summary>
         [WirePath("properties.additionalEnforcedPermissions")]
-        public IList<TopicTypeAdditionalEnforcedPermission> AdditionalEnforcedPermissions { get; }
+        public IList<TopicTypeAdditionalEnforcedPermission> AdditionalEnforcedPermissions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalEnforcedPermissions;
+            }
+        }
     }
 }

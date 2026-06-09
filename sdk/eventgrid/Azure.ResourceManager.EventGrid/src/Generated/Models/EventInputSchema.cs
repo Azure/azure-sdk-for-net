@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventInputSchema : IEquatable<EventInputSchema>
     {
         private readonly string _value;
+        /// <summary> CloudEventSchemaV1_0. </summary>
+        private const string CloudEventSchemaV10Value = "CloudEventSchemaV1_0";
 
         /// <summary> Initializes a new instance of <see cref="EventInputSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventInputSchema(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CloudEventSchemaV10Value = "CloudEventSchemaV1_0";
+            _value = value;
+        }
 
         /// <summary> CloudEventSchemaV1_0. </summary>
         public static EventInputSchema CloudEventSchemaV10 { get; } = new EventInputSchema(CloudEventSchemaV10Value);
+
         /// <summary> Determines if two <see cref="EventInputSchema"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventInputSchema left, EventInputSchema right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventInputSchema"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventInputSchema left, EventInputSchema right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventInputSchema"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventInputSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventInputSchema(string value) => new EventInputSchema(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventInputSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventInputSchema?(string value) => value == null ? null : new EventInputSchema(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventInputSchema other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventInputSchema other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

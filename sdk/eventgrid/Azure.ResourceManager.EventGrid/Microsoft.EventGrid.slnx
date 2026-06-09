@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Microsoft.EventGrid.csproj" />
+  <Project Path="tests/Microsoft.EventGrid.Tests.csproj" />
+</Solution>

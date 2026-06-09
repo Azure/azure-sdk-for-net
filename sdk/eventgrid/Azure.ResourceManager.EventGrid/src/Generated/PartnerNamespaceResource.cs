@@ -6,48 +6,37 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A Class representing a PartnerNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerNamespaceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPartnerNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPartnerNamespace method.
+    /// A class representing a PartnerNamespace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerNamespaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPartnerNamespaces method.
     /// </summary>
     public partial class PartnerNamespaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PartnerNamespaceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="partnerNamespaceName"> The partnerNamespaceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string partnerNamespaceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _partnerNamespaceClientDiagnostics;
-        private readonly PartnerNamespacesRestOperations _partnerNamespaceRestClient;
+        private readonly ClientDiagnostics _partnerNamespacesClientDiagnostics;
+        private readonly PartnerNamespaces _partnerNamespacesRestClient;
         private readonly PartnerNamespaceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces";
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PartnerNamespaceResource for mocking. </summary>
         protected PartnerNamespaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PartnerNamespaceResource(ArmClient client, PartnerNamespaceData data) : this(client, data.Id)
@@ -56,278 +45,92 @@ namespace Azure.ResourceManager.EventGrid
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerNamespaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _partnerNamespaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string partnerNamespaceApiVersion);
-            _partnerNamespaceRestClient = new PartnerNamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, partnerNamespaceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _partnerNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
+            _partnerNamespacesRestClient = new PartnerNamespaces(_partnerNamespacesClientDiagnostics, Pipeline, Endpoint, partnerNamespaceApiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PartnerNamespaceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="partnerNamespaceName"> The partnerNamespaceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string partnerNamespaceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of PartnerNamespaceChannelResources in the PartnerNamespace. </summary>
-        /// <returns> An object representing collection of PartnerNamespaceChannelResources and their operations over a PartnerNamespaceChannelResource. </returns>
-        public virtual PartnerNamespaceChannelCollection GetPartnerNamespaceChannels()
-        {
-            return GetCachedClient(client => new PartnerNamespaceChannelCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get properties of a channel.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> Name of the channel. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PartnerNamespaceChannelResource>> GetPartnerNamespaceChannelAsync(string channelName, CancellationToken cancellationToken = default)
-        {
-            return await GetPartnerNamespaceChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a channel.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> Name of the channel. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PartnerNamespaceChannelResource> GetPartnerNamespaceChannel(string channelName, CancellationToken cancellationToken = default)
-        {
-            return GetPartnerNamespaceChannels().Get(channelName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EventGridPartnerNamespacePrivateEndpointConnectionResources in the PartnerNamespace. </summary>
-        /// <returns> An object representing collection of EventGridPartnerNamespacePrivateEndpointConnectionResources and their operations over a EventGridPartnerNamespacePrivateEndpointConnectionResource. </returns>
-        public virtual EventGridPartnerNamespacePrivateEndpointConnectionCollection GetEventGridPartnerNamespacePrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new EventGridPartnerNamespacePrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetEventGridPartnerNamespacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetEventGridPartnerNamespacePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EventGridPartnerNamespacePrivateEndpointConnectionResource> GetEventGridPartnerNamespacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetEventGridPartnerNamespacePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PartnerNamespacePrivateLinkResources in the PartnerNamespace. </summary>
-        /// <returns> An object representing collection of PartnerNamespacePrivateLinkResources and their operations over a PartnerNamespacePrivateLinkResource. </returns>
-        public virtual PartnerNamespacePrivateLinkResourceCollection GetPartnerNamespacePrivateLinkResources()
-        {
-            return GetCachedClient(client => new PartnerNamespacePrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get properties of a private link resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespacePrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetPartnerNamespacePrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetPartnerNamespacePrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a private link resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespacePrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PartnerNamespacePrivateLinkResource> GetPartnerNamespacePrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return GetPartnerNamespacePrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get properties of a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PartnerNamespaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.Get");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerNamespaceData> response = Response.FromValue(PartnerNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,118 +144,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PartnerNamespaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.Get");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.Get");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerNamespaceData> response = Response.FromValue(PartnerNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerNamespaceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete existing partner namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _partnerNamespaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete existing partner namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _partnerNamespaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventGridArmOperation(_partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -465,20 +192,20 @@ namespace Azure.ResourceManager.EventGrid
         /// Asynchronously updates a partner namespace with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,14 +217,21 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.Update");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PartnerNamespacePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EventGridArmOperation operation = new EventGridArmOperation(_partnerNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -511,20 +245,20 @@ namespace Azure.ResourceManager.EventGrid
         /// Asynchronously updates a partner namespace with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,14 +270,119 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.Update");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new EventGridArmOperation(_partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PartnerNamespacePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EventGridArmOperation operation = new EventGridArmOperation(_partnerNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete existing partner namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EventGridArmOperation operation = new EventGridArmOperation(_partnerNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete existing partner namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EventGridArmOperation operation = new EventGridArmOperation(_partnerNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -557,31 +396,41 @@ namespace Azure.ResourceManager.EventGrid
         /// List the two keys used to publish to a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/listKeys</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/listKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_ListSharedAccessKeys</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_ListSharedAccessKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PartnerNamespaceSharedAccessKeys>> GetSharedAccessKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.GetSharedAccessKeys");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.GetSharedAccessKeys");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceRestClient.ListSharedAccessKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerNamespaceSharedAccessKeys> response = Response.FromValue(PartnerNamespaceSharedAccessKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -595,31 +444,41 @@ namespace Azure.ResourceManager.EventGrid
         /// List the two keys used to publish to a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/listKeys</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/listKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_ListSharedAccessKeys</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_ListSharedAccessKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PartnerNamespaceSharedAccessKeys> GetSharedAccessKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.GetSharedAccessKeys");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.GetSharedAccessKeys");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceRestClient.ListSharedAccessKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerNamespaceSharedAccessKeys> response = Response.FromValue(PartnerNamespaceSharedAccessKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -633,20 +492,20 @@ namespace Azure.ResourceManager.EventGrid
         /// Regenerate a shared access key for a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/regenerateKey</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/regenerateKey. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_RegenerateKey</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_RegenerateKey. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -657,11 +516,21 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.RegenerateKey");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PartnerNamespaceRegenerateKeyContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerNamespaceSharedAccessKeys> response = Response.FromValue(PartnerNamespaceSharedAccessKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -675,20 +544,20 @@ namespace Azure.ResourceManager.EventGrid
         /// Regenerate a shared access key for a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/regenerateKey</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/regenerateKey. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_RegenerateKey</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_RegenerateKey. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -699,11 +568,21 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.RegenerateKey");
+            using DiagnosticScope scope = _partnerNamespacesClientDiagnostics.CreateScope("PartnerNamespaceResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerNamespacesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PartnerNamespaceRegenerateKeyContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerNamespaceSharedAccessKeys> response = Response.FromValue(PartnerNamespaceSharedAccessKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -713,362 +592,70 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<PartnerNamespaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of PartnerNamespaceChannels in the <see cref="PartnerNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of PartnerNamespaceChannels and their operations over a PartnerNamespaceChannelResource. </returns>
+        public virtual PartnerNamespaceChannelCollection GetPartnerNamespaceChannels()
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _partnerNamespaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PartnerNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-                }
-                else
-                {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PartnerNamespacePatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new PartnerNamespaceChannelCollection(client, Id));
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
+        /// <summary> Get properties of a channel. </summary>
+        /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<PartnerNamespaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PartnerNamespaceChannelResource>> GetPartnerNamespaceChannelAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
-                {
-                    var originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _partnerNamespaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PartnerNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-                }
-                else
-                {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PartnerNamespacePatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetPartnerNamespaceChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Get properties of a channel. </summary>
+        /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<PartnerNamespaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PartnerNamespaceChannelResource> GetPartnerNamespaceChannel(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _partnerNamespaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PartnerNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-                }
-                else
-                {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PartnerNamespacePatch();
-                    patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetPartnerNamespaceChannels().Get(channelName, cancellationToken);
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<PartnerNamespaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of PartnerNamespacePrivateEndpointConnections in the <see cref="PartnerNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of PartnerNamespacePrivateEndpointConnections and their operations over a PartnerNamespacePrivateEndpointConnectionResource. </returns>
+        public virtual PartnerNamespacePrivateEndpointConnectionCollection GetPartnerNamespacePrivateEndpointConnections()
         {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
-                {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _partnerNamespaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PartnerNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-                }
-                else
-                {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PartnerNamespacePatch();
-                    patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new PartnerNamespacePrivateEndpointConnectionCollection(client, Id));
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
+        /// <summary> Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace. </summary>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<PartnerNamespaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PartnerNamespacePrivateEndpointConnectionResource>> GetPartnerNamespacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _partnerNamespaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PartnerNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-                }
-                else
-                {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PartnerNamespacePatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetPartnerNamespacePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
+        /// <summary> Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace. </summary>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<PartnerNamespaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PartnerNamespacePrivateEndpointConnectionResource> GetPartnerNamespacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
-                {
-                    var originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _partnerNamespaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PartnerNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-                }
-                else
-                {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PartnerNamespacePatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetPartnerNamespacePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
     }
 }
