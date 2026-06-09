@@ -17,7 +17,6 @@ namespace Azure.Identity
 {
     internal class MsalManagedIdentityClient
     {
-        private const string AttestationOptionsTypeFullName = "Azure.Identity.Broker.ManagedIdentityCredentialAttestationOptions";
         private readonly ConcurrentDictionary<(bool EnableCae, bool IsTokenBinding), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
         private bool _isForceRefreshEnabled { get; }
         private readonly Action<AcquireTokenForManagedIdentityParameterBuilder> _beforeTokenAcquisition;
@@ -56,10 +55,10 @@ namespace Azure.Identity
 
             Pipeline = clientOptions.Pipeline;
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;
-            _isAttestationOptionsEnabled = string.Equals(clientOptions.Options?.GetType().FullName, AttestationOptionsTypeFullName, StringComparison.Ordinal);
 
             if (clientOptions.Options is IMsalManagedIdentityInitializerOptions initializerOptions)
             {
+                _isAttestationOptionsEnabled = true;
                 _beforeTokenAcquisition = initializerOptions.BeforeTokenAcquisition;
             }
         }
@@ -78,6 +77,10 @@ namespace Azure.Identity
                 .Create(ManagedIdentityId)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
 
+            // When token binding (mTLS PoP) is enabled, MSAL must manage its own HTTP
+            // client so it can perform the mTLS handshake with the platform's bound certificate.
+            // The Azure.Core pipeline transport does not carry these mTLS credentials, so
+            // WithHttpClientFactory is intentionally omitted in this path.
             if (!isTokenBindingAvailable)
             {
                 miAppBuilder.WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false);
