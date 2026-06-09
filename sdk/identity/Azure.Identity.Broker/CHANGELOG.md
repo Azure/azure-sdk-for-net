@@ -1,14 +1,10 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (2026-06-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `ManagedIdentityCredentialAttestationOptions` to enable Credential Guard key attestation support for managed identity mTLS Proof-of-Possession flows.
 
 ## 1.7.0 (2026-05-26)
 
