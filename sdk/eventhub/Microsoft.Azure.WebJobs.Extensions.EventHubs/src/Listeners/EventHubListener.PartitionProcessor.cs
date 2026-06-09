@@ -261,6 +261,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     // and wait to send until we receive enough events or total max wait time has passed.
                 }
 
+                // Track the last processed event for idle/close checkpoint, regardless
+                // of whether the batch-frequency gate triggers a checkpoint this cycle.
+                if (eventToCheckpoint != null)
+                {
+                    _lastProcessedEvent = eventToCheckpoint;
+                }
+
                 // If enabled, checkpoint if we processed any events, the listener is not stopping,
                 // and cancellation has not been signaled.  Don't checkpoint if no events. This
                 // can reset the sequence counter to 0.
@@ -281,7 +288,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     && !_functionExecutionToken.IsCancellationRequested
                     && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
-                    _lastProcessedEvent = eventToCheckpoint;
                     await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                 }
             }
