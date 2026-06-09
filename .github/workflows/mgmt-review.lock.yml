@@ -487,6 +487,7 @@ jobs:
       GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
       GH_AW_WORKFLOW_ID_SANITIZED: mgmtreview
     outputs:
+      agent_conclusion: ${{ steps.agentic_execution.outcome || 'skipped' }}
       agentic_engine_timeout: ${{ steps.detect-agent-errors.outputs.agentic_engine_timeout || 'false' }}
       checkout_pr_success: ${{ steps.checkout-pr.outputs.checkout_pr_success || 'true' }}
       effective_tokens: ${{ steps.parse-mcp-gateway.outputs.effective_tokens }}
@@ -912,6 +913,7 @@ jobs:
         run: bash "${RUNNER_TEMP}/gh-aw/actions/audit_pre_agent_workspace.sh"
       - name: Execute GitHub Copilot CLI
         id: agentic_execution
+        continue-on-error: true
         # Copilot CLI tool arguments (sorted):
         timeout-minutes: 25
         run: |
@@ -1187,7 +1189,7 @@ jobs:
           GH_AW_WORKFLOW_NAME: "Azure .NET Management SDK PR Review"
           GH_AW_WORKFLOW_SOURCE_URL: "${{ github.server_url }}/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/mgmt-review.md"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
+          GH_AW_AGENT_CONCLUSION: ${{ needs.agent.outputs.agent_conclusion || needs.agent.result }}
           GH_AW_NOOP_REPORT_AS_ISSUE: "false"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
@@ -1252,7 +1254,7 @@ jobs:
           GH_AW_WORKFLOW_NAME: "Azure .NET Management SDK PR Review"
           GH_AW_WORKFLOW_SOURCE_URL: "${{ github.server_url }}/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/mgmt-review.md"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
+          GH_AW_AGENT_CONCLUSION: ${{ needs.agent.outputs.agent_conclusion || needs.agent.result }}
           GH_AW_WORKFLOW_ID: "mgmt-review"
           GH_AW_ACTION_FAILURE_ISSUE_EXPIRES_HOURS: "168"
           GH_AW_ENGINE_ID: "copilot"
