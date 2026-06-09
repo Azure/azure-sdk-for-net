@@ -85,6 +85,13 @@ namespace Azure.Core.Tests.Identity.Mock
             types: [typeof(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource), typeof(Microsoft.Identity.Client.AppConfig.MtlsBindingStrength), typeof(string)],
                 modifiers: null);
 
+            if (ctor == null)
+            {
+                throw new InvalidOperationException(
+                    $"Could not find the expected internal constructor on {nameof(ManagedIdentityCapabilities)}. " +
+                    "The MSAL library version may have changed its internal API. Update the reflection call to match the current constructor signature.");
+            }
+
             return (ManagedIdentityCapabilities)ctor.Invoke([source, Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None, null]);
         }
 
