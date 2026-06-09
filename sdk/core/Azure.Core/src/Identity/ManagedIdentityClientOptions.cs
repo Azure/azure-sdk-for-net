@@ -36,6 +36,7 @@ namespace Azure.Identity
                 Pipeline = Pipeline,
                 ExcludeTokenExchangeManagedIdentitySource = ExcludeTokenExchangeManagedIdentitySource,
                 IsForceRefreshEnabled = IsForceRefreshEnabled,
+                MsalManagedIdentityClientOverride = MsalManagedIdentityClientOverride,
             };
 
             if (Options != null)
