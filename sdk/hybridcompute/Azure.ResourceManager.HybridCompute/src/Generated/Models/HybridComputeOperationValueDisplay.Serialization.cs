@@ -14,51 +14,51 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the properties of a Hybrid Compute Operation Value Display. </summary>
-    public partial class OperationValueDisplay : IJsonModel<OperationValueDisplay>
+    public partial class HybridComputeOperationValueDisplay : IJsonModel<HybridComputeOperationValueDisplay>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationValueDisplay PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HybridComputeOperationValueDisplay PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeOperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOperationValueDisplay(document.RootElement, options);
+                        return DeserializeHybridComputeOperationValueDisplay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationValueDisplay)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeOperationValueDisplay)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeOperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OperationValueDisplay)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeOperationValueDisplay)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OperationValueDisplay>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HybridComputeOperationValueDisplay>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationValueDisplay IPersistableModel<OperationValueDisplay>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HybridComputeOperationValueDisplay IPersistableModel<HybridComputeOperationValueDisplay>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OperationValueDisplay>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeOperationValueDisplay>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OperationValueDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeOperationValueDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeOperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationValueDisplay)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeOperationValueDisplay)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Operation))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationValueDisplay IJsonModel<OperationValueDisplay>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HybridComputeOperationValueDisplay IJsonModel<HybridComputeOperationValueDisplay>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationValueDisplay JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HybridComputeOperationValueDisplay JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeOperationValueDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationValueDisplay)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeOperationValueDisplay)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationValueDisplay(document.RootElement, options);
+            return DeserializeHybridComputeOperationValueDisplay(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OperationValueDisplay DeserializeOperationValueDisplay(JsonElement element, ModelReaderWriterOptions options)
+        internal static HybridComputeOperationValueDisplay DeserializeHybridComputeOperationValueDisplay(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationValueDisplay(operation, resource, description, provider, additionalBinaryDataProperties);
+            return new HybridComputeOperationValueDisplay(operation, resource, description, provider, additionalBinaryDataProperties);
         }
     }
 }

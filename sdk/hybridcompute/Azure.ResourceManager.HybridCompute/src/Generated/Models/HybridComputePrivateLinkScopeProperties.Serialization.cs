@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("serviceExtensions"u8);
                 writer.WriteStartArray();
-                foreach (ServiceExtension item in ServiceExtensions)
+                foreach (HybridComputeServiceExtension item in ServiceExtensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string provisioningState = default;
             string privateLinkScopeId = default;
             IReadOnlyList<PrivateEndpointConnectionDataModel> privateEndpointConnections = default;
-            IList<ServiceExtension> serviceExtensions = default;
+            IList<HybridComputeServiceExtension> serviceExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<ServiceExtension> array = new List<ServiceExtension>();
+                    List<HybridComputeServiceExtension> array = new List<HybridComputeServiceExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ServiceExtension.DeserializeServiceExtension(item, options));
+                        array.Add(HybridComputeServiceExtension.DeserializeHybridComputeServiceExtension(item, options));
                     }
                     serviceExtensions = array;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 provisioningState,
                 privateLinkScopeId,
                 privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>(),
-                serviceExtensions ?? new ChangeTrackingList<ServiceExtension>(),
+                serviceExtensions ?? new ChangeTrackingList<HybridComputeServiceExtension>(),
                 additionalBinaryDataProperties);
         }
     }

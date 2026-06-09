@@ -138,35 +138,21 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new ExtensionValueV2Resource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputeSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SettingsResource"/> object. </returns>
-        public virtual SettingsResource GetSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeSettingsResource"/> object. </returns>
+        public virtual HybridComputeSettingsResource GetHybridComputeSettingsResource(ResourceIdentifier id)
         {
-            SettingsResource.ValidateResourceId(id);
-            return new SettingsResource(Client, id);
+            HybridComputeSettingsResource.ValidateResourceId(id);
+            return new HybridComputeSettingsResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="SettingsCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="HybridComputeSettingsCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="SettingsResource"/> objects. </returns>
-        public virtual SettingsCollection GetAllSettings(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="HybridComputeSettingsResource"/> objects. </returns>
+        public virtual HybridComputeSettingsCollection GetAllHybridComputeSettings(ResourceIdentifier scope)
         {
-            return new SettingsCollection(Client, scope);
-        }
-
-        /// <summary> Returns the base Settings for the target resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SettingsResource> GetSettings(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-
-            return GetAllSettings(scope).Get(settingsResourceName, cancellationToken);
+            return new HybridComputeSettingsCollection(Client, scope);
         }
 
         /// <summary> Returns the base Settings for the target resource. </summary>
@@ -176,11 +162,25 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SettingsResource>> GetSettingsAsync(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeSettingsResource> GetHybridComputeSettings(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            return await GetAllSettings(scope).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
+            return GetAllHybridComputeSettings(scope).Get(settingsResourceName, cancellationToken);
+        }
+
+        /// <summary> Returns the base Settings for the target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="settingsResourceName"> The name of the settings resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridComputeSettingsResource>> GetHybridComputeSettingsAsync(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+
+            return await GetAllHybridComputeSettings(scope).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("properties.parameters")]
-        public IList<RunCommandInputParameter> Parameters
+        public IList<RunCommandInputContent> Parameters
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("properties.protectedParameters")]
-        public IList<RunCommandInputParameter> ProtectedParameters
+        public IList<RunCommandInputContent> ProtectedParameters
         {
             get
             {

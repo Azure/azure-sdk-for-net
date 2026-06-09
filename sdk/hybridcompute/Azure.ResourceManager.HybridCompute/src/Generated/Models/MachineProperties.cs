@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkProfile"> Information about the network the machine is on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineProperties(HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, IdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, ResourceIdentifier hardwareResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineProperties(HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, HybridComputeIdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, ResourceIdentifier hardwareResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Specifies the identity key store a machine is using. </summary>
         [WirePath("identityKeyStore")]
-        public IdentityKeyStore? IdentityKeyStore { get; set; }
+        public HybridComputeIdentityKeyStore? IdentityKeyStore { get; set; }
 
         /// <summary> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </summary>
         [WirePath("tpmEkCertificate")]

@@ -14,7 +14,7 @@ using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal partial class OperationsGetAllCollectionResultOfT : Pageable<OperationValue>
+    internal partial class OperationsGetAllCollectionResultOfT : Pageable<HybridComputeOperationValue>
     {
         private readonly Operations _client;
         private readonly RequestContext _context;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OperationsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<OperationValue>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<HybridComputeOperationValue>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 OperationListResult result = OperationListResult.FromResponse(response);
-                yield return Page<OperationValue>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HybridComputeOperationValue>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

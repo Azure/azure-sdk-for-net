@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 provisioningState,
                 privateLinkScopeId,
                 new List<PrivateEndpointConnectionDataModel>(privateEndpointConnections),
-                serviceExtensions: new ChangeTrackingList<ServiceExtension>(),
+                serviceExtensions: new ChangeTrackingList<HybridComputeServiceExtension>(),
                 additionalBinaryDataProperties: null);
         }
 

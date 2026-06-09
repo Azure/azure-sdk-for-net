@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationValue"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationValue> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeOperationValue"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeOperationValue> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationValue"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationValue> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeOperationValue"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeOperationValue> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisher"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publisher"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.ExtensionType> GetAllAsync(string location, string publisher, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeExtensionType> GetAllAsync(string location, string publisher, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisher"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publisher"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.ExtensionType> GetAll(string location, string publisher, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeExtensionType> GetAll(string location, string publisher, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));

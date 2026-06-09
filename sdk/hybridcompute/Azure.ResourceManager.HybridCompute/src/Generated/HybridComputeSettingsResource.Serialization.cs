@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary></summary>
-    public partial class SettingsResource : IJsonModel<ArcSettingsData>
+    public partial class HybridComputeSettingsResource : IJsonModel<ArcSettingsData>
     {
         private static IJsonModel<ArcSettingsData> s_dataDeserializationInstance;
 
