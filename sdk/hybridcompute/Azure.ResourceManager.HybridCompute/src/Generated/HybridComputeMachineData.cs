@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineProperties properties, IReadOnlyList<HybridComputeMachineExtensionData> resources, Models.Identity identity, ArcKindEnum? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineProperties properties, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Resources = resources;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public Models.Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
         [WirePath("kind")]
