@@ -121,7 +121,6 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             bool isForceRefreshEnabled = true,
             Uri authorityHost = null)
         {
-            transport.AutoHandleImdsProbeRequests = true;
             var credential = CreateConfiguredCredential(transport, clientId: clientId, isForceRefreshEnabled: isForceRefreshEnabled, isChained: isChained);
             return InstrumentClient(credential);
         }
@@ -132,7 +131,6 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             bool isChained = false,
             bool isForceRefreshEnabled = true)
         {
-            transport.AutoHandleImdsProbeRequests = true;
             var credential = CreateConfiguredCredential(transport, resourceId: resourceId.ToString(), isForceRefreshEnabled: isForceRefreshEnabled, isChained: isChained);
             return InstrumentClient(credential);
         }
@@ -186,10 +184,8 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
         protected override TokenCredential CreateCredentialWithManagedIdentityId(
             MockTransport transport,
             ManagedIdentityId managedIdentityId,
-            bool autoHandleImdsProbeRequests = true,
             bool isForceRefreshEnabled = true)
         {
-            transport.AutoHandleImdsProbeRequests = autoHandleImdsProbeRequests;
             string idStr = managedIdentityId.ToString();
             string clientId = null;
             string resourceId = null;

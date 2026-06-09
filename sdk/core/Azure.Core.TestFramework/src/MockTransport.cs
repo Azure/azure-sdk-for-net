@@ -14,20 +14,12 @@ namespace Azure.Core.TestFramework
     {
         private readonly object _syncObj = new object();
         private readonly Func<HttpMessage, MockResponse> _responseFactory;
-        private MockResponse _deferredResponse;
-
-        private const string ImdsTokenPath = "/metadata/identity/oauth2/token";
-        private const string MetadataHeaderName = "Metadata";
 
         public AsyncGate<MockRequest, MockResponse> RequestGate { get; }
 
         public List<MockRequest> Requests { get; } = new List<MockRequest>();
 
         public bool? ExpectSyncPipeline { get; set; }
-
-        // Opt-in helper for MI tests: if a probe request gets a token payload response,
-        // return an IMDS probe response and defer the token payload to the next request.
-        public bool AutoHandleImdsProbeRequests { get; set; }
 
         public List<HttpPipelineTransportOptions> TransportUpdates { get; } = [];
 
@@ -109,18 +101,8 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private async Task<MockResponse> GetNextResponseAsync(MockRequest request, HttpMessage message)
+        protected virtual async Task<MockResponse> GetNextResponseAsync(MockRequest request, HttpMessage message)
         {
-            lock (_syncObj)
-            {
-                if (_deferredResponse != null)
-                {
-                    MockResponse deferred = _deferredResponse;
-                    _deferredResponse = null;
-                    return deferred;
-                }
-            }
-
             MockResponse response;
             if (RequestGate != null)
             {
@@ -131,28 +113,8 @@ namespace Azure.Core.TestFramework
                 response = _responseFactory(message);
             }
 
-            if (AutoHandleImdsProbeRequests && IsImdsProbeRequest(request) && LooksLikeManagedIdentityTokenResponse(response))
-            {
-                lock (_syncObj)
-                {
-                    _deferredResponse = response;
-                }
-                return CreateImdsProbeResponse();
-            }
-
             return response;
         }
-
-        private static bool IsImdsProbeRequest(MockRequest request)
-            => request.Uri.Path == ImdsTokenPath &&
-               !request.Headers.TryGetValue(MetadataHeaderName, out _);
-
-        private static bool LooksLikeManagedIdentityTokenResponse(MockResponse response)
-            => response.Status == 200 &&
-               response.Content?.ToString()?.IndexOf("\"access_token\"", StringComparison.OrdinalIgnoreCase) >= 0;
-
-        private static MockResponse CreateImdsProbeResponse()
-            => new MockResponse(400).WithJson("{\"error\":\"invalid_request\",\"error_description\":\"Required metadata header not specified\"}");
 
         public MockRequest SingleRequest
         {
