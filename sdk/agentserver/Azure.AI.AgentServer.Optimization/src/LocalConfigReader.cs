@@ -231,7 +231,7 @@ internal static class LocalConfigReader
     private static bool IsValidCandidateId(string candidateId)
     {
         return !candidateId.Contains("..", StringComparison.Ordinal) &&
-            candidateId.IndexOf(Path.DirectorySeparatorChar) < 0 &&
-            candidateId.IndexOf(Path.AltDirectorySeparatorChar) < 0;
+            candidateId.IndexOf('/') < 0 &&
+            candidateId.IndexOf('\\') < 0;
     }
 }

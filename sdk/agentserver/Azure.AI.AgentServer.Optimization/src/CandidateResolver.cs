@@ -311,8 +311,8 @@ internal static class CandidateResolver
         }
 
         if (candidateId.Contains("..", StringComparison.Ordinal) ||
-            candidateId.IndexOf(Path.DirectorySeparatorChar) >= 0 ||
-            candidateId.IndexOf(Path.AltDirectorySeparatorChar) >= 0)
+            candidateId.IndexOf('/') >= 0 ||
+            candidateId.IndexOf('\\') >= 0)
         {
             throw new ArgumentException("Candidate ID must not contain path separators or '..'.", nameof(candidateId));
         }
