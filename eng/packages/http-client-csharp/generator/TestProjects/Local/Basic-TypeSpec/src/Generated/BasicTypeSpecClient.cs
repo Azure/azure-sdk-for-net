@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -2166,7 +2167,8 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response MultipartRequest(RequestContent content, string contentType, RequestContext context = null)
@@ -2176,6 +2178,7 @@ namespace BasicTypeSpec
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateMultipartRequestRequest(content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -2198,7 +2201,8 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> MultipartRequestAsync(RequestContent content, string contentType, RequestContext context = null)
@@ -2208,6 +2212,7 @@ namespace BasicTypeSpec
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateMultipartRequestRequest(content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -2217,6 +2222,34 @@ namespace BasicTypeSpec
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> A sample operation with multipart request. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual Response MultipartRequest(MultipartRequestRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            return this.MultipartRequest(content, content.MediaType, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> A sample operation with multipart request. </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<Response> MultipartRequestAsync(MultipartRequestRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            return await this.MultipartRequestAsync(content, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

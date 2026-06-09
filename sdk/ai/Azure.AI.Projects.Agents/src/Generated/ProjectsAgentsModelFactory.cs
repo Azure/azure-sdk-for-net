@@ -3,8 +3,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -1137,9 +1139,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
         /// <returns> A new <see cref="Agents.CreateAgentFromCodeOptions"/> instance for mocking. </returns>
-        public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, BinaryData code = default)
+        [Experimental("SCME0004")]
+        public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, FileBinaryContent code = default)
         {
-            return new CreateAgentFromCodeOptions(metadata, code, additionalBinaryDataProperties: null);
+            return new CreateAgentFromCodeOptions(metadata, code);
         }
 
         /// <summary>
@@ -1163,6 +1166,16 @@ namespace Azure.AI.Projects.Agents
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new CreateAgentVersionFromCodeMetadata(description, metadata, definition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Multipart request body for updating or versioning a code-based agent (POST /agents/{name} and POST /agents/{name}/versions). </summary>
+        /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
+        /// <param name="code"> The code zip file (max 250 MB). </param>
+        /// <returns> A new <see cref="Agents.CreateAgentVersionFromCodeContent"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static CreateAgentVersionFromCodeContent CreateAgentVersionFromCodeContent(CreateAgentVersionFromCodeMetadata metadata = default, FileBinaryContent code = default)
+        {
+            return new CreateAgentVersionFromCodeContent(metadata, code);
         }
 
         /// <summary> The AgentManifestOptions. </summary>
@@ -1394,6 +1407,18 @@ namespace Azure.AI.Projects.Agents
                 description,
                 createdAt,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Multipart request body for creating a skill version from files. Accepts either a single zip file or multiple individual skill files (directory upload). For zip uploads, the server extracts and validates contents. For directory uploads, files are validated as-is. </summary>
+        /// <param name="files"> Skill files to upload. Upload a single zip file or multiple individual files with relative paths. </param>
+        /// <param name="default"> Whether to set this version as the default. Defaults to false. </param>
+        /// <returns> A new <see cref="Agents.CreateSkillVersionFromFilesBody"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static CreateSkillVersionFromFilesBody CreateSkillVersionFromFilesBody(IEnumerable<FileBinaryContent> files = default, bool? @default = default)
+        {
+            files ??= new ChangeTrackingList<FileBinaryContent>();
+
+            return new CreateSkillVersionFromFilesBody(files.ToList(), @default);
         }
 
         /// <summary> A deleted skill version. </summary>

@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace OpenAI
 {
     /// <summary></summary>
     public readonly partial struct TextResponseFormatConfigurationType : IEquatable<TextResponseFormatConfigurationType>
