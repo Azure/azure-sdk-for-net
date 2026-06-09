@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
-using Azure.Identity;
 
 namespace Azure.Core.Pipeline
 {
@@ -312,7 +311,7 @@ namespace Azure.Core.Pipeline
             _lastBindingCertificate = newCert;
             var options = _transportOptions?.Clone() ?? new HttpPipelineTransportOptions();
             options.ClientCertificates.Add(newCert);
-            AzureIdentityEventSource.Singleton.TokenBinding("Updating transport options with a new binding certificate.");
+            AzureCoreEventSource.Singleton.TokenBinding("Updating transport options with a new binding certificate.");
 #pragma warning disable AZID0004 // Internal usage of experimental token binding API
             OnTransportOptionsChanged(options);
 #pragma warning restore AZID0004
@@ -511,7 +510,7 @@ namespace Azure.Core.Pipeline
                 };
                 if (token.BindingCertificate != null)
                 {
-                    AzureIdentityEventSource.Singleton.TokenBinding("Token acquired with a binding certificate.");
+                    AzureCoreEventSource.Singleton.TokenBinding("Token acquired with a binding certificate.");
                 }
                 targetTcs.SetResult(new AuthHeaderValueInfo(token.TokenType + " " + token.Token, token.ExpiresOn, refreshOn, token.BindingCertificate));
             }
