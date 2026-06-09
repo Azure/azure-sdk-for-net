@@ -1,12 +1,14 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed `JobRunProperties` deserialization to handle empty-string `AgentResourceId`, `SourceResourceId`, and `TargetResourceId` values returned by the service (for example, for cloud-to-cloud jobs that have no agent, or resources in transient states). These previously threw an `ArgumentException` while polling job runs.
 
 ### Other Changes
 
