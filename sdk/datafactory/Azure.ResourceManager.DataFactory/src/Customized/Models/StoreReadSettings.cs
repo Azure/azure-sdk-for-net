@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public abstract partial class StoreReadSettings

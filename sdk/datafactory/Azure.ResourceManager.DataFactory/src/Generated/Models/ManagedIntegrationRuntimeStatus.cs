@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeStatus"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Managed integration runtime status type properties. </param>
-        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType @type, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, ManagedIntegrationRuntimeStatusTypeProperties typeProperties) : base(@type, dataFactoryName, state, additionalProperties)
+        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, ManagedIntegrationRuntimeStatusTypeProperties typeProperties) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             TypeProperties = typeProperties;
         }

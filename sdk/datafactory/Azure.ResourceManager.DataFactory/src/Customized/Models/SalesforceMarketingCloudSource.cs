@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceMarketingCloudSource
     {
         /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudSource"/>. </summary>
-        public SalesforceMarketingCloudSource() : base("SalesforceMarketingCloudSource")
+        public SalesforceMarketingCloudSource()
         {
+            CopySourceType = "SalesforceMarketingCloudSource";
         }
     }
 }

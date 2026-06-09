@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryFlowletProperties"/>. </summary>
-        /// <param name="type"> Type of data flow. </param>
+        /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="typeProperties"> Flowlet type properties. </param>
-        internal DataFactoryFlowletProperties(string @type, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties, FlowletTypeProperties typeProperties) : base(@type, description, annotations, folder, additionalBinaryDataProperties)
+        internal DataFactoryFlowletProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties, FlowletTypeProperties typeProperties) : base(dataFlowType, description, annotations, folder, additionalBinaryDataProperties)
         {
             TypeProperties = typeProperties;
         }

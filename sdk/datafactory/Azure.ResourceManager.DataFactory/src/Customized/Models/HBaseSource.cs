@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HBaseSource
     {
         /// <summary> Initializes a new instance of <see cref="HBaseSource"/>. </summary>
-        public HBaseSource() : base("HBaseSource")
+        public HBaseSource()
         {
+            CopySourceType = "HBaseSource";
         }
     }
 }

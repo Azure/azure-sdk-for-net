@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IcebergWriteSettings"/>. </summary>
-        /// <param name="type"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal IcebergWriteSettings(string @type, IDictionary<string, BinaryData> additionalProperties) : base(@type, additionalProperties)
+        internal IcebergWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(formatWriteSettingsType, additionalProperties)
         {
         }
     }

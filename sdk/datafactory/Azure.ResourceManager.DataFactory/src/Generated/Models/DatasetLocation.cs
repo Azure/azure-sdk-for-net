@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatasetLocation"/>. </summary>
-        /// <param name="type"> Type of dataset storage location. </param>
-        private protected DatasetLocation(string @type)
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        private protected DatasetLocation(string datasetLocationType)
         {
-            Type = @type;
+            DatasetLocationType = datasetLocationType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetLocation"/>. </summary>
-        /// <param name="type"> Type of dataset storage location. </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
-        internal DatasetLocation(string @type, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties)
+        internal DatasetLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            DatasetLocationType = datasetLocationType;
             FolderPath = folderPath;
             FileName = fileName;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of dataset storage location. </summary>
-        internal string Type { get; set; }
+        internal string DatasetLocationType { get; set; }
 
         /// <summary> Specify the folder path of dataset. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FolderPath { get; set; }

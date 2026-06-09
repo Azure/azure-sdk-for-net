@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element, options);
                 }
             }
-            return UnknownActivity.DeserializeUnknownPipelineActivity(element, options);
+            return UnknownActivity.DeserializeUnknownActivity(element, options);
         }
     }
 }

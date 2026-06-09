@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceSource
     {
         /// <summary> Initializes a new instance of <see cref="SalesforceSource"/>. </summary>
-        public SalesforceSource() : base("SalesforceSource")
+        public SalesforceSource()
         {
+            CopySourceType = "SalesforceSource";
         }
     }
 }

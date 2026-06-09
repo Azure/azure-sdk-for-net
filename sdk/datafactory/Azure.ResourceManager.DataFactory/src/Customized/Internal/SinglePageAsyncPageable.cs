@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 
 namespace Azure.ResourceManager.DataFactory
 {

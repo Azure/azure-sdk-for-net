@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/>. </summary>
-        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="typeProperties"> Install Azure PowerShell type properties. </param>
-        internal AzPowerShellSetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzPowerShellSetupTypeProperties typeProperties) : base(@type, additionalBinaryDataProperties)
+        internal AzPowerShellSetup(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzPowerShellSetupTypeProperties typeProperties) : base(customSetupBaseType, additionalBinaryDataProperties)
         {
             TypeProperties = typeProperties;
         }

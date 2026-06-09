@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="PipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="type"> Type of activity. </param>
-        private protected PipelineActivity(string name, string @type)
+        /// <param name="activityType"> Type of activity. </param>
+        private protected PipelineActivity(string name, string activityType)
         {
             Name = name;
-            Type = @type;
+            ActivityType = activityType;
             DependsOn = new ChangeTrackingList<PipelineActivityDependency>();
             UserProperties = new ChangeTrackingList<PipelineActivityUserProperty>();
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="PipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="type"> Type of activity. </param>
+        /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        internal PipelineActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal PipelineActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
-            Type = @type;
+            ActivityType = activityType;
             Description = description;
             State = state;
             OnInactiveMarkAs = onInactiveMarkAs;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Name { get; set; }
 
         /// <summary> Type of activity. </summary>
-        internal string Type { get; set; }
+        internal string ActivityType { get; set; }
 
         /// <summary> Activity description. </summary>
         public string Description { get; set; }

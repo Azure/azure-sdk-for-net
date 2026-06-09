@@ -112,18 +112,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "unknown";
+            string formatReadSettingsType = "unknown";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    formatReadSettingsType = prop.Value.GetString();
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new UnknownFormatReadSettings(@type, additionalProperties);
+            return new UnknownFormatReadSettings(formatReadSettingsType, additionalProperties);
         }
     }
 }

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSqlSource
     {
         /// <summary> Initializes a new instance of <see cref="AzureSqlSource"/>. </summary>
-        public AzureSqlSource() : base("AzureSqlSource")
+        public AzureSqlSource()
         {
+            CopySourceType = "AzureSqlSource";
         }
     }
 }

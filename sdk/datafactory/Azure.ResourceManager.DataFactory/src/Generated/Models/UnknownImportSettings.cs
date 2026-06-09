@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownImportSettings : ImportSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownImportSettings"/>. </summary>
-        /// <param name="type"> The import setting type. </param>
+        /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownImportSettings(string @type, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", additionalProperties)
+        internal UnknownImportSettings(string importSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(importSettingsType ?? "unknown", additionalProperties)
         {
         }
     }

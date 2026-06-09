@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownCredential DeserializeUnknownDataFactoryCredential(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownCredential DeserializeUnknownCredential(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "unknown";
+            string credentialType = "unknown";
             string description = default;
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    credentialType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new UnknownCredential(@type, description, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties);
+            return new UnknownCredential(credentialType, description, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties);
         }
     }
 }

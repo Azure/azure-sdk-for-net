@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SybaseSource
     {
         /// <summary> Initializes a new instance of <see cref="SybaseSource"/>. </summary>
-        public SybaseSource() : base("SybaseSource")
+        public SybaseSource()
         {
+            CopySourceType = "SybaseSource";
         }
     }
 }

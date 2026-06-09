@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ResponsysSource
     {
         /// <summary> Initializes a new instance of <see cref="ResponsysSource"/>. </summary>
-        public ResponsysSource() : base("ResponsysSource")
+        public ResponsysSource()
         {
+            CopySourceType = "ResponsysSource";
         }
     }
 }

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DynamicsAXSource
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsAXSource"/>. </summary>
-        public DynamicsAXSource() : base("DynamicsAXSource")
+        public DynamicsAXSource()
         {
+            CopySourceType = "DynamicsAXSource";
         }
     }
 }

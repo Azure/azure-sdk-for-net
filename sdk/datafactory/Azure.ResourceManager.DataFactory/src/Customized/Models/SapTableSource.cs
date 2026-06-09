@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapTableSource
     {
         /// <summary> Initializes a new instance of <see cref="SapTableSource"/>. </summary>
-        public SapTableSource() : base("SapTableSource")
+        public SapTableSource()
         {
+            CopySourceType = "SapTableSource";
         }
     }
 }

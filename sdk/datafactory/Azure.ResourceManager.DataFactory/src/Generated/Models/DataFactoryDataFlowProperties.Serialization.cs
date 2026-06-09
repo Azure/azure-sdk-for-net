@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(DataFlowType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DataFactoryWranglingDataFlowProperties.DeserializeDataFactoryWranglingDataFlowProperties(element, options);
                 }
             }
-            return UnknownDataFlow.DeserializeUnknownDataFactoryDataFlowProperties(element, options);
+            return UnknownDataFlow.DeserializeUnknownDataFlow(element, options);
         }
     }
 }

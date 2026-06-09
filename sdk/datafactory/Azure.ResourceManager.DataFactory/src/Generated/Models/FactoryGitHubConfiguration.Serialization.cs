@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "FactoryGitHubConfiguration";
+            string factoryRepoConfigurationType = "FactoryGitHubConfiguration";
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    factoryRepoConfigurationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("accountName"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new FactoryGitHubConfiguration(
-                @type,
+                factoryRepoConfigurationType,
                 accountName,
                 repositoryName,
                 collaborationBranch,

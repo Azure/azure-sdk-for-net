@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownDataFlow DeserializeUnknownDataFactoryDataFlowProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownDataFlow DeserializeUnknownDataFlow(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "unknown";
+            string dataFlowType = "unknown";
             string description = default;
             IList<BinaryData> annotations = default;
             DataFlowFolder folder = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    dataFlowType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownDataFlow(@type, description, annotations ?? new ChangeTrackingList<BinaryData>(), folder, additionalBinaryDataProperties);
+            return new UnknownDataFlow(dataFlowType, description, annotations ?? new ChangeTrackingList<BinaryData>(), folder, additionalBinaryDataProperties);
         }
     }
 }

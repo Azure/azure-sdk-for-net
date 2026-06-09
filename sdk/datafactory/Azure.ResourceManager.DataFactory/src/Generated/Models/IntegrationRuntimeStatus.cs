@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeStatus"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
-        private protected IntegrationRuntimeStatus(IntegrationRuntimeType @type)
+        /// <param name="runtimeType"> Type of integration runtime. </param>
+        private protected IntegrationRuntimeStatus(IntegrationRuntimeType runtimeType)
         {
-            Type = @type;
+            RuntimeType = runtimeType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeStatus"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"></param>
-        internal IntegrationRuntimeStatus(IntegrationRuntimeType @type, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            RuntimeType = runtimeType;
             DataFactoryName = dataFactoryName;
             State = state;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
 
         /// <summary> Type of integration runtime. </summary>
-        internal IntegrationRuntimeType Type { get; set; }
+        internal IntegrationRuntimeType RuntimeType { get; set; }
 
         /// <summary> The data factory name which the integration runtime belong to. </summary>
         public string DataFactoryName { get; }

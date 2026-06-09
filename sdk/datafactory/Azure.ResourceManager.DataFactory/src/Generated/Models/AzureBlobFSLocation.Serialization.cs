@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AzureBlobFSLocation";
+            string datasetLocationType = "AzureBlobFSLocation";
             DataFactoryElement<string> folderPath = default;
             DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    datasetLocationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("folderPath"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new AzureBlobFSLocation(@type, folderPath, fileName, additionalProperties, fileSystem);
+            return new AzureBlobFSLocation(datasetLocationType, folderPath, fileName, additionalProperties, fileSystem);
         }
     }
 }

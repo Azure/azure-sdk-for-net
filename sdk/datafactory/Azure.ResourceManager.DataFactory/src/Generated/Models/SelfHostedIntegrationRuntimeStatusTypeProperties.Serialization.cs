@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Guid? taskQueueId = default;
             IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = default;
             string version = default;
-            IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes = default;
+            IList<SelfHostedIntegrationRuntimeNode> nodes = default;
             DateTimeOffset? scheduledUpdateOn = default;
             TimeSpan? updateDelayOffset = default;
             TimeSpan? localTimeZoneOffset = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IReadOnlyList<string> serviceUriStringList = default;
             IntegrationRuntimeAutoUpdateState? autoUpdate = default;
             string versionStatus = default;
-            IReadOnlyList<LinkedIntegrationRuntime> links = default;
+            IList<LinkedIntegrationRuntime> links = default;
             string pushedVersion = default;
             string latestVersion = default;
             DateTimeOffset? autoUpdateEta = default;

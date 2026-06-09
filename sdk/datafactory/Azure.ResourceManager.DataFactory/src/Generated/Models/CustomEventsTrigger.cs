@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/>. </summary>
-        /// <param name="type"> Trigger type. </param>
+        /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="typeProperties"> Custom Events Trigger properties. </param>
-        internal CustomEventsTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, CustomEventsTriggerTypeProperties typeProperties) : base(@type, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal CustomEventsTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, CustomEventsTriggerTypeProperties typeProperties) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             TypeProperties = typeProperties;
         }

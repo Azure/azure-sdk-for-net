@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "TumblingWindowTriggerDependencyReference";
+            string dependencyReferenceType = "TumblingWindowTriggerDependencyReference";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryTriggerReference referenceTrigger = default;
             string offset = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    dependencyReferenceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("referenceTrigger"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TumblingWindowTriggerDependencyReference(@type, additionalBinaryDataProperties, referenceTrigger, offset, size);
+            return new TumblingWindowTriggerDependencyReference(dependencyReferenceType, additionalBinaryDataProperties, referenceTrigger, offset, size);
         }
     }
 }

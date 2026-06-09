@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeStatus"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Self-hosted integration runtime status type properties. </param>
-        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType @type, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, SelfHostedIntegrationRuntimeStatusTypeProperties typeProperties) : base(@type, dataFactoryName, state, additionalProperties)
+        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, SelfHostedIntegrationRuntimeStatusTypeProperties typeProperties) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
@@ -67,15 +67,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             get
             {
                 return TypeProperties.Version;
-            }
-        }
-
-        /// <summary> The list of nodes for this integration runtime. </summary>
-        public IReadOnlyList<SelfHostedIntegrationRuntimeNode> Nodes
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.Nodes;
             }
         }
 
@@ -139,15 +130,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             get
             {
                 return TypeProperties.VersionStatus;
-            }
-        }
-
-        /// <summary> The list of linked integration runtimes that are created to share with this integration runtime. </summary>
-        public IReadOnlyList<LinkedIntegrationRuntime> Links
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.Links;
             }
         }
 

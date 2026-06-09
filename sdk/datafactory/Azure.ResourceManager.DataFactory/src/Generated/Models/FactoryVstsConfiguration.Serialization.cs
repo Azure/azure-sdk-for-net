@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "FactoryVSTSConfiguration";
+            string factoryRepoConfigurationType = "FactoryVSTSConfiguration";
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    factoryRepoConfigurationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("accountName"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new FactoryVstsConfiguration(
-                @type,
+                factoryRepoConfigurationType,
                 accountName,
                 repositoryName,
                 collaborationBranch,

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapCloudForCustomerSource
     {
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerSource"/>. </summary>
-        public SapCloudForCustomerSource() : base("SapCloudForCustomerSource")
+        public SapCloudForCustomerSource()
         {
+            CopySourceType = "SapCloudForCustomerSource";
         }
     }
 }

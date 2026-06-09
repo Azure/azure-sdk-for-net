@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FactoryVstsConfiguration"/>. </summary>
-        /// <param name="type"> Type of repo configuration. </param>
+        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectName"> VSTS project name. </param>
         /// <param name="tenantId"> VSTS tenant id. </param>
-        internal FactoryVstsConfiguration(string @type, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectName, Guid? tenantId) : base(@type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, additionalBinaryDataProperties)
+        internal FactoryVstsConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectName, Guid? tenantId) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             TenantId = tenantId;

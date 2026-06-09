@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FactoryRepoConfiguration"/>. </summary>
-        /// <param name="type"> Type of repo configuration. </param>
+        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
-        private protected FactoryRepoConfiguration(string @type, string accountName, string repositoryName, string collaborationBranch, string rootFolder)
+        private protected FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder)
         {
-            Type = @type;
+            FactoryRepoConfigurationType = factoryRepoConfigurationType;
             AccountName = accountName;
             RepositoryName = repositoryName;
             CollaborationBranch = collaborationBranch;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FactoryRepoConfiguration"/>. </summary>
-        /// <param name="type"> Type of repo configuration. </param>
+        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="lastCommitId"> Last commit id. </param>
         /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FactoryRepoConfiguration(string @type, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            FactoryRepoConfigurationType = factoryRepoConfigurationType;
             AccountName = accountName;
             RepositoryName = repositoryName;
             CollaborationBranch = collaborationBranch;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of repo configuration. </summary>
-        internal string Type { get; set; }
+        internal string FactoryRepoConfigurationType { get; set; }
 
         /// <summary> Account name. </summary>
         public string AccountName { get; set; }

@@ -6,7 +6,6 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models

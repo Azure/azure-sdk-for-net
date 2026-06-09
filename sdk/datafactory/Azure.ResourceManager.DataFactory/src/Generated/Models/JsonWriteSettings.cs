@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JsonWriteSettings"/>. </summary>
-        /// <param name="type"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="filePattern"> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive. </param>
-        internal JsonWriteSettings(string @type, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> filePattern) : base(@type, additionalProperties)
+        internal JsonWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> filePattern) : base(formatWriteSettingsType, additionalProperties)
         {
             FilePattern = filePattern;
         }

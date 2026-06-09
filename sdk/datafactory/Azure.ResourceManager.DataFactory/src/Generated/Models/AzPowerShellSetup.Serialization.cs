@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AzPowerShellSetup";
+            string customSetupBaseType = "AzPowerShellSetup";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzPowerShellSetupTypeProperties typeProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    customSetupBaseType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeProperties"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzPowerShellSetup(@type, additionalBinaryDataProperties, typeProperties);
+            return new AzPowerShellSetup(customSetupBaseType, additionalBinaryDataProperties, typeProperties);
         }
     }
 }

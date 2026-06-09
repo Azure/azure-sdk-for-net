@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentSetup"/>. </summary>
-        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="typeProperties"> Install 3rd party component type properties. </param>
-        internal ComponentSetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, LicensedComponentSetupTypeProperties typeProperties) : base(@type, additionalBinaryDataProperties)
+        internal ComponentSetup(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties, LicensedComponentSetupTypeProperties typeProperties) : base(customSetupBaseType, additionalBinaryDataProperties)
         {
             TypeProperties = typeProperties;
         }

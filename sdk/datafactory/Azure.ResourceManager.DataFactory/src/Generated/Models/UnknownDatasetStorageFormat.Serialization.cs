@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "unknown";
+            string datasetStorageFormatType = "unknown";
             DataFactoryElement<string> serializer = default;
             DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    datasetStorageFormatType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("serializer"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new UnknownDatasetStorageFormat(@type, serializer, deserializer, additionalProperties);
+            return new UnknownDatasetStorageFormat(datasetStorageFormatType, serializer, deserializer, additionalProperties);
         }
     }
 }

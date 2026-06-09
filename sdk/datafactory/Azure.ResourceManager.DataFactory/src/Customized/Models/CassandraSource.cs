@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CassandraSource
     {
         /// <summary> Initializes a new instance of <see cref="CassandraSource"/>. </summary>
-        public CassandraSource() : base("CassandraSource")
+        public CassandraSource()
         {
+            CopySourceType = "CassandraSource";
         }
     }
 }

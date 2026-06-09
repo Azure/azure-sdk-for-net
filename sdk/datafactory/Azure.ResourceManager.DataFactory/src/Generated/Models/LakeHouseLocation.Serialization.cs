@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "LakeHouseLocation";
+            string datasetLocationType = "LakeHouseLocation";
             DataFactoryElement<string> folderPath = default;
             DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    datasetLocationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("folderPath"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new LakeHouseLocation(@type, folderPath, fileName, additionalProperties);
+            return new LakeHouseLocation(datasetLocationType, folderPath, fileName, additionalProperties);
         }
     }
 }

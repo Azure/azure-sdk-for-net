@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ShopifySource
     {
         /// <summary> Initializes a new instance of <see cref="ShopifySource"/>. </summary>
-        public ShopifySource() : base("ShopifySource")
+        public ShopifySource()
         {
+            CopySourceType = "ShopifySource";
         }
     }
 }

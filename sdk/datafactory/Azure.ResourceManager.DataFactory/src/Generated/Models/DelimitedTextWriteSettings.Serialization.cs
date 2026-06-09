@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "DelimitedTextWriteSettings";
+            string formatWriteSettingsType = "DelimitedTextWriteSettings";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<bool> quoteAllText = default;
             DataFactoryElement<string> fileExtension = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    formatWriteSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("quoteAllText"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new DelimitedTextWriteSettings(
-                @type,
+                formatWriteSettingsType,
                 additionalProperties,
                 quoteAllText,
                 fileExtension,

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PrestoSource
     {
         /// <summary> Initializes a new instance of <see cref="PrestoSource"/>. </summary>
-        public PrestoSource() : base("PrestoSource")
+        public PrestoSource()
         {
+            CopySourceType = "PrestoSource";
         }
     }
 }

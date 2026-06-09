@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
-        /// <param name="type"> The import setting type. </param>
-        private protected ImportSettings(string @type)
+        /// <param name="importSettingsType"> The import setting type. </param>
+        private protected ImportSettings(string importSettingsType)
         {
-            Type = @type;
+            ImportSettingsType = importSettingsType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
-        /// <param name="type"> The import setting type. </param>
+        /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal ImportSettings(string @type, IDictionary<string, BinaryData> additionalProperties)
+        internal ImportSettings(string importSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            ImportSettingsType = importSettingsType;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The import setting type. </summary>
-        internal string Type { get; set; }
+        internal string ImportSettingsType { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element, options);
                 }
             }
-            return UnknownLinkedService.DeserializeUnknownDataFactoryLinkedServiceProperties(element, options);
+            return UnknownLinkedService.DeserializeUnknownLinkedService(element, options);
         }
     }
 }

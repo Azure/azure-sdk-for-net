@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "ManagedIdentity";
+            string credentialType = "ManagedIdentity";
             string description = default;
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    credentialType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new DataFactoryManagedIdentityCredentialProperties(@type, description, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, typeProperties);
+            return new DataFactoryManagedIdentityCredentialProperties(credentialType, description, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, typeProperties);
         }
     }
 }

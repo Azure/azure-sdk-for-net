@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownCredential : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCredential"/>. </summary>
-        /// <param name="type"> Type of credential. </param>
+        /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownCredential(string @type, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", description, annotations, additionalProperties)
+        internal UnknownCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(credentialType ?? "unknown", description, annotations, additionalProperties)
         {
         }
     }

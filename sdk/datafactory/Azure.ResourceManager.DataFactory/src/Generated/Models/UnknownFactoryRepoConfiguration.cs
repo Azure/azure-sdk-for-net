@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownFactoryRepoConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFactoryRepoConfiguration"/>. </summary>
-        /// <param name="type"> Type of repo configuration. </param>
+        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="lastCommitId"> Last commit id. </param>
         /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFactoryRepoConfiguration(string @type, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, additionalBinaryDataProperties)
+        internal UnknownFactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(factoryRepoConfigurationType ?? "unknown", accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, additionalBinaryDataProperties)
         {
         }
     }

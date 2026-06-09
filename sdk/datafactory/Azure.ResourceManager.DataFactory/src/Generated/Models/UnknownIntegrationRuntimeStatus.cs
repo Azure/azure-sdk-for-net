@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntimeStatus"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownIntegrationRuntimeStatus(IntegrationRuntimeType @type, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(@type != default ? @type : "unknown", dataFactoryName, state, additionalProperties)
+        internal UnknownIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(runtimeType != default ? runtimeType : "unknown", dataFactoryName, state, additionalProperties)
         {
         }
     }

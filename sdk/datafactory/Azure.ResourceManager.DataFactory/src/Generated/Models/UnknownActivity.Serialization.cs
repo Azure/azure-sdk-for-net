@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownActivity DeserializeUnknownPipelineActivity(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownActivity DeserializeUnknownActivity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            string @type = "unknown";
+            string activityType = "unknown";
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    activityType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new UnknownActivity(
                 name,
-                @type,
+                activityType,
                 description,
                 state,
                 onInactiveMarkAs,

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/>. </summary>
-        /// <param name="type"> Trigger type. </param>
+        /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="typeProperties"> Blob Trigger properties. </param>
         /// <param name="linkedService"></param>
-        internal DataFactoryBlobTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, BlobTriggerTypeProperties typeProperties, DataFactoryLinkedServiceReference linkedService) : base(@type, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal DataFactoryBlobTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, BlobTriggerTypeProperties typeProperties, DataFactoryLinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             TypeProperties = typeProperties;
             LinkedService = linkedService;

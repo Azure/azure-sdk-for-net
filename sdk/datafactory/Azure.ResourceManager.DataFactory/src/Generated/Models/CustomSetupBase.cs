@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
-        /// <param name="type"> The type of custom setup. </param>
-        private protected CustomSetupBase(string @type)
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        private protected CustomSetupBase(string customSetupBaseType)
         {
-            Type = @type;
+            CustomSetupBaseType = customSetupBaseType;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
-        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomSetupBase(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomSetupBase(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            CustomSetupBaseType = customSetupBaseType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of custom setup. </summary>
-        internal string Type { get; set; }
+        internal string CustomSetupBaseType { get; set; }
     }
 }

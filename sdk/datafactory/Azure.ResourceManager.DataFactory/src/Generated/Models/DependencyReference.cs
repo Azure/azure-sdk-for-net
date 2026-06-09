@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
-        /// <param name="type"> The type of dependency reference. </param>
-        private protected DependencyReference(string @type)
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
+        private protected DependencyReference(string dependencyReferenceType)
         {
-            Type = @type;
+            DependencyReferenceType = dependencyReferenceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
-        /// <param name="type"> The type of dependency reference. </param>
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DependencyReference(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            DependencyReferenceType = dependencyReferenceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of dependency reference. </summary>
-        internal string Type { get; set; }
+        internal string DependencyReferenceType { get; set; }
     }
 }

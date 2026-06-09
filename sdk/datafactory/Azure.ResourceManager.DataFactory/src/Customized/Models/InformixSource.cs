@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class InformixSource
     {
         /// <summary> Initializes a new instance of <see cref="InformixSource"/>. </summary>
-        public InformixSource() : base("InformixSource")
+        public InformixSource()
         {
+            CopySourceType = "InformixSource";
         }
     }
 }

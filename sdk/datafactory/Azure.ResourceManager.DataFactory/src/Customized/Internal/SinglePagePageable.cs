@@ -4,7 +4,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.DataFactory
 {

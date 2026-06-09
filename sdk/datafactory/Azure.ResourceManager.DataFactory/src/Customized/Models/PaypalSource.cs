@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PaypalSource
     {
         /// <summary> Initializes a new instance of <see cref="PaypalSource"/>. </summary>
-        public PaypalSource() : base("PaypalSource")
+        public PaypalSource()
         {
+            CopySourceType = "PaypalSource";
         }
     }
 }

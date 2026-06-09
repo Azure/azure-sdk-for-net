@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialProperties"/>. </summary>
-        /// <param name="type"> Type of credential. </param>
+        /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Managed identity credential properties. </param>
-        internal DataFactoryManagedIdentityCredentialProperties(string @type, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ManagedIdentityTypeProperties typeProperties) : base(@type, description, annotations, additionalProperties)
+        internal DataFactoryManagedIdentityCredentialProperties(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ManagedIdentityTypeProperties typeProperties) : base(credentialType, description, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
         }

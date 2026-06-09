@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownFormatReadSettings : FormatReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFormatReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownFormatReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", additionalProperties)
+        internal UnknownFormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(formatReadSettingsType ?? "unknown", additionalProperties)
         {
         }
     }

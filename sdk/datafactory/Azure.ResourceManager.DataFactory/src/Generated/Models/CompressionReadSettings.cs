@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
-        /// <param name="type"> The Compression setting type. </param>
-        private protected CompressionReadSettings(string @type)
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
+        private protected CompressionReadSettings(string compressionReadSettingsType)
         {
-            Type = @type;
+            CompressionReadSettingsType = compressionReadSettingsType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
-        /// <param name="type"> The Compression setting type. </param>
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal CompressionReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties)
+        internal CompressionReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            CompressionReadSettingsType = compressionReadSettingsType;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The Compression setting type. </summary>
-        internal string Type { get; set; }
+        internal string CompressionReadSettingsType { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

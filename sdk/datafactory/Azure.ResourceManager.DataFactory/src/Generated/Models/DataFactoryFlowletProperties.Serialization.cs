@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "Flowlet";
+            string dataFlowType = "Flowlet";
             string description = default;
             IList<BinaryData> annotations = default;
             DataFlowFolder folder = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    dataFlowType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new DataFactoryFlowletProperties(
-                @type,
+                dataFlowType,
                 description,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 folder,

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "ParquetWriteSettings";
+            string formatWriteSettingsType = "ParquetWriteSettings";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<int> maxRowsPerFile = default;
             DataFactoryElement<string> fileNamePrefix = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    formatWriteSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("maxRowsPerFile"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new ParquetWriteSettings(@type, additionalProperties, maxRowsPerFile, fileNamePrefix);
+            return new ParquetWriteSettings(formatWriteSettingsType, additionalProperties, maxRowsPerFile, fileNamePrefix);
         }
     }
 }

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return SelfHostedIntegrationRuntime.DeserializeSelfHostedIntegrationRuntime(element, options);
                 }
             }
-            return UnknownIntegrationRuntime.DeserializeUnknownDataFactoryIntegrationRuntimeProperties(element, options);
+            return UnknownIntegrationRuntime.DeserializeUnknownIntegrationRuntime(element, options);
         }
     }
 }

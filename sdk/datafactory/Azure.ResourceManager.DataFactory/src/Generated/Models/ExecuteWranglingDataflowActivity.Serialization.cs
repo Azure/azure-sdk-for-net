@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string name = default;
-            string @type = "ExecuteWranglingDataflow";
+            string activityType = "ExecuteWranglingDataflow";
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    activityType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new ExecuteWranglingDataflowActivity(
                 name,
-                @type,
+                activityType,
                 description,
                 state,
                 onInactiveMarkAs,

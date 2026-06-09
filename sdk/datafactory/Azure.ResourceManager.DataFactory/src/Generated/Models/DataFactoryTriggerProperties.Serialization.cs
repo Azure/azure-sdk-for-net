@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return ChainingTrigger.DeserializeChainingTrigger(element, options);
                 }
             }
-            return UnknownTrigger.DeserializeUnknownDataFactoryTriggerProperties(element, options);
+            return UnknownTrigger.DeserializeUnknownTrigger(element, options);
         }
     }
 }

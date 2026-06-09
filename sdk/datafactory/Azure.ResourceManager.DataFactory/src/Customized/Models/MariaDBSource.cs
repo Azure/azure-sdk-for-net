@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MariaDBSource
     {
         /// <summary> Initializes a new instance of <see cref="MariaDBSource"/>. </summary>
-        public MariaDBSource() : base("MariaDBSource")
+        public MariaDBSource()
         {
+            CopySourceType = "MariaDBSource";
         }
     }
 }

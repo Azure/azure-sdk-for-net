@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ZipDeflateReadSettings"/>. </summary>
-        /// <param name="type"> The Compression setting type. </param>
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="preserveZipFileNameAsFolder"> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        internal ZipDeflateReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveZipFileNameAsFolder) : base(@type, additionalProperties)
+        internal ZipDeflateReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveZipFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveZipFileNameAsFolder = preserveZipFileNameAsFolder;
         }

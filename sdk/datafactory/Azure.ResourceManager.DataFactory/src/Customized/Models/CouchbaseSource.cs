@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CouchbaseSource
     {
         /// <summary> Initializes a new instance of <see cref="CouchbaseSource"/>. </summary>
-        public CouchbaseSource() : base("CouchbaseSource")
+        public CouchbaseSource()
         {
+            CopySourceType = "CouchbaseSource";
         }
     }
 }

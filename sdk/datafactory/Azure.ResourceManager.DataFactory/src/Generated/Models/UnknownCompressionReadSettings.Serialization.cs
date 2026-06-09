@@ -112,18 +112,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "unknown";
+            string compressionReadSettingsType = "unknown";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    compressionReadSettingsType = prop.Value.GetString();
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new UnknownCompressionReadSettings(@type, additionalProperties);
+            return new UnknownCompressionReadSettings(compressionReadSettingsType, additionalProperties);
         }
     }
 }

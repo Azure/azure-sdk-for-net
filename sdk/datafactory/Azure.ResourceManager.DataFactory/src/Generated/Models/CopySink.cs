@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
-        /// <param name="type"> Copy sink type. </param>
-        private protected CopySink(string @type)
+        /// <param name="copySinkType"> Copy sink type. </param>
+        private protected CopySink(string copySinkType)
         {
-            Type = @type;
+            CopySinkType = copySinkType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
-        /// <param name="type"> Copy sink type. </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
-        internal CopySink(string @type, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
+        internal CopySink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            CopySinkType = copySinkType;
             WriteBatchSize = writeBatchSize;
             WriteBatchTimeout = writeBatchTimeout;
             SinkRetryCount = sinkRetryCount;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Copy sink type. </summary>
-        internal string Type { get; set; }
+        internal string CopySinkType { get; set; }
 
         /// <summary> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
         public DataFactoryElement<int> WriteBatchSize { get; set; }

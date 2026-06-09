@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "TeradataImportCommand";
+            string importSettingsType = "TeradataImportCommand";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<IDictionary<string, string>> additionalFormatOptions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    importSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("additionalFormatOptions"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new TeradataImportCommand(@type, additionalProperties, additionalFormatOptions);
+            return new TeradataImportCommand(importSettingsType, additionalProperties, additionalFormatOptions);
         }
     }
 }

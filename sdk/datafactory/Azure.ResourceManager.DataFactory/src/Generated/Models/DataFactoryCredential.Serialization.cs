@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryCredential)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(CredentialType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(element, options);
                 }
             }
-            return UnknownCredential.DeserializeUnknownDataFactoryCredential(element, options);
+            return UnknownCredential.DeserializeUnknownCredential(element, options);
         }
     }
 }

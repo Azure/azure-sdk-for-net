@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "unknown";
+            string customSetupBaseType = "unknown";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    customSetupBaseType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownCustomSetupBase(@type, additionalBinaryDataProperties);
+            return new UnknownCustomSetupBase(customSetupBaseType, additionalBinaryDataProperties);
         }
     }
 }

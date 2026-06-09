@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ImpalaSource
     {
         /// <summary> Initializes a new instance of <see cref="ImpalaSource"/>. </summary>
-        public ImpalaSource() : base("ImpalaSource")
+        public ImpalaSource()
         {
+            CopySourceType = "ImpalaSource";
         }
     }
 }

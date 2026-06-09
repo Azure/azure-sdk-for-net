@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfDependencyTumblingWindowTriggerReference"/>. </summary>
-        /// <param name="type"> The type of dependency reference. </param>
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
         /// <param name="size"> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </param>
-        internal SelfDependencyTumblingWindowTriggerReference(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string offset, string size) : base(@type, additionalBinaryDataProperties)
+        internal SelfDependencyTumblingWindowTriggerReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string offset, string size) : base(dependencyReferenceType, additionalBinaryDataProperties)
         {
             Offset = offset;
             Size = size;

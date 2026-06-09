@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "ParquetReadSettings";
+            string formatReadSettingsType = "ParquetReadSettings";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CompressionReadSettings compressionProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    formatReadSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("compressionProperties"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new ParquetReadSettings(@type, additionalProperties, compressionProperties);
+            return new ParquetReadSettings(formatReadSettingsType, additionalProperties, compressionProperties);
         }
     }
 }

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapBWSource
     {
         /// <summary> Initializes a new instance of <see cref="SapBWSource"/>. </summary>
-        public SapBWSource() : base("SapBwSource")
+        public SapBWSource()
         {
+            CopySourceType = "SapBwSource";
         }
     }
 }

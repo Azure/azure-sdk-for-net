@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownCopySource DeserializeUnknownCopyActivitySource(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownCopySource DeserializeUnknownCopySource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "unknown";
+            string copySourceType = "unknown";
             DataFactoryElement<int> sourceRetryCount = default;
             DataFactoryElement<string> sourceRetryWait = default;
             DataFactoryElement<int> maxConcurrentConnections = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    copySourceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sourceRetryCount"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new UnknownCopySource(
-                @type,
+                copySourceType,
                 sourceRetryCount,
                 sourceRetryWait,
                 maxConcurrentConnections,

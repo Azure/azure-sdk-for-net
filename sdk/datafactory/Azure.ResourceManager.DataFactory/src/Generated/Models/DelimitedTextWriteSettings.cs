@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/>. </summary>
-        /// <param name="type"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="quoteAllText"> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
         /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextWriteSettings(string @type, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> quoteAllText, DataFactoryElement<string> fileExtension, DataFactoryElement<int> maxRowsPerFile, DataFactoryElement<string> fileNamePrefix) : base(@type, additionalProperties)
+        internal DelimitedTextWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> quoteAllText, DataFactoryElement<string> fileExtension, DataFactoryElement<int> maxRowsPerFile, DataFactoryElement<string> fileNamePrefix) : base(formatWriteSettingsType, additionalProperties)
         {
             QuoteAllText = quoteAllText;
             FileExtension = fileExtension;

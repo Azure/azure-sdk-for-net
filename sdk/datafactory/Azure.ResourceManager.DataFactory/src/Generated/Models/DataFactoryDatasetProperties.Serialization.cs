@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element, options);
                 }
             }
-            return UnknownDataset.DeserializeUnknownDataFactoryDatasetProperties(element, options);
+            return UnknownDataset.DeserializeUnknownDataset(element, options);
         }
     }
 }

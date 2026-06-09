@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Office365Source"/>. </summary>
-        /// <param name="type"> Copy source type. </param>
+        /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="startOn"> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="endOn"> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="outputColumns"> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). itemType: OutputColumn. Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]. </param>
-        internal Office365Source(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<IList<string>> allowedGroups, DataFactoryElement<string> userScopeFilterUri, DataFactoryElement<string> dateFilterColumn, DataFactoryElement<string> startOn, DataFactoryElement<string> endOn, DataFactoryElement<IList<Office365TableOutputColumn>> outputColumns) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal Office365Source(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<IList<string>> allowedGroups, DataFactoryElement<string> userScopeFilterUri, DataFactoryElement<string> dateFilterColumn, DataFactoryElement<string> startOn, DataFactoryElement<string> endOn, DataFactoryElement<IList<Office365TableOutputColumn>> outputColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AllowedGroups = allowedGroups;
             UserScopeFilterUri = userScopeFilterUri;

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRedshiftSource
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftSource"/>. </summary>
-        public AmazonRedshiftSource() : base("AmazonRedshiftSource")
+        public AmazonRedshiftSource()
         {
+            CopySourceType = "AmazonRedshiftSource";
         }
     }
 }

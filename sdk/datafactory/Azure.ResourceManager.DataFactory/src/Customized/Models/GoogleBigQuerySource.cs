@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GoogleBigQuerySource
     {
         /// <summary> Initializes a new instance of <see cref="GoogleBigQuerySource"/>. </summary>
-        public GoogleBigQuerySource() : base("GoogleBigQuerySource")
+        public GoogleBigQuerySource()
         {
+            CopySourceType = "GoogleBigQuerySource";
         }
     }
 }

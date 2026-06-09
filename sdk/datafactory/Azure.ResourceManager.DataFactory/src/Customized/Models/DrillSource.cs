@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DrillSource
     {
         /// <summary> Initializes a new instance of <see cref="DrillSource"/>. </summary>
-        public DrillSource() : base("DrillSource")
+        public DrillSource()
         {
+            CopySourceType = "DrillSource";
         }
     }
 }

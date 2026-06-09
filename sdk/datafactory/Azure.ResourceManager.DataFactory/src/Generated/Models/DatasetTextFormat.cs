@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetTextFormat"/>. </summary>
-        /// <param name="type"> Type of dataset storage format. </param>
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="treatEmptyAsNull"> Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="skipLineCount"> The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal DatasetTextFormat(string @type, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> columnDelimiter, DataFactoryElement<string> rowDelimiter, DataFactoryElement<string> escapeChar, DataFactoryElement<string> quoteChar, DataFactoryElement<string> nullValue, DataFactoryElement<string> encodingName, DataFactoryElement<bool> treatEmptyAsNull, DataFactoryElement<int> skipLineCount, DataFactoryElement<bool> firstRowAsHeader) : base(@type, serializer, deserializer, additionalProperties)
+        internal DatasetTextFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> columnDelimiter, DataFactoryElement<string> rowDelimiter, DataFactoryElement<string> escapeChar, DataFactoryElement<string> quoteChar, DataFactoryElement<string> nullValue, DataFactoryElement<string> encodingName, DataFactoryElement<bool> treatEmptyAsNull, DataFactoryElement<int> skipLineCount, DataFactoryElement<bool> firstRowAsHeader) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             ColumnDelimiter = columnDelimiter;
             RowDelimiter = rowDelimiter;

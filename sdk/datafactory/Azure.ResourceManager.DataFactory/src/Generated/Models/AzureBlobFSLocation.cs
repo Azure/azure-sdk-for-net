@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSLocation"/>. </summary>
-        /// <param name="type"> Type of dataset storage location. </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
         /// <param name="fileSystem"> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobFSLocation(string @type, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> fileSystem) : base(@type, folderPath, fileName, additionalProperties)
+        internal AzureBlobFSLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> fileSystem) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             FileSystem = fileSystem;
         }

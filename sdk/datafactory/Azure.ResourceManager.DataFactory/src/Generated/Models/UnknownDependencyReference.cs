@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownDependencyReference : DependencyReference
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/>. </summary>
-        /// <param name="type"> The type of dependency reference. </param>
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDependencyReference(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dependencyReferenceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

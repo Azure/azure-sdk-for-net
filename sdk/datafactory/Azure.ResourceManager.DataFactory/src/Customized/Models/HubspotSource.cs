@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HubspotSource
     {
         /// <summary> Initializes a new instance of <see cref="HubspotSource"/>. </summary>
-        public HubspotSource() : base("HubspotSource")
+        public HubspotSource()
         {
+            CopySourceType = "HubspotSource";
         }
     }
 }

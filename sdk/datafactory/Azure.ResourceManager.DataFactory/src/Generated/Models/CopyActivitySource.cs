@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CopyActivitySource"/>. </summary>
-        /// <param name="type"> Copy source type. </param>
-        private protected CopyActivitySource(string @type)
+        /// <param name="copySourceType"> Copy source type. </param>
+        private protected CopyActivitySource(string copySourceType)
         {
-            Type = @type;
+            CopySourceType = copySourceType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CopyActivitySource"/>. </summary>
-        /// <param name="type"> Copy source type. </param>
+        /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
-        internal CopyActivitySource(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
+        internal CopyActivitySource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            CopySourceType = copySourceType;
             SourceRetryCount = sourceRetryCount;
             SourceRetryWait = sourceRetryWait;
             MaxConcurrentConnections = maxConcurrentConnections;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Copy source type. </summary>
-        internal string Type { get; set; }
+        internal string CopySourceType { get; set; }
 
         /// <summary> Source retry count. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> SourceRetryCount { get; set; }

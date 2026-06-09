@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "DocumentDbCollectionSource";
+            string copySourceType = "DocumentDbCollectionSource";
             DataFactoryElement<int> sourceRetryCount = default;
             DataFactoryElement<string> sourceRetryWait = default;
             DataFactoryElement<int> maxConcurrentConnections = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    copySourceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sourceRetryCount"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new DocumentDBCollectionSource(
-                @type,
+                copySourceType,
                 sourceRetryCount,
                 sourceRetryWait,
                 maxConcurrentConnections,

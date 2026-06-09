@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class Db2Source
     {
         /// <summary> Initializes a new instance of <see cref="Db2Source"/>. </summary>
-        public Db2Source() : base("Db2Source")
+        public Db2Source()
         {
+            CopySourceType = "Db2Source";
         }
     }
 }

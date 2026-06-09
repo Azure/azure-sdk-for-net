@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "unknown";
+            string dependencyReferenceType = "unknown";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryTriggerReference referenceTrigger = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    dependencyReferenceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("referenceTrigger"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownTriggerDependencyReference(@type, additionalBinaryDataProperties, referenceTrigger);
+            return new UnknownTriggerDependencyReference(dependencyReferenceType, additionalBinaryDataProperties, referenceTrigger);
         }
     }
 }

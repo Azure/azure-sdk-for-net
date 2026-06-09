@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredential"/>. </summary>
-        /// <param name="type"> Type of credential. </param>
+        /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Service Principal credential properties. </param>
-        internal ServicePrincipalCredential(string @type, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ServicePrincipalCredentialTypeProperties typeProperties) : base(@type, description, annotations, additionalProperties)
+        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ServicePrincipalCredentialTypeProperties typeProperties) : base(credentialType, description, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
         }

@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
-        /// <param name="type"> The write setting type. </param>
-        private protected FormatWriteSettings(string @type)
+        /// <param name="formatWriteSettingsType"> The write setting type. </param>
+        private protected FormatWriteSettings(string formatWriteSettingsType)
         {
-            Type = @type;
+            FormatWriteSettingsType = formatWriteSettingsType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
-        /// <param name="type"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal FormatWriteSettings(string @type, IDictionary<string, BinaryData> additionalProperties)
+        internal FormatWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            FormatWriteSettingsType = formatWriteSettingsType;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The write setting type. </summary>
-        internal string Type { get; set; }
+        internal string FormatWriteSettingsType { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

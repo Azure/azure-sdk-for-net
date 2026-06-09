@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapOpenHubSource
     {
         /// <summary> Initializes a new instance of <see cref="SapOpenHubSource"/>. </summary>
-        public SapOpenHubSource() : base("SapOpenHubSource")
+        public SapOpenHubSource()
         {
+            CopySourceType = "SapOpenHubSource";
         }
     }
 }

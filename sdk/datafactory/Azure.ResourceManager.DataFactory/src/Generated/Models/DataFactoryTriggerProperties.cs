@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/>. </summary>
-        /// <param name="type"> Trigger type. </param>
-        private protected DataFactoryTriggerProperties(string @type)
+        /// <param name="triggerType"> Trigger type. </param>
+        private protected DataFactoryTriggerProperties(string triggerType)
         {
-            Type = @type;
+            TriggerType = triggerType;
             Annotations = new ChangeTrackingList<BinaryData>();
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/>. </summary>
-        /// <param name="type"> Trigger type. </param>
+        /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"></param>
-        internal DataFactoryTriggerProperties(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryTriggerProperties(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            TriggerType = triggerType;
             Description = description;
             RuntimeState = runtimeState;
             Annotations = annotations;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Trigger type. </summary>
-        internal string Type { get; set; }
+        internal string TriggerType { get; set; }
 
         /// <summary> Trigger description. </summary>
         public string Description { get; set; }

@@ -4,18 +4,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 
 #pragma warning disable CS1591
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // MPG generator regression workaround. This partial restores pre-MPG DataFactoryResource API
+    // surface the regenerated class no longer emits:
+    //   1. Back-compat string ifNoneMatch overloads ([EditorBrowsable(Never)]) that delegate to the
+    //      ETag-based generated methods.
+    //   2. The public Query convenience methods (GetActivityRun, GetPipelineRuns, GetTriggers,
+    //      GetTriggerRuns, GetPrivateLinkResources) plus their *Internal helpers and result wrappers:
+    //      the generator now emits only the REST request-builders, so the helpers build the message via
+    //      the generated CreateGet*Request, send it through the shared pipeline, and deserialize the
+    //      JSON payload into the existing model types.
     public partial class DataFactoryResource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -372,6 +381,206 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 yield return Page<DataFactoryTriggerResource>.FromValues(items, null, response.GetRawResponse());
             }
+        }
+
+        internal sealed class PipelineActivityRunsResult
+        {
+            public IReadOnlyList<PipelineActivityRunInformation> Value { get; set; }
+            public string ContinuationToken { get; set; }
+        }
+
+        internal sealed class DataFactoryPipelineRunsQueryResult
+        {
+            public IReadOnlyList<DataFactoryPipelineRunInfo> Value { get; set; }
+            public string ContinuationToken { get; set; }
+        }
+
+        internal sealed class DataFactoryTriggerQueryResult
+        {
+            public IReadOnlyList<DataFactoryTriggerData> Value { get; set; }
+            public string ContinuationToken { get; set; }
+        }
+
+        internal sealed class DataFactoryTriggerRunsQueryResult
+        {
+            public IReadOnlyList<DataFactoryTriggerRun> Value { get; set; }
+            public string ContinuationToken { get; set; }
+        }
+
+        internal sealed class DataFactoryPrivateLinkResources
+        {
+            public IReadOnlyList<DataFactoryPrivateLinkResource> Value { get; set; }
+        }
+
+        private static RequestContext BuildContext(CancellationToken cancellationToken)
+        {
+            return new RequestContext { CancellationToken = cancellationToken };
+        }
+
+        private static List<T> ReadArray<T>(JsonElement parent, string propName, Func<JsonElement, T> reader)
+        {
+            var list = new List<T>();
+            if (parent.TryGetProperty(propName, out var arr) && arr.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in arr.EnumerateArray())
+                {
+                    list.Add(reader(item));
+                }
+            }
+            return list;
+        }
+
+        private static string ReadString(JsonElement parent, string propName)
+        {
+            if (parent.TryGetProperty(propName, out var s) && s.ValueKind == JsonValueKind.String)
+            {
+                return s.GetString();
+            }
+            return null;
+        }
+
+        private static T ParseAndDeserialize<T>(Response response, Func<JsonElement, T> deserializer)
+        {
+            using JsonDocument doc = JsonDocument.Parse(response.Content.ToMemory());
+            return deserializer(doc.RootElement);
+        }
+
+        internal Response<PipelineActivityRunsResult> GetActivityRunInternal(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _activityRunsRestClient.CreateGetActivityRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
+            Response response = Pipeline.ProcessMessage(message, context);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new PipelineActivityRunsResult
+            {
+                Value = ReadArray(e, "value", el => PipelineActivityRunInformation.DeserializePipelineActivityRunInformation(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal async Task<Response<PipelineActivityRunsResult>> GetActivityRunInternalAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _activityRunsRestClient.CreateGetActivityRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
+            Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new PipelineActivityRunsResult
+            {
+                Value = ReadArray(e, "value", el => PipelineActivityRunInformation.DeserializePipelineActivityRunInformation(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal Response<DataFactoryPipelineRunsQueryResult> GetPipelineRunsInternal(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _pipelineRunsRestClient.CreateGetPipelineRunsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RunFilterContent.ToRequestContent(content), context);
+            Response response = Pipeline.ProcessMessage(message, context);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryPipelineRunsQueryResult
+            {
+                Value = ReadArray(e, "value", el => DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal async Task<Response<DataFactoryPipelineRunsQueryResult>> GetPipelineRunsInternalAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _pipelineRunsRestClient.CreateGetPipelineRunsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RunFilterContent.ToRequestContent(content), context);
+            Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryPipelineRunsQueryResult
+            {
+                Value = ReadArray(e, "value", el => DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal Response<DataFactoryPrivateLinkResources> GetPrivateLinkResourcesInternal(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _privateLinkResourcesRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            Response response = Pipeline.ProcessMessage(message, context);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryPrivateLinkResources
+            {
+                Value = ReadArray(e, "value", el => DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource(el, ModelSerializationExtensions.WireOptions)),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal async Task<Response<DataFactoryPrivateLinkResources>> GetPrivateLinkResourcesInternalAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _privateLinkResourcesRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryPrivateLinkResources
+            {
+                Value = ReadArray(e, "value", el => DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource(el, ModelSerializationExtensions.WireOptions)),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal Response<DataFactoryTriggerRunsQueryResult> GetTriggerRunsInternal(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _triggerRunsRestClient.CreateGetTriggerRunsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RunFilterContent.ToRequestContent(content), context);
+            Response response = Pipeline.ProcessMessage(message, context);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryTriggerRunsQueryResult
+            {
+                Value = ReadArray(e, "value", el => DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal async Task<Response<DataFactoryTriggerRunsQueryResult>> GetTriggerRunsInternalAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _triggerRunsRestClient.CreateGetTriggerRunsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RunFilterContent.ToRequestContent(content), context);
+            Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryTriggerRunsQueryResult
+            {
+                Value = ReadArray(e, "value", el => DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal Response<DataFactoryTriggerQueryResult> GetTriggersInternal(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _triggersRestClient.CreateGetTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
+            Response response = Pipeline.ProcessMessage(message, context);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryTriggerQueryResult
+            {
+                Value = ReadArray(e, "value", el => DataFactoryTriggerData.DeserializeDataFactoryTriggerData(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
+        }
+
+        internal async Task<Response<DataFactoryTriggerQueryResult>> GetTriggersInternalAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = BuildContext(cancellationToken);
+            using HttpMessage message = _triggersRestClient.CreateGetTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
+            Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            if (response.Status >= 400) throw new RequestFailedException(response);
+            var result = ParseAndDeserialize(response, e => new DataFactoryTriggerQueryResult
+            {
+                Value = ReadArray(e, "value", el => DataFactoryTriggerData.DeserializeDataFactoryTriggerData(el, ModelSerializationExtensions.WireOptions)),
+                ContinuationToken = ReadString(e, "continuationToken"),
+            });
+            return Response.FromValue(result, response);
         }
     }
 }

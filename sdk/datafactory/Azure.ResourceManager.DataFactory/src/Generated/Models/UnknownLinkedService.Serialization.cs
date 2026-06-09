@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownLinkedService DeserializeUnknownDataFactoryLinkedServiceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownLinkedService DeserializeUnknownLinkedService(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

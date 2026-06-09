@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ConcurSource
     {
         /// <summary> Initializes a new instance of <see cref="ConcurSource"/>. </summary>
-        public ConcurSource() : base("ConcurSource")
+        public ConcurSource()
         {
+            CopySourceType = "ConcurSource";
         }
     }
 }

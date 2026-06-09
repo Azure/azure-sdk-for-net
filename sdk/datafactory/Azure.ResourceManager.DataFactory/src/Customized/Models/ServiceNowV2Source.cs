@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ServiceNowV2Source
     {
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2Source"/>. </summary>
-        public ServiceNowV2Source() : base("ServiceNowV2Source")
+        public ServiceNowV2Source()
         {
+            CopySourceType = "ServiceNowV2Source";
         }
     }
 }

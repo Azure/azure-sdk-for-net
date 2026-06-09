@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownExportSettings : ExportSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExportSettings"/>. </summary>
-        /// <param name="type"> The export setting type. </param>
+        /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownExportSettings(string @type, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", additionalProperties)
+        internal UnknownExportSettings(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(exportSettingsType ?? "unknown", additionalProperties)
         {
         }
     }

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GreenplumSource
     {
         /// <summary> Initializes a new instance of <see cref="GreenplumSource"/>. </summary>
-        public GreenplumSource() : base("GreenplumSource")
+        public GreenplumSource()
         {
+            CopySourceType = "GreenplumSource";
         }
     }
 }

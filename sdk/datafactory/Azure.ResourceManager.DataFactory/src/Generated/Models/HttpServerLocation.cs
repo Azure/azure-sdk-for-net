@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpServerLocation"/>. </summary>
-        /// <param name="type"> Type of dataset storage location. </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
         /// <param name="relativeUri"> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </param>
-        internal HttpServerLocation(string @type, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> relativeUri) : base(@type, folderPath, fileName, additionalProperties)
+        internal HttpServerLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> relativeUri) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             RelativeUri = relativeUri;
         }

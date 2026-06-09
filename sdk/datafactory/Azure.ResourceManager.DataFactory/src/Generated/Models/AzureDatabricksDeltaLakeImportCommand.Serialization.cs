@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AzureDatabricksDeltaLakeImportCommand";
+            string importSettingsType = "AzureDatabricksDeltaLakeImportCommand";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<string> dateFormat = default;
             DataFactoryElement<string> timestampFormat = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    importSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("dateFormat"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new AzureDatabricksDeltaLakeImportCommand(@type, additionalProperties, dateFormat, timestampFormat);
+            return new AzureDatabricksDeltaLakeImportCommand(importSettingsType, additionalProperties, dateFormat, timestampFormat);
         }
     }
 }

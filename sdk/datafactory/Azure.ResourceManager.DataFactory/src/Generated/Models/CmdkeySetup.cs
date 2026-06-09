@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
-        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="typeProperties"> Cmdkey command custom setup type properties. </param>
         /// <param name="password"></param>
-        internal CmdkeySetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CmdkeySetupTypeProperties typeProperties, DataFactorySecret password) : base(@type, additionalBinaryDataProperties)
+        internal CmdkeySetup(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CmdkeySetupTypeProperties typeProperties, DataFactorySecret password) : base(customSetupBaseType, additionalBinaryDataProperties)
         {
             TypeProperties = typeProperties;
             Password = password;

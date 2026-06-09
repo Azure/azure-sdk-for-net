@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AvroFormat";
+            string datasetStorageFormatType = "AvroFormat";
             DataFactoryElement<string> serializer = default;
             DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    datasetStorageFormatType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("serializer"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new DatasetAvroFormat(@type, serializer, deserializer, additionalProperties);
+            return new DatasetAvroFormat(datasetStorageFormatType, serializer, deserializer, additionalProperties);
         }
     }
 }

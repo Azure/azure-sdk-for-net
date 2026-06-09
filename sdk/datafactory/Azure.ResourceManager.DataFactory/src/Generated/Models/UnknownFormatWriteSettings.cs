@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownFormatWriteSettings : FormatWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFormatWriteSettings"/>. </summary>
-        /// <param name="type"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownFormatWriteSettings(string @type, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", additionalProperties)
+        internal UnknownFormatWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(formatWriteSettingsType ?? "unknown", additionalProperties)
         {
         }
     }

@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
-        /// <param name="type"> Type of dataset storage format. </param>
-        private protected DatasetStorageFormat(string @type)
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
+        private protected DatasetStorageFormat(string datasetStorageFormatType)
         {
-            Type = @type;
+            DatasetStorageFormatType = datasetStorageFormatType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
-        /// <param name="type"> Type of dataset storage format. </param>
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
-        internal DatasetStorageFormat(string @type, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties)
+        internal DatasetStorageFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            DatasetStorageFormatType = datasetStorageFormatType;
             Serializer = serializer;
             Deserializer = deserializer;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of dataset storage format. </summary>
-        internal string Type { get; set; }
+        internal string DatasetStorageFormatType { get; set; }
 
         /// <summary> Serializer. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Serializer { get; set; }

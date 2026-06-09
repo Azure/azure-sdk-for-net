@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapEccSource
     {
         /// <summary> Initializes a new instance of <see cref="SapEccSource"/>. </summary>
-        public SapEccSource() : base("SapEccSource")
+        public SapEccSource()
         {
+            CopySourceType = "SapEccSource";
         }
     }
 }

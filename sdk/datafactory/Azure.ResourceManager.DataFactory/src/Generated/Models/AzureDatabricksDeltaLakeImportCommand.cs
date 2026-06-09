@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeImportCommand"/>. </summary>
-        /// <param name="type"> The import setting type. </param>
+        /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="dateFormat"> Specify the date format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
         /// <param name="timestampFormat"> Specify the timestamp format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksDeltaLakeImportCommand(string @type, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> dateFormat, DataFactoryElement<string> timestampFormat) : base(@type, additionalProperties)
+        internal AzureDatabricksDeltaLakeImportCommand(string importSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> dateFormat, DataFactoryElement<string> timestampFormat) : base(importSettingsType, additionalProperties)
         {
             DateFormat = dateFormat;
             TimestampFormat = timestampFormat;

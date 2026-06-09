@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownCompressionReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCompressionReadSettings"/>. </summary>
-        /// <param name="type"> The Compression setting type. </param>
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownCompressionReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", additionalProperties)
+        internal UnknownCompressionReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(compressionReadSettingsType ?? "unknown", additionalProperties)
         {
         }
     }

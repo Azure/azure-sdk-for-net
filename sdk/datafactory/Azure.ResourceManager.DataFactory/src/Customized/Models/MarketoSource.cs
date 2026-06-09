@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MarketoSource
     {
         /// <summary> Initializes a new instance of <see cref="MarketoSource"/>. </summary>
-        public MarketoSource() : base("MarketoSource")
+        public MarketoSource()
         {
+            CopySourceType = "MarketoSource";
         }
     }
 }

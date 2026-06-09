@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Mocking;
 using Azure.ResourceManager.Resources;
 

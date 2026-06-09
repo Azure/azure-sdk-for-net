@@ -25,18 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
-        /// <param name="type"> The type of dependency reference. </param>
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
-        internal TriggerDependencyReference(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryTriggerReference referenceTrigger) : base(@type, additionalBinaryDataProperties)
-        {
-            ReferenceTrigger = referenceTrigger;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
-        /// <param name="type"> The type of dependency reference. </param>
-        /// <param name="referenceTrigger"> Referenced trigger. </param>
-        private protected TriggerDependencyReference(string @type, DataFactoryTriggerReference referenceTrigger) : base(@type)
+        internal TriggerDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType, additionalBinaryDataProperties)
         {
             ReferenceTrigger = referenceTrigger;
         }

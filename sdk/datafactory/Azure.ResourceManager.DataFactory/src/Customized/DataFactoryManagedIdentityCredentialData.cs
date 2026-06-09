@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapTableSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SapTableSource"/>. </summary>
-        /// <param name="type"> Copy source type. </param>
+        /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sapDataColumnDelimiter"> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for SAP table read in parallel. Possible values include: "None", "PartitionOnInt", "PartitionOnCalendarYear", "PartitionOnCalendarMonth", "PartitionOnCalendarDate", "PartitionOnTime". </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for SAP table source partitioning. </param>
-        internal SapTableSource(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<int> rowCount, DataFactoryElement<int> rowSkips, DataFactoryElement<string> rfcTableFields, DataFactoryElement<string> rfcTableOptions, DataFactoryElement<int> batchSize, DataFactoryElement<string> customRfcReadTableFunctionModule, DataFactoryElement<string> sapDataColumnDelimiter, BinaryData partitionOption, SapTablePartitionSettings partitionSettings) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal SapTableSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<int> rowCount, DataFactoryElement<int> rowSkips, DataFactoryElement<string> rfcTableFields, DataFactoryElement<string> rfcTableOptions, DataFactoryElement<int> batchSize, DataFactoryElement<string> customRfcReadTableFunctionModule, DataFactoryElement<string> sapDataColumnDelimiter, BinaryData partitionOption, SapTablePartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             RowCount = rowCount;
             RowSkips = rowSkips;

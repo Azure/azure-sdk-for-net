@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "TumblingWindowTrigger";
+            string triggerType = "TumblingWindowTrigger";
             string description = default;
             DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    triggerType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new TumblingWindowTrigger(
-                @type,
+                triggerType,
                 description,
                 runtimeState,
                 annotations ?? new ChangeTrackingList<BinaryData>(),

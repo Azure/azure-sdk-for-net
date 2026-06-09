@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class JiraSource
     {
         /// <summary> Initializes a new instance of <see cref="JiraSource"/>. </summary>
-        public JiraSource() : base("JiraSource")
+        public JiraSource()
         {
+            CopySourceType = "JiraSource";
         }
     }
 }

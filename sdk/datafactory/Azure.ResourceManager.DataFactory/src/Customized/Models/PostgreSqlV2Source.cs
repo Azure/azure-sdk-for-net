@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PostgreSqlV2Source
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlV2Source"/>. </summary>
-        public PostgreSqlV2Source() : base("PostgreSqlV2Source")
+        public PostgreSqlV2Source()
         {
+            CopySourceType = "PostgreSqlV2Source";
         }
     }
 }

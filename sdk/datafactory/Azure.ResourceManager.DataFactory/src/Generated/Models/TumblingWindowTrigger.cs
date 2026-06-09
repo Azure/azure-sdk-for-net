@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TumblingWindowTrigger"/>. </summary>
-        /// <param name="type"> Trigger type. </param>
+        /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="pipeline"> Pipeline for which runs are created when an event is fired for trigger window that is ready. </param>
         /// <param name="typeProperties"> Tumbling Window Trigger properties. </param>
-        internal TumblingWindowTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowTriggerTypeProperties typeProperties) : base(@type, description, runtimeState, annotations, additionalProperties)
+        internal TumblingWindowTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowTriggerTypeProperties typeProperties) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
             TypeProperties = typeProperties;

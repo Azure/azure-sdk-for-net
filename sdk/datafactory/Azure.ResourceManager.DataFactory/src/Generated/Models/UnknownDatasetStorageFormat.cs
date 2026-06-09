@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownDatasetStorageFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatasetStorageFormat"/>. </summary>
-        /// <param name="type"> Type of dataset storage format. </param>
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownDatasetStorageFormat(string @type, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", serializer, deserializer, additionalProperties)
+        internal UnknownDatasetStorageFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType ?? "unknown", serializer, deserializer, additionalProperties)
         {
         }
     }

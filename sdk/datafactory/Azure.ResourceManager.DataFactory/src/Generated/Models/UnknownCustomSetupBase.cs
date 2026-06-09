@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownCustomSetupBase : CustomSetupBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomSetupBase"/>. </summary>
-        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCustomSetupBase(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownCustomSetupBase(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(customSetupBaseType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

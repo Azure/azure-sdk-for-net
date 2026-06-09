@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "CmdkeySetup";
+            string customSetupBaseType = "CmdkeySetup";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CmdkeySetupTypeProperties typeProperties = default;
             DataFactorySecret password = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    customSetupBaseType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeProperties"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CmdkeySetup(@type, additionalBinaryDataProperties, typeProperties, password);
+            return new CmdkeySetup(customSetupBaseType, additionalBinaryDataProperties, typeProperties, password);
         }
     }
 }

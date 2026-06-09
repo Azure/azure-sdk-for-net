@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentVariableSetup"/>. </summary>
-        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="typeProperties"> Add environment variable type properties. </param>
-        internal EnvironmentVariableSetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EnvironmentVariableSetupTypeProperties typeProperties) : base(@type, additionalBinaryDataProperties)
+        internal EnvironmentVariableSetup(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties, EnvironmentVariableSetupTypeProperties typeProperties) : base(customSetupBaseType, additionalBinaryDataProperties)
         {
             TypeProperties = typeProperties;
         }

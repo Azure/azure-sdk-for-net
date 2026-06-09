@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="XmlReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="compressionProperties"> Compression settings. </param>
         /// <param name="validationMode"> Indicates what validation method is used when reading the xml files. Allowed values: 'none', 'xsd', or 'dtd'. Type: string (or Expression with resultType string). </param>
         /// <param name="detectDataType"> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespaces"> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespacePrefixes"> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object). </param>
-        internal XmlReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, DataFactoryElement<string> validationMode, DataFactoryElement<bool> detectDataType, DataFactoryElement<bool> namespaces, DataFactoryElement<IDictionary<string, string>> namespacePrefixes) : base(@type, additionalProperties)
+        internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, DataFactoryElement<string> validationMode, DataFactoryElement<bool> detectDataType, DataFactoryElement<bool> namespaces, DataFactoryElement<IDictionary<string, string>> namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
         {
             CompressionProperties = compressionProperties;
             ValidationMode = validationMode;

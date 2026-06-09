@@ -3,9 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public abstract partial class SsisObjectMetadata

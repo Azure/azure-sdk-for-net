@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
@@ -38,6 +37,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Property restored as workaround for issue #59298. </summary>
-        public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; set; }
+        public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; } = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
     }
 }

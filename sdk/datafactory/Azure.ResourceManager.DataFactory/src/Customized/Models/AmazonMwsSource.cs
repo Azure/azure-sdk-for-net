@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonMwsSource
     {
         /// <summary> Initializes a new instance of <see cref="AmazonMwsSource"/>. </summary>
-        public AmazonMwsSource() : base("AmazonMWSSource")
+        public AmazonMwsSource()
         {
+            CopySourceType = "AmazonMWSSource";
         }
     }
 }

@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "ZipDeflateReadSettings";
+            string compressionReadSettingsType = "ZipDeflateReadSettings";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<bool> preserveZipFileNameAsFolder = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    compressionReadSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("preserveZipFileNameAsFolder"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new ZipDeflateReadSettings(@type, additionalProperties, preserveZipFileNameAsFolder);
+            return new ZipDeflateReadSettings(compressionReadSettingsType, additionalProperties, preserveZipFileNameAsFolder);
         }
     }
 }

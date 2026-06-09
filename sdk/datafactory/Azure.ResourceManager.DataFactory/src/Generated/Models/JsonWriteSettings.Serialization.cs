@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "JsonWriteSettings";
+            string formatWriteSettingsType = "JsonWriteSettings";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<string> filePattern = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    formatWriteSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("filePattern"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new JsonWriteSettings(@type, additionalProperties, filePattern);
+            return new JsonWriteSettings(formatWriteSettingsType, additionalProperties, filePattern);
         }
     }
 }

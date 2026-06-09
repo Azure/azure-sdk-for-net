@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureMySqlSource
     {
         /// <summary> Initializes a new instance of <see cref="AzureMySqlSource"/>. </summary>
-        public AzureMySqlSource() : base("AzureMySqlSource")
+        public AzureMySqlSource()
         {
+            CopySourceType = "AzureMySqlSource";
         }
     }
 }

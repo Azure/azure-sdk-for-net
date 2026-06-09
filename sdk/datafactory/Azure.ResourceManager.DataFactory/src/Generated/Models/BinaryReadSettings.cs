@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="compressionProperties"> Compression settings. </param>
-        internal BinaryReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties) : base(@type, additionalProperties)
+        internal BinaryReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
         {
             CompressionProperties = compressionProperties;
         }

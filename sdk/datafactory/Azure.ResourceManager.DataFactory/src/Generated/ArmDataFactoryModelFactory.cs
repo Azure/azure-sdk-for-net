@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <param name="type"> Type of repo configuration. </param>
+        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="lastCommitId"> Last commit id. </param>
         /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
         /// <returns> A new <see cref="Models.FactoryRepoConfiguration"/> instance for mocking. </returns>
-        public static FactoryRepoConfiguration FactoryRepoConfiguration(string @type = default, string accountName = default, string repositoryName = default, string collaborationBranch = default, string rootFolder = default, string lastCommitId = default, bool? disablePublish = default)
+        public static FactoryRepoConfiguration FactoryRepoConfiguration(string factoryRepoConfigurationType = default, string accountName = default, string repositoryName = default, string collaborationBranch = default, string rootFolder = default, string lastCommitId = default, bool? disablePublish = default)
         {
             return new UnknownFactoryRepoConfiguration(
-                @type,
+                factoryRepoConfigurationType,
                 accountName,
                 repositoryName,
                 collaborationBranch,
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownTrigger(default, description, runtimeState, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownTrigger(triggerType, description, runtimeState, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="description"> Trigger description. </param>
@@ -678,11 +678,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new RetryPolicy(count, intervalInSeconds, default);
         }
 
-        /// <param name="type"> The type of dependency reference. </param>
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <returns> A new <see cref="Models.DependencyReference"/> instance for mocking. </returns>
-        public static DependencyReference DependencyReference(string @type = default)
+        public static DependencyReference DependencyReference(string dependencyReferenceType = default)
         {
-            return new UnknownDependencyReference(@type, default);
+            return new UnknownDependencyReference(dependencyReferenceType, default);
         }
 
         /// <param name="referenceTrigger"> Referenced trigger. </param>
@@ -1023,11 +1023,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new EntityReference(integrationRuntimeEntityReferenceType, referenceName, default);
         }
 
-        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <returns> A new <see cref="Models.CustomSetupBase"/> instance for mocking. </returns>
-        public static CustomSetupBase CustomSetupBase(string @type = default)
+        public static CustomSetupBase CustomSetupBase(string customSetupBaseType = default)
         {
-            return new UnknownCustomSetupBase(@type, default);
+            return new UnknownCustomSetupBase(customSetupBaseType, default);
         }
 
         /// <param name="targetName"> The server name of data source access. Type: string. </param>
@@ -1220,16 +1220,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDataFlowDebugInfo(name, default, properties);
         }
 
-        /// <param name="type"> Type of data flow. </param>
+        /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folderName"> The name of the folder that this data flow is in. </param>
         /// <returns> A new <see cref="Models.DataFactoryDataFlowProperties"/> instance for mocking. </returns>
-        public static DataFactoryDataFlowProperties DataFactoryDataFlowProperties(string @type = default, string description = default, IEnumerable<BinaryData> annotations = default, string folderName = default)
+        public static DataFactoryDataFlowProperties DataFactoryDataFlowProperties(string dataFlowType = default, string description = default, IEnumerable<BinaryData> annotations = default, string folderName = default)
         {
             annotations ??= new ChangeTrackingList<BinaryData>();
 
-            return new UnknownDataFlow(@type, description, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), folderName is null ? default : new DataFlowFolder(folderName, default), default);
+            return new UnknownDataFlow(dataFlowType, description, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), folderName is null ? default : new DataFlowFolder(folderName, default), default);
         }
 
         /// <param name="description"> The description of the data flow. </param>
@@ -1534,16 +1534,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
-        /// <param name="type"> Type of dataset storage format. </param>
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DatasetStorageFormat"/> instance for mocking. </returns>
-        public static DatasetStorageFormat DatasetStorageFormat(string @type = default, DataFactoryElement<string> serializer = default, DataFactoryElement<string> deserializer = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DatasetStorageFormat DatasetStorageFormat(string datasetStorageFormatType = default, DataFactoryElement<string> serializer = default, DataFactoryElement<string> deserializer = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownDatasetStorageFormat(@type, serializer, deserializer, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownDatasetStorageFormat(datasetStorageFormatType, serializer, deserializer, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
@@ -1679,16 +1679,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dataLocation is null && avroCompressionCodec is null && avroCompressionLevel is null ? default : new AvroDatasetTypeProperties(dataLocation, avroCompressionCodec, avroCompressionLevel, default));
         }
 
-        /// <param name="type"> Type of dataset storage location. </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DatasetLocation"/> instance for mocking. </returns>
-        public static DatasetLocation DatasetLocation(string @type = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DatasetLocation DatasetLocation(string datasetLocationType = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownDatasetLocation(@type, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownDatasetLocation(datasetLocationType, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
@@ -12840,7 +12840,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <param name="name"> Activity name. </param>
-        /// <param name="type"> Type of activity. </param>
+        /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
@@ -12848,7 +12848,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.PipelineActivity"/> instance for mocking. </returns>
-        public static PipelineActivity PipelineActivity(string name = default, string @type = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static PipelineActivity PipelineActivity(string name = default, string activityType = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -12856,7 +12856,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             return new UnknownActivity(
                 name,
-                @type,
+                activityType,
                 description,
                 state,
                 onInactiveMarkAs,
@@ -13502,19 +13502,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (outputs ?? new ChangeTrackingList<DatasetReference>()).ToList());
         }
 
-        /// <param name="type"> Copy source type. </param>
+        /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.CopyActivitySource"/> instance for mocking. </returns>
-        public static CopyActivitySource CopyActivitySource(string @type = default, DataFactoryElement<int> sourceRetryCount = default, DataFactoryElement<string> sourceRetryWait = default, DataFactoryElement<int> maxConcurrentConnections = default, DataFactoryElement<bool> disableMetricsCollection = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static CopyActivitySource CopyActivitySource(string copySourceType = default, DataFactoryElement<int> sourceRetryCount = default, DataFactoryElement<string> sourceRetryWait = default, DataFactoryElement<int> maxConcurrentConnections = default, DataFactoryElement<bool> disableMetricsCollection = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new UnknownCopySource(
-                @type,
+                copySourceType,
                 sourceRetryCount,
                 sourceRetryWait,
                 maxConcurrentConnections,
@@ -14100,14 +14100,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ParquetReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), compressionProperties);
         }
 
-        /// <param name="type"> The Compression setting type. </param>
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.CompressionReadSettings"/> instance for mocking. </returns>
-        public static CompressionReadSettings CompressionReadSettings(string @type = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static CompressionReadSettings CompressionReadSettings(string compressionReadSettingsType = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownCompressionReadSettings(@type, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownCompressionReadSettings(compressionReadSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="additionalProperties"></param>
@@ -14140,14 +14140,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TarGzipReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), preserveCompressionFileNameAsFolder);
         }
 
-        /// <param name="type"> The read setting type. </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.FormatReadSettings"/> instance for mocking. </returns>
-        public static FormatReadSettings FormatReadSettings(string @type = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static FormatReadSettings FormatReadSettings(string formatReadSettingsType = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownFormatReadSettings(@type, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownFormatReadSettings(formatReadSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="additionalProperties"></param>
@@ -16904,14 +16904,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SnowflakeExportCopyCommand(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), storageIntegration);
         }
 
-        /// <param name="type"> The export setting type. </param>
+        /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ExportSettings"/> instance for mocking. </returns>
-        public static ExportSettings ExportSettings(string @type = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static ExportSettings ExportSettings(string exportSettingsType = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownExportSettings(@type, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownExportSettings(exportSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="additionalProperties"></param>
@@ -17021,7 +17021,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
-        /// <param name="type"> Copy sink type. </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -17030,12 +17030,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.CopySink"/> instance for mocking. </returns>
-        public static CopySink CopySink(string @type = default, DataFactoryElement<int> writeBatchSize = default, DataFactoryElement<string> writeBatchTimeout = default, DataFactoryElement<int> sinkRetryCount = default, DataFactoryElement<string> sinkRetryWait = default, DataFactoryElement<int> maxConcurrentConnections = default, DataFactoryElement<bool> disableMetricsCollection = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static CopySink CopySink(string copySinkType = default, DataFactoryElement<int> writeBatchSize = default, DataFactoryElement<string> writeBatchTimeout = default, DataFactoryElement<int> sinkRetryCount = default, DataFactoryElement<string> sinkRetryWait = default, DataFactoryElement<int> maxConcurrentConnections = default, DataFactoryElement<bool> disableMetricsCollection = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new UnknownCopySink(
-                @type,
+                copySinkType,
                 writeBatchSize,
                 writeBatchTimeout,
                 sinkRetryCount,
@@ -17270,14 +17270,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 fileNamePrefix);
         }
 
-        /// <param name="type"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.FormatWriteSettings"/> instance for mocking. </returns>
-        public static FormatWriteSettings FormatWriteSettings(string @type = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static FormatWriteSettings FormatWriteSettings(string formatWriteSettingsType = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownFormatWriteSettings(@type, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownFormatWriteSettings(formatWriteSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="additionalProperties"></param>
@@ -17462,14 +17462,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TeradataImportCommand(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions);
         }
 
-        /// <param name="type"> The import setting type. </param>
+        /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ImportSettings"/> instance for mocking. </returns>
-        public static ImportSettings ImportSettings(string @type = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static ImportSettings ImportSettings(string importSettingsType = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownImportSettings(@type, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownImportSettings(importSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="additionalProperties"></param>
@@ -20325,17 +20325,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
-        /// <param name="type"> Type of credential. </param>
+        /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DataFactoryCredential"/> instance for mocking. </returns>
-        public static DataFactoryCredential DataFactoryCredential(string @type = default, string description = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DataFactoryCredential DataFactoryCredential(string credentialType = default, string description = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownCredential(@type, description, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new UnknownCredential(credentialType, description, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="description"> Credential description. </param>

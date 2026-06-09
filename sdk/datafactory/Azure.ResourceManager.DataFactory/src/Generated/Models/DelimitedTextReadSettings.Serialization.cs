@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "DelimitedTextReadSettings";
+            string formatReadSettingsType = "DelimitedTextReadSettings";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<int> skipLineCount = default;
             CompressionReadSettings compressionProperties = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    formatReadSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("skipLineCount"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new DelimitedTextReadSettings(@type, additionalProperties, skipLineCount, compressionProperties);
+            return new DelimitedTextReadSettings(formatReadSettingsType, additionalProperties, skipLineCount, compressionProperties);
         }
     }
 }

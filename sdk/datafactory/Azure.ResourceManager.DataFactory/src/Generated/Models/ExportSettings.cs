@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
-        /// <param name="type"> The export setting type. </param>
-        private protected ExportSettings(string @type)
+        /// <param name="exportSettingsType"> The export setting type. </param>
+        private protected ExportSettings(string exportSettingsType)
         {
-            Type = @type;
+            ExportSettingsType = exportSettingsType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
-        /// <param name="type"> The export setting type. </param>
+        /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal ExportSettings(string @type, IDictionary<string, BinaryData> additionalProperties)
+        internal ExportSettings(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            ExportSettingsType = exportSettingsType;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The export setting type. </summary>
-        internal string Type { get; set; }
+        internal string ExportSettingsType { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

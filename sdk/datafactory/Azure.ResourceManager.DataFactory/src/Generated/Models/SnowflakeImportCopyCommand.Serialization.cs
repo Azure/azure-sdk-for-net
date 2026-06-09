@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "SnowflakeImportCopyCommand";
+            string importSettingsType = "SnowflakeImportCopyCommand";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, BinaryData> additionalCopyOptions = default;
             IDictionary<string, BinaryData> additionalFormatOptions = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    importSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("additionalCopyOptions"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new SnowflakeImportCopyCommand(@type, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), storageIntegration);
+            return new SnowflakeImportCopyCommand(importSettingsType, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), storageIntegration);
         }
     }
 }

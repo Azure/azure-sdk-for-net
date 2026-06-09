@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "SqlSink";
+            string copySinkType = "SqlSink";
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
             DataFactoryElement<int> sinkRetryCount = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    copySinkType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("writeBatchSize"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new SqlSink(
-                @type,
+                copySinkType,
                 writeBatchSize,
                 writeBatchTimeout,
                 sinkRetryCount,

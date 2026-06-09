@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownTriggerDependencyReference : TriggerDependencyReference
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTriggerDependencyReference"/>. </summary>
-        /// <param name="type"> The type of dependency reference. </param>
+        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
-        internal UnknownTriggerDependencyReference(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryTriggerReference referenceTrigger) : base(@type ?? "unknown", additionalBinaryDataProperties, referenceTrigger)
+        internal UnknownTriggerDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType ?? "unknown", additionalBinaryDataProperties, referenceTrigger)
         {
         }
     }

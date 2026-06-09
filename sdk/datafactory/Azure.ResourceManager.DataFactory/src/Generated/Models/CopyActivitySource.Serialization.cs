@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(CopyActivitySource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return ServiceNowV2Source.DeserializeServiceNowV2Source(element, options);
                 }
             }
-            return UnknownCopySource.DeserializeUnknownCopyActivitySource(element, options);
+            return UnknownCopySource.DeserializeUnknownCopySource(element, options);
         }
     }
 }

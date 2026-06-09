@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
-        private protected FormatReadSettings(string @type)
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
+        private protected FormatReadSettings(string formatReadSettingsType)
         {
-            Type = @type;
+            FormatReadSettingsType = formatReadSettingsType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"></param>
-        internal FormatReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties)
+        internal FormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            FormatReadSettingsType = formatReadSettingsType;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The read setting type. </summary>
-        internal string Type { get; set; }
+        internal string FormatReadSettingsType { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

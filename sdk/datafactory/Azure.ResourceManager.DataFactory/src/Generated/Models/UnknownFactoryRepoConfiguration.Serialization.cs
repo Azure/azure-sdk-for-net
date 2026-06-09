@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "unknown";
+            string factoryRepoConfigurationType = "unknown";
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    factoryRepoConfigurationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("accountName"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new UnknownFactoryRepoConfiguration(
-                @type,
+                factoryRepoConfigurationType,
                 accountName,
                 repositoryName,
                 collaborationBranch,

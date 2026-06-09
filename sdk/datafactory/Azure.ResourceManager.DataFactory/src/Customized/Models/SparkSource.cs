@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SparkSource
     {
         /// <summary> Initializes a new instance of <see cref="SparkSource"/>. </summary>
-        public SparkSource() : base("SparkSource")
+        public SparkSource()
         {
+            CopySourceType = "SparkSource";
         }
     }
 }

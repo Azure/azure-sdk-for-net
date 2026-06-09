@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetJsonFormat"/>. </summary>
-        /// <param name="type"> Type of dataset storage format. </param>
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encodingName"> The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </param>
         /// <param name="jsonNodeReference"> The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType string). </param>
         /// <param name="jsonPathDefinition"> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with "$"; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}. Type: object (or Expression with resultType object). </param>
-        internal DatasetJsonFormat(string @type, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties, BinaryData filePattern, DataFactoryElement<string> nestingSeparator, DataFactoryElement<string> encodingName, DataFactoryElement<string> jsonNodeReference, BinaryData jsonPathDefinition) : base(@type, serializer, deserializer, additionalProperties)
+        internal DatasetJsonFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties, BinaryData filePattern, DataFactoryElement<string> nestingSeparator, DataFactoryElement<string> encodingName, DataFactoryElement<string> jsonNodeReference, BinaryData jsonPathDefinition) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             FilePattern = filePattern;
             NestingSeparator = nestingSeparator;

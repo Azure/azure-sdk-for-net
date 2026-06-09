@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapHanaSource
     {
         /// <summary> Initializes a new instance of <see cref="SapHanaSource"/>. </summary>
-        public SapHanaSource() : base("SapHanaSource")
+        public SapHanaSource()
         {
+            CopySourceType = "SapHanaSource";
         }
     }
 }

@@ -11,8 +11,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OdbcSource
     {
         /// <summary> Initializes a new instance of <see cref="OdbcSource"/>. </summary>
-        public OdbcSource() : base("OdbcSource")
+        public OdbcSource()
         {
+            CopySourceType = "OdbcSource";
         }
     }
 }

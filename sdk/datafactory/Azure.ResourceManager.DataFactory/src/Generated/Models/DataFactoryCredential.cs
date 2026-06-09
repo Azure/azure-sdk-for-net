@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredential"/>. </summary>
-        /// <param name="type"> Type of credential. </param>
-        private protected DataFactoryCredential(string @type)
+        /// <param name="credentialType"> Type of credential. </param>
+        private protected DataFactoryCredential(string credentialType)
         {
-            Type = @type;
+            CredentialType = credentialType;
             Annotations = new ChangeTrackingList<BinaryData>();
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredential"/>. </summary>
-        /// <param name="type"> Type of credential. </param>
+        /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
         /// <param name="additionalProperties"></param>
-        internal DataFactoryCredential(string @type, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            CredentialType = credentialType;
             Description = description;
             Annotations = annotations;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of credential. </summary>
-        internal string Type { get; set; }
+        internal string CredentialType { get; set; }
 
         /// <summary> Credential description. </summary>
         public string Description { get; set; }

@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
-        /// <param name="type"> Trigger type. </param>
+        /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Rerun Trigger properties. </param>
-        internal RerunTumblingWindowTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, RerunTumblingWindowTriggerTypeProperties typeProperties) : base(@type, description, runtimeState, annotations, additionalProperties)
+        internal RerunTumblingWindowTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, RerunTumblingWindowTriggerTypeProperties typeProperties) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
         }

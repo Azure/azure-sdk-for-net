@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DelimitedTextReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
         /// <param name="compressionProperties"> Compression settings. </param>
-        internal DelimitedTextReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> skipLineCount, CompressionReadSettings compressionProperties) : base(@type, additionalProperties)
+        internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> skipLineCount, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
         {
             SkipLineCount = skipLineCount;
             CompressionProperties = compressionProperties;

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AvroWriteSettings";
+            string formatWriteSettingsType = "AvroWriteSettings";
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string recordName = default;
             string recordNamespace = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    formatWriteSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("recordName"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new AvroWriteSettings(
-                @type,
+                formatWriteSettingsType,
                 additionalProperties,
                 recordName,
                 recordNamespace,

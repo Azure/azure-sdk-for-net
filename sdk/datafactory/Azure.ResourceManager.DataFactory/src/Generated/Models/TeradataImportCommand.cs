@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TeradataImportCommand"/>. </summary>
-        /// <param name="type"> The import setting type. </param>
+        /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalFormatOptions"> Additional format options for Teradata Copy Command. The format options only applies to direct copy from CSV source. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "timeFormat": "HHhMImSSs" }. </param>
-        internal TeradataImportCommand(string @type, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<IDictionary<string, string>> additionalFormatOptions) : base(@type, additionalProperties)
+        internal TeradataImportCommand(string importSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<IDictionary<string, string>> additionalFormatOptions) : base(importSettingsType, additionalProperties)
         {
             AdditionalFormatOptions = additionalFormatOptions;
         }
