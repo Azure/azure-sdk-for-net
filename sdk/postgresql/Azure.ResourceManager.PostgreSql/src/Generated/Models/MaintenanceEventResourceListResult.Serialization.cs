@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MaintenanceEventResourceData item in Value)
+            foreach (MaintenanceEventData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IList<MaintenanceEventResourceData> value = default;
+            IList<MaintenanceEventData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MaintenanceEventResourceData> array = new List<MaintenanceEventResourceData>();
+                    List<MaintenanceEventData> array = new List<MaintenanceEventData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceEventResourceData.DeserializeMaintenanceEventResourceData(item, options));
+                        array.Add(MaintenanceEventData.DeserializeMaintenanceEventData(item, options));
                     }
                     value = array;
                     continue;

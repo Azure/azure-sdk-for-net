@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing a collection of <see cref="MajorVersionUpgradePrecheckResource"/> and their operations.
     /// Each <see cref="MajorVersionUpgradePrecheckResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
-    /// To get a <see cref="MajorVersionUpgradePrecheckResourceCollection"/> instance call the GetMajorVersionUpgradePrecheckResources method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="MajorVersionUpgradePrecheckCollection"/> instance call the GetMajorVersionUpgradePrechecks method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
-    public partial class MajorVersionUpgradePrecheckResourceCollection : ArmCollection, IEnumerable<MajorVersionUpgradePrecheckResource>, IAsyncEnumerable<MajorVersionUpgradePrecheckResource>
+    public partial class MajorVersionUpgradePrecheckCollection : ArmCollection, IEnumerable<MajorVersionUpgradePrecheckResource>, IAsyncEnumerable<MajorVersionUpgradePrecheckResource>
     {
         private readonly ClientDiagnostics _majorVersionUpgradePrecheckClientDiagnostics;
         private readonly MajorVersionUpgradePrecheck _majorVersionUpgradePrecheckRestClient;
 
-        /// <summary> Initializes a new instance of MajorVersionUpgradePrecheckResourceCollection for mocking. </summary>
-        protected MajorVersionUpgradePrecheckResourceCollection()
+        /// <summary> Initializes a new instance of MajorVersionUpgradePrecheckCollection for mocking. </summary>
+        protected MajorVersionUpgradePrecheckCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MajorVersionUpgradePrecheckResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MajorVersionUpgradePrecheckCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MajorVersionUpgradePrecheckResource.ResourceType, out string majorVersionUpgradePrecheckResourceApiVersion);
+            TryGetApiVersion(MajorVersionUpgradePrecheckResource.ResourceType, out string majorVersionUpgradePrecheckApiVersion);
             _majorVersionUpgradePrecheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", MajorVersionUpgradePrecheckResource.ResourceType.Namespace, Diagnostics);
-            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Endpoint, majorVersionUpgradePrecheckResourceApiVersion ?? "2026-04-01-preview");
+            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Endpoint, majorVersionUpgradePrecheckApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
 
-            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckResourceCollection.Get");
+            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckCollection.Get");
             scope.Start();
             try
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, precheckValidationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MajorVersionUpgradePrecheckResourceData> response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                Response<MajorVersionUpgradePrecheckData> response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
 
-            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckResourceCollection.Get");
+            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckCollection.Get");
             scope.Start();
             try
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, precheckValidationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MajorVersionUpgradePrecheckResourceData> response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                Response<MajorVersionUpgradePrecheckData> response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MajorVersionUpgradePrecheckResourceData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllAsyncCollectionResultOfT(
                 _majorVersionUpgradePrecheckRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "MajorVersionUpgradePrecheckResourceCollection.GetAll"), data => new MajorVersionUpgradePrecheckResource(Client, data));
+                "MajorVersionUpgradePrecheckCollection.GetAll"), data => new MajorVersionUpgradePrecheckResource(Client, data));
         }
 
         /// <summary>
@@ -211,13 +211,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MajorVersionUpgradePrecheckResourceData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllCollectionResultOfT(
+            return new PageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllCollectionResultOfT(
                 _majorVersionUpgradePrecheckRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "MajorVersionUpgradePrecheckResourceCollection.GetAll"), data => new MajorVersionUpgradePrecheckResource(Client, data));
+                "MajorVersionUpgradePrecheckCollection.GetAll"), data => new MajorVersionUpgradePrecheckResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
 
-            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckResourceCollection.Exists");
+            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, precheckValidationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MajorVersionUpgradePrecheckResourceData> response = default;
+                Response<MajorVersionUpgradePrecheckData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MajorVersionUpgradePrecheckResourceData)null, result);
+                        response = Response.FromValue((MajorVersionUpgradePrecheckData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
 
-            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckResourceCollection.Exists");
+            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckCollection.Exists");
             scope.Start();
             try
             {
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, precheckValidationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MajorVersionUpgradePrecheckResourceData> response = default;
+                Response<MajorVersionUpgradePrecheckData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MajorVersionUpgradePrecheckResourceData)null, result);
+                        response = Response.FromValue((MajorVersionUpgradePrecheckData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
 
-            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -370,14 +370,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, precheckValidationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MajorVersionUpgradePrecheckResourceData> response = default;
+                Response<MajorVersionUpgradePrecheckData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MajorVersionUpgradePrecheckResourceData)null, result);
+                        response = Response.FromValue((MajorVersionUpgradePrecheckData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
 
-            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _majorVersionUpgradePrecheckClientDiagnostics.CreateScope("MajorVersionUpgradePrecheckCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, precheckValidationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MajorVersionUpgradePrecheckResourceData> response = default;
+                Response<MajorVersionUpgradePrecheckData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MajorVersionUpgradePrecheckResourceData)null, result);
+                        response = Response.FromValue((MajorVersionUpgradePrecheckData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

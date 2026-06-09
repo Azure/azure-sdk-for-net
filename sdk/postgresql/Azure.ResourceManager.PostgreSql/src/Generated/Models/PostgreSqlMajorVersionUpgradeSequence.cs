@@ -12,21 +12,21 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Upgrade sequence information. </summary>
-    public partial class UpgradeSequence
+    public partial class PostgreSqlMajorVersionUpgradeSequence
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeSequence"/>. </summary>
-        internal UpgradeSequence()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMajorVersionUpgradeSequence"/>. </summary>
+        internal PostgreSqlMajorVersionUpgradeSequence()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeSequence"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMajorVersionUpgradeSequence"/>. </summary>
         /// <param name="sourceVersion"> The source PostgreSQL version. </param>
         /// <param name="targetVersion"> The target PostgreSQL version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeSequence(PostgreSqlFlexibleServerVersion? sourceVersion, PostgreSqlFlexibleServerVersion? targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlMajorVersionUpgradeSequence(PostgreSqlFlexibleServerVersion? sourceVersion, PostgreSqlFlexibleServerVersion? targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVersion = sourceVersion;
             TargetVersion = targetVersion;

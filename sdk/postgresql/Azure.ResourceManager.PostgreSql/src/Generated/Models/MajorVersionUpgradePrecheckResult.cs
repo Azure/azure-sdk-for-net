@@ -12,23 +12,23 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Precheck result details. </summary>
-    public partial class PrecheckResult
+    public partial class MajorVersionUpgradePrecheckResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrecheckResult"/>. </summary>
-        internal PrecheckResult()
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckResult"/>. </summary>
+        internal MajorVersionUpgradePrecheckResult()
         {
-            ErrorInfo = new ChangeTrackingList<PrecheckErrorInfo>();
+            ErrorInfo = new ChangeTrackingList<MajorVersionUpgradePrecheckErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrecheckResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckResult"/>. </summary>
         /// <param name="action"> The action performed. </param>
         /// <param name="upgradeSequence"> The upgrade sequence information. </param>
         /// <param name="errorInfo"> Array of error information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrecheckResult(string action, UpgradeSequence upgradeSequence, IList<PrecheckErrorInfo> errorInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MajorVersionUpgradePrecheckResult(string action, PostgreSqlMajorVersionUpgradeSequence upgradeSequence, IList<MajorVersionUpgradePrecheckErrorInfo> errorInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             UpgradeSequence = upgradeSequence;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The upgrade sequence information. </summary>
         [WirePath("upgradeSequence")]
-        public UpgradeSequence UpgradeSequence { get; }
+        public PostgreSqlMajorVersionUpgradeSequence UpgradeSequence { get; }
 
         /// <summary> Array of error information. </summary>
         [WirePath("errorInfo")]
-        public IList<PrecheckErrorInfo> ErrorInfo { get; }
+        public IList<MajorVersionUpgradePrecheckErrorInfo> ErrorInfo { get; }
     }
 }

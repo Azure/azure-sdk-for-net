@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<StartMajorVersionUpgradePrecheckResponse>> StartMajorVersionUpgradePrecheckAsync(WaitUntil waitUntil, StartMajorVersionUpgradePrecheckRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StartMajorVersionUpgradePrecheckResult>> StartMajorVersionUpgradePrecheckAsync(WaitUntil waitUntil, StartMajorVersionUpgradePrecheckContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1324,10 +1324,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateStartMajorVersionUpgradePrecheckRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StartMajorVersionUpgradePrecheckRequest.ToRequestContent(content), context);
+                HttpMessage message = _serversRestClient.CreateStartMajorVersionUpgradePrecheckRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StartMajorVersionUpgradePrecheckContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResponse> operation = new FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResponse>(
-                    new StartMajorVersionUpgradePrecheckResponseOperationSource(),
+                FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResult> operation = new FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResult>(
+                    new StartMajorVersionUpgradePrecheckResultOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<StartMajorVersionUpgradePrecheckResponse> StartMajorVersionUpgradePrecheck(WaitUntil waitUntil, StartMajorVersionUpgradePrecheckRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StartMajorVersionUpgradePrecheckResult> StartMajorVersionUpgradePrecheck(WaitUntil waitUntil, StartMajorVersionUpgradePrecheckContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1383,10 +1383,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateStartMajorVersionUpgradePrecheckRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StartMajorVersionUpgradePrecheckRequest.ToRequestContent(content), context);
+                HttpMessage message = _serversRestClient.CreateStartMajorVersionUpgradePrecheckRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StartMajorVersionUpgradePrecheckContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResponse> operation = new FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResponse>(
-                    new StartMajorVersionUpgradePrecheckResponseOperationSource(),
+                FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResult> operation = new FlexibleServersArmOperation<StartMajorVersionUpgradePrecheckResult>(
+                    new StartMajorVersionUpgradePrecheckResultOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2008,11 +2008,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetVirtualEndpointResources().Get(virtualEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceEventResources in the <see cref="PostgreSqlFlexibleServerResource"/>. </summary>
-        /// <returns> An object representing collection of MaintenanceEventResources and their operations over a MaintenanceEventResource. </returns>
-        public virtual MaintenanceEventResourceCollection GetMaintenanceEventResources()
+        /// <summary> Gets a collection of MaintenanceEvents in the <see cref="PostgreSqlFlexibleServerResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenanceEvents and their operations over a MaintenanceEventResource. </returns>
+        public virtual MaintenanceEventCollection GetMaintenanceEvents()
         {
-            return GetCachedClient(client => new MaintenanceEventResourceCollection(client, Id));
+            return GetCachedClient(client => new MaintenanceEventCollection(client, Id));
         }
 
         /// <summary> Gets information about a maintenance event for a flexible server. </summary>
@@ -2021,11 +2021,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceEventId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceEventId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceEventResource>> GetMaintenanceEventResourceAsync(string maintenanceEventId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceEventResource>> GetMaintenanceEventAsync(string maintenanceEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            return await GetMaintenanceEventResources().GetAsync(maintenanceEventId, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceEvents().GetAsync(maintenanceEventId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets information about a maintenance event for a flexible server. </summary>
@@ -2034,31 +2034,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceEventId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceEventId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceEventResource> GetMaintenanceEventResource(string maintenanceEventId, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceEventResource> GetMaintenanceEvent(string maintenanceEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            return GetMaintenanceEventResources().Get(maintenanceEventId, cancellationToken);
+            return GetMaintenanceEvents().Get(maintenanceEventId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MajorVersionUpgradePrecheckResources in the <see cref="PostgreSqlFlexibleServerResource"/>. </summary>
-        /// <returns> An object representing collection of MajorVersionUpgradePrecheckResources and their operations over a MajorVersionUpgradePrecheckResource. </returns>
-        public virtual MajorVersionUpgradePrecheckResourceCollection GetMajorVersionUpgradePrecheckResources()
+        /// <summary> Gets a collection of MajorVersionUpgradePrechecks in the <see cref="PostgreSqlFlexibleServerResource"/>. </summary>
+        /// <returns> An object representing collection of MajorVersionUpgradePrechecks and their operations over a MajorVersionUpgradePrecheckResource. </returns>
+        public virtual MajorVersionUpgradePrecheckCollection GetMajorVersionUpgradePrechecks()
         {
-            return GetCachedClient(client => new MajorVersionUpgradePrecheckResourceCollection(client, Id));
-        }
-
-        /// <summary> Gets information about a major version upgrade precheck for a flexible server. </summary>
-        /// <param name="precheckValidationId"> The name of the MajorVersionUpgradePrecheckResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="precheckValidationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="precheckValidationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MajorVersionUpgradePrecheckResource>> GetMajorVersionUpgradePrecheckResourceAsync(string precheckValidationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
-
-            return await GetMajorVersionUpgradePrecheckResources().GetAsync(precheckValidationId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new MajorVersionUpgradePrecheckCollection(client, Id));
         }
 
         /// <summary> Gets information about a major version upgrade precheck for a flexible server. </summary>
@@ -2067,11 +2054,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="precheckValidationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="precheckValidationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MajorVersionUpgradePrecheckResource> GetMajorVersionUpgradePrecheckResource(string precheckValidationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MajorVersionUpgradePrecheckResource>> GetMajorVersionUpgradePrecheckAsync(string precheckValidationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
 
-            return GetMajorVersionUpgradePrecheckResources().Get(precheckValidationId, cancellationToken);
+            return await GetMajorVersionUpgradePrechecks().GetAsync(precheckValidationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about a major version upgrade precheck for a flexible server. </summary>
+        /// <param name="precheckValidationId"> The name of the MajorVersionUpgradePrecheckResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="precheckValidationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="precheckValidationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MajorVersionUpgradePrecheckResource> GetMajorVersionUpgradePrecheck(string precheckValidationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(precheckValidationId, nameof(precheckValidationId));
+
+            return GetMajorVersionUpgradePrechecks().Get(precheckValidationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of PostgreSqlFlexibleServerMicrosoftEntraAdministrators in the <see cref="PostgreSqlFlexibleServerResource"/>. </summary>

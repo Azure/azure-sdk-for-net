@@ -18,15 +18,15 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a MaintenanceEventResource along with the instance operations that can be performed on it.
+    /// A class representing a MaintenanceEvent along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceEventResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetMaintenanceEventResources method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetMaintenanceEvents method.
     /// </summary>
     public partial class MaintenanceEventResource : ArmResource
     {
         private readonly ClientDiagnostics _maintenanceEventsClientDiagnostics;
         private readonly MaintenanceEvents _maintenanceEventsRestClient;
-        private readonly MaintenanceEventResourceData _data;
+        private readonly MaintenanceEventData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/maintenanceEvents";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Initializes a new instance of <see cref="MaintenanceEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceEventResource(ArmClient client, MaintenanceEventResourceData data) : this(client, data.Id)
+        internal MaintenanceEventResource(ArmClient client, MaintenanceEventData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaintenanceEventResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string maintenanceEventResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceEventApiVersion);
             _maintenanceEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Endpoint, maintenanceEventResourceApiVersion ?? "2026-04-01-preview");
+            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Endpoint, maintenanceEventApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MaintenanceEventResourceData Data
+        public virtual MaintenanceEventData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceEventResourceData> response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                Response<MaintenanceEventData> response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceEventResourceData> response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                Response<MaintenanceEventData> response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MaintenanceEventActionResponse>> ApplyNowAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceEventActionResult>> ApplyNowAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResource.ApplyNow");
             scope.Start();
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _maintenanceEventsRestClient.CreateApplyNowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation<MaintenanceEventActionResponse> operation = new FlexibleServersArmOperation<MaintenanceEventActionResponse>(
-                    new MaintenanceEventActionResponseOperationSource(),
+                FlexibleServersArmOperation<MaintenanceEventActionResult> operation = new FlexibleServersArmOperation<MaintenanceEventActionResult>(
+                    new MaintenanceEventActionResultOperationSource(),
                     _maintenanceEventsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<MaintenanceEventActionResponse> ApplyNow(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceEventActionResult> ApplyNow(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResource.ApplyNow");
             scope.Start();
@@ -278,8 +278,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _maintenanceEventsRestClient.CreateApplyNowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation<MaintenanceEventActionResponse> operation = new FlexibleServersArmOperation<MaintenanceEventActionResponse>(
-                    new MaintenanceEventActionResponseOperationSource(),
+                FlexibleServersArmOperation<MaintenanceEventActionResult> operation = new FlexibleServersArmOperation<MaintenanceEventActionResult>(
+                    new MaintenanceEventActionResultOperationSource(),
                     _maintenanceEventsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MaintenanceEventActionResponse>> RescheduleAsync(WaitUntil waitUntil, MaintenanceEventRescheduleRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceEventActionResult>> RescheduleAsync(WaitUntil waitUntil, MaintenanceEventRescheduleContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -335,10 +335,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceEventsRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MaintenanceEventRescheduleRequest.ToRequestContent(content), context);
+                HttpMessage message = _maintenanceEventsRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MaintenanceEventRescheduleContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation<MaintenanceEventActionResponse> operation = new FlexibleServersArmOperation<MaintenanceEventActionResponse>(
-                    new MaintenanceEventActionResponseOperationSource(),
+                FlexibleServersArmOperation<MaintenanceEventActionResult> operation = new FlexibleServersArmOperation<MaintenanceEventActionResult>(
+                    new MaintenanceEventActionResultOperationSource(),
                     _maintenanceEventsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MaintenanceEventActionResponse> Reschedule(WaitUntil waitUntil, MaintenanceEventRescheduleRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceEventActionResult> Reschedule(WaitUntil waitUntil, MaintenanceEventRescheduleContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -394,10 +394,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceEventsRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MaintenanceEventRescheduleRequest.ToRequestContent(content), context);
+                HttpMessage message = _maintenanceEventsRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MaintenanceEventRescheduleContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation<MaintenanceEventActionResponse> operation = new FlexibleServersArmOperation<MaintenanceEventActionResponse>(
-                    new MaintenanceEventActionResponseOperationSource(),
+                FlexibleServersArmOperation<MaintenanceEventActionResult> operation = new FlexibleServersArmOperation<MaintenanceEventActionResult>(
+                    new MaintenanceEventActionResultOperationSource(),
                     _maintenanceEventsClientDiagnostics,
                     Pipeline,
                     message.Request,

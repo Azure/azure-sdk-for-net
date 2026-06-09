@@ -16,58 +16,58 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response model for starting a major version upgrade precheck. </summary>
-    public partial class StartMajorVersionUpgradePrecheckResponse : IJsonModel<StartMajorVersionUpgradePrecheckResponse>
+    public partial class StartMajorVersionUpgradePrecheckResult : IJsonModel<StartMajorVersionUpgradePrecheckResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StartMajorVersionUpgradePrecheckResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StartMajorVersionUpgradePrecheckResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStartMajorVersionUpgradePrecheckResponse(document.RootElement, options);
+                        return DeserializeStartMajorVersionUpgradePrecheckResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StartMajorVersionUpgradePrecheckResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StartMajorVersionUpgradePrecheckResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StartMajorVersionUpgradePrecheckResponse IPersistableModel<StartMajorVersionUpgradePrecheckResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StartMajorVersionUpgradePrecheckResult IPersistableModel<StartMajorVersionUpgradePrecheckResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StartMajorVersionUpgradePrecheckResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StartMajorVersionUpgradePrecheckResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StartMajorVersionUpgradePrecheckResponse"/> from. </param>
-        internal static StartMajorVersionUpgradePrecheckResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StartMajorVersionUpgradePrecheckResult"/> from. </param>
+        internal static StartMajorVersionUpgradePrecheckResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStartMajorVersionUpgradePrecheckResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeStartMajorVersionUpgradePrecheckResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StartMajorVersionUpgradePrecheckResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StartMajorVersionUpgradePrecheckResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -117,24 +117,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StartMajorVersionUpgradePrecheckResponse IJsonModel<StartMajorVersionUpgradePrecheckResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StartMajorVersionUpgradePrecheckResult IJsonModel<StartMajorVersionUpgradePrecheckResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StartMajorVersionUpgradePrecheckResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StartMajorVersionUpgradePrecheckResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartMajorVersionUpgradePrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStartMajorVersionUpgradePrecheckResponse(document.RootElement, options);
+            return DeserializeStartMajorVersionUpgradePrecheckResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StartMajorVersionUpgradePrecheckResponse DeserializeStartMajorVersionUpgradePrecheckResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static StartMajorVersionUpgradePrecheckResult DeserializeStartMajorVersionUpgradePrecheckResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StartMajorVersionUpgradePrecheckResponse(name, createOn, status, additionalBinaryDataProperties);
+            return new StartMajorVersionUpgradePrecheckResult(name, createOn, status, additionalBinaryDataProperties);
         }
     }
 }

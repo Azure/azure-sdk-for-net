@@ -12,17 +12,17 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Properties of a maintenance event resource. </summary>
-    public partial class MaintenanceEventResourceProperties
+    public partial class MaintenanceEventProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceEventResourceProperties"/>. </summary>
-        internal MaintenanceEventResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="MaintenanceEventProperties"/>. </summary>
+        internal MaintenanceEventProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceEventResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceEventProperties"/>. </summary>
         /// <param name="maintenanceEventId"> A service-generated identifier for this maintenance event, assigned by the platform (e.g., 'YL1T-HFG'). The format is not contractual and clients should not attempt to parse or construct this value. </param>
         /// <param name="maintenanceType"> The maintenance type (e.g., 'PlannedMaintenance'). </param>
         /// <param name="description"> The human-readable description of the maintenance event. </param>
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="startOn"> The scheduled start time of the maintenance event (UTC). </param>
         /// <param name="endOn"> The scheduled end time of the maintenance event (UTC). </param>
         /// <param name="estimatedDowntime"> The estimated downtime as an ISO 8601 duration string (e.g., 'PT60S' = 60 seconds). </param>
-        /// <param name="deferrable"> A value indicating whether this maintenance event can be rescheduled by the customer. </param>
-        /// <param name="deferralDeadline"> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </param>
-        /// <param name="rescheduledFrom"> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </param>
+        /// <param name="isDeferrable"> A value indicating whether this maintenance event can be rescheduled by the customer. </param>
+        /// <param name="deferralDeadlineOn"> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </param>
+        /// <param name="rescheduledFromOn"> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
         /// <param name="originalStartOn"> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceEventResourceProperties(string maintenanceEventId, MaintenanceType maintenanceType, string description, MaintenanceEventStatus status, DateTimeOffset startOn, DateTimeOffset endOn, string estimatedDowntime, bool deferrable, DateTimeOffset? deferralDeadline, DateTimeOffset? rescheduledFrom, DateTimeOffset? lastUpdatedOn, DateTimeOffset originalStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceEventProperties(string maintenanceEventId, PostgreSqlFlexibleServerMaintenanceType maintenanceType, string description, MaintenanceEventStatus status, DateTimeOffset startOn, DateTimeOffset endOn, string estimatedDowntime, bool isDeferrable, DateTimeOffset? deferralDeadlineOn, DateTimeOffset? rescheduledFromOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset originalStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceEventId = maintenanceEventId;
             MaintenanceType = maintenanceType;
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             StartOn = startOn;
             EndOn = endOn;
             EstimatedDowntime = estimatedDowntime;
-            Deferrable = deferrable;
-            DeferralDeadline = deferralDeadline;
-            RescheduledFrom = rescheduledFrom;
+            IsDeferrable = isDeferrable;
+            DeferralDeadlineOn = deferralDeadlineOn;
+            RescheduledFromOn = rescheduledFromOn;
             LastUpdatedOn = lastUpdatedOn;
             OriginalStartOn = originalStartOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The maintenance type (e.g., 'PlannedMaintenance'). </summary>
         [WirePath("maintenanceType")]
-        public MaintenanceType MaintenanceType { get; }
+        public PostgreSqlFlexibleServerMaintenanceType MaintenanceType { get; }
 
         /// <summary> The human-readable description of the maintenance event. </summary>
         [WirePath("description")]
@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> A value indicating whether this maintenance event can be rescheduled by the customer. </summary>
         [WirePath("deferrable")]
-        public bool Deferrable { get; }
+        public bool IsDeferrable { get; }
 
         /// <summary> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </summary>
         [WirePath("deferralDeadline")]
-        public DateTimeOffset? DeferralDeadline { get; }
+        public DateTimeOffset? DeferralDeadlineOn { get; }
 
         /// <summary> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </summary>
         [WirePath("rescheduledFrom")]
-        public DateTimeOffset? RescheduledFrom { get; }
+        public DateTimeOffset? RescheduledFromOn { get; }
 
         /// <summary> The time this maintenance event record was last updated (UTC). </summary>
         [WirePath("lastUpdatedTime")]

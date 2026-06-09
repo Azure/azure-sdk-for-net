@@ -14,7 +14,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal partial class MajorVersionUpgradePrecheckGetAllCollectionResultOfT : Pageable<MajorVersionUpgradePrecheckResourceData>
+    internal partial class MajorVersionUpgradePrecheckGetAllCollectionResultOfT : Pageable<MajorVersionUpgradePrecheckData>
     {
         private readonly MajorVersionUpgradePrecheck _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MajorVersionUpgradePrecheckGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<MajorVersionUpgradePrecheckResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MajorVersionUpgradePrecheckData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 MajorVersionUpgradePrecheckResourceListResult result = MajorVersionUpgradePrecheckResourceListResult.FromResponse(response);
-                yield return Page<MajorVersionUpgradePrecheckResourceData>.FromValues((IReadOnlyList<MajorVersionUpgradePrecheckResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MajorVersionUpgradePrecheckData>.FromValues((IReadOnlyList<MajorVersionUpgradePrecheckData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

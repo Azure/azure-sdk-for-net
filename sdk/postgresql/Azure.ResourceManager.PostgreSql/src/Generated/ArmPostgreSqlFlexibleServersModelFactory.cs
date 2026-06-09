@@ -522,19 +522,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
-        /// <returns> A new <see cref="Models.StartMajorVersionUpgradePrecheckRequest"/> instance for mocking. </returns>
-        public static StartMajorVersionUpgradePrecheckRequest StartMajorVersionUpgradePrecheckRequest(PostgreSqlFlexibleServerVersion targetVersion = default)
+        /// <returns> A new <see cref="Models.StartMajorVersionUpgradePrecheckContent"/> instance for mocking. </returns>
+        public static StartMajorVersionUpgradePrecheckContent StartMajorVersionUpgradePrecheckContent(PostgreSqlFlexibleServerVersion targetVersion = default)
         {
-            return new StartMajorVersionUpgradePrecheckRequest(targetVersion, default);
+            return new StartMajorVersionUpgradePrecheckContent(targetVersion, default);
         }
 
         /// <param name="name"> The precheck validation ID. </param>
         /// <param name="createOn"> The time when the precheck was created. </param>
         /// <param name="status"> The status of the precheck validation. </param>
-        /// <returns> A new <see cref="Models.StartMajorVersionUpgradePrecheckResponse"/> instance for mocking. </returns>
-        public static StartMajorVersionUpgradePrecheckResponse StartMajorVersionUpgradePrecheckResponse(string name = default, DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default)
+        /// <returns> A new <see cref="Models.StartMajorVersionUpgradePrecheckResult"/> instance for mocking. </returns>
+        public static StartMajorVersionUpgradePrecheckResult StartMajorVersionUpgradePrecheckResult(string name = default, DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default)
         {
-            return new StartMajorVersionUpgradePrecheckResponse(name, createOn, status, default);
+            return new StartMajorVersionUpgradePrecheckResult(name, createOn, status, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -638,10 +638,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="FlexibleServers.MaintenanceEventResourceData"/> instance for mocking. </returns>
-        public static MaintenanceEventResourceData MaintenanceEventResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceEventResourceProperties properties = default)
+        /// <returns> A new <see cref="FlexibleServers.MaintenanceEventData"/> instance for mocking. </returns>
+        public static MaintenanceEventData MaintenanceEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceEventProperties properties = default)
         {
-            return new MaintenanceEventResourceData(
+            return new MaintenanceEventData(
                 id,
                 name,
                 resourceType,
@@ -657,15 +657,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="startOn"> The scheduled start time of the maintenance event (UTC). </param>
         /// <param name="endOn"> The scheduled end time of the maintenance event (UTC). </param>
         /// <param name="estimatedDowntime"> The estimated downtime as an ISO 8601 duration string (e.g., 'PT60S' = 60 seconds). </param>
-        /// <param name="deferrable"> A value indicating whether this maintenance event can be rescheduled by the customer. </param>
-        /// <param name="deferralDeadline"> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </param>
-        /// <param name="rescheduledFrom"> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </param>
+        /// <param name="isDeferrable"> A value indicating whether this maintenance event can be rescheduled by the customer. </param>
+        /// <param name="deferralDeadlineOn"> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </param>
+        /// <param name="rescheduledFromOn"> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
         /// <param name="originalStartOn"> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </param>
-        /// <returns> A new <see cref="Models.MaintenanceEventResourceProperties"/> instance for mocking. </returns>
-        public static MaintenanceEventResourceProperties MaintenanceEventResourceProperties(string maintenanceEventId = default, MaintenanceType maintenanceType = default, string description = default, MaintenanceEventStatus status = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, string estimatedDowntime = default, bool deferrable = default, DateTimeOffset? deferralDeadline = default, DateTimeOffset? rescheduledFrom = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset originalStartOn = default)
+        /// <returns> A new <see cref="Models.MaintenanceEventProperties"/> instance for mocking. </returns>
+        public static MaintenanceEventProperties MaintenanceEventProperties(string maintenanceEventId = default, PostgreSqlFlexibleServerMaintenanceType maintenanceType = default, string description = default, MaintenanceEventStatus status = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, string estimatedDowntime = default, bool isDeferrable = default, DateTimeOffset? deferralDeadlineOn = default, DateTimeOffset? rescheduledFromOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset originalStartOn = default)
         {
-            return new MaintenanceEventResourceProperties(
+            return new MaintenanceEventProperties(
                 maintenanceEventId,
                 maintenanceType,
                 description,
@@ -673,19 +673,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 startOn,
                 endOn,
                 estimatedDowntime,
-                deferrable,
-                deferralDeadline,
-                rescheduledFrom,
+                isDeferrable,
+                deferralDeadlineOn,
+                rescheduledFromOn,
                 lastUpdatedOn,
                 originalStartOn,
                 default);
         }
 
         /// <param name="postponeToOn"> New start time in RFC3339 format. </param>
-        /// <returns> A new <see cref="Models.MaintenanceEventRescheduleRequest"/> instance for mocking. </returns>
-        public static MaintenanceEventRescheduleRequest MaintenanceEventRescheduleRequest(DateTimeOffset postponeToOn = default)
+        /// <returns> A new <see cref="Models.MaintenanceEventRescheduleContent"/> instance for mocking. </returns>
+        public static MaintenanceEventRescheduleContent MaintenanceEventRescheduleContent(DateTimeOffset postponeToOn = default)
         {
-            return new MaintenanceEventRescheduleRequest(postponeToOn, default);
+            return new MaintenanceEventRescheduleContent(postponeToOn, default);
         }
 
         /// <param name="maintenanceEventId"> The maintenance event name (maintenance ID). </param>
@@ -693,18 +693,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="status"> The status of the maintenance event. </param>
         /// <param name="plannedStartOn"> The planned start time of the maintenance event (UTC). </param>
         /// <param name="plannedEndOn"> The planned end time of the maintenance event (UTC). </param>
-        /// <param name="appliedNow"> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </param>
+        /// <param name="isAppliedNow"> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
-        /// <returns> A new <see cref="Models.MaintenanceEventActionResponse"/> instance for mocking. </returns>
-        public static MaintenanceEventActionResponse MaintenanceEventActionResponse(string maintenanceEventId = default, ResourceIdentifier serverId = default, MaintenanceEventStatus? status = default, DateTimeOffset? plannedStartOn = default, DateTimeOffset? plannedEndOn = default, bool? appliedNow = default, DateTimeOffset? lastUpdatedOn = default)
+        /// <returns> A new <see cref="Models.MaintenanceEventActionResult"/> instance for mocking. </returns>
+        public static MaintenanceEventActionResult MaintenanceEventActionResult(string maintenanceEventId = default, ResourceIdentifier serverId = default, MaintenanceEventStatus? status = default, DateTimeOffset? plannedStartOn = default, DateTimeOffset? plannedEndOn = default, bool? isAppliedNow = default, DateTimeOffset? lastUpdatedOn = default)
         {
-            return new MaintenanceEventActionResponse(
+            return new MaintenanceEventActionResult(
                 maintenanceEventId,
                 serverId,
                 status,
                 plannedStartOn,
                 plannedEndOn,
-                appliedNow,
+                isAppliedNow,
                 lastUpdatedOn,
                 default);
         }
@@ -714,10 +714,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="FlexibleServers.MajorVersionUpgradePrecheckResourceData"/> instance for mocking. </returns>
-        public static MajorVersionUpgradePrecheckResourceData MajorVersionUpgradePrecheckResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MajorVersionUpgradePrecheckResourceProperties properties = default)
+        /// <returns> A new <see cref="FlexibleServers.MajorVersionUpgradePrecheckData"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckData MajorVersionUpgradePrecheckData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MajorVersionUpgradePrecheckProperties properties = default)
         {
-            return new MajorVersionUpgradePrecheckResourceData(
+            return new MajorVersionUpgradePrecheckData(
                 id,
                 name,
                 resourceType,
@@ -731,58 +731,58 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="precheckResult"> The detailed result of the precheck operation. </param>
         /// <param name="targetVersion"> The target PostgreSQL major version for the upgrade. </param>
         /// <param name="policyDetails"> Array of policy validation details. </param>
-        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckResourceProperties"/> instance for mocking. </returns>
-        public static MajorVersionUpgradePrecheckResourceProperties MajorVersionUpgradePrecheckResourceProperties(DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default, PrecheckResult precheckResult = default, PostgreSqlFlexibleServerVersion? targetVersion = default, IEnumerable<PolicyDetail> policyDetails = default)
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckProperties"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckProperties MajorVersionUpgradePrecheckProperties(DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default, MajorVersionUpgradePrecheckResult precheckResult = default, PostgreSqlFlexibleServerVersion? targetVersion = default, IEnumerable<MajorVersionUpgradePrecheckPolicyDetail> policyDetails = default)
         {
-            policyDetails ??= new ChangeTrackingList<PolicyDetail>();
+            policyDetails ??= new ChangeTrackingList<MajorVersionUpgradePrecheckPolicyDetail>();
 
-            return new MajorVersionUpgradePrecheckResourceProperties(
+            return new MajorVersionUpgradePrecheckProperties(
                 createOn,
                 status,
                 precheckResult,
                 targetVersion,
-                (policyDetails ?? new ChangeTrackingList<PolicyDetail>()).ToList(),
+                (policyDetails ?? new ChangeTrackingList<MajorVersionUpgradePrecheckPolicyDetail>()).ToList(),
                 default);
         }
 
         /// <param name="action"> The action performed. </param>
         /// <param name="upgradeSequence"> The upgrade sequence information. </param>
         /// <param name="errorInfo"> Array of error information. </param>
-        /// <returns> A new <see cref="Models.PrecheckResult"/> instance for mocking. </returns>
-        public static PrecheckResult PrecheckResult(string action = default, UpgradeSequence upgradeSequence = default, IEnumerable<PrecheckErrorInfo> errorInfo = default)
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckResult"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckResult MajorVersionUpgradePrecheckResult(string action = default, PostgreSqlMajorVersionUpgradeSequence upgradeSequence = default, IEnumerable<MajorVersionUpgradePrecheckErrorInfo> errorInfo = default)
         {
-            errorInfo ??= new ChangeTrackingList<PrecheckErrorInfo>();
+            errorInfo ??= new ChangeTrackingList<MajorVersionUpgradePrecheckErrorInfo>();
 
-            return new PrecheckResult(action, upgradeSequence, (errorInfo ?? new ChangeTrackingList<PrecheckErrorInfo>()).ToList(), default);
+            return new MajorVersionUpgradePrecheckResult(action, upgradeSequence, (errorInfo ?? new ChangeTrackingList<MajorVersionUpgradePrecheckErrorInfo>()).ToList(), default);
         }
 
         /// <param name="sourceVersion"> The source PostgreSQL version. </param>
         /// <param name="targetVersion"> The target PostgreSQL version. </param>
-        /// <returns> A new <see cref="Models.UpgradeSequence"/> instance for mocking. </returns>
-        public static UpgradeSequence UpgradeSequence(PostgreSqlFlexibleServerVersion? sourceVersion = default, PostgreSqlFlexibleServerVersion? targetVersion = default)
+        /// <returns> A new <see cref="Models.PostgreSqlMajorVersionUpgradeSequence"/> instance for mocking. </returns>
+        public static PostgreSqlMajorVersionUpgradeSequence PostgreSqlMajorVersionUpgradeSequence(PostgreSqlFlexibleServerVersion? sourceVersion = default, PostgreSqlFlexibleServerVersion? targetVersion = default)
         {
-            return new UpgradeSequence(sourceVersion, targetVersion, default);
+            return new PostgreSqlMajorVersionUpgradeSequence(sourceVersion, targetVersion, default);
         }
 
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        /// <returns> A new <see cref="Models.PrecheckErrorInfo"/> instance for mocking. </returns>
-        public static PrecheckErrorInfo PrecheckErrorInfo(int? errorCode = default, string errorMessage = default)
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckErrorInfo"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckErrorInfo MajorVersionUpgradePrecheckErrorInfo(int? errorCode = default, string errorMessage = default)
         {
-            return new PrecheckErrorInfo(errorCode, errorMessage, default);
+            return new MajorVersionUpgradePrecheckErrorInfo(errorCode, errorMessage, default);
         }
 
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="passed"> Whether the policy validation passed. </param>
+        /// <param name="isPassed"> Whether the policy validation passed. </param>
         /// <param name="errorCode"> The error code if validation failed. </param>
         /// <param name="errorMessage"> The error message if validation failed. </param>
         /// <param name="policyDescription"> Description of what the policy validates. </param>
-        /// <returns> A new <see cref="Models.PolicyDetail"/> instance for mocking. </returns>
-        public static PolicyDetail PolicyDetail(string policyName = default, bool? passed = default, int? errorCode = default, string errorMessage = default, string policyDescription = default)
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckPolicyDetail"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckPolicyDetail MajorVersionUpgradePrecheckPolicyDetail(string policyName = default, bool? isPassed = default, int? errorCode = default, string errorMessage = default, string policyDescription = default)
         {
-            return new PolicyDetail(
+            return new MajorVersionUpgradePrecheckPolicyDetail(
                 policyName,
-                passed,
+                isPassed,
                 errorCode,
                 errorMessage,
                 policyDescription,

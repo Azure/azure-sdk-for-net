@@ -13,28 +13,28 @@ using Azure.ResourceManager.PostgreSql;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary></summary>
-    public partial class MajorVersionUpgradePrecheckResource : IJsonModel<MajorVersionUpgradePrecheckResourceData>
+    public partial class MajorVersionUpgradePrecheckResource : IJsonModel<MajorVersionUpgradePrecheckData>
     {
-        private static IJsonModel<MajorVersionUpgradePrecheckResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<MajorVersionUpgradePrecheckData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MajorVersionUpgradePrecheckResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MajorVersionUpgradePrecheckResourceData();
+        private static IJsonModel<MajorVersionUpgradePrecheckData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MajorVersionUpgradePrecheckData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MajorVersionUpgradePrecheckResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MajorVersionUpgradePrecheckResourceData>)Data).Write(writer, options);
+        void IJsonModel<MajorVersionUpgradePrecheckData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MajorVersionUpgradePrecheckData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MajorVersionUpgradePrecheckResourceData IJsonModel<MajorVersionUpgradePrecheckResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MajorVersionUpgradePrecheckData IJsonModel<MajorVersionUpgradePrecheckData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MajorVersionUpgradePrecheckResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MajorVersionUpgradePrecheckResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<MajorVersionUpgradePrecheckData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MajorVersionUpgradePrecheckData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MajorVersionUpgradePrecheckResourceData IPersistableModel<MajorVersionUpgradePrecheckResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MajorVersionUpgradePrecheckResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
+        MajorVersionUpgradePrecheckData IPersistableModel<MajorVersionUpgradePrecheckData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MajorVersionUpgradePrecheckData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MajorVersionUpgradePrecheckResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MajorVersionUpgradePrecheckData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

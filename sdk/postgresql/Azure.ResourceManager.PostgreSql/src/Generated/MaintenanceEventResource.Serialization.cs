@@ -13,28 +13,28 @@ using Azure.ResourceManager.PostgreSql;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary></summary>
-    public partial class MaintenanceEventResource : IJsonModel<MaintenanceEventResourceData>
+    public partial class MaintenanceEventResource : IJsonModel<MaintenanceEventData>
     {
-        private static IJsonModel<MaintenanceEventResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<MaintenanceEventData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MaintenanceEventResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenanceEventResourceData();
+        private static IJsonModel<MaintenanceEventData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenanceEventData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenanceEventResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceEventResourceData>)Data).Write(writer, options);
+        void IJsonModel<MaintenanceEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceEventData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventResourceData IJsonModel<MaintenanceEventResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MaintenanceEventData IJsonModel<MaintenanceEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceEventResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceEventResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<MaintenanceEventData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceEventData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventResourceData IPersistableModel<MaintenanceEventResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceEventResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
+        MaintenanceEventData IPersistableModel<MaintenanceEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceEventData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceEventResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MaintenanceEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

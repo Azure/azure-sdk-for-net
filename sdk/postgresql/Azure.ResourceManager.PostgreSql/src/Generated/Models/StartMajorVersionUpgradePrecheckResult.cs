@@ -12,22 +12,22 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response model for starting a major version upgrade precheck. </summary>
-    public partial class StartMajorVersionUpgradePrecheckResponse
+    public partial class StartMajorVersionUpgradePrecheckResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckResponse"/>. </summary>
-        internal StartMajorVersionUpgradePrecheckResponse()
+        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckResult"/>. </summary>
+        internal StartMajorVersionUpgradePrecheckResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckResult"/>. </summary>
         /// <param name="name"> The precheck validation ID. </param>
         /// <param name="createOn"> The time when the precheck was created. </param>
         /// <param name="status"> The status of the precheck validation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartMajorVersionUpgradePrecheckResponse(string name, DateTimeOffset? createOn, MajorVersionUpgradePrecheckStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StartMajorVersionUpgradePrecheckResult(string name, DateTimeOffset? createOn, MajorVersionUpgradePrecheckStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             CreateOn = createOn;

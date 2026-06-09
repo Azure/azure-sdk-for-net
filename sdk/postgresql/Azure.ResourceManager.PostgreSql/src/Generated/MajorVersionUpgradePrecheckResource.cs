@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a MajorVersionUpgradePrecheckResource along with the instance operations that can be performed on it.
+    /// A class representing a MajorVersionUpgradePrecheck along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MajorVersionUpgradePrecheckResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetMajorVersionUpgradePrecheckResources method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetMajorVersionUpgradePrechecks method.
     /// </summary>
     public partial class MajorVersionUpgradePrecheckResource : ArmResource
     {
         private readonly ClientDiagnostics _majorVersionUpgradePrecheckClientDiagnostics;
         private readonly MajorVersionUpgradePrecheck _majorVersionUpgradePrecheckRestClient;
-        private readonly MajorVersionUpgradePrecheckResourceData _data;
+        private readonly MajorVersionUpgradePrecheckData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/majorVersionUpgradePrecheck";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MajorVersionUpgradePrecheckResource(ArmClient client, MajorVersionUpgradePrecheckResourceData data) : this(client, data.Id)
+        internal MajorVersionUpgradePrecheckResource(ArmClient client, MajorVersionUpgradePrecheckData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MajorVersionUpgradePrecheckResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string majorVersionUpgradePrecheckResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string majorVersionUpgradePrecheckApiVersion);
             _majorVersionUpgradePrecheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Endpoint, majorVersionUpgradePrecheckResourceApiVersion ?? "2026-04-01-preview");
+            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Endpoint, majorVersionUpgradePrecheckApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MajorVersionUpgradePrecheckResourceData Data
+        public virtual MajorVersionUpgradePrecheckData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MajorVersionUpgradePrecheckResourceData> response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                Response<MajorVersionUpgradePrecheckData> response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _majorVersionUpgradePrecheckRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MajorVersionUpgradePrecheckResourceData> response = Response.FromValue(MajorVersionUpgradePrecheckResourceData.FromResponse(result), result);
+                Response<MajorVersionUpgradePrecheckData> response = Response.FromValue(MajorVersionUpgradePrecheckData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckResourceListResult"/>. </summary>
         /// <param name="value"> The MajorVersionUpgradePrecheckResource items on this page. </param>
-        internal MajorVersionUpgradePrecheckResourceListResult(IEnumerable<MajorVersionUpgradePrecheckResourceData> value)
+        internal MajorVersionUpgradePrecheckResourceListResult(IEnumerable<MajorVersionUpgradePrecheckData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="value"> The MajorVersionUpgradePrecheckResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MajorVersionUpgradePrecheckResourceListResult(IList<MajorVersionUpgradePrecheckResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MajorVersionUpgradePrecheckResourceListResult(IList<MajorVersionUpgradePrecheckData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The MajorVersionUpgradePrecheckResource items on this page. </summary>
         [WirePath("value")]
-        public IList<MajorVersionUpgradePrecheckResourceData> Value { get; }
+        public IList<MajorVersionUpgradePrecheckData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal partial class MaintenanceEventsGetAllAsyncCollectionResultOfT : AsyncPageable<MaintenanceEventResourceData>
+    internal partial class MaintenanceEventsGetAllAsyncCollectionResultOfT : AsyncPageable<MaintenanceEventData>
     {
         private readonly MaintenanceEvents _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MaintenanceEventsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MaintenanceEventResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MaintenanceEventData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 MaintenanceEventResourceListResult result = MaintenanceEventResourceListResult.FromResponse(response);
-                yield return Page<MaintenanceEventResourceData>.FromValues((IReadOnlyList<MaintenanceEventResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MaintenanceEventData>.FromValues((IReadOnlyList<MaintenanceEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

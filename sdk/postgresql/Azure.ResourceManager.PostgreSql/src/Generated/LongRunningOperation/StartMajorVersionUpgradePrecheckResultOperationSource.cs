@@ -15,29 +15,29 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary></summary>
-    internal partial class StartMajorVersionUpgradePrecheckResponseOperationSource : IOperationSource<StartMajorVersionUpgradePrecheckResponse>
+    internal partial class StartMajorVersionUpgradePrecheckResultOperationSource : IOperationSource<StartMajorVersionUpgradePrecheckResult>
     {
         /// <summary></summary>
-        internal StartMajorVersionUpgradePrecheckResponseOperationSource()
+        internal StartMajorVersionUpgradePrecheckResultOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        StartMajorVersionUpgradePrecheckResponse IOperationSource<StartMajorVersionUpgradePrecheckResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        StartMajorVersionUpgradePrecheckResult IOperationSource<StartMajorVersionUpgradePrecheckResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return StartMajorVersionUpgradePrecheckResponse.DeserializeStartMajorVersionUpgradePrecheckResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return StartMajorVersionUpgradePrecheckResult.DeserializeStartMajorVersionUpgradePrecheckResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<StartMajorVersionUpgradePrecheckResponse> IOperationSource<StartMajorVersionUpgradePrecheckResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StartMajorVersionUpgradePrecheckResult> IOperationSource<StartMajorVersionUpgradePrecheckResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return StartMajorVersionUpgradePrecheckResponse.DeserializeStartMajorVersionUpgradePrecheckResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return StartMajorVersionUpgradePrecheckResult.DeserializeStartMajorVersionUpgradePrecheckResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

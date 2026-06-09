@@ -12,27 +12,27 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Policy validation details. </summary>
-    public partial class PolicyDetail
+    public partial class MajorVersionUpgradePrecheckPolicyDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyDetail"/>. </summary>
-        internal PolicyDetail()
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckPolicyDetail"/>. </summary>
+        internal MajorVersionUpgradePrecheckPolicyDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckPolicyDetail"/>. </summary>
         /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="passed"> Whether the policy validation passed. </param>
+        /// <param name="isPassed"> Whether the policy validation passed. </param>
         /// <param name="errorCode"> The error code if validation failed. </param>
         /// <param name="errorMessage"> The error message if validation failed. </param>
         /// <param name="policyDescription"> Description of what the policy validates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyDetail(string policyName, bool? passed, int? errorCode, string errorMessage, string policyDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MajorVersionUpgradePrecheckPolicyDetail(string policyName, bool? isPassed, int? errorCode, string errorMessage, string policyDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyName = policyName;
-            Passed = passed;
+            IsPassed = isPassed;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             PolicyDescription = policyDescription;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Whether the policy validation passed. </summary>
         [WirePath("passed")]
-        public bool? Passed { get; }
+        public bool? IsPassed { get; }
 
         /// <summary> The error code if validation failed. </summary>
         [WirePath("errorCode")]

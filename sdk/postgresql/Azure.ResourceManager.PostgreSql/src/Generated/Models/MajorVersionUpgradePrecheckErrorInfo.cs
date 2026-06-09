@@ -12,21 +12,21 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Error information from precheck validation. </summary>
-    public partial class PrecheckErrorInfo
+    public partial class MajorVersionUpgradePrecheckErrorInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrecheckErrorInfo"/>. </summary>
-        internal PrecheckErrorInfo()
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckErrorInfo"/>. </summary>
+        internal MajorVersionUpgradePrecheckErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrecheckErrorInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckErrorInfo"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrecheckErrorInfo(int? errorCode, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MajorVersionUpgradePrecheckErrorInfo(int? errorCode, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;

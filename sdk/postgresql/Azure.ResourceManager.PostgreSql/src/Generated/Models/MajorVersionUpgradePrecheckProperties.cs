@@ -12,25 +12,25 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Major version upgrade precheck resource with validation results. </summary>
-    public partial class MajorVersionUpgradePrecheckResourceProperties
+    public partial class MajorVersionUpgradePrecheckProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckResourceProperties"/>. </summary>
-        internal MajorVersionUpgradePrecheckResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckProperties"/>. </summary>
+        internal MajorVersionUpgradePrecheckProperties()
         {
-            PolicyDetails = new ChangeTrackingList<PolicyDetail>();
+            PolicyDetails = new ChangeTrackingList<MajorVersionUpgradePrecheckPolicyDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MajorVersionUpgradePrecheckProperties"/>. </summary>
         /// <param name="createOn"> The time when the precheck was created. </param>
         /// <param name="status"> The status of the precheck validation. </param>
         /// <param name="precheckResult"> The detailed result of the precheck operation. </param>
         /// <param name="targetVersion"> The target PostgreSQL major version for the upgrade. </param>
         /// <param name="policyDetails"> Array of policy validation details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MajorVersionUpgradePrecheckResourceProperties(DateTimeOffset? createOn, MajorVersionUpgradePrecheckStatus? status, PrecheckResult precheckResult, PostgreSqlFlexibleServerVersion? targetVersion, IList<PolicyDetail> policyDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MajorVersionUpgradePrecheckProperties(DateTimeOffset? createOn, MajorVersionUpgradePrecheckStatus? status, MajorVersionUpgradePrecheckResult precheckResult, PostgreSqlFlexibleServerVersion? targetVersion, IList<MajorVersionUpgradePrecheckPolicyDetail> policyDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateOn = createOn;
             Status = status;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The detailed result of the precheck operation. </summary>
         [WirePath("precheckResult")]
-        public PrecheckResult PrecheckResult { get; }
+        public MajorVersionUpgradePrecheckResult PrecheckResult { get; }
 
         /// <summary> The target PostgreSQL major version for the upgrade. </summary>
         [WirePath("targetVersion")]
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Array of policy validation details. </summary>
         [WirePath("policyDetails")]
-        public IList<PolicyDetail> PolicyDetails { get; }
+        public IList<MajorVersionUpgradePrecheckPolicyDetail> PolicyDetails { get; }
     }
 }

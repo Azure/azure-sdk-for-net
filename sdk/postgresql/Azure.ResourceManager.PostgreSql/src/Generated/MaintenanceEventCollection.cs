@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing a collection of <see cref="MaintenanceEventResource"/> and their operations.
     /// Each <see cref="MaintenanceEventResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
-    /// To get a <see cref="MaintenanceEventResourceCollection"/> instance call the GetMaintenanceEventResources method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="MaintenanceEventCollection"/> instance call the GetMaintenanceEvents method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
-    public partial class MaintenanceEventResourceCollection : ArmCollection, IEnumerable<MaintenanceEventResource>, IAsyncEnumerable<MaintenanceEventResource>
+    public partial class MaintenanceEventCollection : ArmCollection, IEnumerable<MaintenanceEventResource>, IAsyncEnumerable<MaintenanceEventResource>
     {
         private readonly ClientDiagnostics _maintenanceEventsClientDiagnostics;
         private readonly MaintenanceEvents _maintenanceEventsRestClient;
 
-        /// <summary> Initializes a new instance of MaintenanceEventResourceCollection for mocking. </summary>
-        protected MaintenanceEventResourceCollection()
+        /// <summary> Initializes a new instance of MaintenanceEventCollection for mocking. </summary>
+        protected MaintenanceEventCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceEventResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceEventCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceEventResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaintenanceEventCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MaintenanceEventResource.ResourceType, out string maintenanceEventResourceApiVersion);
+            TryGetApiVersion(MaintenanceEventResource.ResourceType, out string maintenanceEventApiVersion);
             _maintenanceEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", MaintenanceEventResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Endpoint, maintenanceEventResourceApiVersion ?? "2026-04-01-preview");
+            _maintenanceEventsRestClient = new MaintenanceEvents(_maintenanceEventsClientDiagnostics, Pipeline, Endpoint, maintenanceEventApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResourceCollection.Get");
+            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventCollection.Get");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceEventId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceEventResourceData> response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                Response<MaintenanceEventData> response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResourceCollection.Get");
+            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventCollection.Get");
             scope.Start();
             try
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceEventId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceEventResourceData> response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                Response<MaintenanceEventData> response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceEventResourceData, MaintenanceEventResource>(new MaintenanceEventsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventsGetAllAsyncCollectionResultOfT(
                 _maintenanceEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 maintenanceStatus?.ToString(),
                 context,
-                "MaintenanceEventResourceCollection.GetAll"), data => new MaintenanceEventResource(Client, data));
+                "MaintenanceEventCollection.GetAll"), data => new MaintenanceEventResource(Client, data));
         }
 
         /// <summary>
@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceEventResourceData, MaintenanceEventResource>(new MaintenanceEventsGetAllCollectionResultOfT(
+            return new PageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventsGetAllCollectionResultOfT(
                 _maintenanceEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 maintenanceStatus?.ToString(),
                 context,
-                "MaintenanceEventResourceCollection.GetAll"), data => new MaintenanceEventResource(Client, data));
+                "MaintenanceEventCollection.GetAll"), data => new MaintenanceEventResource(Client, data));
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResourceCollection.Exists");
+            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventCollection.Exists");
             scope.Start();
             try
             {
@@ -261,14 +261,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceEventId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaintenanceEventResourceData> response = default;
+                Response<MaintenanceEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceEventResourceData)null, result);
+                        response = Response.FromValue((MaintenanceEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResourceCollection.Exists");
+            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventCollection.Exists");
             scope.Start();
             try
             {
@@ -318,14 +318,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceEventId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaintenanceEventResourceData> response = default;
+                Response<MaintenanceEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceEventResourceData)null, result);
+                        response = Response.FromValue((MaintenanceEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -375,14 +375,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceEventId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaintenanceEventResourceData> response = default;
+                Response<MaintenanceEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceEventResourceData)null, result);
+                        response = Response.FromValue((MaintenanceEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceEventsClientDiagnostics.CreateScope("MaintenanceEventCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -436,14 +436,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _maintenanceEventsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceEventId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaintenanceEventResourceData> response = default;
+                Response<MaintenanceEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaintenanceEventResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaintenanceEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaintenanceEventResourceData)null, result);
+                        response = Response.FromValue((MaintenanceEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

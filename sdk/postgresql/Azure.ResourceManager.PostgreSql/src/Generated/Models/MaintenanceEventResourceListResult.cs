@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceEventResourceListResult"/>. </summary>
         /// <param name="value"> The MaintenanceEventResource items on this page. </param>
-        internal MaintenanceEventResourceListResult(IEnumerable<MaintenanceEventResourceData> value)
+        internal MaintenanceEventResourceListResult(IEnumerable<MaintenanceEventData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="value"> The MaintenanceEventResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceEventResourceListResult(IList<MaintenanceEventResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceEventResourceListResult(IList<MaintenanceEventData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The MaintenanceEventResource items on this page. </summary>
         [WirePath("value")]
-        public IList<MaintenanceEventResourceData> Value { get; }
+        public IList<MaintenanceEventData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -14,52 +14,52 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Precheck result details. </summary>
-    public partial class PrecheckResult : IJsonModel<PrecheckResult>
+    /// <summary> Upgrade sequence information. </summary>
+    public partial class PostgreSqlMajorVersionUpgradeSequence : IJsonModel<PostgreSqlMajorVersionUpgradeSequence>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrecheckResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PostgreSqlMajorVersionUpgradeSequence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMajorVersionUpgradeSequence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrecheckResult(document.RootElement, options);
+                        return DeserializePostgreSqlMajorVersionUpgradeSequence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrecheckResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMajorVersionUpgradeSequence)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMajorVersionUpgradeSequence>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrecheckResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMajorVersionUpgradeSequence)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrecheckResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PostgreSqlMajorVersionUpgradeSequence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrecheckResult IPersistableModel<PrecheckResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PostgreSqlMajorVersionUpgradeSequence IPersistableModel<PostgreSqlMajorVersionUpgradeSequence>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrecheckResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlMajorVersionUpgradeSequence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrecheckResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlMajorVersionUpgradeSequence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,30 +70,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMajorVersionUpgradeSequence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrecheckResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMajorVersionUpgradeSequence)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Action))
+            if (Optional.IsDefined(SourceVersion))
             {
-                writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action);
+                writer.WritePropertyName("sourceVersion"u8);
+                writer.WriteStringValue(SourceVersion.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradeSequence))
+            if (Optional.IsDefined(TargetVersion))
             {
-                writer.WritePropertyName("upgradeSequence"u8);
-                writer.WriteObjectValue(UpgradeSequence, options);
-            }
-            if (Optional.IsCollectionDefined(ErrorInfo))
-            {
-                writer.WritePropertyName("errorInfo"u8);
-                writer.WriteStartArray();
-                foreach (PrecheckErrorInfo item in ErrorInfo)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("targetVersion"u8);
+                writer.WriteStringValue(TargetVersion.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -114,61 +104,50 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrecheckResult IJsonModel<PrecheckResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PostgreSqlMajorVersionUpgradeSequence IJsonModel<PostgreSqlMajorVersionUpgradeSequence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrecheckResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PostgreSqlMajorVersionUpgradeSequence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMajorVersionUpgradeSequence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrecheckResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMajorVersionUpgradeSequence)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrecheckResult(document.RootElement, options);
+            return DeserializePostgreSqlMajorVersionUpgradeSequence(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrecheckResult DeserializePrecheckResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static PostgreSqlMajorVersionUpgradeSequence DeserializePostgreSqlMajorVersionUpgradeSequence(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string action = default;
-            UpgradeSequence upgradeSequence = default;
-            IList<PrecheckErrorInfo> errorInfo = default;
+            PostgreSqlFlexibleServerVersion? sourceVersion = default;
+            PostgreSqlFlexibleServerVersion? targetVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("action"u8))
-                {
-                    action = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("upgradeSequence"u8))
+                if (prop.NameEquals("sourceVersion"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    upgradeSequence = UpgradeSequence.DeserializeUpgradeSequence(prop.Value, options);
+                    sourceVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("errorInfo"u8))
+                if (prop.NameEquals("targetVersion"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<PrecheckErrorInfo> array = new List<PrecheckErrorInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(PrecheckErrorInfo.DeserializePrecheckErrorInfo(item, options));
-                    }
-                    errorInfo = array;
+                    targetVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +155,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrecheckResult(action, upgradeSequence, errorInfo ?? new ChangeTrackingList<PrecheckErrorInfo>(), additionalBinaryDataProperties);
+            return new PostgreSqlMajorVersionUpgradeSequence(sourceVersion, targetVersion, additionalBinaryDataProperties);
         }
     }
 }

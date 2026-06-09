@@ -13,33 +13,33 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response model for maintenance event reschedule and apply-now actions. </summary>
-    public partial class MaintenanceEventActionResponse
+    public partial class MaintenanceEventActionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceEventActionResponse"/>. </summary>
-        internal MaintenanceEventActionResponse()
+        /// <summary> Initializes a new instance of <see cref="MaintenanceEventActionResult"/>. </summary>
+        internal MaintenanceEventActionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceEventActionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceEventActionResult"/>. </summary>
         /// <param name="maintenanceEventId"> The maintenance event name (maintenance ID). </param>
         /// <param name="serverId"> The full Azure resource ID of the server. </param>
         /// <param name="status"> The status of the maintenance event. </param>
         /// <param name="plannedStartOn"> The planned start time of the maintenance event (UTC). </param>
         /// <param name="plannedEndOn"> The planned end time of the maintenance event (UTC). </param>
-        /// <param name="appliedNow"> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </param>
+        /// <param name="isAppliedNow"> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceEventActionResponse(string maintenanceEventId, ResourceIdentifier serverId, MaintenanceEventStatus? status, DateTimeOffset? plannedStartOn, DateTimeOffset? plannedEndOn, bool? appliedNow, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceEventActionResult(string maintenanceEventId, ResourceIdentifier serverId, MaintenanceEventStatus? status, DateTimeOffset? plannedStartOn, DateTimeOffset? plannedEndOn, bool? isAppliedNow, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceEventId = maintenanceEventId;
             ServerId = serverId;
             Status = status;
             PlannedStartOn = plannedStartOn;
             PlannedEndOn = plannedEndOn;
-            AppliedNow = appliedNow;
+            IsAppliedNow = isAppliedNow;
             LastUpdatedOn = lastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </summary>
         [WirePath("appliedNow")]
-        public bool? AppliedNow { get; }
+        public bool? IsAppliedNow { get; }
 
         /// <summary> The time this maintenance event record was last updated (UTC). </summary>
         [WirePath("lastUpdatedTime")]

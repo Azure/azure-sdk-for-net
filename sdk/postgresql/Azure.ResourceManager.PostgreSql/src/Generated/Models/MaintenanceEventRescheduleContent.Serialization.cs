@@ -16,66 +16,66 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Parameters to reschedule a maintenance event. </summary>
-    public partial class MaintenanceEventRescheduleRequest : IJsonModel<MaintenanceEventRescheduleRequest>
+    public partial class MaintenanceEventRescheduleContent : IJsonModel<MaintenanceEventRescheduleContent>
     {
-        /// <summary> Initializes a new instance of <see cref="MaintenanceEventRescheduleRequest"/> for deserialization. </summary>
-        internal MaintenanceEventRescheduleRequest()
+        /// <summary> Initializes a new instance of <see cref="MaintenanceEventRescheduleContent"/> for deserialization. </summary>
+        internal MaintenanceEventRescheduleContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceEventRescheduleRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MaintenanceEventRescheduleContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMaintenanceEventRescheduleRequest(document.RootElement, options);
+                        return DeserializeMaintenanceEventRescheduleContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceEventRescheduleRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceEventRescheduleContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceEventRescheduleRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceEventRescheduleContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceEventRescheduleRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MaintenanceEventRescheduleContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventRescheduleRequest IPersistableModel<MaintenanceEventRescheduleRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MaintenanceEventRescheduleContent IPersistableModel<MaintenanceEventRescheduleContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceEventRescheduleRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MaintenanceEventRescheduleContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="maintenanceEventRescheduleRequest"> The <see cref="MaintenanceEventRescheduleRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MaintenanceEventRescheduleRequest maintenanceEventRescheduleRequest)
+        /// <param name="maintenanceEventRescheduleContent"> The <see cref="MaintenanceEventRescheduleContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MaintenanceEventRescheduleContent maintenanceEventRescheduleContent)
         {
-            if (maintenanceEventRescheduleRequest == null)
+            if (maintenanceEventRescheduleContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(maintenanceEventRescheduleRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(maintenanceEventRescheduleContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenanceEventRescheduleRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MaintenanceEventRescheduleContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceEventRescheduleRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceEventRescheduleContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("postponeToDateTime"u8);
             writer.WriteStringValue(PostponeToOn, "O");
@@ -112,24 +112,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventRescheduleRequest IJsonModel<MaintenanceEventRescheduleRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MaintenanceEventRescheduleContent IJsonModel<MaintenanceEventRescheduleContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceEventRescheduleRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MaintenanceEventRescheduleContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventRescheduleContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceEventRescheduleRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceEventRescheduleContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceEventRescheduleRequest(document.RootElement, options);
+            return DeserializeMaintenanceEventRescheduleContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaintenanceEventRescheduleRequest DeserializeMaintenanceEventRescheduleRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static MaintenanceEventRescheduleContent DeserializeMaintenanceEventRescheduleContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceEventRescheduleRequest(postponeToOn, additionalBinaryDataProperties);
+            return new MaintenanceEventRescheduleContent(postponeToOn, additionalBinaryDataProperties);
         }
     }
 }

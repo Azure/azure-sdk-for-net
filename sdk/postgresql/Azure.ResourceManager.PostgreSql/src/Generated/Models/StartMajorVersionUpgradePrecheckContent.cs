@@ -12,22 +12,22 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Request model for starting a major version upgrade precheck. </summary>
-    public partial class StartMajorVersionUpgradePrecheckRequest
+    public partial class StartMajorVersionUpgradePrecheckContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckContent"/>. </summary>
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
-        public StartMajorVersionUpgradePrecheckRequest(PostgreSqlFlexibleServerVersion targetVersion)
+        public StartMajorVersionUpgradePrecheckContent(PostgreSqlFlexibleServerVersion targetVersion)
         {
             TargetVersion = targetVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartMajorVersionUpgradePrecheckContent"/>. </summary>
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartMajorVersionUpgradePrecheckRequest(PostgreSqlFlexibleServerVersion targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StartMajorVersionUpgradePrecheckContent(PostgreSqlFlexibleServerVersion targetVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetVersion = targetVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

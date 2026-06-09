@@ -15,29 +15,29 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary></summary>
-    internal partial class MaintenanceEventActionResponseOperationSource : IOperationSource<MaintenanceEventActionResponse>
+    internal partial class MaintenanceEventActionResultOperationSource : IOperationSource<MaintenanceEventActionResult>
     {
         /// <summary></summary>
-        internal MaintenanceEventActionResponseOperationSource()
+        internal MaintenanceEventActionResultOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MaintenanceEventActionResponse IOperationSource<MaintenanceEventActionResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        MaintenanceEventActionResult IOperationSource<MaintenanceEventActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return MaintenanceEventActionResponse.DeserializeMaintenanceEventActionResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return MaintenanceEventActionResult.DeserializeMaintenanceEventActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MaintenanceEventActionResponse> IOperationSource<MaintenanceEventActionResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MaintenanceEventActionResult> IOperationSource<MaintenanceEventActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return MaintenanceEventActionResponse.DeserializeMaintenanceEventActionResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return MaintenanceEventActionResult.DeserializeMaintenanceEventActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

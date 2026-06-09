@@ -18,59 +18,59 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> Maintenance event resource for a PostgreSQL flexible server. </summary>
-    public partial class MaintenanceEventResourceData : ResourceData, IJsonModel<MaintenanceEventResourceData>
+    /// <summary> Major version upgrade precheck resource for a PostgreSQL flexible server. </summary>
+    public partial class MajorVersionUpgradePrecheckData : ResourceData, IJsonModel<MajorVersionUpgradePrecheckData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MajorVersionUpgradePrecheckData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMaintenanceEventResourceData(document.RootElement, options);
+                        return DeserializeMajorVersionUpgradePrecheckData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceEventResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MajorVersionUpgradePrecheckData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MajorVersionUpgradePrecheckData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceEventResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MajorVersionUpgradePrecheckData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceEventResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MajorVersionUpgradePrecheckData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventResourceData IPersistableModel<MaintenanceEventResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MaintenanceEventResourceData)PersistableModelCreateCore(data, options);
+        MajorVersionUpgradePrecheckData IPersistableModel<MajorVersionUpgradePrecheckData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MajorVersionUpgradePrecheckData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceEventResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MajorVersionUpgradePrecheckData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MaintenanceEventResourceData"/> from. </param>
-        internal static MaintenanceEventResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MajorVersionUpgradePrecheckData"/> from. </param>
+        internal static MajorVersionUpgradePrecheckData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMaintenanceEventResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMajorVersionUpgradePrecheckData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenanceEventResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MajorVersionUpgradePrecheckData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MajorVersionUpgradePrecheckData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceEventResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MajorVersionUpgradePrecheckData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventResourceData IJsonModel<MaintenanceEventResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MaintenanceEventResourceData)JsonModelCreateCore(ref reader, options);
+        MajorVersionUpgradePrecheckData IJsonModel<MajorVersionUpgradePrecheckData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MajorVersionUpgradePrecheckData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MajorVersionUpgradePrecheckData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceEventResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MajorVersionUpgradePrecheckData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceEventResourceData(document.RootElement, options);
+            return DeserializeMajorVersionUpgradePrecheckData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaintenanceEventResourceData DeserializeMaintenanceEventResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MajorVersionUpgradePrecheckData DeserializeMajorVersionUpgradePrecheckData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            MaintenanceEventResourceProperties properties = default;
+            MajorVersionUpgradePrecheckProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    properties = MaintenanceEventResourceProperties.DeserializeMaintenanceEventResourceProperties(prop.Value, options);
+                    properties = MajorVersionUpgradePrecheckProperties.DeserializeMajorVersionUpgradePrecheckProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceEventResourceData(
+            return new MajorVersionUpgradePrecheckData(
                 id,
                 name,
                 resourceType,

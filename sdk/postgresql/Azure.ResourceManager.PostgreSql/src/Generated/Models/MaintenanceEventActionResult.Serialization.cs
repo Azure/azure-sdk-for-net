@@ -17,58 +17,58 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response model for maintenance event reschedule and apply-now actions. </summary>
-    public partial class MaintenanceEventActionResponse : IJsonModel<MaintenanceEventActionResponse>
+    public partial class MaintenanceEventActionResult : IJsonModel<MaintenanceEventActionResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceEventActionResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MaintenanceEventActionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMaintenanceEventActionResponse(document.RootElement, options);
+                        return DeserializeMaintenanceEventActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceEventActionResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceEventActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceEventActionResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceEventActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceEventActionResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MaintenanceEventActionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventActionResponse IPersistableModel<MaintenanceEventActionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MaintenanceEventActionResult IPersistableModel<MaintenanceEventActionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceEventActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MaintenanceEventActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MaintenanceEventActionResponse"/> from. </param>
-        internal static MaintenanceEventActionResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MaintenanceEventActionResult"/> from. </param>
+        internal static MaintenanceEventActionResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMaintenanceEventActionResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMaintenanceEventActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenanceEventActionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MaintenanceEventActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceEventActionResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceEventActionResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(MaintenanceEventId))
             {
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("plannedEndTime"u8);
                 writer.WriteStringValue(PlannedEndOn.Value, "O");
             }
-            if (Optional.IsDefined(AppliedNow))
+            if (Optional.IsDefined(IsAppliedNow))
             {
                 writer.WritePropertyName("appliedNow"u8);
-                writer.WriteBooleanValue(AppliedNow.Value);
+                writer.WriteBooleanValue(IsAppliedNow.Value);
             }
             if (Optional.IsDefined(LastUpdatedOn))
             {
@@ -138,24 +138,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceEventActionResponse IJsonModel<MaintenanceEventActionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MaintenanceEventActionResult IJsonModel<MaintenanceEventActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceEventActionResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MaintenanceEventActionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceEventActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceEventActionResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceEventActionResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceEventActionResponse(document.RootElement, options);
+            return DeserializeMaintenanceEventActionResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaintenanceEventActionResponse DeserializeMaintenanceEventActionResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static MaintenanceEventActionResult DeserializeMaintenanceEventActionResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             MaintenanceEventStatus? status = default;
             DateTimeOffset? plannedStartOn = default;
             DateTimeOffset? plannedEndOn = default;
-            bool? appliedNow = default;
+            bool? isAppliedNow = default;
             DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    appliedNow = prop.Value.GetBoolean();
+                    isAppliedNow = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedTime"u8))
@@ -235,13 +235,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceEventActionResponse(
+            return new MaintenanceEventActionResult(
                 maintenanceEventId,
                 serverId,
                 status,
                 plannedStartOn,
                 plannedEndOn,
-                appliedNow,
+                isAppliedNow,
                 lastUpdatedOn,
                 additionalBinaryDataProperties);
         }

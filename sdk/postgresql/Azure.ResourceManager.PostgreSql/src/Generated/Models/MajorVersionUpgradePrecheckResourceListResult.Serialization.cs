@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MajorVersionUpgradePrecheckResourceData item in Value)
+            foreach (MajorVersionUpgradePrecheckData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IList<MajorVersionUpgradePrecheckResourceData> value = default;
+            IList<MajorVersionUpgradePrecheckData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MajorVersionUpgradePrecheckResourceData> array = new List<MajorVersionUpgradePrecheckResourceData>();
+                    List<MajorVersionUpgradePrecheckData> array = new List<MajorVersionUpgradePrecheckData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MajorVersionUpgradePrecheckResourceData.DeserializeMajorVersionUpgradePrecheckResourceData(item, options));
+                        array.Add(MajorVersionUpgradePrecheckData.DeserializeMajorVersionUpgradePrecheckData(item, options));
                     }
                     value = array;
                     continue;
