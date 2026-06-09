@@ -7,7 +7,10 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationPurchaseContent
     {
-        // The generator only produces a get-only collection by default; customization preserves the GA setter behavior.
+        // AppliedScopes is a property in PurchaseRequestProperties which is also a flattened property in ReservationPurchaseContent.
+        // We flattened the AppliedScopes property to ReservationPurchaseContent for better usability.
+        // And the wrapped property PurchaseRequestProperties.AppliedScopes changed from bare Get Set to only Get within an internal partial class.
+        // So we can provide a public setter in ReservationPurchaseContent while keeping the internal class encapsulation.
         /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </summary>
         public IList<string> AppliedScopes
         {
