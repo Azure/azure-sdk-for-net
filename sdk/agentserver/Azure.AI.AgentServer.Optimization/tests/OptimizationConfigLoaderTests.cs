@@ -47,7 +47,7 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public async Task LoadConfigAsync_LoadsFromEnvVar_Priority1()
+    public async Task LoadConfigAsync_LoadsFromEnvVar_Priority2()
     {
         string json = "{\"instructions\":\"Be helpful.\",\"model\":\"gpt-4o\",\"temperature\":0.7}";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);

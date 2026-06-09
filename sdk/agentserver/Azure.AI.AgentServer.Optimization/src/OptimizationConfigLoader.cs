@@ -11,8 +11,8 @@ namespace Azure.AI.AgentServer.Optimization;
 /// <remarks>
 /// Resolution order (first match wins):
 /// <list type="number">
-/// <item><description><b>Inline JSON</b> — <c>OPTIMIZATION_CONFIG</c> env var contains the full config as JSON.</description></item>
 /// <item><description><b>Resolver API</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> and <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> are both set.</description></item>
+/// <item><description><b>Inline JSON</b> — <c>OPTIMIZATION_CONFIG</c> env var contains the full config as JSON.</description></item>
 /// <item><description><b>Local directory</b> — reads from <c>&lt;config_dir&gt;/&lt;candidate_id&gt;/</c> (or <c>&lt;config_dir&gt;/baseline/</c>).</description></item>
 /// <item><description>When none of the above match, returns <c>null</c>.</description></item>
 /// </list>
@@ -31,35 +31,42 @@ public static class OptimizationConfigLoader
     {
         options ??= new ConfigLoaderOptions();
 
-        // ── Priority 1: Inline JSON env var ─────────────────────────
+        string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableCandidateId)?.Trim() ?? "";
+        string endpoint = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableResolveEndpoint)?.Trim()?.TrimEnd('/') ?? "";
+
+        // ── Priority 1: Resolver API ────────────────────────────────
+        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
+        {
+            try
+            {
+                string localDir = LocalConfigReader.ResolveLocalDir(options.ConfigDirectory);
+                var resolved = await CandidateResolver.ResolveAsync(
+                    candidateId, endpoint, localDir, options.Credential, cancellationToken).ConfigureAwait(false);
+
+                if (resolved.HasValue)
+                {
+                    string skillsDir = resolved.Value.TryGetProperty("skills_dir", out var sdProp) && sdProp.ValueKind == JsonValueKind.String
+                        ? sdProp.GetString()
+                        : null;
+
+                    return OptimizationConfig.FromJson(
+                        resolved.Value,
+                        source: $"api:candidate:{candidateId}",
+                        candidateId: candidateId,
+                        skillsDirectory: skillsDir);
+                }
+            }
+            catch (Exception)
+            {
+                // Resolver failure is non-fatal — fall through to next priority
+            }
+        }
+
+        // ── Priority 2: Inline JSON env var ─────────────────────────
         string rawConfig = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableConfig)?.Trim() ?? "";
         if (!string.IsNullOrEmpty(rawConfig))
         {
             return LoadFromEnvVar(rawConfig);
-        }
-
-        // ── Priority 2: Candidate ID → resolver API ────────────────
-        string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableCandidateId)?.Trim() ?? "";
-        string endpoint = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableResolveEndpoint)?.Trim()?.TrimEnd('/') ?? "";
-
-        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
-        {
-            string localDir = LocalConfigReader.ResolveLocalDir(options.ConfigDirectory);
-            var resolved = await CandidateResolver.ResolveAsync(
-                candidateId, endpoint, localDir, options.Credential, cancellationToken).ConfigureAwait(false);
-
-            if (resolved.HasValue)
-            {
-                string skillsDir = resolved.Value.TryGetProperty("skills_dir", out var sdProp) && sdProp.ValueKind == JsonValueKind.String
-                    ? sdProp.GetString()
-                    : null;
-
-                return OptimizationConfig.FromJson(
-                    resolved.Value,
-                    source: $"api:candidate:{candidateId}",
-                    candidateId: candidateId,
-                    skillsDirectory: skillsDir);
-            }
         }
 
         // ── Priority 3: Local directory ─────────────────────────────
