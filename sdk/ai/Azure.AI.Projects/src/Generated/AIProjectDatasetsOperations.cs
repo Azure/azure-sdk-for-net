@@ -362,7 +362,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Start a new or get an existing pending upload of a dataset for a specific version.
+        /// [Protocol Method] Initiates a new pending upload or retrieves an existing one for the specified dataset version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -388,7 +388,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Start a new or get an existing pending upload of a dataset for a specific version.
+        /// [Protocol Method] Initiates a new pending upload or retrieves an existing one for the specified dataset version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -413,7 +413,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
+        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified dataset version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
         /// <param name="configuration"> The pending upload request parameters. </param>
@@ -431,7 +431,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
+        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified dataset version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
         /// <param name="configuration"> The pending upload request parameters. </param>
@@ -450,7 +450,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get the SAS credential to access the storage account associated with a Dataset version.
+        /// [Protocol Method] Gets the SAS credential to access the storage account associated with a Dataset version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -474,7 +474,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get the SAS credential to access the storage account associated with a Dataset version.
+        /// [Protocol Method] Gets the SAS credential to access the storage account associated with a Dataset version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -497,7 +497,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get the SAS credential to access the storage account associated with a Dataset version. </summary>
+        /// <summary> Gets the SAS credential to access the storage account associated with a Dataset version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -513,7 +513,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
 
-        /// <summary> Get the SAS credential to access the storage account associated with a Dataset version. </summary>
+        /// <summary> Gets the SAS credential to access the storage account associated with a Dataset version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

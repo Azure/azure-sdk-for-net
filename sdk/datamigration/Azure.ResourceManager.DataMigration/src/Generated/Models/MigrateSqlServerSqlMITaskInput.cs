@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -17,26 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <param name="backupBlobShare"> SAS URI of Azure Storage Account Container to be used for storing backup files. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/>, <paramref name="selectedDatabases"/> or <paramref name="backupBlobShare"/> is null. </exception>
-        public MigrateSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, DataMigrationBlobShare backupBlobShare) : base(sourceConnectionInfo, targetConnectionInfo)
-        {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
-            Argument.AssertNotNull(backupBlobShare, nameof(backupBlobShare));
-
-            SelectedDatabases = selectedDatabases.ToList();
-            SelectedLogins = new ChangeTrackingList<string>();
-            SelectedAgentJobs = new ChangeTrackingList<string>();
-            BackupBlobShare = backupBlobShare;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="startedOn"> Date and time relative to UTC when the migration was started on. </param>
         /// <param name="selectedLogins"> Logins to migrate. </param>
@@ -46,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupMode"> Backup Mode to specify whether to use existing backup or create new backup. If using existing backups, backup file paths are required to be provided in selectedDatabases. </param>
         /// <param name="aadDomainName"> Azure Active Directory domain name in the format of 'contoso.com' for federated Azure AD or 'contoso.onmicrosoft.com' for managed domain, required if and only if Windows logins are selected. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        internal MigrateSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, DateTimeOffset? startedOn, IList<string> selectedLogins, IList<string> selectedAgentJobs, DataMigrationFileShareInfo backupFileShare, DataMigrationBlobShare backupBlobShare, DataMigrationBackupMode? backupMode, string aadDomainName, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, DateTimeOffset? startedOn, IList<string> selectedLogins, IList<string> selectedAgentJobs, DataMigrationFileShareInfo backupFileShare, DataMigrationBlobShare backupBlobShare, DataMigrationBackupMode? backupMode, string aadDomainName, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo, additionalBinaryDataProperties)
         {
             SelectedDatabases = selectedDatabases;
             StartedOn = startedOn;
@@ -59,40 +39,48 @@ namespace Azure.ResourceManager.DataMigration.Models
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/> for deserialization. </summary>
-        internal MigrateSqlServerSqlMITaskInput()
-        {
-        }
-
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateSqlServerSqlMIDatabaseInput> SelectedDatabases { get; }
+
         /// <summary> Date and time relative to UTC when the migration was started on. </summary>
         public DateTimeOffset? StartedOn { get; set; }
+
         /// <summary> Logins to migrate. </summary>
         public IList<string> SelectedLogins { get; }
+
         /// <summary> Agent Jobs to migrate. </summary>
         public IList<string> SelectedAgentJobs { get; }
+
         /// <summary> Backup file share information for all selected databases. </summary>
         public DataMigrationFileShareInfo BackupFileShare { get; set; }
+
         /// <summary> SAS URI of Azure Storage Account Container to be used for storing backup files. </summary>
         internal DataMigrationBlobShare BackupBlobShare { get; set; }
-        /// <summary> SAS URI of Azure Storage Account Container. </summary>
-        public Uri BackupBlobShareSasUri
-        {
-            get => BackupBlobShare is null ? default : BackupBlobShare.SasUri;
-            set
-            {
-                if (BackupBlobShare is null)
-                    BackupBlobShare = new DataMigrationBlobShare();
-                BackupBlobShare.SasUri = value;
-            }
-        }
 
         /// <summary> Backup Mode to specify whether to use existing backup or create new backup. If using existing backups, backup file paths are required to be provided in selectedDatabases. </summary>
         public DataMigrationBackupMode? BackupMode { get; set; }
+
         /// <summary> Azure Active Directory domain name in the format of 'contoso.com' for federated Azure AD or 'contoso.onmicrosoft.com' for managed domain, required if and only if Windows logins are selected. </summary>
         public string AadDomainName { get; set; }
+
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }
+
+        /// <summary> SAS URI of Azure Storage Account Container. </summary>
+        public Uri BackupBlobShareSasUri
+        {
+            get
+            {
+                return BackupBlobShare is null ? default : BackupBlobShare.SasUri;
+            }
+            set
+            {
+                if (BackupBlobShare is null)
+                {
+                    BackupBlobShare = new DataMigrationBlobShare();
+                }
+                BackupBlobShare.SasUri = value;
+            }
+        }
     }
 }

@@ -4,11 +4,14 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `AzureRealtimeNativeVoice` and `AzureRealtimeNativeVoiceName` with 12 new voice options (Aarti, Andrew, Ava, Denise, Diya, Elsa, Florian, Francisca, Meera, Xiaoxiao, Ximena, Yunxi).
+- Added `SmartEndOfTurnDetection` (end-of-utterance detection with `ThresholdLevel` and `TimeoutMs`).
+- Added `ParallelToolCalls` property on `VoiceLiveSessionOptions`.
+- Added `Channels` and `ReferenceSource` (`EchoCancellationReferenceSource`) properties on `AudioEchoCancellation`.
+- Added RTC call support: `ClientEventRtcCallSdpCreate`, `ServerEventRtcCallSdpCreated`, `ServerEventRtcCallError`, `RtcCallErrorDetails`.
+- Added output audio buffer events: `ServerEventOutputAudioBufferStarted`, `ServerEventOutputAudioBufferStopped`.
+- Added streaming text input events: `ClientEventInputTextDelta`, `ClientEventInputTextDone`.
+- Added `ServerEventResponseInvocationDelta` for streaming invocation deltas.
 
 ## 1.1.0 (2026-06-03)
  
