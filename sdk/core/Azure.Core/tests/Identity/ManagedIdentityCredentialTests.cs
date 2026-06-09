@@ -404,7 +404,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
+            var mockTransport = new MockImdsManagedIdentityTransport(req => CreateSuccessResponse(ExpectedToken));
             var expectedObjectId = Guid.NewGuid().ToString();
 
             var credential = CreateCredentialWithManagedIdentityId(mockTransport, ManagedIdentityId.FromUserAssignedObjectId(expectedObjectId));
@@ -1372,7 +1372,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
+            var mockTransport = new MockImdsManagedIdentityTransport(req => CreateSuccessResponse(ExpectedToken));
 
             List<string> messages = new();
             using AzureEventSourceListener listener = new AzureEventSourceListener(
