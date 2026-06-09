@@ -11,6 +11,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // The generated overload would expose the internal RuleState model because the public API
+    // previously used SecurityAlertsSuppressionRuleState. Keep this custom factory overload so
+    // callers can continue constructing the model with the GA public enum shape.
     [CodeGenSuppress(
         "SecurityAlertsSuppressionRuleData",
         typeof(ResourceIdentifier),

@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Alerts _alertsRestClient;
         private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
         private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
+        private ClientDiagnostics _jitNetworkAccessPoliciesClientDiagnostics;
+        private JitNetworkAccessPolicies _jitNetworkAccessPoliciesRestClient;
         private ClientDiagnostics _apiCollectionsClientDiagnostics;
         private APICollections _apiCollectionsRestClient;
 
@@ -47,6 +49,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
+        private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -1076,6 +1082,62 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JitNetworkAccessPoliciesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesByResourceGroupAsyncCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JitNetworkAccessPoliciesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesByResourceGroupCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>

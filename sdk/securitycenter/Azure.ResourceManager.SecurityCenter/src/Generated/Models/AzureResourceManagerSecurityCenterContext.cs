@@ -448,6 +448,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(SecuritySettingData))]
     [ModelReaderWriterBuildable(typeof(SecuritySettingResource))]
     [ModelReaderWriterBuildable(typeof(SecuritySolutionData))]
+    [ModelReaderWriterBuildable(typeof(SecuritySolutionList))]
     [ModelReaderWriterBuildable(typeof(SecuritySolutionProperties))]
     [ModelReaderWriterBuildable(typeof(SecuritySolutionResource))]
     [ModelReaderWriterBuildable(typeof(Models.SecuritySolutionsReferenceData))]
