@@ -57,19 +57,27 @@ internal class CandidateConfig
         var skills = new List<OptimizationSkill>();
 
         if (!data.TryGetProperty("skills", out var skillsArray) || skillsArray.ValueKind != JsonValueKind.Array)
+        {
             return skills;
+        }
 
         foreach (var item in skillsArray.EnumerateArray())
         {
             if (item.ValueKind != JsonValueKind.Object)
+            {
                 continue;
+            }
 
             if (!item.TryGetProperty("name", out var skillName) || skillName.ValueKind != JsonValueKind.String)
+            {
                 continue;
+            }
 
             string name = skillName.GetString();
             if (string.IsNullOrEmpty(name))
+            {
                 continue;
+            }
 
             string description = item.TryGetProperty("description", out var descProp) && descProp.ValueKind == JsonValueKind.String
                 ? descProp.GetString() ?? ""
@@ -88,10 +96,14 @@ internal class CandidateConfig
     private static List<BinaryData> ParseToolDefinitions(JsonElement data)
     {
         if (!data.TryGetProperty("tools", out var toolsArray))
+        {
             return new List<BinaryData>();
+        }
 
         if (toolsArray.ValueKind != JsonValueKind.Array)
+        {
             throw new InvalidOperationException($"Expected 'tools' to be an array, got {toolsArray.ValueKind}");
+        }
 
         var tools = new List<BinaryData>();
         foreach (var item in toolsArray.EnumerateArray())

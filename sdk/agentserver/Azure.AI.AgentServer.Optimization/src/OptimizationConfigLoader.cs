@@ -71,7 +71,9 @@ public static class OptimizationConfigLoader
         string effectiveCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
         var localConfig = LocalConfigReader.Load(effectiveCandidateId, options.ConfigDirectory);
         if (localConfig is not null)
+        {
             return localConfig;
+        }
 
         // ── Priority 4: No config found ─────────────────────────────
         return null;

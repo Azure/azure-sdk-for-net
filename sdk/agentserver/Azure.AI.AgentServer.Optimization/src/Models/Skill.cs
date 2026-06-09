@@ -33,7 +33,11 @@ public class OptimizationSkill : IEquatable<OptimizationSkill>
     /// <inheritdoc/>
     public bool Equals(OptimizationSkill other)
     {
-        if (other == null) return false;
+        if (other == null)
+        {
+            return false;
+        }
+
         return Name == other.Name
             && Description == other.Description
             && Body == other.Body;

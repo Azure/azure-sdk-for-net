@@ -167,7 +167,9 @@ public class OptimizationConfig
         string baseInstructions = Instructions ?? "";
 
         if (Skills.Count == 0)
+        {
             return baseInstructions;
+        }
 
         var sb = new StringBuilder();
         if (!string.IsNullOrEmpty(baseInstructions))
