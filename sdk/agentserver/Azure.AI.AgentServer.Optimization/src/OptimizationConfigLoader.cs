@@ -32,15 +32,15 @@ public static class OptimizationConfigLoader
         options ??= new ConfigLoaderOptions();
 
         // ── Priority 1: Inline JSON env var ─────────────────────────
-        string rawConfig = Environment.GetEnvironmentVariable(OptimizationConfig.EnvConfig)?.Trim() ?? "";
+        string rawConfig = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableConfig)?.Trim() ?? "";
         if (!string.IsNullOrEmpty(rawConfig))
         {
             return LoadFromEnvVar(rawConfig);
         }
 
         // ── Priority 2: Candidate ID → resolver API ────────────────
-        string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvCandidateId)?.Trim() ?? "";
-        string endpoint = Environment.GetEnvironmentVariable(OptimizationConfig.EnvResolveEndpoint)?.Trim()?.TrimEnd('/') ?? "";
+        string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableCandidateId)?.Trim() ?? "";
+        string endpoint = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableResolveEndpoint)?.Trim()?.TrimEnd('/') ?? "";
 
         if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
         {
@@ -119,11 +119,11 @@ public static class OptimizationConfigLoader
                 temperature: candidate.Temperature,
                 skills: candidate.Skills,
                 toolDefinitions: candidate.ToolDefinitions,
-                source: $"env:{OptimizationConfig.EnvConfig}");
+                source: $"env:{OptimizationConfig.EnvironmentVariableConfig}");
         }
         catch (JsonException ex)
         {
-            throw new InvalidOperationException($"Bad {OptimizationConfig.EnvConfig} env var: {ex.Message}", ex);
+            throw new InvalidOperationException($"Bad {OptimizationConfig.EnvironmentVariableConfig} env var: {ex.Message}", ex);
         }
     }
 }

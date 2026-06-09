@@ -92,7 +92,7 @@ internal static class LocalConfigReader
             return Path.GetFullPath(configDir);
         }
 
-        string envDir = Environment.GetEnvironmentVariable(OptimizationConfig.EnvLocalDir)?.Trim() ?? "";
+        string envDir = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableLocalDir)?.Trim() ?? "";
         if (!string.IsNullOrEmpty(envDir))
         {
             return Path.GetFullPath(envDir);

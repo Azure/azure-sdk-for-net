@@ -24,12 +24,6 @@ public class OptimizationConfig
     /// <summary>Environment variable name for the local config directory override (Priority 3).</summary>
     public const string EnvironmentVariableLocalDir = "OPTIMIZATION_LOCAL_DIR";
 
-    // ── Internal aliases for backward compat ────────────────────────
-    internal const string EnvCandidateId = EnvironmentVariableCandidateId;
-    internal const string EnvConfig = EnvironmentVariableConfig;
-    internal const string EnvLocalDir = EnvironmentVariableLocalDir;
-    internal const string EnvResolveEndpoint = EnvironmentVariableResolveEndpoint;
-
     // ── Default paths / filenames ───────────────────────────────────
     internal const string DefaultLocalDir = ".agent_configs";
     internal const string MetadataFile = "metadata.yaml";
