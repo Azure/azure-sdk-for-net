@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -12,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -98,11 +100,13 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                body = new MethodBodyStatement[]
+                // Non-resource type: just deserialize and return
+                var statements = new List<MethodBodyStatement>
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
-                    Return(BuildDeserializeNonResource(documentVariable)),
                 };
+                statements.AddRange(BuildDeserializeNonResourceStatements(documentVariable));
+                body = statements.ToArray();
             }
 
             return new MethodProvider(signature, body, this);
@@ -133,14 +137,37 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                body = new MethodBodyStatement[]
+                // Non-resource type: just deserialize and return
+                var statements = new List<MethodBodyStatement>
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream))]), out var documentVariable),
-                    Return(BuildDeserializeNonResource(documentVariable)),
                 };
+                statements.AddRange(BuildDeserializeNonResourceStatements(documentVariable));
+                body = statements.ToArray();
             }
 
             return new MethodProvider(signature, body, this);
+        }
+
+        // Deserialize the document into _resultType.
+        // For framework collection types (e.g. IDictionary<string, BinaryData> from TypeSpec `Record<unknown>`), the value
+        // is built inline from JSON because such types are not IPersistableModel<T> and ModelReaderWriter.Read<T> is invalid.
+        // For all other types, defer to BuildDeserializeNonResource which returns a single expression.
+        private MethodBodyStatement[] BuildDeserializeNonResourceStatements(VariableExpression documentVariable)
+        {
+            if (JsonResponseDeserialization.IsInlineJsonDeserializable(_resultType))
+            {
+                var statements = new List<MethodBodyStatement>();
+                statements.AddRange(JsonResponseDeserialization.BuildDeserializeFromRootElement(
+                    _resultType,
+                    documentVariable.Property(nameof(JsonDocument.RootElement)),
+                    "value",
+                    out var valueVariable));
+                statements.Add(Return(valueVariable));
+                return statements.ToArray();
+            }
+
+            return [Return(BuildDeserializeNonResource(documentVariable))];
         }
 
         // Deserialize the document into _resultType.
