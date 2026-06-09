@@ -9,16 +9,16 @@ using System.IO;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
-    public partial class CreateAgentFromCodeOptions
+    /// <summary> Multipart request body for updating or versioning a code-based agent (POST /agents/{name} and POST /agents/{name}/versions). </summary>
+    public partial class CreateAgentVersionFromCodeContent
     {
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeContent"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="codePath"> The file path for the code file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="codePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="codePath"/> is an empty string, and was expected to be non-empty. </exception>
         [Experimental("SCME0004")]
-        public CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, string codePath)
+        public CreateAgentVersionFromCodeContent(CreateAgentVersionFromCodeMetadata metadata, string codePath)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNullOrEmpty(codePath, nameof(codePath));
@@ -27,12 +27,12 @@ namespace Azure.AI.Projects.Agents
             Code = new FileBinaryContent(codePath);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeContent"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The content for the code file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="code"/> is null. </exception>
         [Experimental("SCME0004")]
-        public CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, Stream code)
+        public CreateAgentVersionFromCodeContent(CreateAgentVersionFromCodeMetadata metadata, Stream code)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(code, nameof(code));
@@ -41,12 +41,12 @@ namespace Azure.AI.Projects.Agents
             Code = new FileBinaryContent(code);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeContent"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The content for the code file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="code"/> is null. </exception>
         [Experimental("SCME0004")]
-        public CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, BinaryData code)
+        public CreateAgentVersionFromCodeContent(CreateAgentVersionFromCodeMetadata metadata, BinaryData code)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(code, nameof(code));
@@ -55,12 +55,12 @@ namespace Azure.AI.Projects.Agents
             Code = new FileBinaryContent(code);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeContent"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="code"/> is null. </exception>
         [Experimental("SCME0004")]
-        public CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, FileBinaryContent code)
+        public CreateAgentVersionFromCodeContent(CreateAgentVersionFromCodeMetadata metadata, FileBinaryContent code)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(code, nameof(code));

@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -355,14 +356,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateSkillVersionFromFiles(string name, BinaryContent content, string contentType, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
             using PipelineMessage message = CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
@@ -380,17 +382,54 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateSkillVersionFromFilesAsync(string name, BinaryContent content, string contentType, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
             using PipelineMessage message = CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Creates a new version of a skill from uploaded files via multipart form data. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual ClientResult<SkillVersion> CreateSkillVersionFromFiles(string name, CreateSkillVersionFromFilesBody content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = CreateSkillVersionFromFiles(name, content0, content0.MediaType, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary> Creates a new version of a skill from uploaded files via multipart form data. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<ClientResult<SkillVersion>> CreateSkillVersionFromFilesAsync(string name, CreateSkillVersionFromFilesBody content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = await CreateSkillVersionFromFilesAsync(name, content0, content0.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
         }
 
         /// <summary>

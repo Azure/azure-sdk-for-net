@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The supported data generation job types. </summary>
-    internal readonly partial struct DataGenerationJobKind : IEquatable<DataGenerationJobKind>
+    public readonly partial struct DataGenerationJobKind : IEquatable<DataGenerationJobKind>
     {
         private readonly string _value;
         /// <summary> Simple question and answers between user and agent. </summary>

@@ -148,6 +148,14 @@ namespace BasicTypeSpec
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The MultipartRequestRequest. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.MultipartRequestRequest"/> instance for mocking. </returns>
+        public static MultipartRequestRequest MultipartRequestRequest(string name = default)
+        {
+            return new MultipartRequestRequest(name);
+        }
+
         /// <summary> Model with DataFactoryElement properties. </summary>
         /// <param name="stringProperty"> String property with DFE pattern. </param>
         /// <param name="intProperty"> Int property with DFE pattern. </param>
