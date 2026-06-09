@@ -67,7 +67,7 @@ To determine the review scope:
    The scanner currently emits these rule families (see "API Review Checklist" for details):
    - `SUFFIX001`–`SUFFIX010` – forbidden type-name suffixes (Parameters, Request, Options, Response, Data, Definition, Operation, Collection, **Update**, …)
    - `RESINFIX001` – `Resource` infix in `*Data`/`*Collection` model names (with PrivateLinkResource exception)
-   - `RESNAME001` – single-word generic resource trio noun (after stripping `Resource`/`Data`/`Collection`, e.g., `Drill`, `Goal`, `Recovery`, `Enrollment`); only fires when the class actually inherits `ArmResource` / `ResourceData` / `TrackedResourceData` / `ArmCollection`
+   - `RESNAME001` – single-word generic resource trio noun (after stripping `Resource`/`Data`/`Collection`); only fires when the class actually inherits `ArmResource` / `ResourceData` / `TrackedResourceData` / `ArmCollection`
    - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/…)
    - `ACRONYM002` – generic 3+ letter all-caps run inside a name (NNI, IPV, BFD, …)
    - `ARMCOMMON001` – type duplicates an Azure.ResourceManager/Azure.Core common type (`OperationStatusResult`, `ManagedServiceIdentity*`, `TagsUpdate`, `ErrorResponse`, …)
