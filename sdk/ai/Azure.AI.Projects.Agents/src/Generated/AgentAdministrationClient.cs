@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Agents
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Updates an agent endpoint.
+        /// [Protocol Method] Applies a merge-patch update to the specified agent endpoint configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -103,7 +103,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Updates an agent endpoint.
+        /// [Protocol Method] Applies a merge-patch update to the specified agent endpoint configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -123,7 +123,11 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] CreateAgentVersionFromCode
+        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
+        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+        /// `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -148,7 +152,11 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] CreateAgentVersionFromCode
+        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
+        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+        /// `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -173,7 +181,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for a code-based hosted agent.
+        /// [Protocol Method] Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
         /// If `agent_version` is supplied, returns that version's code zip; otherwise
         /// returns the latest version's code zip.
@@ -201,7 +209,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for a code-based hosted agent.
+        /// [Protocol Method] Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
         /// If `agent_version` is supplied, returns that version's code zip; otherwise
         /// returns the latest version's code zip.
@@ -229,7 +237,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Download the code zip for a code-based hosted agent.
+        /// Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
         /// If `agent_version` is supplied, returns that version's code zip; otherwise
         /// returns the latest version's code zip.
@@ -251,7 +259,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Download the code zip for a code-based hosted agent.
+        /// Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
         /// If `agent_version` is supplied, returns that version's code zip; otherwise
         /// returns the latest version's code zip.
@@ -319,7 +327,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a session by ID.
+        /// [Protocol Method] Retrieves the details of a hosted agent session by agent name and session identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -340,7 +348,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a session by ID.
+        /// [Protocol Method] Retrieves the details of a hosted agent session by agent name and session identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -405,8 +413,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Stops a session.
-        /// Returns 204 No Content when the stop succeeds.
+        /// [Protocol Method] Terminates the specified hosted agent session and returns 204 No Content when the request succeeds.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -426,8 +433,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Stops a session.
-        /// Returns 204 No Content when the stop succeeds.
+        /// [Protocol Method] Terminates the specified hosted agent session and returns 204 No Content when the request succeeds.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -446,10 +452,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary>
-        /// Stops a session.
-        /// Returns 204 No Content when the stop succeeds.
-        /// </summary>
+        /// <summary> Terminates the specified hosted agent session and returns 204 No Content when the request succeeds. </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -460,10 +463,7 @@ namespace Azure.AI.Projects.Agents
             return StopSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
-        /// <summary>
-        /// Stops a session.
-        /// Returns 204 No Content when the stop succeeds.
-        /// </summary>
+        /// <summary> Terminates the specified hosted agent session and returns 204 No Content when the request succeeds. </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
