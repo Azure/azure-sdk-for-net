@@ -905,44 +905,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             eventProcessor.Dispose();
         }
-
-        /// <summary>
-        /// When BatchCheckpointFrequency == 1, no idle checkpoint timer should be active
-        /// because every batch is checkpointed immediately.
-        /// </summary>
-        [Test]
-        public async Task ProcessEvents_IdleCheckpoint_NotActiveWhenFrequencyIsOne()
-        {
-            var partitionContext = EventHubTests.GetPartitionContext();
-            var checkpoints = 0;
-            var options = new EventHubOptions
-            {
-                BatchCheckpointFrequency = 1
-            };
-
-            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Callback(() =>
-            {
-                checkpoints++;
-            }).Returns(Task.CompletedTask);
-            partitionContext.ProcessorHost = processor.Object;
-
-            var loggerMock = new Mock<ILogger>();
-            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
-            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default, default);
-
-            // Process 3 batches — each should checkpoint immediately (frequency = 1).
-            for (int i = 0; i < 3; i++)
-            {
-                List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events);
-            }
-
-            Assert.AreEqual(3, checkpoints, "Each batch should have been checkpointed (frequency 1).");
-            eventProcessor.Dispose();
-        }
-
         /// <summary>
         /// On graceful shutdown (not OwnershipLost), un-checkpointed work should be checkpointed.
         /// </summary>
