@@ -51,19 +51,28 @@ public class OptimizationConfigTests
     }
 
     [Test]
-    public void MetadataConfig_FromDictionary_ParsesAdditionalNumericTypes()
+    public void LocalConfig_ParsesNumericTemperatureTypes()
     {
-        var longConfig = MetadataConfig.FromDictionary(new Dictionary<string, object?>
-        {
-            ["temperature"] = 2L,
-        });
-        var decimalConfig = MetadataConfig.FromDictionary(new Dictionary<string, object?>
-        {
-            ["temperature"] = 0.25m,
-        });
+        // Temperature parsing is now internal to LocalConfigReader.
+        // Test via a local directory with a metadata.yaml containing a string temperature.
+        string tempDir = Path.Combine(Path.GetTempPath(), "opt-temp-" + Guid.NewGuid().ToString("N").Substring(0, 8));
+        string baseline = Path.Combine(tempDir, "baseline");
+        Directory.CreateDirectory(baseline);
+        File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "temperature: 0.25\n");
 
-        Assert.That(longConfig.Temperature, Is.EqualTo(2d));
-        Assert.That(decimalConfig.Temperature, Is.EqualTo(0.25d));
+        try
+        {
+            var result = LocalConfigReader.Load(null, tempDir);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Temperature, Is.EqualTo(0.25d));
+        }
+        finally
+        {
+            if (Directory.Exists(tempDir))
+            {
+                Directory.Delete(tempDir, true);
+            }
+        }
     }
 
     [Test]

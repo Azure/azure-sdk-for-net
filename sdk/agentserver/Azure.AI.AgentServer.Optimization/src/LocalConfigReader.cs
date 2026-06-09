@@ -140,16 +140,26 @@ internal static class LocalConfigReader
             raw = new Dictionary<string, object>();
         }
 
-        var meta = MetadataConfig.FromDictionary(raw);
+        // Parse metadata fields with defaults
+        string instructionFile = raw.TryGetValue("instruction_file", out var instrVal) && instrVal is string instrStr
+            ? instrStr : "instructions.md";
+        string skillDir = raw.TryGetValue("skill_dir", out var sdVal) && sdVal is string sdStr
+            ? sdStr : "skills";
+        string toolFile = raw.TryGetValue("tool_file", out var tfVal) && tfVal is string tfStr
+            ? tfStr : "tools.json";
+        string model = raw.TryGetValue("model", out var modelVal) && modelVal is string modelStr
+            ? modelStr : null;
+        double? temperature = raw.TryGetValue("temperature", out var tempVal)
+            ? ParseTemperature(tempVal) : null;
 
         // Read instructions
-        string instructionsPath = Path.Combine(candidatePath, meta.InstructionFile);
+        string instructionsPath = Path.Combine(candidatePath, instructionFile);
         string instructions = File.Exists(instructionsPath)
             ? File.ReadAllText(instructionsPath).Trim()
             : null;
 
         // Resolve skills directory
-        string skillsPath = Path.Combine(candidatePath, meta.SkillDir);
+        string skillsPath = Path.Combine(candidatePath, skillDir);
         string skillsDirectory = Directory.Exists(skillsPath)
             ? Path.GetFullPath(skillsPath)
             : null;
@@ -158,18 +168,33 @@ internal static class LocalConfigReader
             : Array.Empty<OptimizationSkill>();
 
         // Load tool definitions
-        string toolFilePath = Path.Combine(candidatePath, meta.ToolFile);
+        string toolFilePath = Path.Combine(candidatePath, toolFile);
         var toolDefinitions = LoadToolDefinitions(toolFilePath);
 
         return new OptimizationConfig(
             instructions: instructions,
-            model: meta.Model,
-            temperature: meta.Temperature,
+            model: model,
+            temperature: temperature,
             skills: skills,
             skillsDirectory: skillsDirectory,
             toolDefinitions: toolDefinitions,
             source: $"local:{candidatePath}",
             candidateId: candidateId);
+    }
+
+    private static double? ParseTemperature(object value)
+    {
+        switch (value)
+        {
+            case double d: return d;
+            case int i: return i;
+            case long l: return l;
+            case float f: return f;
+            case decimal m: return (double)m;
+            case string s when double.TryParse(s, System.Globalization.NumberStyles.Float | System.Globalization.NumberStyles.AllowThousands, System.Globalization.CultureInfo.InvariantCulture, out double parsed):
+                return parsed;
+            default: return null;
+        }
     }
 
     private static IReadOnlyList<BinaryData> LoadToolDefinitions(string toolFilePath)
