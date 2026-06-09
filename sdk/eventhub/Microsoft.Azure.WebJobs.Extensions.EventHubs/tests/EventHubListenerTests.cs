@@ -657,12 +657,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Times.Never);
         }
 
-        /// <summary>
-        /// CloseAsync on Shutdown with no uncheckpointed batches (default frequency)
-        /// should not trigger a checkpoint.
-        /// </summary>
         [Test]
-        public async Task CloseAsync_Shutdown_NoPendingWork_DoesNotCheckpoint()
+        public async Task CloseAsync_Shutdown_DoesNotCheckpoint()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions();
@@ -902,127 +898,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Now an empty batch should trigger the idle checkpoint.
             await eventProcessor.ProcessEventsAsync(partitionContext, Enumerable.Empty<EventData>());
             Assert.AreEqual(1, checkpoints, "Idle checkpoint should have fired after the interval elapsed.");
-
-            eventProcessor.Dispose();
-        }
-        /// <summary>
-        /// On graceful shutdown (not OwnershipLost), un-checkpointed work should be checkpointed.
-        /// </summary>
-        [Test]
-        public async Task CloseAsync_GracefulShutdown_CheckpointsUncheckpointedWork()
-        {
-            var partitionContext = EventHubTests.GetPartitionContext();
-            var checkpoints = 0;
-            var options = new EventHubOptions
-            {
-                BatchCheckpointFrequency = 10
-            };
-
-            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Callback(() =>
-            {
-                checkpoints++;
-            }).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
-            partitionContext.ProcessorHost = processor.Object;
-
-            var loggerMock = new Mock<ILogger>();
-            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
-            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default, default);
-
-            // Process 3 batches (less than frequency 10) — no regular checkpoint.
-            for (int i = 0; i < 3; i++)
-            {
-                List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events);
-            }
-
-            Assert.AreEqual(0, checkpoints, "No regular checkpoint should have occurred.");
-
-            // Graceful shutdown should checkpoint remaining work.
-            await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown);
-
-            Assert.AreEqual(1, checkpoints, "CloseAsync should have checkpointed the un-checkpointed work.");
-            eventProcessor.Dispose();
-        }
-
-        /// <summary>
-        /// On OwnershipLost, un-checkpointed work should NOT be checkpointed.
-        /// </summary>
-        [Test]
-        public async Task CloseAsync_OwnershipLost_DoesNotCheckpoint()
-        {
-            var partitionContext = EventHubTests.GetPartitionContext();
-            var checkpoints = 0;
-            var options = new EventHubOptions
-            {
-                BatchCheckpointFrequency = 10
-            };
-
-            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Callback(() =>
-            {
-                checkpoints++;
-            }).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
-            partitionContext.ProcessorHost = processor.Object;
-
-            var loggerMock = new Mock<ILogger>();
-            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
-            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default, default);
-
-            // Process 3 batches (less than frequency 10) — no regular checkpoint.
-            for (int i = 0; i < 3; i++)
-            {
-                List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events);
-            }
-
-            Assert.AreEqual(0, checkpoints, "No regular checkpoint should have occurred.");
-
-            // OwnershipLost should NOT checkpoint.
-            await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost);
-
-            Assert.AreEqual(0, checkpoints, "CloseAsync with OwnershipLost should not checkpoint.");
-            eventProcessor.Dispose();
-        }
-
-        /// <summary>
-        /// When checkpointing is disabled, idle checkpoint and shutdown checkpoint should not occur.
-        /// </summary>
-        [Test]
-        public async Task CloseAsync_CheckpointingDisabled_DoesNotCheckpoint()
-        {
-            var partitionContext = EventHubTests.GetPartitionContext();
-            var options = new EventHubOptions
-            {
-                EnableCheckpointing = false,
-                BatchCheckpointFrequency = 5
-            };
-
-            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
-            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
-            partitionContext.ProcessorHost = processor.Object;
-
-            var loggerMock = new Mock<ILogger>();
-            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
-            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default, default);
-
-            for (int i = 0; i < 3; i++)
-            {
-                List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events);
-            }
-
-            await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown);
-
-            processor.Verify(
-                p => p.CheckpointAsync(It.IsAny<string>(), It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
-                Times.Never);
 
             eventProcessor.Dispose();
         }

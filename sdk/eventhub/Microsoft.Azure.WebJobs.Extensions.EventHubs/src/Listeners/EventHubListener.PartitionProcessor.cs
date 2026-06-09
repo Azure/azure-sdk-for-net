@@ -86,23 +86,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 {
                     _ownershipLostTokenSource.Cancel();
                 }
-                else if (_enableCheckpointing
-                    && _batchCheckpointFrequency > 1
-                    && _batchCounter > 0)
-                {
-                    // Checkpoint un-checkpointed work on graceful shutdown (not ownership loss)
-                    // to prevent stale checkpoints from blocking scale-in.
-                    try
-                    {
-                        await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
-                        _batchCounter = 0;
-                        _logger.LogDebug(GetOperationDetails(context, "CloseAsync_Checkpoint"));
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogWarning($"Failed to checkpoint on close for partition '{context.PartitionId}': {ex.Message}");
-                    }
-                }
 
                 // clear the cached events
                 CachedEventsManager?.ClearEventCache();
@@ -148,7 +131,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     && _enableCheckpointing
                     && _batchCheckpointFrequency > 1
                     && _batchCounter > 0
-                    && (DateTimeOffset.UtcNow - _lastBatchReceivedTime).TotalSeconds >= IdleCheckpointIntervalSeconds)
+                    && (DateTimeOffset.UtcNow - _lastBatchReceivedTime).TotalSeconds >= IdleCheckpointIntervalSeconds
+                    && !_listenerCancellationToken.IsCancellationRequested
+                    && !_functionExecutionToken.IsCancellationRequested
+                    && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
                     await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
                     _batchCounter = 0;
