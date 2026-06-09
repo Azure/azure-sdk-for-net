@@ -1018,7 +1018,7 @@ namespace Azure.Core.Pipeline
         protected virtual bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
-        protected void OnTransportOptionsChanged(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
+        protected virtual void OnTransportOptionsChanged(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }

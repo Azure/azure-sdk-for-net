@@ -148,7 +148,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Update(HttpPipelineTransportOptions options)
         {
-            AzureCoreEventSource.Singleton.TokenBinding("HttpClientTransport updating transport options with " + options.ClientCertificates.Count + " client certificate(s).");
+            AzureCoreEventSource.Singleton.TokenBinding($"HttpClientTransport updating transport options with {options.ClientCertificates.Count} client certificate(s).");
             if (this == Shared)
             {
                 throw new InvalidOperationException("Cannot update the shared HttpClientTransport instance.");
@@ -363,6 +363,19 @@ namespace Azure.Core.Pipeline
                 httpHandler.SslOptions ??= new System.Net.Security.SslClientAuthenticationOptions();
                 httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
                 httpHandler.SslOptions.ClientCertificates!.Add(cert);
+            }
+
+            // Ensure the first available client certificate is selected during TLS handshake
+            if (options.ClientCertificates.Count > 0)
+            {
+                httpHandler.SslOptions.LocalCertificateSelectionCallback = (sender, targetHost, localCerts, remoteCert, acceptableIssuers) =>
+                {
+                    if (localCerts.Count > 0)
+                    {
+                        return localCerts[0];
+                    }
+                    return null!;
+                };
             }
 #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
