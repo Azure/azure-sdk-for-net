@@ -1445,12 +1445,13 @@ public class CredentialResolverTests
         Type cacheType = typeof(AuthenticationTokenProvider).Assembly
             .GetType("System.ClientModel.Primitives.CredentialCache", throwOnError: true)!;
         var cacheField = cacheType.GetField("s_cache", BindingFlags.NonPublic | BindingFlags.Static)!;
+        var cache = (System.Collections.IDictionary)cacheField.GetValue(null)!;
 
         int missed = 0;
         const int iterations = 2000;
         for (int i = 0; i < iterations; i++)
         {
-            ((System.Collections.IDictionary)cacheField.GetValue(null)!).Clear();
+            cache.Clear();
 
             CredentialSettings? settings = config.GetCredentialSettings("Cred", lazyOnly, foo);
             var provider = (LazyCaptureProvider)settings!.TokenProvider!;
