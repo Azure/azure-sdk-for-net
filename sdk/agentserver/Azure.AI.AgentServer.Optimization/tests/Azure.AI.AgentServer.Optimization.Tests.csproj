@@ -13,7 +13,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\..\core\Microsoft.ClientModel.TestFramework\src\Microsoft.ClientModel.TestFramework.csproj" />
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Optimization.csproj" />
   </ItemGroup>
