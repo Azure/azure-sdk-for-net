@@ -1630,19 +1630,6 @@ namespace Azure.AI.Projects.Agents
             return new DatasetInfo(name, version, taskCount, isInline, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The response data for a requested list of items. </summary>
-        /// <param name="data"> The requested list of items. </param>
-        /// <param name="firstId"> The first ID represented in this list. </param>
-        /// <param name="lastId"> The last ID represented in this list. </param>
-        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Agents.AgentsPagedResultOptimizationCandidate"/> instance for mocking. </returns>
-        public static AgentsPagedResultOptimizationCandidate AgentsPagedResultOptimizationCandidate(IEnumerable<OptimizationCandidate> data = default, string firstId = default, string lastId = default, bool hasMore = default)
-        {
-            data ??= new ChangeTrackingList<OptimizationCandidate>();
-
-            return new AgentsPagedResultOptimizationCandidate(data.ToList(), firstId, lastId, hasMore, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Candidate metadata returned by GET /candidates/{id}. </summary>
         /// <param name="candidateId"> Server-assigned candidate identifier. </param>
         /// <param name="jobId"> Owning optimization job id. </param>
