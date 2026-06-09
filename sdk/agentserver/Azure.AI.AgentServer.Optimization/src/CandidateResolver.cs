@@ -154,12 +154,21 @@ internal static class CandidateResolver
                 }
 
                 string skillName = nameProp.GetString()!;
-                if (string.IsNullOrEmpty(skillName))
+                if (string.IsNullOrEmpty(skillName) ||
+                    skillName.Contains("..", StringComparison.Ordinal) ||
+                    skillName.IndexOf(Path.DirectorySeparatorChar) >= 0 ||
+                    skillName.IndexOf(Path.AltDirectorySeparatorChar) >= 0)
                 {
                     continue;
                 }
 
-                string skillFolder = Path.Combine(skillsDirPath, skillName);
+                string skillFolder = Path.GetFullPath(Path.Combine(skillsDirPath, skillName));
+                string skillsDirFull = Path.GetFullPath(skillsDirPath) + Path.DirectorySeparatorChar;
+                if (!skillFolder.StartsWith(skillsDirFull, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
                 Directory.CreateDirectory(skillFolder);
 
                 var fmDict = new Dictionary<string, string> { ["name"] = skillName };
