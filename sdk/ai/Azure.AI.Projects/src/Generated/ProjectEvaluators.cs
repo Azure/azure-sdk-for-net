@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] List all versions of the given evaluator
+        /// [Protocol Method] Returns the available versions for the specified evaluator.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -60,7 +60,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List all versions of the given evaluator
+        /// [Protocol Method] Returns the available versions for the specified evaluator.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Evaluation
             return new ProjectEvaluatorsGetVersionsAsyncCollectionResult(this, name, @type, limit, options);
         }
 
-        /// <summary> List all versions of the given evaluator. </summary>
+        /// <summary> Returns the available versions for the specified evaluator. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects.Evaluation
             return new ProjectEvaluatorsGetVersionsCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all versions of the given evaluator. </summary>
+        /// <summary> Returns the available versions for the specified evaluator. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
@@ -113,7 +113,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List the latest version of each evaluator
+        /// [Protocol Method] Lists the latest version of each evaluator
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List the latest version of each evaluator
+        /// [Protocol Method] Lists the latest version of each evaluator
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects.Evaluation
             return new ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult(this, @type, limit, options);
         }
 
-        /// <summary> List the latest version of each evaluator. </summary>
+        /// <summary> Lists the latest version of each evaluator. </summary>
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -158,7 +158,7 @@ namespace Azure.AI.Projects.Evaluation
             return new ProjectEvaluatorsGetLatestVersionsCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List the latest version of each evaluator. </summary>
+        /// <summary> Lists the latest version of each evaluator. </summary>
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the EvaluatorVersion. The service returns 404 Not Found error if the EvaluatorVersion does not exist.
+        /// [Protocol Method] Retrieves the specified evaluator version, returning 404 if it does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -193,7 +193,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the EvaluatorVersion. The service returns 404 Not Found error if the EvaluatorVersion does not exist.
+        /// [Protocol Method] Retrieves the specified evaluator version, returning 404 if it does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -216,7 +216,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get the specific version of the EvaluatorVersion. The service returns 404 Not Found error if the EvaluatorVersion does not exist. </summary>
+        /// <summary> Retrieves the specified evaluator version, returning 404 if it does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -232,7 +232,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Get the specific version of the EvaluatorVersion. The service returns 404 Not Found error if the EvaluatorVersion does not exist. </summary>
+        /// <summary> Retrieves the specified evaluator version, returning 404 if it does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -249,7 +249,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the EvaluatorVersion. The service returns 204 No Content if the EvaluatorVersion was deleted successfully or if the EvaluatorVersion does not exist.
+        /// [Protocol Method] Removes the specified evaluator version. Returns 204 whether the version existed or not.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -273,7 +273,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the EvaluatorVersion. The service returns 204 No Content if the EvaluatorVersion was deleted successfully or if the EvaluatorVersion does not exist.
+        /// [Protocol Method] Removes the specified evaluator version. Returns 204 whether the version existed or not.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -296,7 +296,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete the specific version of the EvaluatorVersion. The service returns 204 No Content if the EvaluatorVersion was deleted successfully or if the EvaluatorVersion does not exist. </summary>
+        /// <summary> Removes the specified evaluator version. Returns 204 whether the version existed or not. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -311,7 +311,7 @@ namespace Azure.AI.Projects.Evaluation
             return DeleteVersion(name, version, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete the specific version of the EvaluatorVersion. The service returns 204 No Content if the EvaluatorVersion was deleted successfully or if the EvaluatorVersion does not exist. </summary>
+        /// <summary> Removes the specified evaluator version. Returns 204 whether the version existed or not. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -327,7 +327,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new EvaluatorVersion with auto incremented version id
+        /// [Protocol Method] Creates a new evaluator version with an auto-incremented version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -351,7 +351,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new EvaluatorVersion with auto incremented version id
+        /// [Protocol Method] Creates a new evaluator version with an auto-incremented version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -374,7 +374,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
+        /// <summary> Creates a new evaluator version with an auto-incremented version identifier. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="evaluatorVersion"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -390,7 +390,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
+        /// <summary> Creates a new evaluator version with an auto-incremented version identifier. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="evaluatorVersion"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -407,7 +407,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Update an existing EvaluatorVersion with the given version id
+        /// [Protocol Method] Updates the specified evaluator version in place.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -433,7 +433,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Update an existing EvaluatorVersion with the given version id
+        /// [Protocol Method] Updates the specified evaluator version in place.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -459,7 +459,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Start a new or get an existing pending upload of an evaluator for a specific version.
+        /// [Protocol Method] Initiates a new pending upload or retrieves an existing one for the specified evaluator version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -486,7 +486,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Start a new or get an existing pending upload of an evaluator for a specific version.
+        /// [Protocol Method] Initiates a new pending upload or retrieves an existing one for the specified evaluator version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -512,7 +512,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Start a new or get an existing pending upload of an evaluator for a specific version. </summary>
+        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
         /// <param name="name"></param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
@@ -531,7 +531,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Start a new or get an existing pending upload of an evaluator for a specific version. </summary>
+        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
         /// <param name="name"></param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
@@ -551,7 +551,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get the SAS credential to access the storage account associated with an Evaluator version.
+        /// [Protocol Method] Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -578,7 +578,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get the SAS credential to access the storage account associated with an Evaluator version.
+        /// [Protocol Method] Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -604,7 +604,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get the SAS credential to access the storage account associated with an Evaluator version. </summary>
+        /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>
         /// <param name="name"></param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="credentialRequest"> The credential request parameters. </param>
@@ -623,7 +623,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
 
-        /// <summary> Get the SAS credential to access the storage account associated with an Evaluator version. </summary>
+        /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>
         /// <param name="name"></param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="credentialRequest"> The credential request parameters. </param>

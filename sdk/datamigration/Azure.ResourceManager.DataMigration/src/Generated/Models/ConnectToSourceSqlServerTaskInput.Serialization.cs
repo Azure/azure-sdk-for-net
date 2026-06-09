@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskInput>
+    /// <summary> Input for the task that validates connection to SQL Server and also validates source server requirements. </summary>
+    public partial class ConnectToSourceSqlServerTaskInput : IJsonModel<ConnectToSourceSqlServerTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/> for deserialization. </summary>
+        internal ConnectToSourceSqlServerTaskInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectToSourceSqlServerTaskInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectToSourceSqlServerTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectToSourceSqlServerTaskInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToSourceSqlServerTaskInput IPersistableModel<ConnectToSourceSqlServerTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectToSourceSqlServerTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectToSourceSqlServerTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo, options);
             if (Optional.IsDefined(CheckPermissionsGroup))
@@ -71,15 +116,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,149 +133,121 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        ConnectToSourceSqlServerTaskInput IJsonModel<ConnectToSourceSqlServerTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToSourceSqlServerTaskInput IJsonModel<ConnectToSourceSqlServerTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectToSourceSqlServerTaskInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectToSourceSqlServerTaskInput(document.RootElement, options);
         }
 
-        internal static ConnectToSourceSqlServerTaskInput DeserializeConnectToSourceSqlServerTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectToSourceSqlServerTaskInput DeserializeConnectToSourceSqlServerTaskInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
             ServerLevelPermissionsGroup? checkPermissionsGroup = default;
-            bool? collectDatabases = default;
-            bool? collectLogins = default;
-            bool? collectAgentJobs = default;
-            bool? collectTdeCertificateInfo = default;
-            bool? validateSsisCatalogOnly = default;
+            bool? shouldCollectDatabases = default;
+            bool? shouldCollectLogins = default;
+            bool? shouldCollectAgentJobs = default;
+            bool? shouldCollectTdeCertificateInfo = default;
+            bool? shouldValidateSsisCatalogOnly = default;
             string encryptedKeyForSecureFields = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"u8))
+                if (prop.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("checkPermissionsGroup"u8))
+                if (prop.NameEquals("checkPermissionsGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    checkPermissionsGroup = property.Value.GetString().ToServerLevelPermissionsGroup();
+                    checkPermissionsGroup = prop.Value.GetString().ToServerLevelPermissionsGroup();
                     continue;
                 }
-                if (property.NameEquals("collectDatabases"u8))
+                if (prop.NameEquals("collectDatabases"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    collectDatabases = property.Value.GetBoolean();
+                    shouldCollectDatabases = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("collectLogins"u8))
+                if (prop.NameEquals("collectLogins"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    collectLogins = property.Value.GetBoolean();
+                    shouldCollectLogins = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("collectAgentJobs"u8))
+                if (prop.NameEquals("collectAgentJobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    collectAgentJobs = property.Value.GetBoolean();
+                    shouldCollectAgentJobs = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("collectTdeCertificateInfo"u8))
+                if (prop.NameEquals("collectTdeCertificateInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    collectTdeCertificateInfo = property.Value.GetBoolean();
+                    shouldCollectTdeCertificateInfo = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("validateSsisCatalogOnly"u8))
+                if (prop.NameEquals("validateSsisCatalogOnly"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validateSsisCatalogOnly = property.Value.GetBoolean();
+                    shouldValidateSsisCatalogOnly = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("encryptedKeyForSecureFields"u8))
+                if (prop.NameEquals("encryptedKeyForSecureFields"u8))
                 {
-                    encryptedKeyForSecureFields = property.Value.GetString();
+                    encryptedKeyForSecureFields = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectToSourceSqlServerTaskInput(
                 sourceConnectionInfo,
                 checkPermissionsGroup,
-                collectDatabases,
-                collectLogins,
-                collectAgentJobs,
-                collectTdeCertificateInfo,
-                validateSsisCatalogOnly,
+                shouldCollectDatabases,
+                shouldCollectLogins,
+                shouldCollectAgentJobs,
+                shouldCollectTdeCertificateInfo,
+                shouldValidateSsisCatalogOnly,
                 encryptedKeyForSecureFields,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ConnectToSourceSqlServerTaskInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConnectToSourceSqlServerTaskInput IPersistableModel<ConnectToSourceSqlServerTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectToSourceSqlServerTaskInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConnectToSourceSqlServerTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
