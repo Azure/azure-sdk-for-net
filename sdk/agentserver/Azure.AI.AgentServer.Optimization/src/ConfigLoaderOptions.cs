@@ -14,12 +14,12 @@ public class ConfigLoaderOptions
     /// Override the local config directory path. Defaults to <c>OPTIMIZATION_LOCAL_DIR</c>
     /// environment variable or <c>.agent_configs/</c>.
     /// </summary>
-    public string? ConfigDirectory { get; set; }
+    public string ConfigDirectory { get; set; }
 
     /// <summary>
     /// Credential used for authenticating to the resolver API.
     /// A <c>DefaultAzureCredential</c> or other <c>AuthenticationTokenProvider</c> must be provided
     /// when using the resolver API (Priority 2).
     /// </summary>
-    public AuthenticationTokenProvider? Credential { get; set; }
+    public AuthenticationTokenProvider Credential { get; set; }
 }

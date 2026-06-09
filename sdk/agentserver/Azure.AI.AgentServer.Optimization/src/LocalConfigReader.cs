@@ -13,7 +13,7 @@ internal static class LocalConfigReader
     /// <summary>
     /// Loads an <see cref="OptimizationConfig"/> from a local directory.
     /// </summary>
-    public static OptimizationConfig? Load(string? candidateId, string? configDir)
+    public static OptimizationConfig Load(string candidateId, string configDir)
     {
         string localDir = ResolveLocalDir(configDir);
         if (!Directory.Exists(localDir))
@@ -21,14 +21,14 @@ internal static class LocalConfigReader
             return null;
         }
 
-        string? candidatePath = ResolveCandidateFolder(localDir, candidateId);
+        string candidatePath = ResolveCandidateFolder(localDir, candidateId);
         if (candidatePath is null)
         {
             return null;
         }
 
-        string? resolvedCandidateId = null;
-        string? nonEmptyCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
+        string resolvedCandidateId = null;
+        string nonEmptyCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
         if (nonEmptyCandidateId != null && IsValidCandidateId(nonEmptyCandidateId))
         {
             resolvedCandidateId = nonEmptyCandidateId;
@@ -85,7 +85,7 @@ internal static class LocalConfigReader
         return skills;
     }
 
-    internal static string ResolveLocalDir(string? configDir)
+    internal static string ResolveLocalDir(string configDir)
     {
         if (configDir != null)
         {
@@ -101,9 +101,9 @@ internal static class LocalConfigReader
         return Path.GetFullPath(OptimizationConfig.DefaultLocalDir);
     }
 
-    private static string? ResolveCandidateFolder(string localDir, string? candidateId)
+    private static string ResolveCandidateFolder(string localDir, string candidateId)
     {
-        string? nonEmptyCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
+        string nonEmptyCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
         if (nonEmptyCandidateId != null && IsValidCandidateId(nonEmptyCandidateId))
         {
             string exact = Path.Combine(localDir, nonEmptyCandidateId);
@@ -117,12 +117,12 @@ internal static class LocalConfigReader
         return Directory.Exists(baseline) ? baseline : null;
     }
 
-    private static OptimizationConfig? LoadCandidateFromMetadata(
+    private static OptimizationConfig LoadCandidateFromMetadata(
         string candidatePath,
         string metadataFilePath,
-        string? candidateId)
+        string candidateId)
     {
-        IDictionary<string, object?> raw;
+        IDictionary<string, object> raw;
         if (File.Exists(metadataFilePath))
         {
             try
@@ -137,20 +137,20 @@ internal static class LocalConfigReader
         }
         else
         {
-            raw = new Dictionary<string, object?>();
+            raw = new Dictionary<string, object>();
         }
 
         var meta = MetadataConfig.FromDictionary(raw);
 
         // Read instructions
         string instructionsPath = Path.Combine(candidatePath, meta.InstructionFile);
-        string? instructions = File.Exists(instructionsPath)
+        string instructions = File.Exists(instructionsPath)
             ? File.ReadAllText(instructionsPath).Trim()
             : null;
 
         // Resolve skills directory
         string skillsPath = Path.Combine(candidatePath, meta.SkillDir);
-        string? skillsDirectory = Directory.Exists(skillsPath)
+        string skillsDirectory = Directory.Exists(skillsPath)
             ? Path.GetFullPath(skillsPath)
             : null;
         IReadOnlyList<OptimizationSkill> skills = skillsDirectory != null
@@ -202,17 +202,17 @@ internal static class LocalConfigReader
         }
     }
 
-    internal static (Dictionary<string, object?> Frontmatter, string Body) ParseSkillFrontmatter(string content)
+    internal static (Dictionary<string, object> Frontmatter, string Body) ParseSkillFrontmatter(string content)
     {
         if (!content.StartsWith("---"))
         {
-            return (new Dictionary<string, object?>(), content);
+            return (new Dictionary<string, object>(), content);
         }
 
         int end = content.IndexOf("---", 3, StringComparison.Ordinal);
         if (end == -1)
         {
-            return (new Dictionary<string, object?>(), content);
+            return (new Dictionary<string, object>(), content);
         }
 
         string fmText = content.Substring(3, end - 3).Trim();
@@ -224,7 +224,7 @@ internal static class LocalConfigReader
         }
         catch (FormatException)
         {
-            return (new Dictionary<string, object?>(), body);
+            return (new Dictionary<string, object>(), body);
         }
     }
 

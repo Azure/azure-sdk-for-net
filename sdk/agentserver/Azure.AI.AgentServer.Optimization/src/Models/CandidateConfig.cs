@@ -10,9 +10,9 @@ namespace Azure.AI.AgentServer.Optimization;
 /// </summary>
 internal class CandidateConfig
 {
-    public string? Name { get; set; }
-    public string? Instructions { get; set; }
-    public string? Model { get; set; }
+    public string Name { get; set; }
+    public string Instructions { get; set; }
+    public string Model { get; set; }
     public double? Temperature { get; set; }
     public IReadOnlyList<OptimizationSkill> Skills { get; set; } = Array.Empty<OptimizationSkill>();
     public IReadOnlyList<BinaryData> ToolDefinitions { get; set; } = Array.Empty<BinaryData>();
@@ -22,15 +22,15 @@ internal class CandidateConfig
     /// </summary>
     public static CandidateConfig FromDictionary(JsonElement data)
     {
-        string? name = data.TryGetProperty("name", out var nameProp) && nameProp.ValueKind == JsonValueKind.String
+        string name = data.TryGetProperty("name", out var nameProp) && nameProp.ValueKind == JsonValueKind.String
             ? nameProp.GetString()
             : null;
 
-        string? instructions = data.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String
+        string instructions = data.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String
             ? instrProp.GetString()
             : null;
 
-        string? model = data.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String
+        string model = data.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String
             ? modelProp.GetString()
             : null;
 
@@ -67,7 +67,7 @@ internal class CandidateConfig
             if (!item.TryGetProperty("name", out var skillName) || skillName.ValueKind != JsonValueKind.String)
                 continue;
 
-            string name = skillName.GetString()!;
+            string name = skillName.GetString();
             if (string.IsNullOrEmpty(name))
                 continue;
 

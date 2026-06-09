@@ -7,9 +7,9 @@ namespace Azure.AI.AgentServer.Optimization;
 
 internal static class SimpleYamlParser
 {
-    public static Dictionary<string, object?> ParseKeyValuePairs(string content)
+    public static Dictionary<string, object> ParseKeyValuePairs(string content)
     {
-        var result = new Dictionary<string, object?>(StringComparer.Ordinal);
+        var result = new Dictionary<string, object>(StringComparer.Ordinal);
 
         foreach (string rawLine in content.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         {

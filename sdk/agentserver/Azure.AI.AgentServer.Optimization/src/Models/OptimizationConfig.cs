@@ -43,14 +43,14 @@ public class OptimizationConfig
     /// Initializes a new instance of the <see cref="OptimizationConfig"/> class.
     /// </summary>
     public OptimizationConfig(
-        string? instructions = null,
-        string? model = null,
+        string instructions = null,
+        string model = null,
         double? temperature = null,
-        IReadOnlyList<OptimizationSkill>? skills = null,
-        string? skillsDirectory = null,
-        IReadOnlyList<BinaryData>? toolDefinitions = null,
+        IReadOnlyList<OptimizationSkill> skills = null,
+        string skillsDirectory = null,
+        IReadOnlyList<BinaryData> toolDefinitions = null,
         string source = "defaults",
-        string? candidateId = null)
+        string candidateId = null)
     {
         Instructions = instructions;
         Model = model;
@@ -63,10 +63,10 @@ public class OptimizationConfig
     }
 
     /// <summary>Optimized system prompt text.</summary>
-    public string? Instructions { get; }
+    public string Instructions { get; }
 
     /// <summary>Model deployment name (e.g. "gpt-4o").</summary>
-    public string? Model { get; }
+    public string Model { get; }
 
     /// <summary>Sampling temperature.</summary>
     public double? Temperature { get; }
@@ -75,7 +75,7 @@ public class OptimizationConfig
     public IReadOnlyList<OptimizationSkill> Skills { get; }
 
     /// <summary>Path to a directory containing skill files for on-demand loading.</summary>
-    public string? SkillsDirectory { get; }
+    public string SkillsDirectory { get; }
 
     /// <summary>Tool definitions in OpenAI function-calling format, serialized as JSON.</summary>
     public IReadOnlyList<BinaryData> ToolDefinitions { get; }
@@ -84,7 +84,7 @@ public class OptimizationConfig
     public string Source { get; }
 
     /// <summary>The candidate identifier, if resolved from API or local directory.</summary>
-    public string? CandidateId { get; }
+    public string CandidateId { get; }
 
     /// <summary>
     /// Gets a value indicating whether this config carries any skill data (inline or via directory).
@@ -107,7 +107,7 @@ public class OptimizationConfig
                     func.TryGetProperty("name", out var nameProp) &&
                     nameProp.ValueKind == JsonValueKind.String)
                 {
-                    string name = nameProp.GetString()!;
+                    string name = nameProp.GetString();
                     if (name.Length > 0)
                     {
                         lookup[name] = tool;
@@ -128,7 +128,7 @@ public class OptimizationConfig
     /// <param name="functionName">The function name to look up.</param>
     /// <returns>The optimized description, or <c>null</c> if not found.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="functionName"/> is null.</exception>
-    public string? GetToolDescription(string functionName)
+    public string GetToolDescription(string functionName)
     {
         if (string.IsNullOrEmpty(functionName))
         {

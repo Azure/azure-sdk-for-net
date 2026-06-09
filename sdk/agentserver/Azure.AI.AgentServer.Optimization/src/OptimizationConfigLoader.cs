@@ -25,8 +25,8 @@ public static class OptimizationConfigLoader
     /// <param name="options">Optional loader configuration.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static async Task<OptimizationConfig?> LoadConfigAsync(
-        ConfigLoaderOptions? options = null,
+    public static async Task<OptimizationConfig> LoadConfigAsync(
+        ConfigLoaderOptions options = null,
         CancellationToken cancellationToken = default)
     {
         options ??= new ConfigLoaderOptions();
@@ -51,7 +51,7 @@ public static class OptimizationConfigLoader
             if (resolved.HasValue)
             {
                 var candidate = CandidateConfig.FromDictionary(resolved.Value);
-                string? skillsDir = resolved.Value.TryGetProperty("skills_dir", out var sdProp) && sdProp.ValueKind == JsonValueKind.String
+                string skillsDir = resolved.Value.TryGetProperty("skills_dir", out var sdProp) && sdProp.ValueKind == JsonValueKind.String
                     ? sdProp.GetString()
                     : null;
 
@@ -68,7 +68,7 @@ public static class OptimizationConfigLoader
         }
 
         // ── Priority 3: Local directory ─────────────────────────────
-        string? effectiveCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
+        string effectiveCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
         var localConfig = LocalConfigReader.Load(effectiveCandidateId, options.ConfigDirectory);
         if (localConfig is not null)
             return localConfig;
@@ -82,7 +82,7 @@ public static class OptimizationConfigLoader
     /// </summary>
     /// <param name="options">Optional loader configuration.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static OptimizationConfig? LoadConfig(ConfigLoaderOptions? options = null)
+    public static OptimizationConfig LoadConfig(ConfigLoaderOptions options = null)
     {
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
         return LoadConfigAsync(options).GetAwaiter().GetResult();

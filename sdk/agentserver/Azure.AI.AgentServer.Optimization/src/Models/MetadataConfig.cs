@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Optimization;
 /// </summary>
 internal class MetadataConfig
 {
-    public string? Model { get; set; }
+    public string Model { get; set; }
     public double? Temperature { get; set; }
     public string InstructionFile { get; set; } = "instructions.md";
     public string SkillDir { get; set; } = "skills";
@@ -19,7 +19,7 @@ internal class MetadataConfig
     /// <summary>
     /// Creates a <see cref="MetadataConfig"/> from a parsed YAML dictionary, ignoring unknown keys.
     /// </summary>
-    public static MetadataConfig FromDictionary(IDictionary<string, object?> data)
+    public static MetadataConfig FromDictionary(IDictionary<string, object> data)
     {
         var config = new MetadataConfig();
 
@@ -51,7 +51,7 @@ internal class MetadataConfig
         return config;
     }
 
-    private static double? ParseTemperature(object? temperature)
+    private static double? ParseTemperature(object temperature)
     {
         switch (temperature)
         {

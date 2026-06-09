@@ -24,8 +24,8 @@ internal static class CandidateResolver
     public static async Task<JsonElement?> ResolveAsync(
         string candidateId,
         string endpoint,
-        string? localDir,
-        AuthenticationTokenProvider? credential,
+        string localDir,
+        AuthenticationTokenProvider credential,
         CancellationToken cancellationToken = default)
     {
         ValidateCandidateId(candidateId);
@@ -78,7 +78,7 @@ internal static class CandidateResolver
 
         if (message.Response?.IsError != false)
         {
-            throw new ClientResultException(message.Response!);
+            throw new ClientResultException(message.Response);
         }
 
         using var doc = JsonDocument.Parse(message.Response.Content);
@@ -144,7 +144,7 @@ internal static class CandidateResolver
                     continue;
                 }
 
-                string skillName = nameProp.GetString()!;
+                string skillName = nameProp.GetString();
                 if (string.IsNullOrEmpty(skillName) ||
                     skillName.Contains("..", StringComparison.Ordinal) ||
                     skillName.IndexOf(Path.DirectorySeparatorChar) >= 0 ||
@@ -165,7 +165,7 @@ internal static class CandidateResolver
                 var fmDict = new Dictionary<string, string> { ["name"] = skillName };
                 if (skill.TryGetProperty("description", out var descProp) && descProp.ValueKind == JsonValueKind.String)
                 {
-                    fmDict["description"] = descProp.GetString()!;
+                    fmDict["description"] = descProp.GetString();
                 }
 
                 string fmText = SimpleYamlParser.SerializeKeyValuePairs(fmDict).TrimEnd('\n', '\r');
@@ -206,7 +206,7 @@ internal static class CandidateResolver
 
         if (manifestMessage.Response?.IsError != false)
         {
-            throw new ClientResultException(manifestMessage.Response!);
+            throw new ClientResultException(manifestMessage.Response);
         }
 
         using var manifestDoc = JsonDocument.Parse(manifestMessage.Response.Content);
@@ -232,7 +232,7 @@ internal static class CandidateResolver
                 throw new InvalidOperationException($"Invalid manifest for candidate {candidateId}: skill file path is empty");
             }
 
-            string filePath = pathProp.GetString()!;
+            string filePath = pathProp.GetString();
             if (string.IsNullOrEmpty(filePath))
             {
                 throw new InvalidOperationException($"Invalid manifest for candidate {candidateId}: skill file path is empty");
@@ -246,7 +246,7 @@ internal static class CandidateResolver
             await pipeline.SendAsync(fileMessage).ConfigureAwait(false);
             if (fileMessage.Response?.IsError != false)
             {
-                throw new ClientResultException(fileMessage.Response!);
+                throw new ClientResultException(fileMessage.Response);
             }
 
             string content = fileMessage.Response.Content.ToString();
@@ -266,7 +266,7 @@ internal static class CandidateResolver
                 throw new InvalidOperationException($"Invalid skill file path for candidate {candidateId}: {filePath}");
             }
 
-            string? parentDir = Path.GetDirectoryName(outPath);
+            string parentDir = Path.GetDirectoryName(outPath);
             if (parentDir != null)
             {
                 Directory.CreateDirectory(parentDir);
@@ -316,7 +316,7 @@ internal static class CandidateResolver
             CancellationToken = cancellationToken,
         };
 
-    private static ClientPipeline BuildPipeline(AuthenticationTokenProvider? credential)
+    private static ClientPipeline BuildPipeline(AuthenticationTokenProvider credential)
     {
         if (credential == null)
         {
