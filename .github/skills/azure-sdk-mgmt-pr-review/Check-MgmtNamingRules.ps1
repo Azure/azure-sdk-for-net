@@ -668,6 +668,60 @@ foreach ($typeName in $typeInfos.Keys) {
 }
 
 # =====================================================
+# RULE: RESNAME001 - Single-word generic resource trio names
+# =====================================================
+# After stripping the reserved ARM suffix (Resource / Data / Collection), the
+# remaining noun must still carry RP/domain context. A bare single word like
+# 'Drill', 'Goal', 'Recovery', 'Enrollment' is too generic - reviewers cannot
+# tell which RP it belongs to in IntelliSense and the name will collide with
+# similarly-generic types from other mgmt packages. This rule fires only when
+# the class actually inherits the ARM resource trio base (ArmResource /
+# ResourceData / TrackedResourceData / ArmCollection) so plain models named
+# 'FooData' that aren't resource data types are not flagged here.
+$resourceNameAllowList = @(
+    'GenericResource'     # ARM common, intentionally generic
+)
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'RESNAME001') { continue }
+    if ($resourceNameAllowList -contains $typeName) { continue }
+    $info = $typeInfos[$typeName]
+
+    $noun = $null
+    if ($typeName -like '*Resource' -and (Test-InheritsFrom $typeName 'ArmResource')) {
+        $noun = $typeName -replace 'Resource$',''
+    }
+    elseif ($typeName -like '*Data' -and (
+            (Test-InheritsFrom $typeName 'ResourceData') -or
+            (Test-InheritsFrom $typeName 'TrackedResourceData'))) {
+        $noun = $typeName -replace 'Data$',''
+        # Strip an optional 'Resource' infix so we evaluate the same noun as the
+        # *Resource / *Collection classes (RESINFIX001 already flags the infix).
+        if ($noun -like '*Resource' -and $noun -ne 'Resource') {
+            $noun = $noun -replace 'Resource$',''
+        }
+    }
+    elseif ($typeName -like '*Collection' -and (Test-InheritsFrom $typeName 'ArmCollection')) {
+        $noun = $typeName -replace 'Collection$',''
+        if ($noun -like '*Resource' -and $noun -ne 'Resource') {
+            $noun = $noun -replace 'Resource$',''
+        }
+    }
+    if (-not $noun) { continue }
+    # Single-word noun: starts with a capital letter and has no further capitals.
+    # This catches 'Drill', 'Goal', 'Recovery', 'Enrollment' but allows
+    # 'DrillRun', 'RecoveryPlan', 'GoalAssignment', 'UsagePlan', etc.
+    if ($noun -cmatch '^[A-Z][a-z]+$') {
+        $violations.Add([NamingViolation]::new(
+            'RESNAME001', 'Warning', 'Resource Naming',
+            $typeName, '',
+            "Resource trio noun '$noun' is a single generic word. After stripping the reserved '$(($typeName -replace ".*$noun",''))' suffix, the name carries no RP/domain context and will collide with similarly-named types in other mgmt packages.",
+            "Rename the whole trio ('${noun}Resource' / '${noun}Data' / '${noun}Collection') with an RP/domain prefix so the noun becomes multi-word and service-scoped (e.g., '<RpPrefix>${noun}*').",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
 # Contextual / generic naming is intentionally NOT enforced by this script.
 # =====================================================
 # Naming context is too case-by-case to encode reliably in regex/allowlists -
