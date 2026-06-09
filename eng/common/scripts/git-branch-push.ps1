@@ -15,14 +15,14 @@ Optional arguments to the push command
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
-    [Parameter(Mandatory = $true)]
-    [string] $PRBranchName,
+    [Parameter(Mandatory = $false)]
+    [string] $PRBranchName = '',
 
-    [Parameter(Mandatory = $true)]
-    [string] $CommitMsg,
+    [Parameter(Mandatory = $false)]
+    [string] $CommitMsg = '',
 
-    [Parameter(Mandatory = $true)]
-    [string] $GitUrl,
+    [Parameter(Mandatory = $false)]
+    [string] $GitUrl = '',
 
     [Parameter(Mandatory = $false)]
     [string] $PushArgs = "",
@@ -46,11 +46,26 @@ $PSNativeCommandArgumentPassing = "Legacy"
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
 
+function Get-ComparableGitUrl([string] $url)
+{
+    $parsedUri = $null
+    if ([Uri]::TryCreate($url, [UriKind]::Absolute, [ref]$parsedUri) -and ($parsedUri.Scheme -in @("http", "https")))
+    {
+        # Ignore credentials in remote URLs while still validating the destination.
+        return ("{0}://{1}{2}" -f $parsedUri.Scheme.ToLowerInvariant(), $parsedUri.Host.ToLowerInvariant(), $parsedUri.AbsolutePath.TrimEnd('/').ToLowerInvariant())
+    }
+
+    return $url
+}
+
+function Invoke-GitBranchPush {
 if ((git remote) -contains $RemoteName)
 {
   Write-Host "git remote get-url $RemoteName"
   $remoteUrl = git remote get-url $RemoteName
-  if ($remoteUrl -ne $GitUrl)
+    $comparableRemoteUrl = Get-ComparableGitUrl $remoteUrl
+    $comparableGitUrl = Get-ComparableGitUrl $GitUrl
+    if ($comparableRemoteUrl -ne $comparableGitUrl)
   {
     Write-Error "Remote with name $RemoteName already exists with an incompatible url [$remoteUrl] which should be [$GitUrl]."
     exit 1
@@ -193,4 +208,9 @@ if ($LASTEXITCODE -ne 0 -or $tryNumber -gt $numberOfRetries)
         exit 1
     }
     exit $LASTEXITCODE
+}
+}
+
+if ($MyInvocation.InvocationName -ne '.') {
+  Invoke-GitBranchPush
 }
