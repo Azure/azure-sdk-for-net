@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.Text.Json;
+using System.ClientModel.Primitives;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -19,17 +21,15 @@ namespace Azure.AI.AgentServer.Optimization;
 public static class OptimizationConfigLoader
 {
     /// <summary>
-    /// Loads optimization config asynchronously using the 3-priority resolution waterfall.
+    /// Loads optimization config asynchronously using the resolution waterfall.
     /// </summary>
-    /// <param name="options">Optional loader configuration.</param>
+    /// <param name="credential">Optional credential for authenticating to the resolver API.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
     public static async Task<OptimizationConfig> LoadConfigAsync(
-        ConfigLoaderOptions options = null,
+        AuthenticationTokenProvider credential = null,
         CancellationToken cancellationToken = default)
     {
-        options ??= new ConfigLoaderOptions();
-
         string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableCandidateId)?.Trim() ?? "";
         string endpoint = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableResolveEndpoint)?.Trim()?.TrimEnd('/') ?? "";
 
@@ -39,7 +39,7 @@ public static class OptimizationConfigLoader
             try
             {
                 var resolved = await CandidateResolver.ResolveAsync(
-                    candidateId, endpoint, options.Credential, cancellationToken).ConfigureAwait(false);
+                    candidateId, endpoint, credential, cancellationToken).ConfigureAwait(false);
 
                 if (resolved.HasValue)
                 {
@@ -62,19 +62,19 @@ public static class OptimizationConfigLoader
             return LoadFromEnvVar(rawConfig);
         }
 
-        // ── Priority 3: No config found ─────────────────────────────
+        // ── No config found ─────────────────────────────────────────
         return null;
     }
 
     /// <summary>
-    /// Loads optimization config synchronously using the 3-priority resolution waterfall.
+    /// Loads optimization config synchronously using the resolution waterfall.
     /// </summary>
-    /// <param name="options">Optional loader configuration.</param>
+    /// <param name="credential">Optional credential for authenticating to the resolver API.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static OptimizationConfig LoadConfig(ConfigLoaderOptions options = null)
+    public static OptimizationConfig LoadConfig(AuthenticationTokenProvider credential = null)
     {
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
-        return LoadConfigAsync(options).GetAwaiter().GetResult();
+        return LoadConfigAsync(credential).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
     }
 

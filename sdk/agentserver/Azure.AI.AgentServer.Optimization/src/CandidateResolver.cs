@@ -79,18 +79,13 @@ internal static class CandidateResolver
         if (credential == null)
         {
             throw new InvalidOperationException(
-                "An AuthenticationTokenProvider must be provided via ConfigLoaderOptions.Credential when using the resolver API. " +
-                "Pass a DefaultAzureCredential or another AuthenticationTokenProvider implementation.");
+                "An AuthenticationTokenProvider credential must be provided when using the resolver API.");
         }
 
         return ClientPipeline.Create(
-            new OptimizationClientOptions(),
+            new ClientPipelineOptions(),
             Array.Empty<PipelinePolicy>(),
             new PipelinePolicy[] { new BearerTokenPolicy(credential, AuthScope) },
             Array.Empty<PipelinePolicy>());
-    }
-
-    private sealed class OptimizationClientOptions : ClientPipelineOptions
-    {
     }
 }
