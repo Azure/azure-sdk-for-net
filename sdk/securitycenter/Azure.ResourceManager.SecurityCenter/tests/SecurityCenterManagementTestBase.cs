@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             IotSecuritySolutionData data = new IotSecuritySolutionData(resourceGroup.Data.Location)
             {
                 Status = SecuritySolutionStatus.Enabled,
-                UnmaskedIpLoggingStatus = UnmaskedIpLoggingStatus.Enabled,
+                UnmaskedIPLoggingStatus = UnmaskedIPLoggingStatus.Enabled,
                 DisplayName = solutionModelName,
                 IotHubs =
                 {

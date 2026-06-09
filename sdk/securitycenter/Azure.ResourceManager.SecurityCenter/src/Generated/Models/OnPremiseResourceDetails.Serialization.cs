@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("workspaceId"u8);
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("vmuuid"u8);
-            writer.WriteStringValue(Vmuuid);
+            writer.WriteStringValue(VmUuid);
             writer.WritePropertyName("sourceComputerId"u8);
             writer.WriteStringValue(SourceComputerId);
             writer.WritePropertyName("machineName"u8);

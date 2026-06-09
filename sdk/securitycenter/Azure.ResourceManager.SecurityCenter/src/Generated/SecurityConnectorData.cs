@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The multi cloud resource's cloud name. </summary>
-        public CloudName? EnvironmentName
+        public SecurityCenterCloudName? EnvironmentName
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The security connector environment data. </summary>
-        public SecurityConnectorEnvironmentInfo EnvironmentData
+        public SecurityConnectorEnvironment EnvironmentData
         {
             get
             {

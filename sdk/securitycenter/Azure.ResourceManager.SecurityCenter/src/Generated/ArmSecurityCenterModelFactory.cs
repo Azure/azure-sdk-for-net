@@ -666,12 +666,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <param name="type"> The owner type for the governance rule owner source. </param>
+        /// <param name="sourceType"> The owner type for the governance rule owner source. </param>
         /// <param name="value"> The source value e.g. tag key like owner name or email address. </param>
         /// <returns> A new <see cref="Models.GovernanceRuleOwnerSource"/> instance for mocking. </returns>
-        public static GovernanceRuleOwnerSource GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? @type = default, string value = default)
+        public static GovernanceRuleOwnerSource GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType = default, string value = default)
         {
-            return new GovernanceRuleOwnerSource(@type, value, default);
+            return new GovernanceRuleOwnerSource(sourceType, value, default);
         }
 
         /// <param name="disableManagerEmailNotification"> Defines whether manager email notifications are disabled. </param>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
         /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityWorkspaceSettingData"/> instance for mocking. </returns>
-        public static SecurityWorkspaceSettingData SecurityWorkspaceSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string workspaceId = default, string scope = default)
+        public static SecurityWorkspaceSettingData SecurityWorkspaceSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier workspaceId = default, string scope = default)
         {
             return new SecurityWorkspaceSettingData(
                 id,
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="deprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, Enforce? enforce = default, Inherited? inherited = default, string inheritedFrom = default, ResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<Extension> extensions = default, bool? deprecated = default, IEnumerable<string> replacedBy = default)
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, Enforce? enforce = default, Inherited? inherited = default, string inheritedFrom = default, ResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<Extension> extensions = default, bool? deprecated = default, IEnumerable<string> replacedBy = default)
         {
             return new SecurityCenterPricingData(
                 id,
@@ -1297,7 +1297,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, CloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironmentInfo environmentData = default, string kind = default, ETag? eTag = default)
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1939,10 +1939,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="environmentType"> The type of the environment data. </param>
-        /// <returns> A new <see cref="Models.SecurityConnectorEnvironmentInfo"/> instance for mocking. </returns>
-        public static SecurityConnectorEnvironmentInfo SecurityConnectorEnvironmentInfo(string environmentType = default)
+        /// <returns> A new <see cref="Models.SecurityConnectorEnvironment"/> instance for mocking. </returns>
+        public static SecurityConnectorEnvironment SecurityConnectorEnvironment(string environmentType = default)
         {
-            return new UnknownSecurityConnectorEnvironmentInfo(default, default);
+            return new UnknownSecurityConnectorEnvironment(default, default);
         }
 
         /// <param name="organizationalData"> The AWS account's organizational data. </param>
@@ -2635,13 +2635,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> Port configurations for the virtual machine. </param>
-        /// <param name="publicIpAddress"> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </param>
+        /// <param name="publicIPAddress"> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </param>
         /// <returns> A new <see cref="Models.JitNetworkAccessPolicyVirtualMachine"/> instance for mocking. </returns>
-        public static JitNetworkAccessPolicyVirtualMachine JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id = default, IEnumerable<JitNetworkAccessPortRule> ports = default, string publicIpAddress = default)
+        public static JitNetworkAccessPolicyVirtualMachine JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id = default, IEnumerable<JitNetworkAccessPortRule> ports = default, string publicIPAddress = default)
         {
             ports ??= new ChangeTrackingList<JitNetworkAccessPortRule>();
 
-            return new JitNetworkAccessPolicyVirtualMachine(id, (ports ?? new ChangeTrackingList<JitNetworkAccessPortRule>()).ToList(), publicIpAddress, default);
+            return new JitNetworkAccessPolicyVirtualMachine(id, (ports ?? new ChangeTrackingList<JitNetworkAccessPortRule>()).ToList(), publicIPAddress, default);
         }
 
         /// <param name="number"></param>
@@ -3130,13 +3130,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="expectedResults"> Expected results. </param>
-        /// <param name="updatedOn"> Baseline update time (UTC). </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaseline"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default, DateTimeOffset? updatedOn = default)
+        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default)
         {
             expectedResults ??= new ChangeTrackingList<IList<string>>();
 
-            return new SqlVulnerabilityAssessmentBaseline((expectedResults ?? new ChangeTrackingList<IList<string>>()).ToList(), updatedOn, default);
+            return new SqlVulnerabilityAssessmentBaseline((expectedResults ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
         }
 
         /// <param name="ruleId"> The rule Id. </param>
@@ -3477,35 +3476,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
-        /// <param name="vmuuid"> The unique Id of the machine. </param>
+        /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
         /// <returns> A new <see cref="Models.OnPremiseResourceDetails"/> instance for mocking. </returns>
-        public static OnPremiseResourceDetails OnPremiseResourceDetails(ResourceIdentifier workspaceId = default, Guid vmuuid = default, string sourceComputerId = default, string machineName = default)
+        public static OnPremiseResourceDetails OnPremiseResourceDetails(ResourceIdentifier workspaceId = default, Guid vmUuid = default, string sourceComputerId = default, string machineName = default)
         {
             return new OnPremiseResourceDetails(
                 default,
                 default,
                 workspaceId,
-                vmuuid,
+                vmUuid,
                 sourceComputerId,
                 machineName);
         }
 
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
-        /// <param name="vmuuid"> The unique Id of the machine. </param>
+        /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
         /// <returns> A new <see cref="Models.OnPremiseSqlResourceDetails"/> instance for mocking. </returns>
-        public static OnPremiseSqlResourceDetails OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId = default, Guid vmuuid = default, string sourceComputerId = default, string machineName = default, string serverName = default, string databaseName = default)
+        public static OnPremiseSqlResourceDetails OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId = default, Guid vmUuid = default, string sourceComputerId = default, string machineName = default, string serverName = default, string databaseName = default)
         {
             return new OnPremiseSqlResourceDetails(
                 default,
                 default,
                 workspaceId,
-                vmuuid,
+                vmUuid,
                 sourceComputerId,
                 machineName,
                 serverName,
@@ -4101,40 +4100,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> User friendly display name of the control. </param>
-        /// <param name="description"> User friendly description of the control. </param>
-        /// <param name="maxScore"> Maximum control score (0..10). </param>
-        /// <param name="assessmentDefinitions"> Array of assessments metadata IDs that are included in this security control. </param>
-        /// <param name="sourceType"> The type of security control (for example, BuiltIn). </param>
-        /// <returns> A new <see cref="Models.SecureScoreControlDefinitionItem"/> instance for mocking. </returns>
-        public static SecureScoreControlDefinitionItem SecureScoreControlDefinitionItem(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, int? maxScore = default, IEnumerable<AzureResourceLink> assessmentDefinitions = default, ControlType? sourceType = default)
-        {
-            return new SecureScoreControlDefinitionItem(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && description is null && maxScore is null && sourceType is null && assessmentDefinitions is null ? default : new SecureScoreControlDefinitionItemProperties(
-                    displayName,
-                    description,
-                    maxScore,
-                    new SecureScoreControlDefinitionSource(sourceType, default),
-                    (assessmentDefinitions ?? new ChangeTrackingList<AzureResourceLink>()).ToList(),
-                    default),
-                default);
-        }
-
-        /// <param name="id"> Azure resource Id. </param>
-        /// <returns> A new <see cref="Models.AzureResourceLink"/> instance for mocking. </returns>
-        public static AzureResourceLink AzureResourceLink(string id = default)
-        {
-            return new AzureResourceLink(id, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Azure DevOps Repository properties. </param>
         /// <returns> A new <see cref="SecurityCenter.AzureDevOpsRepositoryData"/> instance for mocking. </returns>
         public static AzureDevOpsRepositoryData AzureDevOpsRepositoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureDevOpsRepositoryProperties properties = default)
@@ -4603,8 +4568,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="server"> The server name. </param>
         /// <param name="database"> The database name. </param>
         /// <param name="sqlVersion"> The SQL version. </param>
-        /// <param name="startOn"> The scan start time (UTC). </param>
-        /// <param name="endOn"> Scan results are valid until end time (UTC). </param>
         /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
         /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
         /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
@@ -4614,7 +4577,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
         /// <param name="lastScanOn"> Last scan time. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
+        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
         {
             return new SqlVulnerabilityAssessmentScanProperties(
                 triggerType,
@@ -4622,8 +4585,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 server,
                 database,
                 sqlVersion,
-                startOn,
-                endOn,
                 highSeverityFailedRulesCount,
                 mediumSeverityFailedRulesCount,
                 lowSeverityFailedRulesCount,

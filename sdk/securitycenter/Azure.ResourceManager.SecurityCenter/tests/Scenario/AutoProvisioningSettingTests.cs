@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var data = new AutoProvisioningSettingData()
             {
-                AutoProvision = AutoProvision.Off,
+                AutoProvision = AutoProvisionState.Off,
             };
             var autoProvisioningSetting = await _autoProvisioningSettingCollection.CreateOrUpdateAsync(WaitUntil.Completed, _automationName, data);
             return autoProvisioningSetting.Value;

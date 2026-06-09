@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string hierarchyIdentifier = default;
             DateTimeOffset? hierarchyIdentifierTrialEndOn = default;
-            CloudName? environmentName = default;
+            SecurityCenterCloudName? environmentName = default;
             IList<SecurityCenterCloudOffering> offerings = default;
-            SecurityConnectorEnvironmentInfo environmentData = default;
+            SecurityConnectorEnvironment environmentData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    environmentName = new CloudName(prop.Value.GetString());
+                    environmentName = new SecurityCenterCloudName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("offerings"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    environmentData = SecurityConnectorEnvironmentInfo.DeserializeSecurityConnectorEnvironmentInfo(prop.Value, options);
+                    environmentData = SecurityConnectorEnvironment.DeserializeSecurityConnectorEnvironment(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

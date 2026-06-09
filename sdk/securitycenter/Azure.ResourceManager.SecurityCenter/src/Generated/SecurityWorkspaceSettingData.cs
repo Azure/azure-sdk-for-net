@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         internal WorkspaceSettingProperties Properties { get; set; }
 
         /// <summary> The full Azure ID of the workspace to save the data in. </summary>
-        public string WorkspaceId
+        public ResourceIdentifier WorkspaceId
         {
             get
             {

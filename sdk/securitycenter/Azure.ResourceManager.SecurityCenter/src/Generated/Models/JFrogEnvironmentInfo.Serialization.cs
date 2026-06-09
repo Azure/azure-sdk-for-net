@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The JFrog Artifactory connector environment data. </summary>
-    public partial class JFrogEnvironmentInfo : SecurityConnectorEnvironmentInfo, IJsonModel<JFrogEnvironmentInfo>
+    public partial class JFrogEnvironmentInfo : SecurityConnectorEnvironment, IJsonModel<JFrogEnvironmentInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SecurityConnectorEnvironmentInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityConnectorEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<JFrogEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SecurityConnectorEnvironmentInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityConnectorEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<JFrogEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

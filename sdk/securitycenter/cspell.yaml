@@ -5,3 +5,47 @@ words:
   - tacr
   - wdatpexcludelinuxpublicpreview
   - wdatpunifiedsolution
+overrides:
+  - filename: '**/sdk/securitycenter/**/*[.md,.txt,*.cs]'
+    words:
+      - cspm
+      - pricings
+  - filename: '**/sdk/securitycenter/**/*.cs'
+    words:
+      - aaduser
+      - ajit
+      - ciem
+      - dspm
+      - exfiltration
+      - iothubs
+      - kube
+      - mcas
+      - myservers
+      - ngfw
+      - nsgs
+      - oidc
+      - onboarded
+      - paloalto
+      - qualys
+      - saas
+      - vmuuid
+      - vnets
+      - wdatp
+    ignoreWords:
+      - AKIARPZCNODDNAEQFSOE
+      - apim
+      - azdo
+      - bfef
+      - dfdsdktest
+      - dfdsdktests
+      - dfdtest
+      - eitan
+      - ERELGROUP
+      - erelh
+      - gcpconnector
+      - gserviceaccount
+      - ioex
+      - matan
+      - matanvs
+      - OSDRIVE
+      - WASECAGENTPROV

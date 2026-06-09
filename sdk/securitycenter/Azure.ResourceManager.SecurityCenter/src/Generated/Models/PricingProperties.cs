@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="PricingProperties"/>. </summary>
         /// <param name="pricingTier"> Indicates whether the Defender plan is enabled on the selected scope. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
-        public PricingProperties(PricingTier pricingTier)
+        public PricingProperties(SecurityCenterPricingTier pricingTier)
         {
             PricingTier = pricingTier;
             Extensions = new ChangeTrackingList<Extension>();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="deprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PricingProperties(PricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, Enforce? enforce, Inherited? inherited, string inheritedFrom, ResourcesCoverageStatus? resourcesCoverageStatus, IList<Extension> extensions, bool? deprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, Enforce? enforce, Inherited? inherited, string inheritedFrom, ResourcesCoverageStatus? resourcesCoverageStatus, IList<Extension> extensions, bool? deprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Indicates whether the Defender plan is enabled on the selected scope. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
-        public PricingTier PricingTier { get; set; }
+        public SecurityCenterPricingTier PricingTier { get; set; }
 
         /// <summary> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. For VirtualMachines plan, available sub plans are 'P1' &amp; 'P2', where for resource level only 'P1' sub plan is supported. </summary>
         public string SubPlan { get; set; }

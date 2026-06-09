@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Source source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier workspaceId = default;
-            Guid vmuuid = default;
+            Guid vmUuid = default;
             string sourceComputerId = default;
             string machineName = default;
             foreach (var prop in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("vmuuid"u8))
                 {
-                    vmuuid = new Guid(prop.Value.GetString());
+                    vmUuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceComputerId"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 source,
                 additionalBinaryDataProperties,
                 workspaceId,
-                vmuuid,
+                vmUuid,
                 sourceComputerId,
                 machineName);
         }

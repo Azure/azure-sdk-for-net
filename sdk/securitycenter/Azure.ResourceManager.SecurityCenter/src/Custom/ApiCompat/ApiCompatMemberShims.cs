@@ -12,6 +12,27 @@
 // Compatibility shims for public SecurityCenter members that existed in the previous GA SDK but are not generated from the latest service specification.
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: the generated factory overload exposes an internal AzureResourceLink type after the
+    // assessmentDefinitions property is hidden behind the public SubResource compatibility property below.
+    // Suppress the invalid generated overload and preserve the previous public ModelFactory signature.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SecureScoreControlDefinitionItem", typeof(Azure.Core.ResourceIdentifier), typeof(string), typeof(Azure.Core.ResourceType), typeof(Azure.ResourceManager.Models.SystemData), typeof(string), typeof(string), typeof(int?), typeof(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.AzureResourceLink>), typeof(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType?))]
+    public static partial class ArmSecurityCenterModelFactory
+    {
+        public static Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionItem SecureScoreControlDefinitionItem(Azure.Core.ResourceIdentifier id = default, string name = default, Azure.Core.ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = default, string displayName = default, string description = default, int? maxScore = default, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> assessmentDefinitions = default, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType? sourceType = default)
+        {
+            System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.AzureResourceLink> assessmentDefinitionLinks = assessmentDefinitions is null
+                ? new System.Collections.Generic.List<Azure.ResourceManager.SecurityCenter.Models.AzureResourceLink>()
+                : System.Linq.Enumerable.ToList(System.Linq.Enumerable.Select(assessmentDefinitions, item => new Azure.ResourceManager.SecurityCenter.Models.AzureResourceLink(item?.Id, new System.Collections.Generic.Dictionary<string, System.BinaryData>())));
+            return new Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionItem(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionItemProperties(displayName, description, maxScore, new Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionSource(sourceType, new System.Collections.Generic.Dictionary<string, System.BinaryData>()), assessmentDefinitionLinks, new System.Collections.Generic.Dictionary<string, System.BinaryData>()),
+                new System.Collections.Generic.Dictionary<string, System.BinaryData>());
+        }
+    }
+
     public partial class SecurityAssessmentPartner : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentPartner>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentPartner>
     {
         public SecurityAssessmentPartner(string partnerName, string secret)
@@ -200,6 +221,20 @@ namespace Azure.ResourceManager.SecurityCenter
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        [Azure.Core.ForwardsClientCalls]
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityAlert(resourceGroupResource, ascLocation.ToString(), alertName, cancellationToken);
+        [Azure.Core.ForwardsClientCalls]
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityAlertAsync(resourceGroupResource, ascLocation.ToString(), alertName, cancellationToken);
+        [Azure.Core.ForwardsClientCalls]
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityTask(resourceGroupResource, ascLocation.ToString(), taskName, cancellationToken);
+        [Azure.Core.ForwardsClientCalls]
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetResourceGroupSecurityTaskAsync(resourceGroupResource, ascLocation.ToString(), taskName, cancellationToken);
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetSecureScoreControlsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetSecureScoreControls(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityCenter.SecurityCenterPricingCollection GetSecurityCenterPricings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
@@ -215,6 +250,10 @@ namespace Azure.ResourceManager.SecurityCenter
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        [Azure.Core.ForwardsClientCalls]
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource> GetSecurityAssessment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        [Azure.Core.ForwardsClientCalls]
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource>> GetSecurityAssessmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.MdeOnboarding> GetMdeOnboarding(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
@@ -327,8 +366,13 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetAll(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Data")]
     public partial class SecurityConnectorGovernanceRuleResource
     {
+#pragma warning disable CS0618 // Type is retained for API compatibility.
+        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+#pragma warning restore CS0618
+
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation ExecuteRule(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
@@ -365,8 +409,13 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetAsync(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Data")]
     public partial class SecurityConnectorApplicationResource
     {
+#pragma warning disable CS0618 // Type is retained for API compatibility.
+        public virtual Azure.ResourceManager.SecurityCenter.SecurityApplicationData Data { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+#pragma warning restore CS0618
+
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
@@ -465,6 +514,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
     public partial class SecuritySolutionsReferenceData
     {
+        public SecuritySolutionsReferenceData(Azure.ResourceManager.SecurityCenter.Models.SecurityFamily securityFamily, string alertVendorName, System.Uri packageInfoUri, string productName, string publisher, string publisherDisplayName, string template) : this(new Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceDataProperties(securityFamily, alertVendorName, packageInfoUri?.AbsoluteUri, productName, publisher, publisherDisplayName, template))
+        {
+        }
+
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.SecurityCenter.Models.SecurityFamily SecurityFamily { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
@@ -517,6 +570,8 @@ namespace Azure.ResourceManager.SecurityCenter
 
     public partial class SqlVulnerabilityAssessmentBaselineRuleData
     {
+        public SqlVulnerabilityAssessmentBaselineRuleData() { }
+
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> RuleResults { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
@@ -577,6 +632,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
     public partial class ContainerRegistryVulnerabilityProperties
     {
+        public ContainerRegistryVulnerabilityProperties() { }
+
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsPatchable { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
@@ -670,6 +727,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
     public partial class ServerVulnerabilityProperties
     {
+        public ServerVulnerabilityProperties() { }
+
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsPatchable { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
@@ -700,8 +759,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Name { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
     }
 
+    public readonly partial struct ExternalSecuritySolutionKind
+    {
+        public static Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind Aad => AAD;
+        public static Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind Ata => ATA;
+        public static Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind Cef => CEF;
+    }
+
+    public readonly partial struct IotSecurityRecommendationType
+    {
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotAcrAuthentication => IoTACRAuthentication;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotAgentSendsUnutilizedMessages => IoTAgentSendsUnutilizedMessages;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotBaseline => IoTBaseline;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotEdgeHubMemOptimize => IoTEdgeHubMemOptimize;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotEdgeLoggingOptions => IoTEdgeLoggingOptions;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotInconsistentModuleSettings => IoTInconsistentModuleSettings;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotInstallAgent => IoTInstallAgent;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotIPFilterDenyAll => IoTIPFilterDenyAll;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotIPFilterPermissiveRule => IoTIPFilterPermissiveRule;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotOpenPorts => IoTOpenPorts;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPermissiveFirewallPolicy => IoTPermissiveFirewallPolicy;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPermissiveInputFirewallRules => IoTPermissiveInputFirewallRules;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPermissiveOutputFirewallRules => IoTPermissiveOutputFirewallRules;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotPrivilegedDockerOptions => IoTPrivilegedDockerOptions;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotSharedCredentials => IoTSharedCredentials;
+        public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotVulnerableTlsCipherSuite => IoTVulnerableTLSCipherSuite;
+    }
+
+    public readonly partial struct JitNetworkAccessPortProtocol
+    {
+        public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol Tcp => TCP;
+        public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol Udp => UDP;
+    }
+
+    public readonly partial struct SecurityValueType
+    {
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityValueType IPCidr => IpCidr;
+    }
+
     public partial class SqlServerVulnerabilityProperties
     {
+        public SqlServerVulnerabilityProperties() { }
+
         [System.Obsolete("This API is no longer supported by the service.", false)]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public string SqlServerVulnerabilityType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
@@ -720,12 +819,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Baseline")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Status")]
     public partial class BaselineAdjustedResult
     {
+        public BaselineAdjustedResult()
+        {
+            ResultsNotInBaseline = new ChangeTrackingList<System.Collections.Generic.IList<string>>();
+            ResultsOnlyInBaseline = new ChangeTrackingList<System.Collections.Generic.IList<string>>();
+        }
+
+        public Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaseline Baseline { get; set; }
+        public Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus? Status { get; set; }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Benchmark")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Reference")]
     public partial class BenchmarkReference
     {
+        public BenchmarkReference() { }
+        public string Benchmark { get; set; }
+        public string Reference { get; set; }
     }
 
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("IotSecurityAlertedDevice")]
@@ -746,40 +860,106 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IotSecurityDeviceRecommendation() { }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AssessmentDefinitions")]
     public partial class SecureScoreControlDefinitionItem
     {
+        public SecureScoreControlDefinitionItem() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> AssessmentDefinitions { get; } = new System.Collections.Generic.List<Azure.ResourceManager.Resources.Models.SubResource>();
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Definition")]
     public partial class SecureScoreControlDetails
     {
+        public SecureScoreControlDetails() { }
+        public Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionItem Definition { get; set; }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("UpdatedOn")]
     public partial class SqlVulnerabilityAssessmentBaseline
     {
+        public SqlVulnerabilityAssessmentBaseline() { }
+        public System.DateTimeOffset? UpdatedOn { get; set; }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TriggerType")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("State")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Server")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Database")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SqlVersion")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("StartOn")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("EndOn")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("HighSeverityFailedRulesCount")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("MediumSeverityFailedRulesCount")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("LowSeverityFailedRulesCount")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TotalPassedRulesCount")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TotalFailedRulesCount")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TotalRulesCount")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("IsBaselineApplied")]
     public partial class SqlVulnerabilityAssessmentScanProperties
     {
+        public SqlVulnerabilityAssessmentScanProperties() { }
+        public Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanTriggerType? TriggerType { get; set; }
+        public Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanState? State { get; set; }
+        public string Server { get; set; }
+        public string Database { get; set; }
+        public string SqlVersion { get; set; }
+        public System.DateTimeOffset? StartOn { get; set; }
+        public System.DateTimeOffset? EndOn { get; set; }
+        public int? HighSeverityFailedRulesCount { get; set; }
+        public int? MediumSeverityFailedRulesCount { get; set; }
+        public int? LowSeverityFailedRulesCount { get; set; }
+        public int? TotalPassedRulesCount { get; set; }
+        public int? TotalFailedRulesCount { get; set; }
+        public int? TotalRulesCount { get; set; }
+        public bool? IsBaselineApplied { get; set; }
     }
 
     public partial class SubAssessmentStatus
     {
+        public SubAssessmentStatus() { }
+    }
+
+    [System.Obsolete("This API is no longer supported by the service.", false)]
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class AwsAssumeRoleAuthenticationDetailsProperties : AuthenticationDetailsProperties
+    {
+        public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, System.Guid awsExternalId) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+
+        public string AwsAssumeRoleArn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.Guid AwsExternalId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string AccountId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string RoleArn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+    }
+
+    [System.Obsolete("This API is no longer supported by the service.", false)]
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class SecurityAlertSimulatorBundlesRequestProperties : SecurityAlertSimulatorRequestProperties
+    {
+        public SecurityAlertSimulatorBundlesRequestProperties() : base(default(SecurityCenterKind)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType> Bundles { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
     }
 
 }
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Properties")]
     public partial class SecurityCenterLocationData
     {
+        public SecurityCenterLocationData() { }
+        public System.BinaryData Properties { get; set; }
     }
 
     public partial class ServerVulnerabilityAssessmentData
     {
+        public ServerVulnerabilityAssessmentData() { }
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Properties")]
     public partial class SqlVulnerabilityAssessmentScanData
     {
+        public SqlVulnerabilityAssessmentScanData() { }
+        public Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanProperties Properties { get; set; }
     }
 
 }

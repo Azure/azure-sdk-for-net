@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            PricingTier pricingTier = default;
+            SecurityCenterPricingTier pricingTier = default;
             string subPlan = default;
             TimeSpan? freeTrialRemainingTime = default;
             DateTimeOffset? enablementOn = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (prop.NameEquals("pricingTier"u8))
                 {
-                    pricingTier = new PricingTier(prop.Value.GetString());
+                    pricingTier = new SecurityCenterPricingTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subPlan"u8))

@@ -14,22 +14,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// The security connector environment data.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironmentInfo"/>, <see cref="GcpProjectEnvironmentInfo"/>, <see cref="GithubScopeEnvironmentInfo"/>, <see cref="AzureDevOpsScopeEnvironmentInfo"/>, <see cref="GitlabScopeEnvironmentInfo"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
     /// </summary>
-    public abstract partial class SecurityConnectorEnvironmentInfo
+    public abstract partial class SecurityConnectorEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironmentInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
-        private protected SecurityConnectorEnvironmentInfo(EnvironmentType environmentType)
+        private protected SecurityConnectorEnvironment(EnvironmentType environmentType)
         {
             EnvironmentType = environmentType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironmentInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorEnvironmentInfo(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityConnectorEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnvironmentType = environmentType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

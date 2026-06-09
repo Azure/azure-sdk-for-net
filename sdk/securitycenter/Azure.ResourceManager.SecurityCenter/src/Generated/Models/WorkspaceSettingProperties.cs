@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
         /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="scope"/> is null. </exception>
-        public WorkspaceSettingProperties(string workspaceId, string scope)
+        public WorkspaceSettingProperties(ResourceIdentifier workspaceId, string scope)
         {
             Argument.AssertNotNull(workspaceId, nameof(workspaceId));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
         /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceSettingProperties(string workspaceId, string scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceSettingProperties(ResourceIdentifier workspaceId, string scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             Scope = scope;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The full Azure ID of the workspace to save the data in. </summary>
-        public string WorkspaceId { get; set; }
+        public ResourceIdentifier WorkspaceId { get; set; }
 
         /// <summary> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </summary>
         public string Scope { get; set; }

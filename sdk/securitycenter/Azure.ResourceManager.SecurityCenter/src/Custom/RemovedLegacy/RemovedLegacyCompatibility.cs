@@ -255,24 +255,24 @@ namespace Azure.ResourceManager.SecurityCenter
 
     [System.Obsolete("This API is no longer supported by the service.", false)]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class GovernanceRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.GovernanceRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.GovernanceRuleData>
+    public partial class GovernanceRuleData : Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.GovernanceRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.GovernanceRuleData>
     {
         public GovernanceRuleData() { }
-        public System.Collections.Generic.IList<System.BinaryData> ConditionSets { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public string Description { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public string DisplayName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public System.Collections.Generic.IList<string> ExcludedScopes { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleEmailNotification GovernanceEmailNotification { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public bool? IncludeMemberScopes { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public bool? IsDisabled { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public bool? IsGracePeriod { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleMetadata Metadata { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSource OwnerSource { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public string RemediationTimeframe { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public int? RulePriority { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType? RuleType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType? SourceResourceType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public System.Guid? TenantId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new System.Collections.Generic.IList<System.BinaryData> ConditionSets { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new string Description { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new string DisplayName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new System.Collections.Generic.IList<string> ExcludedScopes { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleEmailNotification GovernanceEmailNotification { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new bool? IncludeMemberScopes { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new bool? IsDisabled { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new bool? IsGracePeriod { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleMetadata Metadata { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSource OwnerSource { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new string RemediationTimeframe { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new int? RulePriority { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType? RuleType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType? SourceResourceType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new System.Guid? TenantId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityCenter.GovernanceRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.GovernanceRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.GovernanceRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.SecurityCenter
 
     [System.Obsolete("This API is no longer supported by the service.", false)]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class SecurityApplicationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityApplicationData>
+    public partial class SecurityApplicationData : Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityApplicationData>
     {
         public SecurityApplicationData() { }
-        public System.Collections.Generic.IList<System.BinaryData> ConditionSets { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public string Description { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public string DisplayName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType? SourceResourceType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new System.Collections.Generic.IList<System.BinaryData> ConditionSets { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new string Description { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new string DisplayName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType? SourceResourceType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityCenter.SecurityApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1750,26 +1750,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 
-    [System.Obsolete("This API is no longer supported by the service.", false)]
-    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public readonly partial struct SecurityCenterCloudName : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecurityCenterCloudName(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Aws { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Azure { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName AzureDevOps { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Gcp { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Github { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName GitLab { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public SecurityCenterCloudName(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Aws => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName("AWS");
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Azure => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName("Azure");
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName AzureDevOps => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName("AzureDevOps");
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Gcp => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName("GCP");
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Github => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName("Github");
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName GitLab => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName("GitLab");
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName other) => string.Equals(_value, other._value, System.StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName other && Equals(other);
+        public override int GetHashCode() => _value is null ? 0 : System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value);
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName right) => left.Equals(right);
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName(string value) => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName(value);
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName right) => !left.Equals(right);
+        public override string ToString() => _value;
     }
 
     [System.Obsolete("This API is no longer supported by the service.", false)]
@@ -1848,22 +1844,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterFileProtectionMode>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 
-    [System.Obsolete("This API is no longer supported by the service.", false)]
-    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public readonly partial struct SecurityCenterPricingTier : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecurityCenterPricingTier(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier Free { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier Standard { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public SecurityCenterPricingTier(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier Free => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier("Free");
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier Standard => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier("Standard");
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier other) => string.Equals(_value, other._value, System.StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier other && Equals(other);
+        public override int GetHashCode() => _value is null ? 0 : System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value);
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier right) => left.Equals(right);
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier(string value) => new Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier(value);
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier right) => !left.Equals(right);
+        public override string ToString() => _value;
     }
 
     [System.Obsolete("This API is no longer supported by the service.", false)]
@@ -1902,35 +1894,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 
-    [System.Obsolete("This API is no longer supported by the service.", false)]
-    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    public abstract partial class SecurityConnectorEnvironment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>
+    public abstract partial class SecurityConnectorEnvironment : System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>
     {
-        protected SecurityConnectorEnvironment() { }
+        protected SecurityConnectorEnvironment() : this(default(Azure.ResourceManager.SecurityCenter.Models.EnvironmentType)) { }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { return JsonModelCreateCore(ref reader, options); }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { writer.WriteStartObject(); JsonModelWriteCore(writer, options); writer.WriteEndObject(); }
+        Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { return PersistableModelCreateCore(data, options); }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { return "J"; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { return PersistableModelWriteCore(options); }
     }
 
-    [System.Obsolete("This API is no longer supported by the service.", false)]
-    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public readonly partial struct SecurityControlType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityControlType>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecurityControlType(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType BuiltIn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType Custom { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType left, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityControlType(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType left, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public SecurityControlType(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType BuiltIn => new Azure.ResourceManager.SecurityCenter.Models.SecurityControlType("BuiltIn");
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType Custom => new Azure.ResourceManager.SecurityCenter.Models.SecurityControlType("Custom");
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType other) => string.Equals(_value, other._value, System.StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is Azure.ResourceManager.SecurityCenter.Models.SecurityControlType other && Equals(other);
+        public override int GetHashCode() => _value is null ? 0 : System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value);
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType left, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType right) => left.Equals(right);
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityControlType(string value) => new Azure.ResourceManager.SecurityCenter.Models.SecurityControlType(value);
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType left, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType right) => !left.Equals(right);
+        public override string ToString() => _value;
     }
 
     [System.Obsolete("This API is no longer supported by the service.", false)]
@@ -2257,5 +2243,3 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource GetSoftwareInventoryResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 }
-
-

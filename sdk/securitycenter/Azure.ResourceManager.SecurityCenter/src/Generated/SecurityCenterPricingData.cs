@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         internal PricingProperties Properties { get; set; }
 
         /// <summary> Indicates whether the Defender plan is enabled on the selected scope. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
-        public PricingTier? PricingTier
+        public SecurityCenterPricingTier? PricingTier
         {
             get
             {

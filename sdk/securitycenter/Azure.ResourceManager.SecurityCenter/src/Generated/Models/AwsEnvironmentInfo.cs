@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AWS connector environment data. </summary>
-    public partial class AwsEnvironmentInfo : SecurityConnectorEnvironmentInfo
+    public partial class AwsEnvironmentInfo : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="AwsEnvironmentInfo"/>. </summary>
         public AwsEnvironmentInfo() : base(EnvironmentType.AwsAccount)

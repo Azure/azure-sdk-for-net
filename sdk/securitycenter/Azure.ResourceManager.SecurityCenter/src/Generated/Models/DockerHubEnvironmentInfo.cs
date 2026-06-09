@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Docker Hub connector environment data. </summary>
-    public partial class DockerHubEnvironmentInfo : SecurityConnectorEnvironmentInfo
+    public partial class DockerHubEnvironmentInfo : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="DockerHubEnvironmentInfo"/>. </summary>
         public DockerHubEnvironmentInfo() : base(EnvironmentType.DockerHubOrganization)

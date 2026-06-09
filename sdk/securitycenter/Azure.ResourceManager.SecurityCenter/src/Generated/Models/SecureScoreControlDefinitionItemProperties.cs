@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IReadOnlyList<AzureResourceLink> AssessmentDefinitions { get; } = new ChangeTrackingList<AzureResourceLink>();
 
         /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public ControlType? SourceType
+        public SecurityControlType? SourceType
         {
             get
             {

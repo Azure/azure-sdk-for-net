@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownSecurityConnectorEnvironmentInfo : SecurityConnectorEnvironmentInfo
+    internal partial class UnknownSecurityConnectorEnvironment : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownSecurityConnectorEnvironmentInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSecurityConnectorEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSecurityConnectorEnvironmentInfo(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(environmentType != default ? environmentType : "unknown", additionalBinaryDataProperties)
+        internal UnknownSecurityConnectorEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(environmentType != default ? environmentType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -58,19 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
-        /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SecurityConnectorGovernanceRuleData Data
-        {
-            get
-            {
-                if (!HasData)
-                {
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
-                return _data;
-            }
-        }
-
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="scope"> The scope. </param>
         /// <param name="ruleId"> The ruleId. </param>

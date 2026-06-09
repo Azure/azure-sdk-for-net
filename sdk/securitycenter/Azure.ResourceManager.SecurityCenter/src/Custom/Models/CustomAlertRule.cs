@@ -12,6 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public abstract partial class CustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        protected CustomAlertRule(bool isEnabled) : this(default(string), isEnabled)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         protected CustomAlertRule(string ruleType, bool isEnabled)

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(SecurityConnectorApplicationData))]
     [ModelReaderWriterBuildable(typeof(SecurityConnectorApplicationResource))]
     [ModelReaderWriterBuildable(typeof(SecurityConnectorData))]
-    [ModelReaderWriterBuildable(typeof(SecurityConnectorEnvironmentInfo))]
+    [ModelReaderWriterBuildable(typeof(SecurityConnectorEnvironment))]
     [ModelReaderWriterBuildable(typeof(SecurityConnectorGovernanceRuleData))]
     [ModelReaderWriterBuildable(typeof(SecurityConnectorGovernanceRuleResource))]
     [ModelReaderWriterBuildable(typeof(SecurityConnectorProperties))]
@@ -506,6 +507,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(StandardProperties))]
     [ModelReaderWriterBuildable(typeof(StandardResource))]
     [ModelReaderWriterBuildable(typeof(SubAssessmentStatus))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAssessmentMetadataResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionSecurityAlertResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionSecurityTaskResource))]
@@ -535,7 +537,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(UnknownSecurityAutomationAction))]
     [ModelReaderWriterBuildable(typeof(UnknownSecurityCenterCloudOffering))]
     [ModelReaderWriterBuildable(typeof(UnknownSecurityCenterResourceDetails))]
-    [ModelReaderWriterBuildable(typeof(UnknownSecurityConnectorEnvironmentInfo))]
+    [ModelReaderWriterBuildable(typeof(UnknownSecurityConnectorEnvironment))]
     [ModelReaderWriterBuildable(typeof(UnknownSecuritySetting))]
     [ModelReaderWriterBuildable(typeof(UnknownSecuritySubAssessmentAdditionalInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownServerVulnerabilityAssessmentsSetting))]
