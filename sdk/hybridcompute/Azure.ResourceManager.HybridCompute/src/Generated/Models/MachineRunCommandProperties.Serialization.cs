@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
-                foreach (RunCommandInputParameter item in Parameters)
+                foreach (RunCommandInputContent item in Parameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();
-                foreach (RunCommandInputParameter item in ProtectedParameters)
+                foreach (RunCommandInputContent item in ProtectedParameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             MachineRunCommandScriptSource source = default;
-            IList<RunCommandInputParameter> parameters = default;
-            IList<RunCommandInputParameter> protectedParameters = default;
+            IList<RunCommandInputContent> parameters = default;
+            IList<RunCommandInputContent> protectedParameters = default;
             bool? isAsyncExecution = default;
             string runAsUser = default;
             string runAsPassword = default;
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
+                    List<RunCommandInputContent> array = new List<RunCommandInputContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
+                        array.Add(RunCommandInputContent.DeserializeRunCommandInputContent(item, options));
                     }
                     parameters = array;
                     continue;
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
+                    List<RunCommandInputContent> array = new List<RunCommandInputContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
+                        array.Add(RunCommandInputContent.DeserializeRunCommandInputContent(item, options));
                     }
                     protectedParameters = array;
                     continue;
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             return new MachineRunCommandProperties(
                 source,
-                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
-                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                parameters ?? new ChangeTrackingList<RunCommandInputContent>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputContent>(),
                 isAsyncExecution,
                 runAsUser,
                 runAsPassword,

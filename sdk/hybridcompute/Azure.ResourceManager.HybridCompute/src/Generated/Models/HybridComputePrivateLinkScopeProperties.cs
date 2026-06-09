@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public HybridComputePrivateLinkScopeProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
-            ServiceExtensions = new ChangeTrackingList<ServiceExtension>();
+            ServiceExtensions = new ChangeTrackingList<HybridComputeServiceExtension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
         /// <param name="serviceExtensions"> Enable private link validation for an Azure Arc Extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess, string provisioningState, string privateLinkScopeId, IReadOnlyList<PrivateEndpointConnectionDataModel> privateEndpointConnections, IList<ServiceExtension> serviceExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess, string provisioningState, string privateLinkScopeId, IReadOnlyList<PrivateEndpointConnectionDataModel> privateEndpointConnections, IList<HybridComputeServiceExtension> serviceExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
             ProvisioningState = provisioningState;
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Enable private link validation for an Azure Arc Extension. </summary>
         [WirePath("serviceExtensions")]
-        public IList<ServiceExtension> ServiceExtensions { get; }
+        public IList<HybridComputeServiceExtension> ServiceExtensions { get; }
     }
 }

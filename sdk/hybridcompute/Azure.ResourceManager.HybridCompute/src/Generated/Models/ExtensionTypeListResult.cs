@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="ExtensionTypeListResult"/>. </summary>
         internal ExtensionTypeListResult()
         {
-            Value = new ChangeTrackingList<ExtensionType>();
+            Value = new ChangeTrackingList<HybridComputeExtensionType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtensionTypeListResult"/>. </summary>
         /// <param name="value"> The ExtensionType items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionTypeListResult(IReadOnlyList<ExtensionType> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtensionTypeListResult(IReadOnlyList<HybridComputeExtensionType> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The ExtensionType items on this page. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ExtensionType> Value { get; }
+        public IReadOnlyList<HybridComputeExtensionType> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

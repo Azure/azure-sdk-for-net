@@ -13,21 +13,21 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Enable private link validation for an Azure Arc Extension. </summary>
-    public partial class ServiceExtension
+    public partial class HybridComputeServiceExtension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceExtension"/>. </summary>
-        public ServiceExtension()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceExtension"/>. </summary>
+        public HybridComputeServiceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceExtension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceExtension"/>. </summary>
         /// <param name="serviceExtensionType"> The name of the Azure Arc Extension. </param>
         /// <param name="serviceExtensionPublicNetworkAccess"> The network access policy to determine if the specified Azure Arc Extension can use public Azure Arc Extension service endpoints. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceExtension(BinaryData serviceExtensionType, ServiceExtensionPublicNetworkAccess? serviceExtensionPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeServiceExtension(BinaryData serviceExtensionType, HybridComputeServiceExtensionPublicNetworkAccess? serviceExtensionPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceExtensionType = serviceExtensionType;
             ServiceExtensionPublicNetworkAccess = serviceExtensionPublicNetworkAccess;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The network access policy to determine if the specified Azure Arc Extension can use public Azure Arc Extension service endpoints. </summary>
         [WirePath("serviceExtensionPublicNetworkAccess")]
-        public ServiceExtensionPublicNetworkAccess? ServiceExtensionPublicNetworkAccess { get; set; }
+        public HybridComputeServiceExtensionPublicNetworkAccess? ServiceExtensionPublicNetworkAccess { get; set; }
     }
 }

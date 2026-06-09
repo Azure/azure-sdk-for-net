@@ -261,46 +261,46 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HybridComputeSettingsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeSettingsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SettingsResource"/> object. </returns>
-        public static SettingsResource GetSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeSettingsResource"/> object. </returns>
+        public static HybridComputeSettingsResource GetHybridComputeSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetSettingsResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputeSettingsResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="SettingsCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="HybridComputeSettingsCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetAllSettings(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetAllHybridComputeSettings(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="SettingsResource"/> objects. </returns>
-        public static SettingsCollection GetAllSettings(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="HybridComputeSettingsResource"/> objects. </returns>
+        public static HybridComputeSettingsCollection GetAllHybridComputeSettings(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetAllSettings(scope);
+            return GetMockableHybridComputeArmClient(client).GetAllHybridComputeSettings(scope);
         }
 
         /// <summary>
         /// Returns the base Settings for the target resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetSettings(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeSettings(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -309,18 +309,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SettingsResource> GetSettings(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        public static Response<HybridComputeSettingsResource> GetHybridComputeSettings(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetSettings(scope, settingsResourceName, cancellationToken);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputeSettings(scope, settingsResourceName, cancellationToken);
         }
 
         /// <summary>
         /// Returns the base Settings for the target resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetSettingsAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeSettingsAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SettingsResource>> GetSettingsAsync(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridComputeSettingsResource>> GetHybridComputeSettingsAsync(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableHybridComputeArmClient(client).GetSettingsAsync(scope, settingsResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeArmClient(client).GetHybridComputeSettingsAsync(scope, settingsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -876,8 +876,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationValue"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationValue> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeOperationValue"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HybridComputeOperationValue> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -894,8 +894,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationValue"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationValue> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeOperationValue"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HybridComputeOperationValue> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -914,8 +914,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="publisher"> The publisher of the Extension being received. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionType"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.ExtensionType> GetAllAsync(this TenantResource tenantResource, string location, string publisher, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionType"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HybridComputeExtensionType> GetAllAsync(this TenantResource tenantResource, string location, string publisher, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -934,8 +934,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="publisher"> The publisher of the Extension being received. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionType"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.ExtensionType> GetAll(this TenantResource tenantResource, string location, string publisher, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionType"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HybridComputeExtensionType> GetAll(this TenantResource tenantResource, string location, string publisher, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

@@ -12,23 +12,23 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the properties of a Compute Operation value. </summary>
-    public partial class OperationValue
+    public partial class HybridComputeOperationValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationValue"/>. </summary>
-        internal OperationValue()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeOperationValue"/>. </summary>
+        internal HybridComputeOperationValue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeOperationValue"/>. </summary>
         /// <param name="origin"> The origin of the compute operation. </param>
         /// <param name="name"> The name of the compute operation. </param>
         /// <param name="display"> Display properties. </param>
         /// <param name="isDataAction"> This property indicates if the operation is an action or a data action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationValue(string origin, string name, OperationValueDisplay display, bool? isDataAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeOperationValue(string origin, string name, HybridComputeOperationValueDisplay display, bool? isDataAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Origin = origin;
             Name = name;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Display properties. </summary>
         [WirePath("display")]
-        public OperationValueDisplay Display { get; }
+        public HybridComputeOperationValueDisplay Display { get; }
 
         /// <summary> This property indicates if the operation is an action or a data action. </summary>
         [WirePath("isDataAction")]

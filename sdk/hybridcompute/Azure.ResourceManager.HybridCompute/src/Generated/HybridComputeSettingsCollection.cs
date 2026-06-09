@@ -16,28 +16,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SettingsResource"/> and their operations.
-    /// Each <see cref="SettingsResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="SettingsCollection"/> instance call the GetSettings method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="HybridComputeSettingsResource"/> and their operations.
+    /// Each <see cref="HybridComputeSettingsResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="HybridComputeSettingsCollection"/> instance call the GetHybridComputeSettings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class SettingsCollection : ArmCollection
+    public partial class HybridComputeSettingsCollection : ArmCollection
     {
         private readonly ClientDiagnostics _settingsClientDiagnostics;
         private readonly Settings _settingsRestClient;
 
-        /// <summary> Initializes a new instance of SettingsCollection for mocking. </summary>
-        protected SettingsCollection()
+        /// <summary> Initializes a new instance of HybridComputeSettingsCollection for mocking. </summary>
+        protected HybridComputeSettingsCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingsCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SettingsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridComputeSettingsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SettingsResource.ResourceType, out string settingsApiVersion);
-            _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", SettingsResource.ResourceType.Namespace, Diagnostics);
-            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, settingsApiVersion ?? "2025-09-16-preview");
+            TryGetApiVersion(HybridComputeSettingsResource.ResourceType, out string hybridComputeSettingsApiVersion);
+            _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeSettingsResource.ResourceType.Namespace, Diagnostics);
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, hybridComputeSettingsApiVersion ?? "2025-09-16-preview");
         }
 
         /// <summary>
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string settingsResourceName, ArcSettingsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridComputeSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string settingsResourceName, ArcSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridCompute
                 Response<ArcSettingsData> response = Response.FromValue(ArcSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                HybridComputeArmOperation<SettingsResource> operation = new HybridComputeArmOperation<SettingsResource>(Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                HybridComputeArmOperation<HybridComputeSettingsResource> operation = new HybridComputeArmOperation<HybridComputeSettingsResource>(Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SettingsResource> CreateOrUpdate(WaitUntil waitUntil, string settingsResourceName, ArcSettingsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridComputeSettingsResource> CreateOrUpdate(WaitUntil waitUntil, string settingsResourceName, ArcSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridCompute
                 Response<ArcSettingsData> response = Response.FromValue(ArcSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                HybridComputeArmOperation<SettingsResource> operation = new HybridComputeArmOperation<SettingsResource>(Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                HybridComputeArmOperation<HybridComputeSettingsResource> operation = new HybridComputeArmOperation<HybridComputeSettingsResource>(Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SettingsResource>> GetAsync(string settingsResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeSettingsResource>> GetAsync(string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.Get");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.Get");
             scope.Start();
             try
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SettingsResource> Get(string settingsResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeSettingsResource> Get(string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.Get");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.Get");
             scope.Start();
             try
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.Exists");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.Exists");
             scope.Start();
             try
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.Exists");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.Exists");
             scope.Start();
             try
             {
@@ -383,11 +383,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SettingsResource>> GetIfExistsAsync(string settingsResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HybridComputeSettingsResource>> GetIfExistsAsync(string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.GetIfExists");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SettingsResource>(response.GetRawResponse());
+                    return new NoValueResponse<HybridComputeSettingsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SettingsResource> GetIfExists(string settingsResourceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HybridComputeSettingsResource> GetIfExists(string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsCollection.GetIfExists");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -473,9 +473,9 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SettingsResource>(response.GetRawResponse());
+                    return new NoValueResponse<HybridComputeSettingsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

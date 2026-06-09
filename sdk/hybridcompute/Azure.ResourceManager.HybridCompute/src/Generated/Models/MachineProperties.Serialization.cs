@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string displayName = default;
             string machineFqdn = default;
             string clientPublicKey = default;
-            IdentityKeyStore? identityKeyStore = default;
+            HybridComputeIdentityKeyStore? identityKeyStore = default;
             string tpmEkCertificate = default;
             string osName = default;
             string osVersion = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    identityKeyStore = new IdentityKeyStore(prop.Value.GetString());
+                    identityKeyStore = new HybridComputeIdentityKeyStore(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tpmEkCertificate"u8))

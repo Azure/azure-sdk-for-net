@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (OperationValue item in Value)
+                foreach (HybridComputeOperationValue item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            IReadOnlyList<OperationValue> value = default;
+            IReadOnlyList<HybridComputeOperationValue> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<OperationValue> array = new List<OperationValue>();
+                    List<HybridComputeOperationValue> array = new List<HybridComputeOperationValue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationValue.DeserializeOperationValue(item, options));
+                        array.Add(HybridComputeOperationValue.DeserializeHybridComputeOperationValue(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationListResult(value ?? new ChangeTrackingList<OperationValue>(), nextLink, additionalBinaryDataProperties);
+            return new OperationListResult(value ?? new ChangeTrackingList<HybridComputeOperationValue>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,16 +12,16 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the properties of a run command parameter. </summary>
-    public partial class RunCommandInputParameter
+    public partial class RunCommandInputContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunCommandInputParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandInputContent"/>. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="value"> The run command parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        public RunCommandInputParameter(string name, string value)
+        public RunCommandInputContent(string name, string value)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(value, nameof(value));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunCommandInputParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandInputContent"/>. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="value"> The run command parameter value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunCommandInputParameter(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunCommandInputContent(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

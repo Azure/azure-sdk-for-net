@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a Settings along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAllSettings method.
+    /// A class representing a HybridComputeSettings along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAllHybridComputeSettings method.
     /// </summary>
-    public partial class SettingsResource : ArmResource
+    public partial class HybridComputeSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _settingsClientDiagnostics;
         private readonly Settings _settingsRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/settings";
 
-        /// <summary> Initializes a new instance of SettingsResource for mocking. </summary>
-        protected SettingsResource()
+        /// <summary> Initializes a new instance of HybridComputeSettingsResource for mocking. </summary>
+        protected HybridComputeSettingsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SettingsResource(ArmClient client, ArcSettingsData data) : this(client, data.Id)
+        internal HybridComputeSettingsResource(ArmClient client, ArcSettingsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridComputeSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string settingsApiVersion);
+            TryGetApiVersion(ResourceType, out string hybridComputeSettingsApiVersion);
             _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, settingsApiVersion ?? "2025-09-16-preview");
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, hybridComputeSettingsApiVersion ?? "2025-09-16-preview");
             ValidateResourceId(id);
         }
 
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SettingsResource"/>. </description>
+        /// <description> <see cref="HybridComputeSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SettingsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsResource.Get");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsResource.Get");
             scope.Start();
             try
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SettingsResource"/>. </description>
+        /// <description> <see cref="HybridComputeSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SettingsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeSettingsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsResource.Get");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsResource.Get");
             scope.Start();
             try
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,18 +206,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SettingsResource"/>. </description>
+        /// <description> <see cref="HybridComputeSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Settings details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SettingsResource>> UpdateAsync(ArcSettingsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeSettingsResource>> UpdateAsync(ArcSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsResource.Update");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsResource.Update");
             scope.Start();
             try
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SettingsResource"/>. </description>
+        /// <description> <see cref="HybridComputeSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Settings details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SettingsResource> Update(ArcSettingsData data, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeSettingsResource> Update(ArcSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SettingsResource.Update");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("HybridComputeSettingsResource.Update");
             scope.Start();
             try
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

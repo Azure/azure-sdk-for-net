@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="MachineRunCommandProperties"/>. </summary>
         public MachineRunCommandProperties()
         {
-            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
-            ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
+            Parameters = new ChangeTrackingList<RunCommandInputContent>();
+            ProtectedParameters = new ChangeTrackingList<RunCommandInputContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineRunCommandProperties"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine run command instance view. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandProperties(MachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? isAsyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, Uri outputBlobUri, Uri errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, MachineRunCommandInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineRunCommandProperties(MachineRunCommandScriptSource source, IList<RunCommandInputContent> parameters, IList<RunCommandInputContent> protectedParameters, bool? isAsyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, Uri outputBlobUri, Uri errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, MachineRunCommandInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Parameters = parameters;
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("parameters")]
-        public IList<RunCommandInputParameter> Parameters { get; } = new ChangeTrackingList<RunCommandInputParameter>();
+        public IList<RunCommandInputContent> Parameters { get; } = new ChangeTrackingList<RunCommandInputContent>();
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("protectedParameters")]
-        public IList<RunCommandInputParameter> ProtectedParameters { get; } = new ChangeTrackingList<RunCommandInputParameter>();
+        public IList<RunCommandInputContent> ProtectedParameters { get; } = new ChangeTrackingList<RunCommandInputContent>();
 
         /// <summary> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </summary>
         [WirePath("asyncExecution")]

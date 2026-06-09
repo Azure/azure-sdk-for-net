@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Specifies the identity key store a machine is using. </summary>
         [WirePath("properties.identityKeyStore")]
-        public IdentityKeyStore? IdentityKeyStore
+        public HybridComputeIdentityKeyStore? IdentityKeyStore
         {
             get
             {
