@@ -67,6 +67,8 @@
 # Client Libraries
 ####################
 
+/sdk/appconfiguration/Azure.Data.AppConfiguration/    @mrm9084
+
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
