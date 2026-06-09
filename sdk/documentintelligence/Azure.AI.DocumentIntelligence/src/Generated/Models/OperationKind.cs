@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Type of operation. </summary>
-    internal readonly partial struct OperationKind : IEquatable<OperationKind>
+    public readonly partial struct OperationKind : IEquatable<OperationKind>
     {
         private readonly string _value;
         /// <summary> Build a new custom document model. </summary>
