@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="sku"> The Sku pricing tier for the Event Grid Domain resource. </param>
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProperties properties, ResourceSku sku, IdentityInfo identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProperties properties, ResourceSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Identity information for the Event Grid Domain resource. </summary>
         [WirePath("identity")]
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> List of private endpoint connections. </summary>
         [WirePath("properties.privateEndpointConnections")]
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </summary>
         [WirePath("properties.endpoint")]
-        public string Endpoint
+        public Uri Endpoint
         {
             get
             {
@@ -212,11 +212,11 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </summary>
         [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth
+        public bool? IsLocalAuthDisabled
         {
             get
             {
-                return Properties is null ? default : Properties.DisableLocalAuth;
+                return Properties is null ? default : Properties.IsLocalAuthDisabled;
             }
             set
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new DomainProperties();
                 }
-                Properties.DisableLocalAuth = value;
+                Properties.IsLocalAuthDisabled = value;
             }
         }
 

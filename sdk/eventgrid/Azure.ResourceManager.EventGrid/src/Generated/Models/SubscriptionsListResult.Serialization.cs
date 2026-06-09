@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SubscriptionData item in Value)
+            foreach (NamespaceTopicEventSubscriptionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            IList<SubscriptionData> value = default;
+            IList<NamespaceTopicEventSubscriptionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SubscriptionData> array = new List<SubscriptionData>();
+                    List<NamespaceTopicEventSubscriptionData> array = new List<NamespaceTopicEventSubscriptionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionData.DeserializeSubscriptionData(item, options));
+                        array.Add(NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

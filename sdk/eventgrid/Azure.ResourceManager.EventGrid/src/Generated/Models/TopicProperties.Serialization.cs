@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(EventTypeInfo))
             {
@@ -124,20 +124,20 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIpRules))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
-                foreach (EventGridInboundIPRule item in InboundIpRules)
+                foreach (EventGridInboundIPRule item in InboundIPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (Optional.IsDefined(DataResidencyBoundary))
             {
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
             EventGridTopicProvisioningState? provisioningState = default;
-            string endpoint = default;
+            Uri endpoint = default;
             PartnerTopicEventTypeInfo eventTypeInfo = default;
             TlsVersion? minimumTlsVersionAllowed = default;
             EventGridInputSchema? inputSchema = default;
             EventGridInputSchemaMapping inputSchemaMapping = default;
             string metricResourceId = default;
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
-            IList<EventGridInboundIPRule> inboundIpRules = default;
-            bool? disableLocalAuth = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
+            bool? isLocalAuthDisabled = default;
             DataResidencyBoundary? dataResidencyBoundary = default;
             KeyEncryption encryption = default;
             PlatformCapabilities platformCapabilities = default;
@@ -238,7 +238,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("eventTypeInfo"u8))
@@ -302,7 +306,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                     }
-                    inboundIpRules = array;
+                    inboundIPRules = array;
                     continue;
                 }
                 if (prop.NameEquals("disableLocalAuth"u8))
@@ -311,7 +315,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    disableLocalAuth = prop.Value.GetBoolean();
+                    isLocalAuthDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dataResidencyBoundary"u8))
@@ -356,8 +360,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 inputSchemaMapping,
                 metricResourceId,
                 publicNetworkAccess,
-                inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
-                disableLocalAuth,
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                isLocalAuthDisabled,
                 dataResidencyBoundary,
                 encryption,
                 platformCapabilities,

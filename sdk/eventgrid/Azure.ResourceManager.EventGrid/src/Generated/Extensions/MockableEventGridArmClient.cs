@@ -314,13 +314,13 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             return new DomainTopicEventSubscriptionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NamespaceTopicEventSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionResource"/> object. </returns>
-        public virtual SubscriptionResource GetSubscriptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceTopicEventSubscriptionResource"/> object. </returns>
+        public virtual NamespaceTopicEventSubscriptionResource GetNamespaceTopicEventSubscriptionResource(ResourceIdentifier id)
         {
-            SubscriptionResource.ValidateResourceId(id);
-            return new SubscriptionResource(Client, id);
+            NamespaceTopicEventSubscriptionResource.ValidateResourceId(id);
+            return new NamespaceTopicEventSubscriptionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TopicTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -408,8 +408,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionData> GetByResourceAsync(ResourceIdentifier scope, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridSubscriptionData> GetByResourceAsync(ResourceIdentifier scope, string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -452,8 +452,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionData> GetByResource(ResourceIdentifier scope, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridSubscriptionData> GetByResource(ResourceIdentifier scope, string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -494,8 +494,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventType> GetEventTypesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventTypeUnderTopic"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -534,8 +534,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventType> GetEventTypes(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventTypeUnderTopic"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventTypeUnderTopic> GetEventTypes(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid
     {
         private readonly ClientDiagnostics _domainEventSubscriptionsClientDiagnostics;
         private readonly DomainEventSubscriptions _domainEventSubscriptionsRestClient;
-        private readonly EventSubscriptionData _data;
+        private readonly EventGridSubscriptionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/eventSubscriptions";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of <see cref="DomainEventSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DomainEventSubscriptionResource(ArmClient client, EventSubscriptionData data) : this(client, data.Id)
+        internal DomainEventSubscriptionResource(ArmClient client, EventGridSubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual EventSubscriptionData Data
+        public virtual EventGridSubscriptionData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EventSubscriptionData> response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                Response<EventGridSubscriptionData> response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EventSubscriptionData> response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                Response<EventGridSubscriptionData> response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -426,30 +426,21 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeliveryAttributeListResult>> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeliveryAttributeMapping"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _domainEventSubscriptionsClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetDeliveryAttributes");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetDeliveryAttributesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeliveryAttributeListResult> response = Response.FromValue(DeliveryAttributeListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DomainEventSubscriptionsGetDeliveryAttributesAsyncCollectionResultOfT(
+                _domainEventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DomainEventSubscriptionResource.GetDeliveryAttributes");
         }
 
         /// <summary>
@@ -474,30 +465,21 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeliveryAttributeListResult> GetDeliveryAttributes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeliveryAttributeMapping"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _domainEventSubscriptionsClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetDeliveryAttributes");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetDeliveryAttributesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeliveryAttributeListResult> response = Response.FromValue(DeliveryAttributeListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DomainEventSubscriptionsGetDeliveryAttributesCollectionResultOfT(
+                _domainEventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DomainEventSubscriptionResource.GetDeliveryAttributes");
         }
 
         /// <summary>
@@ -522,9 +504,9 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUriAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _domainEventSubscriptionsClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUrl");
+            using DiagnosticScope scope = _domainEventSubscriptionsClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
@@ -532,7 +514,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetFullUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetFullUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventSubscriptionFullUri> response = Response.FromValue(EventSubscriptionFullUri.FromResponse(result), result);
                 if (response.Value == null)
@@ -570,9 +552,9 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EventSubscriptionFullUri> GetFullUrl(CancellationToken cancellationToken = default)
+        public virtual Response<EventSubscriptionFullUri> GetFullUri(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _domainEventSubscriptionsClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUrl");
+            using DiagnosticScope scope = _domainEventSubscriptionsClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
@@ -580,7 +562,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetFullUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _domainEventSubscriptionsRestClient.CreateGetFullUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventSubscriptionFullUri> response = Response.FromValue(EventSubscriptionFullUri.FromResponse(result), result);
                 if (response.Value == null)

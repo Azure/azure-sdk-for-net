@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        internal HttpMessage CreateGetFullUrlRequest(string scope, string eventSubscriptionName, RequestContext context)
+        internal HttpMessage CreateGetFullUriRequest(string scope, string eventSubscriptionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

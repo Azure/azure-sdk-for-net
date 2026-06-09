@@ -15,7 +15,7 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal partial class TopicsGetEventTypesAsyncCollectionResultOfT : AsyncPageable<EventType>
+    internal partial class TopicsGetEventTypesAsyncCollectionResultOfT : AsyncPageable<EventTypeUnderTopic>
     {
         private readonly Topics _client;
         private readonly Guid _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TopicsGetEventTypesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<EventType>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<EventTypeUnderTopic>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 EventTypesListResult result = EventTypesListResult.FromResponse(response);
-                yield return Page<EventType>.FromValues((IReadOnlyList<EventType>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EventTypeUnderTopic>.FromValues((IReadOnlyList<EventTypeUnderTopic>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

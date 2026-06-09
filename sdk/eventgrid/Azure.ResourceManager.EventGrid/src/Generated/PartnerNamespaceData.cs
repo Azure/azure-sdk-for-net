@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </summary>
         [WirePath("properties.partnerRegistrationFullyQualifiedId")]
-        public string PartnerRegistrationFullyQualifiedId
+        public ResourceIdentifier PartnerRegistrationFullyQualifiedId
         {
             get
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Endpoint for the partner namespace. </summary>
         [WirePath("properties.endpoint")]
-        public string Endpoint
+        public Uri Endpoint
         {
             get
             {
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </summary>
         [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth
+        public bool? IsLocalAuthDisabled
         {
             get
             {
-                return Properties is null ? default : Properties.DisableLocalAuth;
+                return Properties is null ? default : Properties.IsLocalAuthDisabled;
             }
             set
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new PartnerNamespaceProperties();
                 }
-                Properties.DisableLocalAuth = value;
+                Properties.IsLocalAuthDisabled = value;
             }
         }
 

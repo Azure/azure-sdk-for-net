@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Event Type for a subject under a topic. </summary>
-    public partial class EventType : ResourceData
+    public partial class EventTypeUnderTopic : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EventType"/>. </summary>
-        internal EventType()
+        /// <summary> Initializes a new instance of <see cref="EventTypeUnderTopic"/>. </summary>
+        internal EventTypeUnderTopic()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTypeUnderTopic"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventTypeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal EventTypeUnderTopic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventTypeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> URL of the schema for this event type. </summary>
         [WirePath("properties.schemaUrl")]
-        public string SchemaUri
+        public Uri SchemaUri
         {
             get
             {

@@ -15,7 +15,7 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal partial class NamespaceTopicEventSubscriptionsGetByNamespaceTopicAsyncCollectionResultOfT : AsyncPageable<SubscriptionData>
+    internal partial class NamespaceTopicEventSubscriptionsGetByNamespaceTopicAsyncCollectionResultOfT : AsyncPageable<NamespaceTopicEventSubscriptionData>
     {
         private readonly NamespaceTopicEventSubscriptions _client;
         private readonly Guid _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of NamespaceTopicEventSubscriptionsGetByNamespaceTopicAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NamespaceTopicEventSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 SubscriptionsListResult result = SubscriptionsListResult.FromResponse(response);
-                yield return Page<SubscriptionData>.FromValues((IReadOnlyList<SubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NamespaceTopicEventSubscriptionData>.FromValues((IReadOnlyList<NamespaceTopicEventSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

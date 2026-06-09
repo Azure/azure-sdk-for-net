@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
         /// <param name="provisioningState"> Provisioning state of the channel. </param>
         /// <param name="readinessState"> The readiness state of the corresponding partner topic. </param>
-        /// <param name="expirationTimeIfNotActivatedUtc">
+        /// <param name="expireOnIfNotActivated">
         /// Expiration time of the channel. If this timer expires while the corresponding partner topic is never activated,
         /// the channel and corresponding partner topic are deleted.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChannelProperties(PartnerNamespaceChannelType? channelType, PartnerTopicInfo partnerTopicInfo, PartnerDestinationInfo partnerDestinationInfo, string messageForActivation, PartnerNamespaceChannelProvisioningState? provisioningState, PartnerTopicReadinessState? readinessState, DateTimeOffset? expirationTimeIfNotActivatedUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChannelProperties(PartnerNamespaceChannelType? channelType, PartnerTopicInfo partnerTopicInfo, PartnerDestinationInfo partnerDestinationInfo, string messageForActivation, PartnerNamespaceChannelProvisioningState? provisioningState, PartnerTopicReadinessState? readinessState, DateTimeOffset? expireOnIfNotActivated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ChannelType = channelType;
             PartnerTopicInfo = partnerTopicInfo;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             MessageForActivation = messageForActivation;
             ProvisioningState = provisioningState;
             ReadinessState = readinessState;
-            ExpirationTimeIfNotActivatedUtc = expirationTimeIfNotActivatedUtc;
+            ExpireOnIfNotActivated = expireOnIfNotActivated;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// the channel and corresponding partner topic are deleted.
         /// </summary>
         [WirePath("expirationTimeIfNotActivatedUtc")]
-        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc { get; set; }
+        public DateTimeOffset? ExpireOnIfNotActivated { get; set; }
     }
 }

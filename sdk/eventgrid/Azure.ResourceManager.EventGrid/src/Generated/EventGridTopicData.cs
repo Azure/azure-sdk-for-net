@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="extendedLocation"> Extended location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TopicProperties properties, ResourceSku sku, IdentityInfo identity, ResourceKind? kind, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TopicProperties properties, ResourceSku sku, ManagedServiceIdentity identity, ResourceKind? kind, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Identity information for the resource. </summary>
         [WirePath("identity")]
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Kind of the resource. </summary>
         [WirePath("kind")]
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Endpoint for the topic. </summary>
         [WirePath("properties.endpoint")]
-        public string Endpoint
+        public Uri Endpoint
         {
             get
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules
+        public IList<EventGridInboundIPRule> InboundIPRules
         {
             get
             {
@@ -218,17 +218,17 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new TopicProperties();
                 }
-                return Properties.InboundIpRules;
+                return Properties.InboundIPRules;
             }
         }
 
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </summary>
         [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth
+        public bool? IsLocalAuthDisabled
         {
             get
             {
-                return Properties is null ? default : Properties.DisableLocalAuth;
+                return Properties is null ? default : Properties.IsLocalAuthDisabled;
             }
             set
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new TopicProperties();
                 }
-                Properties.DisableLocalAuth = value;
+                Properties.IsLocalAuthDisabled = value;
             }
         }
 

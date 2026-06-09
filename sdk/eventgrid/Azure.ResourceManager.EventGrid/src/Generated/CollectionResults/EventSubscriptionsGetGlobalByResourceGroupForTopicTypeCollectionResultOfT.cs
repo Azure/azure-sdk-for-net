@@ -14,7 +14,7 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal partial class EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT : Pageable<EventSubscriptionData>
+    internal partial class EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT : Pageable<EventGridSubscriptionData>
     {
         private readonly EventSubscriptions _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EventSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<EventGridSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
-                yield return Page<EventSubscriptionData>.FromValues((IReadOnlyList<EventSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EventGridSubscriptionData>.FromValues((IReadOnlyList<EventGridSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

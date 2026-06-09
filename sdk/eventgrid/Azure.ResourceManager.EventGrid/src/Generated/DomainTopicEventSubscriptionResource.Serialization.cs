@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary></summary>
-    public partial class DomainTopicEventSubscriptionResource : IJsonModel<EventSubscriptionData>
+    public partial class DomainTopicEventSubscriptionResource : IJsonModel<EventGridSubscriptionData>
     {
-        private static IJsonModel<EventSubscriptionData> s_dataDeserializationInstance;
+        private static IJsonModel<EventGridSubscriptionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<EventSubscriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventSubscriptionData();
+        private static IJsonModel<EventGridSubscriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventGridSubscriptionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EventSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventSubscriptionData>)Data).Write(writer, options);
+        void IJsonModel<EventGridSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridSubscriptionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventSubscriptionData IJsonModel<EventSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        EventGridSubscriptionData IJsonModel<EventGridSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EventSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventSubscriptionData>(Data, options, AzureResourceManagerEventGridContext.Default);
+        BinaryData IPersistableModel<EventGridSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridSubscriptionData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventSubscriptionData IPersistableModel<EventSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventSubscriptionData>(data, options, AzureResourceManagerEventGridContext.Default);
+        EventGridSubscriptionData IPersistableModel<EventGridSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridSubscriptionData>(data, options, AzureResourceManagerEventGridContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EventSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<EventGridSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

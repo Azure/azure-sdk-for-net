@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="groupIds"> GroupIds from the private link service resource. </param>
-        /// <param name="privateLinkServiceConnectionState"> Details about the state of the connection. </param>
+        /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, IList<string> groupIds, EventGridPrivateEndpointConnectionState privateLinkServiceConnectionState, EventGridResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, IList<string> groupIds, EventGridPrivateEndpointConnectionState connectionState, EventGridResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Details about the state of the connection. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public EventGridPrivateEndpointConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public EventGridPrivateEndpointConnectionState ConnectionState { get; set; }
 
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
         [WirePath("provisioningState")]
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
         [WirePath("privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

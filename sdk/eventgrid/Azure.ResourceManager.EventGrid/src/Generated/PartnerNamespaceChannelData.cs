@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.EventGrid
         /// the channel and corresponding partner topic are deleted.
         /// </summary>
         [WirePath("properties.expirationTimeIfNotActivatedUtc")]
-        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc
+        public DateTimeOffset? ExpireOnIfNotActivated
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationTimeIfNotActivatedUtc;
+                return Properties is null ? default : Properties.ExpireOnIfNotActivated;
             }
             set
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new ChannelProperties();
                 }
-                Properties.ExpirationTimeIfNotActivatedUtc = value;
+                Properties.ExpireOnIfNotActivated = value;
             }
         }
     }

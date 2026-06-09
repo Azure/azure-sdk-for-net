@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("readinessState"u8);
                 writer.WriteStringValue(ReadinessState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
+            if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
-                writer.WriteStringValue(ExpirationTimeIfNotActivatedUtc.Value, "O");
+                writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string messageForActivation = default;
             PartnerNamespaceChannelProvisioningState? provisioningState = default;
             PartnerTopicReadinessState? readinessState = default;
-            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
+            DateTimeOffset? expireOnIfNotActivated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    expirationTimeIfNotActivatedUtc = prop.Value.GetDateTimeOffset("O");
+                    expireOnIfNotActivated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 messageForActivation,
                 provisioningState,
                 readinessState,
-                expirationTimeIfNotActivatedUtc,
+                expireOnIfNotActivated,
                 additionalBinaryDataProperties);
         }
     }

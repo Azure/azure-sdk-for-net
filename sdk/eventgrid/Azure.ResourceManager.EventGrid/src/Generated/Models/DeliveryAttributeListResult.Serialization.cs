@@ -15,7 +15,7 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Result of the Get delivery attributes operation. </summary>
-    public partial class DeliveryAttributeListResult : IJsonModel<DeliveryAttributeListResult>
+    internal partial class DeliveryAttributeListResult : IJsonModel<DeliveryAttributeListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

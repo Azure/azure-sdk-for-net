@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid
         DomainEventSubscriptionResource IOperationSource<DomainEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EventSubscriptionData data = EventSubscriptionData.DeserializeEventSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            EventGridSubscriptionData data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DomainEventSubscriptionResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid
         async ValueTask<DomainEventSubscriptionResource> IOperationSource<DomainEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EventSubscriptionData data = EventSubscriptionData.DeserializeEventSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            EventGridSubscriptionData data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DomainEventSubscriptionResource(_client, data);
         }
     }

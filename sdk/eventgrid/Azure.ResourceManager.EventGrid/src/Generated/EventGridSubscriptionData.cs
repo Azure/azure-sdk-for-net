@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary> Event Subscription. </summary>
-    public partial class EventSubscriptionData : ResourceData
+    public partial class EventGridSubscriptionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EventSubscriptionData"/>. </summary>
-        public EventSubscriptionData()
+        /// <summary> Initializes a new instance of <see cref="EventGridSubscriptionData"/>. </summary>
+        public EventGridSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventSubscriptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridSubscriptionData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the event subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventSubscriptionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal EventGridSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventSubscriptionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Expiration time of the event subscription. </summary>
         [WirePath("properties.expirationTimeUtc")]
-        public DateTimeOffset? ExpirationTimeUtc
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationTimeUtc;
+                return Properties is null ? default : Properties.ExpireOn;
             }
             set
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new EventSubscriptionProperties();
                 }
-                Properties.ExpirationTimeUtc = value;
+                Properties.ExpireOn = value;
             }
         }
 

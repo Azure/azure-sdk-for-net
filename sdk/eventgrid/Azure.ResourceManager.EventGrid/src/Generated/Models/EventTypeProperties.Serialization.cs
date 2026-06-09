@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(SchemaUri))
             {
                 writer.WritePropertyName("schemaUrl"u8);
-                writer.WriteStringValue(SchemaUri);
+                writer.WriteStringValue(SchemaUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsInDefaultSet))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             string displayName = default;
             string description = default;
-            string schemaUri = default;
+            Uri schemaUri = default;
             bool? isInDefaultSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,7 +155,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("schemaUrl"u8))
                 {
-                    schemaUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schemaUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("isInDefaultSet"u8))

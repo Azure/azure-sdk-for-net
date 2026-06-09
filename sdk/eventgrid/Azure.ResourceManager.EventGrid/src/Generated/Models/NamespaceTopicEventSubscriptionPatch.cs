@@ -7,49 +7,33 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.EventGrid;
 
-namespace Azure.ResourceManager.EventGrid
+namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Event Subscription. </summary>
-    public partial class SubscriptionData : ResourceData
+    /// <summary> Properties of the Event Subscription update. </summary>
+    public partial class NamespaceTopicEventSubscriptionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/>. </summary>
-        public SubscriptionData()
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
+        public NamespaceTopicEventSubscriptionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the event subscription. </param>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
+        /// <param name="properties"> Properties of the Event Subscription update parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal NamespaceTopicEventSubscriptionPatch(SubscriptionUpdateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Properties of the event subscription. </summary>
+        /// <summary> Properties of the Event Subscription update parameters. </summary>
         [WirePath("properties")]
-        internal SubscriptionProperties Properties { get; set; }
-
-        /// <summary> Provisioning state of the event subscription. </summary>
-        [WirePath("properties.provisioningState")]
-        public SubscriptionProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
+        internal SubscriptionUpdateParametersProperties Properties { get; set; }
 
         /// <summary> Information about the delivery configuration of the event subscription. </summary>
         [WirePath("properties.deliveryConfiguration")]
@@ -63,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 if (Properties is null)
                 {
-                    Properties = new SubscriptionProperties();
+                    Properties = new SubscriptionUpdateParametersProperties();
                 }
                 Properties.DeliveryConfiguration = value;
             }
@@ -81,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 if (Properties is null)
                 {
-                    Properties = new SubscriptionProperties();
+                    Properties = new SubscriptionUpdateParametersProperties();
                 }
                 Properties.EventDeliverySchema = value;
             }
@@ -99,7 +83,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 if (Properties is null)
                 {
-                    Properties = new SubscriptionProperties();
+                    Properties = new SubscriptionUpdateParametersProperties();
                 }
                 Properties.FiltersConfiguration = value;
             }
@@ -117,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 if (Properties is null)
                 {
-                    Properties = new SubscriptionProperties();
+                    Properties = new SubscriptionUpdateParametersProperties();
                 }
                 Properties.ExpirationTimeUtc = value;
             }
@@ -131,7 +115,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 if (Properties is null)
                 {
-                    Properties = new SubscriptionProperties();
+                    Properties = new SubscriptionUpdateParametersProperties();
                 }
                 return Properties.Tags;
             }

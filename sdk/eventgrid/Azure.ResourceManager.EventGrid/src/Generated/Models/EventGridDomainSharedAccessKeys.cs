@@ -12,21 +12,21 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Shared access keys of the Domain. </summary>
-    public partial class DomainSharedAccessKeys
+    public partial class EventGridDomainSharedAccessKeys
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DomainSharedAccessKeys"/>. </summary>
-        internal DomainSharedAccessKeys()
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainSharedAccessKeys"/>. </summary>
+        internal EventGridDomainSharedAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DomainSharedAccessKeys"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the domain. </param>
         /// <param name="key2"> Shared access key2 for the domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainSharedAccessKeys(string key1, string key2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridDomainSharedAccessKeys(string key1, string key2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key1 = key1;
             Key2 = key2;

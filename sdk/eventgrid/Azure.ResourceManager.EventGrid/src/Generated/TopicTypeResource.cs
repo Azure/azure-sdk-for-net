@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventType> GetEventTypesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventTypeUnderTopic"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventType> GetEventTypes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventTypeUnderTopic"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventTypeUnderTopic> GetEventTypes(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

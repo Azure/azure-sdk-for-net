@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -119,10 +120,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (Optional.IsDefined(PartnerTopicRoutingMode))
             {
@@ -173,12 +174,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
             PartnerNamespaceProvisioningState? provisioningState = default;
-            string partnerRegistrationFullyQualifiedId = default;
+            ResourceIdentifier partnerRegistrationFullyQualifiedId = default;
             TlsVersion? minimumTlsVersionAllowed = default;
-            string endpoint = default;
+            Uri endpoint = default;
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIpRules = default;
-            bool? disableLocalAuth = default;
+            bool? isLocalAuthDisabled = default;
             PartnerTopicRoutingMode? partnerTopicRoutingMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -208,7 +209,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("partnerRegistrationFullyQualifiedId"u8))
                 {
-                    partnerRegistrationFullyQualifiedId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerRegistrationFullyQualifiedId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("minimumTlsVersionAllowed"u8))
@@ -222,7 +227,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -254,7 +263,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    disableLocalAuth = prop.Value.GetBoolean();
+                    isLocalAuthDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("partnerTopicRoutingMode"u8))
@@ -279,7 +288,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 endpoint,
                 publicNetworkAccess,
                 inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
-                disableLocalAuth,
+                isLocalAuthDisabled,
                 partnerTopicRoutingMode,
                 additionalBinaryDataProperties);
         }

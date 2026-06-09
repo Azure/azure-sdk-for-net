@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DomainSharedAccessKeys>> GetSharedAccessKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridDomainSharedAccessKeys>> GetSharedAccessKeysAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _domainsClientDiagnostics.CreateScope("EventGridDomainResource.GetSharedAccessKeys");
             scope.Start();
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _domainsRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DomainSharedAccessKeys> response = Response.FromValue(DomainSharedAccessKeys.FromResponse(result), result);
+                Response<EventGridDomainSharedAccessKeys> response = Response.FromValue(EventGridDomainSharedAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DomainSharedAccessKeys> GetSharedAccessKeys(CancellationToken cancellationToken = default)
+        public virtual Response<EventGridDomainSharedAccessKeys> GetSharedAccessKeys(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _domainsClientDiagnostics.CreateScope("EventGridDomainResource.GetSharedAccessKeys");
             scope.Start();
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _domainsRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DomainSharedAccessKeys> response = Response.FromValue(DomainSharedAccessKeys.FromResponse(result), result);
+                Response<EventGridDomainSharedAccessKeys> response = Response.FromValue(EventGridDomainSharedAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="content"> Request body to regenerate key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DomainSharedAccessKeys>> RegenerateKeyAsync(EventGridDomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridDomainSharedAccessKeys>> RegenerateKeyAsync(EventGridDomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _domainsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridDomainRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DomainSharedAccessKeys> response = Response.FromValue(DomainSharedAccessKeys.FromResponse(result), result);
+                Response<EventGridDomainSharedAccessKeys> response = Response.FromValue(EventGridDomainSharedAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="content"> Request body to regenerate key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DomainSharedAccessKeys> RegenerateKey(EventGridDomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EventGridDomainSharedAccessKeys> RegenerateKey(EventGridDomainRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _domainsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridDomainRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DomainSharedAccessKeys> response = Response.FromValue(DomainSharedAccessKeys.FromResponse(result), result);
+                Response<EventGridDomainSharedAccessKeys> response = Response.FromValue(EventGridDomainSharedAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

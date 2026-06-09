@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SystemTopicEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SystemTopicEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, EventSubscriptionData.ToRequestContent(data), context);
+                HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, EventGridSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation<SystemTopicEventSubscriptionResource> operation = new EventGridArmOperation<SystemTopicEventSubscriptionResource>(
                     new SystemTopicEventSubscriptionResourceOperationSource(Client),
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SystemTopicEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SystemTopicEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, EventSubscriptionData.ToRequestContent(data), context);
+                HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, EventGridSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation<SystemTopicEventSubscriptionResource> operation = new EventGridArmOperation<SystemTopicEventSubscriptionResource>(
                     new SystemTopicEventSubscriptionResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EventSubscriptionData> response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                Response<EventGridSubscriptionData> response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
                 };
                 HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EventSubscriptionData> response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                Response<EventGridSubscriptionData> response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventSubscriptionData, SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionsGetBySystemTopicAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridSubscriptionData, SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionsGetBySystemTopicAsyncCollectionResultOfT(
                 _systemTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventSubscriptionData, SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionsGetBySystemTopicCollectionResultOfT(
+            return new PageableWrapper<EventGridSubscriptionData, SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionsGetBySystemTopicCollectionResultOfT(
                 _systemTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -380,14 +380,14 @@ namespace Azure.ResourceManager.EventGrid
                 HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<EventSubscriptionData> response = default;
+                Response<EventGridSubscriptionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EventSubscriptionData)null, result);
+                        response = Response.FromValue((EventGridSubscriptionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -437,14 +437,14 @@ namespace Azure.ResourceManager.EventGrid
                 HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<EventSubscriptionData> response = default;
+                Response<EventGridSubscriptionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EventSubscriptionData)null, result);
+                        response = Response.FromValue((EventGridSubscriptionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -494,14 +494,14 @@ namespace Azure.ResourceManager.EventGrid
                 HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<EventSubscriptionData> response = default;
+                Response<EventGridSubscriptionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EventSubscriptionData)null, result);
+                        response = Response.FromValue((EventGridSubscriptionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -555,14 +555,14 @@ namespace Azure.ResourceManager.EventGrid
                 HttpMessage message = _systemTopicEventSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, eventSubscriptionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<EventSubscriptionData> response = default;
+                Response<EventGridSubscriptionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EventSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EventSubscriptionData)null, result);
+                        response = Response.FromValue((EventGridSubscriptionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

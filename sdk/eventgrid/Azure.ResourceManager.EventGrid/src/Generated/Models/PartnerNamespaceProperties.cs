@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -38,13 +39,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="disableLocalAuth"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </param>
         /// <param name="partnerTopicRoutingMode">
         /// This determines if events published to this partner namespace should use the source attribute in the event payload
         /// or use the channel name in the header when matching to the partner topic. If none is specified, source attribute routing will be used to match the partner topic.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerNamespaceProperties(IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, string partnerRegistrationFullyQualifiedId, TlsVersion? minimumTlsVersionAllowed, string endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIpRules, bool? disableLocalAuth, PartnerTopicRoutingMode? partnerTopicRoutingMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PartnerNamespaceProperties(IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIpRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Endpoint = endpoint;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
-            DisableLocalAuth = disableLocalAuth;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
             PartnerTopicRoutingMode = partnerTopicRoutingMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </summary>
         [WirePath("partnerRegistrationFullyQualifiedId")]
-        public string PartnerRegistrationFullyQualifiedId { get; set; }
+        public ResourceIdentifier PartnerRegistrationFullyQualifiedId { get; set; }
 
         /// <summary> Minimum TLS version of the publisher allowed to publish to this partner namespace. </summary>
         [WirePath("minimumTlsVersionAllowed")]
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Endpoint for the partner namespace. </summary>
         [WirePath("endpoint")]
-        public string Endpoint { get; }
+        public Uri Endpoint { get; }
 
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </summary>
         [WirePath("disableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
+        public bool? IsLocalAuthDisabled { get; set; }
 
         /// <summary>
         /// This determines if events published to this partner namespace should use the source attribute in the event payload

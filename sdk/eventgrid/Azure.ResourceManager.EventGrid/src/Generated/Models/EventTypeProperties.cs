@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="schemaUri"> URL of the schema for this event type. </param>
         /// <param name="isInDefaultSet"> IsInDefaultSet flag of the event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventTypeProperties(string displayName, string description, string schemaUri, bool? isInDefaultSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventTypeProperties(string displayName, string description, Uri schemaUri, bool? isInDefaultSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> URL of the schema for this event type. </summary>
         [WirePath("schemaUrl")]
-        public string SchemaUri { get; }
+        public Uri SchemaUri { get; }
 
         /// <summary> IsInDefaultSet flag of the event type. </summary>
         [WirePath("isInDefaultSet")]

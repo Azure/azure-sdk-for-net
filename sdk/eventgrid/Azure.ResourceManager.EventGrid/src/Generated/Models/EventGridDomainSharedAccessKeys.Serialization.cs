@@ -15,58 +15,58 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Shared access keys of the Domain. </summary>
-    public partial class DomainSharedAccessKeys : IJsonModel<DomainSharedAccessKeys>
+    public partial class EventGridDomainSharedAccessKeys : IJsonModel<EventGridDomainSharedAccessKeys>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DomainSharedAccessKeys PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventGridDomainSharedAccessKeys PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridDomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDomainSharedAccessKeys(document.RootElement, options);
+                        return DeserializeEventGridDomainSharedAccessKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainSharedAccessKeys)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridDomainSharedAccessKeys)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridDomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DomainSharedAccessKeys)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridDomainSharedAccessKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DomainSharedAccessKeys>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventGridDomainSharedAccessKeys>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainSharedAccessKeys IPersistableModel<DomainSharedAccessKeys>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventGridDomainSharedAccessKeys IPersistableModel<EventGridDomainSharedAccessKeys>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DomainSharedAccessKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventGridDomainSharedAccessKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DomainSharedAccessKeys"/> from. </param>
-        internal static DomainSharedAccessKeys FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EventGridDomainSharedAccessKeys"/> from. </param>
+        internal static EventGridDomainSharedAccessKeys FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDomainSharedAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEventGridDomainSharedAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DomainSharedAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventGridDomainSharedAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridDomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainSharedAccessKeys)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridDomainSharedAccessKeys)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Key1))
             {
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainSharedAccessKeys IJsonModel<DomainSharedAccessKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventGridDomainSharedAccessKeys IJsonModel<EventGridDomainSharedAccessKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DomainSharedAccessKeys JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventGridDomainSharedAccessKeys JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridDomainSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainSharedAccessKeys)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridDomainSharedAccessKeys)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDomainSharedAccessKeys(document.RootElement, options);
+            return DeserializeEventGridDomainSharedAccessKeys(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DomainSharedAccessKeys DeserializeDomainSharedAccessKeys(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventGridDomainSharedAccessKeys DeserializeEventGridDomainSharedAccessKeys(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DomainSharedAccessKeys(key1, key2, additionalBinaryDataProperties);
+            return new EventGridDomainSharedAccessKeys(key1, key2, additionalBinaryDataProperties);
         }
     }
 }

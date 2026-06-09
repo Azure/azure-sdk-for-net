@@ -10,76 +10,58 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.EventGrid
+namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Event Subscription. </summary>
-    public partial class SubscriptionData : ResourceData, IJsonModel<SubscriptionData>
+    /// <summary> Event Type for a subject under a topic. </summary>
+    public partial class EventTypeUnderTopic : ResourceData, IJsonModel<EventTypeUnderTopic>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSubscriptionData(document.RootElement, options);
+                        return DeserializeEventTypeUnderTopic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubscriptionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventTypeUnderTopic>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionData IPersistableModel<SubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SubscriptionData)PersistableModelCreateCore(data, options);
+        EventTypeUnderTopic IPersistableModel<EventTypeUnderTopic>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventTypeUnderTopic)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="subscriptionData"> The <see cref="SubscriptionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SubscriptionData subscriptionData)
-        {
-            if (subscriptionData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(subscriptionData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SubscriptionData"/> from. </param>
-        internal static SubscriptionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<EventTypeUnderTopic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventTypeUnderTopic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +72,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +102,24 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionData IJsonModel<SubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SubscriptionData)JsonModelCreateCore(ref reader, options);
+        EventTypeUnderTopic IJsonModel<EventTypeUnderTopic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EventTypeUnderTopic)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionData(document.RootElement, options);
+            return DeserializeEventTypeUnderTopic(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SubscriptionData DeserializeSubscriptionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventTypeUnderTopic DeserializeEventTypeUnderTopic(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +129,7 @@ namespace Azure.ResourceManager.EventGrid
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SubscriptionProperties properties = default;
+            EventTypeProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +171,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    properties = SubscriptionProperties.DeserializeSubscriptionProperties(prop.Value, options);
+                    properties = EventTypeProperties.DeserializeEventTypeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +179,7 @@ namespace Azure.ResourceManager.EventGrid
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubscriptionData(
+            return new EventTypeUnderTopic(
                 id,
                 name,
                 resourceType,

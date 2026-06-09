@@ -12,7 +12,7 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Result of the Get delivery attributes operation. </summary>
-    public partial class DeliveryAttributeListResult
+    internal partial class DeliveryAttributeListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

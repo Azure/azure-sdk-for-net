@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="EventTypesListResult"/>. </summary>
         internal EventTypesListResult()
         {
-            Value = new ChangeTrackingList<EventType>();
+            Value = new ChangeTrackingList<EventTypeUnderTopic>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventTypesListResult"/>. </summary>
         /// <param name="value"> A collection of event types. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventTypesListResult(IList<EventType> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventTypesListResult(IList<EventTypeUnderTopic> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> A collection of event types. </summary>
         [WirePath("value")]
-        public IList<EventType> Value { get; }
+        public IList<EventTypeUnderTopic> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         [WirePath("nextLink")]

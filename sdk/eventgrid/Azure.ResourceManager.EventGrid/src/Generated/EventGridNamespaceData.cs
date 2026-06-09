@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="identity"> Identity information for the Namespace resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NamespaceProperties properties, NamespaceSku sku, IdentityInfo identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NamespaceProperties properties, NamespaceSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Identity information for the Namespace resource. </summary>
         [WirePath("identity")]
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> List of private endpoint connections. </summary>
         [WirePath("properties.privateEndpointConnections")]
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules
+        public IList<EventGridInboundIPRule> InboundIPRules
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new NamespaceProperties();
                 }
-                return Properties.InboundIpRules;
+                return Properties.InboundIPRules;
             }
         }
 
