@@ -56,6 +56,95 @@ public class OptimizationConfig
         CandidateId = candidateId;
     }
 
+    /// <summary>
+    /// Creates an <see cref="OptimizationConfig"/> from a JSON element (API response or env var payload).
+    /// </summary>
+    internal static OptimizationConfig FromJson(JsonElement data, string source = "defaults", string candidateId = null, string skillsDirectory = null)
+    {
+        string instructions = data.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String
+            ? instrProp.GetString()
+            : null;
+
+        string model = data.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String
+            ? modelProp.GetString()
+            : null;
+
+        double? temperature = data.TryGetProperty("temperature", out var tempProp) && tempProp.ValueKind == JsonValueKind.Number
+            ? tempProp.GetDouble()
+            : (double?)null;
+
+        return new OptimizationConfig(
+            instructions: instructions,
+            model: model,
+            temperature: temperature,
+            skills: ParseSkills(data),
+            skillsDirectory: skillsDirectory,
+            toolDefinitions: ParseToolDefinitions(data),
+            source: source,
+            candidateId: candidateId);
+    }
+
+    private static List<OptimizationSkill> ParseSkills(JsonElement data)
+    {
+        var skills = new List<OptimizationSkill>();
+
+        if (!data.TryGetProperty("skills", out var skillsArray) || skillsArray.ValueKind != JsonValueKind.Array)
+        {
+            return skills;
+        }
+
+        foreach (var item in skillsArray.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                continue;
+            }
+
+            if (!item.TryGetProperty("name", out var skillName) || skillName.ValueKind != JsonValueKind.String)
+            {
+                continue;
+            }
+
+            string name = skillName.GetString();
+            if (string.IsNullOrEmpty(name))
+            {
+                continue;
+            }
+
+            string description = item.TryGetProperty("description", out var descProp) && descProp.ValueKind == JsonValueKind.String
+                ? descProp.GetString() ?? ""
+                : "";
+
+            string body = item.TryGetProperty("body", out var bodyProp) && bodyProp.ValueKind == JsonValueKind.String
+                ? bodyProp.GetString() ?? ""
+                : "";
+
+            skills.Add(new OptimizationSkill(name, description, body));
+        }
+
+        return skills;
+    }
+
+    private static List<BinaryData> ParseToolDefinitions(JsonElement data)
+    {
+        if (!data.TryGetProperty("tools", out var toolsArray))
+        {
+            return new List<BinaryData>();
+        }
+
+        if (toolsArray.ValueKind != JsonValueKind.Array)
+        {
+            throw new InvalidOperationException($"Expected 'tools' to be an array, got {toolsArray.ValueKind}");
+        }
+
+        var tools = new List<BinaryData>();
+        foreach (var item in toolsArray.EnumerateArray())
+        {
+            tools.Add(BinaryData.FromString(item.GetRawText()));
+        }
+        return tools;
+    }
+
     /// <summary>Optimized system prompt text.</summary>
     public string Instructions { get; }
 

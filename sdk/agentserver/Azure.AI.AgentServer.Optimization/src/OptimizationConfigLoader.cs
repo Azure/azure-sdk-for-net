@@ -50,20 +50,15 @@ public static class OptimizationConfigLoader
 
             if (resolved.HasValue)
             {
-                var candidate = CandidateConfig.FromDictionary(resolved.Value);
                 string skillsDir = resolved.Value.TryGetProperty("skills_dir", out var sdProp) && sdProp.ValueKind == JsonValueKind.String
                     ? sdProp.GetString()
                     : null;
 
-                return new OptimizationConfig(
-                    instructions: candidate.Instructions,
-                    model: candidate.Model,
-                    temperature: candidate.Temperature,
-                    skills: candidate.Skills,
-                    skillsDirectory: skillsDir,
-                    toolDefinitions: candidate.ToolDefinitions,
+                return OptimizationConfig.FromJson(
+                    resolved.Value,
                     source: $"api:candidate:{candidateId}",
-                    candidateId: candidateId);
+                    candidateId: candidateId,
+                    skillsDirectory: skillsDir);
             }
         }
 
@@ -112,13 +107,8 @@ public static class OptimizationConfigLoader
         try
         {
             using var doc = JsonDocument.Parse(rawConfig);
-            var candidate = CandidateConfig.FromDictionary(doc.RootElement);
-            return new OptimizationConfig(
-                instructions: candidate.Instructions,
-                model: candidate.Model,
-                temperature: candidate.Temperature,
-                skills: candidate.Skills,
-                toolDefinitions: candidate.ToolDefinitions,
+            return OptimizationConfig.FromJson(
+                doc.RootElement,
                 source: $"env:{OptimizationConfig.EnvironmentVariableConfig}");
         }
         catch (JsonException ex)
