@@ -167,11 +167,24 @@ function Get-GitHubInstallationId {
       Write-Host "  ${installationId}: ${installationLogin} [${installationType}]"
     }
 
-    $matchingInstallations = @($resp | Where-Object {
-      $null -ne $_.account -and $_.account.login -ieq $InstallationTokenOwner
+    $loginMatches = @($resp | Where-Object {
+      $installationLogin = Get-PropertyValue -InputObject $_ -PropertyName 'login'
+      if ($null -eq $installationLogin) {
+        $installationLogin = (Get-PropertyValue -InputObject $_ -PropertyName 'account').login
+      }
+
+      $installationLogin -ieq $InstallationTokenOwner
+    })
+
+    $matchingInstallations = @($loginMatches | Where-Object {
+      $null -ne (Get-PropertyValue -InputObject $_ -PropertyName 'id')
     })
 
     if ($matchingInstallations.Count -eq 0) {
+      if ($loginMatches.Count -gt 0) {
+        throw "No installations with a valid id found for '$InstallationTokenOwner' on this App."
+      }
+
       throw "No installations found for '$InstallationTokenOwner' on this App."
     }
 
@@ -247,6 +260,8 @@ function Invoke-LoginToGitHub {
   }
 }
 
-if ($MyInvocation.InvocationName -ne '.') {
-  Invoke-LoginToGitHub
+if ($env:PESTER_TEST_RUN -eq 'true') {
+  return
 }
+
+Invoke-LoginToGitHub
