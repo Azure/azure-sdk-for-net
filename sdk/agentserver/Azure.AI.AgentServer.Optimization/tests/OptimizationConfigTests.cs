@@ -48,31 +48,6 @@ public class OptimizationConfigTests
     }
 
     [Test]
-    public void LocalConfig_ParsesNumericTemperatureTypes()
-    {
-        // Temperature parsing is now internal to LocalConfigReader.
-        // Test via a local directory with a metadata.yaml containing a string temperature.
-        string tempDir = Path.Combine(Path.GetTempPath(), "opt-temp-" + Guid.NewGuid().ToString("N").Substring(0, 8));
-        string baseline = Path.Combine(tempDir, "baseline");
-        Directory.CreateDirectory(baseline);
-        File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "temperature: 0.25\n");
-
-        try
-        {
-            var result = LocalConfigReader.Load(null, tempDir);
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Temperature, Is.EqualTo(0.25d));
-        }
-        finally
-        {
-            if (Directory.Exists(tempDir))
-            {
-                Directory.Delete(tempDir, true);
-            }
-        }
-    }
-
-    [Test]
     public void HasSkills_TrueWhenSkillsPresent()
     {
         var config = new OptimizationConfig(skills: new[] { new OptimizationSkill("s1", "d1") });
@@ -128,10 +103,10 @@ public class OptimizationConfigTests
     [Test]
     public void ToString_ContainsSourceAndModel()
     {
-        var config = new OptimizationConfig(model: "gpt-4o", source: "local:/path");
+        var config = new OptimizationConfig(model: "gpt-4o", source: "api:candidate:test");
 
         Assert.That(config.ToString(), Does.Contain("gpt-4o"));
-        Assert.That(config.ToString(), Does.Contain("local:/path"));
+        Assert.That(config.ToString(), Does.Contain("api:candidate:test"));
     }
 
     [Test]

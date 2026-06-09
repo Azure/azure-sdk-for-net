@@ -3,7 +3,6 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Concurrent;
 using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Optimization;
@@ -16,51 +15,19 @@ internal static class CandidateResolver
     private const string ApiVersion = "2025-11-15-preview";
     private const string AuthScope = "https://ai.azure.com/.default";
 
-    private static readonly ConcurrentDictionary<string, byte> s_downloaded = new();
-
     /// <summary>
     /// Resolves a candidate's full config from the optimization service.
     /// </summary>
     public static async Task<JsonElement?> ResolveAsync(
         string candidateId,
         string endpoint,
-        string localDir,
         AuthenticationTokenProvider credential,
         CancellationToken cancellationToken = default)
     {
         ValidateCandidateId(candidateId);
 
-        string cacheKey = string.Concat(endpoint.TrimEnd('/'), "|", localDir ?? "", "|", candidateId);
-
-        if (s_downloaded.ContainsKey(cacheKey))
-        {
-            if (localDir != null && Directory.Exists(Path.Combine(localDir, candidateId)))
-            {
-                return null;
-            }
-
-            s_downloaded.TryRemove(cacheKey, out _);
-        }
-
         var pipeline = BuildPipeline(credential);
-
-        var config = await FetchCandidateConfigAsync(pipeline, endpoint, candidateId, cancellationToken).ConfigureAwait(false);
-
-        if (localDir != null)
-        {
-            string candidatePath = Path.Combine(localDir, candidateId);
-            try
-            {
-                PersistToLocalLayout(candidatePath, config);
-            }
-            catch (IOException)
-            {
-                // Persist failure is non-fatal
-            }
-        }
-
-        s_downloaded.TryAdd(cacheKey, 0);
-        return config;
+        return await FetchCandidateConfigAsync(pipeline, endpoint, candidateId, cancellationToken).ConfigureAwait(false);
     }
 
     private static async Task<JsonElement> FetchCandidateConfigAsync(
@@ -84,49 +51,6 @@ internal static class CandidateResolver
 
         using var doc = JsonDocument.Parse(message.Response.Content);
         return doc.RootElement.Clone();
-    }
-
-    private static void PersistToLocalLayout(string candidatePath, JsonElement config)
-    {
-        if (Directory.Exists(candidatePath))
-        {
-            Directory.Delete(candidatePath, recursive: true);
-        }
-
-        Directory.CreateDirectory(candidatePath);
-
-        // metadata.yaml
-        var metaLines = new List<string>();
-        if (config.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String)
-        {
-            metaLines.Add($"model: {modelProp.GetString()}");
-        }
-
-        if (config.TryGetProperty("temperature", out var tempProp) && tempProp.ValueKind == JsonValueKind.Number)
-        {
-            metaLines.Add($"temperature: {tempProp.GetDouble()}");
-        }
-
-        metaLines.Add($"instruction_file: {OptimizationConfig.InstructionsFile}");
-        metaLines.Add($"tool_file: {OptimizationConfig.ToolsFile}");
-        File.WriteAllText(Path.Combine(candidatePath, OptimizationConfig.MetadataFile), string.Join("\n", metaLines) + "\n");
-
-        // instructions.md
-        if (config.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String)
-        {
-            string instructions = instrProp.GetString() ?? "";
-            if (!string.IsNullOrEmpty(instructions))
-            {
-                File.WriteAllText(Path.Combine(candidatePath, OptimizationConfig.InstructionsFile), instructions);
-            }
-        }
-
-        // tools.json
-        if (config.TryGetProperty("tools", out var toolsProp) && toolsProp.ValueKind == JsonValueKind.Array)
-        {
-            string toolsJson = JsonSerializer.Serialize(toolsProp, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(Path.Combine(candidatePath, OptimizationConfig.ToolsFile), toolsJson);
-        }
     }
 
     private static void ValidateCandidateId(string candidateId)

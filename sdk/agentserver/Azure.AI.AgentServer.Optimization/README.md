@@ -2,10 +2,9 @@
 
 Config loader for optimization-ready Azure AI Hosted Agents. Resolves optimized agent configurations from multiple sources using a priority waterfall:
 
-1. **Inline JSON** — `OPTIMIZATION_CONFIG` environment variable
-2. **Remote API** — `OPTIMIZATION_CANDIDATE_ID` + `OPTIMIZATION_RESOLVE_ENDPOINT`
-3. **Local directory** — `OPTIMIZATION_LOCAL_DIR` (defaults to `.agent_configs/`)
-4. **None** — returns `null` if no config source is found
+1. **Remote API** — `OPTIMIZATION_CANDIDATE_ID` + `OPTIMIZATION_RESOLVE_ENDPOINT`
+2. **Inline JSON** — `OPTIMIZATION_CONFIG` environment variable
+3. **None** — returns `null` if no config source is found
 
 ## Getting started
 
@@ -68,7 +67,6 @@ using Azure.AI.AgentServer.Optimization;
 var options = new ConfigLoaderOptions
 {
     Credential = new DefaultAzureCredential(),
-    ConfigDirectory = "/path/to/configs",
 };
 
 OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync(options);

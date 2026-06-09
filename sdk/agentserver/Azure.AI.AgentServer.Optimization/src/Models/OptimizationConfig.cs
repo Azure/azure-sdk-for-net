@@ -12,24 +12,14 @@ namespace Azure.AI.AgentServer.Optimization;
 /// </summary>
 public class OptimizationConfig
 {
-    /// <summary>Environment variable name for inline JSON config (Priority 1).</summary>
+    /// <summary>Environment variable name for inline JSON config (Priority 2).</summary>
     public const string EnvironmentVariableConfig = "OPTIMIZATION_CONFIG";
 
-    /// <summary>Environment variable name for the candidate ID (Priority 2).</summary>
+    /// <summary>Environment variable name for the candidate ID (Priority 1).</summary>
     public const string EnvironmentVariableCandidateId = "OPTIMIZATION_CANDIDATE_ID";
 
-    /// <summary>Environment variable name for the resolver API endpoint (Priority 2).</summary>
+    /// <summary>Environment variable name for the resolver API endpoint (Priority 1).</summary>
     public const string EnvironmentVariableResolveEndpoint = "OPTIMIZATION_RESOLVE_ENDPOINT";
-
-    /// <summary>Environment variable name for the local config directory override (Priority 3).</summary>
-    public const string EnvironmentVariableLocalDir = "OPTIMIZATION_LOCAL_DIR";
-
-    // ── Default paths / filenames ───────────────────────────────────
-    internal const string DefaultLocalDir = ".agent_configs";
-    internal const string MetadataFile = "metadata.yaml";
-    internal const string InstructionsFile = "instructions.md";
-    internal const string ToolsFile = "tools.json";
-    internal const string BaselineDir = "baseline";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OptimizationConfig"/> class.
@@ -182,10 +172,10 @@ public class OptimizationConfig
     /// <summary>Optimized tool definitions.</summary>
     public IReadOnlyList<ToolDefinition> ToolDefinitions { get; }
 
-    /// <summary>Where the config was loaded from (e.g. "env:OPTIMIZATION_CONFIG", "api:candidate:abc", "local:/path").</summary>
+    /// <summary>Where the config was loaded from (e.g. "env:OPTIMIZATION_CONFIG" or "api:candidate:abc").</summary>
     public string Source { get; }
 
-    /// <summary>The candidate identifier, if resolved from API or local directory.</summary>
+    /// <summary>The candidate identifier, if resolved from the API.</summary>
     public string CandidateId { get; }
 
     /// <summary>

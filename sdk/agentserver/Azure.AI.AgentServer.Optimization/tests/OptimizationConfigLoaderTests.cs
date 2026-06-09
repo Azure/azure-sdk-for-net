@@ -13,13 +13,13 @@ public class OptimizationConfigLoaderTests
     [SetUp]
     public void SetUp()
     {
-        // Save and clear all optimization env vars
-        string[] envVars = {
+        string[] envVars =
+        {
             "OPTIMIZATION_CONFIG",
             "OPTIMIZATION_CANDIDATE_ID",
             "OPTIMIZATION_RESOLVE_ENDPOINT",
-            "OPTIMIZATION_LOCAL_DIR"
         };
+
         foreach (var v in envVars)
         {
             _savedEnvVars[v] = Environment.GetEnvironmentVariable(v);
@@ -30,7 +30,6 @@ public class OptimizationConfigLoaderTests
     [TearDown]
     public void TearDown()
     {
-        // Restore env vars
         foreach (KeyValuePair<string, string?> environmentVariable in _savedEnvVars)
         {
             Environment.SetEnvironmentVariable(environmentVariable.Key, environmentVariable.Value);
@@ -40,8 +39,7 @@ public class OptimizationConfigLoaderTests
     [Test]
     public async Task LoadConfigAsync_ReturnsNull_WhenNoSourceAvailable()
     {
-        var result = await OptimizationConfigLoader.LoadConfigAsync(
-            new ConfigLoaderOptions { ConfigDirectory = Path.Combine(Path.GetTempPath(), "nonexistent-" + Guid.NewGuid()) });
+        var result = await OptimizationConfigLoader.LoadConfigAsync();
 
         Assert.That(result, Is.Null);
     }
@@ -91,64 +89,6 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public async Task LoadConfigAsync_EnvVarTakesPriority_OverLocalDir()
-    {
-        // Set up both env var AND local dir
-        string tempDir = Path.Combine(Path.GetTempPath(), "opt-priority-" + Guid.NewGuid().ToString("N").Substring(0, 8));
-        string baseline = Path.Combine(tempDir, "baseline");
-        Directory.CreateDirectory(baseline);
-        File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "model: local-model\n");
-
-        try
-        {
-            string json = "{\"model\":\"env-model\"}";
-            Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
-
-            var result = await OptimizationConfigLoader.LoadConfigAsync(
-                new ConfigLoaderOptions { ConfigDirectory = tempDir });
-
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Model, Is.EqualTo("env-model"));
-            Assert.That(result.Source, Does.StartWith("env:"));
-        }
-        finally
-        {
-            if (Directory.Exists(tempDir))
-            {
-                Directory.Delete(tempDir, recursive: true);
-            }
-        }
-    }
-
-    [Test]
-    public async Task LoadConfigAsync_FallsBackToLocalDir_Priority3()
-    {
-        string tempDir = Path.Combine(Path.GetTempPath(), "opt-local-" + Guid.NewGuid().ToString("N").Substring(0, 8));
-        string baseline = Path.Combine(tempDir, "baseline");
-        Directory.CreateDirectory(baseline);
-        File.WriteAllText(Path.Combine(baseline, "metadata.yaml"), "model: local-gpt\n");
-        File.WriteAllText(Path.Combine(baseline, "instructions.md"), "Local instructions.");
-
-        try
-        {
-            var result = await OptimizationConfigLoader.LoadConfigAsync(
-                new ConfigLoaderOptions { ConfigDirectory = tempDir });
-
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Model, Is.EqualTo("local-gpt"));
-            Assert.That(result.Instructions, Is.EqualTo("Local instructions."));
-            Assert.That(result.Source, Does.StartWith("local:"));
-        }
-        finally
-        {
-            if (Directory.Exists(tempDir))
-            {
-                Directory.Delete(tempDir, recursive: true);
-            }
-        }
-    }
-
-    [Test]
     public void LoadConfig_Sync_Works()
     {
         string json = "{\"model\":\"sync-model\"}";
@@ -165,8 +105,7 @@ public class OptimizationConfigLoaderTests
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "   ");
 
-        var result = await OptimizationConfigLoader.LoadConfigAsync(
-            new ConfigLoaderOptions { ConfigDirectory = Path.Combine(Path.GetTempPath(), "nonexistent-" + Guid.NewGuid()) });
+        var result = await OptimizationConfigLoader.LoadConfigAsync();
 
         Assert.That(result, Is.Null);
     }

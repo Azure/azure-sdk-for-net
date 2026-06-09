@@ -5,6 +5,6 @@
 ### Features Added
 
 - Initial release of `Azure.AI.AgentServer.Optimization`.
-- `OptimizationConfigLoader.LoadConfig()` and `LoadConfigAsync()` — resolves optimized agent configurations from environment variable, remote API, or local directory.
+- `OptimizationConfigLoader.LoadConfig()` and `LoadConfigAsync()` — resolves optimized agent configurations from the resolver API or environment variable.
 - `OptimizationConfig` — immutable config object with instructions, model, temperature, skills, and tool definitions.
 - `OptimizationSkill` — represents a single learned skill with name, description, and body.

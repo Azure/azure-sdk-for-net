@@ -6,21 +6,20 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Loads optimization config with graceful fallback using a 4-priority resolution waterfall.
+/// Loads optimization config with graceful fallback using a 3-priority resolution waterfall.
 /// </summary>
 /// <remarks>
 /// Resolution order (first match wins):
 /// <list type="number">
 /// <item><description><b>Resolver API</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> and <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> are both set.</description></item>
 /// <item><description><b>Inline JSON</b> — <c>OPTIMIZATION_CONFIG</c> env var contains the full config as JSON.</description></item>
-/// <item><description><b>Local directory</b> — reads from <c>&lt;config_dir&gt;/&lt;candidate_id&gt;/</c> (or <c>&lt;config_dir&gt;/baseline/</c>).</description></item>
 /// <item><description>When none of the above match, returns <c>null</c>.</description></item>
 /// </list>
 /// </remarks>
 public static class OptimizationConfigLoader
 {
     /// <summary>
-    /// Loads optimization config asynchronously using the 4-priority resolution waterfall.
+    /// Loads optimization config asynchronously using the 3-priority resolution waterfall.
     /// </summary>
     /// <param name="options">Optional loader configuration.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -39,9 +38,8 @@ public static class OptimizationConfigLoader
         {
             try
             {
-                string localDir = LocalConfigReader.ResolveLocalDir(options.ConfigDirectory);
                 var resolved = await CandidateResolver.ResolveAsync(
-                    candidateId, endpoint, localDir, options.Credential, cancellationToken).ConfigureAwait(false);
+                    candidateId, endpoint, options.Credential, cancellationToken).ConfigureAwait(false);
 
                 if (resolved.HasValue)
                 {
@@ -64,20 +62,12 @@ public static class OptimizationConfigLoader
             return LoadFromEnvVar(rawConfig);
         }
 
-        // ── Priority 3: Local directory ─────────────────────────────
-        string effectiveCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
-        var localConfig = LocalConfigReader.Load(effectiveCandidateId, options.ConfigDirectory);
-        if (localConfig is not null)
-        {
-            return localConfig;
-        }
-
-        // ── Priority 4: No config found ─────────────────────────────
+        // ── Priority 3: No config found ─────────────────────────────
         return null;
     }
 
     /// <summary>
-    /// Loads optimization config synchronously using the 4-priority resolution waterfall.
+    /// Loads optimization config synchronously using the 3-priority resolution waterfall.
     /// </summary>
     /// <param name="options">Optional loader configuration.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
