@@ -51,9 +51,7 @@ public static class OptimizationConfigLoader
             if (resolved.HasValue)
             {
                 var candidate = CandidateConfig.FromDictionary(resolved.Value);
-                string? skillsDir = resolved.Value.TryGetProperty("skills_dir", out var sdProp) && sdProp.ValueKind == JsonValueKind.String
-                    ? sdProp.GetString()
-                    : null;
+                string? skillsDir = ParseSkillsDirectory(resolved.Value);
 
                 return new OptimizationConfig(
                     instructions: candidate.Instructions,
@@ -71,7 +69,9 @@ public static class OptimizationConfigLoader
         string? effectiveCandidateId = string.IsNullOrEmpty(candidateId) ? null : candidateId;
         var localConfig = LocalConfigReader.Load(effectiveCandidateId, options.ConfigDirectory);
         if (localConfig is not null)
+        {
             return localConfig;
+        }
 
         // ── Priority 4: No config found ─────────────────────────────
         return null;
@@ -94,15 +94,24 @@ public static class OptimizationConfigLoader
     /// </summary>
     /// <param name="skillsDirectory">Path to the skills directory.</param>
     /// <returns>A list of parsed skills.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="skillsDirectory"/> is null.</exception>
+    /// <exception cref="ArgumentException"><paramref name="skillsDirectory"/> is null or empty.</exception>
     public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDirectory)
     {
-        if (string.IsNullOrEmpty(skillsDirectory))
-        {
-            throw new ArgumentNullException(nameof(skillsDirectory));
-        }
+        ArgumentException.ThrowIfNullOrEmpty(skillsDirectory);
 
         return LocalConfigReader.LoadSkillsFromDirectory(skillsDirectory);
+    }
+
+    internal static string? ParseSkillsDirectory(JsonElement resolvedCandidate)
+    {
+        if (!resolvedCandidate.TryGetProperty("skills_dir", out var skillsDirectoryProperty) ||
+            skillsDirectoryProperty.ValueKind != JsonValueKind.String)
+        {
+            return null;
+        }
+
+        string? skillsDirectory = skillsDirectoryProperty.GetString()?.Trim();
+        return string.IsNullOrEmpty(skillsDirectory) ? null : skillsDirectory;
     }
 
     private static OptimizationConfig LoadFromEnvVar(string rawConfig)

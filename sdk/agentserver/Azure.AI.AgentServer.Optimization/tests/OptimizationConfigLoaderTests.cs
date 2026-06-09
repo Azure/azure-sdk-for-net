@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Optimization.Tests;
@@ -183,6 +184,24 @@ public class OptimizationConfigLoaderTests
                 Directory.Delete(tempDir, recursive: true);
             }
         }
+    }
+
+    [Test]
+    public void LoadSkillsFromDirectory_ThrowsForEmptyDirectory()
+    {
+        Assert.That(
+            () => OptimizationConfigLoader.LoadSkillsFromDirectory(string.Empty),
+            Throws.InstanceOf<ArgumentException>());
+    }
+
+    [Test]
+    public void ParseSkillsDirectory_ReturnsNullForWhitespace()
+    {
+        using JsonDocument document = JsonDocument.Parse("""{"skills_dir":"   "}""");
+
+        string? skillsDirectory = OptimizationConfigLoader.ParseSkillsDirectory(document.RootElement);
+
+        Assert.That(skillsDirectory, Is.Null);
     }
 
     [Test]

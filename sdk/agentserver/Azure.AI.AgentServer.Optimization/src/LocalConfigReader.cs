@@ -143,22 +143,22 @@ internal static class LocalConfigReader
         var meta = MetadataConfig.FromDictionary(raw);
 
         // Read instructions
-        string instructionsPath = Path.Combine(candidatePath, meta.InstructionFile);
-        string? instructions = File.Exists(instructionsPath)
+        string? instructionsPath = ResolvePathWithinRoot(candidatePath, meta.InstructionFile);
+        string? instructions = instructionsPath is not null && File.Exists(instructionsPath)
             ? File.ReadAllText(instructionsPath).Trim()
             : null;
 
         // Resolve skills directory
-        string skillsPath = Path.Combine(candidatePath, meta.SkillDir);
-        string? skillsDirectory = Directory.Exists(skillsPath)
-            ? Path.GetFullPath(skillsPath)
+        string? skillsPath = ResolvePathWithinRoot(candidatePath, meta.SkillDir);
+        string? skillsDirectory = skillsPath is not null && Directory.Exists(skillsPath)
+            ? skillsPath
             : null;
         IReadOnlyList<OptimizationSkill> skills = skillsDirectory != null
             ? LoadSkillsFromDirectory(skillsDirectory)
             : Array.Empty<OptimizationSkill>();
 
         // Load tool definitions
-        string toolFilePath = Path.Combine(candidatePath, meta.ToolFile);
+        string? toolFilePath = ResolvePathWithinRoot(candidatePath, meta.ToolFile);
         var toolDefinitions = LoadToolDefinitions(toolFilePath);
 
         return new OptimizationConfig(
@@ -172,9 +172,9 @@ internal static class LocalConfigReader
             candidateId: candidateId);
     }
 
-    private static IReadOnlyList<BinaryData> LoadToolDefinitions(string toolFilePath)
+    private static IReadOnlyList<BinaryData> LoadToolDefinitions(string? toolFilePath)
     {
-        if (!File.Exists(toolFilePath))
+        if (toolFilePath is null || !File.Exists(toolFilePath))
         {
             return Array.Empty<BinaryData>();
         }
@@ -224,14 +224,38 @@ internal static class LocalConfigReader
         }
         catch (FormatException)
         {
-            return (new Dictionary<string, object?>(), body);
+            return (new Dictionary<string, object?>(), content);
         }
     }
 
     private static bool IsValidCandidateId(string candidateId)
     {
         return !candidateId.Contains("..", StringComparison.Ordinal) &&
-            candidateId.IndexOf(Path.DirectorySeparatorChar) < 0 &&
-            candidateId.IndexOf(Path.AltDirectorySeparatorChar) < 0;
+            candidateId.IndexOf('/') < 0 &&
+            candidateId.IndexOf('\\') < 0;
+    }
+
+    private static string? ResolvePathWithinRoot(string rootPath, string relativePath)
+    {
+        if (string.IsNullOrWhiteSpace(relativePath) || Path.IsPathRooted(relativePath))
+        {
+            return null;
+        }
+
+        string normalizedRootPath = EnsureTrailingDirectorySeparator(Path.GetFullPath(rootPath));
+        string resolvedPath = Path.GetFullPath(Path.Combine(rootPath, relativePath));
+        return resolvedPath.StartsWith(normalizedRootPath, StringComparison.Ordinal)
+            ? resolvedPath
+            : null;
+    }
+
+    private static string EnsureTrailingDirectorySeparator(string path)
+    {
+        if (path.EndsWith(Path.DirectorySeparatorChar) || path.EndsWith(Path.AltDirectorySeparatorChar))
+        {
+            return path;
+        }
+
+        return path + Path.DirectorySeparatorChar;
     }
 }

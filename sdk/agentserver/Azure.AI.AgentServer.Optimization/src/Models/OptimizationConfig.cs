@@ -127,13 +127,10 @@ public class OptimizationConfig
     /// </summary>
     /// <param name="functionName">The function name to look up.</param>
     /// <returns>The optimized description, or <c>null</c> if not found.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="functionName"/> is null.</exception>
+    /// <exception cref="ArgumentException"><paramref name="functionName"/> is null or empty.</exception>
     public string? GetToolDescription(string functionName)
     {
-        if (string.IsNullOrEmpty(functionName))
-        {
-            throw new ArgumentNullException(nameof(functionName));
-        }
+        ArgumentException.ThrowIfNullOrEmpty(functionName);
 
         foreach (var tool in ToolDefinitions)
         {

@@ -212,4 +212,12 @@ public class OptimizationConfigTests
 
         Assert.That(config.GetToolDescription("anything"), Is.Null);
     }
+
+    [Test]
+    public void GetToolDescription_ThrowsForEmptyFunctionName()
+    {
+        var config = new OptimizationConfig();
+
+        Assert.That(() => config.GetToolDescription(string.Empty), Throws.InstanceOf<ArgumentException>());
+    }
 }

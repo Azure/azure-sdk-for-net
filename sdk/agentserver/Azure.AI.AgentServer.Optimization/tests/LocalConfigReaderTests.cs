@@ -169,6 +169,33 @@ public class LocalConfigReaderTests
     }
 
     [Test]
+    public void Load_IgnoresMetadataPathsOutsideCandidateFolder()
+    {
+        string baseline = Path.Combine(_tempDir, "baseline");
+        string outsideSkillDir = Path.Combine(_tempDir, "outside-skills", "skill-a");
+        Directory.CreateDirectory(baseline);
+        Directory.CreateDirectory(outsideSkillDir);
+        File.WriteAllText(Path.Combine(_tempDir, "outside-instructions.md"), "Outside instructions.");
+        File.WriteAllText(Path.Combine(_tempDir, "outside-tools.json"), "[{\"type\":\"function\"}]");
+        File.WriteAllText(Path.Combine(outsideSkillDir, "SKILL.md"), "# Outside skill");
+        File.WriteAllText(
+            Path.Combine(baseline, "metadata.yaml"),
+            """
+            instruction_file: ../outside-instructions.md
+            skill_dir: ../outside-skills
+            tool_file: ../outside-tools.json
+            """);
+
+        var result = LocalConfigReader.Load(null, _tempDir);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result!.Instructions, Is.Null);
+        Assert.That(result.SkillsDirectory, Is.Null);
+        Assert.That(result.Skills, Is.Empty);
+        Assert.That(result.ToolDefinitions, Is.Empty);
+    }
+
+    [Test]
     public void LoadSkillsFromDirectory_LoadsSkillsWithFrontmatter()
     {
         string skillsDir = Path.Combine(_tempDir, "skills");
@@ -248,6 +275,17 @@ public class LocalConfigReaderTests
     public void ParseSkillFrontmatter_HandlesUnclosedFrontmatter()
     {
         string content = "---\nname: test\nNo closing delimiter";
+
+        var (frontmatter, body) = LocalConfigReader.ParseSkillFrontmatter(content);
+
+        Assert.That(frontmatter, Is.Empty);
+        Assert.That(body, Is.EqualTo(content));
+    }
+
+    [Test]
+    public void ParseSkillFrontmatter_ReturnsOriginalContent_WhenFrontmatterIsMalformed()
+    {
+        string content = "---\nnot a key value line\n---\nBody text.";
 
         var (frontmatter, body) = LocalConfigReader.ParseSkillFrontmatter(content);
 
