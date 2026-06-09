@@ -14,8 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="Microsoft.Identity.Client.Broker" />
-    <PackageReference Include="Microsoft.Identity.Client.KeyAttestation">
-      <CopyLocal>true</CopyLocal>
-    </PackageReference>
+    <PackageReference Include="Microsoft.Identity.Client.KeyAttestation" />
   </ItemGroup>
 </Project>

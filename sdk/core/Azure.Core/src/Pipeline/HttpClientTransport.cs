@@ -148,7 +148,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Update(HttpPipelineTransportOptions options)
         {
-            AzureCoreEventSource.Singleton.TokenBinding("HttpClientTransport updating transport options with " + options.ClientCertificates.Count + " client certificate(s).");
+            AzureCoreEventSource.Singleton.TokenBinding($"HttpClientTransport updating transport options with {options.ClientCertificates.Count} client certificate(s).");
             if (this == Shared)
             {
                 throw new InvalidOperationException("Cannot update the shared HttpClientTransport instance.");

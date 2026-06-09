@@ -288,7 +288,7 @@ namespace Azure.Core.Pipeline
         /// Triggers the <see cref="TransportOptionsChanged"/> event to update the transport with new options.
         /// This can be used to trigger transport updates when token refreshes happen in the background and new tokens have different requirements for the transport, such as a different client certificate.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The updated <see cref="HttpPipelineTransportOptions"/> to apply to the transport, typically containing new client certificates for mTLS token binding.</param>
         [Experimental("AZID0004")]
         protected void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
         {
