@@ -78,22 +78,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new FooResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public virtual FooSettingsResource GetFooSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
+        public virtual FooConfigurationResource GetFooConfigurationResource(ResourceIdentifier id)
         {
-            FooSettingsResource.ValidateResourceId(id);
-            return new FooSettingsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
-        public virtual BarResource GetBarResource(ResourceIdentifier id)
-        {
-            BarResource.ValidateResourceId(id);
-            return new BarResource(Client, id);
+            FooConfigurationResource.ValidateResourceId(id);
+            return new FooConfigurationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -387,24 +378,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             WorkloadNetworksResource.ValidateResourceId(id);
             return new WorkloadNetworksResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
-        public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
-        {
-            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
-            return new WorkloadNetworkVmGroupResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
-        public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
-        {
-            WorkloadNetworkSegmentResource.ValidateResourceId(id);
-            return new WorkloadNetworkSegmentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -722,6 +695,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetPolicyArcAssignments(scope).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="CustomBaseTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomBaseTypeResource"/> object. </returns>
+        public virtual CustomBaseTypeResource GetCustomBaseTypeResource(ResourceIdentifier id)
+        {
+            CustomBaseTypeResource.ValidateResourceId(id);
+            return new CustomBaseTypeResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TestCertificateResource"/> object. </returns>
@@ -801,6 +783,69 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             CycleTestStoreResource.ValidateResourceId(id);
             return new CycleTestStoreResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridTopicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
+        public virtual EventGridTopicResource GetEventGridTopicResource(ResourceIdentifier id)
+        {
+            EventGridTopicResource.ValidateResourceId(id);
+            return new EventGridTopicResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridDomainResource"/> object. </returns>
+        public virtual EventGridDomainResource GetEventGridDomainResource(ResourceIdentifier id)
+        {
+            EventGridDomainResource.ValidateResourceId(id);
+            return new EventGridDomainResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
+        public virtual BarResource GetBarResource(ResourceIdentifier id)
+        {
+            BarResource.ValidateResourceId(id);
+            return new BarResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
+        public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
+        {
+            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
+            return new WorkloadNetworkVmGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
+        public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
+        {
+            WorkloadNetworkSegmentResource.ValidateResourceId(id);
+            return new WorkloadNetworkSegmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            EventGridTopicPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridTopicPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            EventGridDomainPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridDomainPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>

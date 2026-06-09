@@ -27,6 +27,7 @@ namespace Azure.AI.Projects.Agents
         private AgentToolboxes _cachedAgentToolboxes;
         private ProjectAgentSkills _cachedProjectAgentSkills;
         private AgentSessionFiles _cachedAgentSessionFiles;
+        private AgentOptimizationJobs _cachedAgentOptimizationJobs;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -95,6 +96,12 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentSessionFiles GetAgentSessionFilesClient()
         {
             return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+        }
+
+        /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
+        public virtual AgentOptimizationJobs GetAgentOptimizationJobsClient()
+        {
+            return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
         }
     }
 }

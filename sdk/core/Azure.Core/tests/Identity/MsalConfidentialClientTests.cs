@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -87,6 +90,144 @@ namespace Azure.Core.Tests.Identity
             // If MSAL retry was active, we'd see one or more extra requests.
             Assert.AreEqual(expectedCalls, requestCount, $"Expected exactly {expectedCalls} requests (1 initial + {maxRetries} Azure SDK retries). MSAL retry is not disabled.");
         }
+
+#pragma warning disable AZID0001 // AdditionalQueryParameters is experimental
+        [Test]
+        public void AdditionalQueryParametersAreForwardedToBuilder()
+        {
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = new MockTransport(),
+                DisableInstanceDiscovery = true,
+            };
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalConfidentialClient(pipeline, "tenant", "client", "secret", "https://redirect", options);
+
+            // Verify the parameters were snapshotted into the MSAL client
+            var stored = client.GetAdditionalQueryParameters();
+            Assert.IsNotNull(stored);
+            Assert.AreEqual(2, stored.Count);
+            Assert.AreEqual(("agenticSession", false), stored["feature"]);
+            Assert.AreEqual(("abc-123", true), stored["session_id"]);
+
+            // Verify it's a snapshot (mutation of the original doesn't affect the client)
+            options.AdditionalQueryParameters["new_param"] = ("new_value", false);
+            Assert.IsFalse(stored.ContainsKey("new_param"));
+
+            // Verify the builder still works
+            Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
+        }
+
+        [Test]
+        public async Task AdditionalQueryParametersAreIncludedInRequests()
+        {
+            var mockTransport = new MockTransport(req =>
+            {
+                var response = new MockResponse(400);
+                response.SetContent("{\"error\":\"invalid_grant\",\"error_description\":\"bad request\"}");
+                return response;
+            });
+
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = mockTransport,
+                Retry = { MaxRetries = 0 },
+                DisableInstanceDiscovery = true,
+            };
+#pragma warning disable AZID0001
+            options.AdditionalQueryParameters["feature"] = ("agenticSession", false);
+            options.AdditionalQueryParameters["session_id"] = ("abc-123", true);
+#pragma warning restore AZID0001
+
+            var credential = new ClientSecretCredential("tenant", "client", "secret", options);
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" })));
+
+            Assert.IsNotEmpty(mockTransport.Requests);
+            var tokenRequest = mockTransport.Requests.Find(r => r.Uri.Path.Contains("/oauth2/v2.0/token"));
+            Assert.IsNotNull(tokenRequest, "Expected a token request to /oauth2/v2.0/token");
+
+            var query = tokenRequest.Uri.Query;
+            Assert.IsTrue(query.Contains("feature=agenticSession"), $"Expected 'feature=agenticSession' in query: {query}");
+            Assert.IsTrue(query.Contains("session_id=abc-123"), $"Expected 'session_id=abc-123' in query: {query}");
+        }
+
+        [Test]
+        public void DefaultEmptyAdditionalQueryParametersDoesNotThrow()
+        {
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = new MockTransport(),
+                DisableInstanceDiscovery = true,
+            };
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalConfidentialClient(pipeline, "tenant", "client", "secret", "https://redirect", options);
+
+            Assert.IsNull(client.GetAdditionalQueryParameters());
+            Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
+        }
+#pragma warning restore AZID0001
+
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
+        [Test]
+        public async Task TokenRequestCallbackBodyParametersAreIncludedInRequests()
+        {
+            string capturedBody = null;
+            var mockTransport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.Contains("/oauth2/v2.0/token"))
+                {
+                    using var ms = new MemoryStream();
+                    req.Content.WriteTo(ms, CancellationToken.None);
+                    capturedBody = System.Text.Encoding.UTF8.GetString(ms.ToArray());
+                }
+                var response = new MockResponse(400);
+                response.SetContent("{\"error\":\"invalid_grant\",\"error_description\":\"bad request\"}");
+                return response;
+            });
+
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = mockTransport,
+                Retry = { MaxRetries = 0 },
+                DisableInstanceDiscovery = true,
+                TokenRequestCallback = data =>
+                {
+                    data.BodyParameters["custom_param"] = "custom_value";
+                }
+            };
+
+            var credential = new ClientSecretCredential("tenant", "client", "secret", options);
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" })));
+
+            Assert.IsNotNull(capturedBody, "Expected a token request to /oauth2/v2.0/token");
+            Assert.IsTrue(capturedBody.Contains("custom_param=custom_value"), $"Expected 'custom_param=custom_value' in body: {capturedBody}");
+        }
+
+        [Test]
+        public void DefaultNullTokenRequestCallbackDoesNotThrow()
+        {
+            var options = new ClientSecretCredentialOptions
+            {
+                Transport = new MockTransport(),
+                DisableInstanceDiscovery = true,
+            };
+
+            Assert.IsNull(options.TokenRequestCallback);
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalConfidentialClient(pipeline, "tenant", "client", "secret", "https://redirect", options);
+
+            Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
+        }
+#pragma warning restore AZID0003
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions
         {

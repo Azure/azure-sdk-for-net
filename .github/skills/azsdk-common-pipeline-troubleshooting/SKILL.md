@@ -5,8 +5,7 @@ metadata:
   version: "1.0.0"
   distribution: shared
 description: "Diagnose and resolve failures in Azure SDK CI and generation pipelines. **UTILITY SKILL**. USE FOR: \"pipeline failed\", \"build failure\", \"CI check failing\", \"SDK generation error\", \"reproduce pipeline locally\", \"debug SDK pipeline\". DO NOT USE FOR: local build issues without pipeline context, API design review, SDK publishing. INVOKES: azure-sdk-mcp:azsdk_analyze_pipeline, azure-sdk-mcp:azsdk_package_build_code, azure-sdk-mcp:azsdk_package_run_check."
-compatibility:
-  requires: "azure-sdk-mcp server, Azure DevOps pipeline build ID"
+compatibility: "azure-sdk-mcp server, Azure DevOps pipeline build ID"
 ---
 
 # Pipeline Troubleshooting

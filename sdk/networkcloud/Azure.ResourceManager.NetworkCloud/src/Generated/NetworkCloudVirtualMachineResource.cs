@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudVirtualMachinePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudVirtualMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(
-                    new NetworkCloudVirtualMachineOperationSource(Client),
+                    new NetworkCloudVirtualMachineResourceOperationSource(Client),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudVirtualMachinePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudVirtualMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(
-                    new NetworkCloudVirtualMachineOperationSource(Client),
+                    new NetworkCloudVirtualMachineResourceOperationSource(Client),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

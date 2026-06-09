@@ -304,6 +304,19 @@ namespace Azure.Generator.Management.Providers
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
+            // If the user provided a @@clientName(.., "csharp") on the underlying tsp method,
+            // honor it instead of fabricating from (kind, ResourceName). The TCGC name on
+            // resourceMethod.InputMethod.Name already reflects the override.
+            // Scope: only List operations for now. Other kinds (Read/Create/Update/Delete/Action)
+            // can be opted into in a follow-up.
+            if (methodName != null
+                && resourceMethod.Kind == ResourceOperationKind.List
+                && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
+            {
+                var baseName = resourceMethod.InputMethod.Name;
+                methodName = isAsync ? $"{baseName}Async" : baseName;
+            }
+
             // Only fall back to the raw SDK method name when no standard name was generated.
             // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
             // standard CRUD method naming patterns.
@@ -333,9 +346,11 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, OperationContext operationContext, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
                 return new ArrayResponseOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }

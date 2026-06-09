@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ComputeFleet
                 HttpMessage message = _fleetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ComputeFleetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeFleetArmOperation<ComputeFleetResource> operation = new ComputeFleetArmOperation<ComputeFleetResource>(
-                    new ComputeFleetOperationSource(Client),
+                    new ComputeFleetResourceOperationSource(Client),
                     _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ComputeFleet
                 HttpMessage message = _fleetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ComputeFleetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeFleetArmOperation<ComputeFleetResource> operation = new ComputeFleetArmOperation<ComputeFleetResource>(
-                    new ComputeFleetOperationSource(Client),
+                    new ComputeFleetResourceOperationSource(Client),
                     _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,

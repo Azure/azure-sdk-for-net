@@ -114,6 +114,16 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Skills))
+            {
+                writer.WritePropertyName("skills"u8);
+                writer.WriteStartArray();
+                foreach (ToolboxSkill item in Skills)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
@@ -164,6 +174,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, string> metadata = default;
             IList<ProjectsAgentTool> tools = default;
+            IList<ToolboxSkill> skills = default;
             ToolboxPolicies policies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -204,6 +215,20 @@ namespace Azure.AI.Projects.Agents
                     tools = array;
                     continue;
                 }
+                if (prop.NameEquals("skills"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ToolboxSkill> array = new List<ToolboxSkill>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ToolboxSkill.DeserializeToolboxSkill(item, options));
+                    }
+                    skills = array;
+                    continue;
+                }
                 if (prop.NameEquals("policies"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -218,7 +243,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateToolboxVersionRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools, policies, additionalBinaryDataProperties);
+            return new CreateToolboxVersionRequest(
+                description,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                tools,
+                skills ?? new ChangeTrackingList<ToolboxSkill>(),
+                policies,
+                additionalBinaryDataProperties);
         }
     }
 }

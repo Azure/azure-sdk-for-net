@@ -1,4 +1,4 @@
-# Sample for Agent Administration (creation, retrieval, update, deletion) in Azure.AI.Projects.Agents
+# Sample for Agent Administration (creation, retrieval and deletion) in Azure.AI.Projects.Agents
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 

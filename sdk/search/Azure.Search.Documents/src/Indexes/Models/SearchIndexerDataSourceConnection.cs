@@ -27,6 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             Container = container ?? throw new ArgumentNullException(nameof(container));
             Type = type;
+            IndexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
@@ -55,6 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Type = type;
             ConnectionString = connectionString;
             Container = container;
+            IndexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
             _etag = etag;

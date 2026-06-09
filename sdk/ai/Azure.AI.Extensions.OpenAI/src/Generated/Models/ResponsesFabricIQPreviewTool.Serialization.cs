@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The ResponsesFabricIQPreviewTool. </summary>
+    /// <summary> A FabricIQ server-side tool. </summary>
     public partial class ResponsesFabricIQPreviewTool : ResponsesTool, IJsonModel<ResponsesFabricIQPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/> for deserialization. </summary>
@@ -76,8 +76,51 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesFabricIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("fabric_iq_preview"u8);
-            writer.WriteObjectValue(FabricIqPreview, options);
+            writer.WritePropertyName("project_connection_id"u8);
+            writer.WriteStringValue(ProjectConnectionId);
+            if (Optional.IsDefined(ServerLabel))
+            {
+                writer.WritePropertyName("server_label"u8);
+                writer.WriteStringValue(ServerLabel);
+            }
+            if (Optional.IsDefined(ServerUrl))
+            {
+                writer.WritePropertyName("server_url"u8);
+                writer.WriteStringValue(ServerUrl.AbsoluteUri);
+            }
+            if (Optional.IsDefined(RequireApproval))
+            {
+                writer.WritePropertyName("require_approval"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(RequireApproval);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -107,7 +150,13 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponsesFabricIQPreviewToolParameters fabricIqPreview = default;
+            string projectConnectionId = default;
+            string serverLabel = default;
+            Uri serverUrl = default;
+            BinaryData requireApproval = default;
+            string name = default;
+            string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -115,9 +164,57 @@ namespace Azure.AI.Extensions.OpenAI
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("fabric_iq_preview"u8))
+                if (prop.NameEquals("project_connection_id"u8))
                 {
-                    fabricIqPreview = ResponsesFabricIQPreviewToolParameters.DeserializeResponsesFabricIQPreviewToolParameters(prop.Value, options);
+                    projectConnectionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("server_label"u8))
+                {
+                    serverLabel = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("server_url"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("require_approval"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        requireApproval = null;
+                        continue;
+                    }
+                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +222,16 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesFabricIQPreviewTool(@type, additionalBinaryDataProperties, fabricIqPreview);
+            return new ResponsesFabricIQPreviewTool(
+                @type,
+                additionalBinaryDataProperties,
+                projectConnectionId,
+                serverLabel,
+                serverUrl,
+                requireApproval,
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
         }
     }
 }

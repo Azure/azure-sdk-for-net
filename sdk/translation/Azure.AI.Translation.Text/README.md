@@ -21,7 +21,7 @@ Use the Text Translation client library for .NET to:
 Install the Azure Text Translation client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.AI.Translation.Text --prerelease
+dotnet add package Azure.AI.Translation.Text
 ```
 
 This table shows the relationship between SDK versions and supported API versions of the service:
@@ -31,6 +31,7 @@ This table shows the relationship between SDK versions and supported API version
 |1.0.0-beta.1 | 3.0
 |1.0.0 | 3.0
 |2.0.0-beta.1 | 2025-10-01-preview
+|2.0.0 | 2026-06-06
 
 ### Prerequisites
 
@@ -291,7 +292,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [transliterate_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample3_Transliterate.md
 
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal

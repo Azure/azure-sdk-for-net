@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _storageAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageAccountName, DataBoxEdgeStorageAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountResource>(
-                    new DataBoxEdgeStorageAccountOperationSource(Client),
+                    new DataBoxEdgeStorageAccountResourceOperationSource(Client),
                     _storageAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _storageAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageAccountName, DataBoxEdgeStorageAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountResource>(
-                    new DataBoxEdgeStorageAccountOperationSource(Client),
+                    new DataBoxEdgeStorageAccountResourceOperationSource(Client),
                     _storageAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,

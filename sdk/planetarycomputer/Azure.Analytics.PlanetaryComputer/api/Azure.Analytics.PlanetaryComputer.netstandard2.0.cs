@@ -1186,6 +1186,13 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Analytics.PlanetaryComputer.ManagedStorageSharedAccessSignatureClient GetManagedStorageSharedAccessSignatureClient() { throw null; }
         public virtual Azure.Analytics.PlanetaryComputer.StacClient GetStacClient() { throw null; }
     }
+    public static partial class PlanetaryComputerProClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddPlanetaryComputerProClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings> configureSettings) { throw null; }
+    }
     public partial class PlanetaryComputerProClientOptions : Azure.Core.ClientOptions
     {
         public PlanetaryComputerProClientOptions(Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions.ServiceVersion version = Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions.ServiceVersion.V2025_04_30_Preview) { }
@@ -2567,13 +2574,5 @@ namespace Azure.Analytics.PlanetaryComputer
         Azure.Analytics.PlanetaryComputer.VariableMatrixWidth System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.VariableMatrixWidth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.VariableMatrixWidth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.VariableMatrixWidth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class PlanetaryComputerClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

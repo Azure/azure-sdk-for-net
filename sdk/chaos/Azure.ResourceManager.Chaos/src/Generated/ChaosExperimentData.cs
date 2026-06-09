@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The properties of the experiment resource. </param>
-        internal ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExperimentProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExperimentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Identity = identity;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
@@ -87,6 +87,23 @@ namespace Azure.ResourceManager.Chaos
                     Properties = new ExperimentProperties();
                 }
                 return Properties.Selectors;
+            }
+        }
+
+        /// <summary> Optional customer-managed Storage account where Experiment schema will be stored. </summary>
+        public ChaosCustomerDataStorageProperties CustomerDataStorage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerDataStorage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentProperties();
+                }
+                Properties.CustomerDataStorage = value;
             }
         }
     }

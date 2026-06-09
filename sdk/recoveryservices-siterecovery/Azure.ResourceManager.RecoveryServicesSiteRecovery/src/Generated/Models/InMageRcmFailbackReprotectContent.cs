@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -18,38 +19,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="policyId"> The Policy Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        public InMageRcmFailbackReprotectContent(Guid processServerId, ResourceIdentifier policyId)
+        public InMageRcmFailbackReprotectContent(Guid processServerId, ResourceIdentifier policyId) : base("InMageRcmFailback")
         {
             Argument.AssertNotNull(policyId, nameof(policyId));
 
             ProcessServerId = processServerId;
             PolicyId = policyId;
-            InstanceType = "InMageRcmFailback";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReprotectContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="runAsAccountId"> The run as account Id. </param>
         /// <param name="policyId"> The Policy Id. </param>
-        internal InMageRcmFailbackReprotectContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid processServerId, string runAsAccountId, ResourceIdentifier policyId) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmFailbackReprotectContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Guid processServerId, string runAsAccountId, ResourceIdentifier policyId) : base(instanceType, additionalBinaryDataProperties)
         {
             ProcessServerId = processServerId;
             RunAsAccountId = runAsAccountId;
             PolicyId = policyId;
-            InstanceType = instanceType ?? "InMageRcmFailback";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReprotectContent"/> for deserialization. </summary>
-        internal InMageRcmFailbackReprotectContent()
-        {
         }
 
         /// <summary> The process server Id. </summary>
         public Guid ProcessServerId { get; }
+
         /// <summary> The run as account Id. </summary>
         public string RunAsAccountId { get; set; }
+
         /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; }
     }

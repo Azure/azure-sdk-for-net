@@ -1,15 +1,28 @@
 # Release History
 
-## 4.10.0-beta.1 (Unreleased)
+## 4.11.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added `KeyProperties.KeySize` to expose the key size in bits.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.11.0-beta.1 (2026-06-04)
+
+### Features Added
+- Added the `ExternalKey` model and the new methods `CreateExternalKey` and `CreateExternalKeyAsync` in `KeyClient` for registering a Key Vault key whose material is held in an external HSM.
+
+### Other Changes
+- The default service version is now `2026-01-01-preview`.
+
+## 4.10.0 (2026-05-05)
+
+### Features Added
+
+- Added `KeyProperties.KeySize` to expose the key size in bits.
 
 ## 4.9.0 (2026-03-04)
 

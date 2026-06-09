@@ -140,6 +140,12 @@ namespace Azure.Core.Tests.Identity
                     list.Add(Guid.NewGuid().ToString());
                     list.Add(Guid.NewGuid().ToString());
                 }
+                else if (propInfo.PropertyType == typeof(IDictionary<string, (string Value, bool IncludeInCacheKey)>))
+                {
+                    var dict = propInfo.GetValue(orig) as IDictionary<string, (string Value, bool IncludeInCacheKey)>;
+                    dict[Guid.NewGuid().ToString()] = (Guid.NewGuid().ToString(), true);
+                    dict[Guid.NewGuid().ToString()] = (Guid.NewGuid().ToString(), false);
+                }
                 else
                 {
                     Assert.Fail($"test doesn't support property type {propInfo.PropertyType} for property {propInfo.Name}");
@@ -153,6 +159,13 @@ namespace Azure.Core.Tests.Identity
                 if (propInfo.PropertyType == typeof(IList<string>))
                 {
                     CollectionAssert.AreEqual((IList<string>)propInfo.GetValue(orig), (IList<string>)propInfo.GetValue(clone), $"Cloned {propInfo.Name} does not match original");
+                }
+                else if (propInfo.PropertyType == typeof(IDictionary<string, (string Value, bool IncludeInCacheKey)>))
+                {
+                    CollectionAssert.AreEqual(
+                        (IDictionary<string, (string Value, bool IncludeInCacheKey)>)propInfo.GetValue(orig),
+                        (IDictionary<string, (string Value, bool IncludeInCacheKey)>)propInfo.GetValue(clone),
+                        $"Cloned {propInfo.Name} does not match original");
                 }
                 else
                 {

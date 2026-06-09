@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.OracleDatabase
         CloudAccountDetails IOperationSource<CloudAccountDetails>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CloudAccountDetails result = CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.OracleDatabase
         async ValueTask<CloudAccountDetails> IOperationSource<CloudAccountDetails>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CloudAccountDetails result = CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return CloudAccountDetails.DeserializeCloudAccountDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

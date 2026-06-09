@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ComputeLimit
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureEnableContent))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureResource))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitGuestSubscriptionData))]
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.ComputeLimit
     [ModelReaderWriterBuildable(typeof(FeatureListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

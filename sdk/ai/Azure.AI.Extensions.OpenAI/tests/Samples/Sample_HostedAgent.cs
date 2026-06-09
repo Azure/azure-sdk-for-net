@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -25,7 +25,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
             memory: "1Gi"
         )
         {
-            Image = dockerImage,
+            ContainerConfiguration = new(dockerImage)
         };
         return agentDefinition;
     }
@@ -39,11 +39,9 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgentClient_HostedAgent
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
@@ -58,7 +56,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName: "myHostedAgent",
+            agentName: "myHostedAgent1",
             options: creationOptions);
         #endregion
         #region Snippet:Sample_WaitForDeployment_HostedAgent_Async
@@ -73,7 +71,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
-        AgentEndpoint config = new()
+        AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }
@@ -88,17 +86,12 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-        ProjectOpenAIClientOptions responsesOptions = new()
-        {
-            AgentName = agentVersion.Name
-        };
-        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgent_HostedAgent_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -109,11 +102,9 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
@@ -142,7 +133,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
-        AgentEndpoint config = new()
+        AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }
@@ -157,17 +148,12 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-        ProjectOpenAIClientOptions responsesOptions = new()
-        {
-            AgentName = agentVersion.Name
-        };
-        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
         ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgent_HostedAgent_Sync
-        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 

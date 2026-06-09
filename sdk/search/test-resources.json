@@ -67,11 +67,46 @@
             "metadata": {
                 "description": "The location for the Azure OpenAI resource."
             }
+        },
+        "fabricWorkspaceId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The Microsoft Fabric workspace ID for Fabric Ontology and Data Agent knowledge sources."
+            }
+        },
+        "fabricOntologyId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The Fabric Ontology ID within the workspace."
+            }
+        },
+        "fabricDataAgentId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The Fabric Data Agent ID within the workspace."
+            }
+        },
+        "deployStorage": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Whether to deploy the storage account and Cognitive Services. Set to false for environments that restrict storage SAS keys."
+            }
+        },
+        "deployEmbeddings": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Whether to deploy OpenAI embedding models. Set to false if you only need the chat model (gpt-5-mini) for knowledge retrieval tests."
+            }
         }
     },
     "variables": {
         "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
-        "searchApiVersion": "2021-04-01-preview",
+        "searchApiVersion": "2026-03-01-preview",
         "searchEncryptionLocations": [
             "westus2",
             "eastus2",
@@ -104,13 +139,15 @@
                 "publicNetworkAccess": "Enabled",
                 "networkRuleSet": {
                     "ipRules": []
-                }
+                },
+                "semanticSearch": "free"
             }
         },
         {
             "name": "[variables('storageAccountName')]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "[variables('storageApiVersion')]",
+            "condition": "[parameters('deployStorage')]",
             "location": "[parameters('location')]",
             "properties": {
                 "accessTier": "Hot",
@@ -120,12 +157,13 @@
             "sku": {
                 "name": "Standard_LRS"
             },
-            "kind": "BlobStorage"
+            "kind": "StorageV2"
         },
         {
             "name": "[variables('cognitiveServicesAccountName')]",
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "[variables('cognitiveServicesApiVersion')]",
+            "condition": "[parameters('deployStorage')]",
             "location": "[parameters('location')]",
             "sku": {
                 "name": "S0"
@@ -189,14 +227,14 @@
             }
         },
         {
-            "name": "[concat(variables('openAiAccountName'), '/gpt-4.1')]",
+            "name": "[concat(variables('openAiAccountName'), '/gpt-5-mini')]",
             "type": "Microsoft.CognitiveServices/accounts/deployments",
             "apiVersion": "[variables('openAiApiVersion')]",
             "properties": {
                 "model": {
-                    "name": "gpt-4.1",
+                    "name": "gpt-5-mini",
                     "format": "OpenAI",
-                    "version": "2025-04-14"
+                    "version": "2025-08-07"
                 }
             },
             "sku": {
@@ -211,6 +249,7 @@
             "name": "[concat(variables('openAiAccountName'), '/text-embedding-3-small')]",
             "type": "Microsoft.CognitiveServices/accounts/deployments",
             "apiVersion": "[variables('openAiApiVersion')]",
+            "condition": "[parameters('deployEmbeddings')]",
             "properties": {
                 "model": {
                     "name": "text-embedding-3-small",
@@ -223,13 +262,14 @@
                 "capacity": 30
             },
             "dependsOn": [
-                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'gpt-4.1')]"
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'gpt-5-mini')]"
             ]
         },
         {
             "name": "[concat(variables('openAiAccountName'), '/text-embedding-3-large')]",
             "type": "Microsoft.CognitiveServices/accounts/deployments",
             "apiVersion": "[variables('openAiApiVersion')]",
+            "condition": "[parameters('deployEmbeddings')]",
             "properties": {
                 "model": {
                     "name": "text-embedding-3-large",
@@ -249,6 +289,7 @@
             "name": "[concat(variables('openAiAccountName'), '/text-embedding-ada-002')]",
             "type": "Microsoft.CognitiveServices/accounts/deployments",
             "apiVersion": "[variables('openAiApiVersion')]",
+            "condition": "[parameters('deployEmbeddings')]",
             "properties": {
                 "model": {
                     "name": "text-embedding-ada-002",
@@ -288,15 +329,23 @@
         },
         "SEARCH_STORAGE_NAME": {
             "type": "string",
+            "condition": "[parameters('deployStorage')]",
             "value": "[variables('storageAccountName')]"
         },
         "SEARCH_STORAGE_KEY": {
             "type": "string",
+            "condition": "[parameters('deployStorage')]",
             "value": "[listKeys(variables('storageAccountName'), variables('storageApiVersion')).keys[0].value]"
         },
         "SEARCH_COGNITIVE_KEY": {
             "type": "string",
+            "condition": "[parameters('deployStorage')]",
             "value": "[listKeys(variables('cognitiveServicesAccountName'), variables('cognitiveServicesApiVersion')).key1]"
+        },
+        "SEARCH_COGNITIVE_ENDPOINT": {
+            "type": "string",
+            "condition": "[parameters('deployStorage')]",
+            "value": "[reference(variables('cognitiveServicesAccountName')).endpoint]"
         },
         "SEARCH_KEYVAULT_URL": {
             "type": "string",
@@ -310,6 +359,21 @@
         "OPENAI_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName')), variables('openAiApiVersion')).key1]"
+        },
+        "SEARCH_FABRIC_WORKSPACE_ID": {
+            "type": "string",
+            "condition": "[not(empty(parameters('fabricWorkspaceId')))]",
+            "value": "[parameters('fabricWorkspaceId')]"
+        },
+        "SEARCH_FABRIC_ONTOLOGY_ID": {
+            "type": "string",
+            "condition": "[not(empty(parameters('fabricOntologyId')))]",
+            "value": "[parameters('fabricOntologyId')]"
+        },
+        "SEARCH_FABRIC_DATA_AGENT_ID": {
+            "type": "string",
+            "condition": "[not(empty(parameters('fabricDataAgentId')))]",
+            "value": "[parameters('fabricDataAgentId')]"
         }
     }
 }

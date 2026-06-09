@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Properties specific to the NFS protocol. </summary>
-    internal partial class NfsProtocolProperties
+    public partial class NfsProtocolProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Initializes a new instance of <see cref="NfsProtocolProperties"/>. </summary>
         /// <param name="rootSquash"> Root squash defines how root users on clients are mapped to the NFS share. </param>
+        /// <param name="encryptionInTransitRequired"> Encryption in transit defines whether data is encrypted for NFS shares. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NfsProtocolProperties(ShareRootSquash? rootSquash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NfsProtocolProperties(ShareRootSquash? rootSquash, EncryptionInTransitRequired? encryptionInTransitRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RootSquash = rootSquash;
+            EncryptionInTransitRequired = encryptionInTransitRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Root squash defines how root users on clients are mapped to the NFS share. </summary>
         public ShareRootSquash? RootSquash { get; set; }
+
+        /// <summary> Encryption in transit defines whether data is encrypted for NFS shares. </summary>
+        public EncryptionInTransitRequired? EncryptionInTransitRequired { get; set; }
     }
 }

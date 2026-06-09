@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,8 +19,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/>. </summary>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scoringUri"/> is null. </exception>
         public AzureMachineLearningParameters(Uri scoringUri)
         {
+            Argument.AssertNotNull(scoringUri, nameof(scoringUri));
+
             ScoringUri = scoringUri;
         }
 
