@@ -7,12 +7,10 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     // Customized: preserve the legacy MachineLearning-prefixed resource name.
-    [CodeGenType("JobBaseResource")]
     public partial class MachineLearningJobResource
     {
         /// <summary>

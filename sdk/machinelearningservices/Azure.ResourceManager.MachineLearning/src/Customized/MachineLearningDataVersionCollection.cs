@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Threading;
 using Azure;
 using Azure.ResourceManager.MachineLearning.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -18,7 +17,6 @@ namespace Azure.ResourceManager.MachineLearning
     /// To get a <see cref="MachineLearningDataVersionCollection" /> instance call the GetMachineLearningDataVersions method from an instance of <see cref="MachineLearningDataContainerResource" />.
     /// </summary>
     // Customized: preserve the legacy MachineLearning-prefixed collection name.
-    [CodeGenType("DataVersionCollection")]
     public partial class MachineLearningDataVersionCollection
     {
         /// <summary>

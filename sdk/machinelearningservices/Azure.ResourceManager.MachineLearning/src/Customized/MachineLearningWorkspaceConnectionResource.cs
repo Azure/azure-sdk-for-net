@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -21,7 +20,6 @@ namespace Azure.ResourceManager.MachineLearning
     /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetMachineLearningWorkspaceConnection method.
     /// </summary>
     // Customized: preserve the legacy MachineLearning-prefixed resource name.
-    [CodeGenType("WorkspaceConnectionPropertiesV2BasicResource")]
     public partial class MachineLearningWorkspaceConnectionResource : ArmResource
     {
         /// <summary>
