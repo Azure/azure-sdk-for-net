@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The supported source types for data generation jobs. </summary>
-    internal readonly partial struct DataGenerationJobSourceType : IEquatable<DataGenerationJobSourceType>
+    public readonly partial struct DataGenerationJobSourceType : IEquatable<DataGenerationJobSourceType>
     {
         private readonly string _value;
         /// <summary> Prompt source — inline text provided by the user. </summary>

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal readonly partial struct CustomToolParamFormatType : IEquatable<CustomToolParamFormatType>
+    public readonly partial struct CustomToolParamFormatType : IEquatable<CustomToolParamFormatType>
     {
         private readonly string _value;
         private const string TextValue = "text";
