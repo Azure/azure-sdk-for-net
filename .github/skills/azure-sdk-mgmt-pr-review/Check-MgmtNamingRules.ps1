@@ -687,13 +687,16 @@ foreach ($typeName in $typeInfos.Keys) {
     $info = $typeInfos[$typeName]
 
     $noun = $null
+    $suffix = $null
     if ($typeName -like '*Resource' -and (Test-InheritsFrom $typeName 'ArmResource')) {
         $noun = $typeName -replace 'Resource$',''
+        $suffix = 'Resource'
     }
     elseif ($typeName -like '*Data' -and (
             (Test-InheritsFrom $typeName 'ResourceData') -or
             (Test-InheritsFrom $typeName 'TrackedResourceData'))) {
         $noun = $typeName -replace 'Data$',''
+        $suffix = 'Data'
         # Strip an optional 'Resource' infix so we evaluate the same noun as the
         # *Resource / *Collection classes (RESINFIX001 already flags the infix).
         if ($noun -like '*Resource' -and $noun -ne 'Resource') {
@@ -702,6 +705,7 @@ foreach ($typeName in $typeInfos.Keys) {
     }
     elseif ($typeName -like '*Collection' -and (Test-InheritsFrom $typeName 'ArmCollection')) {
         $noun = $typeName -replace 'Collection$',''
+        $suffix = 'Collection'
         if ($noun -like '*Resource' -and $noun -ne 'Resource') {
             $noun = $noun -replace 'Resource$',''
         }
@@ -711,11 +715,13 @@ foreach ($typeName in $typeInfos.Keys) {
     # This catches 'Drill', 'Goal', 'Recovery', 'Enrollment' but allows
     # 'DrillRun', 'RecoveryPlan', 'GoalAssignment', 'UsagePlan', etc.
     if ($noun -cmatch '^[A-Z][a-z]+$') {
+        $message = "Resource trio noun '$noun' is a single generic word. After stripping the reserved '$suffix' suffix, the name carries no RP/domain context and will collide with similarly-named types in other mgmt packages."
+        $fix = "Rename the whole trio ('${noun}Resource' / '${noun}Data' / '${noun}Collection') with an RP/domain prefix so the noun becomes multi-word and service-scoped (e.g., '<RpPrefix>${noun}*')."
         $violations.Add([NamingViolation]::new(
             'RESNAME001', 'Warning', 'Resource Naming',
             $typeName, '',
-            "Resource trio noun '$noun' is a single generic word. After stripping the reserved '$(($typeName -replace ".*$noun",''))' suffix, the name carries no RP/domain context and will collide with similarly-named types in other mgmt packages.",
-            "Rename the whole trio ('${noun}Resource' / '${noun}Data' / '${noun}Collection') with an RP/domain prefix so the noun becomes multi-word and service-scoped (e.g., '<RpPrefix>${noun}*').",
+            $message,
+            $fix,
             $info.Line
         )) | Out-Null
     }
