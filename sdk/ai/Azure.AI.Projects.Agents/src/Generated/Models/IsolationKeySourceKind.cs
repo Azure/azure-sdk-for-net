@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public readonly partial struct IsolationKeySourceKind : IEquatable<IsolationKeySourceKind>
+    internal readonly partial struct IsolationKeySourceKind : IEquatable<IsolationKeySourceKind>
     {
         private readonly string _value;
         private const string EntraValue = "Entra";

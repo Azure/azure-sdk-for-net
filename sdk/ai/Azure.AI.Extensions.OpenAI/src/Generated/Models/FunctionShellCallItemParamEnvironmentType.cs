@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct FunctionShellCallItemParamEnvironmentType : IEquatable<FunctionShellCallItemParamEnvironmentType>
+    internal readonly partial struct FunctionShellCallItemParamEnvironmentType : IEquatable<FunctionShellCallItemParamEnvironmentType>
     {
         private readonly string _value;
         private const string LocalValue = "local";
