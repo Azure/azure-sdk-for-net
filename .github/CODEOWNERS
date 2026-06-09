@@ -92,7 +92,7 @@
 /sdk/appconfiguration/    @avanigupta @linglingye001 @zhiyuanliang-ms
 
 # ServiceLabel: %App Configuration
-# ServiceOwners: @avanigupta @linglingye001 @zhiyuanliang-ms
+# ServiceOwners: @avanigupta @linglingye001 @zhiyuanliang-ms @mrm9084
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation/    @anilba06 @Azure/azure-sdk-write-attestation @gkostal
