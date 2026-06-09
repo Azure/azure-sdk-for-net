@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
@@ -14,7 +15,7 @@ namespace Azure.Data.AppConfiguration
     /// Configuration Setting model factory that enables mocking for the AppConfiguration client library.
     /// </summary>
     [CodeGenType("AppConfigurationModelFactory")]
-    [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(bool?), typeof(ETag))]
+    [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(string), typeof(bool?), typeof(ETag))]
     public static partial class ConfigurationModelFactory
     {
         /// <summary>
@@ -27,6 +28,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="eTag">An ETag indicating the version of a configuration setting within a configuration store.</param>
         /// <param name="lastModified">The last time a modifying operation was performed on the given configuration setting.</param>
         /// <param name="isReadOnly">A value indicating whether the configuration setting is read only.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConfigurationSetting ConfigurationSetting(
             string key,
             string value,
@@ -35,13 +37,36 @@ namespace Azure.Data.AppConfiguration
             ETag eTag = default,
             DateTimeOffset? lastModified = null,
             bool? isReadOnly = null)
+            => ConfigurationSetting(key, value, label, contentType, eTag, lastModified, isReadOnly, description: null);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppConfiguration.ConfigurationSetting"/> for mocking purposes.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group configuration settings.</param>
+        /// <param name="contentType">The content type of the configuration setting's value.</param>
+        /// <param name="eTag">An ETag indicating the version of a configuration setting within a configuration store.</param>
+        /// <param name="lastModified">The last time a modifying operation was performed on the given configuration setting.</param>
+        /// <param name="isReadOnly">A value indicating whether the configuration setting is read only.</param>
+        /// <param name="description">The description of the configuration setting.</param>
+        public static ConfigurationSetting ConfigurationSetting(
+            string key,
+            string value,
+            string label,
+            string contentType,
+            ETag eTag,
+            DateTimeOffset? lastModified,
+            bool? isReadOnly,
+            string description)
         {
             return new ConfigurationSetting(key, value, label)
             {
                 ContentType = contentType,
                 ETag = eTag,
                 LastModified = lastModified,
-                IsReadOnly = isReadOnly
+                IsReadOnly = isReadOnly,
+                Description = description
             };
         }
 

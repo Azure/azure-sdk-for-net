@@ -103,13 +103,15 @@ namespace Azure.Data.AppConfiguration
     }
     public partial class ConfigurationClientOptions : Azure.Core.ClientOptions
     {
-        public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2023_11_01) { }
+        public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2026_04_01) { }
         public Azure.Data.AppConfiguration.AppConfigurationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 0,
             V2023_10_01 = 1,
             V2023_11_01 = 2,
+            V2024_09_01 = 3,
+            V2026_04_01 = 4,
         }
     }
     public partial class ConfigurationClientSettings : System.ClientModel.Primitives.ClientSettings
@@ -123,8 +125,11 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
         public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key, string value, string label = null, string contentType = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key, string value, string label, string contentType, Azure.ETag eTag, System.DateTimeOffset? lastModified, bool? isReadOnly, string description) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key = null, string label = null, string contentType = null, string value = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, bool? isReadOnly = default(bool?), Azure.ETag eTag = default(Azure.ETag)) { throw null; }
         public static Azure.Data.AppConfiguration.ConfigurationSettingsFilter ConfigurationSettingsFilter(string key = null, string label = null, System.Collections.Generic.IEnumerable<string> tags = null) { throw null; }
-        public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(string name = null, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status = default(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters = null, Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition = default(Azure.Data.AppConfiguration.SnapshotComposition?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.TimeSpan? retentionPeriod = default(System.TimeSpan?), long? sizeInBytes = default(long?), long? itemCount = default(long?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag eTag = default(Azure.ETag)) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(string name, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters, Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition, System.DateTimeOffset? createdOn, System.DateTimeOffset? expiresOn, System.TimeSpan? retentionPeriod, long? sizeInBytes, long? itemCount, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag eTag) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(string name = null, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status = default(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters = null, Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition = default(Azure.Data.AppConfiguration.SnapshotComposition?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.TimeSpan? retentionPeriod = default(System.TimeSpan?), long? sizeInBytes = default(long?), long? itemCount = default(long?), System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, Azure.ETag eTag = default(Azure.ETag)) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SettingLabel SettingLabel(string name = null) { throw null; }
@@ -134,6 +139,7 @@ namespace Azure.Data.AppConfiguration
         public ConfigurationSetting(string key, string value, string label = null) { }
         public ConfigurationSetting(string key, string value, string label, Azure.ETag etag) { }
         public string ContentType { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public Azure.ETag ETag { get { throw null; } }
         public bool? IsReadOnly { get { throw null; } }
         public string Key { get { throw null; } set { } }
@@ -176,6 +182,7 @@ namespace Azure.Data.AppConfiguration
     {
         public ConfigurationSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Description { get { throw null; } set { } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> Filters { get { throw null; } }
@@ -235,7 +242,7 @@ namespace Azure.Data.AppConfiguration
         public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : base (default(string), default(string), default(string)) { }
         public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label, Azure.ETag etag) : base (default(string), default(string), default(string)) { }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFilter> ClientFilters { get { throw null; } }
-        public string Description { get { throw null; } set { } }
+        public new string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string FeatureId { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
@@ -265,6 +272,7 @@ namespace Azure.Data.AppConfiguration
         LastModified = (uint)32,
         IsReadOnly = (uint)64,
         Tags = (uint)128,
+        Description = (uint)256,
         All = (uint)4294967295,
     }
     public partial class SettingLabel : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.SettingLabel>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.SettingLabel>
@@ -341,6 +349,7 @@ namespace Azure.Data.AppConfiguration
         private readonly int _dummyPrimitive;
         public SnapshotFields(string value) { throw null; }
         public static Azure.Data.AppConfiguration.SnapshotFields CreatedOn { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields Description { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields ETag { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields ExpiresOn { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Filters { get { throw null; } }
