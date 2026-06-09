@@ -76,4 +76,4 @@ Do not look at pre existing in the repository lists; if the tool specification h
 
 ## List location
 
-Please save the list at \<cs_root\>sdk/ai/Azure.AI.Extensions.OpenAI/codegen/generator/src/ and name it as stable_types_\<project_name\>.yaml where project name is one of `Azure.AI.Projects`, `Azure.AI.Extensions.OpenAI` or `Azure.AI.Projects.Agents`. Do not look at the pre existing files/
+Please save the list at \<cs_root\>sdk/ai/codegen/generator/src/ and name it as stable_types_\<project_name\>.yaml where project name is one of `Azure.AI.Projects`, `Azure.AI.Extensions.OpenAI` or `Azure.AI.Projects.Agents`. Do not look at the pre existing files/
