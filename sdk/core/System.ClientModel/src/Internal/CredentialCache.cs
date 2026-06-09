@@ -38,14 +38,13 @@ internal static class CredentialCache
     /// Look up a cached <see cref="CredentialSettings"/> for
     /// (<paramref name="mergedSection"/>, <paramref name="resolver"/>); on
     /// miss, call <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>.
-    /// If the resolver matches and produces a non-null, non-disposable provider,
-    /// build a <see cref="CredentialSettings"/> for it. Cache the result only
-    /// if the resolver did NOT invoke <paramref name="resolveChild"/> (i.e.,
-    /// is not a chain owner); otherwise return the freshly built settings
-    /// without caching so each resolution gets a wrapper bound to its own
-    /// active chain. Returns <see langword="null"/> when the resolver does
-    /// not match (the no-match case is handled by
-    /// <see cref="GetOrCreateInline"/>).
+    /// If the resolver matches and produces a non-null provider, build a
+    /// <see cref="CredentialSettings"/> for it. The result is cached only
+    /// when the provider is non-disposable and the resolver did NOT invoke
+    /// <paramref name="resolveChild"/> (i.e., is not a chain owner);
+    /// otherwise the freshly built settings are returned without caching.
+    /// Returns <see langword="null"/> when the resolver does not match
+    /// (the no-match case is handled by <see cref="GetOrCreateInline"/>).
     /// </summary>
     /// <param name="mergedSection">The credential section to resolve (already
     /// merged with any overrides).</param>
