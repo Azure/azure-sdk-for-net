@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary></summary>
-    internal readonly partial struct OrchestrationTargetProjectKind : IEquatable<OrchestrationTargetProjectKind>
+    public readonly partial struct OrchestrationTargetProjectKind : IEquatable<OrchestrationTargetProjectKind>
     {
         private readonly string _value;
         private const string LuisValue = "Luis";

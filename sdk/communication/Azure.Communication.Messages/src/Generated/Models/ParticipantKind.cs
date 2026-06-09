@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> The type of a participant in a threaded conversation. </summary>
-    internal readonly partial struct ParticipantKind : IEquatable<ParticipantKind>
+    public readonly partial struct ParticipantKind : IEquatable<ParticipantKind>
     {
         private readonly string _value;
         /// <summary> A participant internal to Azure Communication Services. </summary>

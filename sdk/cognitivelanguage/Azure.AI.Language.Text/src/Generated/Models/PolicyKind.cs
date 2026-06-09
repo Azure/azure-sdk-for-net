@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Kinds of overlap policies supported. </summary>
-    internal readonly partial struct PolicyKind : IEquatable<PolicyKind>
+    public readonly partial struct PolicyKind : IEquatable<PolicyKind>
     {
         private readonly string _value;
         /// <summary> Represents MatchLongestEntityPolicyType. </summary>

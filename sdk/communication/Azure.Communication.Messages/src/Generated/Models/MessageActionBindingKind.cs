@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> The Kind of interactive message channel action binding like WhatsAppListAction. </summary>
-    internal readonly partial struct MessageActionBindingKind : IEquatable<MessageActionBindingKind>
+    public readonly partial struct MessageActionBindingKind : IEquatable<MessageActionBindingKind>
     {
         private readonly string _value;
         /// <summary> The WhatsApp List action binding kind. </summary>

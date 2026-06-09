@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Kinds of redaction policies supported. </summary>
-    internal readonly partial struct RedactionPolicyKind : IEquatable<RedactionPolicyKind>
+    public readonly partial struct RedactionPolicyKind : IEquatable<RedactionPolicyKind>
     {
         private readonly string _value;
         /// <summary> Do not mask detected entities. </summary>

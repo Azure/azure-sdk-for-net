@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The type of a target service. </summary>
-    internal readonly partial struct TargetProjectKind : IEquatable<TargetProjectKind>
+    public readonly partial struct TargetProjectKind : IEquatable<TargetProjectKind>
     {
         private readonly string _value;
         /// <summary> Luis target service type. </summary>

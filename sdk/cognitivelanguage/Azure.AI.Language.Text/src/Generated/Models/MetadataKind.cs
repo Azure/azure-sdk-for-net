@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The entity Metadata object kind. </summary>
-    internal readonly partial struct MetadataKind : IEquatable<MetadataKind>
+    public readonly partial struct MetadataKind : IEquatable<MetadataKind>
     {
         private readonly string _value;
         /// <summary> Metadata for date-related values. </summary>

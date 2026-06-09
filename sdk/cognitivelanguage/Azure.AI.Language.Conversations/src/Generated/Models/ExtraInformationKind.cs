@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The extra information object kind. </summary>
-    internal readonly partial struct ExtraInformationKind : IEquatable<ExtraInformationKind>
+    public readonly partial struct ExtraInformationKind : IEquatable<ExtraInformationKind>
     {
         private readonly string _value;
         /// <summary> Entity subtype extra information kind. </summary>

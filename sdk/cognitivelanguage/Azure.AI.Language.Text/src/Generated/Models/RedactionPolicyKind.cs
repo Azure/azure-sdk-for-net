@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Kinds of redaction policies supported. </summary>
-    internal readonly partial struct RedactionPolicyKind : IEquatable<RedactionPolicyKind>
+    public readonly partial struct RedactionPolicyKind : IEquatable<RedactionPolicyKind>
     {
         private readonly string _value;
         /// <summary> Do not redact detected entities. </summary>
