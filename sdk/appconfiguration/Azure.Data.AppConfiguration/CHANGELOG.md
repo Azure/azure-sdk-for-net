@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added support for the `2026-04-01` service API version (also exposes `2024-09-01`), now selected by default.
+- Added a `Description` property on `ConfigurationSetting` and `ConfigurationSnapshot` to associate descriptive text with settings and snapshots.
+- Added `SettingFields.Description` so `Description` can be requested when retrieving configuration settings.
+
 ### Breaking Changes
 
 ### Bugs Fixed

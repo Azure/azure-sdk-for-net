@@ -39,5 +39,16 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Assert.That(TimeSpan.FromSeconds(10675199), Is.EqualTo(settingSnapshot.RetentionPeriod));
         }
+
+        [Test]
+        public void SetDescriptionUsingSetter()
+        {
+            List<ConfigurationSettingsFilter> filters = new() { new ConfigurationSettingsFilter("key", "val", Array.Empty<string>()) };
+
+            var settingSnapshot = new ConfigurationSnapshot(filters);
+            settingSnapshot.Description = "snapshot_description";
+
+            Assert.That(settingSnapshot.Description, Is.EqualTo("snapshot_description"));
+        }
     }
 }
