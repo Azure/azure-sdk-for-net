@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             TryGetApiVersion(ResourceType, out string artifactSigningCertificateProfileApiVersion);
             _certificateProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning", ResourceType.Namespace, Diagnostics);
-            _certificateProfilesRestClient = new CertificateProfiles(_certificateProfilesClientDiagnostics, Pipeline, Endpoint, artifactSigningCertificateProfileApiVersion ?? "2025-10-13");
+            _certificateProfilesRestClient = new CertificateProfiles(_certificateProfilesClientDiagnostics, Pipeline, Endpoint, artifactSigningCertificateProfileApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -287,19 +287,19 @@ namespace Azure.ResourceManager.ArtifactSigning
         }
 
         /// <summary>
-        /// Revoke a certificate under a certificate profile.
+        /// Revokes certificates under a certificate profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}/revokeCertificate. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}/revokeCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CertificateProfiles_RevokeCertificate. </description>
+        /// <description> CertificateProfiles_RevokeCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -307,14 +307,14 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters to revoke the certificate profile. </param>
+        /// <param name="body"> Parameters to revoke the certificates in the certificate profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> RevokeCertificateAsync(RevokeCertificateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response> RevokeCertificatesAsync(RevokeCertificateList body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("ArtifactSigningCertificateProfileResource.RevokeCertificate");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("ArtifactSigningCertificateProfileResource.RevokeCertificates");
             scope.Start();
             try
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateRevokeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RevokeCertificateContent.ToRequestContent(content), context);
+                HttpMessage message = _certificateProfilesRestClient.CreateRevokeCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RevokeCertificateList.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -334,19 +334,19 @@ namespace Azure.ResourceManager.ArtifactSigning
         }
 
         /// <summary>
-        /// Revoke a certificate under a certificate profile.
+        /// Revokes certificates under a certificate profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}/revokeCertificate. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}/revokeCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CertificateProfiles_RevokeCertificate. </description>
+        /// <description> CertificateProfiles_RevokeCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters to revoke the certificate profile. </param>
+        /// <param name="body"> Parameters to revoke the certificates in the certificate profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response RevokeCertificate(RevokeCertificateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response RevokeCertificates(RevokeCertificateList body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("ArtifactSigningCertificateProfileResource.RevokeCertificate");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("ArtifactSigningCertificateProfileResource.RevokeCertificates");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateRevokeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RevokeCertificateContent.ToRequestContent(content), context);
+                HttpMessage message = _certificateProfilesRestClient.CreateRevokeCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RevokeCertificateList.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
