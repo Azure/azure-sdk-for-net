@@ -161,31 +161,6 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public void LoadSkillsFromDirectory_DelegatesToLocalConfigReader()
-    {
-        string tempDir = Path.Combine(Path.GetTempPath(), "opt-skills-" + Guid.NewGuid().ToString("N").Substring(0, 8));
-        string skillDir = Path.Combine(tempDir, "my-skill");
-        Directory.CreateDirectory(skillDir);
-        File.WriteAllText(Path.Combine(skillDir, "SKILL.md"),
-            "---\nname: my-skill\ndescription: A test skill\n---\nBody.");
-
-        try
-        {
-            var skills = OptimizationConfigLoader.LoadSkillsFromDirectory(tempDir);
-
-            Assert.That(skills.Count, Is.EqualTo(1));
-            Assert.That(skills[0].Name, Is.EqualTo("my-skill"));
-        }
-        finally
-        {
-            if (Directory.Exists(tempDir))
-            {
-                Directory.Delete(tempDir, recursive: true);
-            }
-        }
-    }
-
-    [Test]
     public async Task LoadConfigAsync_HandlesEmptyEnvVar()
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "   ");

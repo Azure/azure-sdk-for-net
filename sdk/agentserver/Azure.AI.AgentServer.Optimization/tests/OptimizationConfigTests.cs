@@ -17,7 +17,6 @@ public class OptimizationConfigTests
         Assert.That(config.Model, Is.Null);
         Assert.That(config.Temperature, Is.Null);
         Assert.That(config.Skills, Is.Empty);
-        Assert.That(config.SkillsDirectory, Is.Null);
         Assert.That(config.ToolDefinitions, Is.Empty);
         Assert.That(config.Source, Is.EqualTo("defaults"));
         Assert.That(config.CandidateId, Is.Null);
@@ -35,7 +34,6 @@ public class OptimizationConfigTests
             model: "gpt-4o",
             temperature: 0.7,
             skills: skills,
-            skillsDirectory: "/path/to/skills",
             toolDefinitions: tools,
             source: "env:OPTIMIZATION_CONFIG",
             candidateId: "candidate-1");
@@ -44,7 +42,6 @@ public class OptimizationConfigTests
         Assert.That(config.Model, Is.EqualTo("gpt-4o"));
         Assert.That(config.Temperature, Is.EqualTo(0.7));
         Assert.That(config.Skills.Count, Is.EqualTo(1));
-        Assert.That(config.SkillsDirectory, Is.EqualTo("/path/to/skills"));
         Assert.That(config.ToolDefinitions.Count, Is.EqualTo(1));
         Assert.That(config.Source, Is.EqualTo("env:OPTIMIZATION_CONFIG"));
         Assert.That(config.CandidateId, Is.EqualTo("candidate-1"));
@@ -79,14 +76,6 @@ public class OptimizationConfigTests
     public void HasSkills_TrueWhenSkillsPresent()
     {
         var config = new OptimizationConfig(skills: new[] { new OptimizationSkill("s1", "d1") });
-
-        Assert.That(config.HasSkills, Is.True);
-    }
-
-    [Test]
-    public void HasSkills_TrueWhenSkillsDirectorySet()
-    {
-        var config = new OptimizationConfig(skillsDirectory: "/some/dir");
 
         Assert.That(config.HasSkills, Is.True);
     }

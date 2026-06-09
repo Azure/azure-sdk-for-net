@@ -37,54 +37,6 @@ internal static class LocalConfigReader
         return LoadCandidateFromMetadata(candidatePath, metadataFilePath, resolvedCandidateId);
     }
 
-    /// <summary>
-    /// Loads skills from a directory of skill folders.
-    /// </summary>
-    public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDir)
-    {
-        if (!Directory.Exists(skillsDir))
-        {
-            return Array.Empty<OptimizationSkill>();
-        }
-
-        var skills = new List<OptimizationSkill>();
-        foreach (var skillFolder in Directory.GetDirectories(skillsDir).OrderBy(d => d))
-        {
-            string skillFile = Path.Combine(skillFolder, OptimizationConfig.SkillFile);
-            if (!File.Exists(skillFile))
-            {
-                continue;
-            }
-
-            try
-            {
-                string content = File.ReadAllText(skillFile).Trim();
-                var (frontmatter, body) = ParseSkillFrontmatter(content);
-                string name = frontmatter.TryGetValue("name", out var n) && n is string nameStr
-                    ? nameStr
-                    : Path.GetFileName(skillFolder);
-                string description = frontmatter.TryGetValue("description", out var d) && d is string descStr
-                    ? descStr
-                    : "";
-
-                if (frontmatter.Count == 0 && !string.IsNullOrEmpty(body))
-                {
-                    var lines = body.Split(new[] { '\n' }, 2);
-                    description = lines[0].TrimStart('#').Trim();
-                    body = lines.Length > 1 ? lines[1].Trim() : "";
-                }
-
-                skills.Add(new OptimizationSkill(name, description, body));
-            }
-            catch (IOException)
-            {
-                // Skip unreadable skill files
-            }
-        }
-
-        return skills;
-    }
-
     internal static string ResolveLocalDir(string configDir)
     {
         if (configDir != null)
@@ -143,8 +95,6 @@ internal static class LocalConfigReader
         // Parse metadata fields with defaults
         string instructionFile = raw.TryGetValue("instruction_file", out var instrVal) && instrVal is string instrStr
             ? instrStr : "instructions.md";
-        string skillDir = raw.TryGetValue("skill_dir", out var sdVal) && sdVal is string sdStr
-            ? sdStr : "skills";
         string toolFile = raw.TryGetValue("tool_file", out var tfVal) && tfVal is string tfStr
             ? tfStr : "tools.json";
         string model = raw.TryGetValue("model", out var modelVal) && modelVal is string modelStr
@@ -158,15 +108,6 @@ internal static class LocalConfigReader
             ? File.ReadAllText(instructionsPath).Trim()
             : null;
 
-        // Resolve skills directory
-        string skillsPath = Path.Combine(candidatePath, skillDir);
-        string skillsDirectory = Directory.Exists(skillsPath)
-            ? Path.GetFullPath(skillsPath)
-            : null;
-        IReadOnlyList<OptimizationSkill> skills = skillsDirectory != null
-            ? LoadSkillsFromDirectory(skillsDirectory)
-            : Array.Empty<OptimizationSkill>();
-
         // Load tool definitions
         string toolFilePath = Path.Combine(candidatePath, toolFile);
         var toolDefinitions = LoadToolDefinitions(toolFilePath);
@@ -175,8 +116,6 @@ internal static class LocalConfigReader
             instructions: instructions,
             model: model,
             temperature: temperature,
-            skills: skills,
-            skillsDirectory: skillsDirectory,
             toolDefinitions: toolDefinitions,
             source: $"local:{candidatePath}",
             candidateId: candidateId);
@@ -227,32 +166,6 @@ internal static class LocalConfigReader
     {
         string wrappedJson = $"{{\"tools\":{toolsArray.GetRawText()}}}";
         return JsonDocument.Parse(wrappedJson).RootElement;
-    }
-
-    internal static (Dictionary<string, object> Frontmatter, string Body) ParseSkillFrontmatter(string content)
-    {
-        if (!content.StartsWith("---"))
-        {
-            return (new Dictionary<string, object>(), content);
-        }
-
-        int end = content.IndexOf("---", 3, StringComparison.Ordinal);
-        if (end == -1)
-        {
-            return (new Dictionary<string, object>(), content);
-        }
-
-        string fmText = content.Substring(3, end - 3).Trim();
-        string body = content.Substring(end + 3).Trim();
-
-        try
-        {
-            return (SimpleYamlParser.ParseKeyValuePairs(fmText), body);
-        }
-        catch (FormatException)
-        {
-            return (new Dictionary<string, object>(), body);
-        }
     }
 
     private static bool IsValidCandidateId(string candidateId)

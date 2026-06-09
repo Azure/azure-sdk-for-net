@@ -122,7 +122,7 @@ public class LocalConfigReaderTests
     }
 
     [Test]
-    public void Load_LoadsSkills_WhenSkillsFolderExists()
+    public void Load_IgnoresSkillsFolder_WhenSkillsFolderExists()
     {
         string baseline = Path.Combine(_tempDir, "baseline");
         string skillsDir = Path.Combine(baseline, "skills");
@@ -135,9 +135,7 @@ public class LocalConfigReaderTests
         var result = LocalConfigReader.Load(null, _tempDir);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result!.SkillsDirectory, Is.Not.Null);
-        Assert.That(result.Skills.Count, Is.EqualTo(1));
-        Assert.That(result.Skills[0].Name, Is.EqualTo("budget-checker"));
+        Assert.That(result!.Skills, Is.Empty);
     }
 
     [Test]
@@ -166,92 +164,5 @@ public class LocalConfigReaderTests
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Instructions, Is.EqualTo("Just instructions."));
         Assert.That(result.Model, Is.Null);
-    }
-
-    [Test]
-    public void LoadSkillsFromDirectory_LoadsSkillsWithFrontmatter()
-    {
-        string skillsDir = Path.Combine(_tempDir, "skills");
-        string skill1Dir = Path.Combine(skillsDir, "budget-checker");
-        Directory.CreateDirectory(skill1Dir);
-        File.WriteAllText(Path.Combine(skill1Dir, "SKILL.md"),
-            "---\nname: budget-checker\ndescription: Checks budget limits\n---\nSkill body here.");
-
-        var skills = LocalConfigReader.LoadSkillsFromDirectory(skillsDir);
-
-        Assert.That(skills.Count, Is.EqualTo(1));
-        Assert.That(skills[0].Name, Is.EqualTo("budget-checker"));
-        Assert.That(skills[0].Description, Is.EqualTo("Checks budget limits"));
-        Assert.That(skills[0].Body, Is.EqualTo("Skill body here."));
-    }
-
-    [Test]
-    public void LoadSkillsFromDirectory_LoadsSkillsWithoutFrontmatter()
-    {
-        string skillsDir = Path.Combine(_tempDir, "skills");
-        string skill1Dir = Path.Combine(skillsDir, "simple-skill");
-        Directory.CreateDirectory(skill1Dir);
-        File.WriteAllText(Path.Combine(skill1Dir, "SKILL.md"),
-            "# Simple Skill Title\nBody content here.");
-
-        var skills = LocalConfigReader.LoadSkillsFromDirectory(skillsDir);
-
-        Assert.That(skills.Count, Is.EqualTo(1));
-        Assert.That(skills[0].Name, Is.EqualTo("simple-skill"));
-        Assert.That(skills[0].Description, Is.EqualTo("Simple Skill Title"));
-        Assert.That(skills[0].Body, Is.EqualTo("Body content here."));
-    }
-
-    [Test]
-    public void LoadSkillsFromDirectory_ReturnsEmpty_WhenDirMissing()
-    {
-        var skills = LocalConfigReader.LoadSkillsFromDirectory(Path.Combine(_tempDir, "nonexistent"));
-
-        Assert.That(skills, Is.Empty);
-    }
-
-    [Test]
-    public void LoadSkillsFromDirectory_SkipsFolderWithoutSkillFile()
-    {
-        string skillsDir = Path.Combine(_tempDir, "skills");
-        Directory.CreateDirectory(Path.Combine(skillsDir, "no-skill-file"));
-
-        var skills = LocalConfigReader.LoadSkillsFromDirectory(skillsDir);
-
-        Assert.That(skills, Is.Empty);
-    }
-
-    [Test]
-    public void ParseSkillFrontmatter_ParsesValidFrontmatter()
-    {
-        string content = "---\nname: test\ndescription: A test skill\n---\nBody text.";
-
-        var (frontmatter, body) = LocalConfigReader.ParseSkillFrontmatter(content);
-
-        Assert.That(frontmatter["name"], Is.EqualTo("test"));
-        Assert.That(frontmatter["description"], Is.EqualTo("A test skill"));
-        Assert.That(body, Is.EqualTo("Body text."));
-    }
-
-    [Test]
-    public void ParseSkillFrontmatter_ReturnsBodyOnly_WhenNoFrontmatter()
-    {
-        string content = "Just plain text content.";
-
-        var (frontmatter, body) = LocalConfigReader.ParseSkillFrontmatter(content);
-
-        Assert.That(frontmatter, Is.Empty);
-        Assert.That(body, Is.EqualTo("Just plain text content."));
-    }
-
-    [Test]
-    public void ParseSkillFrontmatter_HandlesUnclosedFrontmatter()
-    {
-        string content = "---\nname: test\nNo closing delimiter";
-
-        var (frontmatter, body) = LocalConfigReader.ParseSkillFrontmatter(content);
-
-        Assert.That(frontmatter, Is.Empty);
-        Assert.That(body, Is.EqualTo(content));
     }
 }

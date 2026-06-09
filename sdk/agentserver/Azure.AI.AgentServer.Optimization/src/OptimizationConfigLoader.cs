@@ -45,15 +45,10 @@ public static class OptimizationConfigLoader
 
                 if (resolved.HasValue)
                 {
-                    string skillsDir = resolved.Value.TryGetProperty("skills_dir", out var sdProp) && sdProp.ValueKind == JsonValueKind.String
-                        ? sdProp.GetString()
-                        : null;
-
                     return OptimizationConfig.FromJson(
                         resolved.Value,
                         source: $"api:candidate:{candidateId}",
-                        candidateId: candidateId,
-                        skillsDirectory: skillsDir);
+                        candidateId: candidateId);
                 }
             }
             catch (Exception)
@@ -91,22 +86,6 @@ public static class OptimizationConfigLoader
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
         return LoadConfigAsync(options).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
-    }
-
-    /// <summary>
-    /// Loads skills from a directory of skill folders.
-    /// </summary>
-    /// <param name="skillsDirectory">Path to the skills directory.</param>
-    /// <returns>A list of parsed skills.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="skillsDirectory"/> is null.</exception>
-    public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDirectory)
-    {
-        if (string.IsNullOrEmpty(skillsDirectory))
-        {
-            throw new ArgumentNullException(nameof(skillsDirectory));
-        }
-
-        return LocalConfigReader.LoadSkillsFromDirectory(skillsDirectory);
     }
 
     private static OptimizationConfig LoadFromEnvVar(string rawConfig)

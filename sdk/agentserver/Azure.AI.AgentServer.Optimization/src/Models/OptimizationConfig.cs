@@ -29,8 +29,6 @@ public class OptimizationConfig
     internal const string MetadataFile = "metadata.yaml";
     internal const string InstructionsFile = "instructions.md";
     internal const string ToolsFile = "tools.json";
-    internal const string SkillsDir = "skills";
-    internal const string SkillFile = "SKILL.md";
     internal const string BaselineDir = "baseline";
 
     /// <summary>
@@ -41,7 +39,6 @@ public class OptimizationConfig
         string model = null,
         double? temperature = null,
         IReadOnlyList<OptimizationSkill> skills = null,
-        string skillsDirectory = null,
         IReadOnlyList<ToolDefinition> toolDefinitions = null,
         string source = "defaults",
         string candidateId = null)
@@ -50,7 +47,6 @@ public class OptimizationConfig
         Model = model;
         Temperature = temperature;
         Skills = skills ?? Array.Empty<OptimizationSkill>();
-        SkillsDirectory = skillsDirectory;
         ToolDefinitions = toolDefinitions ?? Array.Empty<ToolDefinition>();
         Source = source;
         CandidateId = candidateId;
@@ -59,7 +55,7 @@ public class OptimizationConfig
     /// <summary>
     /// Creates an <see cref="OptimizationConfig"/> from a JSON element (API response or env var payload).
     /// </summary>
-    internal static OptimizationConfig FromJson(JsonElement data, string source = "defaults", string candidateId = null, string skillsDirectory = null)
+    internal static OptimizationConfig FromJson(JsonElement data, string source = "defaults", string candidateId = null)
     {
         string instructions = data.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String
             ? instrProp.GetString()
@@ -78,7 +74,6 @@ public class OptimizationConfig
             model: model,
             temperature: temperature,
             skills: ParseSkills(data),
-            skillsDirectory: skillsDirectory,
             toolDefinitions: ParseToolDefinitions(data),
             source: source,
             candidateId: candidateId);
@@ -184,9 +179,6 @@ public class OptimizationConfig
     /// <summary>Learned skills from optimization.</summary>
     public IReadOnlyList<OptimizationSkill> Skills { get; }
 
-    /// <summary>Path to a directory containing skill files for on-demand loading.</summary>
-    public string SkillsDirectory { get; }
-
     /// <summary>Optimized tool definitions.</summary>
     public IReadOnlyList<ToolDefinition> ToolDefinitions { get; }
 
@@ -197,9 +189,9 @@ public class OptimizationConfig
     public string CandidateId { get; }
 
     /// <summary>
-    /// Gets a value indicating whether this config carries any skill data (inline or via directory).
+    /// Gets a value indicating whether this config carries any inline skill data.
     /// </summary>
-    public bool HasSkills => Skills.Count > 0 || SkillsDirectory != null;
+    public bool HasSkills => Skills.Count > 0;
 
     /// <summary>
     /// Returns instructions with a skill catalog appended (if any skills are present).
