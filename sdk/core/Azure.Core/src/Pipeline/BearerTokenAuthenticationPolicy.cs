@@ -290,7 +290,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="options">The updated <see cref="HttpPipelineTransportOptions"/> to apply to the transport, typically containing new client certificates for mTLS token binding.</param>
         [Experimental("AZID0004")]
-        protected void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
+        protected virtual void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
         {
             TransportOptionsChanged?.Invoke(options);
         }
