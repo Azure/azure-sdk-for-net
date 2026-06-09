@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Server event types used in VoiceLive protocol. </summary>
-    internal readonly partial struct ServerEventType : IEquatable<ServerEventType>
+    public readonly partial struct ServerEventType : IEquatable<ServerEventType>
     {
         private readonly string _value;
         private const string ErrorValue = "error";

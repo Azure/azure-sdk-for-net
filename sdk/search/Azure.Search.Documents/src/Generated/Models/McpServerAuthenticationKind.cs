@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The kind of authentication for an MCP server. </summary>
-    internal readonly partial struct McpServerAuthenticationKind : IEquatable<McpServerAuthenticationKind>
+    public readonly partial struct McpServerAuthenticationKind : IEquatable<McpServerAuthenticationKind>
     {
         private readonly string _value;
         /// <summary> Authenticate using an Azure AI Foundry connection. </summary>

@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// The supported tool type discriminators for voicelive tools.
     /// Currently, only 'function' tools are supported.
     /// </summary>
-    internal readonly partial struct ToolType : IEquatable<ToolType>
+    public readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;
         private const string FunctionValue = "function";

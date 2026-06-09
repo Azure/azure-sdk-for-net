@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    internal readonly partial struct EouDetectionModel : IEquatable<EouDetectionModel>
+    public readonly partial struct EouDetectionModel : IEquatable<EouDetectionModel>
     {
         private readonly string _value;
         private const string SemanticDetectionV1Value = "semantic_detection_v1";
