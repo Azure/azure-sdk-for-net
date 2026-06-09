@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="stable-types_Azure.AI.Extensions.OpenAI.yaml" LogicalName="stable-types_Azure.AI.Extensions.OpenAI.yaml" />
+    <EmbeddedResource Include="stable-types_Azure.AI.Projects.Agents.yaml" LogicalName="stable-types_Azure.AI.Projects.Agents.yaml" />
+    <EmbeddedResource Include="stable-types_Azure.AI.Projects.yaml" LogicalName="stable_types-Azure.AI.Projects.yaml" />
     <EmbeddedResource Include="stable-types.yaml" LogicalName="stable-types.yaml" />
   </ItemGroup>
 

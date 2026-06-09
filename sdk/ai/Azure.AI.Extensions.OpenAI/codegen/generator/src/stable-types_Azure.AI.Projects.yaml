@@ -1,0 +1,47 @@
+# Stable types for Azure.AI.Projects
+# Generated from TypeSpec stable client folders: connections, datasets, deployments,
+# evaluations, evaluation-rules, indexes.
+# No stable tools are generated in this project.
+
+stableTypes:
+# connections
+- Azure.AI.Projects.AgenticIdentityPreviewCredentials
+- Azure.AI.Projects.AIProjectConnection
+- Azure.AI.Projects.AIProjectConnectionApiKeyCredential
+- Azure.AI.Projects.AIProjectConnectionBaseCredential
+- Azure.AI.Projects.AIProjectConnectionCustomCredential
+- Azure.AI.Projects.AIProjectConnectionEntraIdCredential
+- Azure.AI.Projects.AIProjectConnectionSasCredential
+- Azure.AI.Projects.BlobReferenceSasCredential
+- Azure.AI.Projects.ConnectionType
+- Azure.AI.Projects.NoAuthenticationCredentials
+# datasets
+- Azure.AI.Projects.AIProjectBlobReference
+- Azure.AI.Projects.AIProjectDataset
+- Azure.AI.Projects.DatasetCredential
+- Azure.AI.Projects.FileDataset
+- Azure.AI.Projects.FolderDataset
+- Azure.AI.Projects.PendingUploadConfiguration
+- Azure.AI.Projects.PendingUploadResult
+- Azure.AI.Projects.PendingUploadType
+# deployments
+- Azure.AI.Projects.AIProjectDeployment
+- Azure.AI.Projects.AIProjectDeploymentType
+- Azure.AI.Projects.ModelDeployment
+- Azure.AI.Projects.ModelDeploymentSku
+# evaluations
+- Azure.AI.Projects.Evaluation.EvaluationTarget
+# evaluation-rules (excluding HumanEvaluationPreviewRuleAction)
+- Azure.AI.Projects.Evaluation.ContinuousEvaluationRuleAction
+- Azure.AI.Projects.Evaluation.EvaluationRule
+- Azure.AI.Projects.Evaluation.EvaluationRuleAction
+- Azure.AI.Projects.Evaluation.EvaluationRuleActionType
+- Azure.AI.Projects.Evaluation.EvaluationRuleEventType
+- Azure.AI.Projects.Evaluation.EvaluationRuleFilter
+# indexes
+- Azure.AI.Projects.AIProjectCosmosDBIndex
+- Azure.AI.Projects.AIProjectIndex
+- Azure.AI.Projects.AIProjectIndexFieldMapping
+- Azure.AI.Projects.AzureAISearchIndex
+- Azure.AI.Projects.EmbeddingConfiguration
+- Azure.AI.Projects.ManagedAzureAISearchIndex
