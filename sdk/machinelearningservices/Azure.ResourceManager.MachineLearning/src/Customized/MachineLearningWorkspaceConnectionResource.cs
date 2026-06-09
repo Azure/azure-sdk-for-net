@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.MachineLearning
     /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceConnectionPropertiesV2BasicResource method.
     /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetMachineLearningWorkspaceConnection method.
     /// </summary>
-    // Customized: preserve the legacy MachineLearning-prefixed resource name.
     public partial class MachineLearningWorkspaceConnectionResource : ArmResource
     {
         /// <summary>

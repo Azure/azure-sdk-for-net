@@ -5,8 +5,6 @@
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: retained only as a temporary migration shim for collection customization drift;
-    // remove once regeneration no longer requires this partial.
     public partial class MachineLearningDatastoreCollection
     {
     }

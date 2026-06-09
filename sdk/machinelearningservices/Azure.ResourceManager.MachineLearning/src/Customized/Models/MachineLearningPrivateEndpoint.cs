@@ -9,8 +9,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: preserve the legacy public private endpoint model used by compatibility
-    // properties even though TypeSpec generated a different private endpoint hierarchy.
     /// <summary> The Private Endpoint resource. </summary>
     public partial class MachineLearningPrivateEndpoint
     {

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.MachineLearning
     /// Each <see cref="MachineLearningEnvironmentVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningEnvironmentContainerResource" />.
     /// To get a <see cref="MachineLearningEnvironmentVersionCollection" /> instance call the GetMachineLearningEnvironmentVersions method from an instance of <see cref="MachineLearningEnvironmentContainerResource" />.
     /// </summary>
-    // Customized: preserve the legacy MachineLearning-prefixed collection name.
     public partial class MachineLearningEnvironmentVersionCollection
     {
         /// <summary>

@@ -14,8 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 // TODO: stale suppression kept only for regeneration; disabled for current build.
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: keep legacy compute schedules JSON handling because the migrated TypeSpec shape
-    // does not emit the previous collection wrapper serialization.
     internal partial class ComputeSchedules : IUtf8JsonSerializable, IJsonModel<ComputeSchedules>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSchedules>)this).Write(writer, new ModelReaderWriterOptions("W"));

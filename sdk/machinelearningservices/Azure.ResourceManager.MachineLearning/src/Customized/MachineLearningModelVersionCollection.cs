@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve the legacy MachineLearning-prefixed collection name.
     public partial class MachineLearningModelVersionCollection
     {
     }

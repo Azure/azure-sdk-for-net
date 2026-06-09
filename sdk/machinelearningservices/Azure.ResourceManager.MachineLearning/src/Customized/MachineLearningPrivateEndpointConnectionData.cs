@@ -18,8 +18,6 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MicrosoftMachineLearningServicesPrivateEndpointConnectionData
     {
     }
-
-    // Customized: restore legacy constructor and aliases over the generated private endpoint connection shape.
     [CodeGenSuppress("PrivateEndpoint")]
     public partial class MachineLearningPrivateEndpointConnectionData : TrackedResourceData
     {

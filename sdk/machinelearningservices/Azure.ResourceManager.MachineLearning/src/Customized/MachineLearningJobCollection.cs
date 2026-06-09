@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.MachineLearning
     /// Each <see cref="MachineLearningJobResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
     /// To get a <see cref="MachineLearningJobCollection" /> instance call the GetMachineLearningJobs method from an instance of <see cref="MachineLearningWorkspaceResource" />.
     /// </summary>
-    // Customized: preserve the legacy MachineLearning-prefixed collection name.
     public partial class MachineLearningJobCollection
     {
         /// <summary>

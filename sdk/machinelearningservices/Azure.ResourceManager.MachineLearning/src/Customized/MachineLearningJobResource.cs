@@ -10,7 +10,6 @@ using Azure;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve the legacy MachineLearning-prefixed resource name.
     public partial class MachineLearningJobResource
     {
         /// <summary>

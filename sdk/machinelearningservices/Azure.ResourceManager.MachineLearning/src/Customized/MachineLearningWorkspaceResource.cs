@@ -13,8 +13,6 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore legacy workspace operation overloads and return shapes that were
-    // renamed by TypeSpec generation but remain in the shipped API surface.
     /// <summary>
     /// A Class representing a MachineLearningWorkspace along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkspaceResource" />

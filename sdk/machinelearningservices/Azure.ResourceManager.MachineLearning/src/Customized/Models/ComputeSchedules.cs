@@ -11,8 +11,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 // TODO: stale suppression kept only for regeneration; disabled for current build.
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: keep the legacy internal compute schedules model and serialization contract used
-    // by existing compute customization code while TypeSpec emits a different schedule hierarchy.
     /// <summary> The list of schedules to be applied on the computes. </summary>
     internal partial class ComputeSchedules
     {

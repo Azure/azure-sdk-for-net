@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore legacy constructors and alias properties over the generated TypeSpec workspace data shape.
     [CodeGenSuppress("Encryption")]
     [CodeGenSuppress("PublicNetworkAccess")]
     public partial class MachineLearningWorkspaceData : TrackedResourceData
