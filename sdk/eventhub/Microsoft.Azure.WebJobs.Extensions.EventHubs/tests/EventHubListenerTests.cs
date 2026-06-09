@@ -657,8 +657,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Times.Never);
         }
 
+        /// <summary>
+        /// CloseAsync on Shutdown with no uncheckpointed batches (default frequency)
+        /// should not trigger a checkpoint.
+        /// </summary>
         [Test]
-        public async Task CloseAsync_Shutdown_DoesNotCheckpoint()
+        public async Task CloseAsync_Shutdown_NoPendingWork_DoesNotCheckpoint()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions();
@@ -940,10 +944,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         /// <summary>
-        /// On graceful shutdown (not OwnershipLost), un-checkpointed work should be flushed.
+        /// On graceful shutdown (not OwnershipLost), un-checkpointed work should be checkpointed.
         /// </summary>
         [Test]
-        public async Task CloseAsync_GracefulShutdown_FlushesUncheckpointedWork()
+        public async Task CloseAsync_GracefulShutdown_CheckpointsUncheckpointedWork()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var checkpoints = 0;
@@ -974,18 +978,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.AreEqual(0, checkpoints, "No regular checkpoint should have occurred.");
 
-            // Graceful shutdown should flush.
+            // Graceful shutdown should checkpoint remaining work.
             await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown);
 
-            Assert.AreEqual(1, checkpoints, "CloseAsync should have flushed the un-checkpointed work.");
+            Assert.AreEqual(1, checkpoints, "CloseAsync should have checkpointed the un-checkpointed work.");
             eventProcessor.Dispose();
         }
 
         /// <summary>
-        /// On OwnershipLost, un-checkpointed work should NOT be flushed.
+        /// On OwnershipLost, un-checkpointed work should NOT be checkpointed.
         /// </summary>
         [Test]
-        public async Task CloseAsync_OwnershipLost_DoesNotFlush()
+        public async Task CloseAsync_OwnershipLost_DoesNotCheckpoint()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var checkpoints = 0;
@@ -1016,7 +1020,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             Assert.AreEqual(0, checkpoints, "No regular checkpoint should have occurred.");
 
-            // OwnershipLost should NOT flush.
+            // OwnershipLost should NOT checkpoint.
             await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost);
 
             Assert.AreEqual(0, checkpoints, "CloseAsync with OwnershipLost should not checkpoint.");
@@ -1024,10 +1028,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         /// <summary>
-        /// When checkpointing is disabled, idle checkpoint and close flush should not occur.
+        /// When checkpointing is disabled, idle checkpoint and shutdown checkpoint should not occur.
         /// </summary>
         [Test]
-        public async Task CloseAsync_CheckpointingDisabled_DoesNotFlush()
+        public async Task CloseAsync_CheckpointingDisabled_DoesNotCheckpoint()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions

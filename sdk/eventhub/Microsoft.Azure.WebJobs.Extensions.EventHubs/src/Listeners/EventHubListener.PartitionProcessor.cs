@@ -92,17 +92,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     && _lastProcessedEvent != null
                     && !_functionExecutionToken.IsCancellationRequested)
                 {
-                    // Flush un-checkpointed work on graceful shutdown (not ownership loss)
+                    // Checkpoint un-checkpointed work on graceful shutdown (not ownership loss)
                     // to prevent stale checkpoints from blocking scale-in.
                     try
                     {
                         await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
                         _batchCounter = 0;
-                        _logger.LogDebug(GetOperationDetails(context, "CloseAsync_FlushCheckpoint"));
+                        _logger.LogDebug(GetOperationDetails(context, "CloseAsync_Checkpoint"));
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogWarning($"Failed to flush checkpoint on close for partition '{context.PartitionId}': {ex.Message}");
+                        _logger.LogWarning($"Failed to checkpoint on close for partition '{context.PartitionId}': {ex.Message}");
                     }
                 }
 
