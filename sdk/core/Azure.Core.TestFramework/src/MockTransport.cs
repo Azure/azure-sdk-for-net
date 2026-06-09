@@ -111,11 +111,14 @@ namespace Azure.Core.TestFramework
 
         private async Task<MockResponse> GetNextResponseAsync(MockRequest request, HttpMessage message)
         {
-            if (_deferredResponse != null)
+            lock (_syncObj)
             {
-                MockResponse deferred = _deferredResponse;
-                _deferredResponse = null;
-                return deferred;
+                if (_deferredResponse != null)
+                {
+                    MockResponse deferred = _deferredResponse;
+                    _deferredResponse = null;
+                    return deferred;
+                }
             }
 
             MockResponse response;
@@ -130,7 +133,10 @@ namespace Azure.Core.TestFramework
 
             if (AutoHandleImdsProbeRequests && IsImdsProbeRequest(request) && LooksLikeManagedIdentityTokenResponse(response))
             {
-                _deferredResponse = response;
+                lock (_syncObj)
+                {
+                    _deferredResponse = response;
+                }
                 return CreateImdsProbeResponse();
             }
 
