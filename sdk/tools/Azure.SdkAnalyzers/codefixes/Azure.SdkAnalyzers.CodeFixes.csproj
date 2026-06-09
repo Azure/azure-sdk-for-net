@@ -9,11 +9,6 @@
     packaged.
   -->
   <PropertyGroup>
-    <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <IsAnalzyer>true</IsAnalzyer>
-    <OutputItemType>Analyzer</OutputItemType>
-    <AnalyzerLanguage>cs</AnalyzerLanguage>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsPackable>false</IsPackable>
