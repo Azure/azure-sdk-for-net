@@ -3,19 +3,16 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
     [CodeGenSuppress("Errors")]
     public partial class AmlComputeProperties
     {
-        /// <summary> Collection of errors encountered by various compute nodes during node setup. </summary>
+        // Customized: TypeSpec property renaming is not applied to this generated property declaration.
         [WirePath("errors")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<MachineLearningError> Errors { get; }

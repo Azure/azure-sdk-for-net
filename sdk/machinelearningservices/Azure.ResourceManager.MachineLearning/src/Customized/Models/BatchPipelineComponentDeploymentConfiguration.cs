@@ -3,19 +3,15 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
     [CodeGenSuppress("ComponentId")]
     public partial class BatchPipelineComponentDeploymentConfiguration
     {
-        /// <summary> The ARM id of the component to be run. </summary>
+        // Customized: TypeSpec property renaming is not applied to this generated property declaration.
         [WirePath("componentId")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MachineLearningIdAssetReference ComponentId { get; set; }

@@ -9,7 +9,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore the legacy tracked-resource-style constructor over the generated compute data shape.
+    // Customized: restore the legacy public constructor; TrackedResourceData owns the location initialization.
     public partial class MachineLearningComputeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>

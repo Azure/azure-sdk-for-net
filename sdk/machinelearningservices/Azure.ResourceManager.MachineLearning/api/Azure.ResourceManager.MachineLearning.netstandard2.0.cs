@@ -123,10 +123,6 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.ConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.EndpointDeploymentResourcePropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.ConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.EndpointDeploymentResourcePropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataContainerData
-    {
-        public DataContainerData() { }
-    }
     public partial class EndpointDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearning.EndpointDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.EndpointDeploymentResource>, System.Collections.IEnumerable
     {
         protected EndpointDeploymentCollection() { }
@@ -236,10 +232,6 @@ namespace Azure.ResourceManager.MachineLearning
         Azure.ResourceManager.MachineLearning.EndpointResourcePropertiesBasicResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.EndpointResourcePropertiesBasicResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.EndpointResourcePropertiesBasicResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.EndpointResourcePropertiesBasicResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EnvironmentContainerData
-    {
-        public EnvironmentContainerData() { }
     }
     public partial class InferenceEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearning.InferenceEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.InferenceEndpointResource>, System.Collections.IEnumerable
     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningWorkspaceConnectionData
     {
-        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionData"/> for deserialization. </summary>
+        // Customized: generated resource deserialization creates this model as an IJsonModel shim.
         internal MachineLearningWorkspaceConnectionData()
         {
         }
