@@ -10,7 +10,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <!-- TODO: Consider migrating to System.ClientModel instead of Azure.Core. -->
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 </Project>

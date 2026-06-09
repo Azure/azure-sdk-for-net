@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using System.ClientModel;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -18,8 +18,8 @@ public class ConfigLoaderOptions
 
     /// <summary>
     /// Credential used for authenticating to the resolver API.
-    /// A <c>DefaultAzureCredential</c> or other <c>TokenCredential</c> must be provided
+    /// A <c>DefaultAzureCredential</c> or other <c>AuthenticationTokenProvider</c> must be provided
     /// when using the resolver API (Priority 2).
     /// </summary>
-    public TokenCredential? Credential { get; set; }
+    public AuthenticationTokenProvider? Credential { get; set; }
 }

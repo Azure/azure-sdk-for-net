@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -25,7 +25,7 @@ internal static class CandidateResolver
         string candidateId,
         string endpoint,
         string? localDir,
-        TokenCredential? credential,
+        AuthenticationTokenProvider? credential,
         CancellationToken cancellationToken = default)
     {
         ValidateCandidateId(candidateId);
@@ -40,7 +40,7 @@ internal static class CandidateResolver
             s_downloaded.TryRemove(candidateId, out _);
         }
 
-        var pipeline = BuildPipeline(endpoint, credential);
+        var pipeline = BuildPipeline(credential);
 
         var config = await FetchCandidateConfigAsync(pipeline, endpoint, candidateId, cancellationToken).ConfigureAwait(false);
 
@@ -63,34 +63,25 @@ internal static class CandidateResolver
     }
 
     private static async Task<JsonElement> FetchCandidateConfigAsync(
-        HttpPipeline pipeline,
+        ClientPipeline pipeline,
         string endpoint,
         string candidateId,
         CancellationToken cancellationToken)
     {
         string escapedCandidateId = Uri.EscapeDataString(candidateId);
         string url = $"{endpoint.TrimEnd('/')}/candidates/{escapedCandidateId}/config?api-version={ApiVersion}";
-        var request = new RequestUriBuilder();
-        request.Reset(new Uri(url));
 
-        using var message = pipeline.CreateMessage();
-        message.Request.Uri = request;
-        message.Request.Method = RequestMethod.Get;
+        using var message = pipeline.CreateMessage(new Uri(url), "GET");
+        message.Apply(CreateRequestOptions(cancellationToken));
 
-        await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        await pipeline.SendAsync(message).ConfigureAwait(false);
 
-        if (message.Response.Status < 200 || message.Response.Status >= 300)
+        if (message.Response?.IsError != false)
         {
-            throw new RequestFailedException(message.Response);
+            throw new ClientResultException(message.Response!);
         }
 
-        Stream? contentStream = message.Response.ContentStream;
-        if (contentStream == null)
-        {
-            throw new InvalidOperationException("Resolver response did not include a content stream.");
-        }
-
-        using var doc = JsonDocument.Parse(contentStream);
+        using var doc = JsonDocument.Parse(message.Response.Content);
         return doc.RootElement.Clone();
     }
 
@@ -197,7 +188,7 @@ internal static class CandidateResolver
     }
 
     private static async Task DownloadSkillFilesAsync(
-        HttpPipeline pipeline,
+        ClientPipeline pipeline,
         string endpoint,
         string candidateId,
         string candidatePath,
@@ -208,24 +199,17 @@ internal static class CandidateResolver
         // Fetch manifest
         string manifestUrl = $"{endpoint.TrimEnd('/')}/candidates/{escapedCandidateId}?api-version={ApiVersion}";
 
-        using var manifestMessage = pipeline.CreateMessage();
-        manifestMessage.Request.Uri.Reset(new Uri(manifestUrl));
-        manifestMessage.Request.Method = RequestMethod.Get;
+        using var manifestMessage = pipeline.CreateMessage(new Uri(manifestUrl), "GET");
+        manifestMessage.Apply(CreateRequestOptions(cancellationToken));
 
-        await pipeline.SendAsync(manifestMessage, cancellationToken).ConfigureAwait(false);
+        await pipeline.SendAsync(manifestMessage).ConfigureAwait(false);
 
-        if (manifestMessage.Response.Status < 200 || manifestMessage.Response.Status >= 300)
+        if (manifestMessage.Response?.IsError != false)
         {
-            throw new RequestFailedException(manifestMessage.Response);
+            throw new ClientResultException(manifestMessage.Response!);
         }
 
-        Stream? manifestContentStream = manifestMessage.Response.ContentStream;
-        if (manifestContentStream == null)
-        {
-            throw new InvalidOperationException("Resolver manifest response did not include a content stream.");
-        }
-
-        using var manifestDoc = JsonDocument.Parse(manifestContentStream);
+        using var manifestDoc = JsonDocument.Parse(manifestMessage.Response.Content);
         var manifest = manifestDoc.RootElement;
 
         if (!manifest.TryGetProperty("files", out var filesProp) || filesProp.ValueKind != JsonValueKind.Array)
@@ -256,14 +240,13 @@ internal static class CandidateResolver
 
             // Download skill file content
             string fileUrl = $"{endpoint.TrimEnd('/')}/candidates/{escapedCandidateId}/files?path={Uri.EscapeDataString(filePath)}&api-version={ApiVersion}";
-            using var fileMessage = pipeline.CreateMessage();
-            fileMessage.Request.Uri.Reset(new Uri(fileUrl));
-            fileMessage.Request.Method = RequestMethod.Get;
+            using var fileMessage = pipeline.CreateMessage(new Uri(fileUrl), "GET");
+            fileMessage.Apply(CreateRequestOptions(cancellationToken));
 
-            await pipeline.SendAsync(fileMessage, cancellationToken).ConfigureAwait(false);
-            if (fileMessage.Response.Status < 200 || fileMessage.Response.Status >= 300)
+            await pipeline.SendAsync(fileMessage).ConfigureAwait(false);
+            if (fileMessage.Response?.IsError != false)
             {
-                throw new RequestFailedException(fileMessage.Response);
+                throw new ClientResultException(fileMessage.Response!);
             }
 
             string content = fileMessage.Response.Content.ToString();
@@ -327,21 +310,29 @@ internal static class CandidateResolver
         }
     }
 
-    private static HttpPipeline BuildPipeline(string endpoint, TokenCredential? credential)
+    private static RequestOptions CreateRequestOptions(CancellationToken cancellationToken) =>
+        new()
+        {
+            CancellationToken = cancellationToken,
+        };
+
+    private static ClientPipeline BuildPipeline(AuthenticationTokenProvider? credential)
     {
         if (credential == null)
         {
             throw new InvalidOperationException(
-                "A TokenCredential must be provided via ConfigLoaderOptions.Credential when using the resolver API. " +
-                "Pass a DefaultAzureCredential or another TokenCredential implementation.");
+                "An AuthenticationTokenProvider must be provided via ConfigLoaderOptions.Credential when using the resolver API. " +
+                "Pass a DefaultAzureCredential or another AuthenticationTokenProvider implementation.");
         }
 
-        return HttpPipelineBuilder.Build(
+        return ClientPipeline.Create(
             new OptimizationClientOptions(),
-            new BearerTokenAuthenticationPolicy(credential, AuthScope));
+            Array.Empty<PipelinePolicy>(),
+            new PipelinePolicy[] { new BearerTokenPolicy(credential, AuthScope) },
+            Array.Empty<PipelinePolicy>());
     }
 
-    private sealed class OptimizationClientOptions : ClientOptions
+    private sealed class OptimizationClientOptions : ClientPipelineOptions
     {
     }
 }
