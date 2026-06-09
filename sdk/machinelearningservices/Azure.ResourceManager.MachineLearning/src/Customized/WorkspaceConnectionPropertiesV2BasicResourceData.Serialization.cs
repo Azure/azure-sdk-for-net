@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customized: preserve legacy ResourceData base for workspace connection data without spec-side hierarchy building.
+// Customized: the generator leaves serialization empty for this ResourceData-compatible custom base model, while generated resource methods still require these helpers.
 
 #nullable disable
 
@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningWorkspaceConnectionData : ResourceData, IJsonModel<MachineLearningWorkspaceConnectionData>
+    public partial class MachineLearningWorkspaceConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionData"/> for deserialization. </summary>
         internal MachineLearningWorkspaceConnectionData()
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.MachineLearning
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MachineLearningWorkspaceConnectionProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.MachineLearning
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                properties);
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

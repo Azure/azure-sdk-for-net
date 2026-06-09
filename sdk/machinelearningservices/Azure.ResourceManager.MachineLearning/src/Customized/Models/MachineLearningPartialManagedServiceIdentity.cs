@@ -6,9 +6,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
-// TODO: stale suppression kept only for regeneration; disabled for current build.
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>

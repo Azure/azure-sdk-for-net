@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable SA1402 // Keep stale placeholder and active compatibility shim together for this legacy type.
-
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -14,10 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // TODO: stale customization no longer needed after TypeSpec regeneration.
-    public partial class MicrosoftMachineLearningServicesPrivateEndpointConnectionData
-    {
-    }
     [CodeGenSuppress("PrivateEndpoint")]
     public partial class MachineLearningPrivateEndpointConnectionData : TrackedResourceData
     {
@@ -68,5 +62,3 @@ namespace Azure.ResourceManager.MachineLearning
         }
     }
 }
-
-#pragma warning restore SA1402

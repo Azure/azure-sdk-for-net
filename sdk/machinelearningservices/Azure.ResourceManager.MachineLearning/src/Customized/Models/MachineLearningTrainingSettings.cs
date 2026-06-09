@@ -5,8 +5,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy boolean property names that used Is* prefixes before TypeSpec
-    // generated the wire-name-based properties.
+    // Customized: restore legacy boolean property names; @@clientName does not affect these generated property names.
     public partial class MachineLearningTrainingSettings
     {
         /// <summary> Enable recommendation of DNN models. </summary>

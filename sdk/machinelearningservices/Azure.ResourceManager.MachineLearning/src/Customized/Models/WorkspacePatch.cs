@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: keep the shipped WorkspacePatch name while preserving the MachineLearningWorkspacePatch compatibility shim.
+    // Customized: restore the legacy flattened public network property; @@clientName does not affect this generated flattened property name.
     [CodeGenType("WorkspaceUpdateParameters")]
     public partial class WorkspacePatch
     {

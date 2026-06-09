@@ -2927,10 +2927,6 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.ManagedNetworkSettingsRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningOutboundRuleBasicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.ManagedNetworkSettingsRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningOutboundRuleBasicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MicrosoftMachineLearningServicesPrivateEndpointConnectionData
-    {
-        public MicrosoftMachineLearningServicesPrivateEndpointConnectionData() { }
-    }
     public partial class RaiBlocklistItemPropertiesBasicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.RaiBlocklistItemPropertiesBasicResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.RaiBlocklistItemPropertiesBasicResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -3087,10 +3083,6 @@ namespace Azure.ResourceManager.MachineLearning
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.RaiPolicyPropertiesBasicResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.RaiPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.RaiPolicyPropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.RaiPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.RaiPolicyPropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceData
-    {
-        public WorkspaceData() { }
     }
     public partial class WorkspaceResource : Azure.ResourceManager.ArmResource
     {
