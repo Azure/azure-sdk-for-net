@@ -22,9 +22,7 @@ namespace Azure.Generator.Provisioning.Primitives
             ResourceType = GetSameResourceType(metadata);
             ResourceName = GetSameValueOrDefault(metadata.Select(resource => resource.ResourceName), ResourceModel.Name, StringComparer.Ordinal);
             SingletonResourceName = GetSameNullableValueOrDefault(metadata.Select(resource => resource.SingletonResourceName), null, StringComparer.Ordinal);
-            // TODO: Revisit parent merging in the parent/scope PR. For now, preserve
-            // the previous behavior by using the first detected parent.
-            ParentResourceId = metadata[0].ParentResourceId;
+            ParentResourceId = GetSameNullableValueOrDefault(metadata.Select(resource => resource.ParentResourceId), null);
             NameConstraints = GetSameValueOrDefault(
                 metadata.Select(resource => resource.NameConstraints),
                 new ArmResourceNameConstraints(null, null, null));
@@ -32,29 +30,83 @@ namespace Azure.Generator.Provisioning.Primitives
             ApiVersions = [.. CollectApiVersions(metadata)];
             Methods = [.. CollectMethods(metadata)];
             RbacRoles = [.. CollectRbacRoles(metadata)];
+            ReadableScopes = CollectScopes(metadata, IsReadableOperation);
+            WritableScopes = CollectScopes(metadata, IsWritableOperation);
         }
 
+        /// <summary>
+        /// Gets the raw management resource metadata entries represented by this
+        /// provisioning resource projection.
+        /// </summary>
         internal IReadOnlyList<ArmResourceMetadata> Metadata { get; }
 
+        /// <summary>
+        /// Gets the resource body model shared by all collapsed metadata entries.
+        /// </summary>
         internal InputModelType ResourceModel { get; }
 
+        /// <summary>
+        /// Gets the generated provisioning resource type name.
+        /// </summary>
         internal string ResourceName { get; }
 
+        /// <summary>
+        /// Gets the concrete ARM resource type emitted in Bicep.
+        /// </summary>
         internal string ResourceType { get; }
 
+        /// <summary>
+        /// Gets the fixed singleton resource name when all collapsed metadata
+        /// entries agree on the same singleton name; otherwise null.
+        /// </summary>
         internal string? SingletonResourceName { get; }
 
+        /// <summary>
+        /// Gets the detected structural parent resource ID pattern.
+        /// </summary>
         internal RequestPathPattern? ParentResourceId { get; }
 
+        /// <summary>
+        /// Gets the resource name constraints when all collapsed metadata entries
+        /// agree on the same constraints; otherwise conservative defaults.
+        /// </summary>
         internal ArmResourceNameConstraints NameConstraints { get; }
 
+        /// <summary>
+        /// Gets all ARM resource ID patterns collapsed into this projection.
+        /// </summary>
         internal IReadOnlyList<RequestPathPattern> ResourceIdPatterns { get; }
 
+        /// <summary>
+        /// Gets all API versions available across the collapsed metadata entries.
+        /// </summary>
         internal IReadOnlyList<string> ApiVersions { get; }
 
+        /// <summary>
+        /// Gets all resource methods from the collapsed metadata entries.
+        /// </summary>
         internal IReadOnlyList<ResourceMethod> Methods { get; }
 
+        /// <summary>
+        /// Gets all RBAC roles declared on the collapsed metadata entries.
+        /// </summary>
         internal IReadOnlyList<ArmResourceRbacRole> RbacRoles { get; }
+
+        /// <summary>
+        /// Gets deployment scopes where the resource can be read.
+        /// </summary>
+        internal IReadOnlyList<ResourceScope> ReadableScopes { get; }
+
+        /// <summary>
+        /// Gets deployment scopes where the resource can be written.
+        /// </summary>
+        internal IReadOnlyList<ResourceScope> WritableScopes { get; }
+
+        /// <summary>
+        /// Gets whether this resource should be emitted as a Bicep extension
+        /// resource with a language-level <c>scope</c> relationship.
+        /// </summary>
+        internal bool IsExtensionResource => WritableScopes.Contains(ResourceScope.Extension);
 
         internal static IReadOnlyList<ProvisioningResourceProjection> Create(IReadOnlyList<ArmResourceMetadata> metadata)
         {
@@ -99,42 +151,14 @@ namespace Azure.Generator.Provisioning.Primitives
         private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)
             where T : notnull
         {
-            comparer ??= EqualityComparer<T>.Default;
-            using var enumerator = values.GetEnumerator();
-            if (!enumerator.MoveNext())
-            {
-                return defaultValue;
-            }
-
-            var first = enumerator.Current;
-            while (enumerator.MoveNext())
-            {
-                if (!comparer.Equals(first, enumerator.Current))
-                {
-                    return defaultValue;
-                }
-            }
-            return first;
+            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
+            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
         }
 
         private static T? GetSameNullableValueOrDefault<T>(IEnumerable<T?> values, T? defaultValue, IEqualityComparer<T?>? comparer = null)
         {
-            comparer ??= EqualityComparer<T?>.Default;
-            using var enumerator = values.GetEnumerator();
-            if (!enumerator.MoveNext())
-            {
-                return defaultValue;
-            }
-
-            var first = enumerator.Current;
-            while (enumerator.MoveNext())
-            {
-                if (!comparer.Equals(first, enumerator.Current))
-                {
-                    return defaultValue;
-                }
-            }
-            return first;
+            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
+            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
         }
 
         private static IEnumerable<RequestPathPattern> CollectResourceIdPatterns(IReadOnlyList<ArmResourceMetadata> metadata)
@@ -193,5 +217,27 @@ namespace Azure.Generator.Provisioning.Primitives
                 }
             }
         }
+
+        private static IReadOnlyList<ResourceScope> CollectScopes(
+            IReadOnlyList<ArmResourceMetadata> metadata,
+            Func<ResourceOperationKind, bool> operationSelector)
+        {
+            var seen = new HashSet<ResourceScope>();
+            var scopes = new List<ResourceScope>();
+            foreach (var resource in metadata)
+            {
+                if (resource.Methods.Any(method => operationSelector(method.Kind)) && seen.Add(resource.Scope.Kind))
+                {
+                    scopes.Add(resource.Scope.Kind);
+                }
+            }
+            return scopes;
+        }
+
+        private static bool IsReadableOperation(ResourceOperationKind kind)
+            => kind == ResourceOperationKind.Read;
+
+        private static bool IsWritableOperation(ResourceOperationKind kind)
+            => kind == ResourceOperationKind.Create || kind == ResourceOperationKind.Update;
     }
 }

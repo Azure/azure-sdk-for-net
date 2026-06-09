@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 profileType is null && includeStreetAddress is null && includeCity is null && includeState is null && includeCountry is null && includePostalCode is null && identityValidationId is null && provisioningState is null && status is null && certificates is null ? default : new CertificateProfileProperties(
                     profileType.GetValueOrDefault(),
                     includeStreetAddress,
@@ -50,7 +49,8 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                     provisioningState,
                     status,
                     (certificates ?? new ChangeTrackingList<ArtifactSigningCertificate>()).ToList(),
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
     }
 }

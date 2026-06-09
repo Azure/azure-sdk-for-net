@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -59,18 +60,17 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                error is null && template is null && templateLink is null && parameters is null && parametersLink is null && extensionConfigs is null && externalInputs is null && externalInputDefinitions is null && actionOnUnmanage is null && deploymentScope is null && description is null && denySettings is null && provisioningState is null && correlationId is null && validationLevel is null && bypassStackOutOfSyncError is null && detachedResources is null && deletedResources is null && failedResources is null && resources is null && deploymentExtensions is null && deploymentId is null && outputs is null && duration is null && debugSettingDetailLevel is null ? default : new DeploymentStackProperties(
+                error is null && template is null && templateLink is null && parameters is null && parametersLink is null && extensionConfigs is null && externalInputs is null && externalInputDefinitions is null && actionOnUnmanage is null && debugSettingDetailLevel is null && deploymentScope is null && description is null && denySettings is null && provisioningState is null && correlationId is null && validationLevel is null && bypassStackOutOfSyncError is null && detachedResources is null && deletedResources is null && failedResources is null && resources is null && deploymentExtensions is null && deploymentId is null && outputs is null && duration is null ? default : new DeploymentStackProperties(
                     error,
                     template,
                     templateLink,
-                    parameters,
+                    parameters ?? new ChangeTrackingDictionary<string, DeploymentParameterItem>(),
                     parametersLink,
-                    extensionConfigs,
-                    externalInputs,
-                    externalInputDefinitions,
+                    extensionConfigs ?? new ChangeTrackingDictionary<string, DeploymentExtensionConfig>(),
+                    externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
+                    externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
                     actionOnUnmanage,
-                    new DeploymentStacksDebugSetting(debugSettingDetailLevel, null),
+                    new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
                     deploymentScope,
                     description,
                     denySettings,
@@ -86,31 +86,99 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                     deploymentId,
                     outputs,
                     duration,
-                    null),
+                    default),
                 location,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> The resource management error additional info. </summary>
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         /// <returns> A new <see cref="Models.DeploymentStackAdditionalErrorInfo"/> instance for mocking. </returns>
         public static DeploymentStackAdditionalErrorInfo DeploymentStackAdditionalErrorInfo(string @type = default, BinaryData info = default)
         {
-            return new DeploymentStackAdditionalErrorInfo(@type, info, additionalBinaryDataProperties: null);
+            return new DeploymentStackAdditionalErrorInfo(@type, info, default);
         }
 
-        /// <summary> The configuration of a deployment extension. The keys of this object should align with the extension config schema. </summary>
+        /// <param name="uri"> The URI of the template to deploy. Use either the uri or id property, but not both. </param>
+        /// <param name="id"> The resourceId of a Template Spec. Use either the id or uri property, but not both. </param>
+        /// <param name="relativePath"> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </param>
+        /// <param name="queryString"> The query string (for example, a SAS token) to be used with the templateLink URI. </param>
+        /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
+        /// <returns> A new <see cref="Models.DeploymentStacksTemplateLink"/> instance for mocking. </returns>
+        public static DeploymentStacksTemplateLink DeploymentStacksTemplateLink(Uri uri = default, string id = default, string relativePath = default, string queryString = default, string contentVersion = default)
+        {
+            return new DeploymentStacksTemplateLink(
+                uri,
+                id,
+                relativePath,
+                queryString,
+                contentVersion,
+                default);
+        }
+
+        /// <param name="value"> Input value to the parameter. </param>
+        /// <param name="type"> Type of the value. </param>
+        /// <param name="reference"> Azure Key Vault parameter reference. </param>
+        /// <param name="expression"> Input expression to the parameter. </param>
+        /// <returns> A new <see cref="Models.DeploymentParameterItem"/> instance for mocking. </returns>
+        public static DeploymentParameterItem DeploymentParameterItem(BinaryData value = default, string @type = default, KeyVaultParameterReference reference = default, string expression = default)
+        {
+            return new DeploymentParameterItem(value, @type, reference, expression, default);
+        }
+
+        /// <param name="keyVaultId"> Azure Key Vault resourceId. </param>
+        /// <param name="secretName"> Azure Key Vault secret name. </param>
+        /// <param name="secretVersion"> Azure Key Vault secret version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultId"/> is null. </exception>
+        /// <returns> A new <see cref="Models.KeyVaultParameterReference"/> instance for mocking. </returns>
+        public static KeyVaultParameterReference KeyVaultParameterReference(ResourceIdentifier keyVaultId = default, string secretName = default, string secretVersion = default)
+        {
+            return new KeyVaultParameterReference(keyVaultId is null ? default : new KeyVaultReference(keyVaultId, default), secretName, secretVersion, default);
+        }
+
+        /// <param name="uri"> The URI of the parameters file. </param>
+        /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
+        /// <returns> A new <see cref="Models.DeploymentStacksParametersLink"/> instance for mocking. </returns>
+        public static DeploymentStacksParametersLink DeploymentStacksParametersLink(Uri uri = default, string contentVersion = default)
+        {
+            return new DeploymentStacksParametersLink(uri, contentVersion, default);
+        }
+
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DeploymentExtensionConfig"/> instance for mocking. </returns>
         public static DeploymentExtensionConfig DeploymentExtensionConfig(IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new DeploymentExtensionConfig(additionalProperties);
+            return new DeploymentExtensionConfig(additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Defines how resources deployed by the Deployment stack are locked. </summary>
+        /// <param name="value"> External input value. </param>
+        /// <returns> A new <see cref="Models.DeploymentExternalInput"/> instance for mocking. </returns>
+        public static DeploymentExternalInput DeploymentExternalInput(BinaryData value = default)
+        {
+            return new DeploymentExternalInput(value, default);
+        }
+
+        /// <param name="kind"> The kind of external input. </param>
+        /// <param name="config"> Configuration for the external input. </param>
+        /// <returns> A new <see cref="Models.DeploymentExternalInputDefinition"/> instance for mocking. </returns>
+        public static DeploymentExternalInputDefinition DeploymentExternalInputDefinition(string kind = default, BinaryData config = default)
+        {
+            return new DeploymentExternalInputDefinition(kind, config, default);
+        }
+
+        /// <param name="resources"> Specifies an action for a newly unmanaged resource. </param>
+        /// <param name="resourceGroups"> Specifies an action for a newly unmanaged resource group. </param>
+        /// <param name="managementGroups"> Specifies an action for a newly unmanaged resource management group. </param>
+        /// <param name="resourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
+        /// <returns> A new <see cref="Models.ActionOnUnmanage"/> instance for mocking. </returns>
+        public static ActionOnUnmanage ActionOnUnmanage(UnmanageActionResourceMode resources = default, UnmanageActionResourceGroupMode? resourceGroups = default, UnmanageActionManagementGroupMode? managementGroups = default, ResourcesWithoutDeleteSupportAction? resourcesWithoutDeleteSupport = default)
+        {
+            return new ActionOnUnmanage(resources, resourceGroups, managementGroups, resourcesWithoutDeleteSupport, default);
+        }
+
         /// <param name="mode"> denySettings Mode that defines denied actions. </param>
         /// <param name="excludedPrincipals"> List of AAD principal IDs excluded from the lock. Up to 5 principals are permitted. </param>
         /// <param name="excludedActions"> List of role-based management operations that are excluded from the denySettings. Up to 200 actions are permitted. If the denySetting mode is set to 'denyWriteAndDelete', then the following actions are automatically appended to 'excludedActions': '*\/read' and 'Microsoft.Authorization/locks/delete'. If the denySetting mode is set to 'denyDelete', then the following actions are automatically appended to 'excludedActions': 'Microsoft.Authorization/locks/delete'. Duplicate actions will be removed. </param>
@@ -121,10 +189,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
             excludedPrincipals ??= new ChangeTrackingList<string>();
             excludedActions ??= new ChangeTrackingList<string>();
 
-            return new DeploymentStackDenySettings(mode, excludedPrincipals.ToList(), excludedActions.ToList(), applyToChildScopes, additionalBinaryDataProperties: null);
+            return new DeploymentStackDenySettings(mode, (excludedPrincipals ?? new ChangeTrackingList<string>()).ToList(), (excludedActions ?? new ChangeTrackingList<string>()).ToList(), applyToChildScopes, default);
         }
 
-        /// <summary> The resourceId model. </summary>
         /// <param name="id"> The ARM Resource ID of a resource managed by the deployment stack. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="type"> The resource type. </param>
@@ -139,10 +206,19 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 @type,
                 identifiers,
                 apiVersion,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The resourceId extended model. This is used to document failed resources with a resourceId and a corresponding error. </summary>
+        /// <param name="name"> The extension name. </param>
+        /// <param name="version"> The extension version. </param>
+        /// <param name="configId"> The configuration ID of the extension usage. It uniquely identifies a target the extension deploys to. </param>
+        /// <param name="configAdditionalProperties"> Gets the AdditionalProperties. </param>
+        /// <returns> A new <see cref="Models.DeploymentExtension"/> instance for mocking. </returns>
+        public static DeploymentExtension DeploymentExtension(string name = default, string version = default, string configId = default, IDictionary<string, BinaryData> configAdditionalProperties = default)
+        {
+            return new DeploymentExtension(name, version, configId, configAdditionalProperties is null ? default : new DeploymentExtensionConfig(configAdditionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>()), default);
+        }
+
         /// <param name="id"> The ARM Resource ID of a resource managed by the deployment stack. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="type"> The resource type. </param>
@@ -159,10 +235,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 identifiers,
                 apiVersion,
                 error,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The managed resource model. </summary>
         /// <param name="id"> The ARM Resource ID of a resource managed by the deployment stack. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="type"> The resource type. </param>
@@ -179,12 +254,30 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 @type,
                 identifiers,
                 apiVersion,
-                additionalBinaryDataProperties: null,
+                default,
                 status,
                 denyStatus);
         }
 
-        /// <summary> The Deployment stack validation result details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="error"> The error detail. </param>
+        /// <param name="properties"> The validation result details. </param>
+        /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
+        public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResponseError error = default, DeploymentStackValidateProperties properties = default)
+        {
+            return new DeploymentStackValidateResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                error,
+                properties,
+                default);
+        }
+
         /// <param name="actionOnUnmanage"> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </param>
         /// <param name="correlationId"> The correlation id of the Deployment stack validate operation. It is in GUID format and is used for tracing. </param>
         /// <param name="denySettings"> The Deployment stack deny settings. </param>
@@ -208,24 +301,22 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 denySettings,
                 deploymentScope,
                 description,
-                parameters,
+                parameters ?? new ChangeTrackingDictionary<string, DeploymentParameterItem>(),
                 templateLink,
-                validatedResources.ToList(),
-                deploymentExtensions.ToList(),
+                (validatedResources ?? new ChangeTrackingList<DeploymentStackResourceReference>()).ToList(),
+                (deploymentExtensions ?? new ChangeTrackingList<DeploymentExtension>()).ToList(),
                 validationLevel,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Export Template specific properties of the Deployment stack. </summary>
         /// <param name="template"> The template content. Use this element to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
         /// <returns> A new <see cref="Models.DeploymentStackTemplateExportResult"/> instance for mocking. </returns>
         public static DeploymentStackTemplateExportResult DeploymentStackTemplateExportResult(BinaryData template = default, DeploymentStacksTemplateLink templateLink = default)
         {
-            return new DeploymentStackTemplateExportResult(template, templateLink, additionalBinaryDataProperties: null);
+            return new DeploymentStackTemplateExportResult(template, templateLink, default);
         }
 
-        /// <summary> Deployment stack object. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -243,10 +334,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
                 location,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="error"> The error detail. </param>
@@ -283,13 +374,13 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 error,
                 template,
                 templateLink,
-                parameters,
+                parameters ?? new ChangeTrackingDictionary<string, DeploymentParameterItem>(),
                 parametersLink,
-                extensionConfigs,
-                externalInputs,
-                externalInputDefinitions,
+                extensionConfigs ?? new ChangeTrackingDictionary<string, DeploymentExtensionConfig>(),
+                externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
+                externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
                 actionOnUnmanage,
-                debugSettingDetailLevel is null ? default : new DeploymentStacksDebugSetting(debugSettingDetailLevel, null),
+                debugSettingDetailLevel is null ? default : new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
                 deploymentScope,
                 description,
                 denySettings,
@@ -300,11 +391,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 deploymentStackLastModifiedOn,
                 retentionInterval,
                 changes,
-                diagnostics.ToList(),
-                additionalBinaryDataProperties: null);
+                (diagnostics ?? new ChangeTrackingList<DeploymentStacksDiagnostic>()).ToList(),
+                default);
         }
 
-        /// <summary> Changes predicted to the deployment stack as a result of the what-if operation. </summary>
         /// <param name="resourceChanges"> List of resource changes predicted by What-If operation. </param>
         /// <param name="denySettingsChange"> Predicted changes to the deployment stack deny settings. </param>
         /// <param name="deploymentScopeChange"> Predicted changes to the deployment scope for the deployment stack. </param>
@@ -313,10 +403,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         {
             resourceChanges ??= new ChangeTrackingList<DeploymentStacksWhatIfResourceChange>();
 
-            return new DeploymentStacksWhatIfChange(resourceChanges.ToList(), denySettingsChange, deploymentScopeChange, additionalBinaryDataProperties: null);
+            return new DeploymentStacksWhatIfChange((resourceChanges ?? new ChangeTrackingList<DeploymentStacksWhatIfResourceChange>()).ToList(), denySettingsChange, deploymentScopeChange, default);
         }
 
-        /// <summary> Information about a single resource change predicted by What-If operation. </summary>
         /// <param name="id"> The ARM Resource ID of a resource managed by the deployment stack. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="type"> The resource type. </param>
@@ -347,28 +436,25 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 denyStatusChange,
                 unsupportedReason,
                 resourceConfigurationChanges,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Base model for properties with the before-and-after property values. </summary>
         /// <param name="before"> The predicted value before the deployment is executed. </param>
         /// <param name="after"> The predicted value after the deployment is executed. </param>
         /// <returns> A new <see cref="Models.DeploymentStacksChangeBaseDeploymentStacksManagementStatus"/> instance for mocking. </returns>
         public static DeploymentStacksChangeBaseDeploymentStacksManagementStatus DeploymentStacksChangeBaseDeploymentStacksManagementStatus(DeploymentStacksManagementStatus? before = default, DeploymentStacksManagementStatus? after = default)
         {
-            return new DeploymentStacksChangeBaseDeploymentStacksManagementStatus(before, after, additionalBinaryDataProperties: null);
+            return new DeploymentStacksChangeBaseDeploymentStacksManagementStatus(before, after, default);
         }
 
-        /// <summary> Base model for properties with the before-and-after property values. </summary>
         /// <param name="before"> The predicted value before the deployment is executed. </param>
         /// <param name="after"> The predicted value after the deployment is executed. </param>
         /// <returns> A new <see cref="Models.DeploymentStacksChangeBaseDenyStatusMode"/> instance for mocking. </returns>
         public static DeploymentStacksChangeBaseDenyStatusMode DeploymentStacksChangeBaseDenyStatusMode(DeploymentStackDenyStatusMode? before = default, DeploymentStackDenyStatusMode? after = default)
         {
-            return new DeploymentStacksChangeBaseDenyStatusMode(before, after, additionalBinaryDataProperties: null);
+            return new DeploymentStacksChangeBaseDenyStatusMode(before, after, default);
         }
 
-        /// <summary> Model to show the before-and-after property values, along with the delta between them. </summary>
         /// <param name="before"> The predicted value before the deployment is executed. </param>
         /// <param name="after"> The predicted value after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to the properties.". </param>
@@ -377,10 +463,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         {
             delta ??= new ChangeTrackingList<DeploymentStacksWhatIfPropertyChange>();
 
-            return new DeploymentStacksChangeDelta(before, after, delta.ToList(), additionalBinaryDataProperties: null);
+            return new DeploymentStacksChangeDelta(before, after, (delta ?? new ChangeTrackingList<DeploymentStacksWhatIfPropertyChange>()).ToList(), default);
         }
 
-        /// <summary> The predicted change to the resource property. </summary>
         /// <param name="before"> The predicted value before the deployment is executed. </param>
         /// <param name="after"> The predicted value after the deployment is executed. </param>
         /// <param name="path"> Type of change that will be made to the resource when the deployment is executed. </param>
@@ -396,11 +481,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 after,
                 path,
                 changeType,
-                children.ToList(),
-                additionalBinaryDataProperties: null);
+                (children ?? new ChangeTrackingList<DeploymentStacksWhatIfPropertyChange>()).ToList(),
+                default);
         }
 
-        /// <summary> Model to show the before-and-after property values, along with the delta between them. </summary>
         /// <param name="before"> The predicted value before the deployment is executed. </param>
         /// <param name="after"> The predicted value after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to the properties.". </param>
@@ -409,19 +493,17 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         {
             delta ??= new ChangeTrackingList<DeploymentStacksWhatIfPropertyChange>();
 
-            return new DeploymentStacksChangeDeltaDenySettings(before, after, delta.ToList(), additionalBinaryDataProperties: null);
+            return new DeploymentStacksChangeDeltaDenySettings(before, after, (delta ?? new ChangeTrackingList<DeploymentStacksWhatIfPropertyChange>()).ToList(), default);
         }
 
-        /// <summary> Base model for properties with the before-and-after property values. </summary>
         /// <param name="before"> The predicted value before the deployment is executed. </param>
         /// <param name="after"> The predicted value after the deployment is executed. </param>
         /// <returns> A new <see cref="Models.DeploymentStacksChangeBase"/> instance for mocking. </returns>
         public static DeploymentStacksChangeBase DeploymentStacksChangeBase(string before = default, string after = default)
         {
-            return new DeploymentStacksChangeBase(before, after, additionalBinaryDataProperties: null);
+            return new DeploymentStacksChangeBase(before, after, default);
         }
 
-        /// <summary> The error additional info. </summary>
         /// <param name="level"> Denotes the additional response level. </param>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
@@ -437,8 +519,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 code,
                 message,
                 target,
-                additionalInfo.ToList(),
-                additionalBinaryDataProperties: null);
+                (additionalInfo ?? new ChangeTrackingList<DeploymentStackAdditionalErrorInfo>()).ToList(),
+                default);
         }
 
         /// <summary> The Deployment stack validation result. </summary>
@@ -449,6 +531,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="error"> The error detail. </param>
         /// <param name="properties"> The validation result details. </param>
         /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = default, ResourceType resourceType = default, string name = default, SystemData systemData = default, ResponseError error = default, DeploymentStackValidateProperties properties = default)
         {
             return new DeploymentStackValidateResult(
@@ -456,9 +539,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 error,
-                properties);
+                properties,
+                default);
         }
     }
 }

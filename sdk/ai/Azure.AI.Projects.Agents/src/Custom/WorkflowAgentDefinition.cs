@@ -16,6 +16,10 @@ public partial class WorkflowAgentDefinition
     {
     }
 
+    /// <summary>
+    /// Creates a new <see cref="WorkflowAgentDefinition"/> from a workflow YAML document.
+    /// </summary>
+    /// <param name="workflowYamlDocument">The workflow defined as a YAML document.</param>
     public static WorkflowAgentDefinition FromYaml(string workflowYamlDocument)
     {
         return new()

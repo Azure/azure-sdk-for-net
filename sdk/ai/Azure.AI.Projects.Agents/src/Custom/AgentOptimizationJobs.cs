@@ -15,6 +15,10 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(JobStatus?), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetCandidates", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetCandidates", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetCandidatesAsync", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetCandidatesAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class AgentOptimizationJobs
 {
     /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
@@ -243,17 +247,23 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentsPagedResultOptimizationCandidate> GetCandidates(string jobId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<OptimizationCandidate> GetCandidates(string jobId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return GetCandidates(
-            jobId: jobId,
-            foundryFeatures: default,
-            limit: limit,
-            order: order,
-            after: after,
-            before: before,
-            cancellationToken: cancellationToken
-        );
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        return new InternalOpenAICollectionResultOfT<OptimizationCandidate>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetCandidatesRequest(
+                    jobId: localCollectionOptions.Filters[0],
+                    foundryFeatures: default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    before: localCollectionOptions.BeforeId,
+                    options: localRequestOptions),
+            dataItemDeserializer: OptimizationCandidate.DeserializeOptimizationCandidate,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [jobId]),
+            cancellationToken.ToRequestOptions());
     }
 
     /// <summary> List candidates produced by a job. </summary>
@@ -280,17 +290,23 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentsPagedResultOptimizationCandidate>> GetCandidatesAsync(string jobId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<OptimizationCandidate> GetCandidatesAsync(string jobId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return await GetCandidatesAsync(
-            jobId: jobId,
-            foundryFeatures: default,
-            limit: limit,
-            order: order,
-            after: after,
-            before: before,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        return new InternalOpenAIAsyncCollectionResultOfT<OptimizationCandidate>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetCandidatesRequest(
+                    jobId: localCollectionOptions.Filters[0],
+                    foundryFeatures: default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    before: localCollectionOptions.BeforeId,
+                    options: localRequestOptions),
+            dataItemDeserializer: OptimizationCandidate.DeserializeOptimizationCandidate,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [jobId]),
+            cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Get a single candidate's metadata, manifest, and promotion info. </summary>

@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>
+    /// <summary> Parameters to create and update ClientEncryptionKey. </summary>
+    public partial class CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent : IJsonModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"/> for deserialization. </summary>
+        internal CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"> The <see cref="CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent cosmosDBSqlClientEncryptionKeyCreateOrUpdateContent)
+        {
+            if (cosmosDBSqlClientEncryptionKeyCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(cosmosDBSqlClientEncryptionKeyCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,26 +85,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue(Resource, options);
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -56,86 +109,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent IJsonModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent IJsonModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent DeserializeCosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent DeserializeCosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CosmosDBSqlClientEncryptionKeyResourceInfo resource = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ClientEncryptionKeyCreateUpdateProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("resource"u8))
-                        {
-                            resource = CosmosDBSqlClientEncryptionKeyResourceInfo.DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = ClientEncryptionKeyCreateUpdateProperties.DeserializeClientEncryptionKeyCreateUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(resource, serializedAdditionalRawData);
+            return new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
