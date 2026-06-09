@@ -88,9 +88,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
                 else if (_enableCheckpointing
                     && _batchCheckpointFrequency > 1
-                    && _batchCounter > 0
-                    && _lastProcessedEvent != null
-                    && !_functionExecutionToken.IsCancellationRequested)
+                    && _batchCounter > 0)
                 {
                     // Checkpoint un-checkpointed work on graceful shutdown (not ownership loss)
                     // to prevent stale checkpoints from blocking scale-in.
@@ -150,11 +148,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     && _enableCheckpointing
                     && _batchCheckpointFrequency > 1
                     && _batchCounter > 0
-                    && _lastProcessedEvent != null
-                    && (DateTimeOffset.UtcNow - _lastBatchReceivedTime).TotalSeconds >= IdleCheckpointIntervalSeconds
-                    && !_listenerCancellationToken.IsCancellationRequested
-                    && !_functionExecutionToken.IsCancellationRequested
-                    && !_ownershipLostTokenSource.IsCancellationRequested)
+                    && (DateTimeOffset.UtcNow - _lastBatchReceivedTime).TotalSeconds >= IdleCheckpointIntervalSeconds)
                 {
                     await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
                     _batchCounter = 0;
