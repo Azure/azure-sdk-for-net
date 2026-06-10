@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A Class representing a ResourceHealthEventImpactedResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceHealthEventImpactedResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetResourceHealthEventImpactedResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceHealthEventResource"/> using the GetResourceHealthEventImpactedResource method.
+    /// A class representing a ResourceHealthEventImpactedResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceHealthEventImpactedResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceHealthEventResource"/> using the GetResourceHealthEventImpactedResources method.
     /// </summary>
     public partial class ResourceHealthEventImpactedResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ResourceHealthEventImpactedResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="eventTrackingId"> The eventTrackingId. </param>
-        /// <param name="impactedResourceName"> The impactedResourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string eventTrackingId, string impactedResourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics;
-        private readonly ImpactedResourcesRestOperations _resourceHealthEventImpactedResourceImpactedResourcesRestClient;
+        private readonly ClientDiagnostics _resourceHealthEventImpactedResourcesClientDiagnostics;
+        private readonly ResourceHealthEventImpactedResources _resourceHealthEventImpactedResourcesRestClient;
         private readonly ResourceHealthEventImpactedResourceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events/impactedResources";
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceHealthEventImpactedResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResource for mocking. </summary>
         protected ResourceHealthEventImpactedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceHealthEventImpactedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceHealthEventImpactedResource(ArmClient client, ResourceHealthEventImpactedResourceData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.ResourceHealth
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceHealthEventImpactedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceHealthEventImpactedResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string resourceHealthEventImpactedResourceImpactedResourcesApiVersion);
-            _resourceHealthEventImpactedResourceImpactedResourcesRestClient = new ImpactedResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventImpactedResourceImpactedResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string resourceHealthEventImpactedResourceApiVersion);
+            _resourceHealthEventImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
+            _resourceHealthEventImpactedResourcesRestClient = new ResourceHealthEventImpactedResources(_resourceHealthEventImpactedResourcesClientDiagnostics, Pipeline, Endpoint, resourceHealthEventImpactedResourceApiVersion ?? "2025-05-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ResourceHealthEventImpactedResourceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="eventTrackingId"> The eventTrackingId. </param>
+        /// <param name="impactedResourceName"> The impactedResourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string eventTrackingId, string impactedResourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specific impacted resource in the subscription by an event.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactedResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EventImpactedResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceHealthEventImpactedResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceHealthEventImpactedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceHealthEventImpactedResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResource.Get");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResource.Get");
             scope.Start();
             try
             {
-                var response = await _resourceHealthEventImpactedResourceImpactedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Gets the specific impacted resource in the subscription by an event.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactedResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EventImpactedResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceHealthEventImpactedResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceHealthEventImpactedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceHealthEventImpactedResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResource.Get");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResource.Get");
             scope.Start();
             try
             {
-                var response = _resourceHealthEventImpactedResourceImpactedResourcesRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

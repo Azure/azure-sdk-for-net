@@ -13,73 +13,58 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary>
-    /// A class representing the ServiceEmergingIssue data model.
-    /// The Get EmergingIssues operation response.
-    /// </summary>
+    /// <summary> The Get EmergingIssues operation response. </summary>
     public partial class ServiceEmergingIssueData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceEmergingIssueData"/>. </summary>
         internal ServiceEmergingIssueData()
         {
-            StatusBanners = new ChangeTrackingList<EmergingIssueBannerType>();
-            StatusActiveEvents = new ChangeTrackingList<EmergingIssueActiveEventType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceEmergingIssueData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="refreshedOn"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
-        /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
-        /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshedOn, IReadOnlyList<EmergingIssueBannerType> statusBanners, IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The emerging issue entity properties. </param>
+        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmergingIssue properties) : base(id, name, resourceType, systemData)
         {
-            RefreshedOn = refreshedOn;
-            StatusBanners = statusBanners;
-            StatusActiveEvents = statusActiveEvents;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The emerging issue entity properties. </summary>
+        internal EmergingIssue Properties { get; }
+
         /// <summary> Timestamp for when last time refreshed for ongoing emerging issue. </summary>
-        public DateTimeOffset? RefreshedOn { get; }
+        public DateTimeOffset? RefreshedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RefreshedOn;
+            }
+        }
+
         /// <summary> The list of emerging issues of banner type. </summary>
-        public IReadOnlyList<EmergingIssueBannerType> StatusBanners { get; }
+        public IList<EmergingIssueBannerType> StatusBanners
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusBanners;
+            }
+        }
+
         /// <summary> The list of emerging issues of active event type. </summary>
-        public IReadOnlyList<EmergingIssueActiveEventType> StatusActiveEvents { get; }
+        public IList<EmergingIssueActiveEventType> StatusActiveEvents
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusActiveEvents;
+            }
+        }
     }
 }
