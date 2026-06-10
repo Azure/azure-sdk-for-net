@@ -44,7 +44,7 @@ variables:
   - template: /eng/pipelines/templates/variables/globals.yml
 
 extends:
-  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
+  template: /eng/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
     InitializationSteps:
       - task: UseNode@1
