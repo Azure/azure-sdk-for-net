@@ -490,7 +490,7 @@ When you need post-generation customizations, refer to the language-specific doc
 | **C#** | [C# Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md) | Partial classes with `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSerialization]` attributes |
 | **Python** | [Python Customization Guide](https://github.com/Azure/autorest.python/blob/main/docs/customizations.md) | `_patch.py` files at models, operations, and client levels |
 | **Java** | [Java Customization Guide](https://github.com/Azure/autorest.java/blob/main/customization-base/README.md) | `Customization` class with `customizeAst()` method |
-| **JavaScript** | [JS Customization Guide](https://github.com/Azure/azure-sdk-for-js/wiki/Modular-(DPG)-Customization-Guide) | Copy `src/` to `generated/`, add customizations in `src/` |
+| **JavaScript** | [JS Customization Guide](https://github.com/Azure/azure-sdk-for-js/blob/main/documentation/modular-customization.md) | Copy `src/` to `generated/`, add customizations in `src/` |
 | **Go** | [Go Customization Guide](https://github.com/Azure/azure-sdk-for-go/blob/main/documentation/development/generate.md) | Prefer TypeSpec; use custom wrapper files for advanced cases |
 
 ### Decision Flow
