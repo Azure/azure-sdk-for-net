@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Enumeration of results for supported conversation analysis Results. </summary>
-    internal readonly partial struct AnalyzeConversationOperationResultsKind : IEquatable<AnalyzeConversationOperationResultsKind>
+    public readonly partial struct AnalyzeConversationOperationResultsKind : IEquatable<AnalyzeConversationOperationResultsKind>
     {
         private readonly string _value;
         /// <summary> Conversational Summarization Results. </summary>

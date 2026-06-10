@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The entity resolution object kind. </summary>
-    internal readonly partial struct ResolutionKind : IEquatable<ResolutionKind>
+    public readonly partial struct ResolutionKind : IEquatable<ResolutionKind>
     {
         private readonly string _value;
         /// <summary> Resolution of a boolean entity. </summary>

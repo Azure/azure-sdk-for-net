@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> Defines the type of message platform. </summary>
-    internal readonly partial struct MessagePlatformKind : IEquatable<MessagePlatformKind>
+    public readonly partial struct MessagePlatformKind : IEquatable<MessagePlatformKind>
     {
         private readonly string _value;
         /// <summary> Azure Communication platform. </summary>

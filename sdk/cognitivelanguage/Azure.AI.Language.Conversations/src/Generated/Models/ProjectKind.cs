@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The type of the project. </summary>
-    internal readonly partial struct ProjectKind : IEquatable<ProjectKind>
+    public readonly partial struct ProjectKind : IEquatable<ProjectKind>
     {
         private readonly string _value;
         /// <summary> Conversation type. </summary>

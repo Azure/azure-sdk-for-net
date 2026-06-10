@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The kind of the analyze-text tasks supported. </summary>
-    internal readonly partial struct AnalyzeTextInputKind : IEquatable<AnalyzeTextInputKind>
+    public readonly partial struct AnalyzeTextInputKind : IEquatable<AnalyzeTextInputKind>
     {
         private readonly string _value;
         /// <summary> Sentiment analysis task. </summary>

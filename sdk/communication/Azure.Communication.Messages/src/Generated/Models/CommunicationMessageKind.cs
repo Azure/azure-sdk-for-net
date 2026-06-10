@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> The type of message. </summary>
-    internal readonly partial struct CommunicationMessageKind : IEquatable<CommunicationMessageKind>
+    public readonly partial struct CommunicationMessageKind : IEquatable<CommunicationMessageKind>
     {
         private readonly string _value;
         /// <summary> Text message type. </summary>

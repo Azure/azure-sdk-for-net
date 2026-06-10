@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The kind of the response object returned by the analyze-text task. </summary>
-    internal readonly partial struct AnalyzeTextResultsKind : IEquatable<AnalyzeTextResultsKind>
+    public readonly partial struct AnalyzeTextResultsKind : IEquatable<AnalyzeTextResultsKind>
     {
         private readonly string _value;
         /// <summary> Sentiment analysis results. </summary>

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Kind of matching policy to be used. </summary>
-    internal readonly partial struct MatchingPolicyKind : IEquatable<MatchingPolicyKind>
+    public readonly partial struct MatchingPolicyKind : IEquatable<MatchingPolicyKind>
     {
         private readonly string _value;
         /// <summary> Prebuilt weights will be used for giving preference to question and answer columns when quering AI search. </summary>

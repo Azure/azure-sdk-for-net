@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The kind of the long running analyze text tasks supported. </summary>
-    internal readonly partial struct AnalyzeTextOperationActionKind : IEquatable<AnalyzeTextOperationActionKind>
+    public readonly partial struct AnalyzeTextOperationActionKind : IEquatable<AnalyzeTextOperationActionKind>
     {
         private readonly string _value;
         /// <summary> Sentiment analysis task. </summary>
