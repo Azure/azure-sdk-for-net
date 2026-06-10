@@ -15,61 +15,61 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Request to retry a summary logs bin. </summary>
-    public partial class SummaryLogsRetryBin : IJsonModel<SummaryLogsRetryBin>
+    public partial class OperationalInsightsSummaryLogsRetryBin : IJsonModel<OperationalInsightsSummaryLogsRetryBin>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SummaryLogsRetryBin PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsSummaryLogsRetryBin PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSummaryLogsRetryBin(document.RootElement, options);
+                        return DeserializeOperationalInsightsSummaryLogsRetryBin(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SummaryLogsRetryBin)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsSummaryLogsRetryBin)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SummaryLogsRetryBin)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsSummaryLogsRetryBin)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SummaryLogsRetryBin>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OperationalInsightsSummaryLogsRetryBin>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SummaryLogsRetryBin IPersistableModel<SummaryLogsRetryBin>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OperationalInsightsSummaryLogsRetryBin IPersistableModel<OperationalInsightsSummaryLogsRetryBin>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SummaryLogsRetryBin>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationalInsightsSummaryLogsRetryBin>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="summaryLogsRetryBin"> The <see cref="SummaryLogsRetryBin"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SummaryLogsRetryBin summaryLogsRetryBin)
+        /// <param name="operationalInsightsSummaryLogsRetryBin"> The <see cref="OperationalInsightsSummaryLogsRetryBin"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(OperationalInsightsSummaryLogsRetryBin operationalInsightsSummaryLogsRetryBin)
         {
-            if (summaryLogsRetryBin == null)
+            if (operationalInsightsSummaryLogsRetryBin == null)
             {
                 return null;
             }
-            return RequestContent.Create(summaryLogsRetryBin, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(operationalInsightsSummaryLogsRetryBin, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SummaryLogsRetryBin>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationalInsightsSummaryLogsRetryBin>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummaryLogsRetryBin)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsSummaryLogsRetryBin)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SummaryLogsRetryBin IJsonModel<SummaryLogsRetryBin>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OperationalInsightsSummaryLogsRetryBin IJsonModel<OperationalInsightsSummaryLogsRetryBin>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SummaryLogsRetryBin JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsSummaryLogsRetryBin JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSummaryLogsRetryBin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummaryLogsRetryBin)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsSummaryLogsRetryBin)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSummaryLogsRetryBin(document.RootElement, options);
+            return DeserializeOperationalInsightsSummaryLogsRetryBin(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SummaryLogsRetryBin DeserializeSummaryLogsRetryBin(JsonElement element, ModelReaderWriterOptions options)
+        internal static OperationalInsightsSummaryLogsRetryBin DeserializeOperationalInsightsSummaryLogsRetryBin(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SummaryLogsRetryBin(properties, additionalBinaryDataProperties);
+            return new OperationalInsightsSummaryLogsRetryBin(properties, additionalBinaryDataProperties);
         }
     }
 }

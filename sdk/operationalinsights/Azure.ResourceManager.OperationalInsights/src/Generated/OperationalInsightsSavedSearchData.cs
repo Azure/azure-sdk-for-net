@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -39,14 +38,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the saved search. </param>
         /// <param name="eTag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
-        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SavedSearchProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SavedSearchProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the saved search. </summary>
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
 
         /// <summary> The category of the saved search. This helps the user to find a saved search faster. </summary>
         [WirePath("properties.category")]

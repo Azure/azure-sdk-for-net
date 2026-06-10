@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation<OperationalInsightsClusterResource> operation = new OperationalInsightsArmOperation<OperationalInsightsClusterResource>(
-                    new OperationalInsightsClusterOperationSource(Client),
+                    new OperationalInsightsClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation<OperationalInsightsClusterResource> operation = new OperationalInsightsArmOperation<OperationalInsightsClusterResource>(
-                    new OperationalInsightsClusterOperationSource(Client),
+                    new OperationalInsightsClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,

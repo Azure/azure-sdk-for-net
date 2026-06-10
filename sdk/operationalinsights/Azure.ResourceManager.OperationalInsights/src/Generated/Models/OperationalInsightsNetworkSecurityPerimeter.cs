@@ -13,22 +13,22 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Information about a network security perimeter (NSP). </summary>
-    public partial class NetworkSecurityPerimeter
+    public partial class OperationalInsightsNetworkSecurityPerimeter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
-        internal NetworkSecurityPerimeter()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeter"/>. </summary>
+        internal OperationalInsightsNetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeter"/>. </summary>
         /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;

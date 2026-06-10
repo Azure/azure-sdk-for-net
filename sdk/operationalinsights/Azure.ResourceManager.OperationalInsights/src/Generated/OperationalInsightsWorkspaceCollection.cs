@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OperationalInsightsWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource> operation = new OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource>(
-                    new OperationalInsightsWorkspaceOperationSource(Client),
+                    new OperationalInsightsWorkspaceResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OperationalInsightsWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource> operation = new OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource>(
-                    new OperationalInsightsWorkspaceOperationSource(Client),
+                    new OperationalInsightsWorkspaceResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,

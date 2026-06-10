@@ -14,7 +14,7 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal partial class WorkspacesGetNSPCollectionResultOfT : Pageable<NetworkSecurityPerimeterConfiguration>
+    internal partial class WorkspacesGetNSPCollectionResultOfT : Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration>
     {
         private readonly Workspaces _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkspacesGetNSPCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NetworkSecurityPerimeterConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<OperationalInsightsNetworkSecurityPerimeterConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationListResult result = NetworkSecurityPerimeterConfigurationListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<NetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<OperationalInsightsNetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

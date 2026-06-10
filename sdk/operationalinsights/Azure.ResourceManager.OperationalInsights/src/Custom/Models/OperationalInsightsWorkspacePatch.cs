@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         internal OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ETag? eTag, WorkspaceProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags)
-            : this(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, identity, tags)
+            : this(id, name, resourceType, systemData, properties, identity, tags, additionalBinaryDataProperties)
         {
             _eTag = eTag;
         }

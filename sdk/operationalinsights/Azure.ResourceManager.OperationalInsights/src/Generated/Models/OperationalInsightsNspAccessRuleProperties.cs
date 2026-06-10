@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<OperationalInsightsNspAccessRuleSubscription>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsNspAccessRuleProperties(OperationalInsightsNspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<OperationalInsightsNspAccessRuleSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNspAccessRuleProperties(OperationalInsightsNspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<OperationalInsightsNspAccessRuleSubscription> subscriptions, IList<OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Network security perimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]
-        public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+        public IList<OperationalInsightsNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> Fully qualified domain names (FQDN) for outbound rules. </summary>
         [WirePath("fullyQualifiedDomainNames")]

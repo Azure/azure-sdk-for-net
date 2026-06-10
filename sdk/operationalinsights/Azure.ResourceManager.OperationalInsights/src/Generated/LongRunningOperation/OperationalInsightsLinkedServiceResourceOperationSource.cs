@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary></summary>
-    internal partial class SummaryLogsOperationSource : IOperationSource<SummaryLogsResource>
+    internal partial class OperationalInsightsLinkedServiceResourceOperationSource : IOperationSource<OperationalInsightsLinkedServiceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SummaryLogsOperationSource(ArmClient client)
+        internal OperationalInsightsLinkedServiceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SummaryLogsResource IOperationSource<SummaryLogsResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        OperationalInsightsLinkedServiceResource IOperationSource<OperationalInsightsLinkedServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SummaryLogsData data = SummaryLogsData.DeserializeSummaryLogsData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SummaryLogsResource(_client, data);
+            OperationalInsightsLinkedServiceData data = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OperationalInsightsLinkedServiceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SummaryLogsResource> IOperationSource<SummaryLogsResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OperationalInsightsLinkedServiceResource> IOperationSource<OperationalInsightsLinkedServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SummaryLogsData data = SummaryLogsData.DeserializeSummaryLogsData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SummaryLogsResource(_client, data);
+            OperationalInsightsLinkedServiceData data = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OperationalInsightsLinkedServiceResource(_client, data);
         }
     }
 }

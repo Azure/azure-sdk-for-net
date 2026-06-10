@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary></summary>
-    internal partial class OperationalInsightsClusterOperationSource : IOperationSource<OperationalInsightsClusterResource>
+    internal partial class OperationalInsightsTableResourceOperationSource : IOperationSource<OperationalInsightsTableResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal OperationalInsightsClusterOperationSource(ArmClient client)
+        internal OperationalInsightsTableResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        OperationalInsightsClusterResource IOperationSource<OperationalInsightsClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        OperationalInsightsTableResource IOperationSource<OperationalInsightsTableResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            OperationalInsightsClusterData data = OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new OperationalInsightsClusterResource(_client, data);
+            OperationalInsightsTableData data = OperationalInsightsTableData.DeserializeOperationalInsightsTableData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OperationalInsightsTableResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<OperationalInsightsClusterResource> IOperationSource<OperationalInsightsClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OperationalInsightsTableResource> IOperationSource<OperationalInsightsTableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            OperationalInsightsClusterData data = OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new OperationalInsightsClusterResource(_client, data);
+            OperationalInsightsTableData data = OperationalInsightsTableData.DeserializeOperationalInsightsTableData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OperationalInsightsTableResource(_client, data);
         }
     }
 }

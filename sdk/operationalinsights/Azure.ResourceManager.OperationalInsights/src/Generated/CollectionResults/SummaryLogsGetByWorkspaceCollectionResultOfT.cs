@@ -14,7 +14,7 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal partial class SummaryLogsGetByWorkspaceCollectionResultOfT : Pageable<SummaryLogsData>
+    internal partial class SummaryLogsGetByWorkspaceCollectionResultOfT : Pageable<OperationalInsightsSummaryLogsData>
     {
         private readonly SummaryLogs _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SummaryLogsGetByWorkspaceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SummaryLogsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<OperationalInsightsSummaryLogsData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     yield break;
                 }
                 SummaryLogsListResult result = SummaryLogsListResult.FromResponse(response);
-                yield return Page<SummaryLogsData>.FromValues((IReadOnlyList<SummaryLogsData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<OperationalInsightsSummaryLogsData>.FromValues((IReadOnlyList<OperationalInsightsSummaryLogsData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

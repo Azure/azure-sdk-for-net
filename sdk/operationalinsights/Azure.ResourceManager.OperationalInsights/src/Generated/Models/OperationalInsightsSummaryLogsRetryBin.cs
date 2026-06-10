@@ -12,20 +12,20 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Request to retry a summary logs bin. </summary>
-    public partial class SummaryLogsRetryBin
+    public partial class OperationalInsightsSummaryLogsRetryBin
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SummaryLogsRetryBin"/>. </summary>
-        public SummaryLogsRetryBin()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSummaryLogsRetryBin"/>. </summary>
+        public OperationalInsightsSummaryLogsRetryBin()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SummaryLogsRetryBin"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSummaryLogsRetryBin"/>. </summary>
         /// <param name="properties"> Retry bin properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryLogsRetryBin(SummaryLogsRetryBinProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsSummaryLogsRetryBin(SummaryLogsRetryBinProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

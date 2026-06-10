@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeter item in NetworkSecurityPerimeters)
+                foreach (OperationalInsightsNetworkSecurityPerimeter item in NetworkSecurityPerimeters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             OperationalInsightsNspAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
             IList<OperationalInsightsNspAccessRuleSubscription> subscriptions = default;
-            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IList<OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<string> emailAddresses = default;
             IList<string> phoneNumbers = default;
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeter> array = new List<NetworkSecurityPerimeter>();
+                    List<OperationalInsightsNetworkSecurityPerimeter> array = new List<OperationalInsightsNetworkSecurityPerimeter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(item, options));
+                        array.Add(OperationalInsightsNetworkSecurityPerimeter.DeserializeOperationalInsightsNetworkSecurityPerimeter(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<OperationalInsightsNspAccessRuleSubscription>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
                 phoneNumbers ?? new ChangeTrackingList<string>(),

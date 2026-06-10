@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetworkSecurityPerimeterConfiguration>> GetNSPAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationalInsightsNetworkSecurityPerimeterConfiguration>> GetNSPAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 };
                 HttpMessage message = _workspacesRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> response = Response.FromValue(OperationalInsightsNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetworkSecurityPerimeterConfiguration> GetNSP(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNSP(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 };
                 HttpMessage message = _workspacesRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> response = Response.FromValue(OperationalInsightsNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -553,8 +553,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetNSPAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNSPAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -591,8 +591,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetNSP(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNSP(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -2378,11 +2378,11 @@ namespace Azure.ResourceManager.OperationalInsights
             return GetStorageInsights().Get(storageInsightName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SummaryLogs in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of SummaryLogs and their operations over a SummaryLogsResource. </returns>
-        public virtual SummaryLogsCollection GetAllSummaryLogs()
+        /// <summary> Gets a collection of OperationalInsightsSummaryLogs in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsSummaryLogs and their operations over a OperationalInsightsSummaryLogsResource. </returns>
+        public virtual OperationalInsightsSummaryLogsCollection GetAllOperationalInsightsSummaryLogs()
         {
-            return GetCachedClient(client => new SummaryLogsCollection(client, Id));
+            return GetCachedClient(client => new OperationalInsightsSummaryLogsCollection(client, Id));
         }
 
         /// <summary> Gets Log Analytics workspace Summary rules. </summary>
@@ -2391,11 +2391,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="summaryLogsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="summaryLogsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SummaryLogsResource>> GetSummaryLogsAsync(string summaryLogsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationalInsightsSummaryLogsResource>> GetOperationalInsightsSummaryLogsAsync(string summaryLogsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(summaryLogsName, nameof(summaryLogsName));
 
-            return await GetAllSummaryLogs().GetAsync(summaryLogsName, cancellationToken).ConfigureAwait(false);
+            return await GetAllOperationalInsightsSummaryLogs().GetAsync(summaryLogsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets Log Analytics workspace Summary rules. </summary>
@@ -2404,11 +2404,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="summaryLogsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="summaryLogsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SummaryLogsResource> GetSummaryLogs(string summaryLogsName, CancellationToken cancellationToken = default)
+        public virtual Response<OperationalInsightsSummaryLogsResource> GetOperationalInsightsSummaryLogs(string summaryLogsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(summaryLogsName, nameof(summaryLogsName));
 
-            return GetAllSummaryLogs().Get(summaryLogsName, cancellationToken);
+            return GetAllOperationalInsightsSummaryLogs().Get(summaryLogsName, cancellationToken);
         }
     }
 }

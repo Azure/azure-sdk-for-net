@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -39,18 +38,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
         /// <param name="eTag"> The ETag of the data source. </param>
         /// <param name="kind"> The kind of the DataSource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal OperationalInsightsDataSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ETag? eTag, OperationalInsightsDataSourceKind kind, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsDataSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, string eTag, OperationalInsightsDataSourceKind kind, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             Kind = kind;
             Tags = tags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The ETag of the data source. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
 
         /// <summary> The kind of the DataSource. </summary>
         [WirePath("kind")]

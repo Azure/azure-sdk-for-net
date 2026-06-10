@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _tablesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsTableData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation<OperationalInsightsTableResource> operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(
-                    new OperationalInsightsTableOperationSource(Client),
+                    new OperationalInsightsTableResourceOperationSource(Client),
                     _tablesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _tablesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsTableData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation<OperationalInsightsTableResource> operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(
-                    new OperationalInsightsTableOperationSource(Client),
+                    new OperationalInsightsTableResourceOperationSource(Client),
                     _tablesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             return new StorageInsightResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SummaryLogsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="OperationalInsightsSummaryLogsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SummaryLogsResource"/> object. </returns>
-        public virtual SummaryLogsResource GetSummaryLogsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsSummaryLogsResource"/> object. </returns>
+        public virtual OperationalInsightsSummaryLogsResource GetOperationalInsightsSummaryLogsResource(ResourceIdentifier id)
         {
-            SummaryLogsResource.ValidateResourceId(id);
-            return new SummaryLogsResource(Client, id);
+            OperationalInsightsSummaryLogsResource.ValidateResourceId(id);
+            return new OperationalInsightsSummaryLogsResource(Client, id);
         }
     }
 }

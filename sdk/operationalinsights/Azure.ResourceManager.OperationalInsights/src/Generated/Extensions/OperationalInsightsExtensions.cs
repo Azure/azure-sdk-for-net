@@ -237,21 +237,21 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SummaryLogsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="OperationalInsightsSummaryLogsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetSummaryLogsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsSummaryLogsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SummaryLogsResource"/> object. </returns>
-        public static SummaryLogsResource GetSummaryLogsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsSummaryLogsResource"/> object. </returns>
+        public static OperationalInsightsSummaryLogsResource GetOperationalInsightsSummaryLogsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableOperationalInsightsArmClient(client).GetSummaryLogsResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsSummaryLogsResource(id);
         }
 
         /// <summary>

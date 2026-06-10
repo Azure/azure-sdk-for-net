@@ -18,40 +18,40 @@ using Azure.ResourceManager.OperationalInsights.Models;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
-    /// A class representing a SummaryLogs along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SummaryLogsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetAllSummaryLogs method.
+    /// A class representing a OperationalInsightsSummaryLogs along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="OperationalInsightsSummaryLogsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetAllOperationalInsightsSummaryLogs method.
     /// </summary>
-    public partial class SummaryLogsResource : ArmResource
+    public partial class OperationalInsightsSummaryLogsResource : ArmResource
     {
         private readonly ClientDiagnostics _summaryLogsClientDiagnostics;
         private readonly SummaryLogs _summaryLogsRestClient;
-        private readonly SummaryLogsData _data;
+        private readonly OperationalInsightsSummaryLogsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/summaryLogs";
 
-        /// <summary> Initializes a new instance of SummaryLogsResource for mocking. </summary>
-        protected SummaryLogsResource()
+        /// <summary> Initializes a new instance of OperationalInsightsSummaryLogsResource for mocking. </summary>
+        protected OperationalInsightsSummaryLogsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SummaryLogsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSummaryLogsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SummaryLogsResource(ArmClient client, SummaryLogsData data) : this(client, data.Id)
+        internal OperationalInsightsSummaryLogsResource(ArmClient client, OperationalInsightsSummaryLogsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SummaryLogsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSummaryLogsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SummaryLogsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal OperationalInsightsSummaryLogsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string summaryLogsApiVersion);
+            TryGetApiVersion(ResourceType, out string operationalInsightsSummaryLogsApiVersion);
             _summaryLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _summaryLogsRestClient = new SummaryLogs(_summaryLogsClientDiagnostics, Pipeline, Endpoint, summaryLogsApiVersion ?? "2025-07-01");
+            _summaryLogsRestClient = new SummaryLogs(_summaryLogsClientDiagnostics, Pipeline, Endpoint, operationalInsightsSummaryLogsApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SummaryLogsData Data
+        public virtual OperationalInsightsSummaryLogsData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SummaryLogsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationalInsightsSummaryLogsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Get");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.OperationalInsights
                 };
                 HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SummaryLogsData> response = Response.FromValue(SummaryLogsData.FromResponse(result), result);
+                Response<OperationalInsightsSummaryLogsData> response = Response.FromValue(OperationalInsightsSummaryLogsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SummaryLogsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsSummaryLogsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SummaryLogsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<OperationalInsightsSummaryLogsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Get");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.OperationalInsights
                 };
                 HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SummaryLogsData> response = Response.FromValue(SummaryLogsData.FromResponse(result), result);
+                Response<OperationalInsightsSummaryLogsData> response = Response.FromValue(OperationalInsightsSummaryLogsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SummaryLogsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsSummaryLogsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Delete");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Delete");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Delete");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Delete");
             scope.Start();
             try
             {
@@ -303,19 +303,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="summaryLogsRetryBin"> The parameters required to retry a Summary rule bin. </param>
+        /// <param name="operationalInsightsSummaryLogsRetryBin"> The parameters required to retry a Summary rule bin. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summaryLogsRetryBin"/> is null. </exception>
-        public virtual async Task<ArmOperation> RetryBinAsync(WaitUntil waitUntil, SummaryLogsRetryBin summaryLogsRetryBin, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationalInsightsSummaryLogsRetryBin"/> is null. </exception>
+        public virtual async Task<ArmOperation> RetryBinAsync(WaitUntil waitUntil, OperationalInsightsSummaryLogsRetryBin operationalInsightsSummaryLogsRetryBin, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(summaryLogsRetryBin, nameof(summaryLogsRetryBin));
+            Argument.AssertNotNull(operationalInsightsSummaryLogsRetryBin, nameof(operationalInsightsSummaryLogsRetryBin));
 
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.RetryBin");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.RetryBin");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateRetryBinRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SummaryLogsRetryBin.ToRequestContent(summaryLogsRetryBin), context);
+                HttpMessage message = _summaryLogsRestClient.CreateRetryBinRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsSummaryLogsRetryBin.ToRequestContent(operationalInsightsSummaryLogsRetryBin), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_summaryLogsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -356,19 +356,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="summaryLogsRetryBin"> The parameters required to retry a Summary rule bin. </param>
+        /// <param name="operationalInsightsSummaryLogsRetryBin"> The parameters required to retry a Summary rule bin. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summaryLogsRetryBin"/> is null. </exception>
-        public virtual ArmOperation RetryBin(WaitUntil waitUntil, SummaryLogsRetryBin summaryLogsRetryBin, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationalInsightsSummaryLogsRetryBin"/> is null. </exception>
+        public virtual ArmOperation RetryBin(WaitUntil waitUntil, OperationalInsightsSummaryLogsRetryBin operationalInsightsSummaryLogsRetryBin, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(summaryLogsRetryBin, nameof(summaryLogsRetryBin));
+            Argument.AssertNotNull(operationalInsightsSummaryLogsRetryBin, nameof(operationalInsightsSummaryLogsRetryBin));
 
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.RetryBin");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.RetryBin");
             scope.Start();
             try
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateRetryBinRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SummaryLogsRetryBin.ToRequestContent(summaryLogsRetryBin), context);
+                HttpMessage message = _summaryLogsRestClient.CreateRetryBinRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsSummaryLogsRetryBin.ToRequestContent(operationalInsightsSummaryLogsRetryBin), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_summaryLogsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Start");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Start");
             scope.Start();
             try
             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Start");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Start");
             scope.Start();
             try
             {
@@ -507,14 +507,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Stop");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Stop");
             scope.Start();
             try
             {
@@ -550,14 +550,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Stop(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Stop");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Stop");
             scope.Start();
             try
             {
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Update a SummaryLogs.
+        /// Update a OperationalInsightsSummaryLogs.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -601,11 +601,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> The parameters required to update summary rules properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SummaryLogsResource>> UpdateAsync(WaitUntil waitUntil, SummaryLogsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationalInsightsSummaryLogsResource>> UpdateAsync(WaitUntil waitUntil, OperationalInsightsSummaryLogsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Update");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Update");
             scope.Start();
             try
             {
@@ -613,10 +613,10 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SummaryLogsData.ToRequestContent(data), context);
+                HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsSummaryLogsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OperationalInsightsArmOperation<SummaryLogsResource> operation = new OperationalInsightsArmOperation<SummaryLogsResource>(
-                    new SummaryLogsOperationSource(Client),
+                OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource> operation = new OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource>(
+                    new OperationalInsightsSummaryLogsResourceOperationSource(Client),
                     _summaryLogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Update a SummaryLogs.
+        /// Update a OperationalInsightsSummaryLogs.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SummaryLogsResource"/>. </description>
+        /// <description> <see cref="OperationalInsightsSummaryLogsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -660,11 +660,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> The parameters required to update summary rules properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SummaryLogsResource> Update(WaitUntil waitUntil, SummaryLogsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationalInsightsSummaryLogsResource> Update(WaitUntil waitUntil, OperationalInsightsSummaryLogsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("SummaryLogsResource.Update");
+            using DiagnosticScope scope = _summaryLogsClientDiagnostics.CreateScope("OperationalInsightsSummaryLogsResource.Update");
             scope.Start();
             try
             {
@@ -672,10 +672,10 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SummaryLogsData.ToRequestContent(data), context);
+                HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsSummaryLogsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                OperationalInsightsArmOperation<SummaryLogsResource> operation = new OperationalInsightsArmOperation<SummaryLogsResource>(
-                    new SummaryLogsOperationSource(Client),
+                OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource> operation = new OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource>(
+                    new OperationalInsightsSummaryLogsResourceOperationSource(Client),
                     _summaryLogsClientDiagnostics,
                     Pipeline,
                     message.Request,

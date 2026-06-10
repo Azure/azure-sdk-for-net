@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -31,18 +30,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Workspace properties. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="eTag"> The etag of the workspace. </param>
-        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, Models.Identity identity, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Workspace properties. </summary>
@@ -51,11 +50,11 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public Models.Identity Identity { get; set; }
 
         /// <summary> The etag of the workspace. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
 
         /// <summary> The provisioning state of the workspace. </summary>
         [WirePath("properties.provisioningState")]

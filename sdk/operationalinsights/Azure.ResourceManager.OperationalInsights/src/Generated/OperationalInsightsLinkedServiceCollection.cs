@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _linkedServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, OperationalInsightsLinkedServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource> operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(
-                    new OperationalInsightsLinkedServiceOperationSource(Client),
+                    new OperationalInsightsLinkedServiceResourceOperationSource(Client),
                     _linkedServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 HttpMessage message = _linkedServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, OperationalInsightsLinkedServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource> operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(
-                    new OperationalInsightsLinkedServiceOperationSource(Client),
+                    new OperationalInsightsLinkedServiceResourceOperationSource(Client),
                     _linkedServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

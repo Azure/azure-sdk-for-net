@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SummaryLogsData item in Value)
+            foreach (OperationalInsightsSummaryLogsData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            IList<SummaryLogsData> value = default;
+            IList<OperationalInsightsSummaryLogsData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SummaryLogsData> array = new List<SummaryLogsData>();
+                    List<OperationalInsightsSummaryLogsData> array = new List<OperationalInsightsSummaryLogsData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SummaryLogsData.DeserializeSummaryLogsData(item, options));
+                        array.Add(OperationalInsightsSummaryLogsData.DeserializeOperationalInsightsSummaryLogsData(item, options));
                     }
                     value = array;
                     continue;
