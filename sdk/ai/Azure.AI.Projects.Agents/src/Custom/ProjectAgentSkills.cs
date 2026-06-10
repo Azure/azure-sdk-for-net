@@ -14,6 +14,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetSkillsAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetSkills", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetSkillsAsync", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("CreateSkillVersionFromFiles", typeof(string), typeof(CreateSkillVersionFromFilesBody), typeof(CancellationToken))]
+[CodeGenSuppress("CreateSkillVersionFromFilesAsync", typeof(string), typeof(CreateSkillVersionFromFilesBody), typeof(CancellationToken))]
 public partial class ProjectAgentSkills
 {
     /// <summary> Creates a skill from a zip package. </summary>

@@ -928,21 +928,11 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ContentFilterConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ContentFilterConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CreateAgentFromCodeOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateAgentFromCodeOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentFromCodeOptions>
+    public partial class CreateAgentFromCodeOptions
     {
         public CreateAgentFromCodeOptions(Azure.AI.Projects.Agents.CreateAgentVersionFromCodeMetadata metadata, System.BinaryData code) { }
         public System.BinaryData Code { get { throw null; } }
         public Azure.AI.Projects.Agents.CreateAgentVersionFromCodeMetadata Metadata { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.CreateAgentFromCodeOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Projects.Agents.CreateAgentFromCodeOptions createAgentFromCodeOptions) { throw null; }
-        protected virtual Azure.AI.Projects.Agents.CreateAgentFromCodeOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.CreateAgentFromCodeOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateAgentFromCodeOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateAgentFromCodeOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.CreateAgentFromCodeOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentFromCodeOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentFromCodeOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentFromCodeOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CreateAgentVersionFromCodeMetadata : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateAgentVersionFromCodeMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentVersionFromCodeMetadata>
     {

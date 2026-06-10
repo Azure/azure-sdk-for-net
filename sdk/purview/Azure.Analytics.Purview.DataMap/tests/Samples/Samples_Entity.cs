@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -2864,8 +2865,9 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             BusinessMetadataOptions body = null;
-            using RequestContent content = body?.ToRequestContent();
-            Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
+            using BinaryContent content = body?.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response response = client.ImportBusinessMetadata(requestContent, "multipart/form-data");
         }
 
         [Test]
@@ -2877,8 +2879,9 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             BusinessMetadataOptions body = null;
-            using RequestContent content = body?.ToRequestContent();
-            Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
+            using BinaryContent content = body?.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response response = await client.ImportBusinessMetadataAsync(requestContent, "multipart/form-data");
         }
 
         [Test]
