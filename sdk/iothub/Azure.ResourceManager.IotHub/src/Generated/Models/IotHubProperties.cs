@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The properties of an IoT hub. </summary>
     public partial class IotHubProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotHubProperties"/>. </summary>
         public IotHubProperties()
@@ -73,6 +45,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="state"> The hub state. </param>
         /// <param name="hostName"> The name of the host. </param>
+        /// <param name="deviceHostName"> The name of the device host. Supports secure connections over TLS 1.3. </param>
+        /// <param name="serviceHostName"> The name of the service host. Supports secure connections over TLS 1.3. </param>
         /// <param name="eventHubEndpoints"> The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub. </param>
         /// <param name="routing"> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </param>
         /// <param name="storageEndpoints"> The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown. </param>
@@ -88,8 +62,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="rootCertificate"> This property store root certificate related information. </param>
         /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
         /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, IotHubEncryptionProperties encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, IotHubDeviceRegistry deviceRegistry, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="iotHubDetails"> Set of additional read-only properties for the IoT hub. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, IotHubEncryptionProperties encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, IotHubDeviceRegistry deviceRegistry, IotHubDetails iotHubDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -105,6 +80,8 @@ namespace Azure.ResourceManager.IotHub.Models
             ProvisioningState = provisioningState;
             State = state;
             HostName = hostName;
+            DeviceHostName = deviceHostName;
+            ServiceHostName = serviceHostName;
             EventHubEndpoints = eventHubEndpoints;
             Routing = routing;
             StorageEndpoints = storageEndpoints;
@@ -120,77 +97,126 @@ namespace Azure.ResourceManager.IotHub.Models
             RootCertificate = rootCertificate;
             IPVersion = ipVersion;
             DeviceRegistry = deviceRegistry;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IotHubDetails = iotHubDetails;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The shared access policies you can use to secure a connection to the IoT hub. </summary>
         public IList<SharedAccessSignatureAuthorizationRule> AuthorizationPolicies { get; }
+
         /// <summary> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
+
         /// <summary> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </summary>
         public bool? DisableDeviceSas { get; set; }
+
         /// <summary> If true, all module scoped SAS keys cannot be used for authentication. </summary>
         public bool? DisableModuleSas { get; set; }
+
         /// <summary> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </summary>
         public bool? RestrictOutboundNetworkAccess { get; set; }
+
         /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </summary>
         public IList<string> AllowedFqdns { get; }
+
         /// <summary> Whether requests from Public Network are allowed. </summary>
         public IotHubPublicNetworkAccess? PublicNetworkAccess { get; set; }
+
         /// <summary> The IP filter rules. </summary>
         public IList<IotHubIPFilterRule> IPFilterRules { get; }
+
         /// <summary> Network Rule Set Properties of IotHub. </summary>
         public IotHubNetworkRuleSetProperties NetworkRuleSets { get; set; }
+
         /// <summary> Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients that use a TLS version below 1.2 to be rejected. </summary>
         public string MinTlsVersion { get; set; }
+
         /// <summary> Private endpoint connections created on this IotHub. </summary>
         public IList<IotHubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
+
         /// <summary> The hub state. </summary>
         public string State { get; }
+
         /// <summary> The name of the host. </summary>
         public string HostName { get; }
+
+        /// <summary> The name of the device host. Supports secure connections over TLS 1.3. </summary>
+        public string DeviceHostName { get; }
+
+        /// <summary> The name of the service host. Supports secure connections over TLS 1.3. </summary>
+        public string ServiceHostName { get; }
+
         /// <summary> The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub. </summary>
         public IDictionary<string, EventHubCompatibleEndpointProperties> EventHubEndpoints { get; }
+
         /// <summary> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </summary>
         public IotHubRoutingProperties Routing { get; set; }
+
         /// <summary> The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown. </summary>
         public IDictionary<string, IotHubStorageEndpointProperties> StorageEndpoints { get; }
+
         /// <summary> The messaging endpoint properties for the file upload notification queue. </summary>
         public IDictionary<string, MessagingEndpointProperties> MessagingEndpoints { get; }
+
         /// <summary> If True, file upload notifications are enabled. </summary>
         public bool? EnableFileUploadNotifications { get; set; }
+
         /// <summary> The IoT hub cloud-to-device messaging properties. </summary>
         public CloudToDeviceProperties CloudToDevice { get; set; }
+
         /// <summary> IoT hub comments. </summary>
         public string Comments { get; set; }
+
         /// <summary> The device streams properties of iothub. </summary>
         internal IotHubPropertiesDeviceStreams DeviceStreams { get; set; }
+
+        /// <summary> The capabilities and features enabled for the IoT hub. </summary>
+        public IotHubCapability? Features { get; set; }
+
+        /// <summary> The encryption properties for the IoT hub. </summary>
+        public IotHubEncryptionProperties Encryption { get; set; }
+
+        /// <summary> Primary and secondary location for iot hub. </summary>
+        public IReadOnlyList<IotHubLocationDescription> Locations { get; }
+
+        /// <summary> This property when set to true, will enable data residency, thus, disabling disaster recovery. </summary>
+        public bool? EnableDataResidency { get; set; }
+
+        /// <summary> This property store root certificate related information. </summary>
+        public IotHubRootCertificateProperties RootCertificate { get; set; }
+
+        /// <summary> This property specifies the IP Version the hub is currently utilizing. </summary>
+        public IotHubIPVersion? IPVersion { get; set; }
+
+        /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
+        public IotHubDeviceRegistry DeviceRegistry { get; set; }
+
+        /// <summary> Set of additional read-only properties for the IoT hub. </summary>
+        internal IotHubDetails IotHubDetails { get; }
+
         /// <summary> List of Device Streams Endpoints. </summary>
         public IList<string> DeviceStreamsStreamingEndpoints
         {
             get
             {
                 if (DeviceStreams is null)
+                {
                     DeviceStreams = new IotHubPropertiesDeviceStreams();
+                }
                 return DeviceStreams.StreamingEndpoints;
             }
         }
 
-        /// <summary> The capabilities and features enabled for the IoT hub. </summary>
-        public IotHubCapability? Features { get; set; }
-        /// <summary> The encryption properties for the IoT hub. </summary>
-        public IotHubEncryptionProperties Encryption { get; set; }
-        /// <summary> Primary and secondary location for iot hub. </summary>
-        public IReadOnlyList<IotHubLocationDescription> Locations { get; }
-        /// <summary> This property when set to true, will enable data residency, thus, disabling disaster recovery. </summary>
-        public bool? EnableDataResidency { get; set; }
-        /// <summary> This property store root certificate related information. </summary>
-        public IotHubRootCertificateProperties RootCertificate { get; set; }
-        /// <summary> This property specifies the IP Version the hub is currently utilizing. </summary>
-        public IotHubIPVersion? IPVersion { get; set; }
-        /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
-        public IotHubDeviceRegistry DeviceRegistry { get; set; }
+        /// <summary> The IoT hub Gateway version. </summary>
+        public GatewayVersion? IotHubDetailsGatewayVersion
+        {
+            get
+            {
+                return IotHubDetails is null ? default : IotHubDetails.GatewayVersion;
+            }
+        }
     }
 }

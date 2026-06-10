@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.IotHub
 {
+    /// <summary></summary>
     public partial class IotHubPrivateEndpointGroupInformationResource : IJsonModel<IotHubPrivateEndpointGroupInformationData>
     {
-        private static IotHubPrivateEndpointGroupInformationData s_dataDeserializationInstance;
-        private static IotHubPrivateEndpointGroupInformationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotHubPrivateEndpointGroupInformationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotHubPrivateEndpointGroupInformationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotHubPrivateEndpointGroupInformationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubPrivateEndpointGroupInformationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotHubPrivateEndpointGroupInformationData>)Data).Write(writer, options);
 
-        IotHubPrivateEndpointGroupInformationData IJsonModel<IotHubPrivateEndpointGroupInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubPrivateEndpointGroupInformationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubPrivateEndpointGroupInformationData IJsonModel<IotHubPrivateEndpointGroupInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotHubPrivateEndpointGroupInformationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubPrivateEndpointGroupInformationData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotHubPrivateEndpointGroupInformationData IPersistableModel<IotHubPrivateEndpointGroupInformationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubPrivateEndpointGroupInformationData>(data, options, AzureResourceManagerIotHubContext.Default);
 
-        string IPersistableModel<IotHubPrivateEndpointGroupInformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubPrivateEndpointGroupInformationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubPrivateEndpointGroupInformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

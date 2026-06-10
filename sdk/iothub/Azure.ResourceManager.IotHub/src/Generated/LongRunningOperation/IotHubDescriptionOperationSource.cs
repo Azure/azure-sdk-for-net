@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotHub
 {
-    internal class IotHubDescriptionOperationSource : IOperationSource<IotHubDescriptionResource>
+    /// <summary></summary>
+    internal partial class IotHubDescriptionOperationSource : IOperationSource<IotHubDescriptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal IotHubDescriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         IotHubDescriptionResource IOperationSource<IotHubDescriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotHubDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            IotHubDescriptionData data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new IotHubDescriptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<IotHubDescriptionResource> IOperationSource<IotHubDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotHubDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
-            return await Task.FromResult(new IotHubDescriptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            IotHubDescriptionData data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IotHubDescriptionResource(_client, data);
         }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotHub
 {
-    internal class IotHubPrivateEndpointConnectionOperationSource : IOperationSource<IotHubPrivateEndpointConnectionResource>
+    /// <summary></summary>
+    internal partial class IotHubPrivateEndpointConnectionOperationSource : IOperationSource<IotHubPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal IotHubPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         IotHubPrivateEndpointConnectionResource IOperationSource<IotHubPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            IotHubPrivateEndpointConnectionData data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new IotHubPrivateEndpointConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<IotHubPrivateEndpointConnectionResource> IOperationSource<IotHubPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotHubContext.Default);
-            return await Task.FromResult(new IotHubPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            IotHubPrivateEndpointConnectionData data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IotHubPrivateEndpointConnectionResource(_client, data);
         }
     }
 }

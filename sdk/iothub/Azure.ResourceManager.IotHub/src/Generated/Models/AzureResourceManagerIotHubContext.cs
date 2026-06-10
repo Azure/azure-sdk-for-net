@@ -6,28 +6,30 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CertificateListDescription))]
     [ModelReaderWriterBuildable(typeof(CloudToDeviceFeedbackQueueProperties))]
     [ModelReaderWriterBuildable(typeof(CloudToDeviceProperties))]
+    [ModelReaderWriterBuildable(typeof(EndpointHealthDataListResult))]
     [ModelReaderWriterBuildable(typeof(EventHubCompatibleEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubConsumerGroupInfoCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(EventHubConsumerGroupInfoData))]
     [ModelReaderWriterBuildable(typeof(EventHubConsumerGroupInfoResource))]
+    [ModelReaderWriterBuildable(typeof(EventHubConsumerGroupName))]
     [ModelReaderWriterBuildable(typeof(EventHubConsumerGroupsListResult))]
     [ModelReaderWriterBuildable(typeof(ExportDevicesContent))]
     [ModelReaderWriterBuildable(typeof(IotHubCapacity))]
     [ModelReaderWriterBuildable(typeof(IotHubCertificateDescriptionData))]
     [ModelReaderWriterBuildable(typeof(IotHubCertificateDescriptionResource))]
-    [ModelReaderWriterBuildable(typeof(IotHubCertificateListDescription))]
     [ModelReaderWriterBuildable(typeof(IotHubCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(IotHubCertificatePropertiesWithNonce))]
     [ModelReaderWriterBuildable(typeof(IotHubCertificateVerificationContent))]
@@ -36,10 +38,10 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(IotHubDescriptionListResult))]
     [ModelReaderWriterBuildable(typeof(IotHubDescriptionPatch))]
     [ModelReaderWriterBuildable(typeof(IotHubDescriptionResource))]
+    [ModelReaderWriterBuildable(typeof(IotHubDetails))]
     [ModelReaderWriterBuildable(typeof(IotHubDeviceRegistry))]
     [ModelReaderWriterBuildable(typeof(IotHubEncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(IotHubEndpointHealthInfo))]
-    [ModelReaderWriterBuildable(typeof(IotHubEndpointHealthInfoListResult))]
     [ModelReaderWriterBuildable(typeof(IotHubEnrichmentProperties))]
     [ModelReaderWriterBuildable(typeof(IotHubFailoverContent))]
     [ModelReaderWriterBuildable(typeof(IotHubFallbackRouteProperties))]
@@ -57,11 +59,9 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointConnectionResource))]
-    [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointConnectionsList))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointGroupInformationData))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointGroupInformationProperties))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointGroupInformationResource))]
-    [ModelReaderWriterBuildable(typeof(IotHubPrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(IotHubProperties))]
     [ModelReaderWriterBuildable(typeof(IotHubPropertiesDeviceStreams))]
@@ -81,10 +81,12 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(IotHubTestRouteResultDetails))]
     [ModelReaderWriterBuildable(typeof(IotHubTypeName))]
     [ModelReaderWriterBuildable(typeof(IotHubUserSubscriptionQuota))]
-    [ModelReaderWriterBuildable(typeof(IotHubUserSubscriptionQuotaListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessagingEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(Models.PrivateLinkResources))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteCompilationError))]
     [ModelReaderWriterBuildable(typeof(RouteErrorPosition))]
     [ModelReaderWriterBuildable(typeof(RouteErrorRange))]
@@ -100,9 +102,9 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(RoutingTwinProperties))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRule))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserSubscriptionQuotaListResult))]
     public partial class AzureResourceManagerIotHubContext : ModelReaderWriterContext
     {
     }
