@@ -125,25 +125,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                 int eventCount = events.Length;
 
-                // Idle checkpoint: if no new events arrived and we have un-checkpointed work
-                // that is older than the idle interval, force a checkpoint to keep the blob
-                // current for accurate scale metrics.
-                if (eventCount == 0
-                    && _enableCheckpointing
-                    && _batchCheckpointFrequency > 1
-                    && _batchCounter > 0
-                    && _lastProcessedEvent != null
-                    && (DateTimeOffset.UtcNow - _lastBatchProcessedTime).TotalSeconds >= IdleCheckpointIntervalSeconds
-                    && !_listenerCancellationToken.IsCancellationRequested
-                    && !_functionExecutionToken.IsCancellationRequested
-                    && !_ownershipLostTokenSource.IsCancellationRequested)
-                {
-                    await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
-                    _batchCounter = 0;
-                    _lastBatchProcessedTime = DateTimeOffset.UtcNow;
-                    _logger.LogDebug(GetOperationDetails(context, "IdleCheckpoint"));
-                }
-
                 if (_singleDispatch)
                 {
                     UpdateCheckpointContext(events, context);
@@ -242,6 +223,29 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                     // If total events is less than the batch size, leave them in the stored events list
                     // and wait to send until we receive enough events or total max wait time has passed.
+
+                    // Track the last processed event and time for idle checkpoint.
+                    // When batchCheckpointFrequency > 1, stale blob checkpoints can block
+                    // scale-in. These are used below to force a checkpoint after inactivity.
+                    if (eventToCheckpoint != null)
+                    {
+                        _lastProcessedEvent = eventToCheckpoint;
+                        _lastBatchProcessedTime = DateTimeOffset.UtcNow;
+                    }
+                }
+
+                // Idle checkpoint: if no new events arrived and we have un-checkpointed batches
+                // older than the idle interval, piggyback on the existing checkpoint flow to keep
+                // the blob current for accurate scale metrics.
+                if (eventToCheckpoint == null
+                    && _batchCheckpointFrequency > 1
+                    && _batchCounter > 0
+                    && _lastProcessedEvent != null
+                    && (DateTimeOffset.UtcNow - _lastBatchProcessedTime).TotalSeconds >= IdleCheckpointIntervalSeconds)
+                {
+                    eventToCheckpoint = _lastProcessedEvent;
+                    context.PartitionContext.IsCheckpointingAfterInvocation = true;
+                    _lastBatchProcessedTime = DateTimeOffset.UtcNow;
                 }
 
                 // If enabled, checkpoint if we processed any events, the listener is not stopping,
@@ -321,6 +325,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                         UpdateCheckpointContext(triggerEvents, _mostRecentPartitionContext);
                         await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
+                        _lastProcessedEvent = triggerEvents.Last();
+                        _lastBatchProcessedTime = DateTimeOffset.UtcNow;
                         if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
                         {
                             await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
@@ -430,13 +436,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         {
                             isCheckpointingAfterInvocation = true;
                         }
-
-                        // Track the last processed event and time for idle checkpoint.
-                        // When batchCheckpointFrequency > 1, stale blob checkpoints can
-                        // block scale-in. The idle checkpoint in ProcessEventsAsync uses
-                        // these to force a checkpoint after a period of inactivity.
-                        _lastProcessedEvent = events.Last();
-                        _lastBatchProcessedTime = DateTimeOffset.UtcNow;
                     }
                 }
 
