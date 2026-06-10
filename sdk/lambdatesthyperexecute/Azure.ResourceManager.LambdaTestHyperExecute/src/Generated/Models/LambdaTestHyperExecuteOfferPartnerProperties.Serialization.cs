@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOfferPartnerProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("licensesSubscribed"u8);
-            writer.WriteNumberValue(SubscribedLicensesCount);
+            writer.WriteNumberValue(subscribedLicensesCount);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         public HDInsightSecurityProfile()
         {
-            LdapUris = new ChangeTrackingList<Uri>();
+            LdapUris  = new ChangeTrackingList<Uri>();
             ClusterUsersGroupDNs = new ChangeTrackingList<string>();
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             DirectoryType = directoryType;
             Domain = domain;
             OrganizationalUnitDN = organizationalUnitDN;
-            LdapUris = ldapUris;
+            LdapUris  = ldapUris;
             DomainUsername = domainUsername;
             DomainUserPassword = domainUserPassword;
             ClusterUsersGroupDNs = clusterUsersGroupDNs;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string OrganizationalUnitDN { get; set; }
 
         /// <summary> The LDAPS protocol URLs to communicate with the Active Directory. </summary>
-        public IList<Uri> LdapUris { get; }
+        public IList<Uri> LdapUris  { get; }
 
         /// <summary> The domain user account that will have admin privileges on the cluster. </summary>
         public string DomainUsername { get; set; }

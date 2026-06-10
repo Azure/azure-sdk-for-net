@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ClusterCreateRequestValidationParametersType))
+            if (Optional.IsDefined(ClusterCreateRequestValidationParametersType ))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ClusterCreateRequestValidationParametersType);
+                writer.WriteStringValue(ClusterCreateRequestValidationParametersType );
             }
             if (Optional.IsDefined(TenantId))
             {

@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The list of storage accounts in the cluster. </summary>
-        public IList<HDInsightStorageAccountInfo> StorageAccounts
+        public IList<HDInsightStorageAccountInfo> StorageAccounts 
         {
             get
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     StorageProfile = new StorageProfile();
                 }
-                return StorageProfile.Accounts;
+                return StorageProfile.Accounts ;
             }
         }
     }

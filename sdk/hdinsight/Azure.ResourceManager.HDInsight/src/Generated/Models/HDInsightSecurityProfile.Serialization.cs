@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("organizationalUnitDN"u8);
                 writer.WriteStringValue(OrganizationalUnitDN);
             }
-            if (Optional.IsCollectionDefined(LdapUris))
+            if (Optional.IsCollectionDefined(LdapUris ))
             {
                 writer.WritePropertyName("ldapsUrls"u8);
                 writer.WriteStartArray();
-                foreach (Uri item in LdapUris)
+                foreach (Uri item in LdapUris )
                 {
                     if (item == null)
                     {

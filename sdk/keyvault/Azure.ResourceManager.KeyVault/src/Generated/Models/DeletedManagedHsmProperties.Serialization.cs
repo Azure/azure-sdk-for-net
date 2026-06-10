@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 throw new FormatException($"The model {nameof(DeletedManagedHsmProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedHsmId))
+            if (options.Format != "W" && Optional.IsDefined(managedHsmId))
             {
                 writer.WritePropertyName("mhsmId"u8);
-                writer.WriteStringValue(ManagedHsmId);
+                writer.WriteStringValue(managedHsmId);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {

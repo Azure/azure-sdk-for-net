@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ManagedHsmId = managedHsmId;
+            managedHsmId = managedHsmId;
             Location = location;
             DeletedOn = deletedOn;
             ScheduledPurgeOn = scheduledPurgeOn;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> The resource id of the original managed HSM. </summary>
         [WirePath("mhsmId")]
-        public ResourceIdentifier ManagedHsmId { get; }
+        public ResourceIdentifier managedHsmId { get; }
 
         /// <summary> The location of the original managed HSM. </summary>
         [WirePath("location")]

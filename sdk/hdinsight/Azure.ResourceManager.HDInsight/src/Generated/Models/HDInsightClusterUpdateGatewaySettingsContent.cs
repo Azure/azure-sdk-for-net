@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HDInsightClusterUpdateGatewaySettingsContent(bool? isCredentialEnabled, string userName, string password, IList<EntraUserInfo> restAuthEntraUsers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsCredentialEnabled = isCredentialEnabled;
-            UserName = userName;
-            Password = password;
+            isCredentialEnabled = isCredentialEnabled;
+            userName = userName;
+            password = password;
             RestAuthEntraUsers = restAuthEntraUsers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether or not the gateway settings based authorization is enabled. </summary>
-        public bool? IsCredentialEnabled { get; set; }
+        public bool? isCredentialEnabled { get; set; }
 
         /// <summary> The gateway settings user name. </summary>
-        public string UserName { get; set; }
+        public string userName { get; set; }
 
         /// <summary> The gateway settings user password. </summary>
-        public string Password { get; set; }
+        public string password { get; set; }
 
         /// <summary> List of Entra users for gateway access. </summary>
         public IList<EntraUserInfo> RestAuthEntraUsers { get; }

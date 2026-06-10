@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Accounts))
+            if (Optional.IsCollectionDefined(Accounts ))
             {
                 writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
-                foreach (HDInsightStorageAccountInfo item in Accounts)
+                foreach (HDInsightStorageAccountInfo item in Accounts )
                 {
                     writer.WriteObjectValue(item, options);
                 }

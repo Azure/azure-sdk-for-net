@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         {
             Argument.AssertNotNull(connectionState, nameof(connectionState));
 
-            ConnectionState = connectionState;
+            connectionState  = connectionState;
             GroupIds = new ChangeTrackingList<string>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         internal CloudHsmClusterPrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, CloudHsmClusterPrivateLinkServiceConnectionState connectionState, CloudHsmClusterPrivateEndpointConnectionProvisioningState? provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
+            connectionState  = connectionState;
             ProvisioningState = provisioningState;
             GroupIds = groupIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public CloudHsmClusterPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public CloudHsmClusterPrivateLinkServiceConnectionState connectionState  { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public CloudHsmClusterPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }

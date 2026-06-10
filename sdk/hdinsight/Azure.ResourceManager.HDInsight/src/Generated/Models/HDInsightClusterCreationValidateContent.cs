@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightClusterCreationValidateContent(AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string clusterCreateRequestValidationParametersType, Guid? tenantId, bool? fetchAaddsResource) : base(location, tags, zones, properties, identity, additionalBinaryDataProperties)
         {
             Name = name;
-            ClusterCreateRequestValidationParametersType = clusterCreateRequestValidationParametersType;
+            ClusterCreateRequestValidationParametersType  = clusterCreateRequestValidationParametersType;
             TenantId = tenantId;
             FetchAaddsResource = fetchAaddsResource;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get; set; }
 
         /// <summary> The resource type. </summary>
-        public string ClusterCreateRequestValidationParametersType { get; set; }
+        public string ClusterCreateRequestValidationParametersType  { get; set; }
 
         /// <summary> The tenant id. </summary>
         public Guid? TenantId { get; set; }

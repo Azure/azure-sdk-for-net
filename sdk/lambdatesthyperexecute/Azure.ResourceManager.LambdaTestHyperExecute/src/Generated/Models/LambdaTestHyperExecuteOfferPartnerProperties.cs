@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="subscribedLicensesCount"> The number of licenses subscribed. </param>
         public LambdaTestHyperExecuteOfferPartnerProperties(int subscribedLicensesCount)
         {
-            SubscribedLicensesCount = subscribedLicensesCount;
+            subscribedLicensesCount = subscribedLicensesCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOfferPartnerProperties"/>. </summary>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LambdaTestHyperExecuteOfferPartnerProperties(int subscribedLicensesCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SubscribedLicensesCount = subscribedLicensesCount;
+            subscribedLicensesCount = subscribedLicensesCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of licenses subscribed. </summary>
-        public int SubscribedLicensesCount { get; set; }
+        public int subscribedLicensesCount { get; set; }
     }
 }

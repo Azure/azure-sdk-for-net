@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public LambdaTestHyperExecuteSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
 
         /// <summary> The number of licenses subscribed. </summary>
-        public int PartnerSubscribedLicensesCount
+        public int PartnersubscribedLicensesCount
         {
             get
             {
-                return PartnerProperties is null ? default : PartnerProperties.SubscribedLicensesCount;
+                return PartnerProperties is null ? default : PartnerProperties.subscribedLicensesCount;
             }
             set
             {

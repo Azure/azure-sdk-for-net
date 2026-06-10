@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary> Resource data plane URI. </summary>
-        public string DataPlaneUri
+        public string dataPlaneUri
         {
             get
             {
-                return Properties is null ? default : Properties.DataPlaneUri;
+                return Properties is null ? default : Properties.dataPlaneUri;
             }
         }
 

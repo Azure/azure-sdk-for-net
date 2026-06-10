@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MongoClusterNameAvailabilityResult(bool? isNameAvailable, MongoClusterNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsNameAvailable = isNameAvailable;
+            isNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if the resource name is available. </summary>
-        public bool? IsNameAvailable { get; }
+        public bool? isNameAvailable { get; }
 
         /// <summary> The reason why the given name is not available. </summary>
         public MongoClusterNameUnavailableReason? Reason { get; }

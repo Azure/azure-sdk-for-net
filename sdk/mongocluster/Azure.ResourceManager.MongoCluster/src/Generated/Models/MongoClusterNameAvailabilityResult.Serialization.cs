@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 throw new FormatException($"The model {nameof(MongoClusterNameAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsNameAvailable))
+            if (Optional.IsDefined(isNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(IsNameAvailable.Value);
+                writer.WriteBooleanValue(isNameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {

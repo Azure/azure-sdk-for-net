@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Disabled = disabled;
             AutoUpgradeProfileStatus = autoUpgradeProfileStatus;
             TargetKubernetesVersion = targetKubernetesVersion;
-            IsLongTermSupport = isLongTermSupport;
+            isLongTermSupport = isLongTermSupport;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         ///   By default, this is set to False.
         ///   For more information on AKS LTS, please see https://learn.microsoft.com/en-us/azure/aks/long-term-support
         /// </summary>
-        public bool? IsLongTermSupport { get; set; }
+        public bool? isLongTermSupport { get; set; }
 
         /// <summary> The node image upgrade type. </summary>
         public AutoUpgradeNodeImageSelectionType? SelectionType

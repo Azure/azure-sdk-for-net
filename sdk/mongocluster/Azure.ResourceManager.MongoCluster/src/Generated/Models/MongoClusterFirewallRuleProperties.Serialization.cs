@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("startIpAddress"u8);
-            writer.WriteStringValue(StartIPAddress);
+            writer.WriteStringValue(startIPAddress);
             writer.WritePropertyName("endIpAddress"u8);
-            writer.WriteStringValue(EndIPAddress);
+            writer.WriteStringValue(endIPAddress);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

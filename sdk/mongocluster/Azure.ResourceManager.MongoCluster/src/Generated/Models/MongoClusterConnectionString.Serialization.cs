@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 throw new FormatException($"The model {nameof(MongoClusterConnectionString)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(uri))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(uri);
             }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {

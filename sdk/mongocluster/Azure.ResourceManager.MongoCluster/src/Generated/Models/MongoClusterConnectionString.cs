@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MongoClusterConnectionString(string uri, string description, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Uri = uri;
+            uri = uri;
             Description = description;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Value of the connection string. </summary>
-        public string Uri { get; }
+        public string uri { get; }
 
         /// <summary> Description of the connection string. </summary>
         public string Description { get; }

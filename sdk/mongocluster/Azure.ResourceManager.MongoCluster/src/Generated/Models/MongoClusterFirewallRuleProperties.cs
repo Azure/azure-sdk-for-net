@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
             Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
             Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
-            StartIPAddress = startIPAddress;
-            EndIPAddress = endIPAddress;
+            startIPAddress = startIPAddress;
+            endIPAddress = endIPAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterFirewallRuleProperties"/>. </summary>
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
         internal MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState, string startIPAddress, string endIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            StartIPAddress = startIPAddress;
-            EndIPAddress = endIPAddress;
+            startIPAddress = startIPAddress;
+            endIPAddress = endIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterProvisioningState? ProvisioningState { get; }
 
         /// <summary> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
-        public string StartIPAddress { get; set; }
+        public string startIPAddress { get; set; }
 
         /// <summary> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
-        public string EndIPAddress { get; set; }
+        public string endIPAddress { get; set; }
     }
 }

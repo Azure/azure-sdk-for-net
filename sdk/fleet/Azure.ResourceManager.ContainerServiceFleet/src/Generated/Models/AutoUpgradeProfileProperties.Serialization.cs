@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("targetKubernetesVersion"u8);
                 writer.WriteStringValue(TargetKubernetesVersion);
             }
-            if (Optional.IsDefined(IsLongTermSupport))
+            if (Optional.IsDefined(isLongTermSupport))
             {
                 writer.WritePropertyName("longTermSupport"u8);
-                writer.WriteBooleanValue(IsLongTermSupport.Value);
+                writer.WriteBooleanValue(isLongTermSupport.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

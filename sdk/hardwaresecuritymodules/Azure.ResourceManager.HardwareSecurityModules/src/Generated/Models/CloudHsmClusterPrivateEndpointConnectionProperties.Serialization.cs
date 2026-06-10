@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState, options);
+            writer.WriteObjectValue(connectionState , options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

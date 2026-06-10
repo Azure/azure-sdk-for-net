@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="endpointType"> The type of endpoint. </param>
         public HybridConnectivityEndpointProperties(HybridConnectivityEndpointType endpointType)
         {
-            EndpointType = endpointType;
+            endpointType = endpointType;
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectivityEndpointProperties"/>. </summary>
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HybridConnectivityEndpointProperties(HybridConnectivityEndpointType endpointType, ResourceIdentifier resourceId, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndpointType = endpointType;
+            endpointType = endpointType;
             ResourceId = resourceId;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of endpoint. </summary>
-        public HybridConnectivityEndpointType EndpointType { get; set; }
+        public HybridConnectivityEndpointType endpointType { get; set; }
 
         /// <summary> The resource Id of the connectivity endpoint (optional). </summary>
         public ResourceIdentifier ResourceId { get; set; }

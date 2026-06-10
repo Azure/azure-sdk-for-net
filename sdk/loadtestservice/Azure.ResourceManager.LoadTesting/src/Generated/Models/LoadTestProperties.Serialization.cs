@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DataPlaneUri))
+            if (options.Format != "W" && Optional.IsDefined(dataPlaneUri))
             {
                 writer.WritePropertyName("dataPlaneURI"u8);
-                writer.WriteStringValue(DataPlaneUri);
+                writer.WriteStringValue(dataPlaneUri);
             }
             if (Optional.IsDefined(Encryption))
             {

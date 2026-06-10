@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         {
             Description = description;
             ProvisioningState = provisioningState;
-            DataPlaneUri = dataPlaneUri;
+            dataPlaneUri = dataPlaneUri;
             Encryption = encryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public LoadTestingProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource data plane URI. </summary>
-        public string DataPlaneUri { get; }
+        public string dataPlaneUri { get; }
 
         /// <summary> CMK Encryption property. </summary>
         public LoadTestingCmkEncryptionProperties Encryption { get; set; }

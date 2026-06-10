@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         public StorageProfile()
         {
-            Accounts = new ChangeTrackingList<HDInsightStorageAccountInfo>();
+            Accounts  = new ChangeTrackingList<HDInsightStorageAccountInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StorageProfile(IList<HDInsightStorageAccountInfo> accounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Accounts = accounts;
+            Accounts  = accounts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of storage accounts in the cluster. </summary>
-        public IList<HDInsightStorageAccountInfo> Accounts { get; }
+        public IList<HDInsightStorageAccountInfo> Accounts  { get; }
     }
 }

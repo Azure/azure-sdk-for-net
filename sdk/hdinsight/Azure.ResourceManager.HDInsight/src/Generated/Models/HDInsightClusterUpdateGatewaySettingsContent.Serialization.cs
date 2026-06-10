@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsCredentialEnabled))
+            if (Optional.IsDefined(isCredentialEnabled))
             {
                 writer.WritePropertyName("restAuthCredential.isEnabled"u8);
-                writer.WriteBooleanValue(IsCredentialEnabled.Value);
+                writer.WriteBooleanValue(isCredentialEnabled.Value);
             }
-            if (Optional.IsDefined(UserName))
+            if (Optional.IsDefined(userName))
             {
                 writer.WritePropertyName("restAuthCredential.username"u8);
-                writer.WriteStringValue(UserName);
+                writer.WriteStringValue(userName);
             }
-            if (Optional.IsDefined(Password))
+            if (Optional.IsDefined(password))
             {
                 writer.WritePropertyName("restAuthCredential.password"u8);
-                writer.WriteStringValue(Password);
+                writer.WriteStringValue(password);
             }
             if (Optional.IsCollectionDefined(RestAuthEntraUsers))
             {

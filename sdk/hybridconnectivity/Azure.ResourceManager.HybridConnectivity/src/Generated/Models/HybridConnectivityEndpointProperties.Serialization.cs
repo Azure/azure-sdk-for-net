@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 throw new FormatException($"The model {nameof(HybridConnectivityEndpointProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(EndpointType.ToString());
+            writer.WriteStringValue(endpointType.ToString());
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
