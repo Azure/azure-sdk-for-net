@@ -46,25 +46,89 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _operatingSystem = platform.GetOSPlatformName();
 
-            _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars.IngestionEndpoint);
+            _customer_Ikey = connectionStringVars.InstrumentationKey;
 
-            // Initialize only if we are able to determine the correct region to send the data to.
+            // The Attach gauge is created up-front for both code paths so that any
+            // background MeterProvider that comes online later (distro path) immediately
+            // picks it up.
+            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
+
+            var routeToDistroEndpoint =
+                AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
+                && enabled;
+
+            if (routeToDistroEndpoint)
+            {
+                // Distro path: fetch the remote configuration in the background. The
+                // MeterProvider is only built if the config responds with enabled=true and
+                // a valid url. On any failure, SDK statistics stay disabled for the
+                // process — the constructor must NOT throw because that would break the
+                // customer's exporter pin path.
+                var configUrl = GetSdkStatsConfigUrl(connectionStringVars.IngestionEndpoint);
+                _ = Task.Run(() => InitializeFromConfigAsync(configUrl));
+                return;
+            }
+
+            // Legacy path: pick the existing Application Insights internal resource based
+            // on the customer's ingestion region. If the region isn't recognized, throw to
+            // preserve historical behavior.
+            _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars.IngestionEndpoint);
             if (_statsbeat_ConnectionString == null)
             {
                 throw new InvalidOperationException("Could not find a matching endpoint to initialize Statsbeat.");
             }
 
-            _customer_Ikey = connectionStringVars.InstrumentationKey;
+            BuildMeterProvider(_statsbeat_ConnectionString);
+            ScheduleInitialAttachFlush();
+        }
 
-            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
+        private async Task InitializeFromConfigAsync(string configUrl)
+        {
+            try
+            {
+                var config = await SdkStatsConfigFetcher.FetchAsync(configUrl).ConfigureAwait(false);
+                if (config == null || string.IsNullOrEmpty(config.url))
+                {
+                    // FetchAsync has already logged the reason; stay disabled.
+                    return;
+                }
 
-            // Configure for attach statsbeat which has collection
-            // schedule of 24 hrs == 86400000 milliseconds.
+                // Build a Breeze-compatible connection string from the config-supplied
+                // host. The transmitter appends the standard /v2.1/track path; the
+                // placeholder iKey is required by ConnectionStringParser but is ignored
+                // server-side by this endpoint family.
+                var host = config.url!.TrimEnd('/');
+                if (!host.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    && !host.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                {
+                    host = "https://" + host;
+                }
+                _statsbeat_ConnectionString =
+                    "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=" + host + "/";
+
+                BuildMeterProvider(_statsbeat_ConnectionString);
+                ScheduleInitialAttachFlush();
+            }
+            catch (Exception ex)
+            {
+                // Defensive — the fetcher already swallows its own exceptions, but if
+                // construction of the MeterProvider itself throws, leave SDK statistics off
+                // rather than letting the unhandled exception escape the background task.
+                AzureMonitorExporterEventSource.Log.SdkStatsConfigFetchFailed(
+                    configUrl,
+                    $"MeterProvider build failed: {ex.GetType().Name}");
+            }
+        }
+
+        private void BuildMeterProvider(string connectionString)
+        {
+            // EnableStatsbeat=false avoids a recursive Statsbeat construction inside the
+            // transmitter we're about to attach.
             var exporterOptions = new AzureMonitorExporterOptions
             {
                 DisableOfflineStorage = true,
-                ConnectionString = _statsbeat_ConnectionString,
-                EnableStatsbeat = false, // to avoid recursive Statsbeat.
+                ConnectionString = connectionString,
+                EnableStatsbeat = false,
             };
 
             _statsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
@@ -74,11 +138,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.GeneralStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+        }
 
-            // Wait 1 minute before sending the startup SDK stats attach signal to ensure we don't collect data from very short-lived apps that could spam the stats.
-            // If the version information is not yet available, wait up to five minutes - it really should be done in one minute or less
-            // (whenever the first Export call occurs, and otel does metrics at least once a minute).
-            // After the first attach metric emission, the AttachStatsbeatInterval above (24 hours by default) takes over sending metrics.
+        private void ScheduleInitialAttachFlush()
+        {
+            // Wait 1 minute before sending the startup SDK stats attach signal to ensure
+            // we don't collect data from very short-lived apps that could spam the stats.
+            // If the version information is not yet available, wait up to five minutes —
+            // it really should be done in one minute or less (whenever the first Export
+            // call occurs, and otel does metrics at least once a minute). After the first
+            // attach metric emission, the AttachStatsbeatInterval above (24 hours by
+            // default) takes over sending metrics.
             _ = Task.Run(async () =>
             {
                 DateTime giveUpTime = DateTime.Now.AddMinutes(5);
@@ -95,44 +165,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
         {
-            // When the distro AppContext switch is set, route SDK statistics to the
-            // distro-owned ingestion endpoints. Region selection still derives from the
-            // customer's ingestion endpoint when it maps to a known region; otherwise
-            // default to the non-EU distro endpoint instead of returning null (which would
-            // prevent Statsbeat initialization for the distro's inert exporter pin).
-            var routeToDistroEndpoint =
-                AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
-                && enabled;
-
+            // Legacy path: maps the customer's ingestion region to the internal Application
+            // Insights resource hosting Statsbeat. Returns null for unknown regions so the
+            // caller can throw and leave Statsbeat disabled. (The distro path uses
+            // GetSdkStatsConfigUrl + the runtime config endpoint instead of this.)
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
             if (!patternMatch.Success)
             {
-                return routeToDistroEndpoint
-                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
-                    : null;
+                return null;
             }
 
             var endpoint = patternMatch.Groups[1].Value;
             if (StatsbeatConstants.s_EU_Endpoints.Contains(endpoint))
             {
-                return routeToDistroEndpoint
-                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_EU
-                    : StatsbeatConstants.Statsbeat_ConnectionString_EU;
+                return StatsbeatConstants.Statsbeat_ConnectionString_EU;
             }
 
             if (StatsbeatConstants.s_non_EU_Endpoints.Contains(endpoint))
             {
-                return routeToDistroEndpoint
-                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
-                    : StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
+                return StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
             }
 
-            // Unknown region: under the distro fall back to the non-EU distro endpoint;
-            // otherwise preserve existing behavior of returning null so the
-            // AzureMonitorStatsbeat constructor throws and Statsbeat stays disabled.
-            return routeToDistroEndpoint
-                ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
-                : null;
+            return null;
+        }
+
+        internal static string GetSdkStatsConfigUrl(string ingestionEndpoint)
+        {
+            // Distro path: pick the EU or non-EU configuration endpoint based on the
+            // customer's ingestion region. Unknown regions default to non-EU.
+            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
+            if (patternMatch.Success
+                && StatsbeatConstants.s_EU_Endpoints.Contains(patternMatch.Groups[1].Value))
+            {
+                return StatsbeatConstants.SdkStatsConfigUrl_EU;
+            }
+
+            return StatsbeatConstants.SdkStatsConfigUrl_NonEU;
         }
 
         private Measurement<int> GetAttachStatsbeat()

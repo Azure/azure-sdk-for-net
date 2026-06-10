@@ -42,55 +42,62 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Theory]
         [MemberData(nameof(StatsbeatTests.EuEndpoints), MemberType = typeof(StatsbeatTests))]
-        public void DistroSwitchOn_EuCustomer_RoutesToDistroEuEndpoint(string euEndpoint)
+        public void GetSdkStatsConfigUrl_EuCustomer_ReturnsEuConfigUrl(string euEndpoint)
         {
             var customerCs = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{euEndpoint}.in.applicationinsights.azure.com/";
 
-            var result = AzureMonitorStatsbeat.GetStatsbeatConnectionString(
+            var result = AzureMonitorStatsbeat.GetSdkStatsConfigUrl(
                 ConnectionStringParser.GetValues(customerCs).IngestionEndpoint);
 
-            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_EU, result);
+            Assert.Equal(StatsbeatConstants.SdkStatsConfigUrl_EU, result);
         }
 
         [Theory]
         [MemberData(nameof(StatsbeatTests.NonEuEndpoints), MemberType = typeof(StatsbeatTests))]
-        public void DistroSwitchOn_NonEuCustomer_RoutesToDistroNonEuEndpoint(string nonEuEndpoint)
+        public void GetSdkStatsConfigUrl_NonEuCustomer_ReturnsNonEuConfigUrl(string nonEuEndpoint)
         {
             var customerCs = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{nonEuEndpoint}.in.applicationinsights.azure.com/";
 
-            var result = AzureMonitorStatsbeat.GetStatsbeatConnectionString(
+            var result = AzureMonitorStatsbeat.GetSdkStatsConfigUrl(
                 ConnectionStringParser.GetValues(customerCs).IngestionEndpoint);
 
-            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU, result);
+            Assert.Equal(StatsbeatConstants.SdkStatsConfigUrl_NonEU, result);
         }
 
         [Fact]
-        public void DistroSwitchOn_UnknownRegion_FallsBackToDistroNonEuEndpoint()
+        public void GetSdkStatsConfigUrl_UnknownRegion_FallsBackToNonEu()
         {
-            // Without the distro switch this same input returns null and Statsbeat throws.
-            // With the switch on we default to the non-EU distro endpoint so the inert
-            // exporter pin used by the distro can still initialize Statsbeat.
+            // Unknown region defaults to the non-EU config endpoint so the distro can
+            // still attempt to fetch configuration for OTLP/Console/Agent365-only
+            // deployments that supply the placeholder iKey + an unrecognized region.
             var customerCs = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
 
-            var result = AzureMonitorStatsbeat.GetStatsbeatConnectionString(
+            var result = AzureMonitorStatsbeat.GetSdkStatsConfigUrl(
                 ConnectionStringParser.GetValues(customerCs).IngestionEndpoint);
 
-            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU, result);
+            Assert.Equal(StatsbeatConstants.SdkStatsConfigUrl_NonEU, result);
         }
 
         [Fact]
-        public void DistroSwitchOn_StatsbeatInitializes_ForUnknownRegion()
+        public void DistroSwitchOn_ConstructorDoesNotThrow_ForUnknownRegion()
         {
-            // Counterpart to the existing StatsbeatIsNotInitializedForUnknownRegions test:
-            // with the distro switch on, the constructor must succeed (no throw) because
-            // the distro relies on this for OTLP/Console/Agent365-only deployments where
-            // the placeholder customer connection string has no known region.
+            // Counterpart to StatsbeatIsNotInitializedForUnknownRegions: when the distro
+            // switch is on the constructor must complete without throwing even if the
+            // customer connection string maps to an unknown region. SDK statistics
+            // initialization is deferred to a background task (which fetches the remote
+            // configuration); the constructor itself only kicks that task off.
             var customerCs = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customerCs);
 
+            // No throw == passing assertion for this case. The Statsbeat MeterProvider
+            // will only build later (and only if the remote config returns enabled=true
+            // and a valid url); we cannot synchronously assert on that here without
+            // standing up an in-process HTTP stub.
             using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
 
-            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU, statsBeatInstance._statsbeat_ConnectionString);
+            // _statsbeat_ConnectionString stays null until the background fetch completes
+            // and returns a non-null, enabled config — neither expected during this test.
+            Assert.Null(statsBeatInstance._statsbeat_ConnectionString);
         }
     }
 }
