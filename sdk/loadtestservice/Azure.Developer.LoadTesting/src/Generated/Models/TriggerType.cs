@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Type of a trigger. </summary>
-    internal readonly partial struct TriggerType : IEquatable<TriggerType>
+    public readonly partial struct TriggerType : IEquatable<TriggerType>
     {
         private readonly string _value;
         /// <summary> Trigger is a Scheduled Trigger on a Test. </summary>

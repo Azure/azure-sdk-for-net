@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Notification event type. </summary>
-    internal readonly partial struct NotificationEventType : IEquatable<NotificationEventType>
+    public readonly partial struct NotificationEventType : IEquatable<NotificationEventType>
     {
         private readonly string _value;
         /// <summary> Test run ended event. This event would occur when a test run reaches terminal state. </summary>

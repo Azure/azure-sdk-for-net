@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Kind of the resource on which test profile is created. </summary>
-    internal readonly partial struct ResourceKind : IEquatable<ResourceKind>
+    public readonly partial struct ResourceKind : IEquatable<ResourceKind>
     {
         private readonly string _value;
         /// <summary> Resource is a Azure FunctionApp on Flex Consumption Plan. </summary>
