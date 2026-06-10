@@ -106,11 +106,35 @@ internal class NameVisitor : ScmLibraryVisitor
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
+        if (DoPreVisitPropertyForClientNameOverride(property, propertyProvider))
+        {
+            return base.PreVisitProperty(property, propertyProvider);
+        }
+
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
         DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
+    }
+
+    private static bool DoPreVisitPropertyForClientNameOverride(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider is null)
+        {
+             return false;
+        }
+
+        foreach (var decorator in property.Decorators)
+        {
+            if (decorator.Name == ManagementInputLibrary.HasClientNameOverrideDecoratorName)
+            {
+                propertyProvider.Update(name: property.Name);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)

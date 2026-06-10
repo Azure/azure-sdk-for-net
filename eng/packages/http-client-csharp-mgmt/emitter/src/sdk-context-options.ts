@@ -211,20 +211,38 @@ export function setHasClientNameOverride(
     const sdkModel = sdkModelByKey.get(
       `${inputModel.namespace}.${inputModel.name}`
     );
-    const raw = sdkModel?.__raw;
-    if (!raw) {
+    if (!sdkModel) {
       continue;
     }
-    const override = getClientNameOverride(sdkContext, raw, "csharp");
-    if (override === undefined) {
-      continue;
+
+    const raw = sdkModel.__raw;
+    if (raw) {
+      const override = getClientNameOverride(sdkContext, raw, "csharp");
+      if (override !== undefined) {
+        inputModel.decorators ??= [];
+        const marker: DecoratorInfo = {
+          name: hasClientNameOverrideDecorator,
+          arguments: {}
+        };
+        inputModel.decorators.push(marker);
+      }
     }
-    inputModel.decorators ??= [];
-    const marker: DecoratorInfo = {
-      name: hasClientNameOverrideDecorator,
-      arguments: {}
-    };
-    inputModel.decorators.push(marker);
+
+    for (const sdkProperty of sdkModel.properties) {
+      const raw = sdkProperty.__raw;
+      if (!raw) {
+        continue;
+      }
+      const override = getClientNameOverride(sdkContext, raw, "csharp");
+      if (override === undefined) {
+        continue;
+      }
+      sdkProperty.decorators ??= [];
+      sdkProperty.decorators.push({
+        name: hasClientNameOverrideDecorator,
+        arguments: {}
+      });
+    }
   }
 
   for (const sdkClient of getAllSdkClients(sdkContext)) {

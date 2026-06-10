@@ -17,7 +17,7 @@ namespace Azure.Generator.Management
         private const string ArmProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@armProviderSchema";
         private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
         private const string ClientOptionDecoratorName = "Azure.ClientGenerator.Core.@clientOption";
-        private const string HasClientNameOverrideDecoratorName = "Azure.ResourceManager.@hasClientNameOverride";
+        internal const string HasClientNameOverrideDecoratorName = "Azure.ResourceManager.@hasClientNameOverride";
         private const string DisableSafeFlattenKey = "disable-safe-flatten";
         private const string CSharpScope = "csharp";
 
