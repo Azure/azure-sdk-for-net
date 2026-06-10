@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -279,6 +280,1044 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
+        /// [Protocol Method] Gets a list of feature flags.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Pageable<BinaryData> GetFeatureFlags(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            return new ConfigurationClientGetFeatureFlagsCollectionResult(
+                this,
+                name,
+                label,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                matchConditions,
+                tags,
+                context,
+                "ConfigurationClient.GetFeatureFlags");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of feature flags.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual AsyncPageable<BinaryData> GetFeatureFlagsAsync(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            return new ConfigurationClientGetFeatureFlagsAsyncCollectionResult(
+                this,
+                name,
+                label,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                matchConditions,
+                tags,
+                context,
+                "ConfigurationClient.GetFeatureFlags");
+        }
+
+        /// <summary> Gets a list of feature flags. </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<FeatureFlag> GetFeatureFlags(string name = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<string> @select = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetFeatureFlagsCollectionResultOfT(
+                this,
+                name,
+                label,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                matchConditions,
+                tags,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetFeatureFlags");
+        }
+
+        /// <summary> Gets a list of feature flags. </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<FeatureFlag> GetFeatureFlagsAsync(string name = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<string> @select = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT(
+                this,
+                name,
+                label,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                matchConditions,
+                tags,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetFeatureFlags");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CheckFeatureFlags(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckFeatureFlags");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckFeatureFlagsRequest(name, label, syncToken, after, acceptDatetime, @select, matchConditions, tags, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CheckFeatureFlagsAsync(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckFeatureFlags");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckFeatureFlagsRequest(name, label, syncToken, after, acceptDatetime, @select, matchConditions, tags, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response CheckFeatureFlags(string name = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<string> @select = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return CheckFeatureFlags(name, label, syncToken, after, acceptDatetime, @select, matchConditions, tags, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter used to match feature flag names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response> CheckFeatureFlagsAsync(string name = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<string> @select = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return await CheckFeatureFlagsAsync(name, label, syncToken, after, acceptDatetime, @select, matchConditions, tags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a single feature flag.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetFeatureFlag(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFeatureFlagRequest(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a single feature flag.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetFeatureFlagAsync(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFeatureFlagRequest(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a single feature flag. </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<FeatureFlag> GetFeatureFlag(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            Response result = GetFeatureFlag(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, cancellationToken.ToRequestContext());
+            return Response.FromValue((FeatureFlag)result, result);
+        }
+
+        /// <summary> Gets a single feature flag. </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<FeatureFlag>> GetFeatureFlagAsync(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetFeatureFlagAsync(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((FeatureFlag)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag to retrieve. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CheckFeatureFlag(string name, string label, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckFeatureFlagRequest(name, label, syncToken, acceptDatetime, matchConditions, @select, tags, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag to retrieve. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CheckFeatureFlagAsync(string name, string label, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckFeatureFlagRequest(name, label, syncToken, acceptDatetime, matchConditions, @select, tags, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> The name of the feature flag to retrieve. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response CheckFeatureFlag(string name, string label = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return CheckFeatureFlag(name, label, syncToken, acceptDatetime, matchConditions, @select, tags, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> The name of the feature flag to retrieve. </param>
+        /// <param name="label"> The label of the feature flag to retrieve. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response> CheckFeatureFlagAsync(string name, string label = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return await CheckFeatureFlagAsync(name, label, syncToken, acceptDatetime, matchConditions, @select, tags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a feature flag.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag to create. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="label"> The label of the feature flag to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response PutFeatureFlag(string name, RequestContent content, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePutFeatureFlagRequest(name, content, label, syncToken, matchConditions, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a feature flag.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag to create. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="label"> The label of the feature flag to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> PutFeatureFlagAsync(string name, RequestContent content, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePutFeatureFlagRequest(name, content, label, syncToken, matchConditions, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a feature flag. </summary>
+        /// <param name="name"> The name of the feature flag to create. </param>
+        /// <param name="entity"> The feature flag to create. </param>
+        /// <param name="label"> The label of the feature flag to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<FeatureFlag> PutFeatureFlag(string name, FeatureFlag entity = default, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            Response result = PutFeatureFlag(name, entity, label, syncToken, matchConditions, cancellationToken.ToRequestContext());
+            return Response.FromValue((FeatureFlag)result, result);
+        }
+
+        /// <summary> Creates a feature flag. </summary>
+        /// <param name="name"> The name of the feature flag to create. </param>
+        /// <param name="entity"> The feature flag to create. </param>
+        /// <param name="label"> The label of the feature flag to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<FeatureFlag>> PutFeatureFlagAsync(string name, FeatureFlag entity = default, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await PutFeatureFlagAsync(name, entity, label, syncToken, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((FeatureFlag)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a feature flag.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag to delete. </param>
+        /// <param name="label"> The label of the feature flag to delete. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response DeleteFeatureFlag(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteFeatureFlagRequest(name, label, syncToken, ifMatch, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a feature flag.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the feature flag to delete. </param>
+        /// <param name="label"> The label of the feature flag to delete. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> DeleteFeatureFlagAsync(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteFeatureFlag");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteFeatureFlagRequest(name, label, syncToken, ifMatch, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a feature flag. </summary>
+        /// <param name="name"> The name of the feature flag to delete. </param>
+        /// <param name="label"> The label of the feature flag to delete. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<FeatureFlag> DeleteFeatureFlag(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Response result = DeleteFeatureFlag(name, label, syncToken, ifMatch, cancellationToken.ToRequestContext());
+            return Response.FromValue((FeatureFlag)result, result);
+        }
+
+        /// <summary> Deletes a feature flag. </summary>
+        /// <param name="name"> The name of the feature flag to delete. </param>
+        /// <param name="label"> The label of the feature flag to delete. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<FeatureFlag>> DeleteFeatureFlagAsync(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await DeleteFeatureFlagAsync(name, label, syncToken, ifMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((FeatureFlag)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of feature flag revisions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Pageable<BinaryData> GetFeatureFlagRevisions(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            return new ConfigurationClientGetFeatureFlagRevisionsCollectionResult(
+                this,
+                name,
+                label,
+                after,
+                @select,
+                tags,
+                syncToken,
+                matchConditions,
+                context,
+                "ConfigurationClient.GetFeatureFlagRevisions");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of feature flag revisions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual AsyncPageable<BinaryData> GetFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            return new ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResult(
+                this,
+                name,
+                label,
+                after,
+                @select,
+                tags,
+                syncToken,
+                matchConditions,
+                context,
+                "ConfigurationClient.GetFeatureFlagRevisions");
+        }
+
+        /// <summary> Gets a list of feature flag revisions. </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<FeatureFlag> GetFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetFeatureFlagRevisionsCollectionResultOfT(
+                this,
+                name,
+                label,
+                after,
+                @select,
+                tags,
+                syncToken,
+                matchConditions,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetFeatureFlagRevisions");
+        }
+
+        /// <summary> Gets a list of feature flag revisions. </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<FeatureFlag> GetFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResultOfT(
+                this,
+                name,
+                label,
+                after,
+                @select,
+                tags,
+                syncToken,
+                matchConditions,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetFeatureFlagRevisions");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CheckFeatureFlagRevisions(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckFeatureFlagRevisions");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckFeatureFlagRevisionsRequest(name, label, after, @select, tags, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckFeatureFlagRevisions");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckFeatureFlagRevisionsRequest(name, label, after, @select, tags, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response CheckFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return CheckFeatureFlagRevisions(name, label, after, @select, tags, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter used to match names. </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        {
+            return await CheckFeatureFlagRevisionsAsync(name, label, after, @select, tags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// [Protocol Method] Gets a single key-value snapshot.
         /// <list type="bullet">
         /// <item>
@@ -450,6 +1489,256 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of labels.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetLabels(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            return new ConfigurationClientGetLabelsCollectionResult(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                context,
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of labels.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetLabelsAsync(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            return new ConfigurationClientGetLabelsAsyncCollectionResult(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                context,
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<SettingLabel> GetLabels(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetLabelsCollectionResultOfT(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<SettingLabel> GetLabelsAsync(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetLabelsAsyncCollectionResultOfT(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CheckLabels(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckLabelsRequest(name, syncToken, after, acceptDatetime, @select, resourceType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CheckLabelsAsync(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckLabelsRequest(name, syncToken, after, acceptDatetime, @select, resourceType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response CheckLabels(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return CheckLabels(name, syncToken, after, acceptDatetime, @select, resourceType, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CheckLabelsAsync(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return await CheckLabelsAsync(name, syncToken, after, acceptDatetime, @select, resourceType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

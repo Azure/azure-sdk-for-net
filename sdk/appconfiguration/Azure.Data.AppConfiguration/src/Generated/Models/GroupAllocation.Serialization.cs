@@ -12,52 +12,57 @@ using System.Text.Json;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Labels are used to group key values or feature flags. </summary>
-    public partial class SettingLabel : IJsonModel<SettingLabel>
+    /// <summary> Feature Flag GroupAllocation object. </summary>
+    internal partial class GroupAllocation : IJsonModel<GroupAllocation>
     {
+        /// <summary> Initializes a new instance of <see cref="GroupAllocation"/> for deserialization. </summary>
+        internal GroupAllocation()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingLabel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GroupAllocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupAllocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSettingLabel(document.RootElement, options);
+                        return DeserializeGroupAllocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SettingLabel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupAllocation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupAllocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SettingLabel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupAllocation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SettingLabel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GroupAllocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingLabel IPersistableModel<SettingLabel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GroupAllocation IPersistableModel<GroupAllocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SettingLabel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GroupAllocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SettingLabel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GroupAllocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,16 +73,25 @@ namespace Azure.Data.AppConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupAllocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingLabel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupAllocation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            writer.WritePropertyName("variant"u8);
+            writer.WriteStringValue(Variant);
+            writer.WritePropertyName("groups"u8);
+            writer.WriteStartArray();
+            foreach (string item in Groups)
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -97,36 +111,54 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingLabel IJsonModel<SettingLabel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GroupAllocation IJsonModel<GroupAllocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingLabel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GroupAllocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupAllocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingLabel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupAllocation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSettingLabel(document.RootElement, options);
+            return DeserializeGroupAllocation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SettingLabel DeserializeSettingLabel(JsonElement element, ModelReaderWriterOptions options)
+        internal static GroupAllocation DeserializeGroupAllocation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
+            string variant = default;
+            IList<string> groups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("variant"u8))
                 {
-                    name = prop.Value.GetString();
+                    variant = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("groups"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    groups = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +166,7 @@ namespace Azure.Data.AppConfiguration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SettingLabel(name, additionalBinaryDataProperties);
+            return new GroupAllocation(variant, groups, additionalBinaryDataProperties);
         }
     }
 }

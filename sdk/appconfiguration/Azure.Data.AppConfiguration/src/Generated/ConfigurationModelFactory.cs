@@ -45,6 +45,17 @@ namespace Azure.Data.AppConfiguration
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Feature Flag Filter object. </summary>
+        /// <param name="name"> The name of the filter. </param>
+        /// <param name="parameters"> The parameters used by the filter. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagFilter"/> instance for mocking. </returns>
+        public static FeatureFlagFilter FeatureFlagFilter(string name = default, IDictionary<string, object> parameters = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, object>();
+
+            return new FeatureFlagFilter(name, parameters, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
@@ -105,7 +116,7 @@ namespace Azure.Data.AppConfiguration
             return new ConfigurationSettingsFilter(key, label, tags.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Labels are used to group key-values. </summary>
+        /// <summary> Labels are used to group key values or feature flags. </summary>
         /// <param name="name"> The name of the label. </param>
         /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
         public static SettingLabel SettingLabel(string name = default)

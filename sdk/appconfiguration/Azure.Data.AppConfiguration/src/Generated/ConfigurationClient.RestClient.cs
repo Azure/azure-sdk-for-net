@@ -401,6 +401,396 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal HttpMessage CreateGetFeatureFlagsRequest(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in tags)
+                {
+                    uri.AppendQuery("tags", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (syncToken != null)
+            {
+                request.Headers.SetValue("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ffset\\\";charset=utf-8, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetFeatureFlagsRequest(Uri nextPage, string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ffset\\\";charset=utf-8, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateCheckFeatureFlagsRequest(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in tags)
+                {
+                    uri.AppendQuery("tags", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Head;
+            if (syncToken != null)
+            {
+                request.Headers.SetValue("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateGetFeatureFlagRequest(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff/", false);
+            uri.AppendPath(name, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<FeatureFlagFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in tags)
+                {
+                    uri.AppendQuery("tags", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (syncToken != null)
+            {
+                request.Headers.SetValue("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ff\\\";charset=utf-8, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateCheckFeatureFlagRequest(string name, string label, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff/", false);
+            uri.AppendPath(name, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<FeatureFlagFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in tags)
+                {
+                    uri.AppendQuery("tags", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Head;
+            if (syncToken != null)
+            {
+                request.Headers.SetValue("Sync-Token", syncToken);
+            }
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreatePutFeatureFlagRequest(string name, RequestContent content, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff/", false);
+            uri.AppendPath(name, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ff\\\";charset=utf-8");
+            }
+            if (syncToken != null)
+            {
+                request.Headers.SetValue("Sync-Token", syncToken);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ff\\\";charset=utf-8, application/problem+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteFeatureFlagRequest(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff/", false);
+            uri.AppendPath(name, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Delete;
+            if (syncToken != null)
+            {
+                request.Headers.SetValue("Sync-Token", syncToken);
+            }
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch.Value);
+            }
+            request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ff\\\";charset=utf-8, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff-revisions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in tags)
+                {
+                    uri.AppendQuery("tags", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (syncToken != null)
+            {
+                request.Headers.SetValue("Sync-Token", syncToken);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ffset\\\";charset=utf-8, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetFeatureFlagRevisionsRequest(Uri nextPage, string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/ffset\\\";charset=utf-8, application/problem+json");
+            return message;
+        }
+
+        internal HttpMessage CreateCheckFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ff-revisions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in tags)
+                {
+                    uri.AppendQuery("tags", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Head;
+            return message;
+        }
+
         internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -610,7 +1000,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
+        internal HttpMessage CreateGetLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -631,6 +1021,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
+            if (resourceType != null)
+            {
+                uri.AppendQuery("resource-type", resourceType, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -647,7 +1041,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateNextGetLabelsRequest(Uri nextPage, string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
+        internal HttpMessage CreateNextGetLabelsRequest(Uri nextPage, string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -670,7 +1064,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
+        internal HttpMessage CreateCheckLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -690,6 +1084,10 @@ namespace Azure.Data.AppConfiguration
             if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            if (resourceType != null)
+            {
+                uri.AppendQuery("resource-type", resourceType, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
