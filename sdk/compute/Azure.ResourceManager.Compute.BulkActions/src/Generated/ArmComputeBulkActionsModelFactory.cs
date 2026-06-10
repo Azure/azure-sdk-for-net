@@ -48,45 +48,45 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new DeallocateResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
+        /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <returns> A new <see cref="Models.ResourceOperationResult"/> instance for mocking. </returns>
-        public static ResourceOperationResult ResourceOperationResult(IEnumerable<ResourceIdentifier> resourceId = default, string errorCode = default, string errorDetails = default, ResourceOperationDetails operation = default)
+        public static ResourceOperationResult ResourceOperationResult(IEnumerable<ResourceIdentifier> resourceIds = default, string errorCode = default, string errorDetails = default, ResourceOperationDetails operation = default)
         {
-            resourceId ??= new ChangeTrackingList<ResourceIdentifier>();
+            resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new ResourceOperationResult((resourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), errorCode, errorDetails, operation, default);
+            return new ResourceOperationResult((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), errorCode, errorDetails, operation, default);
         }
 
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
-        /// <param name="opType"> Type of operation performed on the resources. </param>
+        /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
+        /// <param name="operationType"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadline"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
-        /// <param name="timezone"> Timezone for the operation. </param>
-        /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
+        /// <param name="timeZone"> Timezone for the operation. </param>
+        /// <param name="error"> Operation level errors if they exist. </param>
         /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, IEnumerable<ResourceIdentifier> resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timezone = default, ResourceOperationError resourceOperationError = default, FallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, IEnumerable<ResourceIdentifier> resourceIds = default, ResourceOperationType? operationType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timeZone = default, ResourceOperationError error = default, FallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
         {
-            resourceId ??= new ChangeTrackingList<ResourceIdentifier>();
+            resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new ResourceOperationDetails(
                 operationId,
-                (resourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                opType,
+                (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                operationType,
                 subscriptionId,
                 deadline,
                 deadlineType,
                 state,
-                timezone,
-                resourceOperationError,
+                timeZone,
+                error,
                 fallbackOperationInfo,
                 completedOn,
                 retryPolicy,
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new ResourceOperationError(errorCode, errorDetails, default);
         }
 
-        /// <param name="lastOpType"> The last operation type that was performed as a fallback. </param>
+        /// <param name="lastOperationType"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
         /// <param name="error"> The error code if the fallback operation failed. </param>
         /// <returns> A new <see cref="Models.FallbackOperationInfo"/> instance for mocking. </returns>
-        public static FallbackOperationInfo FallbackOperationInfo(ResourceOperationType lastOpType = default, string status = default, ResourceOperationError error = default)
+        public static FallbackOperationInfo FallbackOperationInfo(ResourceOperationType lastOperationType = default, string status = default, ResourceOperationError error = default)
         {
-            return new FallbackOperationInfo(lastOpType, status, error, default);
+            return new FallbackOperationInfo(lastOperationType, status, error, default);
         }
 
         /// <param name="executionParametersRetryPolicy"> Retry policy the user can pass. </param>
@@ -163,15 +163,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="type"> The type of resources used in the delete request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the delete request eg virtual machines. </param>
         /// <param name="location"> The location of the delete request eg westus. </param>
         /// <param name="results"> The results from the delete request if no errors exist. </param>
         /// <returns> A new <see cref="Models.DeleteResourceOperationResult"/> instance for mocking. </returns>
-        public static DeleteResourceOperationResult DeleteResourceOperationResult(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
+        public static DeleteResourceOperationResult DeleteResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new DeleteResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
+            return new DeleteResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>

@@ -23,34 +23,34 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         internal ResourceOperationDetails(string operationId)
         {
             OperationId = operationId;
-            ResourceId = new ChangeTrackingList<ResourceIdentifier>();
+            ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
-        /// <param name="opType"> Type of operation performed on the resources. </param>
+        /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
+        /// <param name="operationType"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadline"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
-        /// <param name="timezone"> Timezone for the operation. </param>
-        /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
+        /// <param name="timeZone"> Timezone for the operation. </param>
+        /// <param name="error"> Operation level errors if they exist. </param>
         /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, IList<ResourceIdentifier> resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, ResourceOperationError resourceOperationError, FallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceOperationDetails(string operationId, IList<ResourceIdentifier> resourceIds, ResourceOperationType? operationType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ResourceOperationError error, FallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
-            ResourceId = resourceId;
-            OpType = opType;
+            ResourceIds = resourceIds;
+            OperationType = operationType;
             SubscriptionId = subscriptionId;
             Deadline = deadline;
             DeadlineType = deadlineType;
             State = state;
-            Timezone = timezone;
-            ResourceOperationError = resourceOperationError;
+            TimeZone = timeZone;
+            Error = error;
             FallbackOperationInfo = fallbackOperationInfo;
             CompletedOn = completedOn;
             RetryPolicy = retryPolicy;
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string OperationId { get; }
 
         /// <summary> Unique identifier for the resource involved in the operation, for example Azure resource ID. </summary>
-        public IList<ResourceIdentifier> ResourceId { get; }
+        public IList<ResourceIdentifier> ResourceIds { get; }
 
         /// <summary> Type of operation performed on the resources. </summary>
-        public ResourceOperationType? OpType { get; }
+        public ResourceOperationType? OperationType { get; }
 
         /// <summary> Subscription id attached to the request. </summary>
         public string SubscriptionId { get; }
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public ScheduledActionOperationState? State { get; }
 
         /// <summary> Timezone for the operation. </summary>
-        public string Timezone { get; }
+        public string TimeZone { get; }
 
         /// <summary> Operation level errors if they exist. </summary>
-        public ResourceOperationError ResourceOperationError { get; }
+        public ResourceOperationError Error { get; }
 
         /// <summary> Fallback operation details if a fallback was performed. </summary>
         public FallbackOperationInfo FallbackOperationInfo { get; }

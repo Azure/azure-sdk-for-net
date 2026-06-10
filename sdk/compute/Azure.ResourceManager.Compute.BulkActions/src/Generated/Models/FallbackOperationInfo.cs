@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FallbackOperationInfo"/>. </summary>
-        /// <param name="lastOpType"> The last operation type that was performed as a fallback. </param>
+        /// <param name="lastOperationType"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
-        internal FallbackOperationInfo(ResourceOperationType lastOpType, string status)
+        internal FallbackOperationInfo(ResourceOperationType lastOperationType, string status)
         {
-            LastOpType = lastOpType;
+            LastOperationType = lastOperationType;
             Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="FallbackOperationInfo"/>. </summary>
-        /// <param name="lastOpType"> The last operation type that was performed as a fallback. </param>
+        /// <param name="lastOperationType"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
         /// <param name="error"> The error code if the fallback operation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FallbackOperationInfo(ResourceOperationType lastOpType, string status, ResourceOperationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FallbackOperationInfo(ResourceOperationType lastOperationType, string status, ResourceOperationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastOpType = lastOpType;
+            LastOperationType = lastOperationType;
             Status = status;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The last operation type that was performed as a fallback. </summary>
-        public ResourceOperationType LastOpType { get; }
+        public ResourceOperationType LastOperationType { get; }
 
         /// <summary> The status of the fallback operation. </summary>
         public string Status { get; }

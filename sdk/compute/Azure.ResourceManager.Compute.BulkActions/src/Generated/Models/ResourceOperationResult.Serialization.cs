@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(ResourceOperationResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ResourceId))
+            if (Optional.IsCollectionDefined(ResourceIds))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in ResourceId)
+                foreach (ResourceIdentifier item in ResourceIds)
                 {
                     if (item == null)
                     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            IList<ResourceIdentifier> resourceId = default;
+            IList<ResourceIdentifier> resourceIds = default;
             string errorCode = default;
             string errorDetails = default;
             ResourceOperationDetails operation = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                             array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
-                    resourceId = array;
+                    resourceIds = array;
                     continue;
                 }
                 if (prop.NameEquals("errorCode"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceOperationResult(resourceId ?? new ChangeTrackingList<ResourceIdentifier>(), errorCode, errorDetails, operation, additionalBinaryDataProperties);
+            return new ResourceOperationResult(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), errorCode, errorDetails, operation, additionalBinaryDataProperties);
         }
     }
 }

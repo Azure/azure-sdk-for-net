@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ResourceOperationResult"/>. </summary>
         internal ResourceOperationResult()
         {
-            ResourceId = new ChangeTrackingList<ResourceIdentifier>();
+            ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationResult"/>. </summary>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
+        /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationResult(IList<ResourceIdentifier> resourceId, string errorCode, string errorDetails, ResourceOperationDetails operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceOperationResult(IList<ResourceIdentifier> resourceIds, string errorCode, string errorDetails, ResourceOperationDetails operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
+            ResourceIds = resourceIds;
             ErrorCode = errorCode;
             ErrorDetails = errorDetails;
             Operation = operation;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Unique identifier for the resource involved in the operation, for example Azure resource ID. </summary>
-        public IList<ResourceIdentifier> ResourceId { get; }
+        public IList<ResourceIdentifier> ResourceIds { get; }
 
         /// <summary> Resource level error code if it exists. </summary>
         public string ErrorCode { get; }

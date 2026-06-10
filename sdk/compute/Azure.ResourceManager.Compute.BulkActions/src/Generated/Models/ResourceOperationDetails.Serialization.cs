@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
-            if (Optional.IsCollectionDefined(ResourceId))
+            if (Optional.IsCollectionDefined(ResourceIds))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in ResourceId)
+                foreach (ResourceIdentifier item in ResourceIds)
                 {
                     if (item == null)
                     {
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OpType))
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("opType"u8);
-                writer.WriteStringValue(OpType.Value.ToString());
+                writer.WriteStringValue(OperationType.Value.ToString());
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Timezone))
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timezone"u8);
-                writer.WriteStringValue(Timezone);
+                writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(ResourceOperationError))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("resourceOperationError"u8);
-                writer.WriteObjectValue(ResourceOperationError, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (Optional.IsDefined(FallbackOperationInfo))
             {
@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             string operationId = default;
-            IList<ResourceIdentifier> resourceId = default;
-            ResourceOperationType? opType = default;
+            IList<ResourceIdentifier> resourceIds = default;
+            ResourceOperationType? operationType = default;
             string subscriptionId = default;
             DateTimeOffset? deadline = default;
             ScheduledActionDeadlineType? deadlineType = default;
             ScheduledActionOperationState? state = default;
-            string timezone = default;
-            ResourceOperationError resourceOperationError = default;
+            string timeZone = default;
+            ResourceOperationError error = default;
             FallbackOperationInfo fallbackOperationInfo = default;
             DateTimeOffset? completedOn = default;
             UserRequestRetryPolicy retryPolicy = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                             array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
-                    resourceId = array;
+                    resourceIds = array;
                     continue;
                 }
                 if (prop.NameEquals("opType"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    opType = new ResourceOperationType(prop.Value.GetString());
+                    operationType = new ResourceOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (prop.NameEquals("timezone"u8))
                 {
-                    timezone = prop.Value.GetString();
+                    timeZone = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("resourceOperationError"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    resourceOperationError = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
+                    error = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fallbackOperationInfo"u8))
@@ -319,14 +319,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             return new ResourceOperationDetails(
                 operationId,
-                resourceId ?? new ChangeTrackingList<ResourceIdentifier>(),
-                opType,
+                resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                operationType,
                 subscriptionId,
                 deadline,
                 deadlineType,
                 state,
-                timezone,
-                resourceOperationError,
+                timeZone,
+                error,
                 fallbackOperationInfo,
                 completedOn,
                 retryPolicy,

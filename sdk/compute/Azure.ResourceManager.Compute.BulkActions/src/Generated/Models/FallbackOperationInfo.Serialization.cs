@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("lastOpType"u8);
-            writer.WriteStringValue(LastOpType.ToString());
+            writer.WriteStringValue(LastOperationType.ToString());
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
             if (Optional.IsDefined(Error))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ResourceOperationType lastOpType = default;
+            ResourceOperationType lastOperationType = default;
             string status = default;
             ResourceOperationError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (prop.NameEquals("lastOpType"u8))
                 {
-                    lastOpType = new ResourceOperationType(prop.Value.GetString());
+                    lastOperationType = new ResourceOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FallbackOperationInfo(lastOpType, status, error, additionalBinaryDataProperties);
+            return new FallbackOperationInfo(lastOperationType, status, error, additionalBinaryDataProperties);
         }
     }
 }
