@@ -11,10 +11,6 @@ namespace Azure.AI.Translation.Document
     /// <summary></summary>
     public partial class DocumentTranslateContent
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/> for deserialization. </summary>
-        internal DocumentTranslateContent()
-        {
-        }
     }
 }
 #pragma warning restore SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.

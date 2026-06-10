@@ -6,12 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Document Translate Request Content. </summary>
     public partial class DocumentTranslateContent
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
         /// <param name="multipartDocument"> Document to be translated in the form. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartDocument"/> is null. </exception>
@@ -21,6 +25,17 @@ namespace Azure.AI.Translation.Document
 
             MultipartDocument = multipartDocument;
             MultipartGlossary = new ChangeTrackingList<MultipartFormFileData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
+        /// <param name="multipartDocument"> Document to be translated in the form. </param>
+        /// <param name="multipartGlossary"> Glossary-translation memory will be used during translation in the form. . </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTranslateContent(MultipartFormFileData multipartDocument, IList<MultipartFormFileData> multipartGlossary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            MultipartDocument = multipartDocument;
+            MultipartGlossary = multipartGlossary;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }
