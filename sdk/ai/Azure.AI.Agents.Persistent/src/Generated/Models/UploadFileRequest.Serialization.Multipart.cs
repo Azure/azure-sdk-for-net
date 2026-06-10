@@ -10,6 +10,7 @@ using System.ClientModel;
 #pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.AI.Agents.Persistent
 {
+    /// <summary></summary>
     internal partial class UploadFileRequest
     {
         /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/> for deserialization. </summary>
