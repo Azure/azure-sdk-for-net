@@ -42,3 +42,12 @@ jobs:
         run: |
           ./eng/common/mcp/azure-sdk-mcp.ps1 -InstallDirectory $HOME/bin
 
+      # Pre-build the Generator Agent MCP server so it is warmed and ready for the
+      # cloud agent to launch via `dotnet run ... -- --mcp-server` (see .mcp.json).
+      # This restores its NuGet dependencies (incl. ModelContextProtocol) and produces
+      # the Debug/net10.0 output up front so the agent does not spend time discovering
+      # and building them on first MCP use. The startup handshake is regression-tested
+      # separately in .github/workflows/generator-agent-mcp.yml (not on every session).
+      - name: Build Generator Agent MCP server
+        run: dotnet build sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj -c Debug --framework net10.0
+
