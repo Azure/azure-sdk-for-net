@@ -29,12 +29,24 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     public partial class MockableSecurityCenterResourceGroupResource
     {
         [ForwardsClientCalls]
+        public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(string ascLocation)
+            => GetJitNetworkAccessPolicies(new AzureLocation(ascLocation));
+
+        [ForwardsClientCalls]
+        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(string ascLocation)
+            => GetResourceGroupSecurityAlerts(new AzureLocation(ascLocation));
+
+        [ForwardsClientCalls]
         public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             => GetResourceGroupSecurityAlert(new AzureLocation(ascLocation), alertName, cancellationToken);
 
         [ForwardsClientCalls]
         public virtual Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             => GetResourceGroupSecurityAlertAsync(new AzureLocation(ascLocation), alertName, cancellationToken);
+
+        [ForwardsClientCalls]
+        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
+            => GetResourceGroupSecurityTasks(new AzureLocation(ascLocation));
 
         [ForwardsClientCalls]
         public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))

@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [ForwardsClientCalls]
         public static JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, string ascLocation)
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicies(new AzureLocation(ascLocation));
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicies(ascLocation);
         [ForwardsClientCalls]
         public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, string ascLocation)
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(new AzureLocation(ascLocation));
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
         [ForwardsClientCalls]
         public static Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this ResourceGroupResource resourceGroupResource, string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlert(ascLocation, alertName, cancellationToken);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter
             => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlertAsync(ascLocation, alertName, cancellationToken);
         [ForwardsClientCalls]
         public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, string ascLocation)
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(new AzureLocation(ascLocation));
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
         [ForwardsClientCalls]
         public static Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this ResourceGroupResource resourceGroupResource, string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
             => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTask(ascLocation, taskName, cancellationToken);
