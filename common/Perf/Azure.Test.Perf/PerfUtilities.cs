@@ -52,10 +52,10 @@ namespace Azure.Test.PerfStress
                 var baseOptionsType = t.GetConstructors().First().GetParameters()[0].ParameterType;
                 var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, baseOptionsType);
 
-                var attrCtor = typeof(VerbAttribute).GetConstructor(new Type[] { typeof(string), typeof(bool) });
+                var attrCtor = typeof(VerbAttribute).GetConstructor(new Type[] { typeof(string), typeof(bool), typeof(string[]) });
                 var verbName = GetVerbName(t.Name);
                 tb.SetCustomAttribute(new CustomAttributeBuilder(attrCtor,
-                    new object[] { verbName, attrCtor.GetParameters()[1].DefaultValue }));
+                    new object[] { verbName, false, null }));
 
                 optionTypes.Add(tb.CreateType());
             }
