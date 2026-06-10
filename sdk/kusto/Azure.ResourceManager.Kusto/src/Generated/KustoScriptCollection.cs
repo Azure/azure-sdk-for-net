@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoScriptCollection : ArmCollection, IEnumerable<KustoScriptResource>, IAsyncEnumerable<KustoScriptResource>
     {
-        private readonly ClientDiagnostics _kustoScriptScriptsClientDiagnostics;
-        private readonly ScriptsRestOperations _kustoScriptScriptsRestClient;
+        private readonly ClientDiagnostics _scriptsClientDiagnostics;
+        private readonly Scripts _scriptsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="KustoScriptCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of KustoScriptCollection for mocking. </summary>
         protected KustoScriptCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KustoScriptCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoScriptCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KustoScriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kustoScriptScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoScriptResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(KustoScriptResource.ResourceType, out string kustoScriptScriptsApiVersion);
-            _kustoScriptScriptsRestClient = new ScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoScriptScriptsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(KustoScriptResource.ResourceType, out string kustoScriptApiVersion);
+            _scriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoScriptResource.ResourceType.Namespace, Diagnostics);
+            _scriptsRestClient = new Scripts(_scriptsClientDiagnostics, Pipeline, Endpoint, kustoScriptApiVersion ?? "2025-02-14");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != KustoDatabaseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, KustoDatabaseResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KustoDatabaseResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a Kusto database script.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="data"> The Kusto Script parameters contains the KQL to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<KustoScriptResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scriptName, KustoScriptData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _kustoScriptScriptsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, KustoScriptData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KustoArmOperation<KustoScriptResource> operation = new KustoArmOperation<KustoScriptResource>(
+                    new KustoScriptOperationSource(Client),
+                    _scriptsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Kusto
         /// Creates a Kusto database script.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="data"> The Kusto Script parameters contains the KQL to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<KustoScriptResource> CreateOrUpdate(WaitUntil waitUntil, string scriptName, KustoScriptData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kustoScriptScriptsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, KustoScriptData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KustoArmOperation<KustoScriptResource> operation = new KustoArmOperation<KustoScriptResource>(
+                    new KustoScriptOperationSource(Client),
+                    _scriptsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Kusto
         /// Gets a Kusto cluster database script.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<KustoScriptResource>> GetAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Get");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.Get");
             scope.Start();
             try
             {
-                var response = await _kustoScriptScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KustoScriptData> response = Response.FromValue(KustoScriptData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Kusto
         /// Gets a Kusto cluster database script.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<KustoScriptResource> Get(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Get");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.Get");
             scope.Start();
             try
             {
-                var response = _kustoScriptScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KustoScriptData> response = Response.FromValue(KustoScriptData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,49 +272,51 @@ namespace Azure.ResourceManager.Kusto
         /// Returns the list of database scripts for given database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoScriptResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoScriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoScriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KustoScriptData, KustoScriptResource>(new ScriptsGetByDatabaseAsyncCollectionResultOfT(
+                _scriptsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "KustoScriptCollection.GetAll"), data => new KustoScriptResource(Client, data));
         }
 
         /// <summary>
         /// Returns the list of database scripts for given database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,44 +324,68 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoScriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoScriptResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KustoScriptData, KustoScriptResource>(new ScriptsGetByDatabaseCollectionResultOfT(
+                _scriptsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "KustoScriptCollection.GetAll"), data => new KustoScriptResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Exists");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _kustoScriptScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoScriptData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoScriptData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoScriptData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,36 +399,50 @@ namespace Azure.ResourceManager.Kusto
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Exists");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.Exists");
             scope.Start();
             try
             {
-                var response = _kustoScriptScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoScriptData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoScriptData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoScriptData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,38 +456,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<KustoScriptResource>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.GetIfExists");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _kustoScriptScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoScriptData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoScriptData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoScriptData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoScriptResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,38 +517,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scripts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Scripts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoScriptResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<KustoScriptResource> GetIfExists(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.GetIfExists");
+            using DiagnosticScope scope = _scriptsClientDiagnostics.CreateScope("KustoScriptCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _kustoScriptScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoScriptData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoScriptData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoScriptData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoScriptResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -483,6 +584,7 @@ namespace Azure.ResourceManager.Kusto
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<KustoScriptResource> IAsyncEnumerable<KustoScriptResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -8,18 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoEventHubDataConnection : IUtf8JsonSerializable, IJsonModel<KustoEventHubDataConnection>
+    /// <summary> Class representing an event hub data connection. </summary>
+    public partial class KustoEventHubDataConnection : KustoDataConnectionData, IJsonModel<KustoEventHubDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoEventHubDataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoEventHubDataConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoEventHubDataConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoEventHubDataConnection IPersistableModel<KustoEventHubDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (KustoEventHubDataConnection)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoEventHubDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoEventHubDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,659 +72,123 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EventHubResourceId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("eventHubResourceId"u8);
-                writer.WriteStringValue(EventHubResourceId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ConsumerGroup))
-            {
-                writer.WritePropertyName("consumerGroup"u8);
-                writer.WriteStringValue(ConsumerGroup);
-            }
-            if (Optional.IsDefined(TableName))
-            {
-                writer.WritePropertyName("tableName"u8);
-                writer.WriteStringValue(TableName);
-            }
-            if (Optional.IsDefined(MappingRuleName))
-            {
-                writer.WritePropertyName("mappingRuleName"u8);
-                writer.WriteStringValue(MappingRuleName);
-            }
-            if (Optional.IsDefined(DataFormat))
-            {
-                writer.WritePropertyName("dataFormat"u8);
-                writer.WriteStringValue(DataFormat.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(EventSystemProperties))
-            {
-                writer.WritePropertyName("eventSystemProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in EventSystemProperties)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Compression))
-            {
-                writer.WritePropertyName("compression"u8);
-                writer.WriteStringValue(Compression.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(ManagedIdentityResourceId))
-            {
-                writer.WritePropertyName("managedIdentityResourceId"u8);
-                writer.WriteStringValue(ManagedIdentityResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
-            {
-                writer.WritePropertyName("managedIdentityObjectId"u8);
-                writer.WriteStringValue(ManagedIdentityObjectId.Value);
-            }
-            if (Optional.IsDefined(DatabaseRouting))
-            {
-                writer.WritePropertyName("databaseRouting"u8);
-                writer.WriteStringValue(DatabaseRouting.Value.ToString());
-            }
-            if (Optional.IsDefined(RetrievalStartOn))
-            {
-                writer.WritePropertyName("retrievalStartDate"u8);
-                writer.WriteStringValue(RetrievalStartOn.Value, "O");
-            }
-            writer.WriteEndObject();
         }
 
-        KustoEventHubDataConnection IJsonModel<KustoEventHubDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoEventHubDataConnection IJsonModel<KustoEventHubDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KustoEventHubDataConnection)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoEventHubDataConnection(document.RootElement, options);
         }
 
-        internal static KustoEventHubDataConnection DeserializeKustoEventHubDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoEventHubDataConnection DeserializeKustoEventHubDataConnection(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureLocation? location = default;
-            DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ResourceIdentifier eventHubResourceId = default;
-            string consumerGroup = default;
-            string tableName = default;
-            string mappingRuleName = default;
-            KustoEventHubDataFormat? dataFormat = default;
-            IList<string> eventSystemProperties = default;
-            EventHubMessagesCompressionType? compression = default;
-            KustoProvisioningState? provisioningState = default;
-            ResourceIdentifier managedIdentityResourceId = default;
-            Guid? managedIdentityObjectId = default;
-            KustoDatabaseRouting? databaseRouting = default;
-            DateTimeOffset? retrievalStartDate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation? location = default;
+            DataConnectionKind kind = default;
+            EventHubConnectionProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    kind = new DataConnectionKind(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("eventHubResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            eventHubResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("consumerGroup"u8))
-                        {
-                            consumerGroup = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("tableName"u8))
-                        {
-                            tableName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("mappingRuleName"u8))
-                        {
-                            mappingRuleName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataFormat"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataFormat = new KustoEventHubDataFormat(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("eventSystemProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            eventSystemProperties = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("compression"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            compression = new EventHubMessagesCompressionType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new KustoProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedIdentityResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedIdentityObjectId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedIdentityObjectId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("databaseRouting"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            databaseRouting = new KustoDatabaseRouting(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("retrievalStartDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            retrievalStartDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
+                        continue;
                     }
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new DataConnectionKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = EventHubConnectionProperties.DeserializeEventHubConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoEventHubDataConnection(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 location,
                 kind,
-                serializedAdditionalRawData,
-                eventHubResourceId,
-                consumerGroup,
-                tableName,
-                mappingRuleName,
-                dataFormat,
-                eventSystemProperties ?? new ChangeTrackingList<string>(),
-                compression,
-                provisioningState,
-                managedIdentityResourceId,
-                managedIdentityObjectId,
-                databaseRouting,
-                retrievalStartDate);
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventHubResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    eventHubResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EventHubResourceId))
-                {
-                    builder.Append("    eventHubResourceId: ");
-                    builder.AppendLine($"'{EventHubResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConsumerGroup), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    consumerGroup: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConsumerGroup))
-                {
-                    builder.Append("    consumerGroup: ");
-                    if (ConsumerGroup.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ConsumerGroup}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ConsumerGroup}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tableName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableName))
-                {
-                    builder.Append("    tableName: ");
-                    if (TableName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TableName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TableName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MappingRuleName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    mappingRuleName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MappingRuleName))
-                {
-                    builder.Append("    mappingRuleName: ");
-                    if (MappingRuleName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MappingRuleName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MappingRuleName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataFormat), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    dataFormat: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DataFormat))
-                {
-                    builder.Append("    dataFormat: ");
-                    builder.AppendLine($"'{DataFormat.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventSystemProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    eventSystemProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(EventSystemProperties))
-                {
-                    if (EventSystemProperties.Any())
-                    {
-                        builder.Append("    eventSystemProperties: ");
-                        builder.AppendLine("[");
-                        foreach (var item in EventSystemProperties)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Compression), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    compression: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Compression))
-                {
-                    builder.Append("    compression: ");
-                    builder.AppendLine($"'{Compression.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentityResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    managedIdentityResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagedIdentityResourceId))
-                {
-                    builder.Append("    managedIdentityResourceId: ");
-                    builder.AppendLine($"'{ManagedIdentityResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentityObjectId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    managedIdentityObjectId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagedIdentityObjectId))
-                {
-                    builder.Append("    managedIdentityObjectId: ");
-                    builder.AppendLine($"'{ManagedIdentityObjectId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseRouting), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    databaseRouting: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatabaseRouting))
-                {
-                    builder.Append("    databaseRouting: ");
-                    builder.AppendLine($"'{DatabaseRouting.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetrievalStartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    retrievalStartDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RetrievalStartOn))
-                {
-                    builder.Append("    retrievalStartDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(RetrievalStartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KustoEventHubDataConnection>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoEventHubDataConnection IPersistableModel<KustoEventHubDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoEventHubDataConnection(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoEventHubDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

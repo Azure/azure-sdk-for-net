@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -15,74 +17,65 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Endpoints accessed for a common purpose that the Kusto Service Environment requires outbound network access to. </summary>
     public partial class OutboundNetworkDependenciesEndpoint : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpoint"/>. </summary>
-        public OutboundNetworkDependenciesEndpoint()
+        internal OutboundNetworkDependenciesEndpoint()
         {
-            Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpoint"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="category"> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
-        /// <param name="endpoints"> The endpoints that the Kusto Service Environment reaches the service at. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundNetworkDependenciesEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, IList<EndpointDependency> endpoints, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The outbound environment endpoint properties. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal OutboundNetworkDependenciesEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutboundNetworkDependenciesEndpointProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            Category = category;
-            Endpoints = endpoints;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> The outbound environment endpoint properties. </summary>
+        [WirePath("properties")]
+        internal OutboundNetworkDependenciesEndpointProperties Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
         [WirePath("properties.category")]
-        public string Category { get; set; }
+        public string Category
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Category;
+            }
+        }
+
         /// <summary> The endpoints that the Kusto Service Environment reaches the service at. </summary>
         [WirePath("properties.endpoints")]
-        public IList<EndpointDependency> Endpoints { get; }
+        public IList<EndpointDependency> Endpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoints;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class KustoManagedPrivateEndpointOperationSource : IOperationSource<KustoManagedPrivateEndpointResource>
+    /// <summary></summary>
+    internal partial class KustoManagedPrivateEndpointOperationSource : IOperationSource<KustoManagedPrivateEndpointResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal KustoManagedPrivateEndpointOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         KustoManagedPrivateEndpointResource IOperationSource<KustoManagedPrivateEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            KustoManagedPrivateEndpointData data = KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new KustoManagedPrivateEndpointResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<KustoManagedPrivateEndpointResource> IOperationSource<KustoManagedPrivateEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
-            return await Task.FromResult(new KustoManagedPrivateEndpointResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            KustoManagedPrivateEndpointData data = KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new KustoManagedPrivateEndpointResource(_client, data);
         }
     }
 }

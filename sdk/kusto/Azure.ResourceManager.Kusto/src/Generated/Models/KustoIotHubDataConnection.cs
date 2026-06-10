@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -16,74 +17,194 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoIotHubDataConnection : KustoDataConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="KustoIotHubDataConnection"/>. </summary>
-        public KustoIotHubDataConnection()
+        public KustoIotHubDataConnection() : base(DataConnectionKind.IotHub)
         {
-            EventSystemProperties = new ChangeTrackingList<string>();
-            Kind = DataConnectionKind.IotHub;
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoIotHubDataConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="iotHubResourceId"> The resource ID of the Iot hub to be used to create a data connection. </param>
-        /// <param name="consumerGroup"> The iot hub consumer group. </param>
-        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
-        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
-        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
-        /// <param name="eventSystemProperties"> System properties of the iot hub. </param>
-        /// <param name="sharedAccessPolicyName"> The name of the share access policy. </param>
-        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
+        /// <param name="properties"> The Iot Hub data connection properties. </param>
+        internal KustoIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, DataConnectionKind kind, IotHubConnectionProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, kind)
         {
-            IotHubResourceId = iotHubResourceId;
-            ConsumerGroup = consumerGroup;
-            TableName = tableName;
-            MappingRuleName = mappingRuleName;
-            DataFormat = dataFormat;
-            EventSystemProperties = eventSystemProperties;
-            SharedAccessPolicyName = sharedAccessPolicyName;
-            DatabaseRouting = databaseRouting;
-            RetrievalStartOn = retrievalStartOn;
-            ProvisioningState = provisioningState;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> The Iot Hub data connection properties. </summary>
+        [WirePath("properties")]
+        internal IotHubConnectionProperties Properties { get; set; }
 
         /// <summary> The resource ID of the Iot hub to be used to create a data connection. </summary>
         [WirePath("properties.iotHubResourceId")]
-        public ResourceIdentifier IotHubResourceId { get; set; }
+        public ResourceIdentifier IotHubResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IotHubResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.IotHubResourceId = value;
+            }
+        }
+
         /// <summary> The iot hub consumer group. </summary>
         [WirePath("properties.consumerGroup")]
-        public string ConsumerGroup { get; set; }
+        public string ConsumerGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsumerGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.ConsumerGroup = value;
+            }
+        }
+
         /// <summary> The table where the data should be ingested. Optionally the table information can be added to each message. </summary>
         [WirePath("properties.tableName")]
-        public string TableName { get; set; }
+        public string TableName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TableName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.TableName = value;
+            }
+        }
+
         /// <summary> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </summary>
         [WirePath("properties.mappingRuleName")]
-        public string MappingRuleName { get; set; }
+        public string MappingRuleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MappingRuleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.MappingRuleName = value;
+            }
+        }
+
         /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
         [WirePath("properties.dataFormat")]
-        public KustoIotHubDataFormat? DataFormat { get; set; }
+        public KustoIotHubDataFormat? DataFormat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataFormat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.DataFormat = value;
+            }
+        }
+
         /// <summary> System properties of the iot hub. </summary>
         [WirePath("properties.eventSystemProperties")]
-        public IList<string> EventSystemProperties { get; }
+        public IList<string> EventSystemProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                return Properties.EventSystemProperties;
+            }
+        }
+
         /// <summary> The name of the share access policy. </summary>
         [WirePath("properties.sharedAccessPolicyName")]
-        public string SharedAccessPolicyName { get; set; }
+        public string SharedAccessPolicyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharedAccessPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.SharedAccessPolicyName = value;
+            }
+        }
+
         /// <summary> Indication for database routing information from the data connection, by default only database routing information is allowed. </summary>
         [WirePath("properties.databaseRouting")]
-        public KustoDatabaseRouting? DatabaseRouting { get; set; }
+        public KustoDatabaseRouting? DatabaseRouting
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseRouting;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.DatabaseRouting = value;
+            }
+        }
+
         /// <summary> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </summary>
         [WirePath("properties.retrievalStartDate")]
-        public DateTimeOffset? RetrievalStartOn { get; set; }
+        public DateTimeOffset? RetrievalStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetrievalStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IotHubConnectionProperties();
+                }
+                Properties.RetrievalStartOn = value;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

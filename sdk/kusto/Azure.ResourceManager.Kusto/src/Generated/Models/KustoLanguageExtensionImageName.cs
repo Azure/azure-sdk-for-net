@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,49 +15,82 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoLanguageExtensionImageName : IEquatable<KustoLanguageExtensionImageName>
     {
         private readonly string _value;
+        /// <summary> R. </summary>
+        private const string RValue = "R";
+        /// <summary> Python3_6_5. </summary>
+        private const string Python365Value = "Python3_6_5";
+        /// <summary> Python3_10_8. </summary>
+        private const string Python3108Value = "Python3_10_8";
+        /// <summary> Python3_10_8_DL. </summary>
+        private const string Python3108DLValue = "Python3_10_8_DL";
+        /// <summary> PythonCustomImage. </summary>
+        private const string PythonCustomImageValue = "PythonCustomImage";
+        /// <summary> Python3_11_7. </summary>
+        private const string Python3117Value = "Python3_11_7";
+        /// <summary> Python3_11_7_DL. </summary>
+        private const string Python3117DLValue = "Python3_11_7_DL";
 
         /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionImageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoLanguageExtensionImageName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RValue = "R";
-        private const string Python3_6_5Value = "Python3_6_5";
-        private const string Python3_10_8Value = "Python3_10_8";
-        private const string Python3108DLValue = "Python3_10_8_DL";
-        private const string PythonCustomImageValue = "PythonCustomImage";
-        private const string Python3117Value = "Python3_11_7";
-        private const string Python3117DLValue = "Python3_11_7_DL";
+            _value = value;
+        }
 
         /// <summary> R. </summary>
         public static KustoLanguageExtensionImageName R { get; } = new KustoLanguageExtensionImageName(RValue);
+
+        /// <summary> Python3_6_5. </summary>
+        public static KustoLanguageExtensionImageName Python365 { get; } = new KustoLanguageExtensionImageName(Python365Value);
+
+        /// <summary> Python3_10_8. </summary>
+        public static KustoLanguageExtensionImageName Python3108 { get; } = new KustoLanguageExtensionImageName(Python3108Value);
+
         /// <summary> Python3_10_8_DL. </summary>
         public static KustoLanguageExtensionImageName Python3108DL { get; } = new KustoLanguageExtensionImageName(Python3108DLValue);
+
         /// <summary> PythonCustomImage. </summary>
         public static KustoLanguageExtensionImageName PythonCustomImage { get; } = new KustoLanguageExtensionImageName(PythonCustomImageValue);
+
         /// <summary> Python3_11_7. </summary>
         public static KustoLanguageExtensionImageName Python3117 { get; } = new KustoLanguageExtensionImageName(Python3117Value);
+
         /// <summary> Python3_11_7_DL. </summary>
         public static KustoLanguageExtensionImageName Python3117DL { get; } = new KustoLanguageExtensionImageName(Python3117DLValue);
+
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoLanguageExtensionImageName left, KustoLanguageExtensionImageName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoLanguageExtensionImageName left, KustoLanguageExtensionImageName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoLanguageExtensionImageName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoLanguageExtensionImageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoLanguageExtensionImageName(string value) => new KustoLanguageExtensionImageName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoLanguageExtensionImageName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoLanguageExtensionImageName?(string value) => value == null ? null : new KustoLanguageExtensionImageName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoLanguageExtensionImageName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoLanguageExtensionImageName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
