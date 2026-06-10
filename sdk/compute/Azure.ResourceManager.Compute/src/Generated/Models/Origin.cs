@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </summary>
-    public readonly partial struct Origin : IEquatable<Origin>
+    internal readonly partial struct Origin : IEquatable<Origin>
     {
         private readonly string _value;
         /// <summary> Indicates the operation is initiated by a user. </summary>

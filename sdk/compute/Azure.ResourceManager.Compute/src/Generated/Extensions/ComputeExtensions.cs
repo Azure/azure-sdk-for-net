@@ -3290,12 +3290,9 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="Models.Operation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.Operation> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static AsyncPageable<Models.Operation> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableComputeTenantResource(tenantResource).GetAllAsync(cancellationToken);
         }
 
@@ -3308,12 +3305,9 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="Models.Operation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.Operation> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static Pageable<Models.Operation> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableComputeTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }

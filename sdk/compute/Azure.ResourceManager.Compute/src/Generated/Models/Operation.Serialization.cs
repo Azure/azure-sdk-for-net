@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> REST API Operation. </summary>
-    public partial class Operation : IJsonModel<Operation>
+    internal partial class Operation : IJsonModel<Operation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

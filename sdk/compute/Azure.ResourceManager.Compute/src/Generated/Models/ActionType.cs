@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </summary>
-    public readonly partial struct ActionType : IEquatable<ActionType>
+    internal readonly partial struct ActionType : IEquatable<ActionType>
     {
         private readonly string _value;
         /// <summary> Actions are for internal-only APIs. </summary>
