@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where `ApplicationGatewayData.EnableFips` could not be deserialized correctly because the server returns `enableFIPS` (uppercase) while the spec defined `enableFips` (lowercase).
+
 ### Other Changes
 
 ## 1.15.0 (2026-02-02)

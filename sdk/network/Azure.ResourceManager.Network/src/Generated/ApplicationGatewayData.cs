@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties.enableHttp2")]
         public bool? EnableHttp2 { get; set; }
         /// <summary> Whether FIPS is enabled on the application gateway resource. </summary>
-        [WirePath("properties.enableFips")]
+        [WirePath("properties.enableFIPS")]
         public bool? EnableFips { get; set; }
         /// <summary> Autoscale Configuration. </summary>
         [WirePath("properties.autoscaleConfiguration")]
