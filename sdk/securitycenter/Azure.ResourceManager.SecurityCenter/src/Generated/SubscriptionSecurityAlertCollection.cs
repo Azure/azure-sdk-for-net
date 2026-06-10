@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
