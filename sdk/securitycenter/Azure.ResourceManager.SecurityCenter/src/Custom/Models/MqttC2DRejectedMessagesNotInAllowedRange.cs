@@ -26,6 +26,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // The previous GA SDK exposed this concrete alert-rule discriminator type, but SDK properties
+    // used the broader TimeWindowCustomAlertRule bucket type. The TypeSpec generator now emits
+    // only the bucket type, so this hidden obsolete shim is retained only for ApiCompat.
     [Obsolete("This API is no longer supported by the service.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MqttC2DRejectedMessagesNotInAllowedRange : TimeWindowCustomAlertRule, IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>, IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>

@@ -26,6 +26,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // The previous GA SDK exposed this securityContacts property type from older swagger. Current
+    // TypeSpec uses the updated security contact notification shape instead, so this hidden obsolete
+    // shim is retained only for ApiCompat.
     [Obsolete("This API is no longer supported by the service.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SecurityContactPropertiesAlertNotifications

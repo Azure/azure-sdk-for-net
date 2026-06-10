@@ -27,6 +27,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // The previous GA SDK generated this legacy AutoRest support type from older Security swagger.
+    // Current TypeSpec either emits the updated resource/model name or no longer includes that
+    // legacy schema, so this hidden obsolete shim is retained only for ApiCompat.
     [Obsolete("This API is no longer supported by the service.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct SecurityFamilyProvisioningState : System.IEquatable<SecurityFamilyProvisioningState>

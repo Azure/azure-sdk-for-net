@@ -26,6 +26,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // The previous GA SDK generated this from the applicationWhitelistings swagger. That swagger
+    // was intentionally deprecated and deleted before the TypeSpec migration, so this hidden
+    // obsolete shim is retained only for ApiCompat.
     [Obsolete("This API is no longer supported by the service.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AdaptiveApplicationControlGroupData : ResourceData, IJsonModel<AdaptiveApplicationControlGroupData>, IPersistableModel<AdaptiveApplicationControlGroupData>

@@ -26,6 +26,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // The previous GA SDK generated this from customAssessmentAutomation swagger. That swagger
+    // was deprecated and removed before the TypeSpec migration, so this hidden obsolete shim is
+    // retained only for ApiCompat.
     [Obsolete("This API is no longer supported by the service.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class CustomAssessmentAutomationResource : ArmResource, IJsonModel<CustomAssessmentAutomationData>, IPersistableModel<CustomAssessmentAutomationData>

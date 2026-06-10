@@ -27,6 +27,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // The previous GA SDK generated this legacy security connector/cloud-offering type from older securityConnectors swagger.
+    // Current TypeSpec emits the updated connector model shape and names instead, so this hidden
+    // obsolete shim is retained only for ApiCompat.
     [Obsolete("This API is no longer supported by the service.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DefenderForServersAwsOfferingVmScannersConfiguration
