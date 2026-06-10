@@ -103,12 +103,32 @@ steps:
         ${{ if ne(parameters.NpmConfigRegistry, '') }}:
           npm_config_registry: ${{ parameters.NpmConfigRegistry }}
 
-    - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
-      parameters:
-        BaseRepoBranch: $(TargetBranchName)
-        BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-        CommitMsg: "Update docs metadata"
-        TargetRepoName: ${{ parameters.TargetDocRepoName }}
-        TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-        WorkingDirectory: $(DocRepoLocation)
-        ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+    - ${{ if eq(parameters.DailyDocsBuild, 'true') }}:
+      - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+        parameters:
+          BaseRepoBranch: $(TargetBranchName)
+          BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
+          CommitMsg: "Update docs metadata"
+          TargetRepoName: ${{ parameters.TargetDocRepoName }}
+          TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
+          WorkingDirectory: $(DocRepoLocation)
+          ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+
+    - ${{ if ne(parameters.DailyDocsBuild, 'true') }}:
+      - pwsh: |
+          $docsMetadataBranchName = "docs-metadata-$(Build.BuildId)"
+          Write-Host "Setting DocsMetadataBranchName=$docsMetadataBranchName"
+          Write-Host "##vso[task.setvariable variable=DocsMetadataBranchName]$docsMetadataBranchName"
+        displayName: Set docs metadata PR branch name
+
+      - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+        parameters:
+          BaseBranchName: $(TargetBranchName)
+          PRBranchName: $(DocsMetadataBranchName)
+          PROwner: ${{ parameters.TargetDocRepoOwner }}
+          CommitMsg: "Update docs metadata"
+          RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+          RepoName: ${{ parameters.TargetDocRepoName }}
+          WorkingDirectory: $(DocRepoLocation)
+          ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+          PRTitle: "Update docs metadata"
