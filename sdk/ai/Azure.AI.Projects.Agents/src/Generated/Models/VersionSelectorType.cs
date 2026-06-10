@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public readonly partial struct VersionSelectorType : IEquatable<VersionSelectorType>
+    internal readonly partial struct VersionSelectorType : IEquatable<VersionSelectorType>
     {
         private readonly string _value;
         private const string FixedRatioValue = "FixedRatio";

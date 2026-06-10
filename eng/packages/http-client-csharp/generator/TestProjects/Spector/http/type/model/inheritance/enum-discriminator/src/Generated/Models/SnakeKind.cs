@@ -7,7 +7,7 @@
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    public enum SnakeKind
+    internal enum SnakeKind
     {
         /// <summary> Species cobra. </summary>
         Cobra

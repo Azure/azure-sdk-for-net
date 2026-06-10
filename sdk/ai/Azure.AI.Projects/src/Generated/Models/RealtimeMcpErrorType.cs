@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public readonly partial struct RealtimeMcpErrorType : IEquatable<RealtimeMcpErrorType>
+    internal readonly partial struct RealtimeMcpErrorType : IEquatable<RealtimeMcpErrorType>
     {
         private readonly string _value;
         private const string ProtocolErrorValue = "protocol_error";

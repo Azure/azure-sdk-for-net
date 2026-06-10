@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The supported output file types for a data generation job. </summary>
-    public readonly partial struct DataGenerationJobOutputType : IEquatable<DataGenerationJobOutputType>
+    internal readonly partial struct DataGenerationJobOutputType : IEquatable<DataGenerationJobOutputType>
     {
         private readonly string _value;
         /// <summary> The generated data is an Azure OpenAI File. </summary>

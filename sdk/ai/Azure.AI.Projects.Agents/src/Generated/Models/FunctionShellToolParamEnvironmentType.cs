@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct FunctionShellToolParamEnvironmentType : IEquatable<FunctionShellToolParamEnvironmentType>
+    internal readonly partial struct FunctionShellToolParamEnvironmentType : IEquatable<FunctionShellToolParamEnvironmentType>
     {
         private readonly string _value;
         private const string ContainerAutoValue = "container_auto";

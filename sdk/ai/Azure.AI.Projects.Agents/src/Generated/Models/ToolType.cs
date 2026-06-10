@@ -4,9 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
+    /// <summary></summary>
     internal readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;
@@ -42,8 +44,11 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ToolType"/>. </summary>
         /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ToolType(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             _value = value;
         }
 

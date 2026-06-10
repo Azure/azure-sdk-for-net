@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2026-06-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.Choas` AOT-compatible.
 
 ## 1.2.0-beta.1 (2026-05-29)
 
