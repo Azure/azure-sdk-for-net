@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="ascLocation"> The ascLocation. </param>
         /// <param name="jitNetworkAccessPolicyName"> The jitNetworkAccessPolicyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}";
             return new ResourceIdentifier(resourceId);

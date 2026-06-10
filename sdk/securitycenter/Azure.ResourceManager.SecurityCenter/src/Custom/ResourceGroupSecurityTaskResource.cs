@@ -7,11 +7,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Backward compatibility: preserve the previous AzureLocation overload for resource identifier creation.
+    // Backward compatibility: TypeSpec now models ascLocation as AzureLocation, while the previous generated SDK also exposed string overloads.
     public partial class ResourceGroupSecurityTaskResource
     {
         /// <summary> Generate the resource identifier for this resource. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName)
-            => CreateResourceIdentifier(subscriptionId, resourceGroupName, ascLocation.ToString(), taskName);
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string taskName)
+            => CreateResourceIdentifier(subscriptionId, resourceGroupName, new AzureLocation(ascLocation), taskName);
     }
 }

@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     public partial class MockableSecurityCenterResourceGroupResource
     {
         [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityAlert(ascLocation.ToString(), alertName, cancellationToken);
+        public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            => GetResourceGroupSecurityAlert(new AzureLocation(ascLocation), alertName, cancellationToken);
 
         [ForwardsClientCalls]
-        public virtual Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityAlertAsync(ascLocation.ToString(), alertName, cancellationToken);
+        public virtual Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            => GetResourceGroupSecurityAlertAsync(new AzureLocation(ascLocation), alertName, cancellationToken);
 
         [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityTask(ascLocation.ToString(), taskName, cancellationToken);
+        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
+            => GetResourceGroupSecurityTask(new AzureLocation(ascLocation), taskName, cancellationToken);
 
         [ForwardsClientCalls]
-        public virtual Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityTaskAsync(ascLocation.ToString(), taskName, cancellationToken);
+        public virtual Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
+            => GetResourceGroupSecurityTaskAsync(new AzureLocation(ascLocation), taskName, cancellationToken);
     }
 }

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="ascLocation"> The ascLocation. </param>
         /// <param name="alertName"> The alertName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string alertName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}";
             return new ResourceIdentifier(resourceId);

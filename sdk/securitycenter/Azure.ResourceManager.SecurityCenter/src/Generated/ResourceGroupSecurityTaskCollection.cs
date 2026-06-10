@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly ClientDiagnostics _tasksClientDiagnostics;
         private readonly Tasks _tasksRestClient;
         /// <summary> The ascLocation. </summary>
-        private readonly string _ascLocation;
+        private readonly AzureLocation _ascLocation;
 
         /// <summary> Initializes a new instance of ResourceGroupSecurityTaskCollection for mocking. </summary>
         protected ResourceGroupSecurityTaskCollection()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
-        internal ResourceGroupSecurityTaskCollection(ArmClient client, ResourceIdentifier id, string ascLocation) : base(client, id)
+        internal ResourceGroupSecurityTaskCollection(ArmClient client, ResourceIdentifier id, AzureLocation ascLocation) : base(client, id)
         {
             TryGetApiVersion(ResourceGroupSecurityTaskResource.ResourceType, out string resourceGroupSecurityTaskApiVersion);
             _ascLocation = ascLocation;

@@ -74,12 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AllowedConnectionsResource>> GetAsync(string ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AllowedConnectionsResource>> GetAsync(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
             using DiagnosticScope scope = _allowedConnectionsClientDiagnostics.CreateScope("AllowedConnectionsResourceCollection.Get");
             scope.Start();
             try
@@ -124,12 +120,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AllowedConnectionsResource> Get(string ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual Response<AllowedConnectionsResource> Get(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
             using DiagnosticScope scope = _allowedConnectionsClientDiagnostics.CreateScope("AllowedConnectionsResourceCollection.Get");
             scope.Start();
             try
@@ -174,12 +166,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
             using DiagnosticScope scope = _allowedConnectionsClientDiagnostics.CreateScope("AllowedConnectionsResourceCollection.Exists");
             scope.Start();
             try
@@ -232,12 +220,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
             using DiagnosticScope scope = _allowedConnectionsClientDiagnostics.CreateScope("AllowedConnectionsResourceCollection.Exists");
             scope.Start();
             try
@@ -290,12 +274,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AllowedConnectionsResource>> GetIfExistsAsync(string ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AllowedConnectionsResource>> GetIfExistsAsync(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
             using DiagnosticScope scope = _allowedConnectionsClientDiagnostics.CreateScope("AllowedConnectionsResourceCollection.GetIfExists");
             scope.Start();
             try
@@ -352,12 +332,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AllowedConnectionsResource> GetIfExists(string ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AllowedConnectionsResource> GetIfExists(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
             using DiagnosticScope scope = _allowedConnectionsClientDiagnostics.CreateScope("AllowedConnectionsResourceCollection.GetIfExists");
             scope.Start();
             try
