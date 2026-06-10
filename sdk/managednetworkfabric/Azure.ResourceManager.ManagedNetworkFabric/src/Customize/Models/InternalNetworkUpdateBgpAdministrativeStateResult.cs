@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> NeighborAddress administrative status. </summary>
         public IReadOnlyList<NeighborAddressBgpAdministrativeStatus> NeighborAddressAdministrativeStatus
-            => (IReadOnlyList<NeighborAddressBgpAdministrativeStatus>)Properties?.NeighborAddressAdministrativeStatus;
+            => Properties?.NeighborAddressAdministrativeStatus as IReadOnlyList<NeighborAddressBgpAdministrativeStatus>;
     }
 }

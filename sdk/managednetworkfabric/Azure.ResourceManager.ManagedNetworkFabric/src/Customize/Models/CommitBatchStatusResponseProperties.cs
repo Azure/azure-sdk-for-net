@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> List of devices for which the commit operation failed. </summary>
         public IReadOnlyList<string> CommitBatchDetailsFailedDevices
-            => (IReadOnlyList<string>)CommitBatchDetails?.FailedDevices;
+            => CommitBatchDetails?.FailedDevices as IReadOnlyList<string>;
     }
 }
