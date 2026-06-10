@@ -1,4 +1,4 @@
-id: owners-remove-label-owner-001
+id: codeowners-manager-remove-label-owner-001
 name: Remove Service Owner from Label
 description: |
   Test that the skill removes a service owner from a label.

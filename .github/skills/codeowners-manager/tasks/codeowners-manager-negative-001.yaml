@@ -1,4 +1,4 @@
-id: owners-negative-001
+id: codeowners-manager-negative-001
 name: Should Not Trigger - Unrelated Request
 description: |
   Test that the skill does NOT trigger for non-CODEOWNERS requests.

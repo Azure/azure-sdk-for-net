@@ -1,4 +1,4 @@
-id: owners-add-label-owner-001
+id: codeowners-manager-add-label-owner-001
 name: Add Service Owner to Label
 description: |
   Test that the skill adds a user as a service owner of a label.
