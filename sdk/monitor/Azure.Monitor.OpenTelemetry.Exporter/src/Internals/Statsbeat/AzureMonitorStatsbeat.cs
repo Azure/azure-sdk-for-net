@@ -40,7 +40,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
-        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform)
+        internal AzureMonitorStatsbeat(
+            ConnectionVars connectionStringVars,
+            IPlatform platform,
+            System.Net.Http.HttpMessageHandler? sdkStatsConfigHttpHandler = null)
         {
             _platform = platform;
 
@@ -65,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 // process — the constructor must NOT throw because that would break the
                 // customer's exporter pin path.
                 var configUrl = GetSdkStatsConfigUrl(connectionStringVars.IngestionEndpoint);
-                _ = Task.Run(() => InitializeFromConfigAsync(configUrl));
+                _ = Task.Run(() => InitializeFromConfigAsync(configUrl, sdkStatsConfigHttpHandler));
                 return;
             }
 
@@ -82,11 +85,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             ScheduleInitialAttachFlush();
         }
 
-        private async Task InitializeFromConfigAsync(string configUrl)
+        private async Task InitializeFromConfigAsync(
+            string configUrl,
+            System.Net.Http.HttpMessageHandler? httpHandler)
         {
             try
             {
-                var config = await SdkStatsConfigFetcher.FetchAsync(configUrl).ConfigureAwait(false);
+                var config = await SdkStatsConfigFetcher.FetchAsync(configUrl, httpHandler).ConfigureAwait(false);
                 if (config == null || string.IsNullOrEmpty(config.url))
                 {
                     // FetchAsync has already logged the reason; stay disabled.
