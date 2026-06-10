@@ -1,0 +1,14 @@
+{
+  "name": "playground-bundle-uploader",
+  "private": true,
+  "description": "Bundle a TypeSpec emitter package and upload it to the typespec playground blob storage. Used by the shared archetype-typespec-emitter.yml pipeline template.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "dependencies": {
+    "@azure/identity": "4.13.1",
+    "@azure/storage-blob": "12.31.0",
+    "@typespec/bundler": "0.5.2"
+  }
+}
