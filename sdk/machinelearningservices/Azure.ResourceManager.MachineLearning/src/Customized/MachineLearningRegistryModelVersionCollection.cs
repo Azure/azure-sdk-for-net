@@ -9,14 +9,13 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve previous collection GetAll overload shapes.
+    // Customized: preserve GA options-bag GetAll overloads; the TypeSpec generator now expands
+    // grouped query parameters into individual method parameters instead of emitting an options bag.
     public partial class MachineLearningRegistryModelVersionCollection
     {
-        // Customized: preserve options-object overloads from the previous generated SDK.
         public virtual AsyncPageable<MachineLearningRegistryModelVersionResource> GetAllAsync(MachineLearningRegistryModelVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
             => GetAllAsync(options?.Skip, options?.OrderBy, options?.Top, options?.Version, options?.Description, options?.Tags, options?.Properties, options?.ListViewType, cancellationToken);
 
-        // Customized: preserve options-object overloads from the previous generated SDK.
         public virtual Pageable<MachineLearningRegistryModelVersionResource> GetAll(MachineLearningRegistryModelVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
             => GetAll(options?.Skip, options?.OrderBy, options?.Top, options?.Version, options?.Description, options?.Tags, options?.Properties, options?.ListViewType, cancellationToken);
     }

@@ -10,7 +10,8 @@ using Azure;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore legacy tag helpers removed when latest generation no longer emits them for this resource.
+    // Customized: restore GA tag helper methods. The TypeSpec generator no longer emits resource-specific
+    // tag helpers for this resource, so these delegate to the generic ARM TagResource.
     public partial class MachineLearningBatchDeploymentResource
     {
         /// <summary> Add a tag to the current resource. </summary>

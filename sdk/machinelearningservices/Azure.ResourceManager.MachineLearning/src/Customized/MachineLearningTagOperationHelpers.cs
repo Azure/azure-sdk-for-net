@@ -13,8 +13,8 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: shared implementation for legacy tag operation overloads that were hand-written
-    // before TypeSpec generated resource-specific update methods.
+    // Customized: shared implementation for GA tag helper methods restored on resources where the
+    // TypeSpec generator no longer emits resource-specific AddTag/SetTags/RemoveTag methods.
     internal static class MachineLearningTagOperationHelpers
     {
         public static async Task<Response<T>> AddTagAsync<T>(TagResource tagResource, Func<CancellationToken, Task<Response<T>>> getAsync, string key, string value, CancellationToken cancellationToken)

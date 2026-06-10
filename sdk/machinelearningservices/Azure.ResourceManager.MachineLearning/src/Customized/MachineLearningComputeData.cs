@@ -9,7 +9,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore the legacy public constructor; TrackedResourceData owns the location initialization.
+    // Customized: restore the legacy location-only constructor; the generated TypeSpec model only
+    // has an internal deserialization constructor, which makes the public GA type effectively sealed.
     public partial class MachineLearningComputeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>

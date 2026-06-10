@@ -15,7 +15,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: collection request bodies currently require manual serialization for these action methods.
+    // Customized: preserve GA add-bulk/delete-bulk shapes. Add-bulk was pageable in GA, while the
+    // TypeSpec operation is an LRO action with an array final result; delete-bulk also needs manual
+    // enumerable body serialization to match the generated REST client request contract.
     [CodeGenSuppress("AddBulkAsync", typeof(WaitUntil), typeof(IEnumerable<RaiBlocklistItemBulkRequest>), typeof(CancellationToken))]
     [CodeGenSuppress("AddBulk", typeof(WaitUntil), typeof(IEnumerable<RaiBlocklistItemBulkRequest>), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteBulkAsync", typeof(WaitUntil), typeof(IEnumerable<string>), typeof(CancellationToken))]
