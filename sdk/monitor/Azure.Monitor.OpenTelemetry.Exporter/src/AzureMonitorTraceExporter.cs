@@ -63,6 +63,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return exportResult;
         }
 
+        /// <summary>
+        /// Immediately attempts to transmit any telemetry accumulated in offline storage.
+        /// This is intended for use with <see cref="AzureMonitorExporterOptions.DisableNetworkTransmission"/>
+        /// where the caller controls when network uploads occur.
+        /// </summary>
+        public void FlushOfflineStorage()
+        {
+            _transmitter.FlushOfflineStorage();
+        }
+
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 using Azure.Core;
@@ -93,6 +94,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool DisableOfflineStorage { get; set; }
 
         /// <summary>
+        /// When enabled, the exporter persists telemetry directly to offline storage
+        /// without attempting network transmission during <c>Export()</c> calls.
+        /// </summary>
+        /// <remarks>
+        /// This is intended for short-lived processes (e.g., CLI tools) where the
+        /// latency of an HTTP round-trip on every invocation would exceed the runtime budget.
+        /// Use in combination with <see cref="AzureMonitorTraceExporter.FlushOfflineStorage"/> or an external
+        /// drain process to periodically upload the accumulated blobs.
+        /// This setting does not affect Statsbeat (SDK health telemetry); use
+        /// <see cref="EnableStatsbeat"/> to control that independently.
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown during exporter construction if both this and <see cref="DisableOfflineStorage"/>
+        /// are set to <c>true</c>, as there would be no destination for telemetry.
+        /// </exception>
+        public bool DisableNetworkTransmission { get; set; }
+
+        /// <summary>
+        /// The interval at which accumulated offline storage blobs are retransmitted.
+        /// Default is 120 seconds. Set to <see cref="System.Threading.Timeout.InfiniteTimeSpan"/>
+        /// to disable automatic retransmission (manual control via <see cref="AzureMonitorTraceExporter.FlushOfflineStorage"/>).
+        /// </summary>
+        /// <remarks>
+        /// Has no effect if <see cref="DisableOfflineStorage"/> is <c>true</c>.
+        /// Must be a positive value or <see cref="System.Threading.Timeout.InfiniteTimeSpan"/>.
+        /// </remarks>
+        public TimeSpan StorageTransmitInterval
+        {
+            get => _storageTransmitInterval;
+            set
+            {
+                if (value != System.Threading.Timeout.InfiniteTimeSpan && value <= TimeSpan.Zero)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "StorageTransmitInterval must be a positive value or Timeout.InfiniteTimeSpan.");
+                }
+
+                if (value.TotalMilliseconds > int.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "StorageTransmitInterval must not exceed Int32.MaxValue milliseconds.");
+                }
+
+                _storageTransmitInterval = value;
+            }
+        }
+
+        private TimeSpan _storageTransmitInterval = TimeSpan.FromSeconds(120);
+
+        /// <summary>
         /// Enables or disables the Live Metrics feature. This property is enabled by default.
         /// Note: Enabling Live Metrics incurs no additional billing or costs. However, it does introduce
         /// a performance overhead due to extra data collection, processing, and networking calls. This overhead
@@ -116,9 +165,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool EnableTraceBasedLogsSampler { get; set; } = true;
 
         /// <summary>
-        /// Internal flag to control if Statsbeat is enabled.
+        /// Gets or sets a value indicating whether Statsbeat (SDK health telemetry
+        /// and environment detection via IMDS metadata probes) is enabled.
+        /// Default is <c>true</c>.
         /// </summary>
-        internal bool EnableStatsbeat { get; set; } = true;
+        /// <remarks>
+        /// When disabled, no IMDS metadata probes or SDK usage metrics are sent.
+        /// Can also be disabled via the <c>APPLICATIONINSIGHTS_STATSBEAT_DISABLED</c>
+        /// environment variable.
+        /// For short-lived CLI processes, disabling this avoids a 150-200ms IMDS probe
+        /// on each invocation.
+        /// </remarks>
+        public bool EnableStatsbeat { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether standard metrics should be collected.

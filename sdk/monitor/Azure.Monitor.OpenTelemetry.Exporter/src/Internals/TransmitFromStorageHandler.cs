@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly bool _isAadEnabled;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, TimeSpan? transmitInterval = null)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
@@ -33,9 +33,83 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _transmitFromStorageTimer = new System.Timers.Timer();
             _transmitFromStorageTimer.Elapsed += TransmitFromStorage;
             _transmitFromStorageTimer.AutoReset = true;
-            _transmitFromStorageTimer.Interval = 120000;
-            _transmitFromStorageTimer.Start();
-            _isAadEnabled = isAadEnabled;
+
+            var interval = transmitInterval ?? TimeSpan.FromSeconds(120);
+            if (interval != System.Threading.Timeout.InfiniteTimeSpan)
+            {
+                _transmitFromStorageTimer.Interval = interval.TotalMilliseconds;
+                _transmitFromStorageTimer.Start();
+            }
+        }
+
+        /// <summary>
+        /// Drains all accumulated blobs from offline storage. Unlike <see cref="TransmitFromStorage"/>
+        /// which caps at 10 files per tick, this method loops until all blobs are uploaded
+        /// or a transmission failure occurs.
+        /// </summary>
+        internal void DrainAll()
+        {
+            while (true)
+            {
+                if (_transmissionStateManager.State != TransmissionState.Closed)
+                {
+                    break;
+                }
+
+                if (!_blobProvider.TryGetBlob(out var blob) || !blob.TryLease(120000))
+                {
+                    break;
+                }
+
+                TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
+
+                try
+                {
+                    blob.TryRead(out var data);
+
+                    if (data == null)
+                    {
+                        // Unreadable blob — delete it to avoid spinning on the same blob forever.
+                        blob.TryDelete();
+                        continue;
+                    }
+
+                    try
+                    {
+                        var telemetryItems = Encoding.UTF8.GetString(data).Split('\n');
+                        for (int i = 0; i < telemetryItems.Length; i++)
+                        {
+                            var telemetryType = HttpPipelineHelper.GetTelemetryTypeFromJson(telemetryItems[i]);
+                            HttpPipelineHelper.IncrementCounterByType(telemetrySchemaTypeCounter, telemetryType);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Best-effort counter population; proceed with transmission regardless.
+                    }
+
+                    using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(data, CancellationToken.None).Result;
+                    var result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
+
+                    if (result == ExportResult.Success)
+                    {
+                        _transmissionStateManager.ResetConsecutiveErrors();
+                        _transmissionStateManager.CloseTransmission();
+                        blob.TryDelete();
+                    }
+                    else
+                    {
+                        _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+                        HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter);
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
+                    break;
+                }
+            }
         }
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e)
