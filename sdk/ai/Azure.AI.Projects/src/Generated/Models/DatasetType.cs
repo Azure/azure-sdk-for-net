@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> Enum to determine the type of data. </summary>
-    internal readonly partial struct DatasetType : IEquatable<DatasetType>
+    public readonly partial struct DatasetType : IEquatable<DatasetType>
     {
         private readonly string _value;
         /// <summary> URI file. </summary>

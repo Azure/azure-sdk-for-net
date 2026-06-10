@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> File share information with Path, Username, and Password. </summary>
     public partial class DataMigrationFileShareInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationFileShareInfo"/>. </summary>
         /// <param name="path"> The folder path for this share. </param>
@@ -59,24 +31,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="userName"> User name credential to connect to the share location. </param>
         /// <param name="password"> Password credential used to connect to the share location. </param>
         /// <param name="path"> The folder path for this share. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationFileShareInfo(string userName, string password, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationFileShareInfo(string userName, string password, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserName = userName;
             Password = password;
             Path = path;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMigrationFileShareInfo"/> for deserialization. </summary>
-        internal DataMigrationFileShareInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> User name credential to connect to the share location. </summary>
         public string UserName { get; set; }
+
         /// <summary> Password credential used to connect to the share location. </summary>
         public string Password { get; set; }
+
         /// <summary> The folder path for this share. </summary>
         public string Path { get; set; }
     }

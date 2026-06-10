@@ -3,8 +3,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -1139,7 +1141,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.CreateAgentFromCodeOptions"/> instance for mocking. </returns>
         public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, BinaryData code = default)
         {
-            return new CreateAgentFromCodeOptions(metadata, code, additionalBinaryDataProperties: null);
+            return new CreateAgentFromCodeOptions(metadata, code);
         }
 
         /// <summary>
@@ -1628,19 +1630,6 @@ namespace Azure.AI.Projects.Agents
         public static DatasetInfo DatasetInfo(string name = default, string version = default, int taskCount = default, bool isInline = default)
         {
             return new DatasetInfo(name, version, taskCount, isInline, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The response data for a requested list of items. </summary>
-        /// <param name="data"> The requested list of items. </param>
-        /// <param name="firstId"> The first ID represented in this list. </param>
-        /// <param name="lastId"> The last ID represented in this list. </param>
-        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Agents.AgentsPagedResultOptimizationCandidate"/> instance for mocking. </returns>
-        public static AgentsPagedResultOptimizationCandidate AgentsPagedResultOptimizationCandidate(IEnumerable<OptimizationCandidate> data = default, string firstId = default, string lastId = default, bool hasMore = default)
-        {
-            data ??= new ChangeTrackingList<OptimizationCandidate>();
-
-            return new AgentsPagedResultOptimizationCandidate(data.ToList(), firstId, lastId, hasMore, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Candidate metadata returned by GET /candidates/{id}. </summary>
