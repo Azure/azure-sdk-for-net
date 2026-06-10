@@ -206,8 +206,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public async Task DistroSwitchOn_ConfigUrlMissingScheme_PrependsHttps()
         {
-            // Server contract returns a bare host like "data.stats.monitor.azure.com";
-            // the exporter must produce a usable IngestionEndpoint URL from it.
+            // Server contract returns a bare host (e.g. "bare.host.invalid"); the exporter
+            // must produce a usable IngestionEndpoint URL from it by prepending https://.
             var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"bare.host.invalid\"}"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 

@@ -5,7 +5,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     // Public for the System.Text.Json source generator. Fields are lower-cased to match the
     // server-emitted JSON contract:
-    //   { "ver": 1, "enabled": true, "url": "data.stats.monitor.azure.com" }
+    //   { "ver": 1, "enabled": true, "url": "data.example.invalid" }
 #pragma warning disable SA1300 // Element should begin with upper-case letter
     internal class SdkStatsConfigResponse
     {
