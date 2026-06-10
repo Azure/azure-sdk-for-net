@@ -1054,6 +1054,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class ArcSettings : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ArcSettings>
     {
         public ArcSettings() { }
+        public ArcSettings(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Guid? tenantId, Azure.Core.ResourceIdentifier gatewayResourceId, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData) { }
         public Azure.Core.ResourceIdentifier GatewayResourceId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1215,7 +1216,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     }
     public partial class EsuKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.EsuKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.EsuKey>
     {
-        internal EsuKey() { }
+        public EsuKey(string sku, int? licenseStatus, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalBinaryDataProperties) { }
         public int? LicenseStatus { get { throw null; } }
         public string Sku { get { throw null; } }
         protected virtual Azure.ResourceManager.HybridCompute.Models.EsuKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1540,18 +1541,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridComputeLicense : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense>
+    public partial class HybridComputeLicense : Azure.ResourceManager.HybridCompute.HybridComputeLicenseData
     {
-        public HybridComputeLicense(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails LicenseDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? LicenseType { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-        Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public HybridComputeLicense(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HybridComputeLicense(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalBinaryDataProperties, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? provisioningState, System.Guid? tenantId, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType? licenseType, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails licenseDetails) : base (default(Azure.Core.AzureLocation)) { }
     }
     public partial class HybridComputeLicenseDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseDetails>
     {
@@ -2426,6 +2419,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class LicenseProfileMachineInstanceViewEsuProperties : Azure.ResourceManager.HybridCompute.Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceViewEsuProperties>
     {
         public LicenseProfileMachineInstanceViewEsuProperties() { }
+        public LicenseProfileMachineInstanceViewEsuProperties(System.Guid? assignedLicenseImmutableId, System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalBinaryDataProperties, Azure.ResourceManager.HybridCompute.Models.EsuServerType? serverType, Azure.ResourceManager.HybridCompute.Models.EsuEligibility? esuEligibility, Azure.ResourceManager.HybridCompute.Models.EsuKeyState? esuKeyState, Azure.ResourceManager.HybridCompute.HybridComputeLicenseData assignedLicense, Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState? licenseAssignmentState) { }
+        public LicenseProfileMachineInstanceViewEsuProperties(System.Guid? assignedLicenseImmutableId, System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalBinaryDataProperties, Azure.ResourceManager.HybridCompute.Models.EsuServerType? serverType, Azure.ResourceManager.HybridCompute.Models.EsuEligibility? esuEligibility, Azure.ResourceManager.HybridCompute.Models.EsuKeyState? esuKeyState, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense assignedLicense, Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState? licenseAssignmentState) { }
         public Azure.ResourceManager.HybridCompute.HybridComputeLicenseData AssignedLicense { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState? LicenseAssignmentState { get { throw null; } set { } }
         protected override Azure.ResourceManager.HybridCompute.Models.LicenseProfileStorageModelEsuProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

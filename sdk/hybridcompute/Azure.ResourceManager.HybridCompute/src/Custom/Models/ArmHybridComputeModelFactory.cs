@@ -154,7 +154,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && tenantId is null && licenseType is null && licenseDetails is null ? default : new LicenseProperties(provisioningState, tenantId, licenseType, licenseDetails, additionalBinaryDataProperties: null));
+                provisioningState,
+                tenantId,
+                licenseType,
+                licenseDetails);
         }
         // Backward-compat justification: the GA model factory exposed license profile patch properties as flattened parameters.
         /// <summary> Creates a HybridComputeLicenseProfilePatch for mocking. </summary>

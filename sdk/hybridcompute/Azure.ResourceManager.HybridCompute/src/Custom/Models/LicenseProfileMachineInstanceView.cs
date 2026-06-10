@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         /// <summary> Gets or sets the SoftwareAssurance. </summary>
         [WirePath("softwareAssurance")]
-        internal LicenseProfileMachineInstanceViewSoftwareAssurance SoftwareAssurance { get; set; }
+        private LicenseProfileMachineInstanceViewSoftwareAssurance SoftwareAssurance { get; set; }
 
         /// <summary> Hybrid Compute Product Profile properties. </summary>
         [WirePath("productProfile")]
-        internal LicenseProfileArmProductProfileProperties ProductProfile { get; set; }
+        private LicenseProfileArmProductProfileProperties ProductProfile { get; set; }
 
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
         [WirePath("softwareAssurance.softwareAssuranceCustomer")]
