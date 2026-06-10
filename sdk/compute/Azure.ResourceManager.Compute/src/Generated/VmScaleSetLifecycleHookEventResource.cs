@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to the Update virtual machine scale set lifecycle hook event operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<VmScaleSetLifecycleHookEventResource>> UpdateAsync(VmScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VmScaleSetLifecycleHookEventResource>> UpdateAsync(VirtualMachineScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VmScaleSetLifecycleHookEventPatch.ToRequestContent(patch), context);
+                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualMachineScaleSetLifecycleHookEventPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VmScaleSetLifecycleHookEventData> response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to the Update virtual machine scale set lifecycle hook event operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<VmScaleSetLifecycleHookEventResource> Update(VmScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<VmScaleSetLifecycleHookEventResource> Update(VirtualMachineScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VmScaleSetLifecycleHookEventPatch.ToRequestContent(patch), context);
+                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualMachineScaleSetLifecycleHookEventPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VmScaleSetLifecycleHookEventData> response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
                 if (response.Value == null)

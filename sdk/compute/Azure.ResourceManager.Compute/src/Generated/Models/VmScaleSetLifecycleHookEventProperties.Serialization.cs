@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(VmScaleSetLifecycleHookEventProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(EventType.Value.ToString());
             }
             if (Optional.IsDefined(WaitUntil))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
-                foreach (VmScaleSetLifecycleHookEventTarget item in TargetResources)
+                foreach (VirtualMachineScaleSetLifecycleHookEventTarget item in TargetResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            VmScaleSetLifecycleHookEventType? @type = default;
+            VmScaleSetLifecycleHookEventType? eventType = default;
             string waitUntil = default;
             string maxWaitUntil = default;
             string timeCreated = default;
             LifecycleHookAction? defaultAction = default;
-            IList<VmScaleSetLifecycleHookEventTarget> targetResources = default;
+            IList<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default;
             VmScaleSetLifecycleHookEventAdditionalContext additionalContext = default;
             VmScaleSetLifecycleHookEventState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new VmScaleSetLifecycleHookEventType(prop.Value.GetString());
+                    eventType = new VmScaleSetLifecycleHookEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("waitUntil"u8))
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VmScaleSetLifecycleHookEventTarget> array = new List<VmScaleSetLifecycleHookEventTarget>();
+                    List<VirtualMachineScaleSetLifecycleHookEventTarget> array = new List<VirtualMachineScaleSetLifecycleHookEventTarget>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmScaleSetLifecycleHookEventTarget.DeserializeVmScaleSetLifecycleHookEventTarget(item, options));
+                        array.Add(VirtualMachineScaleSetLifecycleHookEventTarget.DeserializeVirtualMachineScaleSetLifecycleHookEventTarget(item, options));
                     }
                     targetResources = array;
                     continue;
@@ -243,12 +243,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new VmScaleSetLifecycleHookEventProperties(
-                @type,
+                eventType,
                 waitUntil,
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
-                targetResources ?? new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>(),
+                targetResources ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>(),
                 additionalContext,
                 state,
                 additionalBinaryDataProperties);

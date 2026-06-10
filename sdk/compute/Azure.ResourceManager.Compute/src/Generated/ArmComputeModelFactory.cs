@@ -1613,7 +1613,7 @@ namespace Azure.ResourceManager.Compute.Models
                 default);
         }
 
-        /// <param name="type"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
+        /// <param name="eventType"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
         /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
         /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the lifecycle hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
         /// <param name="timeCreated"> The UTC timestamp in ISO 8601 format at which the platform creates the virtual machine scale set lifecycle hook event entity. </param>
@@ -1625,17 +1625,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
         /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
-        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? @type = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VmScaleSetLifecycleHookEventTarget> targetResources = default, string additionalContextPriority = default, VmScaleSetLifecycleHookEventState? state = default)
+        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? eventType = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default, string additionalContextPriority = default, VmScaleSetLifecycleHookEventState? state = default)
         {
-            targetResources ??= new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>();
+            targetResources ??= new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>();
 
             return new VmScaleSetLifecycleHookEventProperties(
-                @type,
+                eventType,
                 waitUntil,
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
-                (targetResources ?? new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>()).ToList(),
+                (targetResources ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>()).ToList(),
                 additionalContextPriority is null ? default : new VmScaleSetLifecycleHookEventAdditionalContext(additionalContextPriority, default),
                 state,
                 default);
@@ -1643,13 +1643,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="resourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="actionState"> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </param>
-        /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventTarget"/> instance for mocking. </returns>
-        public static VmScaleSetLifecycleHookEventTarget VmScaleSetLifecycleHookEventTarget(ResourceIdentifier resourceId = default, LifecycleHookActionState? actionState = default)
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventTarget"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventTarget VirtualMachineScaleSetLifecycleHookEventTarget(ResourceIdentifier resourceId = default, LifecycleHookActionState? actionState = default)
         {
-            return new VmScaleSetLifecycleHookEventTarget(resourceId is null ? default : new ApiEntityReference(resourceId, default), actionState, default);
+            return new VirtualMachineScaleSetLifecycleHookEventTarget(resourceId is null ? default : new ApiEntityReference(resourceId, default), actionState, default);
         }
 
-        /// <param name="type"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
+        /// <param name="eventType"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
         /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
         /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the lifecycle hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
         /// <param name="timeCreated"> The UTC timestamp in ISO 8601 format at which the platform creates the virtual machine scale set lifecycle hook event entity. </param>
@@ -1660,16 +1660,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// Can only be present for a lifecycle hook event of type "UpgradeAutoOSScheduling".
         /// Denotes the priority of the virtual machine scale set lifecycle hook event for the Auto OS Upgrade scheduled on the virtual machine scale set.
         /// </param>
-        /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventPatch"/> instance for mocking. </returns>
-        public static VmScaleSetLifecycleHookEventPatch VmScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? @type = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VmScaleSetLifecycleHookEventTarget> targetResources = default, VmScaleSetLifecycleHookEventState? state = default, string additionalContextPriority = default)
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventPatch"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventPatch VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? eventType = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default, VmScaleSetLifecycleHookEventState? state = default, string additionalContextPriority = default)
         {
-            return new VmScaleSetLifecycleHookEventPatch(@type is null && waitUntil is null && maxWaitUntil is null && timeCreated is null && defaultAction is null && targetResources is null && additionalContextPriority is null && state is null ? default : new VmScaleSetLifecycleHookEventProperties(
-                @type,
+            return new VirtualMachineScaleSetLifecycleHookEventPatch(eventType is null && waitUntil is null && maxWaitUntil is null && timeCreated is null && defaultAction is null && targetResources is null && additionalContextPriority is null && state is null ? default : new VmScaleSetLifecycleHookEventProperties(
+                eventType,
                 waitUntil,
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
-                (targetResources ?? new ChangeTrackingList<VmScaleSetLifecycleHookEventTarget>()).ToList(),
+                (targetResources ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>()).ToList(),
                 new VmScaleSetLifecycleHookEventAdditionalContext(additionalContextPriority, default),
                 state,
                 default), default);

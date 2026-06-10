@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the virtual machine scale set lifecycle hook event. </summary>
-    public partial class VmScaleSetLifecycleHookEventPatch
+    public partial class VirtualMachineScaleSetLifecycleHookEventPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventPatch"/>. </summary>
-        public VmScaleSetLifecycleHookEventPatch()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventPatch"/>. </summary>
+        public VirtualMachineScaleSetLifecycleHookEventPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventPatch"/>. </summary>
         /// <param name="properties"> virtual machine scale set lifecycle hook event properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute.Models
         internal VmScaleSetLifecycleHookEventProperties Properties { get; set; }
 
         /// <summary> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </summary>
-        public VmScaleSetLifecycleHookEventType? Type
+        public VmScaleSetLifecycleHookEventType? EventType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.EventType;
             }
             set
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VmScaleSetLifecycleHookEventProperties();
                 }
-                Properties.Type = value;
+                Properties.EventType = value;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </summary>
-        public IList<VmScaleSetLifecycleHookEventTarget> TargetResources
+        public IList<VirtualMachineScaleSetLifecycleHookEventTarget> TargetResources
         {
             get
             {
