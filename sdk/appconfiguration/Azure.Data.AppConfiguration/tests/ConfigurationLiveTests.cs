@@ -19,7 +19,9 @@ namespace Azure.Data.AppConfiguration.Tests
     [ClientTestFixture(
         ConfigurationClientOptions.ServiceVersion.V1_0,
         ConfigurationClientOptions.ServiceVersion.V2023_10_01,
-        ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        ConfigurationClientOptions.ServiceVersion.V2023_11_01,
+        ConfigurationClientOptions.ServiceVersion.V2024_09_01,
+        ConfigurationClientOptions.ServiceVersion.V2026_04_01)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
@@ -65,19 +67,25 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationSetting CreateSetting()
         {
-            return new ConfigurationSetting()
+            var setting = new ConfigurationSetting()
             {
                 Key = GenerateKeyId("key-"),
                 Value = "test_value",
                 Label = "test_label",
                 ContentType = "test_content_type",
-                Description = "test_description",
                 Tags = new Dictionary<string, string>
                 {
                     { "tag1", "value1" },
                     { "tag2", "value2" }
                 }
             };
+
+            if (_serviceVersion >= ConfigurationClientOptions.ServiceVersion.V2026_04_01)
+            {
+                setting.Description = "test_description";
+            }
+
+            return setting;
         }
 
         private ConfigurationSetting CreateSetting(string key, string value, string label)
