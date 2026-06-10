@@ -24,7 +24,26 @@ namespace Azure.Security.ConfidentialLedger
     {
         private const int MaxRedirects = 5;
         private readonly object _primaryNodeLock = new object();
+        private readonly bool _cachePrimaryNode;
         private Uri _primaryNodeBaseUri;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="ConfidentialLedgerRedirectPolicy"/>.
+        /// </summary>
+        /// <param name="cachePrimaryNode">
+        /// When <c>true</c> (the default), the policy remembers the redirect target of the most recent
+        /// non-GET request and routes subsequent non-GET requests directly to that host until a transport
+        /// failure or 5xx response invalidates the cache. This optimization is appropriate when the
+        /// redirect chain always terminates at a single sticky primary node (the default CCF behavior).
+        /// When <c>false</c>, the cache is disabled: 307/308 responses are still followed (and the
+        /// <c>Authorization</c> header is still preserved across the redirect) but no host pinning is
+        /// performed. Use this when the upstream gateway may redirect to any healthy host (for example,
+        /// the Confidential Ledger Web Frontend Gateway).
+        /// </param>
+        public ConfidentialLedgerRedirectPolicy(bool cachePrimaryNode = true)
+        {
+            _cachePrimaryNode = cachePrimaryNode;
+        }
 
         /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -145,6 +164,11 @@ namespace Azure.Security.ConfidentialLedger
 
         private bool TryApplyCachedPrimaryNode(Request request)
         {
+            if (!_cachePrimaryNode)
+            {
+                return false;
+            }
+
             if (request.Method == RequestMethod.Get)
             {
                 return false;
@@ -162,6 +186,11 @@ namespace Azure.Security.ConfidentialLedger
 
         private void CachePrimaryNode(Uri redirectUri)
         {
+            if (!_cachePrimaryNode)
+            {
+                return;
+            }
+
             Uri candidatePrimary = GetPrimaryNodeBaseUri(redirectUri);
             if (candidatePrimary == null)
             {
@@ -176,6 +205,11 @@ namespace Azure.Security.ConfidentialLedger
 
         private void InvalidateCachedPrimaryNode()
         {
+            if (!_cachePrimaryNode)
+            {
+                return;
+            }
+
             lock (_primaryNodeLock)
             {
                 _primaryNodeBaseUri = null;

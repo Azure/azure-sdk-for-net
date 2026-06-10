@@ -12,9 +12,19 @@
 
 ## 1.4.1-beta.5 (2026-05-26)
 
+### Features Added
+
+- Added opt-in support for the Azure Confidential Ledger Web Frontend Gateway via `ConfidentialLedgerClientOptions.UseWebFrontend`. When enabled:
+  - The SDK skips the per-ledger CCF identity-service TLS bootstrap. The gateway uses publicly-rooted certificates, so the OS trust store is sufficient.
+  - `ConfidentialLedgerClient.PostLedgerEntry` accepts an HTTP 202 response and returns an operation whose `Id` is the gateway-assigned `operationId` (read from the `x-ms-webfe-operation-id` response header, with a fallback to the response body). The operation transparently polls `GET /app/operations/{operationId}` and surfaces the underlying CCF transaction once committed.
+  - Client-certificate (mTLS) authentication is rejected at construction time — only `TokenCredential` is supported by the gateway.
+- Added `ConfidentialLedgerClient.GetOperationStatus` / `GetOperationStatusAsync` for direct polling of the gateway operation queue.
+- Added `ConfidentialLedgerClient.RehydratePostLedgerEntryOperation(string operationId)` for resuming a previously-started write submission across process restarts (no I/O is performed until polling begins). Operation IDs remain valid on the server for 24 hours.
+
 ### Bugs Fixed
 
-- Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
+- `PostLedgerEntryOperation.GetRawResponse()` now returns the initial submit response before the first poll. Previously, callers using `WaitUntil.Started` who inspected response headers (for example `x-ms-ccf-transaction-id` or `x-ms-webfe-operation-id`) on the returned operation observed a `NullReferenceException`.
+- Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node. (Primary-node caching is automatically disabled when `UseWebFrontend = true`, since the gateway brokers node routing on the server side.)
 
 ## 1.4.1-beta.4 (2026-02-27)
 
