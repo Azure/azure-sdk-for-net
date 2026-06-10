@@ -98,11 +98,17 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Gets or sets the name of a blob.  The value defaults to
         /// <see cref="String.Empty"/> if not present in the <see cref="System.Uri"/>.
+        /// This property will reject blob names that contain ".." as a path segment, which could cause unexpected behaviors.
         /// </summary>
         public string BlobName
         {
             get => _blobName;
-            set { ResetUri(); _blobName = value; }
+            set
+            {
+                ResetUri();
+                //Shared.StorageExtensions.ValidateResourceName(value);
+                _blobName = value;
+            }
         }
         private string _blobName;
 
