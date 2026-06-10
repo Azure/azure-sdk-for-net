@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RouteMapPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RouteMapPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RouteMapPut.json
             // this example is just showing the usage of "RouteMaps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Samples
             string routeMapName = "routeMap1";
             RouteMapData data = new RouteMapData
             {
-                AssociatedInboundConnections = { "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGateway1/expressRouteConnections/exrConn1" },
+                AssociatedInboundConnections = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGateway1/expressRouteConnections/exrConn1" },
                 AssociatedOutboundConnections = { },
                 Rules = {new RouteMapRule
 {
@@ -82,7 +82,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteMapGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RouteMapGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RouteMapGet.json
             // this example is just showing the usage of "RouteMaps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -116,7 +116,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RouteMapList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RouteMapList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RouteMapList.json
             // this example is just showing the usage of "RouteMaps_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -152,7 +152,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RouteMapGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RouteMapGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RouteMapGet.json
             // this example is just showing the usage of "RouteMaps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -182,7 +182,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RouteMapGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RouteMapGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RouteMapGet.json
             // this example is just showing the usage of "RouteMaps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,7 +192,7 @@ NextStepIfMatched = RouteMapNextStepBehavior.Continue,
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A list of Reachability Analysis Run. </summary>
+    /// <summary> The response of a ReachabilityAnalysisRun list operation. </summary>
     internal partial class ReachabilityAnalysisRunListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunListResult"/>. </summary>
-        internal ReachabilityAnalysisRunListResult()
+        /// <param name="value"> The ReachabilityAnalysisRun items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ReachabilityAnalysisRunListResult(IEnumerable<ReachabilityAnalysisRunData> value)
         {
-            Value = new ChangeTrackingList<ReachabilityAnalysisRunData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunListResult"/>. </summary>
-        /// <param name="value"> Gets a page of Reachability Analysis Runs. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <param name="value"> The ReachabilityAnalysisRun items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReachabilityAnalysisRunListResult(IReadOnlyList<ReachabilityAnalysisRunData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReachabilityAnalysisRunListResult(IReadOnlyList<ReachabilityAnalysisRunData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of Reachability Analysis Runs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunListResult"/> for deserialization. </summary>
+        internal ReachabilityAnalysisRunListResult()
+        {
+        }
+
+        /// <summary> The ReachabilityAnalysisRun items on this page. </summary>
         public IReadOnlyList<ReachabilityAnalysisRunData> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

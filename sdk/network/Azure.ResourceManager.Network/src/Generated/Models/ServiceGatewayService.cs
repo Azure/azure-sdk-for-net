@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayService"/>. </summary>
         public ServiceGatewayService()
         {
-            LoadBalancerBackendPools = new ChangeTrackingList<BackendAddressPoolData>();
+            LoadBalancerBackendPools = new ChangeTrackingList<CommonBackendAddressPoolData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayService"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadBalancerBackendPools"> An array of load balancer backend address pools. </param>
         /// <param name="publicNatGatewayId"> Azure Resource Id of public natgateway. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayService(string name, ServiceType? serviceType, bool? isDefault, IList<BackendAddressPoolData> loadBalancerBackendPools, string publicNatGatewayId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceGatewayService(string name, ServiceType? serviceType, bool? isDefault, IList<CommonBackendAddressPoolData> loadBalancerBackendPools, string publicNatGatewayId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ServiceType = serviceType;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool? IsDefault { get; set; }
         /// <summary> An array of load balancer backend address pools. </summary>
         [WirePath("properties.loadBalancerBackendPools")]
-        public IList<BackendAddressPoolData> LoadBalancerBackendPools { get; }
+        public IList<CommonBackendAddressPoolData> LoadBalancerBackendPools { get; }
         /// <summary> Azure Resource Id of public natgateway. </summary>
         [WirePath("properties.publicNatGatewayId")]
         public string PublicNatGatewayId { get; set; }

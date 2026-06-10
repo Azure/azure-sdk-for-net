@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListLoadBalancers API service call. </summary>
+    /// <summary> The response of a LoadBalancer list operation. </summary>
     internal partial class LoadBalancerListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/>. </summary>
-        internal LoadBalancerListResult()
+        /// <param name="value"> The LoadBalancer items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LoadBalancerListResult(IEnumerable<CommonLoadBalancerData> value)
         {
-            Value = new ChangeTrackingList<LoadBalancerData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/>. </summary>
-        /// <param name="value"> A list of load balancers in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The LoadBalancer items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerListResult(IReadOnlyList<LoadBalancerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerListResult(IReadOnlyList<CommonLoadBalancerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of load balancers in a resource group. </summary>
-        public IReadOnlyList<LoadBalancerData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/> for deserialization. </summary>
+        internal LoadBalancerListResult()
+        {
+        }
+
+        /// <summary> The LoadBalancer items on this page. </summary>
+        public IReadOnlyList<CommonLoadBalancerData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

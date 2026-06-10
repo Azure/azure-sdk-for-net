@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListExpressRoutePortAuthorizations API service call. </summary>
+    /// <summary> Paged collection of ExpressRoutePortAuthorization items. </summary>
     internal partial class ExpressRoutePortAuthorizationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationListResult"/>. </summary>
-        internal ExpressRoutePortAuthorizationListResult()
+        /// <param name="value"> The ExpressRoutePortAuthorization items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ExpressRoutePortAuthorizationListResult(IEnumerable<ExpressRoutePortAuthorizationData> value)
         {
-            Value = new ChangeTrackingList<ExpressRoutePortAuthorizationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationListResult"/>. </summary>
-        /// <param name="value"> The authorizations in an ExpressRoute Port. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ExpressRoutePortAuthorization items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRoutePortAuthorizationListResult(IReadOnlyList<ExpressRoutePortAuthorizationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressRoutePortAuthorizationListResult(IReadOnlyList<ExpressRoutePortAuthorizationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The authorizations in an ExpressRoute Port. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationListResult"/> for deserialization. </summary>
+        internal ExpressRoutePortAuthorizationListResult()
+        {
+        }
+
+        /// <summary> The ExpressRoutePortAuthorization items on this page. </summary>
         public IReadOnlyList<ExpressRoutePortAuthorizationData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

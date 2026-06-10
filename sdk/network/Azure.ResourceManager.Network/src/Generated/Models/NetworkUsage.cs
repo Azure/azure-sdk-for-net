@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkUsage(ResourceIdentifier id, NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkUsage(string id, NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Unit = unit;
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource identifier. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; }
+        public string Id { get; }
         /// <summary> An enum describing the unit of measurement. </summary>
         [WirePath("unit")]
         public NetworkUsageUnit Unit { get; }

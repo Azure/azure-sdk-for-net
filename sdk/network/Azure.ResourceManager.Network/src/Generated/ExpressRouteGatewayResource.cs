@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteGatewayResource(ArmClient client, ExpressRouteGatewayData data) : this(client, data.Id)
+        internal ExpressRouteGatewayResource(ArmClient client, ExpressRouteGatewayData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,6 +416,546 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Retrieves the details of all the failover tests performed on the ExpressRoute gateway for different peering locations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="type"> The type of failover test. </param>
+        /// <param name="fetchLatest"> Fetch only the latest tests for each peering location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<IList<ExpressRouteFailoverTestDetails>>> GetFailoverAllTestsDetailsAsync(WaitUntil waitUntil, string type = null, bool? fetchLatest = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverAllTestsDetails");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteGatewayRestClient.GetFailoverAllTestsDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, type, fetchLatest, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>>(new IListOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetFailoverAllTestsDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, type, fetchLatest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the details of all the failover tests performed on the ExpressRoute gateway for different peering locations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="type"> The type of failover test. </param>
+        /// <param name="fetchLatest"> Fetch only the latest tests for each peering location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<IList<ExpressRouteFailoverTestDetails>> GetFailoverAllTestsDetails(WaitUntil waitUntil, string type = null, bool? fetchLatest = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverAllTestsDetails");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteGatewayRestClient.GetFailoverAllTestsDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, type, fetchLatest, cancellationToken);
+                var operation = new NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>>(new IListOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetFailoverAllTestsDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, type, fetchLatest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the details of a particular failover test performed on the ExpressRoute gateway based on the test Guid.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peeringLocation"> Peering location of the test. </param>
+        /// <param name="failoverTestId"> The unique Guid value which identifies the test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> or <paramref name="failoverTestId"/> is null. </exception>
+        public virtual async Task<ArmOperation<IList<ExpressRouteFailoverSingleTestDetails>>> GetFailoverSingleTestDetailsAsync(WaitUntil waitUntil, string peeringLocation, string failoverTestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            Argument.AssertNotNull(failoverTestId, nameof(failoverTestId));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverSingleTestDetails");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteGatewayRestClient.GetFailoverSingleTestDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>>(new IListOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetFailoverSingleTestDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the details of a particular failover test performed on the ExpressRoute gateway based on the test Guid.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peeringLocation"> Peering location of the test. </param>
+        /// <param name="failoverTestId"> The unique Guid value which identifies the test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> or <paramref name="failoverTestId"/> is null. </exception>
+        public virtual ArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> GetFailoverSingleTestDetails(WaitUntil waitUntil, string peeringLocation, string failoverTestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            Argument.AssertNotNull(failoverTestId, nameof(failoverTestId));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverSingleTestDetails");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteGatewayRestClient.GetFailoverSingleTestDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, cancellationToken);
+                var operation = new NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>>(new IListOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetFailoverSingleTestDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the resiliency information for the ExpressRoute gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getResiliencyInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetResiliencyInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="attemptRefresh"> Whether to attempt a refresh of the resiliency information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<GatewayResiliencyInformation>> GetResiliencyInformationAsync(WaitUntil waitUntil, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetResiliencyInformation");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteGatewayRestClient.GetResiliencyInformationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<GatewayResiliencyInformation>(new GatewayResiliencyInformationOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetResiliencyInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the resiliency information for the ExpressRoute gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getResiliencyInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetResiliencyInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="attemptRefresh"> Whether to attempt a refresh of the resiliency information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<GatewayResiliencyInformation> GetResiliencyInformation(WaitUntil waitUntil, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetResiliencyInformation");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteGatewayRestClient.GetResiliencyInformation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh, cancellationToken);
+                var operation = new NetworkArmOperation<GatewayResiliencyInformation>(new GatewayResiliencyInformationOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetResiliencyInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the route sets information for the ExpressRoute gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getRoutesInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetRoutesInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="attemptRefresh"> Whether to attempt a refresh of the route sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<GatewayRouteSetsInformation>> GetRoutesInformationAsync(WaitUntil waitUntil, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetRoutesInformation");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteGatewayRestClient.GetRoutesInformationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<GatewayRouteSetsInformation>(new GatewayRouteSetsInformationOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetRoutesInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the route sets information for the ExpressRoute gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/getRoutesInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_GetRoutesInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="attemptRefresh"> Whether to attempt a refresh of the route sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<GatewayRouteSetsInformation> GetRoutesInformation(WaitUntil waitUntil, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetRoutesInformation");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteGatewayRestClient.GetRoutesInformation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh, cancellationToken);
+                var operation = new NetworkArmOperation<GatewayRouteSetsInformation>(new GatewayRouteSetsInformationOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateGetRoutesInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attemptRefresh).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts failover simulation on the ExpressRoute gateway for the specified peering location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/startSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_StartSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peeringLocation"> Peering location of the test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        public virtual async Task<ArmOperation<string>> StartSiteFailoverTestAsync(WaitUntil waitUntil, string peeringLocation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StartSiteFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteGatewayRestClient.StartSiteFailoverTestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateStartSiteFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts failover simulation on the ExpressRoute gateway for the specified peering location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/startSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_StartSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peeringLocation"> Peering location of the test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringLocation"/> is null. </exception>
+        public virtual ArmOperation<string> StartSiteFailoverTest(WaitUntil waitUntil, string peeringLocation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StartSiteFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteGatewayRestClient.StartSiteFailoverTest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation, cancellationToken);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateStartSiteFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringLocation).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops failover simulation on the ExpressRoute gateway for the specified peering location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/stopSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_StopSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="stopParameters"> Parameters supplied to stop the failover simulation on the express route gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stopParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<string>> StopSiteFailoverTestAsync(WaitUntil waitUntil, ExpressRouteFailoverStopApiParameters stopParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(stopParameters, nameof(stopParameters));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StopSiteFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteGatewayRestClient.StopSiteFailoverTestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, stopParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateStopSiteFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, stopParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops failover simulation on the ExpressRoute gateway for the specified peering location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/stopSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteGateways_StopSiteFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="stopParameters"> Parameters supplied to stop the failover simulation on the express route gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stopParameters"/> is null. </exception>
+        public virtual ArmOperation<string> StopSiteFailoverTest(WaitUntil waitUntil, ExpressRouteFailoverStopApiParameters stopParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(stopParameters, nameof(stopParameters));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StopSiteFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteGatewayRestClient.StopSiteFailoverTest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, stopParameters, cancellationToken);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateStopSiteFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, stopParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -428,7 +968,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -490,7 +1030,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -552,7 +1092,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -609,7 +1149,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -666,7 +1206,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -726,7 +1266,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

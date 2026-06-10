@@ -76,6 +76,21 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPAddresses))
+            {
+                writer.WritePropertyName("publicIPAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in PublicIPAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -100,15 +115,16 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             ETag? etag = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IList<DdosDetectionRule> detectionRules = default;
             IList<WritableSubResource> frontEndIPConfiguration = default;
+            IReadOnlyList<WritableSubResource> publicIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,11 +140,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -138,11 +150,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -223,6 +231,27 @@ namespace Azure.ResourceManager.Network
                             frontEndIPConfiguration = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicIPAddresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                                }
+                            }
+                            publicIPAddresses = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -243,7 +272,8 @@ namespace Azure.ResourceManager.Network
                 resourceGuid,
                 provisioningState,
                 detectionRules ?? new ChangeTrackingList<DdosDetectionRule>(),
-                frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>());
+                frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -358,7 +388,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 
@@ -434,6 +472,34 @@ namespace Azure.ResourceManager.Network
                         foreach (var item in FrontEndIPConfiguration)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    frontEndIpConfiguration: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicIPAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PublicIPAddresses))
+                {
+                    if (PublicIPAddresses.Any())
+                    {
+                        builder.Append("    publicIPAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PublicIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
                         }
                         builder.AppendLine("    ]");
                     }

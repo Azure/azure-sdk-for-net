@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.Network.Models
     public enum FirewallPolicyIdpsSignatureSeverity
     {
         /// <summary> 1. </summary>
-        One = 1,
+        One,
         /// <summary> 2. </summary>
-        Two = 2,
+        Two,
         /// <summary> 3. </summary>
-        Three = 3
+        Three
     }
 }

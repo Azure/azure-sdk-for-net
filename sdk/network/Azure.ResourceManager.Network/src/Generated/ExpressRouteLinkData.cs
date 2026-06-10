@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the ExpressRouteLink data model.
     /// ExpressRouteLink child resource definition.
     /// </summary>
-    public partial class ExpressRouteLinkData : NetworkResourceData
+    public partial class ExpressRouteLinkData : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
         public ExpressRouteLinkData()
@@ -25,9 +24,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of child port resource that is unique among child port resources of the parent. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routerName"> Name of Azure router associated with physical port. </param>
         /// <param name="interfaceName"> Name of Azure router interface. </param>
@@ -38,8 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="adminState"> Administrative state of the physical port. </param>
         /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
         /// <param name="macSecConfig"> MacSec configuration. </param>
-        internal ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ExpressRouteLinkData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
             RouterName = routerName;
             InterfaceName = interfaceName;
@@ -52,6 +51,9 @@ namespace Azure.ResourceManager.Network
             MacSecConfig = macSecConfig;
         }
 
+        /// <summary> Name of child port resource that is unique among child port resources of the parent. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

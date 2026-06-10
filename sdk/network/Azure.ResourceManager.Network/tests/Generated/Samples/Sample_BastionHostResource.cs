@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionHostGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionHostGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string bastionHostName = "bastionhosttenant'";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBastionHostWithPrivateOnly()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionHostGetWithPrivateOnly.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionHostGetWithPrivateOnly.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string bastionHostName = "bastionhosttenant";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBastionHostWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionHostGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionHostGetWithZones.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string bastionHostName = "bastionhosttenant";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDeveloperBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionHostDeveloperGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionHostDeveloperGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string bastionHostName = "bastionhostdeveloper'";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionHostDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionHostDelete.json
             // this example is just showing the usage of "BastionHosts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string bastionHostName = "bastionhosttenant";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDeveloperBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionHostDeveloperDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionHostDeveloperDelete.json
             // this example is just showing the usage of "BastionHosts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg2";
             string bastionHostName = "bastionhostdeveloper";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionHostPatch.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionHostPatch.json
             // this example is just showing the usage of "BastionHosts_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string bastionHostName = "bastionhosttenant";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteBastionShareableLinkByToken_DeleteBastionShareableLinksForTheRequestVMs()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/BastionShareableLinkDeleteByToken.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/BastionShareableLinkDeleteByToken.json
             // this example is just showing the usage of "DeleteBastionShareableLinkByToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this BastionHostResource created on azure
             // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string bastionHostName = "bastionhosttenant";
             ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);

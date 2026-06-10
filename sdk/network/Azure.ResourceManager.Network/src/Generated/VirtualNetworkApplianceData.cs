@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the VirtualNetworkAppliance data model.
     /// A virtual network appliance in a resource group.
     /// </summary>
-    public partial class VirtualNetworkApplianceData : NetworkTrackedResourceData
+    public partial class VirtualNetworkApplianceData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceData"/>. </summary>
         public VirtualNetworkApplianceData()
@@ -34,14 +34,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="bandwidthInGbps"> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </param>
         /// <param name="ipConfigurations"> A list of IPConfigurations of the virtual network appliance. </param>
+        /// <param name="privateIPAddressVersion"> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network appliance resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
-        internal VirtualNetworkApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal VirtualNetworkApplianceData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, double? bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIPVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, CommonSubnetData subnet) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             BandwidthInGbps = bandwidthInGbps;
             IPConfigurations = ipConfigurations;
+            PrivateIPAddressVersion = privateIPAddressVersion;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
             Subnet = subnet;
@@ -52,10 +54,13 @@ namespace Azure.ResourceManager.Network
         public ETag? ETag { get; }
         /// <summary> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </summary>
         [WirePath("properties.bandwidthInGbps")]
-        public string BandwidthInGbps { get; set; }
+        public double? BandwidthInGbps { get; set; }
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("properties.ipConfigurations")]
         public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IPConfigurations { get; }
+        /// <summary> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </summary>
+        [WirePath("properties.privateIPAddressVersion")]
+        public VirtualNetworkApplianceIPVersionType? PrivateIPAddressVersion { get; set; }
         /// <summary> The provisioning state of the virtual network appliance resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
@@ -64,6 +69,6 @@ namespace Azure.ResourceManager.Network
         public Guid? ResourceGuid { get; }
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("properties.subnet")]
-        public SubnetData Subnet { get; set; }
+        public CommonSubnetData Subnet { get; set; }
     }
 }

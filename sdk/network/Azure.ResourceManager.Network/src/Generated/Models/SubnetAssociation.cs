@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="SubnetAssociation"/>. </summary>
         internal SubnetAssociation()
         {
-            SecurityRules = new ChangeTrackingList<SecurityRuleData>();
+            SecurityRules = new ChangeTrackingList<CommonSecurityRuleData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubnetAssociation"/>. </summary>
         /// <param name="id"> Subnet ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetAssociation(ResourceIdentifier id, IReadOnlyList<SecurityRuleData> securityRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubnetAssociation(ResourceIdentifier id, IReadOnlyList<CommonSecurityRuleData> securityRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SecurityRules = securityRules;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Network.Models
         public ResourceIdentifier Id { get; }
         /// <summary> Collection of custom security rules. </summary>
         [WirePath("securityRules")]
-        public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
+        public IReadOnlyList<CommonSecurityRuleData> SecurityRules { get; }
     }
 }

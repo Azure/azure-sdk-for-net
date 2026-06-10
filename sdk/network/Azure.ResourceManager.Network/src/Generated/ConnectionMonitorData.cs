@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorData"/>. </summary>
         internal ConnectionMonitorData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Endpoints = new ChangeTrackingList<ConnectionMonitorEndpoint>();
             TestConfigurations = new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
             TestGroups = new ChangeTrackingList<ConnectionMonitorTestGroup>();
             Outputs = new ChangeTrackingList<ConnectionMonitorOutput>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorData"/>. </summary>
@@ -66,9 +66,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="location"> Connection monitor location. </param>
-        /// <param name="tags"> Connection monitor tags. </param>
         /// <param name="source"> Describes the source of connection monitor. </param>
         /// <param name="destination"> Describes the destination of connection monitor. </param>
         /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
@@ -82,12 +79,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="startOn"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="location"> Connection monitor location. </param>
+        /// <param name="tags"> Connection monitor tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType, ETag? etag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            Location = location;
-            Tags = tags;
             Source = source;
             Destination = destination;
             AutoStart = autoStart;
@@ -101,18 +98,12 @@ namespace Azure.ResourceManager.Network
             StartOn = startOn;
             MonitoringStatus = monitoringStatus;
             ConnectionMonitorType = connectionMonitorType;
+            ETag = etag;
+            Location = location;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
-        /// <summary> Connection monitor location. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
-        /// <summary> Connection monitor tags. </summary>
-        [WirePath("tags")]
-        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Describes the source of connection monitor. </summary>
         [WirePath("properties.source")]
         public ConnectionMonitorSource Source { get; }
@@ -152,5 +143,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Type of connection monitor. </summary>
         [WirePath("properties.connectionMonitorType")]
         public ConnectionMonitorType? ConnectionMonitorType { get; }
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
+        /// <summary> Connection monitor location. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
+        /// <summary> Connection monitor tags. </summary>
+        [WirePath("tags")]
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

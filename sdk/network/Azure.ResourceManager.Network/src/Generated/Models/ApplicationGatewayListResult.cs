@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListApplicationGateways API service call. </summary>
+    /// <summary> The response of a ApplicationGateway list operation. </summary>
     internal partial class ApplicationGatewayListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListResult"/>. </summary>
-        internal ApplicationGatewayListResult()
+        /// <param name="value"> The ApplicationGateway items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ApplicationGatewayListResult(IEnumerable<ApplicationGatewayData> value)
         {
-            Value = new ChangeTrackingList<ApplicationGatewayData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListResult"/>. </summary>
-        /// <param name="value"> List of an application gateways in a resource group. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The ApplicationGateway items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayListResult(IReadOnlyList<ApplicationGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayListResult(IReadOnlyList<ApplicationGatewayData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of an application gateways in a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListResult"/> for deserialization. </summary>
+        internal ApplicationGatewayListResult()
+        {
+        }
+
+        /// <summary> The ApplicationGateway items on this page. </summary>
         public IReadOnlyList<ApplicationGatewayData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

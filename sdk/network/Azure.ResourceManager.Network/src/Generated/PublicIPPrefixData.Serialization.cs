@@ -153,13 +153,13 @@ namespace Azure.ResourceManager.Network
             PublicIPPrefixSku sku = default;
             ETag? etag = default;
             IList<string> zones = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             NetworkIPVersion? publicIPAddressVersion = default;
-            IList<IPTag> ipTags = default;
+            IList<CommonIPTag> ipTags = default;
             int? prefixLength = default;
             string ipPrefix = default;
             IReadOnlyList<SubResource> publicIPAddresses = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             WritableSubResource customIPPrefix = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
-            NatGatewayData natGateway = default;
+            CommonNatGatewayData natGateway = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,11 +215,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -229,11 +225,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -283,10 +275,10 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            List<IPTag> array = new List<IPTag>();
+                            List<CommonIPTag> array = new List<CommonIPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPTag.DeserializeIPTag(item, options));
+                                array.Add(CommonIPTag.DeserializeCommonIPTag(item, options));
                             }
                             ipTags = array;
                             continue;
@@ -361,7 +353,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            natGateway = NatGatewayData.DeserializeNatGatewayData(property0.Value, options);
+                            natGateway = CommonNatGatewayData.DeserializeCommonNatGatewayData(property0.Value, options);
                             continue;
                         }
                     }
@@ -385,7 +377,7 @@ namespace Azure.ResourceManager.Network
                 etag,
                 zones ?? new ChangeTrackingList<string>(),
                 publicIPAddressVersion,
-                ipTags ?? new ChangeTrackingList<IPTag>(),
+                ipTags ?? new ChangeTrackingList<CommonIPTag>(),
                 prefixLength,
                 ipPrefix,
                 publicIPAddresses ?? new ChangeTrackingList<SubResource>(),
@@ -574,7 +566,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

@@ -66,11 +66,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
+        /// <param name="securityPerimeterResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, Guid? perimeterGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, Guid? perimeterGuid, string securityPerimeterResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PerimeterGuid = perimeterGuid;
+            SecurityPerimeterResourceType = securityPerimeterResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,5 +87,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> perimeter guid of the network security perimeter. </summary>
         [WirePath("properties.perimeterGuid")]
         public Guid? PerimeterGuid { get; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string SecurityPerimeterResourceType { get; }
     }
 }

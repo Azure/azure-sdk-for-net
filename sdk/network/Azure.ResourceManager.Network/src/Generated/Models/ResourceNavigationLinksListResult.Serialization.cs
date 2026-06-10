@@ -36,20 +36,17 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(ResourceNavigationLinksListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,29 +85,29 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceNavigationLink> value = default;
-            string nextLink = default;
+            IReadOnlyList<CommonResourceNavigationLink> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceNavigationLink> array = new List<ResourceNavigationLink>();
+                    List<CommonResourceNavigationLink> array = new List<CommonResourceNavigationLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceNavigationLink.DeserializeResourceNavigationLink(item, options));
+                        array.Add(CommonResourceNavigationLink.DeserializeCommonResourceNavigationLink(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceNavigationLinksListResult(value ?? new ChangeTrackingList<ResourceNavigationLink>(), nextLink, serializedAdditionalRawData);
+            return new ResourceNavigationLinksListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -167,15 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                 if (Optional.IsDefined(NextLink))
                 {
                     builder.Append("  nextLink: ");
-                    if (NextLink.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextLink}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextLink}'");
-                    }
+                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
                 }
             }
 

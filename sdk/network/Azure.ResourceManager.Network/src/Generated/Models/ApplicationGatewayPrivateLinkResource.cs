@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateLink Resource of an application gateway. </summary>
-    public partial class ApplicationGatewayPrivateLinkResource : NetworkResourceData
+    public partial class ApplicationGatewayPrivateLinkResource : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
         public ApplicationGatewayPrivateLinkResource()
@@ -23,24 +22,32 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the private link resource that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayPrivateLinkResource(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
         }
 
+        /// <summary> Name of the private link resource that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary> Group identifier of private link resource. </summary>
         [WirePath("properties.groupId")]
         public string GroupId { get; }

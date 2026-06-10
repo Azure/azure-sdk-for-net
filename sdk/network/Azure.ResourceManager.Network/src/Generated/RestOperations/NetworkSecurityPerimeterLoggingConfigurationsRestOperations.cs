@@ -32,8 +32,102 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-05-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
+            uri.AppendPath(networkSecurityPerimeterName, true);
+            uri.AppendPath("/loggingConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
+            uri.AppendPath(networkSecurityPerimeterName, true);
+            uri.AppendPath("/loggingConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists the NSP logging configuration. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetworkSecurityPerimeterLoggingConfigurationListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
+
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NetworkSecurityPerimeterLoggingConfigurationListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = NetworkSecurityPerimeterLoggingConfigurationListResult.DeserializeNetworkSecurityPerimeterLoggingConfigurationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists the NSP logging configuration. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetworkSecurityPerimeterLoggingConfigurationListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
+
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NetworkSecurityPerimeterLoggingConfigurationListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = NetworkSecurityPerimeterLoggingConfigurationListResult.DeserializeNetworkSecurityPerimeterLoggingConfigurationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string loggingConfigurationName)
@@ -75,8 +169,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the NSP logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +202,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the NSP logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,8 +277,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates NSP logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="data"> Parameters that hold the NspLoggingConfiguration to be created/updated. </param>
@@ -217,8 +311,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates NSP logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="data"> Parameters that hold the NspLoggingConfiguration to be created/updated. </param>
@@ -289,8 +383,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes an NSP Logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,8 +410,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes an NSP Logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -337,100 +431,6 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
-            uri.AppendPath(networkSecurityPerimeterName, true);
-            uri.AppendPath("/loggingConfigurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
-            uri.AppendPath(networkSecurityPerimeterName, true);
-            uri.AppendPath("/loggingConfigurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the NSP logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSecurityPerimeterLoggingConfigurationListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLoggingConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSecurityPerimeterLoggingConfigurationListResult.DeserializeNetworkSecurityPerimeterLoggingConfigurationListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the NSP logging configuration. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSecurityPerimeterLoggingConfigurationListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLoggingConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkSecurityPerimeterLoggingConfigurationListResult.DeserializeNetworkSecurityPerimeterLoggingConfigurationListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -460,8 +460,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists the NSP logging configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
@@ -491,8 +491,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists the NSP logging configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>

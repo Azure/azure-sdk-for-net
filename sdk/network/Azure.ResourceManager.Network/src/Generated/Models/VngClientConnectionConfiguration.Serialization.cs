@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -88,17 +93,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ETag? etag = default;
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
-            VirtualNetworkAddressSpace vpnClientAddressPool = default;
+            ETag? etag = default;
+            string id = default;
+            CommonAddressSpace vpnClientAddressPool = default;
             IList<WritableSubResource> virtualNetworkGatewayPolicyGroups = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,25 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -146,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
+                            vpnClientAddressPool = CommonAddressSpace.DeserializeCommonAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
@@ -183,9 +174,8 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new VngClientConnectionConfiguration(
                 id,
-                name,
-                type,
                 serializedAdditionalRawData,
+                name,
                 etag,
                 vpnClientAddressPool,
                 virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<WritableSubResource>(),
@@ -252,7 +242,15 @@ namespace Azure.ResourceManager.Network.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

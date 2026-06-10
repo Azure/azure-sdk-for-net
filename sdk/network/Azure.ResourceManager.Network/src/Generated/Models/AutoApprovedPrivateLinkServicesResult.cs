@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkServicesResult"/>. </summary>
-        internal AutoApprovedPrivateLinkServicesResult()
+        /// <param name="value"> The AutoApprovedPrivateLinkService items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AutoApprovedPrivateLinkServicesResult(IEnumerable<AutoApprovedPrivateLinkService> value)
         {
-            Value = new ChangeTrackingList<AutoApprovedPrivateLinkService>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkServicesResult"/>. </summary>
-        /// <param name="value"> An array of auto approved private link service. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The AutoApprovedPrivateLinkService items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoApprovedPrivateLinkServicesResult(IReadOnlyList<AutoApprovedPrivateLinkService> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoApprovedPrivateLinkServicesResult(IReadOnlyList<AutoApprovedPrivateLinkService> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of auto approved private link service. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkServicesResult"/> for deserialization. </summary>
+        internal AutoApprovedPrivateLinkServicesResult()
+        {
+        }
+
+        /// <summary> The AutoApprovedPrivateLinkService items on this page. </summary>
         public IReadOnlyList<AutoApprovedPrivateLinkService> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

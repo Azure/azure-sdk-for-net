@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Trusted Root certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayTrustedRootCertificate : NetworkResourceData
+    public partial class ApplicationGatewayTrustedRootCertificate : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         public ApplicationGatewayTrustedRootCertificate()
@@ -21,24 +20,32 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the trusted root certificate that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayTrustedRootCertificate(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             Data = data;
             KeyVaultSecretId = keyVaultSecretId;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Name of the trusted root certificate that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary>
         /// Certificate public data.
         /// <para>

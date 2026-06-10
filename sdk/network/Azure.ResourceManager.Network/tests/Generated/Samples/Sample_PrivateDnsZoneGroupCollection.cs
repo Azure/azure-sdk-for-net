@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateEndpointDnsZoneGroupCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/PrivateEndpointDnsZoneGroupCreate.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointResource created on azure
-            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            // this example assumes you already have this CommonPrivateEndpointResource created on azure
+            // for more information of creating CommonPrivateEndpointResource, please refer to the document of CommonPrivateEndpointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
-            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
-            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
+            ResourceIdentifier commonPrivateEndpointResourceId = CommonPrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
+            CommonPrivateEndpointResource commonPrivateEndpoint = client.GetCommonPrivateEndpointResource(commonPrivateEndpointResourceId);
 
             // get the collection of this PrivateDnsZoneGroupResource
-            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
+            PrivateDnsZoneGroupCollection collection = commonPrivateEndpoint.GetPrivateDnsZoneGroups();
 
             // invoke the operation
             string privateDnsZoneGroupName = "testPdnsgroup";
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 PrivateDnsZoneConfigs = {new PrivateDnsZoneConfig
 {
-PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/privateDnsZones/zone1.com",
+PrivateDnsZoneId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/privateDnsZones/zone1.com",
 }},
             };
             ArmOperation<PrivateDnsZoneGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, data);
@@ -62,7 +62,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,16 +70,16 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointResource created on azure
-            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            // this example assumes you already have this CommonPrivateEndpointResource created on azure
+            // for more information of creating CommonPrivateEndpointResource, please refer to the document of CommonPrivateEndpointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
-            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
-            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
+            ResourceIdentifier commonPrivateEndpointResourceId = CommonPrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
+            CommonPrivateEndpointResource commonPrivateEndpoint = client.GetCommonPrivateEndpointResource(commonPrivateEndpointResourceId);
 
             // get the collection of this PrivateDnsZoneGroupResource
-            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
+            PrivateDnsZoneGroupCollection collection = commonPrivateEndpoint.GetPrivateDnsZoneGroups();
 
             // invoke the operation
             string privateDnsZoneGroupName = "testPdnsgroup";
@@ -96,7 +96,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPrivateEndpointsInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateEndpointDnsZoneGroupList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/PrivateEndpointDnsZoneGroupList.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,16 +104,16 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointResource created on azure
-            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            // this example assumes you already have this CommonPrivateEndpointResource created on azure
+            // for more information of creating CommonPrivateEndpointResource, please refer to the document of CommonPrivateEndpointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
-            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
-            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
+            ResourceIdentifier commonPrivateEndpointResourceId = CommonPrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
+            CommonPrivateEndpointResource commonPrivateEndpoint = client.GetCommonPrivateEndpointResource(commonPrivateEndpointResourceId);
 
             // get the collection of this PrivateDnsZoneGroupResource
-            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
+            PrivateDnsZoneGroupCollection collection = commonPrivateEndpoint.GetPrivateDnsZoneGroups();
 
             // invoke the operation and iterate over the result
             await foreach (PrivateDnsZoneGroupResource item in collection.GetAllAsync())
@@ -132,7 +132,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,16 +140,16 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointResource created on azure
-            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            // this example assumes you already have this CommonPrivateEndpointResource created on azure
+            // for more information of creating CommonPrivateEndpointResource, please refer to the document of CommonPrivateEndpointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
-            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
-            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
+            ResourceIdentifier commonPrivateEndpointResourceId = CommonPrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
+            CommonPrivateEndpointResource commonPrivateEndpoint = client.GetCommonPrivateEndpointResource(commonPrivateEndpointResourceId);
 
             // get the collection of this PrivateDnsZoneGroupResource
-            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
+            PrivateDnsZoneGroupCollection collection = commonPrivateEndpoint.GetPrivateDnsZoneGroups();
 
             // invoke the operation
             string privateDnsZoneGroupName = "testPdnsgroup";
@@ -162,7 +162,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,16 +170,16 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointResource created on azure
-            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            // this example assumes you already have this CommonPrivateEndpointResource created on azure
+            // for more information of creating CommonPrivateEndpointResource, please refer to the document of CommonPrivateEndpointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
-            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
-            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
+            ResourceIdentifier commonPrivateEndpointResourceId = CommonPrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
+            CommonPrivateEndpointResource commonPrivateEndpoint = client.GetCommonPrivateEndpointResource(commonPrivateEndpointResourceId);
 
             // get the collection of this PrivateDnsZoneGroupResource
-            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
+            PrivateDnsZoneGroupCollection collection = commonPrivateEndpoint.GetPrivateDnsZoneGroups();
 
             // invoke the operation
             string privateDnsZoneGroupName = "testPdnsgroup";

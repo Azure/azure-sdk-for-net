@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ResourceNavigationLinks_List operation. </summary>
+    /// <summary> Paged collection of ResourceNavigationLink items. </summary>
     internal partial class ResourceNavigationLinksListResult
     {
         /// <summary>
@@ -46,27 +47,36 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLinksListResult"/>. </summary>
-        internal ResourceNavigationLinksListResult()
+        /// <param name="value"> The ResourceNavigationLink items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ResourceNavigationLinksListResult(IEnumerable<CommonResourceNavigationLink> value)
         {
-            Value = new ChangeTrackingList<ResourceNavigationLink>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLinksListResult"/>. </summary>
-        /// <param name="value"> The resource navigation links in a subnet. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ResourceNavigationLink items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNavigationLinksListResult(IReadOnlyList<ResourceNavigationLink> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceNavigationLinksListResult(IReadOnlyList<CommonResourceNavigationLink> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource navigation links in a subnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNavigationLinksListResult"/> for deserialization. </summary>
+        internal ResourceNavigationLinksListResult()
+        {
+        }
+
+        /// <summary> The ResourceNavigationLink items on this page. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ResourceNavigationLink> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        public IReadOnlyList<CommonResourceNavigationLink> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

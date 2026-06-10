@@ -17,13 +17,14 @@ namespace Azure.ResourceManager.Network
     /// A class representing the DdosCustomPolicy data model.
     /// A DDoS custom policy in a resource group.
     /// </summary>
-    public partial class DdosCustomPolicyData : NetworkTrackedResourceData
+    public partial class DdosCustomPolicyData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
         public DdosCustomPolicyData()
         {
             DetectionRules = new ChangeTrackingList<DdosDetectionRule>();
             FrontEndIPConfiguration = new ChangeTrackingList<WritableSubResource>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
@@ -38,13 +39,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
         /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
-        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<WritableSubResource> frontEndIPConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
+        internal DdosCustomPolicyData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<WritableSubResource> frontEndIPConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             DetectionRules = detectionRules;
             FrontEndIPConfiguration = frontEndIPConfiguration;
+            PublicIPAddresses = publicIPAddresses;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

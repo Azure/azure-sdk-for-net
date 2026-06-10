@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.Network.Models
         public string ErrorMessage { get; }
         /// <summary> Provisioning states of a resource. </summary>
         [WirePath("provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; set; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

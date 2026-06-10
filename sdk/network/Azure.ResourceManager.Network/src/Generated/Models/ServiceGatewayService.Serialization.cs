@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
             string name = default;
             ServiceType? serviceType = default;
             bool? isDefault = default;
-            IList<BackendAddressPoolData> loadBalancerBackendPools = default;
+            IList<CommonBackendAddressPoolData> loadBalancerBackendPools = default;
             string publicNatGatewayId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
+                            List<CommonBackendAddressPoolData> array = new List<CommonBackendAddressPoolData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item, options));
+                                array.Add(CommonBackendAddressPoolData.DeserializeCommonBackendAddressPoolData(item, options));
                             }
                             loadBalancerBackendPools = array;
                             continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 serviceType,
                 isDefault,
-                loadBalancerBackendPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
+                loadBalancerBackendPools ?? new ChangeTrackingList<CommonBackendAddressPoolData>(),
                 publicNatGatewayId,
                 serializedAdditionalRawData);
         }

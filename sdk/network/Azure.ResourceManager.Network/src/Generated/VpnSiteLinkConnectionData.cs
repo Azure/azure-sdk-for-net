@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the VpnSiteLinkConnection data model.
     /// VpnSiteLinkConnection Resource.
     /// </summary>
-    public partial class VpnSiteLinkConnectionData : NetworkResourceData
+    public partial class VpnSiteLinkConnectionData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         public VpnSiteLinkConnectionData()
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="vpnSiteLink"> Id of the connected vpn site link. </param>
         /// <param name="routingWeight"> Routing weight for vpn connection. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ingressNatRules"> List of ingress NatRules. </param>
         /// <param name="egressNatRules"> List of egress NatRules. </param>
         /// <param name="dpdTimeoutSeconds"> Dead Peer Detection timeout in seconds for VpnLink connection. </param>
-        internal VpnSiteLinkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, int? dpdTimeoutSeconds) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VpnSiteLinkConnectionData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, WritableSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, int? dpdTimeoutSeconds) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             VpnSiteLink = vpnSiteLink;

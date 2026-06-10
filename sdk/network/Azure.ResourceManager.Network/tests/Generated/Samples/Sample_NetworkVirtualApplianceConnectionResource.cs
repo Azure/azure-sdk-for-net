@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkVirtualApplianceConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkVirtualApplianceConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkVirtualApplianceConnectionGet.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkVirtualApplianceConnectionResource created on azure
             // for more information of creating NetworkVirtualApplianceConnectionResource, please refer to the document of NetworkVirtualApplianceConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkVirtualApplianceName = "nva1";
             string connectionName = "connection1";
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkVirtualApplianceConnectionDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkVirtualApplianceConnectionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkVirtualApplianceConnectionDelete.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkVirtualApplianceConnectionResource created on azure
             // for more information of creating NetworkVirtualApplianceConnectionResource, please refer to the document of NetworkVirtualApplianceConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkVirtualApplianceName = "nva1";
             string connectionName = "connection1";
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkVirtualApplianceConnectionPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkVirtualApplianceConnectionPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkVirtualApplianceConnectionPut.json
             // this example is just showing the usage of "NetworkVirtualApplianceConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkVirtualApplianceConnectionResource created on azure
             // for more information of creating NetworkVirtualApplianceConnectionResource, please refer to the document of NetworkVirtualApplianceConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkVirtualApplianceName = "nva1";
             string connectionName = "connection1";
@@ -99,6 +99,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             NetworkVirtualApplianceConnectionData data = new NetworkVirtualApplianceConnectionData
             {
+                Name = "connection1",
                 NamePropertiesName = "connection1",
                 Asn = 64512L,
                 TunnelIdentifier = 0L,
@@ -106,19 +107,18 @@ namespace Azure.ResourceManager.Network.Samples
                 EnableInternetSecurity = false,
                 ConnectionRoutingConfiguration = new RoutingConfiguration
                 {
-                    AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
+                    AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
                     PropagatedRouteTables = new PropagatedRouteTable
                     {
                         Labels = { "label1" },
                         Ids = {new WritableSubResource
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
 }},
                     },
-                    InboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
-                    OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
+                    InboundRouteMapId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
+                    OutboundRouteMapId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
-                Name = "connection1",
             };
             ArmOperation<NetworkVirtualApplianceConnectionResource> lro = await networkVirtualApplianceConnection.UpdateAsync(WaitUntil.Completed, data);
             NetworkVirtualApplianceConnectionResource result = lro.Value;

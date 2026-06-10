@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GetServiceGatewayServicesResult"/>. </summary>
-        internal GetServiceGatewayServicesResult()
+        /// <param name="value"> The ServiceGatewayService items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GetServiceGatewayServicesResult(IEnumerable<ServiceGatewayService> value)
         {
-            Value = new ChangeTrackingList<ServiceGatewayService>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetServiceGatewayServicesResult"/>. </summary>
-        /// <param name="value"> A list of services of service gateway. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ServiceGatewayService items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetServiceGatewayServicesResult(IReadOnlyList<ServiceGatewayService> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetServiceGatewayServicesResult(IReadOnlyList<ServiceGatewayService> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of services of service gateway. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetServiceGatewayServicesResult"/> for deserialization. </summary>
+        internal GetServiceGatewayServicesResult()
+        {
+        }
+
+        /// <summary> The ServiceGatewayService items on this page. </summary>
         public IReadOnlyList<ServiceGatewayService> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client revoked certificate of virtual network gateway. </summary>
-    public partial class VpnClientRevokedCertificate : NetworkResourceData
+    public partial class VpnClientRevokedCertificate : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="VpnClientRevokedCertificate"/>. </summary>
         public VpnClientRevokedCertificate()
@@ -21,19 +20,22 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VpnClientRevokedCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client revoked certificate resource. </param>
-        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VpnClientRevokedCertificate(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
             Thumbprint = thumbprint;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

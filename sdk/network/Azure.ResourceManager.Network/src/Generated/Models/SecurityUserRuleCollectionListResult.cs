@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Security user configuration rule collection list result. </summary>
+    /// <summary> The response of a SecurityUserRuleCollection list operation. </summary>
     internal partial class SecurityUserRuleCollectionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityUserRuleCollectionListResult"/>. </summary>
-        internal SecurityUserRuleCollectionListResult()
+        /// <param name="value"> The SecurityUserRuleCollection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SecurityUserRuleCollectionListResult(IEnumerable<NetworkManagerSecurityUserRulesData> value)
         {
-            Value = new ChangeTrackingList<NetworkManagerSecurityUserRulesData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityUserRuleCollectionListResult"/>. </summary>
-        /// <param name="value"> A list of network manager security user configuration rule collections. </param>
-        /// <param name="nextLink"> Gets the URL to get the next set of results. </param>
+        /// <param name="value"> The SecurityUserRuleCollection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityUserRuleCollectionListResult(IReadOnlyList<NetworkManagerSecurityUserRulesData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityUserRuleCollectionListResult(IReadOnlyList<NetworkManagerSecurityUserRulesData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of network manager security user configuration rule collections. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityUserRuleCollectionListResult"/> for deserialization. </summary>
+        internal SecurityUserRuleCollectionListResult()
+        {
+        }
+
+        /// <summary> The SecurityUserRuleCollection items on this page. </summary>
         public IReadOnlyList<NetworkManagerSecurityUserRulesData> Value { get; }
-        /// <summary> Gets the URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

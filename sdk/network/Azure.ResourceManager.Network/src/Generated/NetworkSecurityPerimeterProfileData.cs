@@ -62,11 +62,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="systemData"> The systemData. </param>
         /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
         /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
+        /// <param name="securityPerimeterResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessRulesVersion, string diagnosticSettingsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessRulesVersion, string diagnosticSettingsVersion, string securityPerimeterResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AccessRulesVersion = accessRulesVersion;
             DiagnosticSettingsVersion = diagnosticSettingsVersion;
+            SecurityPerimeterResourceType = securityPerimeterResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,5 +78,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Version number that increases with every update to diagnostic settings within the profile. </summary>
         [WirePath("properties.diagnosticSettingsVersion")]
         public string DiagnosticSettingsVersion { get; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string SecurityPerimeterResourceType { get; }
     }
 }

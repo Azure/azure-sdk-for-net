@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NamePropertiesName))
@@ -103,9 +108,8 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string id = default;
             string name0 = default;
             NetworkProvisioningState? provisioningState = default;
             long? asn = default;
@@ -117,27 +121,14 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -224,9 +215,8 @@ namespace Azure.ResourceManager.Network
             serializedAdditionalRawData = rawDataDictionary;
             return new NetworkVirtualApplianceConnectionData(
                 id,
-                name,
-                type,
                 serializedAdditionalRawData,
+                name,
                 name0,
                 provisioningState,
                 asn,
@@ -281,7 +271,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

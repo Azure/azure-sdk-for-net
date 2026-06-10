@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslPredefinedPolicies"/>. </summary>
-        internal ApplicationGatewayAvailableSslPredefinedPolicies()
+        /// <param name="value"> The ApplicationGatewaySslPredefinedPolicy items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ApplicationGatewayAvailableSslPredefinedPolicies(IEnumerable<ApplicationGatewaySslPredefinedPolicy> value)
         {
-            Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslPredefinedPolicies"/>. </summary>
-        /// <param name="value"> List of available Ssl predefined policy. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The ApplicationGatewaySslPredefinedPolicy items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayAvailableSslPredefinedPolicies(IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayAvailableSslPredefinedPolicies(IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of available Ssl predefined policy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslPredefinedPolicies"/> for deserialization. </summary>
+        internal ApplicationGatewayAvailableSslPredefinedPolicies()
+        {
+        }
+
+        /// <summary> The ApplicationGatewaySslPredefinedPolicy items on this page. </summary>
         public IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

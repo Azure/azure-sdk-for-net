@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAvailableResourceGroupDelegations_GetAvailableDelegationsInTheResourceGroup()
+        public async Task GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices_GetListOfPrivateLinkServiceIdThatCanBeLinkedToAPrivateEndPointWithAutoApproved()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AvailableDelegationsResourceGroupGet.json
-            // this example is just showing the usage of "AvailableResourceGroupDelegations_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AutoApprovedPrivateLinkServicesResourceGroupGet.json
+            // this example is just showing the usage of "PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,72 +31,14 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subId";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("westcentralus");
-            await foreach (AvailableDelegation item in resourceGroupResource.GetAvailableResourceGroupDelegationsAsync(location))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAvailableServiceAliasesByResourceGroup_GetAvailableServiceAliasesInTheResourceGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AvailableServiceAliasesListByResourceGroup.json
-            // this example is just showing the usage of "AvailableServiceAliases_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subId";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("westcentralus");
-            await foreach (AvailableServiceAlias item in resourceGroupResource.GetAvailableServiceAliasesByResourceGroupAsync(location))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAvailablePrivateEndpointTypesByResourceGroup_GetAvailablePrivateEndpointTypesInTheResourceGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AvailablePrivateEndpointTypesResourceGroupGet.json
-            // this example is just showing the usage of "AvailablePrivateEndpointTypes_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("regionName");
-            await foreach (AvailablePrivateEndpointType item in resourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroupAsync(location))
+            await foreach (AutoApprovedPrivateLinkService item in resourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -108,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService_CheckPrivateLinkServiceVisibility()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/CheckPrivateLinkServiceVisibilityByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/CheckPrivateLinkServiceVisibilityByResourceGroup.json
             // this example is just showing the usage of "PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -137,10 +79,10 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices_GetListOfPrivateLinkServiceIdThatCanBeLinkedToAPrivateEndPointWithAutoApproved()
+        public async Task GetAvailablePrivateEndpointTypesByResourceGroup_GetAvailablePrivateEndpointTypesInTheResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AutoApprovedPrivateLinkServicesResourceGroupGet.json
-            // this example is just showing the usage of "PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AvailablePrivateEndpointTypesResourceGroupGet.json
+            // this example is just showing the usage of "AvailablePrivateEndpointTypes_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -149,14 +91,132 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("regionName");
-            await foreach (AutoApprovedPrivateLinkService item in resourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location))
+            await foreach (AvailablePrivateEndpointType item in resourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroupAsync(location))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAvailableServiceAliasesByResourceGroup_GetAvailableServiceAliasesInTheResourceGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AvailableServiceAliasesListByResourceGroup.json
+            // this example is just showing the usage of "AvailableServiceAliases_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("westcentralus");
+            await foreach (AvailableServiceAlias item in resourceGroupResource.GetAvailableServiceAliasesByResourceGroupAsync(location))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCloudServiceNetworkInterfacesNetworkInterfaces_ListCloudServiceNetworkInterfaces()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/CloudServiceNetworkInterfaceList.json
+            // this example is just showing the usage of "NetworkInterfaces_ListCloudServiceNetworkInterfaces" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            string cloudServiceName = "cs1";
+            await foreach (CommonNetworkInterfaceData item in resourceGroupResource.GetCloudServiceNetworkInterfacesNetworkInterfacesAsync(cloudServiceName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCloudServicePublicIPAddressesPublicIPAddresses_ListVMSSPublicIP()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/CloudServicePublicIpListAll.json
+            // this example is just showing the usage of "PublicIPAddresses_ListCloudServicePublicIPAddresses" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "cs-tester";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            string cloudServiceName = "cs1";
+            await foreach (CommonPublicIPAddressData item in resourceGroupResource.GetCloudServicePublicIPAddressesPublicIPAddressesAsync(cloudServiceName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAvailableResourceGroupDelegations_GetAvailableDelegationsInTheResourceGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AvailableDelegationsResourceGroupGet.json
+            // this example is just showing the usage of "AvailableResourceGroupDelegations_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("westcentralus");
+            await foreach (AvailableDelegation item in resourceGroupResource.GetAvailableResourceGroupDelegationsAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

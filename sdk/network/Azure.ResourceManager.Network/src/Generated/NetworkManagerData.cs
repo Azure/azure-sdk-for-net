@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the NetworkManager data model.
     /// The Managed Network resource
     /// </summary>
-    public partial class NetworkManagerData : NetworkTrackedResourceData
+    public partial class NetworkManagerData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         public NetworkManagerData()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
         /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NetworkManagerData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             SystemData = systemData;

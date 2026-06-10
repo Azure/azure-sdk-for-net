@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkInterface()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkInterfaceGet.json
             // this example is just showing the usage of "NetworkInterfaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkInterfaceName = "test-nic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetworkInterfaceData resourceData = result.Data;
+            CommonNetworkInterfaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteNetworkInterface()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkInterfaceDelete.json
             // this example is just showing the usage of "NetworkInterfaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkInterfaceName = "test-nic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateNetworkInterfaceTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkInterfaceUpdateTags.json
             // this example is just showing the usage of "NetworkInterfaces_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkInterfaceName = "test-nic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -105,43 +105,16 @@ namespace Azure.ResourceManager.Network.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetworkInterfaceData resourceData = result.Data;
+            CommonNetworkInterfaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEffectiveRouteTable_ShowNetworkInterfaceEffectiveRouteTables()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceEffectiveRouteTableList.json
-            // this example is just showing the usage of "NetworkInterfaces_GetEffectiveRouteTable" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkInterfaceResource created on azure
-            // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string networkInterfaceName = "nic1";
-            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
-            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
-
-            // invoke the operation
-            ArmOperation<EffectiveRouteListResult> lro = await networkInterface.GetEffectiveRouteTableAsync(WaitUntil.Completed);
-            EffectiveRouteListResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetEffectiveNetworkSecurityGroups_ListNetworkInterfaceEffectiveNetworkSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceEffectiveNSGList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkInterfaceEffectiveNSGList.json
             // this example is just showing the usage of "NetworkInterfaces_ListEffectiveNetworkSecurityGroups" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +124,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkInterfaceName = "nic1";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -166,9 +139,36 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetEffectiveRouteTable_ShowNetworkInterfaceEffectiveRouteTables()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkInterfaceEffectiveRouteTableList.json
+            // this example is just showing the usage of "NetworkInterfaces_GetEffectiveRouteTable" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkInterfaceResource created on azure
+            // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string networkInterfaceName = "nic1";
+            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
+            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
+
+            // invoke the operation
+            ArmOperation<EffectiveRouteListResult> lro = await networkInterface.GetEffectiveRouteTableAsync(WaitUntil.Completed);
+            EffectiveRouteListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkInterfaceLoadBalancers_NetworkInterfaceLoadBalancerList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceLoadBalancerList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkInterfaceLoadBalancerList.json
             // this example is just showing the usage of "NetworkInterfaceLoadBalancers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkInterfaceName = "nic1";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LoadBalancerResource item in networkInterface.GetNetworkInterfaceLoadBalancersAsync())
+            await foreach (CommonLoadBalancerResource item in networkInterface.GetNetworkInterfaceLoadBalancersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                LoadBalancerData resourceData = item.Data;
+                CommonLoadBalancerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

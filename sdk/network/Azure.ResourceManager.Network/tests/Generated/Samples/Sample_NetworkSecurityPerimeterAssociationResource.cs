@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NspAssociationGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspAssociationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NspAssociationGet.json
             // this example is just showing the usage of "NetworkSecurityPerimeterAssociations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterAssociationResource created on azure
             // for more information of creating NetworkSecurityPerimeterAssociationResource, please refer to the document of NetworkSecurityPerimeterAssociationResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityPerimeterName = "nsp1";
             string associationName = "association1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NspAssociationDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspAssociationDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NspAssociationDelete.json
             // this example is just showing the usage of "NetworkSecurityPerimeterAssociations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterAssociationResource created on azure
             // for more information of creating NetworkSecurityPerimeterAssociationResource, please refer to the document of NetworkSecurityPerimeterAssociationResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityPerimeterName = "nsp1";
             string associationName = "association1";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NspAssociationPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspAssociationPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NspAssociationPut.json
             // this example is just showing the usage of "NetworkSecurityPerimeterAssociations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterAssociationResource created on azure
             // for more information of creating NetworkSecurityPerimeterAssociationResource, please refer to the document of NetworkSecurityPerimeterAssociationResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityPerimeterName = "nsp1";
             string associationName = "association1";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkSecurityPerimeterAssociationData data = new NetworkSecurityPerimeterAssociationData
             {
                 PrivateLinkResourceId = new ResourceIdentifier("/subscriptions/{paasSubscriptionId}/resourceGroups/{paasResourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}"),
-                ProfileId = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityPerimeters/nsp1/profiles/{profileName}"),
+                ProfileId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityPerimeters/nsp1/profiles/{profileName}"),
                 AccessMode = NetworkSecurityPerimeterAssociationAccessMode.Enforced,
             };
             ArmOperation<NetworkSecurityPerimeterAssociationResource> lro = await networkSecurityPerimeterAssociation.UpdateAsync(WaitUntil.Completed, data);

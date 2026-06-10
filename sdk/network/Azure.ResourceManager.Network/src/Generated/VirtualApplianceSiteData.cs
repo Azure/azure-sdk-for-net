@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the VirtualApplianceSite data model.
     /// Virtual Appliance Site resource.
     /// </summary>
-    public partial class VirtualApplianceSiteData : NetworkResourceData
+    public partial class VirtualApplianceSiteData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceSiteData"/>. </summary>
         public VirtualApplianceSiteData()
@@ -25,14 +24,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceSiteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="addressPrefix"> Address Prefix. </param>
         /// <param name="o365Policy"> Office 365 Policy. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualApplianceSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string addressPrefix, Office365PolicyProperties o365Policy, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VirtualApplianceSiteData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, string addressPrefix, Office365PolicyProperties o365Policy, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             AddressPrefix = addressPrefix;

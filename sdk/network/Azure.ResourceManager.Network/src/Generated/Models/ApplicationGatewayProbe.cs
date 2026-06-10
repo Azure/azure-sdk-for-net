@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Probe of the application gateway. </summary>
-    public partial class ApplicationGatewayProbe : NetworkResourceData
+    public partial class ApplicationGatewayProbe : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayProbe"/>. </summary>
         public ApplicationGatewayProbe()
@@ -21,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayProbe"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the probe that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="protocol"> The protocol used for the probe. </param>
         /// <param name="host"> Host name to send the probe to. </param>
         /// <param name="path"> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </param>
@@ -38,9 +37,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="isProbeProxyProtocolHeaderEnabled"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </param>
-        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, bool? isProbeProxyProtocolHeaderEnabled, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayProbe(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, bool? isProbeProxyProtocolHeaderEnabled, NetworkProvisioningState? provisioningState, int? port) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             Protocol = protocol;
             Host = host;
             Path = path;
@@ -56,9 +57,15 @@ namespace Azure.ResourceManager.Network.Models
             Port = port;
         }
 
+        /// <summary> Name of the probe that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary> The protocol used for the probe. </summary>
         [WirePath("properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }

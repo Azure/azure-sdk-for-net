@@ -17,18 +17,22 @@ namespace Azure.ResourceManager.Network
     /// A class representing the ExpressRouteConnection data model.
     /// ExpressRouteConnection resource.
     /// </summary>
-    public partial class ExpressRouteConnectionData : NetworkResourceData
+    public partial class ExpressRouteConnectionData : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
-        public ExpressRouteConnectionData()
+        /// <param name="name"> The name of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ExpressRouteConnectionData(string name)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>
         /// <param name="expressRouteCircuitPeering"> The ExpressRoute circuit peering. </param>
         /// <param name="authorizationKey"> Authorization key to establish the connection. </param>
@@ -37,8 +41,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayBypass"> Enable FastPath to vWan Firewall hub. </param>
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal ExpressRouteConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ExpressRouteConnectionData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ProvisioningState = provisioningState;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             AuthorizationKey = authorizationKey;
@@ -49,6 +54,14 @@ namespace Azure.ResourceManager.Network
             RoutingConfiguration = routingConfiguration;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/> for deserialization. </summary>
+        internal ExpressRouteConnectionData()
+        {
+        }
+
+        /// <summary> The name of the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> The provisioning state of the express route connection resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }

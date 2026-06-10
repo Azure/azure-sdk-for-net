@@ -48,19 +48,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkWatcherListResult"/>. </summary>
         internal NetworkWatcherListResult()
         {
-            Value = new ChangeTrackingList<NetworkWatcherData>();
+            Value = new ChangeTrackingList<CommonNetworkWatcherData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkWatcherListResult"/>. </summary>
         /// <param name="value"> List of network watcher resources. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkWatcherListResult(IReadOnlyList<NetworkWatcherData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkWatcherListResult(IReadOnlyList<CommonNetworkWatcherData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of network watcher resources. </summary>
-        public IReadOnlyList<NetworkWatcherData> Value { get; }
+        public IReadOnlyList<CommonNetworkWatcherData> Value { get; }
+        /// <summary> URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

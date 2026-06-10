@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Provisioning states of a resource. </summary>
         [WirePath("provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; set; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Gets or sets the description. </summary>
         [WirePath("description")]
         public string Description { get; set; }

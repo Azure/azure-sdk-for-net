@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorV1()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectionMonitorCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherConnectionMonitorCreate.json
             // this example is just showing the usage of "ConnectionMonitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this ConnectionMonitorResource
-            ConnectionMonitorCollection collection = networkWatcher.GetConnectionMonitors();
+            ConnectionMonitorCollection collection = commonNetworkWatcher.GetConnectionMonitors();
 
             // invoke the operation
             string connectionMonitorName = "cm1";
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Location = new AzureLocation("eastus"),
                 Endpoints = {new ConnectionMonitorEndpoint("source")
 {
-ResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/ct1"),
+ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/ct1"),
 }, new ConnectionMonitorEndpoint("destination")
 {
 Address = "bing.com",
@@ -75,7 +75,7 @@ Port = 80,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorV2()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectionMonitorV2Create.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherConnectionMonitorV2Create.json
             // this example is just showing the usage of "ConnectionMonitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,16 +83,16 @@ Port = 80,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this ConnectionMonitorResource
-            ConnectionMonitorCollection collection = networkWatcher.GetConnectionMonitors();
+            ConnectionMonitorCollection collection = commonNetworkWatcher.GetConnectionMonitors();
 
             // invoke the operation
             string connectionMonitorName = "cm1";
@@ -149,7 +149,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorWithArcNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectionMonitorCreateWithArcNetwork.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherConnectionMonitorCreateWithArcNetwork.json
             // this example is just showing the usage of "ConnectionMonitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,16 +157,16 @@ Disable = false,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this ConnectionMonitorResource
-            ConnectionMonitorCollection collection = networkWatcher.GetConnectionMonitors();
+            ConnectionMonitorCollection collection = commonNetworkWatcher.GetConnectionMonitors();
 
             // invoke the operation
             string connectionMonitorName = "cm1";
@@ -226,7 +226,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetConnectionMonitor()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectionMonitorGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherConnectionMonitorGet.json
             // this example is just showing the usage of "ConnectionMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,16 +234,16 @@ Disable = false,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this ConnectionMonitorResource
-            ConnectionMonitorCollection collection = networkWatcher.GetConnectionMonitors();
+            ConnectionMonitorCollection collection = commonNetworkWatcher.GetConnectionMonitors();
 
             // invoke the operation
             string connectionMonitorName = "cm1";
@@ -260,7 +260,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListConnectionMonitors()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectionMonitorList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherConnectionMonitorList.json
             // this example is just showing the usage of "ConnectionMonitors_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -268,16 +268,16 @@ Disable = false,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this ConnectionMonitorResource
-            ConnectionMonitorCollection collection = networkWatcher.GetConnectionMonitors();
+            ConnectionMonitorCollection collection = commonNetworkWatcher.GetConnectionMonitors();
 
             // invoke the operation and iterate over the result
             await foreach (ConnectionMonitorResource item in collection.GetAllAsync())
@@ -296,7 +296,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetConnectionMonitor()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectionMonitorGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherConnectionMonitorGet.json
             // this example is just showing the usage of "ConnectionMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -304,16 +304,16 @@ Disable = false,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this ConnectionMonitorResource
-            ConnectionMonitorCollection collection = networkWatcher.GetConnectionMonitors();
+            ConnectionMonitorCollection collection = commonNetworkWatcher.GetConnectionMonitors();
 
             // invoke the operation
             string connectionMonitorName = "cm1";
@@ -326,7 +326,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetConnectionMonitor()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectionMonitorGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherConnectionMonitorGet.json
             // this example is just showing the usage of "ConnectionMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -334,16 +334,16 @@ Disable = false,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this ConnectionMonitorResource
-            ConnectionMonitorCollection collection = networkWatcher.GetConnectionMonitors();
+            ConnectionMonitorCollection collection = commonNetworkWatcher.GetConnectionMonitors();
 
             // invoke the operation
             string connectionMonitorName = "cm1";

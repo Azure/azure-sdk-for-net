@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A list of application security groups. </summary>
+    /// <summary> The response of a ApplicationSecurityGroup list operation. </summary>
     internal partial class ApplicationSecurityGroupListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupListResult"/>. </summary>
-        internal ApplicationSecurityGroupListResult()
+        /// <param name="value"> The ApplicationSecurityGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ApplicationSecurityGroupListResult(IEnumerable<CommonApplicationSecurityGroupData> value)
         {
-            Value = new ChangeTrackingList<ApplicationSecurityGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupListResult"/>. </summary>
-        /// <param name="value"> A list of application security groups. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ApplicationSecurityGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationSecurityGroupListResult(IReadOnlyList<ApplicationSecurityGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationSecurityGroupListResult(IReadOnlyList<CommonApplicationSecurityGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of application security groups. </summary>
-        public IReadOnlyList<ApplicationSecurityGroupData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupListResult"/> for deserialization. </summary>
+        internal ApplicationSecurityGroupListResult()
+        {
+        }
+
+        /// <summary> The ApplicationSecurityGroup items on this page. </summary>
+        public IReadOnlyList<CommonApplicationSecurityGroupData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

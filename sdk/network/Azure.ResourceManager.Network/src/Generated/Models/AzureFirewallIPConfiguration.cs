@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an Azure Firewall. </summary>
-    public partial class AzureFirewallIPConfiguration : NetworkResourceData
+    public partial class AzureFirewallIPConfiguration : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="AzureFirewallIPConfiguration"/>. </summary>
         public AzureFirewallIPConfiguration()
@@ -22,26 +22,34 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="privateIPAddress"> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </param>
         /// <param name="subnet"> Reference to the subnet resource. This resource must be named 'AzureFirewallSubnet' or 'AzureFirewallManagementSubnet'. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall IP configuration resource. </param>
-        internal AzureFirewallIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal AzureFirewallIPConfiguration(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             PrivateIPAddress = privateIPAddress;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </summary>
         [WirePath("properties.privateIPAddress")]
         public string PrivateIPAddress { get; }

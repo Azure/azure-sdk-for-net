@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterServiceTagsListResult"/>. </summary>
-        internal NetworkSecurityPerimeterServiceTagsListResult()
+        /// <param name="value"> The NspServiceTagsResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkSecurityPerimeterServiceTagsListResult(IEnumerable<NetworkSecurityPerimeterServiceTags> value)
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterServiceTags>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterServiceTagsListResult"/>. </summary>
-        /// <param name="value"> Gets paged list of NSP service tags. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <param name="value"> The NspServiceTagsResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterServiceTagsListResult(IReadOnlyList<NetworkSecurityPerimeterServiceTags> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterServiceTagsListResult(IReadOnlyList<NetworkSecurityPerimeterServiceTags> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets paged list of NSP service tags. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterServiceTagsListResult"/> for deserialization. </summary>
+        internal NetworkSecurityPerimeterServiceTagsListResult()
+        {
+        }
+
+        /// <summary> The NspServiceTagsResource items on this page. </summary>
         public IReadOnlyList<NetworkSecurityPerimeterServiceTags> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

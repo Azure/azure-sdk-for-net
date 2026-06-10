@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualWANGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualWANGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualWANGet.json
             // this example is just showing the usage of "VirtualWans_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualWanResource created on azure
             // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualWanName = "wan1";
             ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualWANDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualWANDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualWANDelete.json
             // this example is just showing the usage of "VirtualWans_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualWanResource created on azure
             // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualWanName = "virtualWan1";
             ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VirtualWANUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualWANUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualWANUpdateTags.json
             // this example is just showing the usage of "VirtualWans_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualWanResource created on azure
             // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualWanName = "wan1";
             ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);
@@ -112,9 +112,41 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GenerateVirtualWanVpnServerConfigurationVpnProfile_GenerateVirtualWanVpnServerConfigurationVpnProfile()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/GenerateVirtualWanVpnServerConfigurationVpnProfile.json
+            // this example is just showing the usage of "Generatevirtualwanvpnserverconfigurationvpnprofile" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualWanResource created on azure
+            // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualWanName = "wan1";
+            ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);
+            VirtualWanResource virtualWan = client.GetVirtualWanResource(virtualWanResourceId);
+
+            // invoke the operation
+            VirtualWanVpnProfileContent content = new VirtualWanVpnProfileContent
+            {
+                VpnServerConfigurationResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnconfig1"),
+                AuthenticationMethod = NetworkAuthenticationMethod.Eaptls,
+            };
+            ArmOperation<VpnProfileResponse> lro = await virtualWan.GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(WaitUntil.Completed, content);
+            VpnProfileResponse result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SupportedSecurityProviders_SupportedSecurityProviders()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualWanSupportedSecurityProviders.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualWanSupportedSecurityProviders.json
             // this example is just showing the usage of "SupportedSecurityProviders" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +156,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualWanResource created on azure
             // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualWanName = "wan1";
             ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);
@@ -138,41 +170,9 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateVirtualWanVpnServerConfigurationVpnProfile_GenerateVirtualWanVpnServerConfigurationVpnProfile()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/GenerateVirtualWanVpnServerConfigurationVpnProfile.json
-            // this example is just showing the usage of "Generatevirtualwanvpnserverconfigurationvpnprofile" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualWanResource created on azure
-            // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualWanName = "wan1";
-            ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);
-            VirtualWanResource virtualWan = client.GetVirtualWanResource(virtualWanResourceId);
-
-            // invoke the operation
-            VirtualWanVpnProfileContent content = new VirtualWanVpnProfileContent
-            {
-                VpnServerConfigurationResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnconfig1"),
-                AuthenticationMethod = NetworkAuthenticationMethod.Eaptls,
-            };
-            ArmOperation<VpnProfileResponse> lro = await virtualWan.GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(WaitUntil.Completed, content);
-            VpnProfileResponse result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task DownloadVpnSitesConfiguration_VpnSitesConfigurationDownload()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnSitesConfigurationDownload.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VpnSitesConfigurationDownload.json
             // this example is just showing the usage of "VpnSitesConfiguration_Download" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualWanResource created on azure
             // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualWanName = "wan1";
             ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             GetVpnSitesConfigurationContent content = new GetVpnSitesConfigurationContent(new Uri("https://blobcortextesturl.blob.core.windows.net/folderforconfig/vpnFile?sp=rw&se=2018-01-10T03%3A42%3A04Z&sv=2017-04-17&sig=WvXrT5bDmDFfgHs%2Brz%2BjAu123eRCNE9BO0eQYcPDT7pY%3D&sr=b"))
             {
-                VpnSites = { "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnSites/abc" },
+                VpnSites = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/vpnSites/abc" },
             };
             await virtualWan.DownloadVpnSitesConfigurationAsync(WaitUntil.Completed, content);
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVpnServerConfigurationsAssociatedWithVirtualWan_GetVirtualWanVpnServerConfigurations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/GetVirtualWanVpnServerConfigurations.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/GetVirtualWanVpnServerConfigurations.json
             // this example is just showing the usage of "VpnServerConfigurationsAssociatedWithVirtualWan_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualWanResource created on azure
             // for more information of creating VirtualWanResource, please refer to the document of VirtualWanResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualWanName = "wan1";
             ResourceIdentifier virtualWanResourceId = VirtualWanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualWanName);

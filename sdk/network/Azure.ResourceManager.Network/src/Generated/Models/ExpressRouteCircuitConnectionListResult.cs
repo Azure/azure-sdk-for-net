@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering for an ExpressRouteCircuit. </summary>
+    /// <summary> The response of a ExpressRouteCircuitConnection list operation. </summary>
     internal partial class ExpressRouteCircuitConnectionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionListResult"/>. </summary>
-        internal ExpressRouteCircuitConnectionListResult()
+        /// <param name="value"> The ExpressRouteCircuitConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ExpressRouteCircuitConnectionListResult(IEnumerable<ExpressRouteCircuitConnectionData> value)
         {
-            Value = new ChangeTrackingList<ExpressRouteCircuitConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionListResult"/>. </summary>
-        /// <param name="value"> The global reach connection associated with Private Peering in an ExpressRoute Circuit. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ExpressRouteCircuitConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCircuitConnectionListResult(IReadOnlyList<ExpressRouteCircuitConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressRouteCircuitConnectionListResult(IReadOnlyList<ExpressRouteCircuitConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The global reach connection associated with Private Peering in an ExpressRoute Circuit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionListResult"/> for deserialization. </summary>
+        internal ExpressRouteCircuitConnectionListResult()
+        {
+        }
+
+        /// <summary> The ExpressRouteCircuitConnection items on this page. </summary>
         public IReadOnlyList<ExpressRouteCircuitConnectionData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

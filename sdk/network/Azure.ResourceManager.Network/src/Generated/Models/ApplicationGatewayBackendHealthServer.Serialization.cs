@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string address = default;
-            NetworkInterfaceIPConfigurationData ipConfiguration = default;
+            CommonNetworkInterfaceIPConfigurationData ipConfiguration = default;
             ApplicationGatewayBackendHealthServerHealth? health = default;
             string healthProbeLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value, options);
+                    ipConfiguration = CommonNetworkInterfaceIPConfigurationData.DeserializeCommonNetworkInterfaceIPConfigurationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("health"u8))

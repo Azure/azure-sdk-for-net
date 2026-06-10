@@ -67,14 +67,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="profile"> Profile id to which the PaaS resource is associated. </param>
         /// <param name="accessMode"> Access mode on the association. </param>
         /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
+        /// <param name="securityPerimeterResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterProvisioningState? provisioningState, WritableSubResource privateLinkResource, WritableSubResource profile, NetworkSecurityPerimeterAssociationAccessMode? accessMode, string hasProvisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterProvisioningState? provisioningState, WritableSubResource privateLinkResource, WritableSubResource profile, NetworkSecurityPerimeterAssociationAccessMode? accessMode, string hasProvisioningIssues, string securityPerimeterResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateLinkResource = privateLinkResource;
             Profile = profile;
             AccessMode = accessMode;
             HasProvisioningIssues = hasProvisioningIssues;
+            SecurityPerimeterResourceType = securityPerimeterResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -117,5 +119,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Specifies if there are provisioning issues. </summary>
         [WirePath("properties.hasProvisioningIssues")]
         public string HasProvisioningIssues { get; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string SecurityPerimeterResourceType { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServiceTagInformationListResult"/>. </summary>
-        internal ServiceTagInformationListResult()
+        /// <param name="value"> The ServiceTagInformation items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ServiceTagInformationListResult(IEnumerable<ServiceTagInformation> value)
         {
-            Value = new ChangeTrackingList<ServiceTagInformation>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceTagInformationListResult"/>. </summary>
-        /// <param name="value"> The list of service tag information resources. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ServiceTagInformation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTagInformationListResult(IReadOnlyList<ServiceTagInformation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceTagInformationListResult(IReadOnlyList<ServiceTagInformation> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of service tag information resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagInformationListResult"/> for deserialization. </summary>
+        internal ServiceTagInformationListResult()
+        {
+        }
+
+        /// <summary> The ServiceTagInformation items on this page. </summary>
         public IReadOnlyList<ServiceTagInformation> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

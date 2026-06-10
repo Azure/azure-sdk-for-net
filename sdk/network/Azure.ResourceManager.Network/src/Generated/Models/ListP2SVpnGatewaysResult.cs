@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListP2SVpnGatewaysResult"/>. </summary>
-        internal ListP2SVpnGatewaysResult()
+        /// <param name="value"> The P2SVpnGateway items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ListP2SVpnGatewaysResult(IEnumerable<P2SVpnGatewayData> value)
         {
-            Value = new ChangeTrackingList<P2SVpnGatewayData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListP2SVpnGatewaysResult"/>. </summary>
-        /// <param name="value"> List of P2SVpnGateways. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <param name="value"> The P2SVpnGateway items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListP2SVpnGatewaysResult(IReadOnlyList<P2SVpnGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListP2SVpnGatewaysResult(IReadOnlyList<P2SVpnGatewayData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of P2SVpnGateways. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListP2SVpnGatewaysResult"/> for deserialization. </summary>
+        internal ListP2SVpnGatewaysResult()
+        {
+        }
+
+        /// <summary> The P2SVpnGateway items on this page. </summary>
         public IReadOnlyList<P2SVpnGatewayData> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

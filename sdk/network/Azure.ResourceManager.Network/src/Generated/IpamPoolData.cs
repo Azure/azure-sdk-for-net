@@ -70,12 +70,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
-        /// <param name="etag"> String representing unique etag for the resource document. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpamPoolProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal IpamPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpamPoolProperties properties, ETag? etag, string commonResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = etag;
+            CommonResourceType = commonResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,8 +89,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
         [WirePath("properties")]
         public IpamPoolProperties Properties { get; set; }
-        /// <summary> String representing unique etag for the resource document. </summary>
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string CommonResourceType { get; }
     }
 }

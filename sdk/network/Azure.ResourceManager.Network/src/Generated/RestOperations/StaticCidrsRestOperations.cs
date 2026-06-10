@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-05-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ipamPools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/staticCidrs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("skipToken", skipToken, true);
@@ -69,7 +70,6 @@ namespace Azure.ResourceManager.Network
             {
                 uri.AppendQuery("sortValue", sortValue, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ipamPools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/staticCidrs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skipToken != null)
             {
                 uri.AppendQuery("skipToken", skipToken, true);
@@ -109,7 +110,6 @@ namespace Azure.ResourceManager.Network
             {
                 uri.AppendQuery("sortValue", sortValue, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets list of Static CIDR resources at Network Manager level. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="poolName"> Pool resource name. </param>
         /// <param name="skipToken"> Optional skip token. </param>
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets list of Static CIDR resources at Network Manager level. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="poolName"> Pool resource name. </param>
         /// <param name="skipToken"> Optional skip token. </param>
@@ -183,6 +183,118 @@ namespace Azure.ResourceManager.Network
                         value = StaticCidrList.DeserializeStaticCidrList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/ipamPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/staticCidrs/", false);
+            uri.AppendPath(staticCidrName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/ipamPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/staticCidrs/", false);
+            uri.AppendPath(staticCidrName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the specific Static CIDR resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> The name of the network manager. </param>
+        /// <param name="poolName"> Pool resource name. </param>
+        /// <param name="staticCidrName"> StaticCidr resource name to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<StaticCidrData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(staticCidrName, nameof(staticCidrName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkManagerName, poolName, staticCidrName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StaticCidrData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((StaticCidrData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the specific Static CIDR resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> The name of the network manager. </param>
+        /// <param name="poolName"> Pool resource name. </param>
+        /// <param name="staticCidrName"> StaticCidr resource name to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<StaticCidrData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(staticCidrName, nameof(staticCidrName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkManagerName, poolName, staticCidrName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StaticCidrData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((StaticCidrData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,11 +347,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates/Updates the Static CIDR resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="poolName"> IP Address Manager Pool resource name. </param>
-        /// <param name="staticCidrName"> Static Cidr allocation name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
+        /// <param name="poolName"> The name of the IPAM pool. </param>
+        /// <param name="staticCidrName"> Name for the static CIDR. </param>
         /// <param name="data"> StaticCidr resource object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/>, <paramref name="staticCidrName"/> or <paramref name="data"/> is null. </exception>
@@ -271,11 +383,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates/Updates the Static CIDR resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="poolName"> IP Address Manager Pool resource name. </param>
-        /// <param name="staticCidrName"> Static Cidr allocation name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkManagerName"> The <see cref="string"/> to use. </param>
+        /// <param name="poolName"> The name of the IPAM pool. </param>
+        /// <param name="staticCidrName"> Name for the static CIDR. </param>
         /// <param name="data"> StaticCidr resource object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/>, <paramref name="staticCidrName"/> or <paramref name="data"/> is null. </exception>
@@ -301,118 +413,6 @@ namespace Azure.ResourceManager.Network
                         value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
-            uri.AppendPath(networkManagerName, true);
-            uri.AppendPath("/ipamPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/staticCidrs/", false);
-            uri.AppendPath(staticCidrName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
-            uri.AppendPath(networkManagerName, true);
-            uri.AppendPath("/ipamPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/staticCidrs/", false);
-            uri.AppendPath(staticCidrName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the specific Static CIDR resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="poolName"> Pool resource name. </param>
-        /// <param name="staticCidrName"> StaticCidr resource name to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticCidrData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(staticCidrName, nameof(staticCidrName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkManagerName, poolName, staticCidrName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StaticCidrData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((StaticCidrData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the specific Static CIDR resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="poolName"> Pool resource name. </param>
-        /// <param name="staticCidrName"> StaticCidr resource name to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticCidrData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string staticCidrName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(staticCidrName, nameof(staticCidrName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkManagerName, poolName, staticCidrName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StaticCidrData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((StaticCidrData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -461,11 +461,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Delete the Static CIDR resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="poolName"> Pool resource name. </param>
-        /// <param name="staticCidrName"> StaticCidr resource name to delete. </param>
+        /// <param name="staticCidrName"> StaticCidr resource name to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -490,11 +490,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Delete the Static CIDR resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="poolName"> Pool resource name. </param>
-        /// <param name="staticCidrName"> StaticCidr resource name to delete. </param>
+        /// <param name="staticCidrName"> StaticCidr resource name to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="poolName"/> or <paramref name="staticCidrName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -542,8 +542,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets list of Static CIDR resources at Network Manager level. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="poolName"> Pool resource name. </param>
         /// <param name="skipToken"> Optional skip token. </param>
@@ -580,8 +580,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets list of Static CIDR resources at Network Manager level. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="poolName"> Pool resource name. </param>
         /// <param name="skipToken"> Optional skip token. </param>

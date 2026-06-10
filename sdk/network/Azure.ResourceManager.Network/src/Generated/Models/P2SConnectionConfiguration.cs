@@ -7,13 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2SConnectionConfiguration Resource. </summary>
-    public partial class P2SConnectionConfiguration : NetworkResourceData
+    public partial class P2SConnectionConfiguration : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="P2SConnectionConfiguration"/>. </summary>
         public P2SConnectionConfiguration()
@@ -24,9 +23,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="P2SConnectionConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
@@ -34,8 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="configurationPolicyGroups"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IList<WritableSubResource> configurationPolicyGroups, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal P2SConnectionConfiguration(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, CommonAddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IList<WritableSubResource> configurationPolicyGroups, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
             VpnClientAddressPool = vpnClientAddressPool;
             RoutingConfiguration = routingConfiguration;
@@ -45,12 +44,15 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
         [WirePath("properties.vpnClientAddressPool")]
-        public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
+        public CommonAddressSpace VpnClientAddressPool { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("properties.routingConfiguration")]
         public RoutingConfiguration RoutingConfiguration { get; set; }

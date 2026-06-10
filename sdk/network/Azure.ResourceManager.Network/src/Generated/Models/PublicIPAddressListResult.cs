@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListPublicIpAddresses API service call. </summary>
+    /// <summary> The response of a PublicIPAddress list operation. </summary>
     internal partial class PublicIPAddressListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressListResult"/>. </summary>
-        internal PublicIPAddressListResult()
+        /// <param name="value"> The PublicIPAddress items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PublicIPAddressListResult(IEnumerable<CommonPublicIPAddressData> value)
         {
-            Value = new ChangeTrackingList<PublicIPAddressData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressListResult"/>. </summary>
-        /// <param name="value"> A list of public IP addresses that exists in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The PublicIPAddress items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPAddressListResult(IReadOnlyList<PublicIPAddressData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PublicIPAddressListResult(IReadOnlyList<CommonPublicIPAddressData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of public IP addresses that exists in a resource group. </summary>
-        public IReadOnlyList<PublicIPAddressData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressListResult"/> for deserialization. </summary>
+        internal PublicIPAddressListResult()
+        {
+        }
+
+        /// <summary> The PublicIPAddress items on this page. </summary>
+        public IReadOnlyList<CommonPublicIPAddressData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

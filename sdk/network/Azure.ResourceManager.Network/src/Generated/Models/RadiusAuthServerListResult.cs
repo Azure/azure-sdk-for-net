@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,27 +47,36 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RadiusAuthServerListResult"/>. </summary>
-        internal RadiusAuthServerListResult()
+        /// <param name="value"> The RadiusAuthServer items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RadiusAuthServerListResult(IEnumerable<RadiusAuthServer> value)
         {
-            Value = new ChangeTrackingList<RadiusAuthServer>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiusAuthServerListResult"/>. </summary>
-        /// <param name="value"> List of Radius servers with respective radius secrets. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <param name="value"> The RadiusAuthServer items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiusAuthServerListResult(IReadOnlyList<RadiusAuthServer> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RadiusAuthServerListResult(IReadOnlyList<RadiusAuthServer> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Radius servers with respective radius secrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiusAuthServerListResult"/> for deserialization. </summary>
+        internal RadiusAuthServerListResult()
+        {
+        }
+
+        /// <summary> The RadiusAuthServer items on this page. </summary>
         [WirePath("value")]
         public IReadOnlyList<RadiusAuthServer> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
+        /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

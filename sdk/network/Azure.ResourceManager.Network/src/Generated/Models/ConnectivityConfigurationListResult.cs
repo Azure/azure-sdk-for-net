@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Result of the request to list network manager connectivity configurations. It contains a list of configurations and a link to get the next set of results. </summary>
+    /// <summary> The response of a ConnectivityConfiguration list operation. </summary>
     internal partial class ConnectivityConfigurationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationListResult"/>. </summary>
-        internal ConnectivityConfigurationListResult()
+        /// <param name="value"> The ConnectivityConfiguration items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ConnectivityConfigurationListResult(IEnumerable<ConnectivityConfigurationData> value)
         {
-            Value = new ChangeTrackingList<ConnectivityConfigurationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationListResult"/>. </summary>
-        /// <param name="value"> Gets a page of Connectivity Configurations. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <param name="value"> The ConnectivityConfiguration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityConfigurationListResult(IReadOnlyList<ConnectivityConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectivityConfigurationListResult(IReadOnlyList<ConnectivityConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of Connectivity Configurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationListResult"/> for deserialization. </summary>
+        internal ConnectivityConfigurationListResult()
+        {
+        }
+
+        /// <summary> The ConnectivityConfiguration items on this page. </summary>
         public IReadOnlyList<ConnectivityConfigurationData> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

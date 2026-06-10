@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the VirtualNetworkGatewayConnection data model.
     /// A common class for general resource information.
     /// </summary>
-    public partial class VirtualNetworkGatewayConnectionData : NetworkTrackedResourceData
+    public partial class VirtualNetworkGatewayConnectionData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionData"/>. </summary>
         /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
@@ -76,7 +76,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="authenticationType"> Gateway connection authentication type. </param>
         /// <param name="certificateAuthentication"> Certificate Authentication information for a certificate based authentication connection. </param>
-        internal VirtualNetworkGatewayConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, ConnectionAuthenticationType? authenticationType, CertificateAuthentication certificateAuthentication) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="routingConfiguration"> The routing configuration indicating the associated and propagated route tables for this connection. </param>
+        internal VirtualNetworkGatewayConnectionData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, ConnectionAuthenticationType? authenticationType, CertificateAuthentication certificateAuthentication, RoutingConfiguration routingConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             AuthorizationKey = authorizationKey;
@@ -109,6 +110,7 @@ namespace Azure.ResourceManager.Network
             EnablePrivateLinkFastPath = enablePrivateLinkFastPath;
             AuthenticationType = authenticationType;
             CertificateAuthentication = certificateAuthentication;
+            RoutingConfiguration = routingConfiguration;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionData"/> for deserialization. </summary>
@@ -221,5 +223,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Certificate Authentication information for a certificate based authentication connection. </summary>
         [WirePath("properties.certificateAuthentication")]
         public CertificateAuthentication CertificateAuthentication { get; set; }
+        /// <summary> The routing configuration indicating the associated and propagated route tables for this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration { get; set; }
     }
 }

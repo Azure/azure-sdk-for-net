@@ -402,9 +402,6 @@ namespace Azure.ResourceManager.Network
                 name,
                 type,
                 systemData,
-                etag,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 source,
                 destination,
                 autoStart,
@@ -418,6 +415,9 @@ namespace Azure.ResourceManager.Network
                 startTime,
                 monitoringStatus,
                 connectionMonitorType,
+                etag,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Path rule of URL path map of an application gateway. </summary>
-    public partial class ApplicationGatewayPathRule : NetworkResourceData
+    public partial class ApplicationGatewayPathRule : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         public ApplicationGatewayPathRule()
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the path rule that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="paths"> Path rules of URL path map. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
         /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayPathRule(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             Paths = paths;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
@@ -48,9 +50,15 @@ namespace Azure.ResourceManager.Network.Models
             FirewallPolicy = firewallPolicy;
         }
 
+        /// <summary> Name of the path rule that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary> Path rules of URL path map. </summary>
         [WirePath("properties.paths")]
         public IList<string> Paths { get; }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// A Class representing a SecurityRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityRuleResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetSecurityRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityGroupResource"/> using the GetSecurityRule method.
+    /// Otherwise you can get one from its parent resource <see cref="CommonNetworkSecurityGroupResource"/> using the GetSecurityRule method.
     /// </summary>
     public partial class SecurityRuleResource : ArmResource
     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
 
         private readonly ClientDiagnostics _securityRuleClientDiagnostics;
         private readonly SecurityRulesRestOperations _securityRuleRestClient;
-        private readonly SecurityRuleData _data;
+        private readonly CommonSecurityRuleData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups/securityRules";
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="SecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityRuleResource(ArmClient client, SecurityRuleData data) : this(client, data.Id)
+        internal SecurityRuleResource(ArmClient client, CommonSecurityRuleData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityRuleData Data
+        public virtual CommonSecurityRuleData Data
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityRuleResource>> UpdateAsync(WaitUntil waitUntil, SecurityRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityRuleResource>> UpdateAsync(WaitUntil waitUntil, CommonSecurityRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityRuleResource> Update(WaitUntil waitUntil, SecurityRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityRuleResource> Update(WaitUntil waitUntil, CommonSecurityRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

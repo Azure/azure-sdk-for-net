@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkSecurityPerimeterAssociableResourceType()
         {
             PublicDnsZones = new ChangeTrackingList<string>();
+            ServiceTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
@@ -60,11 +61,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
         /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
+        /// <param name="serviceTags"> Service tags associated with the resource provider. </param>
+        /// <param name="readinessState"> The readiness state of the resource type for NSP support. </param>
+        /// <param name="outboundSupported"> Indicates whether the resource type supports outbound scenario. </param>
+        /// <param name="description"> Description of the PaaS resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> publicDnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> publicDnsZones, IReadOnlyList<string> serviceTags, NetworkSecurityPerimeterReadinessState? readinessState, bool? outboundSupported, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             PublicDnsZones = publicDnsZones;
+            ServiceTags = serviceTags;
+            ReadinessState = readinessState;
+            OutboundSupported = outboundSupported;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,5 +83,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Public DNS zone names of the resources. </summary>
         [WirePath("properties.publicDnsZones")]
         public IReadOnlyList<string> PublicDnsZones { get; }
+        /// <summary> Service tags associated with the resource provider. </summary>
+        [WirePath("properties.serviceTags")]
+        public IReadOnlyList<string> ServiceTags { get; }
+        /// <summary> The readiness state of the resource type for NSP support. </summary>
+        [WirePath("properties.readinessState")]
+        public NetworkSecurityPerimeterReadinessState? ReadinessState { get; }
+        /// <summary> Indicates whether the resource type supports outbound scenario. </summary>
+        [WirePath("properties.outboundSupported")]
+        public bool? OutboundSupported { get; }
+        /// <summary> Description of the PaaS resource type. </summary>
+        [WirePath("properties.description")]
+        public string Description { get; }
     }
 }

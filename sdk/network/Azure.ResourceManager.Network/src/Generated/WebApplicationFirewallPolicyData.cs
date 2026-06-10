@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the WebApplicationFirewallPolicy data model.
     /// Defines web application firewall policy.
     /// </summary>
-    public partial class WebApplicationFirewallPolicyData : NetworkTrackedResourceData
+    public partial class WebApplicationFirewallPolicyData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyData"/>. </summary>
         public WebApplicationFirewallPolicyData()
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
         /// <param name="applicationGatewayForContainers"> A collection of references to application gateway for containers. </param>
-        internal WebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules, IReadOnlyList<SubResource> applicationGatewayForContainers) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal WebApplicationFirewallPolicyData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules, IReadOnlyList<SubResource> applicationGatewayForContainers) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             PolicySettings = policySettings;

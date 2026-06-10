@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLoadBalancer()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayGet.json
             // this example is just showing the usage of "ServiceGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteServiceGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayDelete.json
             // this example is just showing the usage of "ServiceGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServiceGatewayTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayUpdateTags.json
             // this example is just showing the usage of "ServiceGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,9 +112,67 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAddressLocations_GetAddressLocationsInServiceGateway()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayGetAddressLocationsResponse.json
+            // this example is just showing the usage of "ServiceGateways_GetAddressLocations" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceGatewayResource created on azure
+            // for more information of creating ServiceGatewayResource, please refer to the document of ServiceGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceGatewayName = "sg";
+            ResourceIdentifier serviceGatewayResourceId = ServiceGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceGatewayName);
+            ServiceGatewayResource serviceGateway = client.GetServiceGatewayResource(serviceGatewayResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceGatewayAddressLocationResponse item in serviceGateway.GetAddressLocationsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetServices_GetServicesInServiceGateway()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayGetServicesResponse.json
+            // this example is just showing the usage of "ServiceGateways_GetServices" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceGatewayResource created on azure
+            // for more information of creating ServiceGatewayResource, please refer to the document of ServiceGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceGatewayName = "sg";
+            ResourceIdentifier serviceGatewayResourceId = ServiceGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceGatewayName);
+            ServiceGatewayResource serviceGateway = client.GetServiceGatewayResource(serviceGatewayResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceGatewayService item in serviceGateway.GetServicesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAddressLocations_FullUpdateCreateUpdateOrDeleteAddressLocationsInTheServiceGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayFullUpdateAddressLocationsRequest.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayFullUpdateAddressLocationsRequest.json
             // this example is just showing the usage of "ServiceGateways_UpdateAddressLocations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +224,7 @@ Address = "10.0.0.6",
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateAddressLocations_PartialUpdateCreateUpdateOrDeleteAddressLocationsInTheServiceGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayPartialUpdateAddressLocationsRequest.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayPartialUpdateAddressLocationsRequest.json
             // this example is just showing the usage of "ServiceGateways_UpdateAddressLocations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +279,7 @@ AddressLocation = "192.0.0.3",
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateServices_CreateOrFullUpdateServicesInServiceGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayUpdateServicesRequest.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ServiceGatewayUpdateServicesRequest.json
             // this example is just showing the usage of "ServiceGateways_UpdateServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -248,11 +306,11 @@ Service = new ServiceGatewayService
 Name = "Service1",
 ServiceType = ServiceType.Inbound,
 IsDefault = true,
-LoadBalancerBackendPools = {new BackendAddressPoolData
+LoadBalancerBackendPools = {new CommonBackendAddressPoolData
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb1/backendAddressPools/be1"),
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb1/backendAddressPools/be1",
 }},
-PublicNatGatewayId = "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/natGateways/test-natGateway",
+PublicNatGatewayId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/natGateways/test-natGateway",
 },
 }, new ServiceGatewayServiceRequest
 {
@@ -266,64 +324,6 @@ IsDefault = false,
 }},
             };
             await serviceGateway.UpdateServicesAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAddressLocations_GetAddressLocationsInServiceGateway()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayGetAddressLocationsResponse.json
-            // this example is just showing the usage of "ServiceGateways_GetAddressLocations" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceGatewayResource created on azure
-            // for more information of creating ServiceGatewayResource, please refer to the document of ServiceGatewayResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceGatewayName = "sg";
-            ResourceIdentifier serviceGatewayResourceId = ServiceGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceGatewayName);
-            ServiceGatewayResource serviceGateway = client.GetServiceGatewayResource(serviceGatewayResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ServiceGatewayAddressLocationResponse item in serviceGateway.GetAddressLocationsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetServices_GetServicesInServiceGateway()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceGatewayGetServicesResponse.json
-            // this example is just showing the usage of "ServiceGateways_GetServices" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceGatewayResource created on azure
-            // for more information of creating ServiceGatewayResource, please refer to the document of ServiceGatewayResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceGatewayName = "sg";
-            ResourceIdentifier serviceGatewayResourceId = ServiceGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceGatewayName);
-            ServiceGatewayResource serviceGateway = client.GetServiceGatewayResource(serviceGatewayResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ServiceGatewayService item in serviceGateway.GetServicesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
 
             Console.WriteLine("Succeeded");
         }

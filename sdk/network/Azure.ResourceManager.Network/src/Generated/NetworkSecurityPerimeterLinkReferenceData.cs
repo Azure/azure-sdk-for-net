@@ -75,8 +75,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
         /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
         /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
+        /// <param name="securityPerimeterResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterLinkProvisioningState? provisioningState, ResourceIdentifier remotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IReadOnlyList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterLinkProvisioningState? provisioningState, ResourceIdentifier remotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IReadOnlyList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, string securityPerimeterResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             RemotePerimeterResourceId = remotePerimeterResourceId;
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.Network
             RemoteOutboundProfiles = remoteOutboundProfiles;
             Description = description;
             Status = status;
+            SecurityPerimeterResourceType = securityPerimeterResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -121,5 +123,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </summary>
         [WirePath("properties.status")]
         public NetworkSecurityPerimeterLinkStatus? Status { get; set; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string SecurityPerimeterResourceType { get; }
     }
 }

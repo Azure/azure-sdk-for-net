@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -179,10 +184,9 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ETag? etag = default;
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            ETag? etag = default;
+            string id = default;
             WritableSubResource remoteVpnSite = default;
             int? routingWeight = default;
             int? dpdTimeoutSeconds = default;
@@ -206,6 +210,11 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -217,25 +226,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -440,9 +431,8 @@ namespace Azure.ResourceManager.Network
             serializedAdditionalRawData = rawDataDictionary;
             return new VpnConnectionData(
                 id,
-                name,
-                type,
                 serializedAdditionalRawData,
+                name,
                 etag,
                 remoteVpnSite,
                 routingWeight,
@@ -525,7 +515,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

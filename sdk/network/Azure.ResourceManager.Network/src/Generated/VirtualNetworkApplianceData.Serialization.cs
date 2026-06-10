@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BandwidthInGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
-                writer.WriteStringValue(BandwidthInGbps);
+                writer.WriteNumberValue(BandwidthInGbps.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Network
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PrivateIPAddressVersion))
+            {
+                writer.WritePropertyName("privateIPAddressVersion"u8);
+                writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -99,16 +104,17 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             ETag? etag = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            string bandwidthInGbps = default;
+            double? bandwidthInGbps = default;
             IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default;
+            VirtualNetworkApplianceIPVersionType? privateIPAddressVersion = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
-            SubnetData subnet = default;
+            CommonSubnetData subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,11 +130,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -138,11 +140,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -179,7 +177,11 @@ namespace Azure.ResourceManager.Network
                     {
                         if (property0.NameEquals("bandwidthInGbps"u8))
                         {
-                            bandwidthInGbps = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            bandwidthInGbps = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -194,6 +196,15 @@ namespace Azure.ResourceManager.Network
                                 array.Add(VirtualNetworkApplianceIPConfiguration.DeserializeVirtualNetworkApplianceIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("privateIPAddressVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateIPAddressVersion = new VirtualNetworkApplianceIPVersionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -220,7 +231,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
+                            subnet = CommonSubnetData.DeserializeCommonSubnetData(property0.Value, options);
                             continue;
                         }
                     }
@@ -242,6 +253,7 @@ namespace Azure.ResourceManager.Network
                 etag,
                 bandwidthInGbps,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>(),
+                privateIPAddressVersion,
                 provisioningState,
                 resourceGuid,
                 subnet);
@@ -359,7 +371,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 
@@ -376,15 +396,7 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(BandwidthInGbps))
                 {
                     builder.Append("    bandwidthInGbps: ");
-                    if (BandwidthInGbps.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BandwidthInGbps}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BandwidthInGbps}'");
-                    }
+                    builder.AppendLine($"'{BandwidthInGbps.Value.ToString()}'");
                 }
             }
 
@@ -408,6 +420,21 @@ namespace Azure.ResourceManager.Network
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateIPAddressVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateIPAddressVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateIPAddressVersion))
+                {
+                    builder.Append("    privateIPAddressVersion: ");
+                    builder.AppendLine($"'{PrivateIPAddressVersion.Value.ToString()}'");
                 }
             }
 

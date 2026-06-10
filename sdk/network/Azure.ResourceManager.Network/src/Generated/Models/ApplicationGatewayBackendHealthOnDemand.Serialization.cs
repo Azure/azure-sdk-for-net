@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ApplicationGatewayBackendAddressPool backendAddressPool = default;
+            CommonApplicationGatewayBackendAddressPool backendAddressPool = default;
             ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value, options);
+                    backendAddressPool = CommonApplicationGatewayBackendAddressPool.DeserializeCommonApplicationGatewayBackendAddressPool(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backendHealthHttpSettings"u8))

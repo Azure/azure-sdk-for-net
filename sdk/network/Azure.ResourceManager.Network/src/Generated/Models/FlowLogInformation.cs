@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ManagedServiceIdentity identity, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, CommonTrafficAnalyticsProperties flowAnalyticsConfiguration, ManagedServiceIdentity identity, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool enabled, CommonRetentionPolicyParameters retentionPolicy, CommonFlowLogFormatParameters format, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetResourceId = targetResourceId;
             FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        internal CommonTrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         [WirePath("flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
-        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
+        public CommonTrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
         {
-            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
             set
             {
                 if (FlowAnalyticsConfiguration is null)
-                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
-                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
+                    FlowAnalyticsConfiguration = new CommonTrafficAnalyticsProperties();
+                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
             }
         }
 
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Network.Models
         public bool Enabled { get; set; }
         /// <summary> Parameters that define the retention policy for flow log. </summary>
         [WirePath("properties.retentionPolicy")]
-        public RetentionPolicyParameters RetentionPolicy { get; set; }
+        public CommonRetentionPolicyParameters RetentionPolicy { get; set; }
         /// <summary> Parameters that define the flow log format. </summary>
         [WirePath("properties.format")]
-        public FlowLogProperties Format { get; set; }
+        public CommonFlowLogFormatParameters Format { get; set; }
     }
 }

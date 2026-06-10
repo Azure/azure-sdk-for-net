@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the RouteFilterRule data model.
     /// Route Filter Rule Resource.
     /// </summary>
-    public partial class RouteFilterRuleData : NetworkResourceData
+    public partial class RouteFilterRuleData : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="RouteFilterRuleData"/>. </summary>
         public RouteFilterRuleData()
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="RouteFilterRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="access"> The access type of the rule. </param>
         /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
         /// <param name="communities"> The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
-        internal RouteFilterRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? location, ETag? etag, NetworkAccess? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal RouteFilterRuleData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, AzureLocation? location, ETag? etag, NetworkAccess? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             Location = location;
             ETag = etag;
             Access = access;
@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> Resource location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }

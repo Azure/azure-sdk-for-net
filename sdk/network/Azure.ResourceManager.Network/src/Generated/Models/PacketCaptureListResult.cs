@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureListResult"/>. </summary>
         /// <param name="value"> Information about packet capture sessions. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureListResult(IReadOnlyList<PacketCaptureData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PacketCaptureListResult(IReadOnlyList<PacketCaptureData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Information about packet capture sessions. </summary>
         public IReadOnlyList<PacketCaptureData> Value { get; }
+        /// <summary> URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

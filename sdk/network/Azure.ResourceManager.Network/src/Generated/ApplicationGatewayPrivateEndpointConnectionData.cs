@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the ApplicationGatewayPrivateEndpointConnection data model.
     /// Private Endpoint connection on an application gateway.
     /// </summary>
-    public partial class ApplicationGatewayPrivateEndpointConnectionData : NetworkResourceData
+    public partial class ApplicationGatewayPrivateEndpointConnectionData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         public ApplicationGatewayPrivateEndpointConnectionData()
@@ -25,15 +24,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayPrivateEndpointConnectionData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, CommonPrivateEndpointData privateEndpoint, CommonPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             PrivateEndpoint = privateEndpoint;
@@ -47,10 +46,10 @@ namespace Azure.ResourceManager.Network
         public ETag? ETag { get; }
         /// <summary> The resource of private end point. </summary>
         [WirePath("properties.privateEndpoint")]
-        public PrivateEndpointData PrivateEndpoint { get; }
+        public CommonPrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public CommonPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the application gateway private endpoint connection resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }

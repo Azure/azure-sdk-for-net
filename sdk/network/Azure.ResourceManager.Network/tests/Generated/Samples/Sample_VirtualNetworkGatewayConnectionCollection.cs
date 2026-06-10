@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkGatewayConnectionS2S()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayConnectionCreate.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 IPConfigurations = {new VirtualNetworkGatewayIPConfiguration
 {
-PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/GatewaySubnet"),
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/gwpip"),
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/gwipconfig1"),
 Name = "gwipconfig1",
+PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/GatewaySubnet"),
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/gwpip"),
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/gwipconfig1",
 }},
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
@@ -67,29 +67,29 @@ Name = "gwipconfig1",
                     BgpPeeringAddress = "10.0.1.30",
                     PeerWeight = 0,
                 },
-                Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw"),
+                Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw",
                 Location = new AzureLocation("centralus"),
                 Tags = { },
             }, VirtualNetworkGatewayConnectionType.IPsec)
             {
                 LocalNetworkGateway2 = new LocalNetworkGatewayData
                 {
-                    LocalNetworkAddressSpace = new VirtualNetworkAddressSpace
+                    LocalNetworkAddressSpace = new CommonAddressSpace
                     {
                         AddressPrefixes = { "10.1.0.0/16" },
                     },
                     GatewayIPAddress = "x.x.x.x",
-                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/localNetworkGateways/localgw"),
+                    Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/localNetworkGateways/localgw",
                     Location = new AzureLocation("centralus"),
                     Tags = { },
                 },
                 IngressNatRules = {new WritableSubResource
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/natRules/natRule1"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/natRules/natRule1"),
 }},
                 EgressNatRules = {new WritableSubResource
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/natRules/natRule2"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/natRules/natRule2"),
 }},
                 ConnectionProtocol = VirtualNetworkGatewayConnectionProtocol.IkeV2,
                 RoutingWeight = 0,
@@ -106,7 +106,7 @@ BgpPeeringAddress = "10.78.1.20",
 }},
                 SharedKey = "Abc123",
                 EnableBgp = false,
-                GatewayCustomBgpIPAddresses = { new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/default", "169.254.21.1"), new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/ActiveActive", "169.254.21.3") },
+                GatewayCustomBgpIPAddresses = { new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/default", "169.254.21.1"), new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/ActiveActive", "169.254.21.3") },
                 UsePolicyBasedTrafficSelectors = false,
                 IPsecPolicies = { },
                 TrafficSelectorPolicies = { },
@@ -116,6 +116,11 @@ BgpPeeringAddress = "10.78.1.20",
                     OutboundAuthCertificate = new Uri("https://customerKv.vault.azure.net/Certificates/outBoundcert/Version"),
                     InboundAuthCertificateSubjectName = "CN=rootCert.com",
                     InboundAuthCertificateChain = { "MIIC+TCCAeGgAwIBAgIQFOJUqDaxV5xJcKpTKO...", "MIIC+TCCAeGgAwIBAgIQPJerInitNblK7yBgkqh..." },
+                },
+                RoutingConfiguration = new RoutingConfiguration
+                {
+                    InboundRouteMapId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
+                    OutboundRouteMapId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
                 Location = new AzureLocation("centralus"),
             };
@@ -133,7 +138,7 @@ BgpPeeringAddress = "10.78.1.20",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayConnectionGet.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +148,7 @@ BgpPeeringAddress = "10.78.1.20",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -166,7 +171,7 @@ BgpPeeringAddress = "10.78.1.20",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualNetworkGatewayConnectionsinResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionsList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayConnectionsList.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +181,7 @@ BgpPeeringAddress = "10.78.1.20",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -201,7 +206,7 @@ BgpPeeringAddress = "10.78.1.20",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayConnectionGet.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -211,7 +216,7 @@ BgpPeeringAddress = "10.78.1.20",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -230,7 +235,7 @@ BgpPeeringAddress = "10.78.1.20",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayConnectionGet.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -240,7 +245,7 @@ BgpPeeringAddress = "10.78.1.20",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

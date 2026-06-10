@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> UrlPathMaps give a url path to the backend mapping information for PathBasedRouting. </summary>
-    public partial class ApplicationGatewayUrlPathMap : NetworkResourceData
+    public partial class ApplicationGatewayUrlPathMap : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayUrlPathMap"/>. </summary>
         public ApplicationGatewayUrlPathMap()
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayUrlPathMap"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the URL path map that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="defaultBackendAddressPool"> Default backend address pool resource of URL path map. </param>
         /// <param name="defaultBackendHttpSettings"> Default backend http settings resource of URL path map. </param>
         /// <param name="defaultRewriteRuleSet"> Default Rewrite rule set resource of URL path map. </param>
@@ -34,9 +34,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultLoadDistributionPolicy"> Default Load Distribution Policy resource of URL path map. </param>
         /// <param name="pathRules"> Path rule of URL path map resource. </param>
         /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
-        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, WritableSubResource defaultLoadDistributionPolicy, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayUrlPathMap(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, WritableSubResource defaultLoadDistributionPolicy, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
             DefaultRewriteRuleSet = defaultRewriteRuleSet;
@@ -46,9 +48,15 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Name of the URL path map that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary> Default backend address pool resource of URL path map. </summary>
         internal WritableSubResource DefaultBackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>

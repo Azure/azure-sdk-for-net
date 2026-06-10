@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NatRulePut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NatRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NatRulePut.json
             // this example is just showing the usage of "NatRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -53,7 +53,7 @@ AddressSpace = "10.4.0.0/24",
 {
 AddressSpace = "192.168.21.0/24",
 }},
-                IPConfigurationId = "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/cloudnet1-VNG/ipConfigurations/default",
+                IPConfigurationId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/cloudnet1-VNG/ipConfigurations/default",
             };
             ArmOperation<VpnGatewayNatRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, natRuleName, data);
             VpnGatewayNatRuleResource result = lro.Value;
@@ -69,7 +69,7 @@ AddressSpace = "192.168.21.0/24",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NatRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NatRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NatRuleGet.json
             // this example is just showing the usage of "NatRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ AddressSpace = "192.168.21.0/24",
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -103,7 +103,7 @@ AddressSpace = "192.168.21.0/24",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NatRuleList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NatRuleList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NatRuleList.json
             // this example is just showing the usage of "NatRules_ListByVpnGateway" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ AddressSpace = "192.168.21.0/24",
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -139,7 +139,7 @@ AddressSpace = "192.168.21.0/24",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_NatRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NatRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NatRuleGet.json
             // this example is just showing the usage of "NatRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ AddressSpace = "192.168.21.0/24",
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -169,7 +169,7 @@ AddressSpace = "192.168.21.0/24",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NatRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NatRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NatRuleGet.json
             // this example is just showing the usage of "NatRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +179,7 @@ AddressSpace = "192.168.21.0/24",
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);

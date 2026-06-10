@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListVirtualHubBgpConnectionResults"/>. </summary>
-        internal ListVirtualHubBgpConnectionResults()
+        /// <param name="value"> The BgpConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ListVirtualHubBgpConnectionResults(IEnumerable<BgpConnectionData> value)
         {
-            Value = new ChangeTrackingList<BgpConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListVirtualHubBgpConnectionResults"/>. </summary>
-        /// <param name="value"> The list of VirtualHubBgpConnections. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The BgpConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListVirtualHubBgpConnectionResults(IReadOnlyList<BgpConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListVirtualHubBgpConnectionResults(IReadOnlyList<BgpConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of VirtualHubBgpConnections. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubBgpConnectionResults"/> for deserialization. </summary>
+        internal ListVirtualHubBgpConnectionResults()
+        {
+        }
+
+        /// <summary> The BgpConnection items on this page. </summary>
         public IReadOnlyList<BgpConnectionData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

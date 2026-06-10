@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="backendHttpSettingsCollection"> List of ApplicationGatewayBackendHealthHttpSettings resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendHealthPool(ApplicationGatewayBackendAddressPool backendAddressPool, IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings> backendHttpSettingsCollection, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayBackendHealthPool(CommonApplicationGatewayBackendAddressPool backendAddressPool, IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings> backendHttpSettingsCollection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackendAddressPool = backendAddressPool;
             BackendHttpSettingsCollection = backendHttpSettingsCollection;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to an ApplicationGatewayBackendAddressPool resource. </summary>
         [WirePath("backendAddressPool")]
-        public ApplicationGatewayBackendAddressPool BackendAddressPool { get; }
+        public CommonApplicationGatewayBackendAddressPool BackendAddressPool { get; }
         /// <summary> List of ApplicationGatewayBackendHealthHttpSettings resources. </summary>
         [WirePath("backendHttpSettingsCollection")]
         public IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings> BackendHttpSettingsCollection { get; }

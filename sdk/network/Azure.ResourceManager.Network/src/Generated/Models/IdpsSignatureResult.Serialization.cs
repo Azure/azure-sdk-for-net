@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteNumberValue((int)Mode.Value);
+                writer.WriteNumberValue(Mode.Value.ToSerialSingle());
             }
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteNumberValue((int)Severity.Value);
+                writer.WriteNumberValue(Severity.Value.ToSerialSingle());
             }
             if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
-                writer.WriteNumberValue((int)Direction.Value);
+                writer.WriteNumberValue(Direction.Value.ToSerialSingle());
             }
             if (Optional.IsDefined(Group))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    mode = property.Value.GetInt32().ToFirewallPolicyIdpsSignatureMode();
+                    mode = property.Value.GetSingle().ToFirewallPolicyIdpsSignatureMode();
                     continue;
                 }
                 if (property.NameEquals("severity"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    severity = property.Value.GetInt32().ToFirewallPolicyIdpsSignatureSeverity();
+                    severity = property.Value.GetSingle().ToFirewallPolicyIdpsSignatureSeverity();
                     continue;
                 }
                 if (property.NameEquals("direction"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    direction = property.Value.GetInt32().ToFirewallPolicyIdpsSignatureDirection();
+                    direction = property.Value.GetSingle().ToFirewallPolicyIdpsSignatureDirection();
                     continue;
                 }
                 if (property.NameEquals("group"u8))

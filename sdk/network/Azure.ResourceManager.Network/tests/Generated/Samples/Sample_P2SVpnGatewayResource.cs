@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_P2SVpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2SVpnGatewayGet.json
             // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "p2sVpnGateway1";
             ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_P2SVpnGatewayDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2SVpnGatewayDelete.json
             // this example is just showing the usage of "P2sVpnGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "p2sVpnGateway1";
             ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_P2SVpnGatewayUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2SVpnGatewayUpdateTags.json
             // this example is just showing the usage of "P2sVpnGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "p2sVpnGateway1";
             ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Reset_ResetP2SVpnGateway()
+        public async Task DisconnectP2SVpnConnections_DisconnectVpnConnectionsFromP2sVpnGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayReset.json
-            // this example is just showing the usage of "P2SVpnGateways_Reset" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2sVpnGatewaysDisconnectP2sVpnConnections.json
+            // this example is just showing the usage of "P2sVpnGateways_DisconnectP2SVpnConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -125,28 +125,27 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string gatewayName = "p2sVpnGateway1";
-            ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "p2s-vpn-gateway-test";
+            string p2sVpnGatewayName = "p2svpngateway";
+            ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, p2sVpnGatewayName);
             P2SVpnGatewayResource p2sVpnGateway = client.GetP2SVpnGatewayResource(p2sVpnGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.ResetAsync(WaitUntil.Completed);
-            P2SVpnGatewayResource result = lro.Value;
+            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest
+            {
+                VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
+            };
+            await p2sVpnGateway.DisconnectP2SVpnConnectionsAsync(WaitUntil.Completed, request);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            P2SVpnGatewayData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateVpnProfile_GenerateP2SVpnGatewayVPNProfile()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayGenerateVpnProfile.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2SVpnGatewayGenerateVpnProfile.json
             // this example is just showing the usage of "P2sVpnGateways_GenerateVpnProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "p2sVpnGateway1";
             ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetP2SVpnConnectionHealth_P2SVpnGatewayGetConnectionHealth()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayGetConnectionHealth.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2SVpnGatewayGetConnectionHealth.json
             // this example is just showing the usage of "P2sVpnGateways_GetP2SVpnConnectionHealth" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "p2sVpnGateway1";
             ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetP2SVpnConnectionHealthDetailed_P2SVpnGatewayGetConnectionHealthDetailed()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayGetConnectionHealthDetailed.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2SVpnGatewayGetConnectionHealthDetailed.json
             // this example is just showing the usage of "P2sVpnGateways_GetP2SVpnConnectionHealthDetailed" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "p2s-vpn-gateway-test";
             string gatewayName = "p2svpngateway";
             ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -238,10 +237,10 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task DisconnectP2SVpnConnections_DisconnectVpnConnectionsFromP2sVpnGateway()
+        public async Task Reset_ResetP2SVpnGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2sVpnGatewaysDisconnectP2sVpnConnections.json
-            // this example is just showing the usage of "P2sVpnGateways_DisconnectP2SVpnConnections" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/P2SVpnGatewayReset.json
+            // this example is just showing the usage of "P2SVpnGateways_Reset" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -250,20 +249,21 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this P2SVpnGatewayResource created on azure
             // for more information of creating P2SVpnGatewayResource, please refer to the document of P2SVpnGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "p2s-vpn-gateway-test";
-            string p2sVpnGatewayName = "p2svpngateway";
-            ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, p2sVpnGatewayName);
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string gatewayName = "p2sVpnGateway1";
+            ResourceIdentifier p2sVpnGatewayResourceId = P2SVpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
             P2SVpnGatewayResource p2sVpnGateway = client.GetP2SVpnGatewayResource(p2sVpnGatewayResourceId);
 
             // invoke the operation
-            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest
-            {
-                VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
-            };
-            await p2sVpnGateway.DisconnectP2SVpnConnectionsAsync(WaitUntil.Completed, request);
+            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.ResetAsync(WaitUntil.Completed);
+            P2SVpnGatewayResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            P2SVpnGatewayData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

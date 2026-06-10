@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ServiceAssociationLinks_List operation. </summary>
+    /// <summary> Paged collection of ServiceAssociationLink items. </summary>
     internal partial class ServiceAssociationLinksListResult
     {
         /// <summary>
@@ -46,27 +47,36 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinksListResult"/>. </summary>
-        internal ServiceAssociationLinksListResult()
+        /// <param name="value"> The ServiceAssociationLink items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ServiceAssociationLinksListResult(IEnumerable<CommonServiceAssociationLink> value)
         {
-            Value = new ChangeTrackingList<ServiceAssociationLink>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinksListResult"/>. </summary>
-        /// <param name="value"> The service association links in a subnet. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ServiceAssociationLink items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAssociationLinksListResult(IReadOnlyList<ServiceAssociationLink> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceAssociationLinksListResult(IReadOnlyList<CommonServiceAssociationLink> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The service association links in a subnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinksListResult"/> for deserialization. </summary>
+        internal ServiceAssociationLinksListResult()
+        {
+        }
+
+        /// <summary> The ServiceAssociationLink items on this page. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ServiceAssociationLink> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        public IReadOnlyList<CommonServiceAssociationLink> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

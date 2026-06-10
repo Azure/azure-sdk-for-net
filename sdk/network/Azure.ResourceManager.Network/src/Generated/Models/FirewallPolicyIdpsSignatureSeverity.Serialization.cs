@@ -11,11 +11,19 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal static partial class FirewallPolicyIdpsSignatureSeverityExtensions
     {
-        public static FirewallPolicyIdpsSignatureSeverity ToFirewallPolicyIdpsSignatureSeverity(this int value)
+        public static float ToSerialSingle(this FirewallPolicyIdpsSignatureSeverity value) => value switch
         {
-            if (value == 1) return FirewallPolicyIdpsSignatureSeverity.One;
-            if (value == 2) return FirewallPolicyIdpsSignatureSeverity.Two;
-            if (value == 3) return FirewallPolicyIdpsSignatureSeverity.Three;
+            FirewallPolicyIdpsSignatureSeverity.One => 1F,
+            FirewallPolicyIdpsSignatureSeverity.Two => 2F,
+            FirewallPolicyIdpsSignatureSeverity.Three => 3F,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureSeverity value.")
+        };
+
+        public static FirewallPolicyIdpsSignatureSeverity ToFirewallPolicyIdpsSignatureSeverity(this float value)
+        {
+            if (value == 1F) return FirewallPolicyIdpsSignatureSeverity.One;
+            if (value == 2F) return FirewallPolicyIdpsSignatureSeverity.Two;
+            if (value == 3F) return FirewallPolicyIdpsSignatureSeverity.Three;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureSeverity value.");
         }
     }

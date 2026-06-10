@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetApplicationGatewayPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayPrivateEndpointConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayPrivateEndpointConnectionGet.json
             // this example is just showing the usage of "ApplicationGatewayPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationGatewayPrivateEndpointConnectionResource created on azure
             // for more information of creating ApplicationGatewayPrivateEndpointConnectionResource, please refer to the document of ApplicationGatewayPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationGatewayName = "appgw";
             string connectionName = "connection1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteApplicationGatewayPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayPrivateEndpointConnectionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayPrivateEndpointConnectionDelete.json
             // this example is just showing the usage of "ApplicationGatewayPrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationGatewayPrivateEndpointConnectionResource created on azure
             // for more information of creating ApplicationGatewayPrivateEndpointConnectionResource, please refer to the document of ApplicationGatewayPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationGatewayName = "appgw";
             string connectionName = "connection1";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateApplicationGatewayPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayPrivateEndpointConnectionUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayPrivateEndpointConnectionUpdate.json
             // this example is just showing the usage of "ApplicationGatewayPrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationGatewayPrivateEndpointConnectionResource created on azure
             // for more information of creating ApplicationGatewayPrivateEndpointConnectionResource, please refer to the document of ApplicationGatewayPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationGatewayName = "appgw";
             string connectionName = "connection1";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             ApplicationGatewayPrivateEndpointConnectionData data = new ApplicationGatewayPrivateEndpointConnectionData
             {
-                ConnectionState = new NetworkPrivateLinkServiceConnectionState
+                ConnectionState = new CommonPrivateLinkServiceConnectionState
                 {
                     Status = "Approved",
                     Description = "approved it for some reason.",

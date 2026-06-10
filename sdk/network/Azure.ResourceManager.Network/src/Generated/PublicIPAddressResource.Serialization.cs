@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PublicIPAddressResource : IJsonModel<PublicIPAddressData>
+    public partial class PublicIPAddressResource : IJsonModel<CommonPublicIPAddressData>
     {
-        private static PublicIPAddressData s_dataDeserializationInstance;
-        private static PublicIPAddressData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static CommonPublicIPAddressData s_dataDeserializationInstance;
+        private static CommonPublicIPAddressData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<PublicIPAddressData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPAddressData>)Data).Write(writer, options);
+        void IJsonModel<CommonPublicIPAddressData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommonPublicIPAddressData>)Data).Write(writer, options);
 
-        PublicIPAddressData IJsonModel<PublicIPAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPAddressData>)DataDeserializationInstance).Create(ref reader, options);
+        CommonPublicIPAddressData IJsonModel<CommonPublicIPAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommonPublicIPAddressData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicIPAddressData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<CommonPublicIPAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommonPublicIPAddressData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PublicIPAddressData IPersistableModel<PublicIPAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPAddressData>(data, options, AzureResourceManagerNetworkContext.Default);
+        CommonPublicIPAddressData IPersistableModel<CommonPublicIPAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommonPublicIPAddressData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PublicIPAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicIPAddressData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CommonPublicIPAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommonPublicIPAddressData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

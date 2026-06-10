@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the P2SVpnGateway data model.
     /// P2SVpnGateway Resource.
     /// </summary>
-    public partial class P2SVpnGatewayData : NetworkTrackedResourceData
+    public partial class P2SVpnGatewayData : TrackedResourceWithSettableIdOptionalLocation
     {
         /// <summary> Initializes a new instance of <see cref="P2SVpnGatewayData"/>. </summary>
         public P2SVpnGatewayData()
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnClientConnectionHealth"> All P2S VPN clients' connection health status. </param>
         /// <param name="customDnsServers"> List of all customer specified DNS servers IP addresses. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the P2SVpnGateway. </param>
-        internal P2SVpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal P2SVpnGatewayData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             VirtualHub = virtualHub;

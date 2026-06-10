@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListBastionHosts API service call. </summary>
+    /// <summary> The response of a BastionHost list operation. </summary>
     internal partial class BastionHostListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BastionHostListResult"/>. </summary>
-        internal BastionHostListResult()
+        /// <param name="value"> The BastionHost items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal BastionHostListResult(IEnumerable<BastionHostData> value)
         {
-            Value = new ChangeTrackingList<BastionHostData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BastionHostListResult"/>. </summary>
-        /// <param name="value"> List of Bastion Hosts in a resource group. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The BastionHost items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BastionHostListResult(IReadOnlyList<BastionHostData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BastionHostListResult(IReadOnlyList<BastionHostData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Bastion Hosts in a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostListResult"/> for deserialization. </summary>
+        internal BastionHostListResult()
+        {
+        }
+
+        /// <summary> The BastionHost items on this page. </summary>
         public IReadOnlyList<BastionHostData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

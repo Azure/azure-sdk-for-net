@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListLoadBalancingRule API service call. </summary>
+    /// <summary> Paged collection of LoadBalancingRule items. </summary>
     internal partial class LoadBalancerLoadBalancingRuleListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerLoadBalancingRuleListResult"/>. </summary>
-        internal LoadBalancerLoadBalancingRuleListResult()
+        /// <param name="value"> The LoadBalancingRule items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LoadBalancerLoadBalancingRuleListResult(IEnumerable<CommonLoadBalancingRuleData> value)
         {
-            Value = new ChangeTrackingList<LoadBalancingRuleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerLoadBalancingRuleListResult"/>. </summary>
-        /// <param name="value"> A list of load balancing rules in a load balancer. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The LoadBalancingRule items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerLoadBalancingRuleListResult(IReadOnlyList<LoadBalancingRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerLoadBalancingRuleListResult(IReadOnlyList<CommonLoadBalancingRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of load balancing rules in a load balancer. </summary>
-        public IReadOnlyList<LoadBalancingRuleData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerLoadBalancingRuleListResult"/> for deserialization. </summary>
+        internal LoadBalancerLoadBalancingRuleListResult()
+        {
+        }
+
+        /// <summary> The LoadBalancingRule items on this page. </summary>
+        public IReadOnlyList<CommonLoadBalancingRuleData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

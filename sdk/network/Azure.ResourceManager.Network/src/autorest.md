@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/b6d0dc8ef749d50348f0e27f5eee38ac3e5469d0/specification/network/resource-manager/readme.md
-#tag: package-2025-05-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/587a15661041e26ff8a3059a4886ff9e092adfda/specification/network/resource-manager/Microsoft.Network/Network/readme.md
+tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -24,9 +24,15 @@ sample-gen:
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
     - VirtualMachineScaleSets_GetNetworkInterface
+    # Array-typed LRO responses not supported by test-modeler
+    - ExpressRouteCircuits_GetCircuitLinkFailoverAllTestsDetails
+    - ExpressRouteCircuits_GetCircuitLinkFailoverSingleTestDetails
+    - ExpressRouteCircuits_StartCircuitLinkFailoverTest
+    - ExpressRouteCircuits_StopCircuitLinkFailoverTest
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -107,6 +113,7 @@ rename-mapping:
   EndpointType: ConnectionMonitorEndpointType
   ExplicitProxy: FirewallPolicyExplicitProxy
   ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
+  ExpressRouteLinkFailoverTestBgpStatus.type: BgpStatusType
   FilterItems: IdpsQueryFilterItems
   FirewallPacketCaptureParameters: FirewallPacketCaptureRequestContent
   FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
@@ -420,10 +427,13 @@ directive:
     transform: >
       $.ServiceEndpointPolicyDefinition.properties['type']['readOnly'] = true;
     reason: Resource type should be readonly for this resource.
-  - from: virtualNetworkGateway.json
+  - from: networkGateway.json
     where: $.definitions
     transform: >
       $.BgpPeerStatus.properties.connectedDuration['x-ms-format'] = 'duration-constant';
+  - from: networkGateway.json
+    where: $.definitions
+    transform: >
       $.DhGroup['x-ms-enum']['name'] = 'DHGroup';
       $.DhGroup['x-ms-enum']['values'] = [
         { value: 'None',        name: 'None' },

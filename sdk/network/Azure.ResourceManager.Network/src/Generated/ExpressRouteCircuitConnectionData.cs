@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the ExpressRouteCircuitConnection data model.
     /// Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
     /// </summary>
-    public partial class ExpressRouteCircuitConnectionData : NetworkResourceData
+    public partial class ExpressRouteCircuitConnectionData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         public ExpressRouteCircuitConnectionData()
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="expressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the circuit initiating connection. </param>
         /// <param name="peerExpressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipv6CircuitConnectionConfig"> IPv6 Address PrefixProperties of the express route circuit connection. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit connection resource. </param>
-        internal ExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ExpressRouteCircuitConnectionData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;

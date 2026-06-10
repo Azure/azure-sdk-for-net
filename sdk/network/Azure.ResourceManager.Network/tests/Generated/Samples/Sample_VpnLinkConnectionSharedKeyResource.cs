@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VpnSiteLinkConnectionDefaultSharedKeyGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnSiteLinkConnectionDefaultSharedKeyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VpnSiteLinkConnectionDefaultSharedKeyGet.json
             // this example is just showing the usage of "VpnLinkConnections_GetDefaultSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnLinkConnectionSharedKeyResource created on azure
             // for more information of creating VpnLinkConnectionSharedKeyResource, please refer to the document of VpnLinkConnectionSharedKeyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string connectionName = "vpnConnection1";
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VpnSiteLinkConnectionDefaultSharedKeyPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnSiteLinkConnectionDefaultSharedKeyPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VpnSiteLinkConnectionDefaultSharedKeyPut.json
             // this example is just showing the usage of "VpnLinkConnections_SetOrInitDefaultSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnLinkConnectionSharedKeyResource created on azure
             // for more information of creating VpnLinkConnectionSharedKeyResource, please refer to the document of VpnLinkConnectionSharedKeyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string connectionName = "vpnConnection1";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDefaultSharedKey_VpnSiteLinkConnectionDefaultSharedKeyList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnSiteLinkConnectionDefaultSharedKeyList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VpnSiteLinkConnectionDefaultSharedKeyList.json
             // this example is just showing the usage of "VpnLinkConnections_ListDefaultSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnLinkConnectionSharedKeyResource created on azure
             // for more information of creating VpnLinkConnectionSharedKeyResource, please refer to the document of VpnLinkConnectionSharedKeyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string connectionName = "vpnConnection1";

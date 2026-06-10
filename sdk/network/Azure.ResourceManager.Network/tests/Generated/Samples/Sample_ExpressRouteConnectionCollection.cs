@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExpressRouteConnectionCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteConnectionCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteConnectionCreate.json
             // this example is just showing the usage of "ExpressRouteConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "gateway-2";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -42,33 +42,32 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string connectionName = "connectionName";
-            ExpressRouteConnectionData data = new ExpressRouteConnectionData
+            ExpressRouteConnectionData data = new ExpressRouteConnectionData("connectionName")
             {
-                ExpressRouteCircuitPeeringId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/circuitName/peerings/AzurePrivatePeering"),
+                ExpressRouteCircuitPeeringId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/circuitName/peerings/AzurePrivatePeering"),
                 AuthorizationKey = "authorizationKey",
                 RoutingWeight = 2,
                 RoutingConfiguration = new RoutingConfiguration
                 {
-                    AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable1"),
+                    AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable1"),
                     PropagatedRouteTables = new PropagatedRouteTable
                     {
                         Labels = { "label1", "label2" },
                         Ids = {new WritableSubResource
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable1"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable1"),
 }, new WritableSubResource
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable2"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable2"),
 }, new WritableSubResource
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable3"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualHubs/hub1/hubRouteTables/hubRouteTable3"),
 }},
                     },
-                    InboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
-                    OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
+                    InboundRouteMapId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
+                    OutboundRouteMapId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
-                Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteGateways/gateway-2/expressRouteConnections/connectionName"),
-                Name = "connectionName",
+                Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteGateways/gateway-2/expressRouteConnections/connectionName",
             };
             ArmOperation<ExpressRouteConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
             ExpressRouteConnectionResource result = lro.Value;
@@ -84,7 +83,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExpressRouteConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteConnectionGet.json
             // this example is just showing the usage of "ExpressRouteConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +93,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -118,7 +117,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExpressRouteConnectionList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteConnectionList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteConnectionList.json
             // this example is just showing the usage of "ExpressRouteConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +127,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -154,7 +153,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExpressRouteConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteConnectionGet.json
             // this example is just showing the usage of "ExpressRouteConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +163,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -184,7 +183,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExpressRouteConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteConnectionGet.json
             // this example is just showing the usage of "ExpressRouteConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +193,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);

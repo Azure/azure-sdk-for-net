@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(SecurityPerimeterResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(SecurityPerimeterResourceType);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -145,9 +150,10 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
+            string type = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType type0 = default;
             SystemData systemData = default;
             NetworkSecurityPerimeterProvisioningState? provisioningState = default;
             NetworkSecurityPerimeterAccessRuleDirection? direction = default;
@@ -162,6 +168,11 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -174,7 +185,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type0 = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -323,7 +334,7 @@ namespace Azure.ResourceManager.Network
             return new NetworkSecurityPerimeterAccessRuleData(
                 id,
                 name,
-                type,
+                type0,
                 systemData,
                 provisioningState,
                 direction,
@@ -334,6 +345,7 @@ namespace Azure.ResourceManager.Network
                 emailAddresses ?? new ChangeTrackingList<string>(),
                 phoneNumbers ?? new ChangeTrackingList<string>(),
                 serviceTags ?? new ChangeTrackingList<string>(),
+                type,
                 serializedAdditionalRawData);
         }
 
@@ -384,6 +396,18 @@ namespace Azure.ResourceManager.Network
                     builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{ResourceType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);

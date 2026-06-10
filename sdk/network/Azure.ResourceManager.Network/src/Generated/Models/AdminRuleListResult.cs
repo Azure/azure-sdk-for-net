@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> security configuration admin rule list result. </summary>
+    /// <summary> Paged collection of BaseAdminRule items. </summary>
     internal partial class AdminRuleListResult
     {
         /// <summary>
@@ -46,33 +47,46 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AdminRuleListResult"/>. </summary>
-        internal AdminRuleListResult()
+        /// <param name="value">
+        /// The BaseAdminRule items on this page
+        /// Please note <see cref="BaseAdminRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AdminRuleListResult(IEnumerable<BaseAdminRuleData> value)
         {
-            Value = new ChangeTrackingList<BaseAdminRuleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AdminRuleListResult"/>. </summary>
         /// <param name="value">
-        /// A list of admin rules
+        /// The BaseAdminRule items on this page
         /// Please note <see cref="BaseAdminRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
         /// </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdminRuleListResult(IReadOnlyList<BaseAdminRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdminRuleListResult(IReadOnlyList<BaseAdminRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AdminRuleListResult"/> for deserialization. </summary>
+        internal AdminRuleListResult()
+        {
+        }
+
         /// <summary>
-        /// A list of admin rules
+        /// The BaseAdminRule items on this page
         /// Please note <see cref="BaseAdminRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
         /// </summary>
         public IReadOnlyList<BaseAdminRuleData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

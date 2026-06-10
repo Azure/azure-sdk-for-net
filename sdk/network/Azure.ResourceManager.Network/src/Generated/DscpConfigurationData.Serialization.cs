@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             ETag? etag = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<int> markings = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
             ProtocolType? protocol = default;
             IList<DscpQosDefinition> qosDefinitionCollection = default;
             string qosCollectionId = default;
-            IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces = default;
+            IReadOnlyList<CommonNetworkInterfaceData> associatedNetworkInterfaces = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -190,11 +190,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -204,11 +200,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -347,10 +339,10 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
+                            List<CommonNetworkInterfaceData> array = new List<CommonNetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
+                                array.Add(CommonNetworkInterfaceData.DeserializeCommonNetworkInterfaceData(item, options));
                             }
                             associatedNetworkInterfaces = array;
                             continue;
@@ -398,7 +390,7 @@ namespace Azure.ResourceManager.Network
                 protocol,
                 qosDefinitionCollection ?? new ChangeTrackingList<DscpQosDefinition>(),
                 qosCollectionId,
-                associatedNetworkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                associatedNetworkInterfaces ?? new ChangeTrackingList<CommonNetworkInterfaceData>(),
                 resourceGuid,
                 provisioningState);
         }
@@ -515,7 +507,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

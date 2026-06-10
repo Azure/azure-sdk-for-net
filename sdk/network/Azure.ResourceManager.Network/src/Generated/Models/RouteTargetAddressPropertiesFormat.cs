@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateIPAddress"> The private IPv4 or IPv6 address of the service gateway route target address. </param>
         /// <param name="privateIPAllocationMethod"> The Private IP allocation method. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteTargetAddressPropertiesFormat(SubnetData subnet, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RouteTargetAddressPropertiesFormat(CommonSubnetData subnet, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subnet = subnet;
             PrivateIPAddress = privateIPAddress;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("subnet")]
-        public SubnetData Subnet { get; set; }
+        public CommonSubnetData Subnet { get; set; }
         /// <summary> The private IPv4 or IPv6 address of the service gateway route target address. </summary>
         [WirePath("privateIPAddress")]
         public string PrivateIPAddress { get; set; }

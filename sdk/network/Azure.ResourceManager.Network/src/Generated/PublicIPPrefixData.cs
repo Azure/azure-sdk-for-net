@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network
     /// A class representing the PublicIPPrefix data model.
     /// Public IP prefix resource.
     /// </summary>
-    public partial class PublicIPPrefixData : NetworkTrackedResourceData
+    public partial class PublicIPPrefixData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="PublicIPPrefixData"/>. </summary>
         public PublicIPPrefixData()
         {
             Zones = new ChangeTrackingList<string>();
-            IPTags = new ChangeTrackingList<IPTag>();
+            IPTags = new ChangeTrackingList<CommonIPTag>();
             PublicIPAddresses = new ChangeTrackingList<SubResource>();
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        internal PublicIPPrefixData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, PublicIPPrefixSku sku, ETag? etag, IList<string> zones, NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal PublicIPPrefixData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, PublicIPPrefixSku sku, ETag? etag, IList<string> zones, NetworkIPVersion? publicIPAddressVersion, IList<CommonIPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, CommonNatGatewayData natGateway) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
         public NetworkIPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> The list of tags associated with the public IP prefix. </summary>
         [WirePath("properties.ipTags")]
-        public IList<IPTag> IPTags { get; }
+        public IList<CommonIPTag> IPTags { get; }
         /// <summary> The Length of the Public IP Prefix. </summary>
         [WirePath("properties.prefixLength")]
         public int? PrefixLength { get; set; }
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.Network
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> NatGateway of Public IP Prefix. </summary>
         [WirePath("properties.natGateway")]
-        public NatGatewayData NatGateway { get; set; }
+        public CommonNatGatewayData NatGateway { get; set; }
     }
 }

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListNetworkVirtualApplianceSites API service call. </summary>
+    /// <summary> Paged collection of VirtualApplianceSite items. </summary>
     internal partial class NetworkVirtualApplianceSiteListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSiteListResult"/>. </summary>
-        internal NetworkVirtualApplianceSiteListResult()
+        /// <param name="value"> The VirtualApplianceSite items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkVirtualApplianceSiteListResult(IEnumerable<VirtualApplianceSiteData> value)
         {
-            Value = new ChangeTrackingList<VirtualApplianceSiteData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSiteListResult"/>. </summary>
-        /// <param name="value"> List of Network Virtual Appliance sites. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The VirtualApplianceSite items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceSiteListResult(IReadOnlyList<VirtualApplianceSiteData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkVirtualApplianceSiteListResult(IReadOnlyList<VirtualApplianceSiteData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Network Virtual Appliance sites. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSiteListResult"/> for deserialization. </summary>
+        internal NetworkVirtualApplianceSiteListResult()
+        {
+        }
+
+        /// <summary> The VirtualApplianceSite items on this page. </summary>
         public IReadOnlyList<VirtualApplianceSiteData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

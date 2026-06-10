@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureCreate.json
             // this example is just showing the usage of "PacketCaptures_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this PacketCaptureResource
-            PacketCaptureCollection collection = networkWatcher.GetPacketCaptures();
+            PacketCaptureCollection collection = commonNetworkWatcher.GetPacketCaptures();
 
             // invoke the operation
             string packetCaptureName = "pc1";
-            PacketCaptureCreateOrUpdateContent content = new PacketCaptureCreateOrUpdateContent("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1", new PacketCaptureStorageLocation
+            PacketCaptureCreateOrUpdateContent content = new PacketCaptureCreateOrUpdateContent("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1", new PacketCaptureStorageLocation
             {
-                StorageId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Storage/storageAccounts/pcstore"),
+                StorageId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Storage/storageAccounts/pcstore"),
                 StoragePath = "https://mytestaccountname.blob.core.windows.net/capture/pc1.cap",
                 FilePath = "D:\\capture\\pc1.cap",
             })
@@ -72,7 +72,7 @@ LocalPort = "80",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureGet.json
             // this example is just showing the usage of "PacketCaptures_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,16 +80,16 @@ LocalPort = "80",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this PacketCaptureResource
-            PacketCaptureCollection collection = networkWatcher.GetPacketCaptures();
+            PacketCaptureCollection collection = commonNetworkWatcher.GetPacketCaptures();
 
             // invoke the operation
             string packetCaptureName = "pc1";
@@ -106,7 +106,7 @@ LocalPort = "80",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPacketCaptures()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCapturesList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCapturesList.json
             // this example is just showing the usage of "PacketCaptures_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,16 +114,16 @@ LocalPort = "80",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this PacketCaptureResource
-            PacketCaptureCollection collection = networkWatcher.GetPacketCaptures();
+            PacketCaptureCollection collection = commonNetworkWatcher.GetPacketCaptures();
 
             // invoke the operation and iterate over the result
             await foreach (PacketCaptureResource item in collection.GetAllAsync())
@@ -142,7 +142,7 @@ LocalPort = "80",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureGet.json
             // this example is just showing the usage of "PacketCaptures_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,16 +150,16 @@ LocalPort = "80",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this PacketCaptureResource
-            PacketCaptureCollection collection = networkWatcher.GetPacketCaptures();
+            PacketCaptureCollection collection = commonNetworkWatcher.GetPacketCaptures();
 
             // invoke the operation
             string packetCaptureName = "pc1";
@@ -172,7 +172,7 @@ LocalPort = "80",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureGet.json
             // this example is just showing the usage of "PacketCaptures_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,16 +180,16 @@ LocalPort = "80",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkWatcherResource created on azure
-            // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkWatcherResource created on azure
+            // for more information of creating CommonNetworkWatcherResource, please refer to the document of CommonNetworkWatcherResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
-            ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
-            NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
+            ResourceIdentifier commonNetworkWatcherResourceId = CommonNetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
+            CommonNetworkWatcherResource commonNetworkWatcher = client.GetCommonNetworkWatcherResource(commonNetworkWatcherResourceId);
 
             // get the collection of this PacketCaptureResource
-            PacketCaptureCollection collection = networkWatcher.GetPacketCaptures();
+            PacketCaptureCollection collection = commonNetworkWatcher.GetPacketCaptures();
 
             // invoke the operation
             string packetCaptureName = "pc1";

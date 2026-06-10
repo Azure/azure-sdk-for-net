@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for the ListRouteTable API service call. </summary>
+    /// <summary> The response of a RouteTable list operation. </summary>
     internal partial class RouteTableListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RouteTableListResult"/>. </summary>
-        internal RouteTableListResult()
+        /// <param name="value"> The RouteTable items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RouteTableListResult(IEnumerable<CommonRouteTableData> value)
         {
-            Value = new ChangeTrackingList<RouteTableData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteTableListResult"/>. </summary>
-        /// <param name="value"> A list of route tables in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The RouteTable items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteTableListResult(IReadOnlyList<RouteTableData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RouteTableListResult(IReadOnlyList<CommonRouteTableData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of route tables in a resource group. </summary>
-        public IReadOnlyList<RouteTableData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="RouteTableListResult"/> for deserialization. </summary>
+        internal RouteTableListResult()
+        {
+        }
+
+        /// <summary> The RouteTable items on this page. </summary>
+        public IReadOnlyList<CommonRouteTableData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

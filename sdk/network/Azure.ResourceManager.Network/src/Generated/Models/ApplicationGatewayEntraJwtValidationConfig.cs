@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Entra JWT Validation Configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayEntraJwtValidationConfig : NetworkResourceData
+    public partial class ApplicationGatewayEntraJwtValidationConfig : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJwtValidationConfig"/>. </summary>
         public ApplicationGatewayEntraJwtValidationConfig()
@@ -22,17 +21,17 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJwtValidationConfig"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the entra jwt validation configuration that is unique within an application gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="unAuthorizedRequestAction"> Unauthorized request action. </param>
         /// <param name="tenantId"> The Tenant ID of the Microsoft Entra ID application. </param>
         /// <param name="clientId"> The Client ID of the Microsoft Entra ID application. </param>
         /// <param name="audiences"> List of acceptable audience claims that can be present in the token (aud claim). A maximum of 5 audiences are permitted. </param>
         /// <param name="provisioningState"> The provisioning state of the entra jwt validation configuration resource. </param>
-        internal ApplicationGatewayEntraJwtValidationConfig(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction, Guid? tenantId, string clientId, IList<string> audiences, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayEntraJwtValidationConfig(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction, Guid? tenantId, string clientId, IList<string> audiences, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
             UnAuthorizedRequestAction = unAuthorizedRequestAction;
             TenantId = tenantId;
@@ -41,6 +40,9 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Name of the entra jwt validation configuration that is unique within an application gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

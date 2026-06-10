@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the FirewallPolicyRuleCollectionGroupDraft data model.
     /// Rule Collection Group resource.
     /// </summary>
-    public partial class FirewallPolicyRuleCollectionGroupDraftData : NetworkResourceData
+    public partial class FirewallPolicyRuleCollectionGroupDraftData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupDraftData"/>. </summary>
         public FirewallPolicyRuleCollectionGroupDraftData()
@@ -26,9 +25,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupDraftData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="size"> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </param>
-        internal FirewallPolicyRuleCollectionGroupDraftData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string size, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal FirewallPolicyRuleCollectionGroupDraftData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, string size, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             Size = size;
             Priority = priority;

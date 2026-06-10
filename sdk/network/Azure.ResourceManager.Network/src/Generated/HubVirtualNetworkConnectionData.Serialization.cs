@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -59,6 +64,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("allowRemoteVnetToUseHubVnetGateways"u8);
                 writer.WriteBooleanValue(AllowRemoteVnetToUseHubVnetGateways.Value);
+            }
+            if (Optional.IsDefined(ConnectionPolicy))
+            {
+                writer.WritePropertyName("connectionPolicy"u8);
+                ((IJsonModel<WritableSubResource>)ConnectionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(EnableInternetSecurity))
             {
@@ -98,13 +108,13 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ETag? etag = default;
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            ETag? etag = default;
+            string id = default;
             WritableSubResource remoteVirtualNetwork = default;
             bool? allowHubToRemoteVnetTransit = default;
             bool? allowRemoteVnetToUseHubVnetGateways = default;
+            WritableSubResource connectionPolicy = default;
             bool? enableInternetSecurity = default;
             RoutingConfiguration routingConfiguration = default;
             NetworkProvisioningState? provisioningState = default;
@@ -112,6 +122,11 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -123,25 +138,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -178,6 +175,15 @@ namespace Azure.ResourceManager.Network
                                 continue;
                             }
                             allowRemoteVnetToUseHubVnetGateways = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectionPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("enableInternetSecurity"u8))
@@ -218,13 +224,13 @@ namespace Azure.ResourceManager.Network
             serializedAdditionalRawData = rawDataDictionary;
             return new HubVirtualNetworkConnectionData(
                 id,
-                name,
-                type,
                 serializedAdditionalRawData,
+                name,
                 etag,
                 remoteVirtualNetwork,
                 allowHubToRemoteVnetTransit,
                 allowRemoteVnetToUseHubVnetGateways,
+                connectionPolicy,
                 enableInternetSecurity,
                 routingConfiguration,
                 provisioningState);
@@ -290,7 +296,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 
@@ -345,6 +359,26 @@ namespace Azure.ResourceManager.Network
                     builder.Append("    allowRemoteVnetToUseHubVnetGateways: ");
                     var boolValue = AllowRemoteVnetToUseHubVnetGateways.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConnectionPolicyId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectionPolicy: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      connectionPolicy: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionPolicy))
+                {
+                    builder.Append("    connectionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectionPolicy, options, 4, false, "    connectionPolicy: ");
                 }
             }
 

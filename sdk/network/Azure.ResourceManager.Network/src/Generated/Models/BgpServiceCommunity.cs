@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Service Community Properties. </summary>
-    public partial class BgpServiceCommunity : NetworkTrackedResourceData
+    public partial class BgpServiceCommunity : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
         public BgpServiceCommunity()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serviceName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="bgpCommunities"> A list of bgp communities. </param>
-        internal BgpServiceCommunity(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string serviceName, IList<BgpCommunity> bgpCommunities) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal BgpServiceCommunity(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string serviceName, IList<BgpCommunity> bgpCommunities) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ServiceName = serviceName;
             BgpCommunities = bgpCommunities;

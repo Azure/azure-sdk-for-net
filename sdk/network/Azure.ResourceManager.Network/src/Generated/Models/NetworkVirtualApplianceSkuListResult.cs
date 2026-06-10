@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListNetworkVirtualApplianceSkus API service call. </summary>
+    /// <summary> The response of a NetworkVirtualApplianceSku list operation. </summary>
     internal partial class NetworkVirtualApplianceSkuListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuListResult"/>. </summary>
-        internal NetworkVirtualApplianceSkuListResult()
+        /// <param name="value"> The NetworkVirtualApplianceSku items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkVirtualApplianceSkuListResult(IEnumerable<NetworkVirtualApplianceSkuData> value)
         {
-            Value = new ChangeTrackingList<NetworkVirtualApplianceSkuData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuListResult"/>. </summary>
-        /// <param name="value"> List of Network Virtual Appliance Skus that are available. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The NetworkVirtualApplianceSku items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceSkuListResult(IReadOnlyList<NetworkVirtualApplianceSkuData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkVirtualApplianceSkuListResult(IReadOnlyList<NetworkVirtualApplianceSkuData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Network Virtual Appliance Skus that are available. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuListResult"/> for deserialization. </summary>
+        internal NetworkVirtualApplianceSkuListResult()
+        {
+        }
+
+        /// <summary> The NetworkVirtualApplianceSku items on this page. </summary>
         public IReadOnlyList<NetworkVirtualApplianceSkuData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

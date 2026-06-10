@@ -393,15 +393,15 @@ namespace Azure.ResourceManager.Network
             ETag? etag = default;
             IList<string> zones = default;
             ManagedServiceIdentity identity = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             ApplicationGatewaySku sku = default;
             ApplicationGatewaySslPolicy sslPolicy = default;
             ApplicationGatewayOperationalState? operationalState = default;
-            IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default;
+            IList<CommonApplicationGatewayIPConfiguration> gatewayIPConfigurations = default;
             IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default;
             IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = default;
             IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
             IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default;
             IList<ApplicationGatewayFrontendPort> frontendPorts = default;
             IList<ApplicationGatewayProbe> probes = default;
-            IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default;
+            IList<CommonApplicationGatewayBackendAddressPool> backendAddressPools = default;
             IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default;
             IList<ApplicationGatewayBackendSettings> backendSettingsCollection = default;
             IList<ApplicationGatewayHttpListener> httpListeners = default;
@@ -473,11 +473,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -487,11 +483,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -559,10 +551,10 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            List<ApplicationGatewayIPConfiguration> array = new List<ApplicationGatewayIPConfiguration>();
+                            List<CommonApplicationGatewayIPConfiguration> array = new List<CommonApplicationGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayIPConfiguration.DeserializeApplicationGatewayIPConfiguration(item, options));
+                                array.Add(CommonApplicationGatewayIPConfiguration.DeserializeCommonApplicationGatewayIPConfiguration(item, options));
                             }
                             gatewayIPConfigurations = array;
                             continue;
@@ -671,10 +663,10 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            List<ApplicationGatewayBackendAddressPool> array = new List<ApplicationGatewayBackendAddressPool>();
+                            List<CommonApplicationGatewayBackendAddressPool> array = new List<CommonApplicationGatewayBackendAddressPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(item, options));
+                                array.Add(CommonApplicationGatewayBackendAddressPool.DeserializeCommonApplicationGatewayBackendAddressPool(item, options));
                             }
                             backendAddressPools = array;
                             continue;
@@ -1001,7 +993,7 @@ namespace Azure.ResourceManager.Network
                 sku,
                 sslPolicy,
                 operationalState,
-                gatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                gatewayIPConfigurations ?? new ChangeTrackingList<CommonApplicationGatewayIPConfiguration>(),
                 authenticationCertificates ?? new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>(),
                 trustedRootCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>(),
                 trustedClientCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>(),
@@ -1009,7 +1001,7 @@ namespace Azure.ResourceManager.Network
                 frontendIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>(),
                 frontendPorts ?? new ChangeTrackingList<ApplicationGatewayFrontendPort>(),
                 probes ?? new ChangeTrackingList<ApplicationGatewayProbe>(),
-                backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
+                backendAddressPools ?? new ChangeTrackingList<CommonApplicationGatewayBackendAddressPool>(),
                 backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>(),
                 backendSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendSettings>(),
                 httpListeners ?? new ChangeTrackingList<ApplicationGatewayHttpListener>(),
@@ -1200,7 +1192,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

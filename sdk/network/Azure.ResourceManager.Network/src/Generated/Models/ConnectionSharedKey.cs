@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetConnectionSharedKey API service call. </summary>
-    public partial class ConnectionSharedKey : NetworkSubResource
+    public partial class ConnectionSharedKey : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionSharedKey"/>. </summary>
         /// <param name="value"> The virtual network connection shared key value. </param>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The virtual network connection shared key value. </param>
-        internal ConnectionSharedKey(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(id, serializedAdditionalRawData)
+        internal ConnectionSharedKey(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(id, serializedAdditionalRawData)
         {
             Value = value;
         }

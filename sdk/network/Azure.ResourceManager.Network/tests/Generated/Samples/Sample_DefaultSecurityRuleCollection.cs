@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DefaultSecurityRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DefaultSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/DefaultSecurityRuleGet.json
             // this example is just showing the usage of "DefaultSecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkSecurityGroupResource created on azure
-            // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkSecurityGroupResource created on azure
+            // for more information of creating CommonNetworkSecurityGroupResource, please refer to the document of CommonNetworkSecurityGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkSecurityGroupName = "nsg1";
-            ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
-            NetworkSecurityGroupResource networkSecurityGroup = client.GetNetworkSecurityGroupResource(networkSecurityGroupResourceId);
+            ResourceIdentifier commonNetworkSecurityGroupResourceId = CommonNetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
+            CommonNetworkSecurityGroupResource commonNetworkSecurityGroup = client.GetCommonNetworkSecurityGroupResource(commonNetworkSecurityGroupResourceId);
 
             // get the collection of this DefaultSecurityRuleResource
-            DefaultSecurityRuleCollection collection = networkSecurityGroup.GetDefaultSecurityRules();
+            DefaultSecurityRuleCollection collection = commonNetworkSecurityGroup.GetDefaultSecurityRules();
 
             // invoke the operation
             string defaultSecurityRuleName = "AllowVnetInBound";
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SecurityRuleData resourceData = result.Data;
+            CommonSecurityRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DefaultSecurityRuleList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DefaultSecurityRuleList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/DefaultSecurityRuleList.json
             // this example is just showing the usage of "DefaultSecurityRules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,23 +61,23 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkSecurityGroupResource created on azure
-            // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkSecurityGroupResource created on azure
+            // for more information of creating CommonNetworkSecurityGroupResource, please refer to the document of CommonNetworkSecurityGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkSecurityGroupName = "nsg1";
-            ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
-            NetworkSecurityGroupResource networkSecurityGroup = client.GetNetworkSecurityGroupResource(networkSecurityGroupResourceId);
+            ResourceIdentifier commonNetworkSecurityGroupResourceId = CommonNetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
+            CommonNetworkSecurityGroupResource commonNetworkSecurityGroup = client.GetCommonNetworkSecurityGroupResource(commonNetworkSecurityGroupResourceId);
 
             // get the collection of this DefaultSecurityRuleResource
-            DefaultSecurityRuleCollection collection = networkSecurityGroup.GetDefaultSecurityRules();
+            DefaultSecurityRuleCollection collection = commonNetworkSecurityGroup.GetDefaultSecurityRules();
 
             // invoke the operation and iterate over the result
             await foreach (DefaultSecurityRuleResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SecurityRuleData resourceData = item.Data;
+                CommonSecurityRuleData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DefaultSecurityRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DefaultSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/DefaultSecurityRuleGet.json
             // this example is just showing the usage of "DefaultSecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkSecurityGroupResource created on azure
-            // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkSecurityGroupResource created on azure
+            // for more information of creating CommonNetworkSecurityGroupResource, please refer to the document of CommonNetworkSecurityGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkSecurityGroupName = "nsg1";
-            ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
-            NetworkSecurityGroupResource networkSecurityGroup = client.GetNetworkSecurityGroupResource(networkSecurityGroupResourceId);
+            ResourceIdentifier commonNetworkSecurityGroupResourceId = CommonNetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
+            CommonNetworkSecurityGroupResource commonNetworkSecurityGroup = client.GetCommonNetworkSecurityGroupResource(commonNetworkSecurityGroupResourceId);
 
             // get the collection of this DefaultSecurityRuleResource
-            DefaultSecurityRuleCollection collection = networkSecurityGroup.GetDefaultSecurityRules();
+            DefaultSecurityRuleCollection collection = commonNetworkSecurityGroup.GetDefaultSecurityRules();
 
             // invoke the operation
             string defaultSecurityRuleName = "AllowVnetInBound";
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DefaultSecurityRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DefaultSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/DefaultSecurityRuleGet.json
             // this example is just showing the usage of "DefaultSecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetworkSecurityGroupResource created on azure
-            // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this CommonNetworkSecurityGroupResource created on azure
+            // for more information of creating CommonNetworkSecurityGroupResource, please refer to the document of CommonNetworkSecurityGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkSecurityGroupName = "nsg1";
-            ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
-            NetworkSecurityGroupResource networkSecurityGroup = client.GetNetworkSecurityGroupResource(networkSecurityGroupResourceId);
+            ResourceIdentifier commonNetworkSecurityGroupResourceId = CommonNetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
+            CommonNetworkSecurityGroupResource commonNetworkSecurityGroup = client.GetCommonNetworkSecurityGroupResource(commonNetworkSecurityGroupResourceId);
 
             // get the collection of this DefaultSecurityRuleResource
-            DefaultSecurityRuleCollection collection = networkSecurityGroup.GetDefaultSecurityRules();
+            DefaultSecurityRuleCollection collection = commonNetworkSecurityGroup.GetDefaultSecurityRules();
 
             // invoke the operation
             string defaultSecurityRuleName = "AllowVnetInBound";
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SecurityRuleData resourceData = result.Data;
+                CommonSecurityRuleData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

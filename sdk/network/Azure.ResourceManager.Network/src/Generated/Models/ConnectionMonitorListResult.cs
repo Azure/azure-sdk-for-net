@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorListResult"/>. </summary>
         /// <param name="value"> Information about connection monitors. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Information about connection monitors. </summary>
         public IReadOnlyList<ConnectionMonitorData> Value { get; }
+        /// <summary> URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client root certificate of virtual network gateway. </summary>
-    public partial class VpnClientRootCertificate : NetworkResourceData
+    public partial class VpnClientRootCertificate : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>
@@ -26,14 +25,14 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client root certificate resource. </param>
-        internal VpnClientRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, BinaryData publicCertData, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VpnClientRootCertificate(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, BinaryData publicCertData, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
             PublicCertData = publicCertData;
             ProvisioningState = provisioningState;
@@ -44,6 +43,9 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

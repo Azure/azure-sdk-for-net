@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAzureFirewall()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallPut.json
             // this example is just showing the usage of "AzureFirewalls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Zones = { },
                 ApplicationRuleCollections = {new AzureFirewallApplicationRuleCollectionData
 {
+Name = "apprulecoll",
 Priority = 110,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallApplicationRule
@@ -60,11 +61,11 @@ Port = 443,
 }},
 TargetFqdns = {"www.test.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
-Name = "apprulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll",
 }},
                 NatRuleCollections = {new AzureFirewallNatRuleCollectionData
 {
+Name = "natrulecoll",
 Priority = 112,
 ActionType = AzureFirewallNatRCActionType.Dnat,
 Rules = {new AzureFirewallNatRule
@@ -88,11 +89,11 @@ Protocols = {AzureFirewallNetworkRuleProtocol.Tcp},
 TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
-Name = "natrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll",
 }},
                 NetworkRuleCollections = {new AzureFirewallNetworkRuleCollectionData
 {
+Name = "netrulecoll",
 Priority = 112,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallNetworkRule
@@ -112,14 +113,13 @@ SourceAddresses = {"10.2.4.12-10.2.4.255"},
 DestinationPorts = {"443-444", "8443"},
 DestinationFqdns = {"www.amazon.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
-Name = "netrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll",
 }},
                 IPConfigurations = {new AzureFirewallIPConfiguration
 {
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 Name = "azureFirewallIpConfiguration",
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 }},
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
                 Sku = new AzureFirewallSku
@@ -145,9 +145,9 @@ Name = "azureFirewallIpConfiguration",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateAzureFirewallWithAdditionalProperties()
+        public async Task CreateOrUpdate_CreateAzureFirewallWithAFCControlPlane()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPutWithAdditionalProperties.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallPutWithAfcConfiguration.json
             // this example is just showing the usage of "AzureFirewalls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +157,63 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AzureFirewallResource
+            AzureFirewallCollection collection = resourceGroupResource.GetAzureFirewalls();
+
+            // invoke the operation
+            string azureFirewallName = "azurefirewall";
+            AzureFirewallData data = new AzureFirewallData
+            {
+                Zones = { },
+                IPConfigurations = {new AzureFirewallIPConfiguration
+{
+Name = "azureFirewallIpConfiguration",
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
+}},
+                ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
+                Sku = new AzureFirewallSku
+                {
+                    Name = AzureFirewallSkuName.AzfwVnet,
+                    Tier = AzureFirewallSkuTier.Standard,
+                },
+                Location = new AzureLocation("West US"),
+                Tags =
+{
+["key1"] = "value1"
+},
+            };
+            bool? createAfcControlPlane = true;
+            ArmOperation<AzureFirewallResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, azureFirewallName, data, createAfcControlPlane: createAfcControlPlane);
+            AzureFirewallResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AzureFirewallData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAzureFirewallWithAdditionalProperties()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallPutWithAdditionalProperties.json
+            // this example is just showing the usage of "AzureFirewalls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -172,6 +228,7 @@ Name = "azureFirewallIpConfiguration",
                 Zones = { },
                 ApplicationRuleCollections = {new AzureFirewallApplicationRuleCollectionData
 {
+Name = "apprulecoll",
 Priority = 110,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallApplicationRule
@@ -186,11 +243,11 @@ Port = 443,
 }},
 TargetFqdns = {"www.test.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
-Name = "apprulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll",
 }},
                 NatRuleCollections = {new AzureFirewallNatRuleCollectionData
 {
+Name = "natrulecoll",
 Priority = 112,
 ActionType = AzureFirewallNatRCActionType.Dnat,
 Rules = {new AzureFirewallNatRule
@@ -214,11 +271,11 @@ Protocols = {AzureFirewallNetworkRuleProtocol.Tcp},
 TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
-Name = "natrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll",
 }},
                 NetworkRuleCollections = {new AzureFirewallNetworkRuleCollectionData
 {
+Name = "netrulecoll",
 Priority = 112,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallNetworkRule
@@ -238,14 +295,13 @@ SourceAddresses = {"10.2.4.12-10.2.4.255"},
 DestinationPorts = {"443-444", "8443"},
 DestinationFqdns = {"www.amazon.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
-Name = "netrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll",
 }},
                 IPConfigurations = {new AzureFirewallIPConfiguration
 {
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 Name = "azureFirewallIpConfiguration",
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 }},
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
                 Sku = new AzureFirewallSku
@@ -278,7 +334,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAzureFirewallWithIpGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPutWithIpGroups.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallPutWithIpGroups.json
             // this example is just showing the usage of "AzureFirewalls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,7 +344,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -303,6 +359,7 @@ Name = "azureFirewallIpConfiguration",
                 Zones = { },
                 ApplicationRuleCollections = {new AzureFirewallApplicationRuleCollectionData
 {
+Name = "apprulecoll",
 Priority = 110,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallApplicationRule
@@ -317,11 +374,11 @@ Port = 443,
 }},
 TargetFqdns = {"www.test.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
-Name = "apprulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll",
 }},
                 NatRuleCollections = {new AzureFirewallNatRuleCollectionData
 {
+Name = "natrulecoll",
 Priority = 112,
 ActionType = AzureFirewallNatRCActionType.Dnat,
 Rules = {new AzureFirewallNatRule
@@ -345,11 +402,11 @@ Protocols = {AzureFirewallNetworkRuleProtocol.Tcp},
 TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
-Name = "natrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll",
 }},
                 NetworkRuleCollections = {new AzureFirewallNetworkRuleCollectionData
 {
+Name = "netrulecoll",
 Priority = 112,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallNetworkRule
@@ -369,14 +426,13 @@ SourceAddresses = {"10.2.4.12-10.2.4.255"},
 DestinationPorts = {"443-444", "8443"},
 DestinationFqdns = {"www.amazon.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
-Name = "netrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll",
 }},
                 IPConfigurations = {new AzureFirewallIPConfiguration
 {
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 Name = "azureFirewallIpConfiguration",
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 }},
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
                 Sku = new AzureFirewallSku
@@ -404,7 +460,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAzureFirewallWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPutWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallPutWithZones.json
             // this example is just showing the usage of "AzureFirewalls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -414,7 +470,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -429,6 +485,7 @@ Name = "azureFirewallIpConfiguration",
                 Zones = { "1", "2", "3" },
                 ApplicationRuleCollections = {new AzureFirewallApplicationRuleCollectionData
 {
+Name = "apprulecoll",
 Priority = 110,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallApplicationRule
@@ -443,11 +500,11 @@ Port = 443,
 }},
 TargetFqdns = {"www.test.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
-Name = "apprulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll",
 }},
                 NatRuleCollections = {new AzureFirewallNatRuleCollectionData
 {
+Name = "natrulecoll",
 Priority = 112,
 ActionType = AzureFirewallNatRCActionType.Dnat,
 Rules = {new AzureFirewallNatRule
@@ -471,11 +528,11 @@ Protocols = {AzureFirewallNetworkRuleProtocol.Tcp},
 TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
-Name = "natrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll",
 }},
                 NetworkRuleCollections = {new AzureFirewallNetworkRuleCollectionData
 {
+Name = "netrulecoll",
 Priority = 112,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallNetworkRule
@@ -495,14 +552,13 @@ SourceAddresses = {"10.2.4.12-10.2.4.255"},
 DestinationPorts = {"443-444", "8443"},
 DestinationFqdns = {"www.amazon.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
-Name = "netrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll",
 }},
                 IPConfigurations = {new AzureFirewallIPConfiguration
 {
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 Name = "azureFirewallIpConfiguration",
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 }},
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
                 Sku = new AzureFirewallSku
@@ -530,7 +586,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAzureFirewallWithManagementSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPutWithMgmtSubnet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallPutWithMgmtSubnet.json
             // this example is just showing the usage of "AzureFirewalls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -540,7 +596,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -555,6 +611,7 @@ Name = "azureFirewallIpConfiguration",
                 Zones = { },
                 ApplicationRuleCollections = {new AzureFirewallApplicationRuleCollectionData
 {
+Name = "apprulecoll",
 Priority = 110,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallApplicationRule
@@ -569,11 +626,11 @@ Port = 443,
 }},
 TargetFqdns = {"www.test.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
-Name = "apprulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll",
 }},
                 NatRuleCollections = {new AzureFirewallNatRuleCollectionData
 {
+Name = "natrulecoll",
 Priority = 112,
 ActionType = AzureFirewallNatRCActionType.Dnat,
 Rules = {new AzureFirewallNatRule
@@ -597,11 +654,11 @@ Protocols = {AzureFirewallNetworkRuleProtocol.Tcp},
 TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
-Name = "natrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll",
 }},
                 NetworkRuleCollections = {new AzureFirewallNetworkRuleCollectionData
 {
+Name = "netrulecoll",
 Priority = 112,
 ActionType = AzureFirewallRCActionType.Deny,
 Rules = {new AzureFirewallNetworkRule
@@ -621,20 +678,19 @@ SourceAddresses = {"10.2.4.12-10.2.4.255"},
 DestinationPorts = {"443-444", "8443"},
 DestinationFqdns = {"www.amazon.com"},
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
-Name = "netrulecoll",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll",
 }},
                 IPConfigurations = {new AzureFirewallIPConfiguration
 {
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 Name = "azureFirewallIpConfiguration",
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"),
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
 }},
                 ManagementIPConfiguration = new AzureFirewallIPConfiguration
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallManagementSubnet"),
-                    PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/managementPipName"),
                     Name = "azureFirewallMgmtIpConfiguration",
+                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallManagementSubnet"),
+                    PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/managementPipName"),
                 },
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
                 Sku = new AzureFirewallSku
@@ -662,7 +718,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAzureFirewallInVirtualHub()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPutInHub.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallPutInHub.json
             // this example is just showing the usage of "AzureFirewalls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -672,7 +728,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -686,8 +742,8 @@ Name = "azureFirewallIpConfiguration",
             {
                 Zones = { },
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Alert,
-                VirtualHubId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/hub1"),
-                FirewallPolicyId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/policy1"),
+                VirtualHubId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/hub1"),
+                FirewallPolicyId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/policy1"),
                 HubIPAddresses = new HubIPAddresses
                 {
                     PublicIPs = new HubPublicIPAddresses
@@ -721,7 +777,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewall()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -731,7 +787,40 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AzureFirewallResource
+            AzureFirewallCollection collection = resourceGroupResource.GetAzureFirewalls();
+
+            // invoke the operation
+            string azureFirewallName = "azurefirewall";
+            AzureFirewallResource result = await collection.GetAsync(azureFirewallName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AzureFirewallData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAzureFirewallWithAFCControlPlane()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithAfcConfiguration.json
+            // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -754,7 +843,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithAdditionalProperties()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithAdditionalProperties.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithAdditionalProperties.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -764,7 +853,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -787,7 +876,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithIpGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithIpGroups.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithIpGroups.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -797,7 +886,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -820,7 +909,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithZones.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -830,7 +919,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -853,7 +942,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithManagementSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithMgmtSubnet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithMgmtSubnet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -863,7 +952,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -886,7 +975,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllAzureFirewallsForAGivenResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallListByResourceGroup.json
             // this example is just showing the usage of "AzureFirewalls_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -896,7 +985,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -921,7 +1010,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAzureFirewall()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -931,7 +1020,36 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AzureFirewallResource
+            AzureFirewallCollection collection = resourceGroupResource.GetAzureFirewalls();
+
+            // invoke the operation
+            string azureFirewallName = "azurefirewall";
+            bool result = await collection.ExistsAsync(azureFirewallName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAzureFirewallWithAFCControlPlane()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithAfcConfiguration.json
+            // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -950,7 +1068,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAzureFirewallWithAdditionalProperties()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithAdditionalProperties.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithAdditionalProperties.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -960,7 +1078,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -979,7 +1097,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAzureFirewallWithIpGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithIpGroups.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithIpGroups.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -989,7 +1107,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1008,7 +1126,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAzureFirewallWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithZones.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1018,7 +1136,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1037,7 +1155,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAzureFirewallWithManagementSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithMgmtSubnet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithMgmtSubnet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1047,7 +1165,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1066,7 +1184,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAzureFirewall()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1076,7 +1194,48 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AzureFirewallResource
+            AzureFirewallCollection collection = resourceGroupResource.GetAzureFirewalls();
+
+            // invoke the operation
+            string azureFirewallName = "azurefirewall";
+            NullableResponse<AzureFirewallResource> response = await collection.GetIfExistsAsync(azureFirewallName);
+            AzureFirewallResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AzureFirewallData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAzureFirewallWithAFCControlPlane()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithAfcConfiguration.json
+            // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1107,7 +1266,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAzureFirewallWithAdditionalProperties()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithAdditionalProperties.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithAdditionalProperties.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1117,7 +1276,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1148,7 +1307,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAzureFirewallWithIpGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithIpGroups.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithIpGroups.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1158,7 +1317,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1189,7 +1348,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAzureFirewallWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithZones.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1199,7 +1358,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1230,7 +1389,7 @@ Name = "azureFirewallIpConfiguration",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAzureFirewallWithManagementSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithMgmtSubnet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AzureFirewallGetWithMgmtSubnet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1240,7 +1399,7 @@ Name = "azureFirewallIpConfiguration",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

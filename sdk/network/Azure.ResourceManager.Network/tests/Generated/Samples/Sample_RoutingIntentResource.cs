@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteTableGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RoutingIntentGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RoutingIntentGet.json
             // this example is just showing the usage of "RoutingIntent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this RoutingIntentResource created on azure
             // for more information of creating RoutingIntentResource, please refer to the document of RoutingIntentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             string routingIntentName = "Intent1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RouteTableDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RoutingIntentDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RoutingIntentDelete.json
             // this example is just showing the usage of "RoutingIntent_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this RoutingIntentResource created on azure
             // for more information of creating RoutingIntentResource, please refer to the document of RoutingIntentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             string routingIntentName = "Intent1";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RouteTablePut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RoutingIntentPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/RoutingIntentPut.json
             // this example is just showing the usage of "RoutingIntent_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this RoutingIntentResource created on azure
             // for more information of creating RoutingIntentResource, please refer to the document of RoutingIntentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             string routingIntentName = "Intent1";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             RoutingIntentData data = new RoutingIntentData
             {
-                RoutingPolicies = { new RoutingPolicy("InternetTraffic", new string[] { "Internet" }, "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1"), new RoutingPolicy("PrivateTrafficPolicy", new string[] { "PrivateTraffic" }, "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1") },
+                RoutingPolicies = { new RoutingPolicy("InternetTraffic", new string[] { "Internet" }, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1"), new RoutingPolicy("PrivateTrafficPolicy", new string[] { "PrivateTraffic" }, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1") },
             };
             ArmOperation<RoutingIntentResource> lro = await routingIntent.UpdateAsync(WaitUntil.Completed, data);
             RoutingIntentResource result = lro.Value;

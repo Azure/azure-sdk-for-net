@@ -55,6 +55,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceTags))
+            {
+                writer.WritePropertyName("serviceTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceTags)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReadinessState))
+            {
+                writer.WritePropertyName("readinessState"u8);
+                writer.WriteStringValue(ReadinessState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OutboundSupported))
+            {
+                writer.WritePropertyName("outboundSupported"u8);
+                writer.WriteBooleanValue(OutboundSupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WriteEndObject();
         }
 
@@ -84,6 +109,10 @@ namespace Azure.ResourceManager.Network.Models
             SystemData systemData = default;
             string displayName = default;
             IReadOnlyList<string> publicDnsZones = default;
+            IReadOnlyList<string> serviceTags = default;
+            NetworkSecurityPerimeterReadinessState? readinessState = default;
+            bool? outboundSupported = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,6 +169,43 @@ namespace Azure.ResourceManager.Network.Models
                             publicDnsZones = array;
                             continue;
                         }
+                        if (property0.NameEquals("serviceTags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            serviceTags = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("readinessState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            readinessState = new NetworkSecurityPerimeterReadinessState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("outboundSupported"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            outboundSupported = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -156,6 +222,10 @@ namespace Azure.ResourceManager.Network.Models
                 systemData,
                 displayName,
                 publicDnsZones ?? new ChangeTrackingList<string>(),
+                serviceTags ?? new ChangeTrackingList<string>(),
+                readinessState,
+                outboundSupported,
+                description,
                 serializedAdditionalRawData);
         }
 
@@ -280,6 +350,96 @@ namespace Azure.ResourceManager.Network.Models
                             }
                         }
                         builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceTags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServiceTags))
+                {
+                    if (ServiceTags.Any())
+                    {
+                        builder.Append("    serviceTags: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServiceTags)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadinessState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    readinessState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReadinessState))
+                {
+                    builder.Append("    readinessState: ");
+                    builder.AppendLine($"'{ReadinessState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutboundSupported), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    outboundSupported: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OutboundSupported))
+                {
+                    builder.Append("    outboundSupported: ");
+                    var boolValue = OutboundSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
                     }
                 }
             }

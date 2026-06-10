@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListAzureFirewallFqdnTags API service call. </summary>
+    /// <summary> The response of a AzureFirewallFqdnTag list operation. </summary>
     internal partial class AzureFirewallFqdnTagListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTagListResult"/>. </summary>
-        internal AzureFirewallFqdnTagListResult()
+        /// <param name="value"> The AzureFirewallFqdnTag items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AzureFirewallFqdnTagListResult(IEnumerable<AzureFirewallFqdnTag> value)
         {
-            Value = new ChangeTrackingList<AzureFirewallFqdnTag>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTagListResult"/>. </summary>
-        /// <param name="value"> List of Azure Firewall FQDN Tags in a resource group. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The AzureFirewallFqdnTag items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallFqdnTagListResult(IReadOnlyList<AzureFirewallFqdnTag> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFirewallFqdnTagListResult(IReadOnlyList<AzureFirewallFqdnTag> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Azure Firewall FQDN Tags in a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTagListResult"/> for deserialization. </summary>
+        internal AzureFirewallFqdnTagListResult()
+        {
+        }
+
+        /// <summary> The AzureFirewallFqdnTag items on this page. </summary>
         public IReadOnlyList<AzureFirewallFqdnTag> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

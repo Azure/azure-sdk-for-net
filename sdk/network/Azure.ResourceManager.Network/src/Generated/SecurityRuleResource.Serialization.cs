@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SecurityRuleResource : IJsonModel<SecurityRuleData>
+    public partial class SecurityRuleResource : IJsonModel<CommonSecurityRuleData>
     {
-        private static SecurityRuleData s_dataDeserializationInstance;
-        private static SecurityRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static CommonSecurityRuleData s_dataDeserializationInstance;
+        private static CommonSecurityRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<SecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityRuleData>)Data).Write(writer, options);
+        void IJsonModel<CommonSecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommonSecurityRuleData>)Data).Write(writer, options);
 
-        SecurityRuleData IJsonModel<SecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        CommonSecurityRuleData IJsonModel<CommonSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommonSecurityRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<CommonSecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommonSecurityRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        SecurityRuleData IPersistableModel<SecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
+        CommonSecurityRuleData IPersistableModel<CommonSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommonSecurityRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<SecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CommonSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommonSecurityRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

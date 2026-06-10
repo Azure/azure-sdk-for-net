@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the BastionHost data model.
     /// Bastion Host resource.
     /// </summary>
-    public partial class BastionHostData : NetworkTrackedResourceData
+    public partial class BastionHostData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         public BastionHostData()
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
         /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
         /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal BastionHostData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Zones = zones;
             ETag = etag;

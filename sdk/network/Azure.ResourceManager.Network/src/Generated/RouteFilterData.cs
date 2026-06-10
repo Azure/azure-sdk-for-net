@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the RouteFilter data model.
     /// Route Filter Resource.
     /// </summary>
-    public partial class RouteFilterData : NetworkTrackedResourceData
+    public partial class RouteFilterData : TrackedResourceWithSettableIdOptionalLocation
     {
         /// <summary> Initializes a new instance of <see cref="RouteFilterData"/>. </summary>
         public RouteFilterData()
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal RouteFilterData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal RouteFilterData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Rules = rules;

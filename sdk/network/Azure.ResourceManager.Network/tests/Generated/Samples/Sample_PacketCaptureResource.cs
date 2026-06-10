@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureGet.json
             // this example is just showing the usage of "PacketCaptures_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PacketCaptureResource created on azure
             // for more information of creating PacketCaptureResource, please refer to the document of PacketCaptureResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             string packetCaptureName = "pc1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureDelete.json
             // this example is just showing the usage of "PacketCaptures_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PacketCaptureResource created on azure
             // for more information of creating PacketCaptureResource, please refer to the document of PacketCaptureResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             string packetCaptureName = "pc1";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatePacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureCreate.json
             // this example is just showing the usage of "PacketCaptures_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PacketCaptureResource created on azure
             // for more information of creating PacketCaptureResource, please refer to the document of PacketCaptureResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             string packetCaptureName = "pc1";
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.Network.Samples
             PacketCaptureResource packetCapture = client.GetPacketCaptureResource(packetCaptureResourceId);
 
             // invoke the operation
-            PacketCaptureCreateOrUpdateContent content = new PacketCaptureCreateOrUpdateContent("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1", new PacketCaptureStorageLocation
+            PacketCaptureCreateOrUpdateContent content = new PacketCaptureCreateOrUpdateContent("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1", new PacketCaptureStorageLocation
             {
-                StorageId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Storage/storageAccounts/pcstore"),
+                StorageId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Storage/storageAccounts/pcstore"),
                 StoragePath = "https://mytestaccountname.blob.core.windows.net/capture/pc1.cap",
                 FilePath = "D:\\capture\\pc1.cap",
             })
@@ -125,36 +125,9 @@ LocalPort = "80",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Stop_StopPacketCapture()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureStop.json
-            // this example is just showing the usage of "PacketCaptures_Stop" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PacketCaptureResource created on azure
-            // for more information of creating PacketCaptureResource, please refer to the document of PacketCaptureResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string networkWatcherName = "nw1";
-            string packetCaptureName = "pc1";
-            ResourceIdentifier packetCaptureResourceId = PacketCaptureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName, packetCaptureName);
-            PacketCaptureResource packetCapture = client.GetPacketCaptureResource(packetCaptureResourceId);
-
-            // invoke the operation
-            await packetCapture.StopAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetStatus_QueryPacketCaptureStatus()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherPacketCaptureQueryStatus.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureQueryStatus.json
             // this example is just showing the usage of "PacketCaptures_GetStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +137,7 @@ LocalPort = "80",
 
             // this example assumes you already have this PacketCaptureResource created on azure
             // for more information of creating PacketCaptureResource, please refer to the document of PacketCaptureResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             string packetCaptureName = "pc1";
@@ -176,6 +149,33 @@ LocalPort = "80",
             PacketCaptureQueryStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Stop_StopPacketCapture()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkWatcherPacketCaptureStop.json
+            // this example is just showing the usage of "PacketCaptures_Stop" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PacketCaptureResource created on azure
+            // for more information of creating PacketCaptureResource, please refer to the document of PacketCaptureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string networkWatcherName = "nw1";
+            string packetCaptureName = "pc1";
+            ResourceIdentifier packetCaptureResourceId = PacketCaptureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName, packetCaptureName);
+            PacketCaptureResource packetCapture = client.GetPacketCaptureResource(packetCaptureResourceId);
+
+            // invoke the operation
+            await packetCapture.StopAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
         }
     }
 }
