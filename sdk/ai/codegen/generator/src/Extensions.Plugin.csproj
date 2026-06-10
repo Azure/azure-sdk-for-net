@@ -4,6 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!--Ensure all dependencies are copied to the output directory so that they can be packaged up for npm.-->
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <NoWarn>$(NoWarn);IDT002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
