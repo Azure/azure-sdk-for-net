@@ -42,24 +42,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal CustomBaseTypeResourceProperties Properties { get; set; }
-
-        /// <summary> Gets or sets the Description. </summary>
-        [WirePath("properties.description")]
-        public string CustomBaseTypeResourceDescription
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomBaseTypeResourceProperties();
-                }
-                Properties.Description = value;
-            }
-        }
+        public CustomBaseTypeResourceProperties Properties { get; set; }
     }
 }

@@ -559,5 +559,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of CustomBaseTypeChildResources in the <see cref="CustomBaseTypeResource"/>. </summary>
+        /// <returns> An object representing collection of CustomBaseTypeChildResources and their operations over a CustomBaseTypeChildResource. </returns>
+        public virtual CustomBaseTypeChildResourceCollection GetCustomBaseTypeChildResources()
+        {
+            return GetCachedClient(client => new CustomBaseTypeChildResourceCollection(client, Id));
+        }
+
+        /// <summary> Get a CustomBaseTypeChildResource. </summary>
+        /// <param name="customBaseTypeChildResourceName"> The name of the CustomBaseTypeChildResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeChildResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customBaseTypeChildResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CustomBaseTypeChildResource>> GetCustomBaseTypeChildResourceAsync(string customBaseTypeChildResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customBaseTypeChildResourceName, nameof(customBaseTypeChildResourceName));
+
+            return await GetCustomBaseTypeChildResources().GetAsync(customBaseTypeChildResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a CustomBaseTypeChildResource. </summary>
+        /// <param name="customBaseTypeChildResourceName"> The name of the CustomBaseTypeChildResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeChildResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customBaseTypeChildResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CustomBaseTypeChildResource> GetCustomBaseTypeChildResource(string customBaseTypeChildResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customBaseTypeChildResourceName, nameof(customBaseTypeChildResourceName));
+
+            return GetCustomBaseTypeChildResources().Get(customBaseTypeChildResourceName, cancellationToken);
+        }
     }
 }

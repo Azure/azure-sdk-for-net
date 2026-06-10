@@ -79,10 +79,10 @@ namespace Azure.Generator.Management
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             // renaming should come first
             AddVisitor(new NameVisitor());
+            AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new SerializationVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
-            AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new FlattenPropertyVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());

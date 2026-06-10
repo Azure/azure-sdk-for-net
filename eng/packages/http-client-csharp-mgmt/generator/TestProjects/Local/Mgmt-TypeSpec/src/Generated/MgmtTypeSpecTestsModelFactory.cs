@@ -1528,9 +1528,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="customBaseTypeResourceDescription"> Gets or sets the Description. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.CustomBaseTypeResourceData"/> instance for mocking. </returns>
-        public static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string customBaseTypeResourceDescription = default)
+        public static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CustomBaseTypeResourceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1541,8 +1541,35 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                customBaseTypeResourceDescription is null ? default : new CustomBaseTypeResourceProperties(customBaseTypeResourceDescription, default),
+                properties,
                 default);
+        }
+
+        /// <param name="description"></param>
+        /// <param name="children"></param>
+        /// <returns> A new <see cref="Models.CustomBaseTypeResourceProperties"/> instance for mocking. </returns>
+        public static CustomBaseTypeResourceProperties CustomBaseTypeResourceProperties(string description = default, IEnumerable<CustomBaseTypeChildResourceData> children = default)
+        {
+            children ??= new ChangeTrackingList<CustomBaseTypeChildResourceData>();
+
+            return new CustomBaseTypeResourceProperties(description, (children ?? new ChangeTrackingList<CustomBaseTypeChildResourceData>()).ToList(), default);
+        }
+
+        /// <param name="id"> Gets or sets the Id. </param>
+        /// <param name="name"> Gets or sets the Name. </param>
+        /// <param name="resourceType"> Gets or sets the ResourceType. </param>
+        /// <param name="customBaseTypeChildResourceValue"> Gets or sets the Value. </param>
+        /// <param name="eTag"></param>
+        /// <returns> A new <see cref="Tests.CustomBaseTypeChildResourceData"/> instance for mocking. </returns>
+        public static CustomBaseTypeChildResourceData CustomBaseTypeChildResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string customBaseTypeChildResourceValue = default, string eTag = default)
+        {
+            return new CustomBaseTypeChildResourceData(
+                id,
+                name,
+                resourceType,
+                default,
+                customBaseTypeChildResourceValue is null ? default : new CustomBaseTypeChildResourceProperties(customBaseTypeChildResourceValue, default),
+                eTag);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

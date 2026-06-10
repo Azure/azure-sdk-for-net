@@ -12,7 +12,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The CustomBaseTypeResourceProperties. </summary>
-    internal partial class CustomBaseTypeResourceProperties
+    public partial class CustomBaseTypeResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,19 +20,26 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="CustomBaseTypeResourceProperties"/>. </summary>
         public CustomBaseTypeResourceProperties()
         {
+            Children = new ChangeTrackingList<CustomBaseTypeChildResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomBaseTypeResourceProperties"/>. </summary>
         /// <param name="description"></param>
+        /// <param name="children"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomBaseTypeResourceProperties(string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomBaseTypeResourceProperties(string description, IList<CustomBaseTypeChildResourceData> children, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
+            Children = children;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
+        /// <summary> Gets the Children. </summary>
+        [WirePath("children")]
+        public IList<CustomBaseTypeChildResourceData> Children { get; }
     }
 }

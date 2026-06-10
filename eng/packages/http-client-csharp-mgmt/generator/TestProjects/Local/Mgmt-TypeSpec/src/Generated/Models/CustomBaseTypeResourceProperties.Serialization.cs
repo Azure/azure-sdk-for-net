@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The CustomBaseTypeResourceProperties. </summary>
-    internal partial class CustomBaseTypeResourceProperties : IJsonModel<CustomBaseTypeResourceProperties>
+    public partial class CustomBaseTypeResourceProperties : IJsonModel<CustomBaseTypeResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsCollectionDefined(Children))
+            {
+                writer.WritePropertyName("children"u8);
+                writer.WriteStartArray();
+                foreach (CustomBaseTypeChildResourceData item in Children)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +132,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             string description = default;
+            IList<CustomBaseTypeChildResourceData> children = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,12 +141,26 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("children"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CustomBaseTypeChildResourceData> array = new List<CustomBaseTypeChildResourceData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(CustomBaseTypeChildResourceData.DeserializeCustomBaseTypeChildResourceData(item, options));
+                    }
+                    children = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomBaseTypeResourceProperties(description, additionalBinaryDataProperties);
+            return new CustomBaseTypeResourceProperties(description, children ?? new ChangeTrackingList<CustomBaseTypeChildResourceData>(), additionalBinaryDataProperties);
         }
     }
 }
