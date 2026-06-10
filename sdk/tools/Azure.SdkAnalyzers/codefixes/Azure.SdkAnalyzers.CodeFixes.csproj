@@ -9,12 +9,14 @@
     packaged.
   -->
   <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-    <IsPackable>false</IsPackable>
-    <IsShippingLibrary>false</IsShippingLibrary>
+    <IsPackable>true</IsPackable>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <RootNamespace>Azure.SdkAnalyzers</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +27,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.SdkAnalyzers.csproj" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
 </Project>
