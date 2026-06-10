@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 throw new FormatException($"The model {nameof(AutonomousDatabaseActionContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PeerDBId))
+            if (Optional.IsDefined(peerDBId))
             {
                 writer.WritePropertyName("peerDbId"u8);
-                writer.WriteStringValue(PeerDBId);
+                writer.WriteStringValue(peerDBId);
             }
-            if (Optional.IsDefined(PeerDBOcid))
+            if (Optional.IsDefined(peerDBOcid))
             {
                 writer.WritePropertyName("peerDbOcid"u8);
-                writer.WriteStringValue(PeerDBOcid);
+                writer.WriteStringValue(peerDBOcid);
             }
-            if (Optional.IsDefined(PeerDBLocation))
+            if (Optional.IsDefined(peerDBLocation))
             {
                 writer.WritePropertyName("peerDbLocation"u8);
-                writer.WriteStringValue(PeerDBLocation);
+                writer.WriteStringValue(peerDBLocation);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

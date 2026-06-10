@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
             }
             writer.WritePropertyName("googleApiKey"u8);
-            writer.WriteStringValue(GcmApiKey);
+            writer.WriteStringValue(gcmApiKey);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

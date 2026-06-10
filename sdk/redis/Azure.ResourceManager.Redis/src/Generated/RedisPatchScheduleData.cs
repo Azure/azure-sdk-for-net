@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Redis
         internal RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisPatchScheduleSettings properties, RedisPatchScheduleDefaultName defaultName, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            DefaultName = defaultName;
+            defaultName = defaultName;
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Default string modeled as parameter for auto generation to work correctly. </summary>
         [WirePath("name")]
-        public RedisPatchScheduleDefaultName DefaultName { get; }
+        public RedisPatchScheduleDefaultName defaultName { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]

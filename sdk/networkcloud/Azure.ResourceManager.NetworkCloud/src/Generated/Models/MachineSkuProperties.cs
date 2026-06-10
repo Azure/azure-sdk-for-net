@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Disks = disks;
             Generation = generation;
             HardwareVersion = hardwareVersion;
-            MemoryCapacityGB = memoryCapacityGB;
+            memoryCapacityGB = memoryCapacityGB;
             Model = model;
             NetworkInterfaces = networkInterfaces;
             TotalThreads = totalThreads;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string HardwareVersion { get; }
 
         /// <summary> The maximum amount of memory. Measured in gibibytes. </summary>
-        public long? MemoryCapacityGB { get; }
+        public long? memoryCapacityGB { get; }
 
         /// <summary> The model of the machine. </summary>
         public string Model { get; }

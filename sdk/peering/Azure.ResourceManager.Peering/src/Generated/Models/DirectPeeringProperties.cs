@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             Connections = connections;
             UseForPeeringService = useForPeeringService;
-            PeerAsnId = peerAsnId;
+            peerAsnId = peerAsnId;
             DirectPeeringType = directPeeringType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Peering.Models
         public bool? UseForPeeringService { get; }
 
         /// <summary> The reference of the peer ASN. </summary>
-        public ResourceIdentifier PeerAsnId { get; set; }
+        public ResourceIdentifier peerAsnId { get; set; }
 
         /// <summary> The type of direct peering. </summary>
         public DirectPeeringType? DirectPeeringType { get; set; }

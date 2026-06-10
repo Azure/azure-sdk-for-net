@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="databaseTransformsUri"> The URL of the Database Transforms for the Autonomous Database. </param>
         /// <param name="graphStudioUri"> The URL of the Graph Studio for the Autonomous Database. </param>
         /// <param name="machineLearningNotebookUri"> The URL of the Oracle Machine Learning (OML) Notebook for the Autonomous Database. </param>
-        /// <param name="mongoDBUri"> The URL of the MongoDB API for the Autonomous Database. </param>
+        /// <param name="mongoDBUrl"> The URL of the MongoDB API for the Autonomous Database. </param>
         /// <param name="ordsUri"> The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database. </param>
         /// <param name="sqlDevWebUri"> Oracle SQL Developer Web URL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseConnectionUrls(Uri apexUri, Uri databaseTransformsUri, Uri graphStudioUri, Uri machineLearningNotebookUri, Uri mongoDBUri, Uri ordsUri, Uri sqlDevWebUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutonomousDatabaseConnectionUrls(Uri apexUri, Uri databaseTransformsUri, Uri graphStudioUri, Uri machineLearningNotebookUri, Uri mongoDBUrl, Uri ordsUri, Uri sqlDevWebUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApexUri = apexUri;
             DatabaseTransformsUri = databaseTransformsUri;
             GraphStudioUri = graphStudioUri;
             MachineLearningNotebookUri = machineLearningNotebookUri;
-            MongoDBUri = mongoDBUri;
+            mongoDBUrl = mongoDBUrl;
             OrdsUri = ordsUri;
             SqlDevWebUri = sqlDevWebUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public Uri MachineLearningNotebookUri { get; }
 
         /// <summary> The URL of the MongoDB API for the Autonomous Database. </summary>
-        public Uri MongoDBUri { get; }
+        public Uri mongoDBUrl { get; }
 
         /// <summary> The Oracle REST Data Services (ORDS) URL of the Web Access for the Autonomous Database. </summary>
         public Uri OrdsUri { get; }

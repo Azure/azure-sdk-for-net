@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StorageApplianceSkuProperties(long? capacityGB, string model, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CapacityGB = capacityGB;
+            capacityGB = capacityGB;
             Model = model;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum capacity of the storage appliance. Measured in gibibytes. </summary>
-        public long? CapacityGB { get; }
+        public long? capacityGB { get; }
 
         /// <summary> The model of the storage appliance. </summary>
         public string Model { get; }

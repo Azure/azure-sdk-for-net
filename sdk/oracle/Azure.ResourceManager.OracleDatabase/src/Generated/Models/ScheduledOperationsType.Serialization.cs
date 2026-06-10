@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(ScheduledOperationsType)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("dayOfWeek"u8);
-            writer.WriteObjectValue(ScheduledDay, options);
+            writer.WriteObjectValue(scheduledDay, options);
             if (Optional.IsDefined(AutoStartOn))
             {
                 writer.WritePropertyName("scheduledStartTime"u8);

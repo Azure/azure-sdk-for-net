@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerAsnId))
+            if (Optional.IsDefined(peerAsnId))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                writer.WriteStringValue(PeerAsnId);
+                writer.WriteStringValue(peerAsnId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

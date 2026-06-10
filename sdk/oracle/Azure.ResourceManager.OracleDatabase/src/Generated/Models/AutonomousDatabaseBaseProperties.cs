@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IsAutoScalingEnabled = isAutoScalingEnabled;
             IsAutoScalingForStorageEnabled = isAutoScalingForStorageEnabled;
             PeerDBIds = peerDBIds;
-            PeerDBId = peerDBId;
+            peerDBId = peerDBId;
             IsLocalDataGuardEnabled = isLocalDataGuardEnabled;
             IsRemoteDataGuardEnabled = isRemoteDataGuardEnabled;
             LocalDisasterRecoveryType = localDisasterRecoveryType;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public IReadOnlyList<string> PeerDBIds { get; }
 
         /// <summary> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
-        public string PeerDBId { get; set; }
+        public string peerDBId { get; set; }
 
         /// <summary> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </summary>
         public bool? IsLocalDataGuardEnabled { get; set; }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             Argument.AssertNotNull(gcmApiKey, nameof(gcmApiKey));
 
-            GcmApiKey = gcmApiKey;
+            gcmApiKey = gcmApiKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="GcmCredentialProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         internal GcmCredentialProperties(Uri gcmEndpoint, string gcmApiKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GcmEndpoint = gcmEndpoint;
-            GcmApiKey = gcmApiKey;
+            gcmApiKey = gcmApiKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public Uri GcmEndpoint { get; set; }
 
         /// <summary> Gets or sets the Google API key. </summary>
-        public string GcmApiKey { get; set; }
+        public string gcmApiKey { get; set; }
     }
 }

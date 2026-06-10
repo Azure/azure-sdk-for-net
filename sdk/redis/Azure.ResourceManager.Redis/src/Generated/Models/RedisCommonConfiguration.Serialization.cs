@@ -79,35 +79,35 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("rdb-backup-enabled"u8);
                 writer.WriteBooleanValue(IsRdbBackupEnabled.Value);
             }
-            if (Optional.IsDefined(RdbBackupFrequency))
+            if (Optional.IsDefined(rdbBackupFrequency))
             {
                 writer.WritePropertyName("rdb-backup-frequency"u8);
-                writer.WriteStringValue(RdbBackupFrequency);
+                writer.WriteStringValue(rdbBackupFrequency);
             }
-            if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
+            if (Optional.IsDefined(rdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
-                WriteRdbBackupMaxSnapshotCount(writer, options);
+                writer.WriteNumberValue(rdbBackupMaxSnapshotCount.Value);
             }
-            if (Optional.IsDefined(RdbStorageConnectionString))
+            if (Optional.IsDefined(rdbStorageConnectionString))
             {
                 writer.WritePropertyName("rdb-storage-connection-string"u8);
-                writer.WriteStringValue(RdbStorageConnectionString);
+                writer.WriteStringValue(rdbStorageConnectionString);
             }
             if (Optional.IsDefined(IsAofBackupEnabled))
             {
                 writer.WritePropertyName("aof-backup-enabled"u8);
                 writer.WriteBooleanValue(IsAofBackupEnabled.Value);
             }
-            if (Optional.IsDefined(AofStorageConnectionString0))
+            if (Optional.IsDefined(aofStorageConnectionString0))
             {
                 writer.WritePropertyName("aof-storage-connection-string-0"u8);
-                writer.WriteStringValue(AofStorageConnectionString0);
+                writer.WriteStringValue(aofStorageConnectionString0);
             }
-            if (Optional.IsDefined(AofStorageConnectionString1))
+            if (Optional.IsDefined(aofStorageConnectionString1))
             {
                 writer.WritePropertyName("aof-storage-connection-string-1"u8);
-                writer.WriteStringValue(AofStorageConnectionString1);
+                writer.WriteStringValue(aofStorageConnectionString1);
             }
             if (Optional.IsDefined(MaxFragmentationMemoryReserved))
             {
@@ -134,35 +134,35 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("maxclients"u8);
                 writer.WriteStringValue(MaxClients);
             }
-            if (Optional.IsDefined(NotifyKeyspaceEvents))
+            if (Optional.IsDefined(notifyKeyspaceEvents))
             {
                 writer.WritePropertyName("notify-keyspace-events"u8);
-                writer.WriteStringValue(NotifyKeyspaceEvents);
+                writer.WriteStringValue(notifyKeyspaceEvents);
             }
-            if (options.Format != "W" && Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            if (options.Format != "W" && Optional.IsDefined(preferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
-                writer.WriteStringValue(PreferredDataArchiveAuthMethod);
+                writer.WriteStringValue(preferredDataArchiveAuthMethod);
             }
-            if (Optional.IsDefined(PreferredDataPersistenceAuthMethod))
+            if (Optional.IsDefined(preferredDataPersistenceAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-persistence-auth-method"u8);
-                writer.WriteStringValue(PreferredDataPersistenceAuthMethod);
+                writer.WriteStringValue(preferredDataPersistenceAuthMethod);
             }
-            if (options.Format != "W" && Optional.IsDefined(ZonalConfiguration))
+            if (options.Format != "W" && Optional.IsDefined(zonalConfiguration))
             {
                 writer.WritePropertyName("zonal-configuration"u8);
-                writer.WriteStringValue(ZonalConfiguration);
+                writer.WriteStringValue(zonalConfiguration);
             }
             if (Optional.IsDefined(AuthNotRequired))
             {
                 writer.WritePropertyName("authnotrequired"u8);
                 writer.WriteStringValue(AuthNotRequired);
             }
-            if (Optional.IsDefined(StorageSubscriptionId))
+            if (Optional.IsDefined(storageSubscriptionId))
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
-                writer.WriteStringValue(StorageSubscriptionId);
+                writer.WriteStringValue(storageSubscriptionId);
             }
             if (Optional.IsDefined(IsAadEnabled))
             {
@@ -242,7 +242,11 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (prop.NameEquals("rdb-backup-max-snapshot-count"u8))
                 {
-                    ReadRdbBackupMaxSnapshotCount(prop, ref rdbBackupMaxSnapshotCount);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdbBackupMaxSnapshotCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("rdb-storage-connection-string"u8))

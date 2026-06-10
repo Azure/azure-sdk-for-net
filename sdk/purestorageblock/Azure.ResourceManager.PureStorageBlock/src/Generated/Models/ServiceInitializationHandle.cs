@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ServiceInitializationHandle(ResourceIdentifier clusterResourceId, string serviceAccountUsername, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClusterResourceId = clusterResourceId;
+            clusterResourceId = clusterResourceId;
             ServiceAccountUsername = serviceAccountUsername;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure resource ID of the AVS SDDC the pool is connecting to. </summary>
-        public ResourceIdentifier ClusterResourceId { get; }
+        public ResourceIdentifier clusterResourceId { get; }
 
         /// <summary> Requested service account username. </summary>
         public string ServiceAccountUsername { get; }

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             SystemVersion = systemVersion;
             TimeZone = timeZone;
             TotalEcpuCount = totalEcpuCount;
-            VmFileSystem = vmFileSystem;
+            vmFileSystem = vmFileSystem;
             LifecycleDetails = lifecycleDetails;
             ScanDnsName = scanDnsName;
             ScanIPIds = scanIPIds;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int TotalEcpuCount { get; set; }
 
         /// <summary> Filesystem storage details. </summary>
-        internal ExadbVmClusterStorageDetails VmFileSystem { get; set; }
+        internal ExadbVmClusterStorageDetails vmFileSystem { get; set; }
 
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return VmFileSystem is null ? default : VmFileSystem.TotalSizeInGbs;
+                return vmFileSystem is null ? default : vmFileSystem.TotalSizeInGbs;
             }
             set
             {
-                VmFileSystem = new ExadbVmClusterStorageDetails(value);
+                vmFileSystem = new ExadbVmClusterStorageDetails(value);
             }
         }
 

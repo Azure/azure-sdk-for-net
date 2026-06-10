@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 throw new FormatException($"The model {nameof(ServiceInitializationHandle)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClusterResourceId))
+            if (Optional.IsDefined(clusterResourceId))
             {
                 writer.WritePropertyName("sddcResourceId"u8);
-                writer.WriteStringValue(ClusterResourceId);
+                writer.WriteStringValue(clusterResourceId);
             }
             if (Optional.IsDefined(ServiceAccountUsername))
             {

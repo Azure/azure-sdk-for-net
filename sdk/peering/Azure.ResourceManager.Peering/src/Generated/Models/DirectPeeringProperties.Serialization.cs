@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (Optional.IsDefined(PeerAsnId))
+            if (Optional.IsDefined(peerAsnId))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                writer.WriteStringValue(PeerAsnId);
+                writer.WriteStringValue(peerAsnId);
             }
             if (Optional.IsDefined(DirectPeeringType))
             {

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             IsAvsEnabled = isAvsEnabled;
             CurrentConnectionStatus = currentConnectionStatus;
-            ClusterResourceId = clusterResourceId;
+            clusterResourceId = clusterResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public string CurrentConnectionStatus { get; }
 
         /// <summary> Azure resource ID of the AVS SDDC the pool is connected to. </summary>
-        public ResourceIdentifier ClusterResourceId { get; }
+        public ResourceIdentifier clusterResourceId { get; }
     }
 }

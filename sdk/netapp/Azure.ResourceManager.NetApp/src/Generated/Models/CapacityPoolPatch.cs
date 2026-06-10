@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
-        public int? CustomThroughputMibpsInt
+        public int? customThroughputMibpsInt
         {
             get
             {
-                return Properties is null ? default : Properties.CustomThroughputMibpsInt;
+                return Properties is null ? default : Properties.customThroughputMibpsInt;
             }
             set
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new PoolPatchProperties();
                 }
-                Properties.CustomThroughputMibpsInt = value;
+                Properties.customThroughputMibpsInt = value;
             }
         }
     }

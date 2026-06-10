@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("hardwareVersion"u8);
                 writer.WriteStringValue(HardwareVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemoryCapacityGB))
+            if (options.Format != "W" && Optional.IsDefined(memoryCapacityGB))
             {
                 writer.WritePropertyName("memoryCapacityGB"u8);
-                writer.WriteNumberValue(MemoryCapacityGB.Value);
+                writer.WriteNumberValue(memoryCapacityGB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Model))
             {

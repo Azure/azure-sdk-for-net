@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 throw new FormatException($"The model {nameof(PeeringLogAnalyticsWorkspaceProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            if (options.Format != "W" && Optional.IsDefined(workspaceId))
             {
                 writer.WritePropertyName("workspaceID"u8);
-                writer.WriteStringValue(WorkspaceId);
+                writer.WriteStringValue(workspaceId);
             }
             if (options.Format != "W" && Optional.IsDefined(Key))
             {

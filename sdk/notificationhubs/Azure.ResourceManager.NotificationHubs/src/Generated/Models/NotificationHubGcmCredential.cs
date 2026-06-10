@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Gets or sets the Google API key. </summary>
-        public string GcmApiKey
+        public string gcmApiKey
         {
             get
             {
-                return Properties is null ? default : Properties.GcmApiKey;
+                return Properties is null ? default : Properties.gcmApiKey;
             }
             set
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     Properties = new GcmCredentialProperties();
                 }
-                Properties.GcmApiKey = value;
+                Properties.gcmApiKey = value;
             }
         }
     }

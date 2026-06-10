@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseActionContent(string peerDBId, string peerDBOcid, string peerDBLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PeerDBId = peerDBId;
-            PeerDBOcid = peerDBOcid;
-            PeerDBLocation = peerDBLocation;
+            peerDBId = peerDBId;
+            peerDBOcid = peerDBOcid;
+            peerDBLocation = peerDBLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
-        public string PeerDBId { get; set; }
+        public string peerDBId { get; set; }
 
         /// <summary> Ocid of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
-        public string PeerDBOcid { get; set; }
+        public string peerDBOcid { get; set; }
 
         /// <summary> The location of the Disaster Recovery peer database. </summary>
-        public string PeerDBLocation { get; set; }
+        public string peerDBLocation { get; set; }
     }
 }

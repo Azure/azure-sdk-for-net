@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             StorageSkuName = storageSkuName;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
-            ClusterLoginUri = clusterLoginUri;
+            clusterLoginUri = clusterLoginUri;
             PrivateIPs = privateIPs;
             AdminPassword = adminPassword;
             AvailabilityZone = availabilityZone;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         public string DelegatedSubnetId { get; set; }
 
         /// <summary> File system Id of the resource. </summary>
-        public Uri ClusterLoginUri { get; set; }
+        public Uri clusterLoginUri { get; set; }
 
         /// <summary> Private IPs of the resource. </summary>
         public IList<IPAddress> PrivateIPs { get; } = new ChangeTrackingList<IPAddress>();

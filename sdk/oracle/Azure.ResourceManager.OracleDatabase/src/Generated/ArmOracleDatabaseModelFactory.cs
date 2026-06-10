@@ -1408,7 +1408,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseTransformsUri,
                 graphStudioUri,
                 machineLearningNotebookUri,
-                mongoDBUri,
+                default,
                 ordsUri,
                 sqlDevWebUri,
                 default);

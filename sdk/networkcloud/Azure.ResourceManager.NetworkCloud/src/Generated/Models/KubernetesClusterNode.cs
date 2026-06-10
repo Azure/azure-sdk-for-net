@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             CpuCores = cpuCores;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
-            DiskSizeGB = diskSizeGB;
+            diskSizeGB = diskSizeGB;
             Image = image;
             KubernetesVersion = kubernetesVersion;
             Labels = labels;
-            MemorySizeGB = memorySizeGB;
+            memorySizeGB = memorySizeGB;
             Mode = mode;
             Name = name;
             NetworkAttachments = networkAttachments;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string DetailedStatusMessage { get; }
 
         /// <summary> The size of the disk configured for this node. Allocations are measured in gibibytes. </summary>
-        public long? DiskSizeGB { get; }
+        public long? diskSizeGB { get; }
 
         /// <summary> The machine image used to deploy this node. </summary>
         public string Image { get; }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IReadOnlyList<KubernetesLabel> Labels { get; }
 
         /// <summary> The amount of memory configured for this node, derived from the vm SKU specified. Allocations are measured in gibibytes. </summary>
-        public long? MemorySizeGB { get; }
+        public long? memorySizeGB { get; }
 
         /// <summary> The mode of the agent pool containing this node. Not applicable for control plane nodes. </summary>
         public NetworkCloudAgentPoolMode? Mode { get; }

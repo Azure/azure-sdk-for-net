@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         internal PureStorageAvs(bool isAvsEnabled, ResourceIdentifier clusterResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAvsEnabled = isAvsEnabled;
-            ClusterResourceId = clusterResourceId;
+            clusterResourceId = clusterResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public bool IsAvsEnabled { get; }
 
         /// <summary> Azure resource ID of the AVS SDDC the storage pool is connected to. </summary>
-        public ResourceIdentifier ClusterResourceId { get; }
+        public ResourceIdentifier clusterResourceId { get; }
     }
 }

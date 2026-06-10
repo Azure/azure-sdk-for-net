@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
             writer.WritePropertyName("registryUrl"u8);
-            writer.WriteStringValue(RegistryUriString);
+            writer.WriteStringValue(registryUriString);
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

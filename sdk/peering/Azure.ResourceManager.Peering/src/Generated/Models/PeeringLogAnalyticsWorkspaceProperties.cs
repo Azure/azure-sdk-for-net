@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PeeringLogAnalyticsWorkspaceProperties(string workspaceId, string key, IReadOnlyList<string> connectedAgents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            WorkspaceId = workspaceId;
+            workspaceId = workspaceId;
             Key = key;
             ConnectedAgents = connectedAgents;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Workspace ID. </summary>
-        public string WorkspaceId { get; }
+        public string workspaceId { get; }
 
         /// <summary> The Workspace Key. </summary>
         public string Key { get; }

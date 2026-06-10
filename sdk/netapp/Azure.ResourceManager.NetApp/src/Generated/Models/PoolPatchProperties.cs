@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Size = size;
             QosType = qosType;
             IsCoolAccessEnabled = isCoolAccessEnabled;
-            CustomThroughputMibpsInt = customThroughputMibpsInt;
+            customThroughputMibpsInt = customThroughputMibpsInt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsCoolAccessEnabled { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
-        public int? CustomThroughputMibpsInt { get; set; }
+        public int? customThroughputMibpsInt { get; set; }
     }
 }

@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WriteBooleanValue(IsAvsEnabled);
             writer.WritePropertyName("currentConnectionStatus"u8);
             writer.WriteStringValue(CurrentConnectionStatus);
-            if (Optional.IsDefined(ClusterResourceId))
+            if (Optional.IsDefined(clusterResourceId))
             {
                 writer.WritePropertyName("sddcResourceId"u8);
-                writer.WriteStringValue(ClusterResourceId);
+                writer.WriteStringValue(clusterResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

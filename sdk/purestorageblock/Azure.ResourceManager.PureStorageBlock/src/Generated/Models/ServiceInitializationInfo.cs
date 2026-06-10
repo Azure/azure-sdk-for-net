@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             ServiceAccountUsername = serviceAccountUsername;
             ServiceAccountPassword = serviceAccountPassword;
-            VSphereIP = vSphereIP;
+            vSphereIP = vSphereIP;
             VSphereCertificate = vSphereCertificate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public string ServiceAccountPassword { get; set; }
 
         /// <summary> AVS instance's vSphere IP address. </summary>
-        public string VSphereIP { get; set; }
+        public string vSphereIP { get; set; }
 
         /// <summary> AVS instance's vSphere certificate. </summary>
         public string VSphereCertificate { get; set; }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 throw new FormatException($"The model {nameof(StoragePoolEnableAvsConnectionContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sddcResourceId"u8);
-            writer.WriteStringValue(ClusterResourceId);
+            writer.WriteStringValue(clusterResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

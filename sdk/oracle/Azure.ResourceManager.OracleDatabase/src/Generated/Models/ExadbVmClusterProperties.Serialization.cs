@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("totalEcpuCount"u8);
             writer.WriteNumberValue(TotalEcpuCount);
             writer.WritePropertyName("vmFileSystemStorage"u8);
-            writer.WriteObjectValue(VmFileSystem, options);
+            writer.WriteObjectValue(vmFileSystem, options);
             if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
             {
                 writer.WritePropertyName("lifecycleDetails"u8);

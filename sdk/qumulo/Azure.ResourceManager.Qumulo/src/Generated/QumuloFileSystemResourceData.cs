@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Qumulo
         }
 
         /// <summary> File system Id of the resource. </summary>
-        public Uri ClusterLoginUri
+        public Uri clusterLoginUri
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterLoginUri;
+                return Properties is null ? default : Properties.clusterLoginUri;
             }
             set
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     Properties = new FileSystemResourceProperties();
                 }
-                Properties.ClusterLoginUri = value;
+                Properties.clusterLoginUri = value;
             }
         }
 

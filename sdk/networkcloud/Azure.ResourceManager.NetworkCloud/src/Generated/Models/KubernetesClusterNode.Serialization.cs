@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
+            if (options.Format != "W" && Optional.IsDefined(diskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
-                writer.WriteNumberValue(DiskSizeGB.Value);
+                writer.WriteNumberValue(diskSizeGB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Image))
             {
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(MemorySizeGB))
+            if (options.Format != "W" && Optional.IsDefined(memorySizeGB))
             {
                 writer.WritePropertyName("memorySizeGB"u8);
-                writer.WriteNumberValue(MemorySizeGB.Value);
+                writer.WriteNumberValue(memorySizeGB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Mode))
             {

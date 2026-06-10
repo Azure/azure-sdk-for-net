@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             Argument.AssertNotNull(clusterResourceId, nameof(clusterResourceId));
 
-            ClusterResourceId = clusterResourceId;
+            clusterResourceId = clusterResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="StoragePoolEnableAvsConnectionContent"/>. </summary>
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StoragePoolEnableAvsConnectionContent(ResourceIdentifier clusterResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClusterResourceId = clusterResourceId;
+            clusterResourceId = clusterResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure resource ID of the AVS SDDC to connect to. </summary>
-        public ResourceIdentifier ClusterResourceId { get; }
+        public ResourceIdentifier clusterResourceId { get; }
     }
 }

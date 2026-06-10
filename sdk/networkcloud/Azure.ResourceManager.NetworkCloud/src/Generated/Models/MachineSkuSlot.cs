@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The maximum amount of memory. Measured in gibibytes. </summary>
-        public long? MemoryCapacityGB
+        public long? memoryCapacityGB
         {
             get
             {
-                return Properties is null ? default : Properties.MemoryCapacityGB;
+                return Properties is null ? default : Properties.memoryCapacityGB;
             }
         }
 

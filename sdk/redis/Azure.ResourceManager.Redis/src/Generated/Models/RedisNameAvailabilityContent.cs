@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Redis.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = resourceType;
+            resourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisNameAvailabilityContent"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Redis.Models
         internal RedisNameAvailabilityContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            ResourceType = resourceType;
+            resourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </summary>
         [WirePath("type")]
-        public ResourceType ResourceType { get; }
+        public ResourceType resourceType { get; }
     }
 }

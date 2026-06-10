@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("machineLearningNotebookUrl"u8);
                 writer.WriteStringValue(MachineLearningNotebookUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MongoDBUri))
+            if (Optional.IsDefined(mongoDBUrl))
             {
                 writer.WritePropertyName("mongoDbUrl"u8);
-                writer.WriteStringValue(MongoDBUri.AbsoluteUri);
+                writer.WriteStringValue(mongoDBUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(OrdsUri))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri databaseTransformsUri = default;
             Uri graphStudioUri = default;
             Uri machineLearningNotebookUri = default;
-            Uri mongoDBUri = default;
+            Uri mongoDBUrl = default;
             Uri ordsUri = default;
             Uri sqlDevWebUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    mongoDBUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    mongoDBUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("ordsUrl"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseTransformsUri,
                 graphStudioUri,
                 machineLearningNotebookUri,
-                mongoDBUri,
+                mongoDBUrl,
                 ordsUri,
                 sqlDevWebUri,
                 additionalBinaryDataProperties);

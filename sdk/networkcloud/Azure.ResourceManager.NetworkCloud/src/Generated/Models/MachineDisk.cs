@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineDisk(long? capacityGB, MachineSkuDiskConnectionType? connection, DiskType? diskType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CapacityGB = capacityGB;
+            capacityGB = capacityGB;
             Connection = connection;
             DiskType = diskType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum amount of storage. Measured in gibibytes. </summary>
-        public long? CapacityGB { get; }
+        public long? capacityGB { get; }
 
         /// <summary> The connection type of the rack SKU resource. </summary>
         public MachineSkuDiskConnectionType? Connection { get; }

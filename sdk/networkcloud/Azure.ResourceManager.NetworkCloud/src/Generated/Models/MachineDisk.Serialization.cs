@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(MachineDisk)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityGB))
+            if (options.Format != "W" && Optional.IsDefined(capacityGB))
             {
                 writer.WritePropertyName("capacityGB"u8);
-                writer.WriteNumberValue(CapacityGB.Value);
+                writer.WriteNumberValue(capacityGB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Connection))
             {

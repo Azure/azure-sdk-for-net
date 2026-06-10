@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             AdditionalFlashCacheInPercent = additionalFlashCacheInPercent;
             Description = description;
             DisplayName = displayName;
-            HighCapacityStorageInput = highCapacityStorageInput;
+            highCapacityStorageInput = highCapacityStorageInput;
             HighCapacityDatabaseStorage = highCapacityDatabaseStorage;
             TimeZone = timeZone;
             ProvisioningState = provisioningState;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string DisplayName { get; set; }
 
         /// <summary> Create exadata Database Storage Details. </summary>
-        internal ExascaleDBStorageInputDetails HighCapacityStorageInput { get; set; }
+        internal ExascaleDBStorageInputDetails highCapacityStorageInput { get; set; }
 
         /// <summary> Response exadata Database Storage Details. </summary>
         public ExascaleDBStorageDetails HighCapacityDatabaseStorage { get; }
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return HighCapacityStorageInput is null ? default : HighCapacityStorageInput.TotalSizeInGbs;
+                return highCapacityStorageInput is null ? default : highCapacityStorageInput.TotalSizeInGbs;
             }
             set
             {
-                HighCapacityStorageInput = new ExascaleDBStorageInputDetails(value);
+                highCapacityStorageInput = new ExascaleDBStorageInputDetails(value);
             }
         }
     }

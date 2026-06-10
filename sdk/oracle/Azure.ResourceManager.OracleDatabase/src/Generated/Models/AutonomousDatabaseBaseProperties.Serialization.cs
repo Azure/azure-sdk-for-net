@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerDBId))
+            if (Optional.IsDefined(peerDBId))
             {
                 writer.WritePropertyName("peerDbId"u8);
-                writer.WriteStringValue(PeerDBId);
+                writer.WriteStringValue(peerDBId);
             }
             if (Optional.IsDefined(IsLocalDataGuardEnabled))
             {

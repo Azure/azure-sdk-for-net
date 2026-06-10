@@ -47,23 +47,23 @@ namespace Azure.ResourceManager.Redis.Models
         internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string notifyKeyspaceEvents, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, string storageSubscriptionId, string isAadEnabled, IDictionary<string, BinaryData> additionalProperties)
         {
             IsRdbBackupEnabled = isRdbBackupEnabled;
-            RdbBackupFrequency = rdbBackupFrequency;
-            RdbBackupMaxSnapshotCount = rdbBackupMaxSnapshotCount;
-            RdbStorageConnectionString = rdbStorageConnectionString;
+            rdbBackupFrequency = rdbBackupFrequency;
+            rdbBackupMaxSnapshotCount = rdbBackupMaxSnapshotCount;
+            rdbStorageConnectionString = rdbStorageConnectionString;
             IsAofBackupEnabled = isAofBackupEnabled;
-            AofStorageConnectionString0 = aofStorageConnectionString0;
-            AofStorageConnectionString1 = aofStorageConnectionString1;
+            aofStorageConnectionString0 = aofStorageConnectionString0;
+            aofStorageConnectionString1 = aofStorageConnectionString1;
             MaxFragmentationMemoryReserved = maxFragmentationMemoryReserved;
             MaxMemoryPolicy = maxMemoryPolicy;
             MaxMemoryReserved = maxMemoryReserved;
             MaxMemoryDelta = maxMemoryDelta;
             MaxClients = maxClients;
-            NotifyKeyspaceEvents = notifyKeyspaceEvents;
-            PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
-            PreferredDataPersistenceAuthMethod = preferredDataPersistenceAuthMethod;
-            ZonalConfiguration = zonalConfiguration;
+            notifyKeyspaceEvents = notifyKeyspaceEvents;
+            preferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
+            preferredDataPersistenceAuthMethod = preferredDataPersistenceAuthMethod;
+            zonalConfiguration = zonalConfiguration;
             AuthNotRequired = authNotRequired;
-            StorageSubscriptionId = storageSubscriptionId;
+            storageSubscriptionId = storageSubscriptionId;
             IsAadEnabled = isAadEnabled;
             _additionalBinaryDataProperties = additionalProperties;
         }
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </summary>
         [WirePath("rdb-backup-frequency")]
-        public string RdbBackupFrequency { get; set; }
+        public string rdbBackupFrequency { get; set; }
 
         /// <summary> Specifies the maximum number of snapshots for rdb backup. </summary>
         [WirePath("rdb-backup-max-snapshot-count")]
-        public int? RdbBackupMaxSnapshotCount { get; set; }
+        public int? rdbBackupMaxSnapshotCount { get; set; }
 
         /// <summary> The storage account connection string for storing rdb file. </summary>
         [WirePath("rdb-storage-connection-string")]
-        public string RdbStorageConnectionString { get; set; }
+        public string rdbStorageConnectionString { get; set; }
 
         /// <summary> Specifies whether the aof backup is enabled. </summary>
         [WirePath("aof-backup-enabled")]
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> First storage account connection string. </summary>
         [WirePath("aof-storage-connection-string-0")]
-        public string AofStorageConnectionString0 { get; set; }
+        public string aofStorageConnectionString0 { get; set; }
 
         /// <summary> Second storage account connection string. </summary>
         [WirePath("aof-storage-connection-string-1")]
-        public string AofStorageConnectionString1 { get; set; }
+        public string aofStorageConnectionString1 { get; set; }
 
         /// <summary> Value in megabytes reserved for fragmentation per shard. </summary>
         [WirePath("maxfragmentationmemory-reserved")]
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> The keyspace events which should be monitored. </summary>
         [WirePath("notify-keyspace-events")]
-        public string NotifyKeyspaceEvents { get; set; }
+        public string notifyKeyspaceEvents { get; set; }
 
         /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
         [WirePath("preferred-data-archive-auth-method")]
-        public string PreferredDataArchiveAuthMethod { get; }
+        public string preferredDataArchiveAuthMethod { get; }
 
         /// <summary> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </summary>
         [WirePath("preferred-data-persistence-auth-method")]
-        public string PreferredDataPersistenceAuthMethod { get; set; }
+        public string preferredDataPersistenceAuthMethod { get; set; }
 
         /// <summary> Zonal Configuration. </summary>
         [WirePath("zonal-configuration")]
-        public string ZonalConfiguration { get; }
+        public string zonalConfiguration { get; }
 
         /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view; you should never disable authentication using this property!. </summary>
         [WirePath("authnotrequired")]
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </summary>
         [WirePath("storage-subscription-id")]
-        public string StorageSubscriptionId { get; set; }
+        public string storageSubscriptionId { get; set; }
 
         /// <summary> Specifies whether AAD based authentication has been enabled or disabled for the cache. </summary>
         [WirePath("aad-enabled")]

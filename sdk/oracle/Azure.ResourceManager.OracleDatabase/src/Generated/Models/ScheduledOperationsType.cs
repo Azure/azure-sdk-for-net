@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledOperationsType(OracleDatabaseDayOfWeek scheduledDay, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ScheduledDay = scheduledDay;
+            scheduledDay = scheduledDay;
             AutoStartOn = autoStartOn;
             AutoStopOn = autoStopOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Day of week. </summary>
-        internal OracleDatabaseDayOfWeek ScheduledDay { get; set; }
+        internal OracleDatabaseDayOfWeek scheduledDay { get; set; }
 
         /// <summary> auto start time. value must be of ISO-8601 format HH:mm. </summary>
         public DateTimeOffset? AutoStartOn { get; set; }
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return ScheduledDay is null ? default : ScheduledDay.Name;
+                return scheduledDay is null ? default : scheduledDay.Name;
             }
             set
             {
-                ScheduledDay = new OracleDatabaseDayOfWeek(value);
+                scheduledDay = new OracleDatabaseDayOfWeek(value);
             }
         }
     }

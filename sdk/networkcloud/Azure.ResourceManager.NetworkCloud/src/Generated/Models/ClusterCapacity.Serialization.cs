@@ -74,45 +74,45 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AvailableApplianceStorageGB))
+            if (Optional.IsDefined(availableApplianceStorageGB))
             {
                 writer.WritePropertyName("availableApplianceStorageGB"u8);
-                writer.WriteNumberValue(AvailableApplianceStorageGB.Value);
+                writer.WriteNumberValue(availableApplianceStorageGB.Value);
             }
             if (Optional.IsDefined(AvailableCoreCount))
             {
                 writer.WritePropertyName("availableCoreCount"u8);
                 writer.WriteNumberValue(AvailableCoreCount.Value);
             }
-            if (Optional.IsDefined(AvailableHostStorageGB))
+            if (Optional.IsDefined(availableHostStorageGB))
             {
                 writer.WritePropertyName("availableHostStorageGB"u8);
-                writer.WriteNumberValue(AvailableHostStorageGB.Value);
+                writer.WriteNumberValue(availableHostStorageGB.Value);
             }
-            if (Optional.IsDefined(AvailableMemoryGB))
+            if (Optional.IsDefined(availableMemoryGB))
             {
                 writer.WritePropertyName("availableMemoryGB"u8);
-                writer.WriteNumberValue(AvailableMemoryGB.Value);
+                writer.WriteNumberValue(availableMemoryGB.Value);
             }
-            if (Optional.IsDefined(TotalApplianceStorageGB))
+            if (Optional.IsDefined(totalApplianceStorageGB))
             {
                 writer.WritePropertyName("totalApplianceStorageGB"u8);
-                writer.WriteNumberValue(TotalApplianceStorageGB.Value);
+                writer.WriteNumberValue(totalApplianceStorageGB.Value);
             }
             if (Optional.IsDefined(TotalCoreCount))
             {
                 writer.WritePropertyName("totalCoreCount"u8);
                 writer.WriteNumberValue(TotalCoreCount.Value);
             }
-            if (Optional.IsDefined(TotalHostStorageGB))
+            if (Optional.IsDefined(totalHostStorageGB))
             {
                 writer.WritePropertyName("totalHostStorageGB"u8);
-                writer.WriteNumberValue(TotalHostStorageGB.Value);
+                writer.WriteNumberValue(totalHostStorageGB.Value);
             }
-            if (Optional.IsDefined(TotalMemoryGB))
+            if (Optional.IsDefined(totalMemoryGB))
             {
                 writer.WritePropertyName("totalMemoryGB"u8);
-                writer.WriteNumberValue(TotalMemoryGB.Value);
+                writer.WriteNumberValue(totalMemoryGB.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

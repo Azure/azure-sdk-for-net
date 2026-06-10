@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteObjectValue(UserDetails, options);
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
-            if (Optional.IsDefined(ClusterLoginUri))
+            if (Optional.IsDefined(clusterLoginUri))
             {
                 writer.WritePropertyName("clusterLoginUrl"u8);
-                writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
+                writer.WriteStringValue(clusterLoginUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(PrivateIPs))
             {

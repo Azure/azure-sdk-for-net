@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WritePropertyName("serviceAccountPassword"u8);
                 writer.WriteStringValue(ServiceAccountPassword);
             }
-            if (Optional.IsDefined(VSphereIP))
+            if (Optional.IsDefined(vSphereIP))
             {
                 writer.WritePropertyName("vSphereIp"u8);
-                writer.WriteStringValue(VSphereIP);
+                writer.WriteStringValue(vSphereIP);
             }
             if (Optional.IsDefined(VSphereCertificate))
             {

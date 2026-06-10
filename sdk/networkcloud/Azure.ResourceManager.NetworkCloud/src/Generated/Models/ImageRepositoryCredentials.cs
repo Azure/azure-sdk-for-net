@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(username, nameof(username));
 
             Password = password;
-            RegistryUriString = registryUriString;
+            registryUriString = registryUriString;
             Username = username;
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         internal ImageRepositoryCredentials(string password, string registryUriString, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Password = password;
-            RegistryUriString = registryUriString;
+            registryUriString = registryUriString;
             Username = username;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string Password { get; set; }
 
         /// <summary> The URL of the authentication server used to validate the repository credentials. </summary>
-        public string RegistryUriString { get; set; }
+        public string registryUriString { get; set; }
 
         /// <summary> The username used to access an image in the target repository. </summary>
         public string Username { get; set; }

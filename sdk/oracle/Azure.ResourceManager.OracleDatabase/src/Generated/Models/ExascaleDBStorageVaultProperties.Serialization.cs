@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("highCapacityDatabaseStorageInput"u8);
-            writer.WriteObjectValue(HighCapacityStorageInput, options);
+            writer.WriteObjectValue(highCapacityStorageInput, options);
             if (options.Format != "W" && Optional.IsDefined(HighCapacityDatabaseStorage))
             {
                 writer.WritePropertyName("highCapacityDatabaseStorage"u8);

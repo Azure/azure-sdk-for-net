@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Peering.Models
         internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, ResourceIdentifier peerAsnId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connections = connections;
-            PeerAsnId = peerAsnId;
+            peerAsnId = peerAsnId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Peering.Models
         public IList<PeeringExchangeConnection> Connections { get; }
 
         /// <summary> The reference of the peer ASN. </summary>
-        public ResourceIdentifier PeerAsnId { get; set; }
+        public ResourceIdentifier peerAsnId { get; set; }
     }
 }

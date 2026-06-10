@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? RackSlot { get; }
 
         /// <summary> The maximum capacity of the storage appliance. Measured in gibibytes. </summary>
-        public long? CapacityGB
+        public long? capacityGB
         {
             get
             {
-                return Properties is null ? default : Properties.CapacityGB;
+                return Properties is null ? default : Properties.capacityGB;
             }
         }
 

@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ClusterCapacity(long? availableApplianceStorageGB, long? availableCoreCount, long? availableHostStorageGB, long? availableMemoryGB, long? totalApplianceStorageGB, long? totalCoreCount, long? totalHostStorageGB, long? totalMemoryGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AvailableApplianceStorageGB = availableApplianceStorageGB;
+            availableApplianceStorageGB = availableApplianceStorageGB;
             AvailableCoreCount = availableCoreCount;
-            AvailableHostStorageGB = availableHostStorageGB;
-            AvailableMemoryGB = availableMemoryGB;
-            TotalApplianceStorageGB = totalApplianceStorageGB;
+            availableHostStorageGB = availableHostStorageGB;
+            availableMemoryGB = availableMemoryGB;
+            totalApplianceStorageGB = totalApplianceStorageGB;
             TotalCoreCount = totalCoreCount;
-            TotalHostStorageGB = totalHostStorageGB;
-            TotalMemoryGB = totalMemoryGB;
+            totalHostStorageGB = totalHostStorageGB;
+            totalMemoryGB = totalMemoryGB;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The remaining appliance-based storage in GB available for workload use. Measured in gibibytes. </summary>
-        public long? AvailableApplianceStorageGB { get; }
+        public long? availableApplianceStorageGB { get; }
 
         /// <summary> The remaining number of cores that are available in this cluster for workload use. </summary>
         public long? AvailableCoreCount { get; }
 
         /// <summary> The remaining machine or host-based storage in GB available for workload use. Measured in gibibytes. </summary>
-        public long? AvailableHostStorageGB { get; }
+        public long? availableHostStorageGB { get; }
 
         /// <summary> The remaining memory in GB that are available in this cluster for workload use. Measured in gibibytes. </summary>
-        public long? AvailableMemoryGB { get; }
+        public long? availableMemoryGB { get; }
 
         /// <summary> The total appliance-based storage in GB supported by this cluster for workload use. Measured in gibibytes. </summary>
-        public long? TotalApplianceStorageGB { get; }
+        public long? totalApplianceStorageGB { get; }
 
         /// <summary> The total number of cores that are supported by this cluster for workload use. </summary>
         public long? TotalCoreCount { get; }
 
         /// <summary> The total machine or host-based storage in GB supported by this cluster for workload use. Measured in gibibytes. </summary>
-        public long? TotalHostStorageGB { get; }
+        public long? totalHostStorageGB { get; }
 
         /// <summary> The total memory supported by this cluster for workload use. Measured in gibibytes. </summary>
-        public long? TotalMemoryGB { get; }
+        public long? totalMemoryGB { get; }
     }
 }
