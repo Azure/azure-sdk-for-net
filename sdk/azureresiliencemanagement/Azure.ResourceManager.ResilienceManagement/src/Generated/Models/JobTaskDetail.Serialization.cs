@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            JobStatus? status = default;
+            ResilienceManagementJobStatus? status = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             TimeSpan? duration = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new ResilienceManagementJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))

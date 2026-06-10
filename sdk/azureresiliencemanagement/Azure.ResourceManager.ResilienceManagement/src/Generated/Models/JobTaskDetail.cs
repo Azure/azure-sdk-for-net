@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="subTasksList"> List of sub-tasks associated with this job. </param>
         /// <param name="retryDetails"> Retry details of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobTaskDetail(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, string taskId, string taskName, IReadOnlyList<ResourceIdentifier> linkedJobIds, IReadOnlyList<JobUserComment> userComments, IReadOnlyList<JobTaskDetail> subTasksList, IReadOnlyList<JobRetryDetails> retryDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobTaskDetail(ResilienceManagementJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, string taskId, string taskName, IReadOnlyList<ResourceIdentifier> linkedJobIds, IReadOnlyList<JobUserComment> userComments, IReadOnlyList<JobTaskDetail> subTasksList, IReadOnlyList<JobRetryDetails> retryDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartOn = startOn;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The current status of the job execution. </summary>
-        public JobStatus? Status { get; }
+        public ResilienceManagementJobStatus? Status { get; }
 
         /// <summary> The start time of the job execution. </summary>
         public DateTimeOffset? StartOn { get; }

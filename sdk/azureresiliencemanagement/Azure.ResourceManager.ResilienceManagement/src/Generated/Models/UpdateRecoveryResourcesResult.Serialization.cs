@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("failedResources"u8);
                 writer.WriteStartArray();
-                foreach (ResilienceMembersData item in FailedResources)
+                foreach (RecoveryMembersData item in FailedResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            IList<ResilienceMembersData> failedResources = default;
+            IList<RecoveryMembersData> failedResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<ResilienceMembersData> array = new List<ResilienceMembersData>();
+                    List<RecoveryMembersData> array = new List<RecoveryMembersData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResilienceMembersData.DeserializeResilienceMembersData(item, options));
+                        array.Add(RecoveryMembersData.DeserializeRecoveryMembersData(item, options));
                     }
                     failedResources = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateRecoveryResourcesResult(failedResources ?? new ChangeTrackingList<ResilienceMembersData>(), additionalBinaryDataProperties);
+            return new UpdateRecoveryResourcesResult(failedResources ?? new ChangeTrackingList<RecoveryMembersData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GoalTemplateProperties"/>. </summary>
         /// <param name="goalType"> Type of Goal Template created by customer. </param>
-        public GoalTemplateProperties(GoalType goalType)
+        public GoalTemplateProperties(ResilienceManagementGoalType goalType)
         {
             GoalType = goalType;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalTemplateProperties(RequirementSelected? requireHighAvailability, RequirementSelected? requireDisasterRecovery, string regionalRecoveryPointObjective, string regionalRecoveryTimeObjective, GoalType goalType, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalTemplateProperties(RequirementSelected? requireHighAvailability, RequirementSelected? requireDisasterRecovery, string regionalRecoveryPointObjective, string regionalRecoveryTimeObjective, ResilienceManagementGoalType goalType, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequireHighAvailability = requireHighAvailability;
             RequireDisasterRecovery = requireDisasterRecovery;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public string RegionalRecoveryTimeObjective { get; set; }
 
         /// <summary> Type of Goal Template created by customer. </summary>
-        public GoalType GoalType { get; set; }
+        public ResilienceManagementGoalType GoalType { get; set; }
 
         /// <summary> Provisioning state. </summary>
         public ResilienceManagementProvisioningState? ProvisioningState { get; }

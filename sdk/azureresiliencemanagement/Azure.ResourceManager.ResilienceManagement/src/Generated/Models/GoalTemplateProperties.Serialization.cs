@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             RequirementSelected? requireDisasterRecovery = default;
             string regionalRecoveryPointObjective = default;
             string regionalRecoveryTimeObjective = default;
-            GoalType goalType = default;
+            ResilienceManagementGoalType goalType = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("goalType"u8))
                 {
-                    goalType = new GoalType(prop.Value.GetString());
+                    goalType = new ResilienceManagementGoalType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

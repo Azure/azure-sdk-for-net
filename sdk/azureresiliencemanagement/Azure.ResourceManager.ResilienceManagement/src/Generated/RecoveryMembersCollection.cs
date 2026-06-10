@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResilienceMembersResource"/> and their operations.
-    /// Each <see cref="ResilienceMembersResource"/> in the collection will belong to the same instance of <see cref="RecoveryPlanResource"/>.
-    /// To get a <see cref="ResilienceMembersCollection"/> instance call the GetResilienceMembers method from an instance of <see cref="RecoveryPlanResource"/>.
+    /// A class representing a collection of <see cref="RecoveryMembersResource"/> and their operations.
+    /// Each <see cref="RecoveryMembersResource"/> in the collection will belong to the same instance of <see cref="RecoveryPlanResource"/>.
+    /// To get a <see cref="RecoveryMembersCollection"/> instance call the GetRecoveryMembers method from an instance of <see cref="RecoveryPlanResource"/>.
     /// </summary>
-    public partial class ResilienceMembersCollection : ArmCollection, IEnumerable<ResilienceMembersResource>, IAsyncEnumerable<ResilienceMembersResource>
+    public partial class RecoveryMembersCollection : ArmCollection, IEnumerable<RecoveryMembersResource>, IAsyncEnumerable<RecoveryMembersResource>
     {
         private readonly ClientDiagnostics _recoveryResourcesClientDiagnostics;
         private readonly RecoveryResources _recoveryResourcesRestClient;
 
-        /// <summary> Initializes a new instance of ResilienceMembersCollection for mocking. </summary>
-        protected ResilienceMembersCollection()
+        /// <summary> Initializes a new instance of RecoveryMembersCollection for mocking. </summary>
+        protected RecoveryMembersCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResilienceMembersCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryMembersCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResilienceMembersCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RecoveryMembersCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResilienceMembersResource.ResourceType, out string resilienceMembersApiVersion);
-            _recoveryResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResilienceMembersResource.ResourceType.Namespace, Diagnostics);
-            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Endpoint, resilienceMembersApiVersion ?? "2026-04-01-preview");
+            TryGetApiVersion(RecoveryMembersResource.ResourceType, out string recoveryMembersApiVersion);
+            _recoveryResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", RecoveryMembersResource.ResourceType.Namespace, Diagnostics);
+            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Endpoint, recoveryMembersApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResilienceMembersResource>> GetAsync(string recoveryResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoveryMembersResource>> GetAsync(string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersCollection.Get");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResilienceMembersData> response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                Response<RecoveryMembersData> response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResilienceMembersResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryMembersResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResilienceMembersResource> Get(string recoveryResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<RecoveryMembersResource> Get(string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersCollection.Get");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResilienceMembersData> response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                Response<RecoveryMembersData> response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResilienceMembersResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryMembersResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResilienceMembersResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResilienceMembersResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecoveryMembersResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecoveryMembersResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResilienceMembersData, ResilienceMembersResource>(new RecoveryResourcesGetAllAsyncCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "ResilienceMembersCollection.GetAll"), data => new ResilienceMembersResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryResourcesGetAllAsyncCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResilienceMembersResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResilienceMembersResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecoveryMembersResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecoveryMembersResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResilienceMembersData, ResilienceMembersResource>(new RecoveryResourcesGetAllCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "ResilienceMembersCollection.GetAll"), data => new ResilienceMembersResource(Client, data));
+            return new PageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryResourcesGetAllCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersCollection.Exists");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersCollection.Exists");
             scope.Start();
             try
             {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResilienceMembersData> response = default;
+                Response<RecoveryMembersData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                        response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResilienceMembersData)null, result);
+                        response = Response.FromValue((RecoveryMembersData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersCollection.Exists");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersCollection.Exists");
             scope.Start();
             try
             {
@@ -301,14 +301,14 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResilienceMembersData> response = default;
+                Response<RecoveryMembersData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                        response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResilienceMembersData)null, result);
+                        response = Response.FromValue((RecoveryMembersData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ResilienceMembersResource>> GetIfExistsAsync(string recoveryResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RecoveryMembersResource>> GetIfExistsAsync(string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersCollection.GetIfExists");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -358,23 +358,23 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResilienceMembersData> response = default;
+                Response<RecoveryMembersData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                        response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResilienceMembersData)null, result);
+                        response = Response.FromValue((RecoveryMembersData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ResilienceMembersResource>(response.GetRawResponse());
+                    return new NoValueResponse<RecoveryMembersResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResilienceMembersResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryMembersResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ResilienceMembersResource> GetIfExists(string recoveryResourceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RecoveryMembersResource> GetIfExists(string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersCollection.GetIfExists");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -419,23 +419,23 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResilienceMembersData> response = default;
+                Response<RecoveryMembersData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                        response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResilienceMembersData)null, result);
+                        response = Response.FromValue((RecoveryMembersData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ResilienceMembersResource>(response.GetRawResponse());
+                    return new NoValueResponse<RecoveryMembersResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResilienceMembersResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryMembersResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             }
         }
 
-        IEnumerator<ResilienceMembersResource> IEnumerable<ResilienceMembersResource>.GetEnumerator()
+        IEnumerator<RecoveryMembersResource> IEnumerable<RecoveryMembersResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ResilienceMembersResource> IAsyncEnumerable<ResilienceMembersResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RecoveryMembersResource> IAsyncEnumerable<RecoveryMembersResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

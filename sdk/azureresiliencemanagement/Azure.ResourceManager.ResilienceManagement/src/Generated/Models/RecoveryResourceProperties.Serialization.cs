@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("inclusionState"u8);
                 writer.WriteStringValue(InclusionState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RequiresAttention))
+            if (options.Format != "W" && Optional.IsDefined(IsAttentionRequired))
             {
                 writer.WritePropertyName("needsAttention"u8);
-                writer.WriteBooleanValue(RequiresAttention.Value);
+                writer.WriteBooleanValue(IsAttentionRequired.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttentionReasons))
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             AzureLocation? resourceLocation = default;
             IReadOnlyList<string> resourcePhysicalZones = default;
             ResourceInclusionState? inclusionState = default;
-            bool? requiresAttention = default;
+            bool? isAttentionRequired = default;
             IReadOnlyList<string> attentionReasons = default;
             ResourceProtectionStatus? protectionStatus = default;
             IReadOnlyList<ResourceProtectionSolutionSettings> resourceProtectionSolutions = default;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    requiresAttention = prop.Value.GetBoolean();
+                    isAttentionRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("attentionReasons"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 resourceLocation,
                 resourcePhysicalZones ?? new ChangeTrackingList<string>(),
                 inclusionState,
-                requiresAttention,
+                isAttentionRequired,
                 attentionReasons ?? new ChangeTrackingList<string>(),
                 protectionStatus,
                 resourceProtectionSolutions ?? new ChangeTrackingList<ResourceProtectionSolutionSettings>(),

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="UpdateRecoveryResourcesContent"/>. </summary>
         public UpdateRecoveryResourcesContent()
         {
-            ResourcesToUpdate = new ChangeTrackingList<ResilienceMembersData>();
+            ResourcesToUpdate = new ChangeTrackingList<RecoveryMembersData>();
             ResourcesToRemove = new ChangeTrackingList<ResourceIdentifier>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="resourcesToUpdate"> A list of recovery orchestration resources whose properties need to be updated. </param>
         /// <param name="resourcesToRemove"> A list of recovery orchestration resources that need to be removed from the recovery orchestration plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRecoveryResourcesContent(IList<ResilienceMembersData> resourcesToUpdate, IList<ResourceIdentifier> resourcesToRemove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateRecoveryResourcesContent(IList<RecoveryMembersData> resourcesToUpdate, IList<ResourceIdentifier> resourcesToRemove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourcesToUpdate = resourcesToUpdate;
             ResourcesToRemove = resourcesToRemove;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> A list of recovery orchestration resources whose properties need to be updated. </summary>
-        public IList<ResilienceMembersData> ResourcesToUpdate { get; }
+        public IList<RecoveryMembersData> ResourcesToUpdate { get; }
 
         /// <summary> A list of recovery orchestration resources that need to be removed from the recovery orchestration plan. </summary>
         public IList<ResourceIdentifier> ResourcesToRemove { get; }

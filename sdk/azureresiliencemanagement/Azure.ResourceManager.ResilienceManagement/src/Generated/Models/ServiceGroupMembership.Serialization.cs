@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceIdentifier serviceGroupId = default;
-            MembershipType membershipType = default;
+            ResilienceManagementMembershipType membershipType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("membershipType"u8))
                 {
-                    membershipType = new MembershipType(prop.Value.GetString());
+                    membershipType = new ResilienceManagementMembershipType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

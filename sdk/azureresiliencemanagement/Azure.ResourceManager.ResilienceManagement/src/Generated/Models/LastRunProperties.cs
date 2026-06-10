@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="lastRunDuration"> Timespan of the last run of this Drill. </param>
         /// <param name="lastRunAttestation"> Attestation state of the last run of this Drill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LastRunProperties(DateTimeOffset? lastRunOn, JobStatus? lastRunState, TimeSpan? lastRunDuration, DrillAttestation? lastRunAttestation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LastRunProperties(DateTimeOffset? lastRunOn, ResilienceManagementJobStatus? lastRunState, TimeSpan? lastRunDuration, DrillAttestation? lastRunAttestation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastRunOn = lastRunOn;
             LastRunState = lastRunState;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public DateTimeOffset? LastRunOn { get; }
 
         /// <summary> Status of the last run of this Drill. </summary>
-        public JobStatus? LastRunState { get; }
+        public ResilienceManagementJobStatus? LastRunState { get; }
 
         /// <summary> Timespan of the last run of this Drill. </summary>
         public TimeSpan? LastRunDuration { get; }

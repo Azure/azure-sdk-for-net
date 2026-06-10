@@ -210,35 +210,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return await GetRecoveryPlans(scope).GetAsync(recoveryPlanName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="ResilienceMembersResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RecoveryMembersResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResilienceMembersResource"/> object. </returns>
-        public virtual ResilienceMembersResource GetResilienceMembersResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecoveryMembersResource"/> object. </returns>
+        public virtual RecoveryMembersResource GetRecoveryMembersResource(ResourceIdentifier id)
         {
-            ResilienceMembersResource.ValidateResourceId(id);
-            return new ResilienceMembersResource(Client, id);
+            RecoveryMembersResource.ValidateResourceId(id);
+            return new RecoveryMembersResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ResilienceMembersCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="RecoveryMembersCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ResilienceMembersResource"/> objects. </returns>
-        public virtual ResilienceMembersCollection GetAllResilienceMembers(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RecoveryMembersResource"/> objects. </returns>
+        public virtual RecoveryMembersCollection GetAllRecoveryMembers(ResourceIdentifier scope)
         {
-            return new ResilienceMembersCollection(Client, scope);
-        }
-
-        /// <summary> Get a RecoveryResource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recoveryResourceName"> The unique name (Guid) of the recovery resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ResilienceMembersResource> GetResilienceMembers(ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
-
-            return GetAllResilienceMembers(scope).Get(recoveryResourceName, cancellationToken);
+            return new RecoveryMembersCollection(Client, scope);
         }
 
         /// <summary> Get a RecoveryResource. </summary>
@@ -248,11 +234,25 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResilienceMembersResource>> GetResilienceMembersAsync(ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<RecoveryMembersResource> GetRecoveryMembers(ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            return await GetAllResilienceMembers(scope).GetAsync(recoveryResourceName, cancellationToken).ConfigureAwait(false);
+            return GetAllRecoveryMembers(scope).Get(recoveryResourceName, cancellationToken);
+        }
+
+        /// <summary> Get a RecoveryResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recoveryResourceName"> The unique name (Guid) of the recovery resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoveryMembersResource>> GetRecoveryMembersAsync(ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
+
+            return await GetAllRecoveryMembers(scope).GetAsync(recoveryResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="RecoveryJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="retryAttempt"> The retry attempt number of the job. </param>
         /// <param name="userComments"> User Comments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobRetryDetails(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, int retryAttempt, IReadOnlyList<JobUserComment> userComments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobRetryDetails(ResilienceManagementJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, int retryAttempt, IReadOnlyList<JobUserComment> userComments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartOn = startOn;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The current status of the job execution. </summary>
-        public JobStatus? Status { get; }
+        public ResilienceManagementJobStatus? Status { get; }
 
         /// <summary> The start time of the job execution. </summary>
         public DateTimeOffset? StartOn { get; }

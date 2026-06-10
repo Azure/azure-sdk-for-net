@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ServiceGroupMembership"/>. </summary>
         /// <param name="serviceGroupId"> Arm Id of the service group. </param>
         /// <param name="membershipType"> Membership type of the service group to resource. </param>
-        internal ServiceGroupMembership(ResourceIdentifier serviceGroupId, MembershipType membershipType)
+        internal ServiceGroupMembership(ResourceIdentifier serviceGroupId, ResilienceManagementMembershipType membershipType)
         {
             ServiceGroupId = serviceGroupId;
             MembershipType = membershipType;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="serviceGroupId"> Arm Id of the service group. </param>
         /// <param name="membershipType"> Membership type of the service group to resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupMembership(ResourceIdentifier serviceGroupId, MembershipType membershipType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceGroupMembership(ResourceIdentifier serviceGroupId, ResilienceManagementMembershipType membershipType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceGroupId = serviceGroupId;
             MembershipType = membershipType;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier ServiceGroupId { get; }
 
         /// <summary> Membership type of the service group to resource. </summary>
-        public MembershipType MembershipType { get; }
+        public ResilienceManagementMembershipType MembershipType { get; }
     }
 }

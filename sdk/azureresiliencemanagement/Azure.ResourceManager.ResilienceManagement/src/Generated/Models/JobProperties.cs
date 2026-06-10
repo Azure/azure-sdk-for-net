@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="executionConfigurations"> Execution configurations for the job. </param>
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartOn = startOn;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The current status of the job execution. </summary>
-        public JobStatus? Status { get; }
+        public ResilienceManagementJobStatus? Status { get; }
 
         /// <summary> The start time of the job execution. </summary>
         public DateTimeOffset? StartOn { get; }

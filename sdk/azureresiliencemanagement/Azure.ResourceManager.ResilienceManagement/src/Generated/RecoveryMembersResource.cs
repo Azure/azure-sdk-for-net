@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary>
-    /// A class representing a ResilienceMembers along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResilienceMembersResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RecoveryPlanResource"/> using the GetAllResilienceMembers method.
+    /// A class representing a RecoveryMembers along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoveryMembersResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RecoveryPlanResource"/> using the GetAllRecoveryMembers method.
     /// </summary>
-    public partial class ResilienceMembersResource : ArmResource
+    public partial class RecoveryMembersResource : ArmResource
     {
         private readonly ClientDiagnostics _recoveryResourcesClientDiagnostics;
         private readonly RecoveryResources _recoveryResourcesRestClient;
-        private readonly ResilienceMembersData _data;
+        private readonly RecoveryMembersData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureResilienceManagement/recoveryPlans/recoveryResources";
 
-        /// <summary> Initializes a new instance of ResilienceMembersResource for mocking. </summary>
-        protected ResilienceMembersResource()
+        /// <summary> Initializes a new instance of RecoveryMembersResource for mocking. </summary>
+        protected RecoveryMembersResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResilienceMembersResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryMembersResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResilienceMembersResource(ArmClient client, ResilienceMembersData data) : this(client, data.Id)
+        internal RecoveryMembersResource(ArmClient client, RecoveryMembersData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResilienceMembersResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryMembersResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResilienceMembersResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RecoveryMembersResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string resilienceMembersApiVersion);
+            TryGetApiVersion(ResourceType, out string recoveryMembersApiVersion);
             _recoveryResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Endpoint, resilienceMembersApiVersion ?? "2026-04-01-preview");
+            _recoveryResourcesRestClient = new RecoveryResources(_recoveryResourcesClientDiagnostics, Pipeline, Endpoint, recoveryMembersApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ResilienceMembersData Data
+        public virtual RecoveryMembersData Data
         {
             get
             {
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResilienceMembersResource"/>. </description>
+        /// <description> <see cref="RecoveryMembersResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResilienceMembersResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoveryMembersResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersResource.Get");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersResource.Get");
             scope.Start();
             try
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResilienceMembersData> response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                Response<RecoveryMembersData> response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResilienceMembersResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryMembersResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResilienceMembersResource"/>. </description>
+        /// <description> <see cref="RecoveryMembersResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResilienceMembersResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<RecoveryMembersResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("ResilienceMembersResource.Get");
+            using DiagnosticScope scope = _recoveryResourcesClientDiagnostics.CreateScope("RecoveryMembersResource.Get");
             scope.Start();
             try
             {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResilienceMembersData> response = Response.FromValue(ResilienceMembersData.FromResponse(result), result);
+                Response<RecoveryMembersData> response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResilienceMembersResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryMembersResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

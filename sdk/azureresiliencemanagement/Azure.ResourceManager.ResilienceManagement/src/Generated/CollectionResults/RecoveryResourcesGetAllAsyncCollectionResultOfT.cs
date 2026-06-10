@@ -15,7 +15,7 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
-    internal partial class RecoveryResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<ResilienceMembersData>
+    internal partial class RecoveryResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<RecoveryMembersData>
     {
         private readonly RecoveryResources _client;
         private readonly string _serviceGroupName;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RecoveryResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ResilienceMembersData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<RecoveryMembersData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 RecoveryResourceListResult result = RecoveryResourceListResult.FromResponse(response);
-                yield return Page<ResilienceMembersData>.FromValues((IReadOnlyList<ResilienceMembersData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RecoveryMembersData>.FromValues((IReadOnlyList<RecoveryMembersData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

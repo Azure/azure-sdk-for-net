@@ -12,7 +12,7 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Membership type of the service group to resource. </summary>
-    public readonly partial struct MembershipType : IEquatable<MembershipType>
+    public readonly partial struct ResilienceManagementMembershipType : IEquatable<ResilienceManagementMembershipType>
     {
         private readonly string _value;
         /// <summary> Resource is direct member of service group. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Resource is member of service group through resource group. </summary>
         private const string ThroughResourceGroupValue = "ThroughResourceGroup";
 
-        /// <summary> Initializes a new instance of <see cref="MembershipType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResilienceManagementMembershipType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MembershipType(string value)
+        public ResilienceManagementMembershipType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Resource is direct member of service group. </summary>
-        public static MembershipType Direct { get; } = new MembershipType(DirectValue);
+        public static ResilienceManagementMembershipType Direct { get; } = new ResilienceManagementMembershipType(DirectValue);
 
         /// <summary> Resource is member of service group through subscription. </summary>
-        public static MembershipType ThroughSubscription { get; } = new MembershipType(ThroughSubscriptionValue);
+        public static ResilienceManagementMembershipType ThroughSubscription { get; } = new ResilienceManagementMembershipType(ThroughSubscriptionValue);
 
         /// <summary> Resource is member of service group through resource group. </summary>
-        public static MembershipType ThroughResourceGroup { get; } = new MembershipType(ThroughResourceGroupValue);
+        public static ResilienceManagementMembershipType ThroughResourceGroup { get; } = new ResilienceManagementMembershipType(ThroughResourceGroupValue);
 
-        /// <summary> Determines if two <see cref="MembershipType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ResilienceManagementMembershipType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MembershipType left, MembershipType right) => left.Equals(right);
+        public static bool operator ==(ResilienceManagementMembershipType left, ResilienceManagementMembershipType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MembershipType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ResilienceManagementMembershipType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MembershipType left, MembershipType right) => !left.Equals(right);
+        public static bool operator !=(ResilienceManagementMembershipType left, ResilienceManagementMembershipType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MembershipType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ResilienceManagementMembershipType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MembershipType(string value) => new MembershipType(value);
+        public static implicit operator ResilienceManagementMembershipType(string value) => new ResilienceManagementMembershipType(value);
 
-        /// <summary> Converts a string to a <see cref="MembershipType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ResilienceManagementMembershipType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MembershipType?(string value) => value == null ? null : new MembershipType(value);
+        public static implicit operator ResilienceManagementMembershipType?(string value) => value == null ? null : new ResilienceManagementMembershipType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MembershipType other && Equals(other);
+        public override bool Equals(object obj) => obj is ResilienceManagementMembershipType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MembershipType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ResilienceManagementMembershipType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

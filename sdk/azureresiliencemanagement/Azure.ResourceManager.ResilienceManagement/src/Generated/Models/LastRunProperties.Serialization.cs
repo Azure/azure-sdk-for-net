@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             DateTimeOffset? lastRunOn = default;
-            JobStatus? lastRunState = default;
+            ResilienceManagementJobStatus? lastRunState = default;
             TimeSpan? lastRunDuration = default;
             DrillAttestation? lastRunAttestation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    lastRunState = new JobStatus(prop.Value.GetString());
+                    lastRunState = new ResilienceManagementJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastRunDuration"u8))

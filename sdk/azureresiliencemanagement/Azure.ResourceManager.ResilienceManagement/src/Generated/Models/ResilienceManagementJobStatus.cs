@@ -12,7 +12,7 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Job Statuses. </summary>
-    public readonly partial struct JobStatus : IEquatable<JobStatus>
+    public readonly partial struct ResilienceManagementJobStatus : IEquatable<ResilienceManagementJobStatus>
     {
         private readonly string _value;
         /// <summary> The job status is not applicable. </summary>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> The job is currently paused. </summary>
         private const string PausedValue = "Paused";
 
-        /// <summary> Initializes a new instance of <see cref="JobStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResilienceManagementJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobStatus(string value)
+        public ResilienceManagementJobStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -49,62 +49,62 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The job status is not applicable. </summary>
-        public static JobStatus NotApplicable { get; } = new JobStatus(NotApplicableValue);
+        public static ResilienceManagementJobStatus NotApplicable { get; } = new ResilienceManagementJobStatus(NotApplicableValue);
 
         /// <summary> The job has not started yet. </summary>
-        public static JobStatus NotStarted { get; } = new JobStatus(NotStartedValue);
+        public static ResilienceManagementJobStatus NotStarted { get; } = new ResilienceManagementJobStatus(NotStartedValue);
 
         /// <summary> The job is pending execution, awaiting the completion of dependent stages. </summary>
-        public static JobStatus Pending { get; } = new JobStatus(PendingValue);
+        public static ResilienceManagementJobStatus Pending { get; } = new ResilienceManagementJobStatus(PendingValue);
 
         /// <summary> The job is currently in progress. </summary>
-        public static JobStatus InProgress { get; } = new JobStatus(InProgressValue);
+        public static ResilienceManagementJobStatus InProgress { get; } = new ResilienceManagementJobStatus(InProgressValue);
 
         /// <summary> The job has been completed successfully. </summary>
-        public static JobStatus Completed { get; } = new JobStatus(CompletedValue);
+        public static ResilienceManagementJobStatus Completed { get; } = new ResilienceManagementJobStatus(CompletedValue);
 
         /// <summary> The job has been completed with warnings. </summary>
-        public static JobStatus CompletedWithWarnings { get; } = new JobStatus(CompletedWithWarningsValue);
+        public static ResilienceManagementJobStatus CompletedWithWarnings { get; } = new ResilienceManagementJobStatus(CompletedWithWarningsValue);
 
         /// <summary> The job has failed. </summary>
-        public static JobStatus Failed { get; } = new JobStatus(FailedValue);
+        public static ResilienceManagementJobStatus Failed { get; } = new ResilienceManagementJobStatus(FailedValue);
 
         /// <summary> The job skipped for the resource (resource not qualified or not applicable). </summary>
-        public static JobStatus Skipped { get; } = new JobStatus(SkippedValue);
+        public static ResilienceManagementJobStatus Skipped { get; } = new ResilienceManagementJobStatus(SkippedValue);
 
         /// <summary> The job is in the process of being cancelled. </summary>
-        public static JobStatus Cancelling { get; } = new JobStatus(CancellingValue);
+        public static ResilienceManagementJobStatus Cancelling { get; } = new ResilienceManagementJobStatus(CancellingValue);
 
         /// <summary> The job has been cancelled. </summary>
-        public static JobStatus Cancelled { get; } = new JobStatus(CancelledValue);
+        public static ResilienceManagementJobStatus Cancelled { get; } = new ResilienceManagementJobStatus(CancelledValue);
 
         /// <summary> The job is currently paused. </summary>
-        public static JobStatus Paused { get; } = new JobStatus(PausedValue);
+        public static ResilienceManagementJobStatus Paused { get; } = new ResilienceManagementJobStatus(PausedValue);
 
-        /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ResilienceManagementJobStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
+        public static bool operator ==(ResilienceManagementJobStatus left, ResilienceManagementJobStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ResilienceManagementJobStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(JobStatus left, JobStatus right) => !left.Equals(right);
+        public static bool operator !=(ResilienceManagementJobStatus left, ResilienceManagementJobStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="JobStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ResilienceManagementJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobStatus(string value) => new JobStatus(value);
+        public static implicit operator ResilienceManagementJobStatus(string value) => new ResilienceManagementJobStatus(value);
 
-        /// <summary> Converts a string to a <see cref="JobStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ResilienceManagementJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobStatus?(string value) => value == null ? null : new JobStatus(value);
+        public static implicit operator ResilienceManagementJobStatus?(string value) => value == null ? null : new ResilienceManagementJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is JobStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is ResilienceManagementJobStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(JobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ResilienceManagementJobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
