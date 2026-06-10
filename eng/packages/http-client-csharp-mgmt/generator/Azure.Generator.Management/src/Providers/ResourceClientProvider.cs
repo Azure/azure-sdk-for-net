@@ -369,8 +369,8 @@ namespace Azure.Generator.Management.Providers
                 // Get the appropriate rest client for this specific method
                 var restClientInfo = _clientInfos[inputClient];
 
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
-                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false, this);
+                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true, this);
 
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
