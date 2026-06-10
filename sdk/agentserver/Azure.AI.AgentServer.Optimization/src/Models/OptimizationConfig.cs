@@ -21,6 +21,9 @@ public class OptimizationConfig
     /// <summary>Environment variable name for the resolver API endpoint (Priority 1).</summary>
     public const string EnvironmentVariableResolveEndpoint = "OPTIMIZATION_RESOLVE_ENDPOINT";
 
+    /// <summary>Environment variable name for the local baseline directory (Priority 3).</summary>
+    public const string EnvironmentVariableLocalDirectory = "OPTIMIZATION_LOCAL_DIR";
+
     /// <summary>
     /// Initializes a new instance of the <see cref="OptimizationConfig"/> class.
     /// </summary>
@@ -29,6 +32,7 @@ public class OptimizationConfig
         string model = null,
         double? temperature = null,
         IReadOnlyList<OptimizationSkill> skills = null,
+        string skillsDirectory = null,
         IReadOnlyList<ToolDefinition> toolDefinitions = null,
         string source = "defaults",
         string candidateId = null)
@@ -37,6 +41,7 @@ public class OptimizationConfig
         Model = model;
         Temperature = temperature;
         Skills = skills ?? Array.Empty<OptimizationSkill>();
+        SkillsDirectory = skillsDirectory;
         ToolDefinitions = toolDefinitions ?? Array.Empty<ToolDefinition>();
         Source = source;
         CandidateId = candidateId;
@@ -169,6 +174,9 @@ public class OptimizationConfig
     /// <summary>Learned skills from optimization.</summary>
     public IReadOnlyList<OptimizationSkill> Skills { get; }
 
+    /// <summary>Path to a directory containing skill files for on-demand loading via <see cref="OptimizationConfigLoader.LoadSkillsFromDirectory"/>.</summary>
+    public string SkillsDirectory { get; }
+
     /// <summary>Optimized tool definitions.</summary>
     public IReadOnlyList<ToolDefinition> ToolDefinitions { get; }
 
@@ -181,7 +189,7 @@ public class OptimizationConfig
     /// <summary>
     /// Gets a value indicating whether this config carries any inline skill data.
     /// </summary>
-    public bool HasSkills => Skills.Count > 0;
+    public bool HasSkills => Skills.Count > 0 || SkillsDirectory != null;
 
     /// <summary>
     /// Returns instructions with a skill catalog appended (if any skills are present).

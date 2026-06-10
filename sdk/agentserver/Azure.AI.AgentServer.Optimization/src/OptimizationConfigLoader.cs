@@ -15,6 +15,7 @@ namespace Azure.AI.AgentServer.Optimization;
 /// <list type="number">
 /// <item><description><b>Resolver API</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> and <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> are both set.</description></item>
 /// <item><description><b>Inline JSON</b> — <c>OPTIMIZATION_CONFIG</c> env var contains the full config as JSON.</description></item>
+/// <item><description><b>Local baseline directory</b> — <c>OPTIMIZATION_LOCAL_DIR</c> points to a folder with instructions.md, tools.json, and skills/.</description></item>
 /// <item><description>When none of the above match, returns <c>null</c>.</description></item>
 /// </list>
 /// </remarks>
@@ -63,6 +64,13 @@ public static class OptimizationConfigLoader
             return LoadFromEnvVar(rawConfig);
         }
 
+        // ── Priority 3: Local baseline directory ────────────────────
+        string localDir = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableLocalDirectory)?.Trim() ?? "";
+        if (!string.IsNullOrEmpty(localDir) && Directory.Exists(localDir))
+        {
+            return LoadFromLocalDirectory(localDir);
+        }
+
         // ── No config found ─────────────────────────────────────────
         return null;
     }
@@ -79,6 +87,94 @@ public static class OptimizationConfigLoader
 #pragma warning restore AZC0102
     }
 
+    /// <summary>
+    /// Loads skills from a directory of skill folders.
+    /// Each subfolder should contain a <c>SKILL.md</c> file with optional YAML frontmatter
+    /// (name, description) and a body.
+    /// </summary>
+    /// <param name="skillsDirectory">Path to the skills directory.</param>
+    /// <returns>A list of parsed skills.</returns>
+    public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDirectory)
+    {
+        if (string.IsNullOrEmpty(skillsDirectory) || !Directory.Exists(skillsDirectory))
+        {
+            return Array.Empty<OptimizationSkill>();
+        }
+
+        var skills = new List<OptimizationSkill>();
+        foreach (var skillFolder in Directory.GetDirectories(skillsDirectory).OrderBy(d => d))
+        {
+            string skillFile = Path.Combine(skillFolder, "SKILL.md");
+            if (!File.Exists(skillFile))
+            {
+                continue;
+            }
+
+            try
+            {
+                string content = File.ReadAllText(skillFile).Trim();
+                ParseSkillFile(content, Path.GetFileName(skillFolder), out string name, out string description, out string body);
+                skills.Add(new OptimizationSkill(name, description, body));
+            }
+            catch (IOException)
+            {
+                // Skip unreadable skill files
+            }
+        }
+
+        return skills;
+    }
+
+    private static void ParseSkillFile(string content, string folderName, out string name, out string description, out string body)
+    {
+        name = folderName;
+        description = "";
+        body = content;
+
+        // Check for YAML frontmatter (--- delimited)
+        if (content.StartsWith("---", StringComparison.Ordinal))
+        {
+            int end = content.IndexOf("---", 3, StringComparison.Ordinal);
+            if (end > 0)
+            {
+                string frontmatter = content.Substring(3, end - 3).Trim();
+                body = content.Substring(end + 3).Trim();
+
+                // Simple key: value parsing for name and description
+                foreach (string line in frontmatter.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    int sep = line.IndexOf(':');
+                    if (sep <= 0)
+                    {
+                        continue;
+                    }
+
+                    string key = line.Substring(0, sep).Trim();
+                    string value = line.Substring(sep + 1).Trim();
+
+                    if (key == "name")
+                    {
+                        name = value;
+                    }
+                    else if (key == "description")
+                    {
+                        description = value;
+                    }
+                }
+
+                return;
+            }
+        }
+
+        // No frontmatter — first line is description, rest is body
+        if (!string.IsNullOrEmpty(content))
+        {
+            string[] lines = content.Split(new[] { '\n' }, 2);
+            description = lines[0].TrimStart('#').Trim();
+            body = lines.Length > 1 ? lines[1].Trim() : "";
+        }
+    }
+
     private static OptimizationConfig LoadFromEnvVar(string rawConfig)
     {
         try
@@ -92,5 +188,47 @@ public static class OptimizationConfigLoader
         {
             throw new InvalidOperationException($"Bad {OptimizationConfig.EnvironmentVariableConfig} env var: {ex.Message}", ex);
         }
+    }
+
+    private static OptimizationConfig LoadFromLocalDirectory(string localDir)
+    {
+        // Read instructions.md
+        string instructionsPath = Path.Combine(localDir, "instructions.md");
+        string instructions = File.Exists(instructionsPath)
+            ? File.ReadAllText(instructionsPath).Trim()
+            : null;
+
+        // Read tools.json
+        string toolsPath = Path.Combine(localDir, "tools.json");
+        IReadOnlyList<ToolDefinition> tools = Array.Empty<ToolDefinition>();
+        if (File.Exists(toolsPath))
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(File.ReadAllText(toolsPath));
+                if (doc.RootElement.ValueKind == JsonValueKind.Array)
+                {
+                    // Wrap in {"tools": [...]} so FromJson can parse it
+                    string wrapped = $"{{\"tools\":{doc.RootElement.GetRawText()}}}";
+                    using var wrappedDoc = JsonDocument.Parse(wrapped);
+                    tools = OptimizationConfig.FromJson(wrappedDoc.RootElement).ToolDefinitions;
+                }
+            }
+            catch (JsonException)
+            {
+                // Skip malformed tools.json
+            }
+        }
+
+        // Load skills from skills/ subdirectory
+        string skillsDir = Path.Combine(localDir, "skills");
+        IReadOnlyList<OptimizationSkill> skills = LoadSkillsFromDirectory(skillsDir);
+
+        return new OptimizationConfig(
+            instructions: instructions,
+            skills: skills,
+            skillsDirectory: Directory.Exists(skillsDir) ? Path.GetFullPath(skillsDir) : null,
+            toolDefinitions: tools,
+            source: $"local:{localDir}");
     }
 }
