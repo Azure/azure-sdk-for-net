@@ -20,43 +20,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmComputeModelFactory
     {
-
-        /// <param name="details"> The Api error details. </param>
-        /// <param name="innererror"> The Api inner error. </param>
-        /// <param name="code"> The error code. </param>
-        /// <param name="target"> The target of the particular error. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.ComputeApiError"/> instance for mocking. </returns>
-        public static ComputeApiError ComputeApiError(IEnumerable<ComputeApiErrorBase> details = default, InnerError innererror = default, string code = default, string target = default, string message = default)
-        {
-            details ??= new ChangeTrackingList<ComputeApiErrorBase>();
-
-            return new ComputeApiError(
-                (details ?? new ChangeTrackingList<ComputeApiErrorBase>()).ToList(),
-                innererror,
-                code,
-                target,
-                message,
-                default);
-        }
-
-        /// <param name="code"> The error code. </param>
-        /// <param name="target"> The target of the particular error. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.ComputeApiErrorBase"/> instance for mocking. </returns>
-        public static ComputeApiErrorBase ComputeApiErrorBase(string code = default, string target = default, string message = default)
-        {
-            return new ComputeApiErrorBase(code, target, message, default);
-        }
-
-        /// <param name="exceptiontype"> The exception type. </param>
-        /// <param name="errordetail"> The internal error message or exception dump. </param>
-        /// <returns> A new <see cref="Models.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string exceptiontype = default, string errordetail = default)
-        {
-            return new InnerError(exceptiontype, errordetail, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1042,6 +1005,42 @@ namespace Azure.ResourceManager.Compute.Models
             excludeZones ??= new ChangeTrackingList<string>();
 
             return new VirtualMachinePlacement(zonePlacementPolicyType, (includeZones ?? new ChangeTrackingList<string>()).ToList(), (excludeZones ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="details"> The Api error details. </param>
+        /// <param name="innererror"> The Api inner error. </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="target"> The target of the particular error. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.ComputeApiError"/> instance for mocking. </returns>
+        public static ComputeApiError ComputeApiError(IEnumerable<ComputeApiErrorBase> details = default, InnerError innererror = default, string code = default, string target = default, string message = default)
+        {
+            details ??= new ChangeTrackingList<ComputeApiErrorBase>();
+
+            return new ComputeApiError(
+                (details ?? new ChangeTrackingList<ComputeApiErrorBase>()).ToList(),
+                innererror,
+                code,
+                target,
+                message,
+                default);
+        }
+
+        /// <param name="code"> The error code. </param>
+        /// <param name="target"> The target of the particular error. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.ComputeApiErrorBase"/> instance for mocking. </returns>
+        public static ComputeApiErrorBase ComputeApiErrorBase(string code = default, string target = default, string message = default)
+        {
+            return new ComputeApiErrorBase(code, target, message, default);
+        }
+
+        /// <param name="exceptiontype"> The exception type. </param>
+        /// <param name="errordetail"> The internal error message or exception dump. </param>
+        /// <returns> A new <see cref="Models.InnerError"/> instance for mocking. </returns>
+        public static InnerError InnerError(string exceptiontype = default, string errordetail = default)
+        {
+            return new InnerError(exceptiontype, errordetail, default);
         }
 
         /// <param name="tags"> Resource tags. </param>

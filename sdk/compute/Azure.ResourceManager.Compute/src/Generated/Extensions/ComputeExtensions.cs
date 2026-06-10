@@ -38,12 +38,6 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetCachedClient(client => new MockableComputeSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <param name="tenantResource"></param>
-        private static MockableComputeTenantResource GetMockableComputeTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableComputeTenantResource(client, tenantResource.Id));
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="VirtualMachineScaleSetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -3279,36 +3273,6 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetComputeResourceSkus(filter, includeExtendedLocations, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Operation"/> that may take multiple service requests to iterate over. </returns>
-        internal static AsyncPageable<Models.Operation> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableComputeTenantResource(tenantResource).GetAllAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.GetAll(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Operation"/> that may take multiple service requests to iterate over. </returns>
-        internal static Pageable<Models.Operation> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableComputeTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }
 }
