@@ -147,7 +147,7 @@ namespace Azure.Generator.Mgmt.Tests
             const string testModelName = "TestModel";
             const string testPropertyName = "PrivateIPAddress";
             var clientNameOverrideMarker = new InputDecoratorInfo(
-                "Azure.ResourceManager.@hasClientNameOverride",
+                ManagementInputLibrary.HasClientNameOverrideDecoratorName,
                 new Dictionary<string, BinaryData>());
             var modelProperty = InputFactory.Property(
                 testPropertyName,
