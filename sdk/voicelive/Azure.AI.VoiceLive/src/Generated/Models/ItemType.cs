@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    internal readonly partial struct ItemType : IEquatable<ItemType>
+    public readonly partial struct ItemType : IEquatable<ItemType>
     {
         private readonly string _value;
         private const string MessageValue = "message";

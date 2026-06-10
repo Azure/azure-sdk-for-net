@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Union of all supported Azure voice types. </summary>
-    internal readonly partial struct AzureVoiceType : IEquatable<AzureVoiceType>
+    public readonly partial struct AzureVoiceType : IEquatable<AzureVoiceType>
     {
         private readonly string _value;
         /// <summary> Azure custom voice. </summary>

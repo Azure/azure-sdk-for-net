@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Interim response configuration types. </summary>
-    internal readonly partial struct InterimResponseConfigType : IEquatable<InterimResponseConfigType>
+    public readonly partial struct InterimResponseConfigType : IEquatable<InterimResponseConfigType>
     {
         private readonly string _value;
         /// <summary> Static interim response configuration type. </summary>

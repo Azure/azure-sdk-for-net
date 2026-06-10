@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The kind of output parsing for an MCP server tool. </summary>
-    internal readonly partial struct McpServerOutputParsingKind : IEquatable<McpServerOutputParsingKind>
+    public readonly partial struct McpServerOutputParsingKind : IEquatable<McpServerOutputParsingKind>
     {
         private readonly string _value;
         /// <summary> Automatically detect the output format and parse accordingly. </summary>
