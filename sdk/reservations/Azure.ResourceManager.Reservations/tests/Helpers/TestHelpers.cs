@@ -26,7 +26,10 @@ namespace Azure.ResourceManager.Reservations.Tests.Helper
 
             if (scope.Equals("Single"))
             {
-                request.AppliedScopes.Add("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee");
+                request.AppliedScopeProperties = new AppliedScopeProperties
+                {
+                    SubscriptionId = new Core.ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+                };
             }
 
             return request;
