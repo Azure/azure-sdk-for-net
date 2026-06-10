@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.7 (Unreleased)
+## 1.1.0-beta.7 (2026-06-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.SelfHelp` AOT-compatible.
 
 ## 1.1.0-beta.6 (2026-04-29)
 

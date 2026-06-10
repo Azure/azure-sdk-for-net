@@ -3,17 +3,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
     public partial class CreateAgentFromCodeOptions
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
@@ -27,46 +22,7 @@ namespace Azure.AI.Projects.Agents
             Code = code;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
-        /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
-        /// <param name="code"> The code zip file (max 250 MB). </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, BinaryData code, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Metadata = metadata;
-            Code = code;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> JSON metadata including description and hosted definition. </summary>
         public CreateAgentVersionFromCodeMetadata Metadata { get; }
-
-        /// <summary>
-        /// The code zip file (max 250 MB).
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Code { get; }
     }
 }

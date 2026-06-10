@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationProjectProvisioningState : IEquatable<DataMigrationProjectProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationProjectProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
+            _value = value;
+        }
 
         /// <summary> Deleting. </summary>
         public static DataMigrationProjectProvisioningState Deleting { get; } = new DataMigrationProjectProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static DataMigrationProjectProvisioningState Succeeded { get; } = new DataMigrationProjectProvisioningState(SucceededValue);
+
         /// <summary> Determines if two <see cref="DataMigrationProjectProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationProjectProvisioningState left, DataMigrationProjectProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationProjectProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationProjectProvisioningState left, DataMigrationProjectProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationProjectProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationProjectProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationProjectProvisioningState(string value) => new DataMigrationProjectProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationProjectProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationProjectProvisioningState?(string value) => value == null ? null : new DataMigrationProjectProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationProjectProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationProjectProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

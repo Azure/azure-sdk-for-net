@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> Unknown version of ConnectionInfo. </summary>
     internal partial class UnknownConnectionInfo : ServerConnectionInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConnectionInfo"/>. </summary>
-        /// <param name="connectionInfoType"> Type of connection info. </param>
+        /// <param name="type"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
-        {
-            ConnectionInfoType = connectionInfoType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownConnectionInfo"/> for deserialization. </summary>
-        internal UnknownConnectionInfo()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownConnectionInfo(string @type, string userName, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", userName, password, additionalBinaryDataProperties)
         {
         }
     }

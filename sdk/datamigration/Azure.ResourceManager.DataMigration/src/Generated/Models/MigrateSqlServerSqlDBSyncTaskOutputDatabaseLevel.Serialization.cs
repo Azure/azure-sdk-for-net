@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>
+    /// <summary> The MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel. </summary>
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel : MigrateSqlServerSqlDBSyncTaskOutput, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MigrateSqlServerSqlDBSyncTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Create(BinaryData data, ModelReaderWriterOptions options) => (MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
@@ -112,26 +152,34 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MigrateSqlServerSqlDBSyncTaskOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(document.RootElement, options);
         }
 
-        internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string id = default;
+            string resultType = "DatabaseLevelOutput";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string databaseName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
@@ -145,165 +193,160 @@ namespace Azure.ResourceManager.DataMigration.Models
             long? fullLoadLoadingTables = default;
             long? fullLoadQueuedTables = default;
             long? fullLoadErroredTables = default;
-            bool? initializationCompleted = default;
+            bool? isInitializationCompleted = default;
             long? latency = default;
-            string id = default;
-            string resultType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"u8))
+                if (prop.NameEquals("resultType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    resultType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("databaseName"u8))
+                {
+                    databaseName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("startedOn"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startedOn = property.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"u8))
+                if (prop.NameEquals("endedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endedOn = property.Value.GetDateTimeOffset("O");
+                    endedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("migrationState"u8))
+                if (prop.NameEquals("migrationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationState = new SyncDatabaseMigrationReportingState(property.Value.GetString());
+                    migrationState = new SyncDatabaseMigrationReportingState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("incomingChanges"u8))
+                if (prop.NameEquals("incomingChanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    incomingChanges = property.Value.GetInt64();
+                    incomingChanges = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("appliedChanges"u8))
+                if (prop.NameEquals("appliedChanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    appliedChanges = property.Value.GetInt64();
+                    appliedChanges = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cdcInsertCounter"u8))
+                if (prop.NameEquals("cdcInsertCounter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cdcInsertCounter = property.Value.GetInt64();
+                    cdcInsertCounter = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cdcDeleteCounter"u8))
+                if (prop.NameEquals("cdcDeleteCounter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cdcDeleteCounter = property.Value.GetInt64();
+                    cdcDeleteCounter = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cdcUpdateCounter"u8))
+                if (prop.NameEquals("cdcUpdateCounter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cdcUpdateCounter = property.Value.GetInt64();
+                    cdcUpdateCounter = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fullLoadCompletedTables"u8))
+                if (prop.NameEquals("fullLoadCompletedTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadCompletedTables = property.Value.GetInt64();
+                    fullLoadCompletedTables = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fullLoadLoadingTables"u8))
+                if (prop.NameEquals("fullLoadLoadingTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadLoadingTables = property.Value.GetInt64();
+                    fullLoadLoadingTables = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fullLoadQueuedTables"u8))
+                if (prop.NameEquals("fullLoadQueuedTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadQueuedTables = property.Value.GetInt64();
+                    fullLoadQueuedTables = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fullLoadErroredTables"u8))
+                if (prop.NameEquals("fullLoadErroredTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadErroredTables = property.Value.GetInt64();
+                    fullLoadErroredTables = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("initializationCompleted"u8))
+                if (prop.NameEquals("initializationCompleted"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initializationCompleted = property.Value.GetBoolean();
+                    isInitializationCompleted = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("latency"u8))
+                if (prop.NameEquals("latency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    latency = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = property.Value.GetString();
+                    latency = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(
                 id,
                 resultType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 databaseName,
                 startedOn,
                 endedOn,
@@ -317,39 +360,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
-
-        BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
