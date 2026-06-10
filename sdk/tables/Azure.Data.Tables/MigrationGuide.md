@@ -255,6 +255,21 @@ foreach (var item in queryResults.ToList())
 }
 ```
 
+### Checking if a table exists
+
+The `Azure.Data.Tables` library does not include a dedicated `Exists` method for checking whether a table exists. This was an intentional omission because the result of such a check is only valid at the instant it was made, which can encourage racy code patterns. If your goal is to work with a table regardless of whether it already exists, you should use `CreateIfNotExists` or `CreateTableIfNotExists` instead.
+
+For scenarios where you specifically need to check whether a table exists without creating it, you can use the `TableServiceClient.Query` / `TableServiceClient.QueryAsync` method to check for the table by name.
+
+```C# Snippet:TablesMigrationCheckTableExists
+bool exists = false;
+await foreach (var tbl in serviceClient.QueryAsync(t => t.Name == tableName))
+{
+    exists = true;
+    break;
+}
+```
+
 ### Delete table entities
 
 Previously with `Microsoft.Azure.Cosmos.Table`, deleting a table entity was accomplished with the following code.
