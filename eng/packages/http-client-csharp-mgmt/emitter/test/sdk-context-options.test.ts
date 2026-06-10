@@ -20,16 +20,20 @@ describe("SDK context options", () => {
     runner = await createEmitterTestHost();
   });
 
-  it("marks read-only model properties with clientName overrides", async () => {
+  it("marks model properties with clientName overrides", async () => {
     const program = await typeSpecCompile(
       `
 model TestModel {
   @visibility(Lifecycle.Read)
   privateIpAddress?: string | null;
+
+  publicIpAddress?: string | null;
 }
 
 @@clientName(TestModel.privateIpAddress, "PrivateIPAddress", "csharp");
+@@clientName(TestModel.publicIpAddress, "PublicIPAddress", "csharp");
 @@alternateType(TestModel.privateIpAddress, Azure.Core.ipV4Address | null, "csharp");
+@@alternateType(TestModel.publicIpAddress, Azure.Core.ipV4Address | null, "csharp");
 
 #suppress "@azure-tools/typespec-azure-core/use-standard-operations" "Test operation intentionally uses a simple route."
 @get
@@ -46,12 +50,25 @@ op get(): TestModel;
     const property = testModel?.properties.find(
       (p) => p.serializedName === "privateIpAddress"
     );
+    const writableProperty = testModel?.properties.find(
+      (p) => p.serializedName === "publicIpAddress"
+    );
     strictEqual(property?.name, "PrivateIPAddress");
     strictEqual(property?.type.kind, "nullable");
     strictEqual(property?.type.type.kind, "string");
     strictEqual(property?.type.type.name, "ipV4Address");
     strictEqual(
       property?.decorators?.some(
+        (d) => d.name === hasClientNameOverrideDecorator
+      ),
+      true
+    );
+    strictEqual(writableProperty?.name, "PublicIPAddress");
+    strictEqual(writableProperty?.type.kind, "nullable");
+    strictEqual(writableProperty?.type.type.kind, "string");
+    strictEqual(writableProperty?.type.type.name, "ipV4Address");
+    strictEqual(
+      writableProperty?.decorators?.some(
         (d) => d.name === hasClientNameOverrideDecorator
       ),
       true

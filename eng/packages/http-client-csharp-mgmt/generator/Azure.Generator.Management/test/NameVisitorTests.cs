@@ -141,8 +141,9 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(type?.Properties[0].Name, Is.EqualTo("ETag"));
         }
 
-        [Test]
-        public void TestClientNameOverridePreservesPropertyNameExactly()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void TestClientNameOverridePreservesPropertyNameExactly(bool isReadOnly)
         {
             const string testModelName = "TestModel";
             const string testPropertyName = "PrivateIPAddress";
@@ -153,7 +154,7 @@ namespace Azure.Generator.Mgmt.Tests
                 testPropertyName,
                 InputPrimitiveType.String,
                 serializedName: "privateIpAddress",
-                isReadOnly: true,
+                isReadOnly: isReadOnly,
                 decorators: [clientNameOverrideMarker]);
             var model = InputFactory.Model(testModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
