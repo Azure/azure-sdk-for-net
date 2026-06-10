@@ -18,6 +18,7 @@
     <PackageReference Include="Portable.BouncyCastle" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager.Batch" />
+    <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 
   <ItemGroup>
