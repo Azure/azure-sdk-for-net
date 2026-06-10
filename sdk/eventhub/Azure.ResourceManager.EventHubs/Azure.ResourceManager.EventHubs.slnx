@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.EventHubs.csproj" />
+  <Project Path="tests/Azure.ResourceManager.EventHubs.Tests.csproj" />
+</Solution>
