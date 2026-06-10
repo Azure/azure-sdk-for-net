@@ -30,25 +30,25 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ElasticPlanDetails(string offerId, string publisherId, string termId, string planId, string planName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OfferId = offerId;
-            PublisherId = publisherId;
-            TermId = termId;
-            PlanId = planId;
+            offerId = offerId;
+            publisherId = publisherId;
+            termId = termId;
+            planId = planId;
             PlanName = planName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Offer ID of the plan. </summary>
-        public string OfferId { get; set; }
+        public string offerId { get; set; }
 
         /// <summary> Publisher ID of the plan. </summary>
-        public string PublisherId { get; set; }
+        public string publisherId { get; set; }
 
         /// <summary> Term ID of the plan. </summary>
-        public string TermId { get; set; }
+        public string termId { get; set; }
 
         /// <summary> Plan ID. </summary>
-        public string PlanId { get; set; }
+        public string planId { get; set; }
 
         /// <summary> Plan Name. </summary>
         public string PlanName { get; set; }

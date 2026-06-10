@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             TotalVolumeSizeGiB = totalVolumeSizeGiB;
             VolumeGroupCount = volumeGroupCount;
             TotalIops = totalIops;
-            TotalMbps = totalMbps;
+            totalMbps = totalMbps;
             TotalSizeTiB = totalSizeTiB;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? TotalIops { get; }
 
         /// <summary> Total Provisioned MBps Elastic San appliance. </summary>
-        public long? TotalMbps { get; }
+        public long? totalMbps { get; }
 
         /// <summary> Total size of the Elastic San appliance in TB. </summary>
         public long? TotalSizeTiB { get; }

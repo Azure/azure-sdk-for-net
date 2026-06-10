@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Total Provisioned MBps Elastic San appliance. </summary>
-        public long? TotalMbps
+        public long? totalMbps
         {
             get
             {
-                return Properties is null ? default : Properties.TotalMbps;
+                return Properties is null ? default : Properties.totalMbps;
             }
         }
 

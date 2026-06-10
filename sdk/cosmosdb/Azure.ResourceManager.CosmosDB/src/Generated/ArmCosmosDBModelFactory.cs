@@ -1009,10 +1009,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="options"> Gets the Options. </param>
-        /// <param name="resourceGraphName"> Name of the Cosmos DB Graph. </param>
+        /// <param name="resourcegraphName"> Name of the Cosmos DB Graph. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBGraphData"/> instance for mocking. </returns>
-        public static CosmosDBGraphData CosmosDBGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBGraphConfig options = default, string resourceGraphName = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBGraphData CosmosDBGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBGraphConfig options = default, string resourcegraphName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                resourceGraphName is null && options is null ? default : new GraphResourceGetProperties(new GraphResourceGetPropertiesResource(resourceGraphName, default), options, default),
+                resourcegraphName is null && options is null ? default : new GraphResourceGetProperties(new GraphResourceGetPropertiesResource(resourcegraphName, default), options, default),
                 identity,
                 default);
         }
@@ -1051,10 +1051,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <param name="resourceGraphName"> Name of the Cosmos DB Graph. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGraphName"/> is null. </exception>
+        /// <param name="resourcegraphName"> Name of the Cosmos DB Graph. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourcegraphName"/> is null. </exception>
         /// <returns> A new <see cref="Models.CosmosDBGraphCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBGraphCreateOrUpdateContent CosmosDBGraphCreateOrUpdateContent(string id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CosmosDBCreateUpdateConfig options = default, string resourceGraphName = default)
+        public static CosmosDBGraphCreateOrUpdateContent CosmosDBGraphCreateOrUpdateContent(string id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CosmosDBCreateUpdateConfig options = default, string resourcegraphName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 default,
-                resourceGraphName is null ? default : new GraphResourceCreateUpdateProperties(new GraphResource(resourceGraphName, default), default, default));
+                resourcegraphName is null ? default : new GraphResourceCreateUpdateProperties(new GraphResource(resourcegraphName, default), default, default));
         }
 
         /// <param name="throughput"> Request Units per second. For example, "throughput": 10000. </param>

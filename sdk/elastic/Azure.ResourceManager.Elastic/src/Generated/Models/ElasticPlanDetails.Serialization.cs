@@ -74,25 +74,25 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 throw new FormatException($"The model {nameof(ElasticPlanDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OfferId))
+            if (Optional.IsDefined(offerId))
             {
                 writer.WritePropertyName("offerID"u8);
-                writer.WriteStringValue(OfferId);
+                writer.WriteStringValue(offerId);
             }
-            if (Optional.IsDefined(PublisherId))
+            if (Optional.IsDefined(publisherId))
             {
                 writer.WritePropertyName("publisherID"u8);
-                writer.WriteStringValue(PublisherId);
+                writer.WriteStringValue(publisherId);
             }
-            if (Optional.IsDefined(TermId))
+            if (Optional.IsDefined(termId))
             {
                 writer.WritePropertyName("termID"u8);
-                writer.WriteStringValue(TermId);
+                writer.WriteStringValue(termId);
             }
-            if (Optional.IsDefined(PlanId))
+            if (Optional.IsDefined(planId))
             {
                 writer.WritePropertyName("planID"u8);
-                writer.WriteStringValue(PlanId);
+                writer.WriteStringValue(planId);
             }
             if (Optional.IsDefined(PlanName))
             {

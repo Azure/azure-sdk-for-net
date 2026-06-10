@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Argument.AssertNotNull(graphName, nameof(graphName));
 
-            GraphName = graphName;
+            graphName = graphName;
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphResource"/>. </summary>
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal GraphResource(string graphName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            GraphName = graphName;
+            graphName = graphName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
         [WirePath("id")]
-        public string GraphName { get; set; }
+        public string graphName { get; set; }
     }
 }

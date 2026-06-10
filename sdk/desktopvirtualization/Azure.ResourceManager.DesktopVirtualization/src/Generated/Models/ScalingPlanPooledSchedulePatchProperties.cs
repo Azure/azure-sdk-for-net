@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScalingPlanPooledSchedulePatchProperties(string scheduleName, IList<DesktopVirtualizationDayOfWeek> daysOfWeek, DesktopVirtualizationScalingMethodType? scalingMethod, DesktopVirtualizationCreateDeleteProperties createDelete, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ScheduleName = scheduleName;
+            scheduleName = scheduleName;
             DaysOfWeek = daysOfWeek;
             ScalingMethod = scalingMethod;
             CreateDelete = createDelete;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
         [WirePath("name")]
-        public string ScheduleName { get; }
+        public string scheduleName { get; }
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>
         [WirePath("daysOfWeek")]

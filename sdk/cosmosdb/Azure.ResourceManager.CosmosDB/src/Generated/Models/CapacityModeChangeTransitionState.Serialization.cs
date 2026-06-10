@@ -89,20 +89,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("previousCapacityMode"u8);
                 writer.WriteStringValue(PreviousCapacityMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityModeTransitionBeganOn))
+            if (options.Format != "W" && Optional.IsDefined(capacityModeTransitionBeganOn))
             {
                 writer.WritePropertyName("capacityModeTransitionBeginTimestamp"u8);
-                writer.WriteStringValue(CapacityModeTransitionBeganOn.Value, "O");
+                writer.WriteStringValue(capacityModeTransitionBeganOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityModeTransitionEndedOn))
+            if (options.Format != "W" && Optional.IsDefined(capacityModeTransitionEndedOn))
             {
                 writer.WritePropertyName("capacityModeTransitionEndTimestamp"u8);
-                writer.WriteStringValue(CapacityModeTransitionEndedOn.Value, "O");
+                writer.WriteStringValue(capacityModeTransitionEndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityModeLastSuccessfulTransitionEndedOn))
+            if (options.Format != "W" && Optional.IsDefined(capacityModeLastSuccessfulTransitionEndedOn))
             {
                 writer.WritePropertyName("capacityModeLastSuccessfulTransitionEndTimestamp"u8);
-                writer.WriteStringValue(CapacityModeLastSuccessfulTransitionEndedOn.Value, "O");
+                writer.WriteStringValue(capacityModeLastSuccessfulTransitionEndedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

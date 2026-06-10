@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint ))
             {
                 writer.WritePropertyName("ignoreMissingVNetServiceEndpoint"u8);
-                writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
+                writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint .Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

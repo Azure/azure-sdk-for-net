@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Arguments = arguments;
             Host = host;
             IsAdmin = isAdmin;
-            ShouldStopCassandraBeforeStart = shouldStopCassandraBeforeStart;
-            IsReadWrite = isReadWrite;
+            shouldStopCassandraBeforeStart = shouldStopCassandraBeforeStart;
+            isReadWrite = isReadWrite;
             Result = result;
             Status = status;
             OutputFile = outputFile;
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> If true, stops cassandra before executing the command and then start it again. </summary>
         [WirePath("cassandraStopStart")]
-        public bool? ShouldStopCassandraBeforeStart { get; }
+        public bool? shouldStopCassandraBeforeStart { get; }
 
         /// <summary> If true, allows the command to <i>write</i> to the cassandra directory, otherwise read-only. </summary>
         [WirePath("readWrite")]
-        public bool? IsReadWrite { get; }
+        public bool? isReadWrite { get; }
 
         /// <summary> Result output of the command. </summary>
         [WirePath("result")]

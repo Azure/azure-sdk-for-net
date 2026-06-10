@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Argument.AssertNotNull(containerName, nameof(containerName));
 
-            ContainerName = containerName;
+            containerName = containerName;
             MaterializedViews = new ChangeTrackingList<CosmosDBMaterializedViewDetails>();
             ComputedProperties = new ChangeTrackingList<ComputedProperty>();
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, CosmosDBMaterializedViewDefinition materializedViewDefinition, IList<CosmosDBMaterializedViewDetails> materializedViews, MaterializedViewsProperties materializedViewsProperties, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, DataMaskingPolicy dataMaskingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ContainerName = containerName;
+            containerName = containerName;
             IndexingPolicy = indexingPolicy;
             PartitionKey = partitionKey;
             DefaultTtl = defaultTtl;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Name of the Cosmos DB SQL container. </summary>
         [WirePath("id")]
-        public string ContainerName { get; set; }
+        public string containerName { get; set; }
 
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </summary>
         [WirePath("indexingPolicy")]

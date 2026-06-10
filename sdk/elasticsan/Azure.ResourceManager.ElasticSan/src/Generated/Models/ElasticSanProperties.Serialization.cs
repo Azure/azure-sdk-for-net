@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("totalIops"u8);
                 writer.WriteNumberValue(TotalIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalMbps))
+            if (options.Format != "W" && Optional.IsDefined(totalMbps))
             {
                 writer.WritePropertyName("totalMBps"u8);
-                writer.WriteNumberValue(TotalMbps.Value);
+                writer.WriteNumberValue(totalMbps.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalSizeTiB))
             {

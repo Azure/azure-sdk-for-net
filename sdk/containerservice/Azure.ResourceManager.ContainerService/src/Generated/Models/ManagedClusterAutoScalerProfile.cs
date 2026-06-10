@@ -46,32 +46,32 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, bool? isDaemonsetEvictionForEmptyNodesEnabled, bool? isDaemonsetEvictionForOccupiedNodesEnabled, bool? isDaemonsetsUtilizationIgnored, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanIntervalInSeconds, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BalanceSimilarNodeGroups = balanceSimilarNodeGroups;
+            balanceSimilarNodeGroups = balanceSimilarNodeGroups;
             IsDaemonsetEvictionForEmptyNodesEnabled = isDaemonsetEvictionForEmptyNodesEnabled;
             IsDaemonsetEvictionForOccupiedNodesEnabled = isDaemonsetEvictionForOccupiedNodesEnabled;
             IsDaemonsetsUtilizationIgnored = isDaemonsetsUtilizationIgnored;
             Expander = expander;
-            MaxEmptyBulkDelete = maxEmptyBulkDelete;
-            MaxGracefulTerminationSec = maxGracefulTerminationSec;
-            MaxNodeProvisionTime = maxNodeProvisionTime;
-            MaxTotalUnreadyPercentage = maxTotalUnreadyPercentage;
-            NewPodScaleUpDelay = newPodScaleUpDelay;
-            OkTotalUnreadyCount = okTotalUnreadyCount;
+            maxEmptyBulkDelete = maxEmptyBulkDelete;
+            maxGracefulTerminationSec = maxGracefulTerminationSec;
+            maxNodeProvisionTime = maxNodeProvisionTime;
+            maxTotalUnreadyPercentage = maxTotalUnreadyPercentage;
+            newPodScaleUpDelay = newPodScaleUpDelay;
+            okTotalUnreadyCount = okTotalUnreadyCount;
             ScanIntervalInSeconds = scanIntervalInSeconds;
-            ScaleDownDelayAfterAdd = scaleDownDelayAfterAdd;
-            ScaleDownDelayAfterDelete = scaleDownDelayAfterDelete;
-            ScaleDownDelayAfterFailure = scaleDownDelayAfterFailure;
-            ScaleDownUnneededTime = scaleDownUnneededTime;
-            ScaleDownUnreadyTime = scaleDownUnreadyTime;
-            ScaleDownUtilizationThreshold = scaleDownUtilizationThreshold;
-            SkipNodesWithLocalStorage = skipNodesWithLocalStorage;
-            SkipNodesWithSystemPods = skipNodesWithSystemPods;
+            scaleDownDelayAfterAdd = scaleDownDelayAfterAdd;
+            scaleDownDelayAfterDelete = scaleDownDelayAfterDelete;
+            scaleDownDelayAfterFailure = scaleDownDelayAfterFailure;
+            scaleDownUnneededTime = scaleDownUnneededTime;
+            scaleDownUnreadyTime = scaleDownUnreadyTime;
+            scaleDownUtilizationThreshold = scaleDownUtilizationThreshold;
+            skipNodesWithLocalStorage = skipNodesWithLocalStorage;
+            skipNodesWithSystemPods = skipNodesWithSystemPods;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Detects similar node pools and balances the number of nodes between them. Valid values are 'true' and 'false'. </summary>
         [WirePath("balance-similar-node-groups")]
-        public string BalanceSimilarNodeGroups { get; set; }
+        public string balanceSimilarNodeGroups { get; set; }
 
         /// <summary> DaemonSet pods will be gracefully terminated from empty nodes. If set to true, all daemonset pods on empty nodes will be evicted before deletion of the node. If the daemonset pod cannot be evicted another node will be chosen for scaling. If set to false, the node will be deleted without ensuring that daemonset pods are deleted or evicted. </summary>
         [WirePath("daemonset-eviction-for-empty-nodes")]
@@ -91,27 +91,27 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The maximum number of empty nodes that can be deleted at the same time. This must be a positive integer. The default is 10. </summary>
         [WirePath("max-empty-bulk-delete")]
-        public string MaxEmptyBulkDelete { get; set; }
+        public string maxEmptyBulkDelete { get; set; }
 
         /// <summary> The maximum number of seconds the cluster autoscaler waits for pod termination when trying to scale down a node. The default is 600. </summary>
         [WirePath("max-graceful-termination-sec")]
-        public string MaxGracefulTerminationSec { get; set; }
+        public string maxGracefulTerminationSec { get; set; }
 
         /// <summary> The maximum time the autoscaler waits for a node to be provisioned. The default is '15m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
         [WirePath("max-node-provision-time")]
-        public string MaxNodeProvisionTime { get; set; }
+        public string maxNodeProvisionTime { get; set; }
 
         /// <summary> The maximum percentage of unready nodes in the cluster. After this percentage is exceeded, cluster autoscaler halts operations. The default is 45. The maximum is 100 and the minimum is 0. </summary>
         [WirePath("max-total-unready-percentage")]
-        public string MaxTotalUnreadyPercentage { get; set; }
+        public string maxTotalUnreadyPercentage { get; set; }
 
         /// <summary> Ignore unscheduled pods before they're a certain age. For scenarios like burst/batch scale where you don't want CA to act before the kubernetes scheduler could schedule all the pods, you can tell CA to ignore unscheduled pods before they're a certain age. The default is '0s'. Values must be an integer followed by a unit ('s' for seconds, 'm' for minutes, 'h' for hours, etc). </summary>
         [WirePath("new-pod-scale-up-delay")]
-        public string NewPodScaleUpDelay { get; set; }
+        public string newPodScaleUpDelay { get; set; }
 
         /// <summary> The number of allowed unready nodes, irrespective of max-total-unready-percentage. This must be an integer. The default is 3. </summary>
         [WirePath("ok-total-unready-count")]
-        public string OkTotalUnreadyCount { get; set; }
+        public string okTotalUnreadyCount { get; set; }
 
         /// <summary> How often cluster is reevaluated for scale up or down. The default is '10'. Values must be an integer number of seconds. </summary>
         [WirePath("scan-interval")]
@@ -119,34 +119,34 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> How long after scale up that scale down evaluation resumes. The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
         [WirePath("scale-down-delay-after-add")]
-        public string ScaleDownDelayAfterAdd { get; set; }
+        public string scaleDownDelayAfterAdd { get; set; }
 
         /// <summary> How long after node deletion that scale down evaluation resumes. The default is the scan-interval. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
         [WirePath("scale-down-delay-after-delete")]
-        public string ScaleDownDelayAfterDelete { get; set; }
+        public string scaleDownDelayAfterDelete { get; set; }
 
         /// <summary> How long after scale down failure that scale down evaluation resumes. The default is '3m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
         [WirePath("scale-down-delay-after-failure")]
-        public string ScaleDownDelayAfterFailure { get; set; }
+        public string scaleDownDelayAfterFailure { get; set; }
 
         /// <summary> How long a node should be unneeded before it is eligible for scale down. The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
         [WirePath("scale-down-unneeded-time")]
-        public string ScaleDownUnneededTime { get; set; }
+        public string scaleDownUnneededTime { get; set; }
 
         /// <summary> How long an unready node should be unneeded before it is eligible for scale down. The default is '20m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </summary>
         [WirePath("scale-down-unready-time")]
-        public string ScaleDownUnreadyTime { get; set; }
+        public string scaleDownUnreadyTime { get; set; }
 
         /// <summary> Node utilization level, defined as sum of requested resources divided by capacity, below which a node can be considered for scale down. The default is '0.5'. </summary>
         [WirePath("scale-down-utilization-threshold")]
-        public string ScaleDownUtilizationThreshold { get; set; }
+        public string scaleDownUtilizationThreshold { get; set; }
 
         /// <summary> If cluster autoscaler will skip deleting nodes with pods with local storage, for example, EmptyDir or HostPath. The default is true. </summary>
         [WirePath("skip-nodes-with-local-storage")]
-        public string SkipNodesWithLocalStorage { get; set; }
+        public string skipNodesWithLocalStorage { get; set; }
 
         /// <summary> If cluster autoscaler will skip deleting nodes with pods from kube-system (except for DaemonSet or mirror pods). The default is true. </summary>
         [WirePath("skip-nodes-with-system-pods")]
-        public string SkipNodesWithSystemPods { get; set; }
+        public string skipNodesWithSystemPods { get; set; }
     }
 }

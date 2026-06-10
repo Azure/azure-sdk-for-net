@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CapacityModeTransitionStatus = capacityModeTransitionStatus;
             CurrentCapacityMode = currentCapacityMode;
             PreviousCapacityMode = previousCapacityMode;
-            CapacityModeTransitionBeganOn = capacityModeTransitionBeganOn;
-            CapacityModeTransitionEndedOn = capacityModeTransitionEndedOn;
-            CapacityModeLastSuccessfulTransitionEndedOn = capacityModeLastSuccessfulTransitionEndedOn;
+            capacityModeTransitionBeganOn = capacityModeTransitionBeganOn;
+            capacityModeTransitionEndedOn = capacityModeTransitionEndedOn;
+            capacityModeLastSuccessfulTransitionEndedOn = capacityModeLastSuccessfulTransitionEndedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Begin time in UTC of the capacity mode change. </summary>
         [WirePath("capacityModeTransitionBeginTimestamp")]
-        public DateTimeOffset? CapacityModeTransitionBeganOn { get; }
+        public DateTimeOffset? capacityModeTransitionBeganOn { get; }
 
         /// <summary> End time in UTC of the capacity mode change. </summary>
         [WirePath("capacityModeTransitionEndTimestamp")]
-        public DateTimeOffset? CapacityModeTransitionEndedOn { get; }
+        public DateTimeOffset? capacityModeTransitionEndedOn { get; }
 
         /// <summary> End time in UTC of the last successful capacity mode change. </summary>
         [WirePath("capacityModeLastSuccessfulTransitionEndTimestamp")]
-        public DateTimeOffset? CapacityModeLastSuccessfulTransitionEndedOn { get; }
+        public DateTimeOffset? capacityModeLastSuccessfulTransitionEndedOn { get; }
     }
 }

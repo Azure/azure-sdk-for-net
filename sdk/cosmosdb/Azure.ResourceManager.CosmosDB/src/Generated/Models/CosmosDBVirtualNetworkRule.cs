@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CosmosDBVirtualNetworkRule(ResourceIdentifier id, bool? ignoreMissingVnetServiceEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
+            IgnoreMissingVnetServiceEndpoint  = ignoreMissingVnetServiceEndpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
         [WirePath("ignoreMissingVNetServiceEndpoint")]
-        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
+        public bool? IgnoreMissingVnetServiceEndpoint  { get; set; }
     }
 }

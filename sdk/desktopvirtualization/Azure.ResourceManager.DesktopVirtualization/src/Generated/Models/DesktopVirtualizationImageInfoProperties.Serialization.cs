@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 throw new FormatException($"The model {nameof(DesktopVirtualizationImageInfoProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ImageType.ToString());
+            writer.WriteStringValue(imageType.ToString());
             if (Optional.IsDefined(MarketplaceInfo))
             {
                 writer.WritePropertyName("marketplaceInfo"u8);

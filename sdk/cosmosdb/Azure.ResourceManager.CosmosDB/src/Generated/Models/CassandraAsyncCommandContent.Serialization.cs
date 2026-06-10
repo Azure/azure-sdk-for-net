@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("cassandra-stop-start"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (Optional.IsDefined(IsReadWrite))
+            if (Optional.IsDefined(isReadWrite))
             {
                 writer.WritePropertyName("readWrite"u8);
-                writer.WriteBooleanValue(IsReadWrite.Value);
+                writer.WriteBooleanValue(isReadWrite.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

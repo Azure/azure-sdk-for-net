@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
         [WirePath("properties.name")]
-        public string ScheduleName
+        public string scheduleName
         {
             get
             {
-                return Properties is null ? default : Properties.ScheduleName;
+                return Properties is null ? default : Properties.scheduleName;
             }
         }
 

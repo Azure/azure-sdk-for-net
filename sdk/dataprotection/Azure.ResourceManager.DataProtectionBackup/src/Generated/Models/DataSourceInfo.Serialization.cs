@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
-            writer.WriteStringValue(ResourceId);
+            writer.WriteStringValue(resourceId);
             if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);

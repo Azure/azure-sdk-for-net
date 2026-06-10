@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
             KekType = kekType;
             ManagedIdentity = managedIdentity;
             KekUri = kekUri;
-            KekVaultResourceId = kekVaultResourceId;
+            kekVaultResourceId = kekVaultResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.DataBox.Models
         public Uri KekUri { get; set; }
 
         /// <summary> Kek vault resource id. It is required in case of Customer managed KekType. </summary>
-        public ResourceIdentifier KekVaultResourceId { get; set; }
+        public ResourceIdentifier kekVaultResourceId { get; set; }
     }
 }

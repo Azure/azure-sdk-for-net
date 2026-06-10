@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            ResourceId = resourceId;
+            resourceId = resourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataSourceInfo"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
-            ResourceId = resourceId;
+            resourceId = resourceId;
             ResourceLocation = resourceLocation;
             ResourceName = resourceName;
             ResourceType = resourceType;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string ObjectType { get; set; }
 
         /// <summary> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier resourceId { get; set; }
 
         /// <summary> Location of datasource. </summary>
         public AzureLocation? ResourceLocation { get; set; }

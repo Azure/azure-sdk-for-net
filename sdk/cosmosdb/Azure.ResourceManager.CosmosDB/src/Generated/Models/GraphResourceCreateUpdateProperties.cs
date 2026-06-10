@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GraphResourceCreateUpdateProperties"/>. </summary>
-        /// <param name="resourceGraphName"> Name of the Cosmos DB Graph. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGraphName"/> is null. </exception>
-        public GraphResourceCreateUpdateProperties(string resourceGraphName)
+        /// <param name="resourcegraphName"> Name of the Cosmos DB Graph. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourcegraphName"/> is null. </exception>
+        public GraphResourceCreateUpdateProperties(string resourcegraphName)
         {
-            Argument.AssertNotNull(resourceGraphName, nameof(resourceGraphName));
+            Argument.AssertNotNull(resourcegraphName, nameof(resourcegraphName));
 
-            Resource = new GraphResource(resourceGraphName);
+            Resource = new GraphResource(resourcegraphName);
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphResourceCreateUpdateProperties"/>. </summary>
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
         [WirePath("resource.id")]
-        public string ResourceGraphName
+        public string ResourcegraphName
         {
             get
             {
-                return Resource.GraphName;
+                return Resource.graphName;
             }
         }
     }

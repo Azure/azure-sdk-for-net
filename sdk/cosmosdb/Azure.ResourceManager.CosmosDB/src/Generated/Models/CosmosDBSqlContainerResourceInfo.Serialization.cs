@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(ContainerName);
+            writer.WriteStringValue(containerName);
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);

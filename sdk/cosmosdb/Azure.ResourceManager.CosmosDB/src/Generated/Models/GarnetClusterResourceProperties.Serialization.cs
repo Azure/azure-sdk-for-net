@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("nodeSku"u8);
                 writer.WriteStringValue(NodeSku);
             }
-            if (Optional.IsDefined(IsAvailabilityZoneEnabled))
+            if (Optional.IsDefined(isAvailabilityZoneEnabled))
             {
                 writer.WritePropertyName("availabilityZone"u8);
-                writer.WriteBooleanValue(IsAvailabilityZoneEnabled.Value);
+                writer.WriteBooleanValue(isAvailabilityZoneEnabled.Value);
             }
             if (Optional.IsDefined(AuthenticationMethod))
             {

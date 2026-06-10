@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             NetIPv4TcpKeepaliveProbes = netIPv4TcpKeepaliveProbes;
             NetIPv4TcpKeepaliveIntvl = netIPv4TcpKeepaliveIntvl;
             IsNetIpv4TcpTwReuseEnabled = isNetIpv4TcpTwReuseEnabled;
-            NetIPv4IPLocalPortRange = netIPv4IPLocalPortRange;
+            NetIPv4IPLocalPortRange  = netIPv4IPLocalPortRange;
             NetIPv4NeighDefaultGcThresh1 = netIPv4NeighDefaultGcThresh1;
             NetIPv4NeighDefaultGcThresh2 = netIPv4NeighDefaultGcThresh2;
             NetIPv4NeighDefaultGcThresh3 = netIPv4NeighDefaultGcThresh3;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Sysctl setting net.ipv4.ip_local_port_range. </summary>
         [WirePath("netIpv4IpLocalPortRange")]
-        public string NetIPv4IPLocalPortRange { get; set; }
+        public string NetIPv4IPLocalPortRange  { get; set; }
 
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </summary>
         [WirePath("netIpv4NeighDefaultGcThresh1")]

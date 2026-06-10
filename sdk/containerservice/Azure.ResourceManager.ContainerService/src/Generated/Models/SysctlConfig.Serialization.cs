@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("netIpv4TcpTwReuse"u8);
                 writer.WriteBooleanValue(IsNetIpv4TcpTwReuseEnabled.Value);
             }
-            if (Optional.IsDefined(NetIPv4IPLocalPortRange))
+            if (Optional.IsDefined(NetIPv4IPLocalPortRange ))
             {
                 writer.WritePropertyName("netIpv4IpLocalPortRange"u8);
-                writer.WriteStringValue(NetIPv4IPLocalPortRange);
+                writer.WriteStringValue(NetIPv4IPLocalPortRange );
             }
             if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
             {

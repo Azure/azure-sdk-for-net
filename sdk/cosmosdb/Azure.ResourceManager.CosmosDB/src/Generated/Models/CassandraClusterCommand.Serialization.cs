@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("isAdmin"u8);
                 writer.WriteBooleanValue(IsAdmin.Value);
             }
-            if (Optional.IsDefined(ShouldStopCassandraBeforeStart))
+            if (Optional.IsDefined(shouldStopCassandraBeforeStart))
             {
                 writer.WritePropertyName("cassandraStopStart"u8);
-                writer.WriteBooleanValue(ShouldStopCassandraBeforeStart.Value);
+                writer.WriteBooleanValue(shouldStopCassandraBeforeStart.Value);
             }
-            if (Optional.IsDefined(IsReadWrite))
+            if (Optional.IsDefined(isReadWrite))
             {
                 writer.WritePropertyName("readWrite"u8);
-                writer.WriteBooleanValue(IsReadWrite.Value);
+                writer.WriteBooleanValue(isReadWrite.Value);
             }
             if (Optional.IsDefined(Result))
             {

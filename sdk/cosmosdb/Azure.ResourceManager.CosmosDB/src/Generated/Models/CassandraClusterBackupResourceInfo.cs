@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             BackupId = backupId;
             BackupState = backupState;
-            BackupStartedOn = backupStartedOn;
-            BackupStoppedOn = backupStoppedOn;
-            BackupExpiresOn = backupExpiresOn;
+            backupStartedOn = backupStartedOn;
+            backupStoppedOn = backupStoppedOn;
+            backupExpiresOn = backupExpiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The time at which the backup process begins. </summary>
         [WirePath("backupStartTimestamp")]
-        public DateTimeOffset? BackupStartedOn { get; }
+        public DateTimeOffset? backupStartedOn { get; }
 
         /// <summary> The time at which the backup process ends. </summary>
         [WirePath("backupStopTimestamp")]
-        public DateTimeOffset? BackupStoppedOn { get; }
+        public DateTimeOffset? backupStoppedOn { get; }
 
         /// <summary> The time at which the backup will expire. </summary>
         [WirePath("backupExpiryTimestamp")]
-        public DateTimeOffset? BackupExpiresOn { get; }
+        public DateTimeOffset? backupExpiresOn { get; }
     }
 }

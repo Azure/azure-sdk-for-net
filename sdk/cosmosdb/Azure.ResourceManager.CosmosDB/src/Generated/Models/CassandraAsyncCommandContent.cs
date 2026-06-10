@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Arguments = arguments;
             Host = host;
             CassandraStopStart = cassandraStopStart;
-            IsReadWrite = isReadWrite;
+            isReadWrite = isReadWrite;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> If true, allows the command to <i>write</i> to the cassandra directory, otherwise read-only. </summary>
         [WirePath("readWrite")]
-        public bool? IsReadWrite { get; set; }
+        public bool? isReadWrite { get; set; }
     }
 }

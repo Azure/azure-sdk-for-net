@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatchProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduleName))
+            if (options.Format != "W" && Optional.IsDefined(scheduleName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(ScheduleName);
+                writer.WriteStringValue(scheduleName);
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ReplicationFactor = replicationFactor;
             ShardCount = shardCount;
             NodeSku = nodeSku;
-            IsAvailabilityZoneEnabled = isAvailabilityZoneEnabled;
+            isAvailabilityZoneEnabled = isAvailabilityZoneEnabled;
             AuthenticationMethod = authenticationMethod;
             Persistence = persistence;
             AllocationState = allocationState;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the garnet cluster virtual machines. </summary>
         [WirePath("availabilityZone")]
-        public bool? IsAvailabilityZoneEnabled { get; set; }
+        public bool? isAvailabilityZoneEnabled { get; set; }
 
         /// <summary> The authentication method used for the Garnet cluster. </summary>
         [WirePath("authenticationMethod")]

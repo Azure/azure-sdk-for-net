@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DesktopVirtualizationImageInfoPatchProperties(DesktopVirtualizationImageType? imageType, DesktopVirtualizationMarketplaceInfoPatchProperties marketplaceInfo, CustomInfoPatchProperties customInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ImageType = imageType;
+            imageType = imageType;
             MarketplaceInfo = marketplaceInfo;
             CustomInfo = customInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The type of image session hosts use in the hostpool. </summary>
         [WirePath("type")]
-        public DesktopVirtualizationImageType? ImageType { get; set; }
+        public DesktopVirtualizationImageType? imageType { get; set; }
 
         /// <summary> The values to uniquely identify a marketplace image. Only one should be populated based on the image type. </summary>
         [WirePath("marketplaceInfo")]

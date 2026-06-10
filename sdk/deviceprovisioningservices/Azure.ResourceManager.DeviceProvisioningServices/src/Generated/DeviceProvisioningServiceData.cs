@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         internal DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, string resourceGroup, string subscriptionId, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = eTag;
-            ResourceGroup = resourceGroup;
-            SubscriptionId = subscriptionId;
+            resourceGroup = resourceGroup;
+            subscriptionId = subscriptionId;
             Properties = properties;
             Sku = sku;
             Identity = identity;
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public ETag? ETag { get; set; }
 
         /// <summary> The resource group of the resource. </summary>
-        public string ResourceGroup { get; set; }
+        public string resourceGroup { get; set; }
 
         /// <summary> The subscription id of the resource. </summary>
-        public string SubscriptionId { get; set; }
+        public string subscriptionId { get; set; }
 
         /// <summary> Service specific properties for a provisioning service. </summary>
         public DeviceProvisioningServiceProperties Properties { get; set; }

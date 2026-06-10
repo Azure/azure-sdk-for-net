@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(resourceGroup))
             {
                 writer.WritePropertyName("resourcegroup"u8);
-                writer.WriteStringValue(ResourceGroup);
+                writer.WriteStringValue(resourceGroup);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(subscriptionId))
             {
                 writer.WritePropertyName("subscriptionid"u8);
-                writer.WriteStringValue(SubscriptionId);
+                writer.WriteStringValue(subscriptionId);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DnsResolver
         internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DnsForwardingRulesetProperties properties, string rulesetName, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            RulesetName = rulesetName;
+            rulesetName = rulesetName;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver
         internal DnsForwardingRulesetProperties Properties { get; set; }
 
         /// <summary> The name of the DNS forwarding ruleset. </summary>
-        public string RulesetName { get; }
+        public string rulesetName { get; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }

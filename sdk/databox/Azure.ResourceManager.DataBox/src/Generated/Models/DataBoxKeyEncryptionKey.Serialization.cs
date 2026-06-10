@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultResourceId))
+            if (Optional.IsDefined(kekVaultResourceId))
             {
                 writer.WritePropertyName("kekVaultResourceID"u8);
-                writer.WriteStringValue(KekVaultResourceId);
+                writer.WriteStringValue(kekVaultResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

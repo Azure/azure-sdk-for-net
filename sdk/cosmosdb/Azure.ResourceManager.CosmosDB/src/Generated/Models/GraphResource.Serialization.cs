@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 throw new FormatException($"The model {nameof(GraphResource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(GraphName);
+            writer.WriteStringValue(graphName);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

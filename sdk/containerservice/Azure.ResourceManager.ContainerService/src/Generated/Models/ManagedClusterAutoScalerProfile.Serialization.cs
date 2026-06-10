@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BalanceSimilarNodeGroups))
+            if (Optional.IsDefined(balanceSimilarNodeGroups))
             {
                 writer.WritePropertyName("balance-similar-node-groups"u8);
-                writer.WriteStringValue(BalanceSimilarNodeGroups);
+                writer.WriteStringValue(balanceSimilarNodeGroups);
             }
             if (Optional.IsDefined(IsDaemonsetEvictionForEmptyNodesEnabled))
             {
@@ -99,80 +99,80 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("expander"u8);
                 writer.WriteStringValue(Expander.Value.ToString());
             }
-            if (Optional.IsDefined(MaxEmptyBulkDelete))
+            if (Optional.IsDefined(maxEmptyBulkDelete))
             {
                 writer.WritePropertyName("max-empty-bulk-delete"u8);
-                writer.WriteStringValue(MaxEmptyBulkDelete);
+                writer.WriteStringValue(maxEmptyBulkDelete);
             }
-            if (Optional.IsDefined(MaxGracefulTerminationSec))
+            if (Optional.IsDefined(maxGracefulTerminationSec))
             {
                 writer.WritePropertyName("max-graceful-termination-sec"u8);
-                writer.WriteStringValue(MaxGracefulTerminationSec);
+                writer.WriteStringValue(maxGracefulTerminationSec);
             }
-            if (Optional.IsDefined(MaxNodeProvisionTime))
+            if (Optional.IsDefined(maxNodeProvisionTime))
             {
                 writer.WritePropertyName("max-node-provision-time"u8);
-                writer.WriteStringValue(MaxNodeProvisionTime);
+                writer.WriteStringValue(maxNodeProvisionTime);
             }
-            if (Optional.IsDefined(MaxTotalUnreadyPercentage))
+            if (Optional.IsDefined(maxTotalUnreadyPercentage))
             {
                 writer.WritePropertyName("max-total-unready-percentage"u8);
-                writer.WriteStringValue(MaxTotalUnreadyPercentage);
+                writer.WriteStringValue(maxTotalUnreadyPercentage);
             }
-            if (Optional.IsDefined(NewPodScaleUpDelay))
+            if (Optional.IsDefined(newPodScaleUpDelay))
             {
                 writer.WritePropertyName("new-pod-scale-up-delay"u8);
-                writer.WriteStringValue(NewPodScaleUpDelay);
+                writer.WriteStringValue(newPodScaleUpDelay);
             }
-            if (Optional.IsDefined(OkTotalUnreadyCount))
+            if (Optional.IsDefined(okTotalUnreadyCount))
             {
                 writer.WritePropertyName("ok-total-unready-count"u8);
-                writer.WriteStringValue(OkTotalUnreadyCount);
+                writer.WriteStringValue(okTotalUnreadyCount);
             }
             if (Optional.IsDefined(ScanIntervalInSeconds))
             {
                 writer.WritePropertyName("scan-interval"u8);
                 writer.WriteStringValue(ScanIntervalInSeconds);
             }
-            if (Optional.IsDefined(ScaleDownDelayAfterAdd))
+            if (Optional.IsDefined(scaleDownDelayAfterAdd))
             {
                 writer.WritePropertyName("scale-down-delay-after-add"u8);
-                writer.WriteStringValue(ScaleDownDelayAfterAdd);
+                writer.WriteStringValue(scaleDownDelayAfterAdd);
             }
-            if (Optional.IsDefined(ScaleDownDelayAfterDelete))
+            if (Optional.IsDefined(scaleDownDelayAfterDelete))
             {
                 writer.WritePropertyName("scale-down-delay-after-delete"u8);
-                writer.WriteStringValue(ScaleDownDelayAfterDelete);
+                writer.WriteStringValue(scaleDownDelayAfterDelete);
             }
-            if (Optional.IsDefined(ScaleDownDelayAfterFailure))
+            if (Optional.IsDefined(scaleDownDelayAfterFailure))
             {
                 writer.WritePropertyName("scale-down-delay-after-failure"u8);
-                writer.WriteStringValue(ScaleDownDelayAfterFailure);
+                writer.WriteStringValue(scaleDownDelayAfterFailure);
             }
-            if (Optional.IsDefined(ScaleDownUnneededTime))
+            if (Optional.IsDefined(scaleDownUnneededTime))
             {
                 writer.WritePropertyName("scale-down-unneeded-time"u8);
-                writer.WriteStringValue(ScaleDownUnneededTime);
+                writer.WriteStringValue(scaleDownUnneededTime);
             }
-            if (Optional.IsDefined(ScaleDownUnreadyTime))
+            if (Optional.IsDefined(scaleDownUnreadyTime))
             {
                 writer.WritePropertyName("scale-down-unready-time"u8);
-                writer.WriteStringValue(ScaleDownUnreadyTime);
+                writer.WriteStringValue(scaleDownUnreadyTime);
             }
-            if (Optional.IsDefined(ScaleDownUtilizationThreshold))
+            if (Optional.IsDefined(scaleDownUtilizationThreshold))
             {
                 writer.WritePropertyName("scale-down-utilization-threshold"u8);
-                writer.WriteStringValue(ScaleDownUtilizationThreshold);
+                writer.WriteStringValue(scaleDownUtilizationThreshold);
             }
-            if (Optional.IsDefined(SkipNodesWithLocalStorage))
+            if (Optional.IsDefined(skipNodesWithLocalStorage))
             {
                 writer.WritePropertyName("skip-nodes-with-local-storage"u8);
-                writer.WriteStringValue(SkipNodesWithLocalStorage);
+                writer.WriteStringValue(skipNodesWithLocalStorage);
             }
-            if (Optional.IsDefined(SkipNodesWithSystemPods))
+            if (Optional.IsDefined(skipNodesWithSystemPods))
             {
                 writer.WritePropertyName("skip-nodes-with-system-pods"u8);
-                writer.WriteStringValue(SkipNodesWithSystemPods);
+                writer.WriteStringValue(skipNodesWithSystemPods);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

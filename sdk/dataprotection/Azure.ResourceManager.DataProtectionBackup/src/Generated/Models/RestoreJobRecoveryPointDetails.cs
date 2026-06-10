@@ -26,5 +26,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RecoverOn = recoverOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets the recoveryPointId. </summary>
+        public string recoveryPointId { get; }
     }
 }

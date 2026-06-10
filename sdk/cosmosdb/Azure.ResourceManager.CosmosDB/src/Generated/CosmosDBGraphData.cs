@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Name of the Cosmos DB Graph. </summary>
         [WirePath("properties.resource.id")]
-        public string ResourceGraphName
+        public string ResourcegraphName
         {
             get
             {
-                return Properties is null ? default : Properties.ResourceGraphName;
+                return Properties is null ? default : Properties.ResourcegraphName;
             }
         }
     }
