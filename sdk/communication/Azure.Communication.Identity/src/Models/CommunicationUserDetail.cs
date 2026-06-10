@@ -8,7 +8,9 @@ namespace Azure.Communication.Identity.Models
     /// <summary>
     /// Represents the details of a Communication User.
     /// </summary>
+#pragma warning disable AZC0035 // Model factory will be added in a future update
     public class CommunicationUserDetail
+#pragma warning restore AZC0035
     {
         /// <summary> Initializes a new instance of <see cref="CommunicationUserDetail"/>. </summary>
         /// <param name="customId"> The custom Id if one has been associated with the identity. </param>
