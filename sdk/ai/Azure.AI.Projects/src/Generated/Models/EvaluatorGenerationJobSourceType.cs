@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The supported source types for evaluator generation jobs. </summary>
-    public readonly partial struct EvaluatorGenerationJobSourceType : IEquatable<EvaluatorGenerationJobSourceType>
+    internal readonly partial struct EvaluatorGenerationJobSourceType : IEquatable<EvaluatorGenerationJobSourceType>
     {
         private readonly string _value;
         /// <summary> Prompt source — inline text provided by the user. </summary>

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct ContainerSkillType : IEquatable<ContainerSkillType>
+    internal readonly partial struct ContainerSkillType : IEquatable<ContainerSkillType>
     {
         private readonly string _value;
         private const string SkillReferenceValue = "skill_reference";

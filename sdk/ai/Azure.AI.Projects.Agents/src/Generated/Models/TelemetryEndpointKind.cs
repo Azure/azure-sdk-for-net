@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The kind of telemetry export endpoint. </summary>
-    public readonly partial struct TelemetryEndpointKind : IEquatable<TelemetryEndpointKind>
+    internal readonly partial struct TelemetryEndpointKind : IEquatable<TelemetryEndpointKind>
     {
         private readonly string _value;
         /// <summary> OpenTelemetry Protocol (OTLP) endpoint. </summary>
