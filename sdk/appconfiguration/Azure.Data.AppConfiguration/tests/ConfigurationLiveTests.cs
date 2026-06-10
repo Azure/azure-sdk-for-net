@@ -88,6 +88,11 @@ namespace Azure.Data.AppConfiguration.Tests
             return setting;
         }
 
+        private string GetSnapshotDescriptionForVersion()
+            => _serviceVersion >= ConfigurationClientOptions.ServiceVersion.V2026_04_01
+                ? "Test snapshot description"
+                : null;
+
         private ConfigurationSetting CreateSetting(string key, string value, string label)
         {
             return new ConfigurationSetting()
@@ -2531,7 +2536,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() };
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -2559,7 +2564,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() };
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -2601,7 +2606,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     {
                         settingsFilter
                     });
-                var settingsSnapshot = new ConfigurationSnapshot(settingsFilters) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilters) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() };
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -2630,7 +2635,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() };
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -2678,7 +2683,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter("Key-*") });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
@@ -2743,7 +2748,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     settingsFilter
                 });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
@@ -2808,7 +2813,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     settingFilter
                 });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilters) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
@@ -2835,7 +2840,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() };
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -2867,7 +2872,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() };
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -2906,12 +2911,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var firstSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(firstSetting.Key) });
                 var firstSnapshotName = GenerateSnapshotName("first_snapshot");
-                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(firstOperation);
 
                 var secondSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(secondSetting.Key) });
                 var secondSnapshotName = GenerateSnapshotName("second_snapshot");
-                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(secondOperation);
 
                 var selector = new SnapshotSelector();
@@ -2941,12 +2946,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var firstSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(firstSetting.Key) });
                 var firstSnapshotName = GenerateSnapshotName("first_snapshot");
-                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(firstOperation);
 
                 var secondSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(secondSetting.Key) });
                 var secondSnapshotName = GenerateSnapshotName("second_snapshot");
-                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(secondOperation);
 
                 var selector = new SnapshotSelector()
@@ -2979,7 +2984,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(setting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(operation);
 
                 var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
@@ -3005,7 +3010,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(createdSetting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = "Test snapshot description" });
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter) { RetentionPeriod = TimeSpan.FromHours(1), Description = GetSnapshotDescriptionForVersion() });
                 ValidateCompletedOperation(operation);
 
                 setting.Value = "Updated_Value";
