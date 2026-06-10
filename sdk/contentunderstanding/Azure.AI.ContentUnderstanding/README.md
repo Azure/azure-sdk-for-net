@@ -245,6 +245,16 @@ Console.WriteLine(text);
 //   ...
 ```
 
+> **About `<!-- InputPageNumber: N -->`**
+> The helper emits `<!-- InputPageNumber: N -->` markers at page boundaries in
+> the markdown body. `N` is the **original 1-based page number from the source
+> document** (i.e., the page index in the analyzed PDF), not a counter that
+> restarts at 1 for each call. This matters when the analyze request specifies
+> a `ContentRange` (e.g., `"2-3,5"`): the markers will read
+> `InputPageNumber: 2`, `3`, `5` — not `1`, `2`, `3`. Downstream consumers
+> (RAG indexers, page-citation prompts) can rely on the marker value to cite
+> the correct source page even when only a subset of pages was analyzed.
+
 See the [advanced ToLlmInput sample][sample-advanced-to-llm-input] for output options (fields-only, markdown-only, custom metadata), multi-page content ranges, and multi-segment video.
 
 ## Troubleshooting
