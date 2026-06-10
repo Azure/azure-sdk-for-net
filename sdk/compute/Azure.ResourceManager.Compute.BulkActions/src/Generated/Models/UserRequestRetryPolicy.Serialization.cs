@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             int? retryCount = default;
             int? retryWindowInMinutes = default;
-            ResourceOperationType? onFailureAction = default;
+            ComputeBulkOperationType? onFailureAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    onFailureAction = new ResourceOperationType(prop.Value.GetString());
+                    onFailureAction = new ComputeBulkOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

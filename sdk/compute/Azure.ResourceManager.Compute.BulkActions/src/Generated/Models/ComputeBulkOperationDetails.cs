@@ -13,25 +13,25 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The details of a response from an operation on a resource. </summary>
-    public partial class ResourceOperationDetails
+    public partial class ComputeBulkOperationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        internal ResourceOperationDetails(string operationId)
+        internal ComputeBulkOperationDetails(string operationId)
         {
             OperationId = operationId;
             ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
         /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
         /// <param name="operationType"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
-        /// <param name="deadline"> Deadline for the operation. </param>
+        /// <param name="deadlineOn"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
         /// <param name="timeZone"> Timezone for the operation. </param>
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, IList<ResourceIdentifier> resourceIds, ResourceOperationType? operationType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ResourceOperationError error, FallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationDetails(string operationId, IList<ResourceIdentifier> resourceIds, ComputeBulkOperationType? operationType, string subscriptionId, DateTimeOffset? deadlineOn, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceIds = resourceIds;
             OperationType = operationType;
             SubscriptionId = subscriptionId;
-            Deadline = deadline;
+            DeadlineOn = deadlineOn;
             DeadlineType = deadlineType;
             State = state;
             TimeZone = timeZone;
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<ResourceIdentifier> ResourceIds { get; }
 
         /// <summary> Type of operation performed on the resources. </summary>
-        public ResourceOperationType? OperationType { get; }
+        public ComputeBulkOperationType? OperationType { get; }
 
         /// <summary> Subscription id attached to the request. </summary>
         public string SubscriptionId { get; }
 
         /// <summary> Deadline for the operation. </summary>
-        public DateTimeOffset? Deadline { get; }
+        public DateTimeOffset? DeadlineOn { get; }
 
         /// <summary> Type of deadline of the operation. </summary>
         public ScheduledActionDeadlineType? DeadlineType { get; }
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string TimeZone { get; }
 
         /// <summary> Operation level errors if they exist. </summary>
-        public ResourceOperationError Error { get; }
+        public ComputeBulkOperationError Error { get; }
 
         /// <summary> Fallback operation details if a fallback was performed. </summary>
-        public FallbackOperationInfo FallbackOperationInfo { get; }
+        public ComputeBulkFallbackOperationInfo FallbackOperationInfo { get; }
 
         /// <summary> Time the operation was complete if errors are null. </summary>
         public DateTimeOffset? CompletedOn { get; }

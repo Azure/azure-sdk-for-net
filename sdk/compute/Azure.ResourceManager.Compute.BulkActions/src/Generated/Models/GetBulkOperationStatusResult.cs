@@ -12,22 +12,22 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> This is the response from a get operations status request. </summary>
-    public partial class GetOperationStatusResult
+    public partial class GetBulkOperationStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
-        internal GetOperationStatusResult(IEnumerable<ResourceOperationResult> results)
+        internal GetBulkOperationStatusResult(IEnumerable<ResourceOperationResult> results)
         {
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetOperationStatusResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetBulkOperationStatusResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

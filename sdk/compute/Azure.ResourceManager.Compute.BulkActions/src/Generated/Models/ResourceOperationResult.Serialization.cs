@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             IList<ResourceIdentifier> resourceIds = default;
             string errorCode = default;
             string errorDetails = default;
-            ResourceOperationDetails operation = default;
+            ComputeBulkOperationDetails operation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    operation = ResourceOperationDetails.DeserializeResourceOperationDetails(prop.Value, options);
+                    operation = ComputeBulkOperationDetails.DeserializeComputeBulkOperationDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

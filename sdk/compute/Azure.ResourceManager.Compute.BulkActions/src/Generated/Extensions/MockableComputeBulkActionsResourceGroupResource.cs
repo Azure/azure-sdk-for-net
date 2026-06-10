@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetOperationStatusResult>> BulkGetOperationsStatusAsync(AzureLocation location, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -465,9 +465,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkGetOperationsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, GetOperationStatusContent.ToRequestContent(content), context);
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkGetOperationsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, GetBulkOperationStatusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GetOperationStatusResult> response = Response.FromValue(GetOperationStatusResult.FromResponse(result), result);
+                Response<GetBulkOperationStatusResult> response = Response.FromValue(GetBulkOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetOperationStatusResult> BulkGetOperationsStatus(AzureLocation location, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GetBulkOperationStatusResult> BulkGetOperationsStatus(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -514,9 +514,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkGetOperationsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, GetOperationStatusContent.ToRequestContent(content), context);
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkGetOperationsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, GetBulkOperationStatusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GetOperationStatusResult> response = Response.FromValue(GetOperationStatusResult.FromResponse(result), result);
+                Response<GetBulkOperationStatusResult> response = Response.FromValue(GetBulkOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CancelOperationsResult>> BulkCancelOperationsAsync(AzureLocation location, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CancelBulkOperationsResult>> BulkCancelOperationsAsync(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CancelOperationsContent.ToRequestContent(content), context);
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CancelBulkOperationsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CancelOperationsResult> response = Response.FromValue(CancelOperationsResult.FromResponse(result), result);
+                Response<CancelBulkOperationsResult> response = Response.FromValue(CancelBulkOperationsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CancelOperationsResult> BulkCancelOperations(AzureLocation location, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CancelBulkOperationsResult> BulkCancelOperations(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -612,9 +612,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CancelOperationsContent.ToRequestContent(content), context);
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CancelBulkOperationsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CancelOperationsResult> response = Response.FromValue(CancelOperationsResult.FromResponse(result), result);
+                Response<CancelBulkOperationsResult> response = Response.FromValue(CancelBulkOperationsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

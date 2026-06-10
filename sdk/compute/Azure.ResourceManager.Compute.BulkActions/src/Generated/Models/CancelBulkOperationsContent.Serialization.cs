@@ -14,67 +14,67 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> This is the request to get operation status using operationids. </summary>
-    public partial class GetOperationStatusContent : IJsonModel<GetOperationStatusContent>
+    /// <summary> This is the request to cancel running operations in scheduled actions using the operation ids. </summary>
+    public partial class CancelBulkOperationsContent : IJsonModel<CancelBulkOperationsContent>
     {
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusContent"/> for deserialization. </summary>
-        internal GetOperationStatusContent()
+        /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsContent"/> for deserialization. </summary>
+        internal CancelBulkOperationsContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetOperationStatusContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CancelBulkOperationsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelBulkOperationsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGetOperationStatusContent(document.RootElement, options);
+                        return DeserializeCancelBulkOperationsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationStatusContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelBulkOperationsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelBulkOperationsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationStatusContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelBulkOperationsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GetOperationStatusContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CancelBulkOperationsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetOperationStatusContent IPersistableModel<GetOperationStatusContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CancelBulkOperationsContent IPersistableModel<CancelBulkOperationsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GetOperationStatusContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CancelBulkOperationsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="getOperationStatusContent"> The <see cref="GetOperationStatusContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GetOperationStatusContent getOperationStatusContent)
+        /// <param name="cancelBulkOperationsContent"> The <see cref="CancelBulkOperationsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CancelBulkOperationsContent cancelBulkOperationsContent)
         {
-            if (getOperationStatusContent == null)
+            if (cancelBulkOperationsContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(getOperationStatusContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cancelBulkOperationsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GetOperationStatusContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CancelBulkOperationsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelBulkOperationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationStatusContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelBulkOperationsContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("operationIds"u8);
             writer.WriteStartArray();
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetOperationStatusContent IJsonModel<GetOperationStatusContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CancelBulkOperationsContent IJsonModel<CancelBulkOperationsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetOperationStatusContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CancelBulkOperationsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelBulkOperationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationStatusContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelBulkOperationsContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetOperationStatusContent(document.RootElement, options);
+            return DeserializeCancelBulkOperationsContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GetOperationStatusContent DeserializeGetOperationStatusContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static CancelBulkOperationsContent DeserializeCancelBulkOperationsContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GetOperationStatusContent(operationIds, additionalBinaryDataProperties);
+            return new CancelBulkOperationsContent(operationIds, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,63 +15,63 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> This is the response from a get operations status request. </summary>
-    public partial class GetOperationStatusResult : IJsonModel<GetOperationStatusResult>
+    public partial class GetBulkOperationStatusResult : IJsonModel<GetBulkOperationStatusResult>
     {
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResult"/> for deserialization. </summary>
-        internal GetOperationStatusResult()
+        /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusResult"/> for deserialization. </summary>
+        internal GetBulkOperationStatusResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetOperationStatusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GetBulkOperationStatusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetBulkOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGetOperationStatusResult(document.RootElement, options);
+                        return DeserializeGetBulkOperationStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetBulkOperationStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetBulkOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetBulkOperationStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GetOperationStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GetBulkOperationStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetOperationStatusResult IPersistableModel<GetOperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GetBulkOperationStatusResult IPersistableModel<GetBulkOperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GetOperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetBulkOperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetOperationStatusResult"/> from. </param>
-        internal static GetOperationStatusResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetBulkOperationStatusResult"/> from. </param>
+        internal static GetBulkOperationStatusResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGetOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGetBulkOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GetOperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetBulkOperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetBulkOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetBulkOperationStatusResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetOperationStatusResult IJsonModel<GetOperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GetBulkOperationStatusResult IJsonModel<GetBulkOperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetOperationStatusResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GetBulkOperationStatusResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetBulkOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetBulkOperationStatusResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetOperationStatusResult(document.RootElement, options);
+            return DeserializeGetBulkOperationStatusResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GetOperationStatusResult DeserializeGetOperationStatusResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static GetBulkOperationStatusResult DeserializeGetBulkOperationStatusResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GetOperationStatusResult(results, additionalBinaryDataProperties);
+            return new GetBulkOperationStatusResult(results, additionalBinaryDataProperties);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationResult(IList<ResourceIdentifier> resourceIds, string errorCode, string errorDetails, ResourceOperationDetails operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceOperationResult(IList<ResourceIdentifier> resourceIds, string errorCode, string errorDetails, ComputeBulkOperationDetails operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceIds = resourceIds;
             ErrorCode = errorCode;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string ErrorDetails { get; }
 
         /// <summary> Details of the operation performed on a resource. </summary>
-        public ResourceOperationDetails Operation { get; }
+        public ComputeBulkOperationDetails Operation { get; }
     }
 }

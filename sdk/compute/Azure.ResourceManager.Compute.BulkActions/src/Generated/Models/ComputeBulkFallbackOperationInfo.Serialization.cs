@@ -14,56 +14,56 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes the fallback operation that was performed. </summary>
-    public partial class FallbackOperationInfo : IJsonModel<FallbackOperationInfo>
+    public partial class ComputeBulkFallbackOperationInfo : IJsonModel<ComputeBulkFallbackOperationInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="FallbackOperationInfo"/> for deserialization. </summary>
-        internal FallbackOperationInfo()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkFallbackOperationInfo"/> for deserialization. </summary>
+        internal ComputeBulkFallbackOperationInfo()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FallbackOperationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkFallbackOperationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkFallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFallbackOperationInfo(document.RootElement, options);
+                        return DeserializeComputeBulkFallbackOperationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkFallbackOperationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkFallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkFallbackOperationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FallbackOperationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeBulkFallbackOperationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FallbackOperationInfo IPersistableModel<FallbackOperationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeBulkFallbackOperationInfo IPersistableModel<ComputeBulkFallbackOperationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FallbackOperationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeBulkFallbackOperationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FallbackOperationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeBulkFallbackOperationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkFallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkFallbackOperationInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("lastOpType"u8);
             writer.WriteStringValue(LastOperationType.ToString());
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FallbackOperationInfo IJsonModel<FallbackOperationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeBulkFallbackOperationInfo IJsonModel<ComputeBulkFallbackOperationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FallbackOperationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkFallbackOperationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkFallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkFallbackOperationInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFallbackOperationInfo(document.RootElement, options);
+            return DeserializeComputeBulkFallbackOperationInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FallbackOperationInfo DeserializeFallbackOperationInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeBulkFallbackOperationInfo DeserializeComputeBulkFallbackOperationInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceOperationType lastOperationType = default;
+            ComputeBulkOperationType lastOperationType = default;
             string status = default;
-            ResourceOperationError error = default;
+            ComputeBulkOperationError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("lastOpType"u8))
                 {
-                    lastOperationType = new ResourceOperationType(prop.Value.GetString());
+                    lastOperationType = new ComputeBulkOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    error = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
+                    error = ComputeBulkOperationError.DeserializeComputeBulkOperationError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FallbackOperationInfo(lastOperationType, status, error, additionalBinaryDataProperties);
+            return new ComputeBulkFallbackOperationInfo(lastOperationType, status, error, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,56 +15,56 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The details of a response from an operation on a resource. </summary>
-    public partial class ResourceOperationDetails : IJsonModel<ResourceOperationDetails>
+    public partial class ComputeBulkOperationDetails : IJsonModel<ComputeBulkOperationDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/> for deserialization. </summary>
-        internal ResourceOperationDetails()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/> for deserialization. </summary>
+        internal ComputeBulkOperationDetails()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceOperationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkOperationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourceOperationDetails(document.RootElement, options);
+                        return DeserializeComputeBulkOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeBulkOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceOperationDetails IPersistableModel<ResourceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeBulkOperationDetails IPersistableModel<ComputeBulkOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeBulkOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeBulkOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceOperationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkOperationDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(Deadline))
+            if (Optional.IsDefined(DeadlineOn))
             {
                 writer.WritePropertyName("deadline"u8);
-                writer.WriteStringValue(Deadline.Value, "O");
+                writer.WriteStringValue(DeadlineOn.Value, "O");
             }
             if (Optional.IsDefined(DeadlineType))
             {
@@ -166,24 +166,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceOperationDetails IJsonModel<ResourceOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeBulkOperationDetails IJsonModel<ComputeBulkOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceOperationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkOperationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceOperationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkOperationDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceOperationDetails(document.RootElement, options);
+            return DeserializeComputeBulkOperationDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceOperationDetails DeserializeResourceOperationDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeBulkOperationDetails DeserializeComputeBulkOperationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             string operationId = default;
             IList<ResourceIdentifier> resourceIds = default;
-            ResourceOperationType? operationType = default;
+            ComputeBulkOperationType? operationType = default;
             string subscriptionId = default;
-            DateTimeOffset? deadline = default;
+            DateTimeOffset? deadlineOn = default;
             ScheduledActionDeadlineType? deadlineType = default;
             ScheduledActionOperationState? state = default;
             string timeZone = default;
-            ResourceOperationError error = default;
-            FallbackOperationInfo fallbackOperationInfo = default;
+            ComputeBulkOperationError error = default;
+            ComputeBulkFallbackOperationInfo fallbackOperationInfo = default;
             DateTimeOffset? completedOn = default;
             UserRequestRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    operationType = new ResourceOperationType(prop.Value.GetString());
+                    operationType = new ComputeBulkOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    deadline = prop.Value.GetDateTimeOffset("O");
+                    deadlineOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deadlineType"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    error = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
+                    error = ComputeBulkOperationError.DeserializeComputeBulkOperationError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fallbackOperationInfo"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    fallbackOperationInfo = FallbackOperationInfo.DeserializeFallbackOperationInfo(prop.Value, options);
+                    fallbackOperationInfo = ComputeBulkFallbackOperationInfo.DeserializeComputeBulkFallbackOperationInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("completedAt"u8))
@@ -317,12 +317,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceOperationDetails(
+            return new ComputeBulkOperationDetails(
                 operationId,
                 resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 operationType,
                 subscriptionId,
-                deadline,
+                deadlineOn,
                 deadlineType,
                 state,
                 timeZone,

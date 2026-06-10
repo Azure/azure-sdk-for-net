@@ -12,22 +12,22 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> This is the response from a cancel operations request. </summary>
-    public partial class CancelOperationsResult
+    public partial class CancelBulkOperationsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CancelOperationsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
-        internal CancelOperationsResult(IEnumerable<ResourceOperationResult> results)
+        internal CancelBulkOperationsResult(IEnumerable<ResourceOperationResult> results)
         {
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CancelOperationsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CancelOperationsResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelBulkOperationsResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
