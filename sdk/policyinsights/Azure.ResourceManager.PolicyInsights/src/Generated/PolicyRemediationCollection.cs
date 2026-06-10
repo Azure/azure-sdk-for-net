@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyRemediationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(PolicyRemediationResource.ResourceType, out string policyRemediationApiVersion);
+            TryGetApiVersion(PolicyRemediationResource.ResourceType, out string policyRemediationApiVersion);
             _remediationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyRemediationResource.ResourceType.Namespace, Diagnostics);
             _remediationsRestClient = new Remediations(_remediationsClientDiagnostics, Pipeline, Endpoint, policyRemediationApiVersion ?? "2024-10-01");
         }
@@ -559,18 +559,18 @@ namespace Azure.ResourceManager.PolicyInsights
 
         IEnumerator<PolicyRemediationResource> IEnumerable<PolicyRemediationResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PolicyRemediationResource> IAsyncEnumerable<PolicyRemediationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

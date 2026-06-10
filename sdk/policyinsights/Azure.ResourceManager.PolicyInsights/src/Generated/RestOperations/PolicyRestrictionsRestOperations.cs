@@ -89,9 +89,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Management", true);
-            uri.AppendPath("/managementGroups/", false);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/checkPolicyRestrictions", false);
             if (_apiVersion != null)

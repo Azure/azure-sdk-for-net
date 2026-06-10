@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyAttestationResource(ArmClient client, PolicyAttestationData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyAttestationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string policyAttestationApiVersion);
+            TryGetApiVersion(ResourceType, out string policyAttestationApiVersion);
             _attestationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ResourceType.Namespace, Diagnostics);
             _attestationsRestClient = new Attestations(_attestationsClientDiagnostics, Pipeline, Endpoint, policyAttestationApiVersion ?? "2024-10-01");
-            PolicyAttestationResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>

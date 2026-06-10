@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private PolicyEvents _policyEventsRestClient;
         private ClientDiagnostics _policyStatesClientDiagnostics;
         private PolicyStates _policyStatesRestClient;
-        private ClientDiagnostics _policyRestrictionsClientDiagnostics;
-        private PolicyRestrictions _policyRestrictionsRestClient;
         private ClientDiagnostics _componentPolicyStatesClientDiagnostics;
         private ComponentPolicyStates _componentPolicyStatesRestClient;
         private ClientDiagnostics _policyTrackedResourcesClientDiagnostics;
@@ -51,10 +49,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
         private PolicyStates PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStates(PolicyStatesClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
 
-        private ClientDiagnostics PolicyRestrictionsClientDiagnostics => _policyRestrictionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PolicyRestrictions PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictions(PolicyRestrictionsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
-
         private ClientDiagnostics ComponentPolicyStatesClientDiagnostics => _componentPolicyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ComponentPolicyStates ComponentPolicyStatesRestClient => _componentPolicyStatesRestClient ??= new ComponentPolicyStates(ComponentPolicyStatesClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
@@ -62,6 +56,15 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private ClientDiagnostics PolicyTrackedResourcesClientDiagnostics => _policyTrackedResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PolicyTrackedResources PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResources(PolicyTrackedResourcesClientDiagnostics, Pipeline, Endpoint, "2018-07-01-preview");
+
+        /// <summary> Gets an object representing a <see cref="PolicyRemediationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyRemediationResource"/> object. </returns>
+        public virtual PolicyRemediationResource GetPolicyRemediationResource(ResourceIdentifier id)
+        {
+            PolicyRemediationResource.ValidateResourceId(id);
+            return new PolicyRemediationResource(Client, id);
+        }
 
         /// <summary> Gets a collection of <see cref="PolicyRemediationCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
@@ -97,6 +100,15 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             return await GetPolicyRemediations(scope).GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PolicyAttestationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
+        public virtual PolicyAttestationResource GetPolicyAttestationResource(ResourceIdentifier id)
+        {
+            PolicyAttestationResource.ValidateResourceId(id);
+            return new PolicyAttestationResource(Client, id);
         }
 
         /// <summary> Gets a collection of <see cref="PolicyAttestationCollection"/> objects within the specified scope. </summary>
@@ -1883,106 +1895,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 HttpMessage message = PolicyStatesRestClient.CreateSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(scope.SubscriptionId, scope.Parent.Name, policyStatesSummaryResource.ToString(), scope.Name, default, default, default, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SummarizeResults> response = Response.FromValue(SummarizeResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyRestrictionsOperationGroup_CheckAtManagementGroupScope. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckAtManagementGroupScopeAsync(ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope0 = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CheckAtManagementGroupScope");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(scope.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckPolicyRestrictionsResult> response = Response.FromValue(CheckPolicyRestrictionsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyRestrictionsOperationGroup_CheckAtManagementGroupScope. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckPolicyRestrictionsResult> CheckAtManagementGroupScope(ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope0 = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CheckAtManagementGroupScope");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(scope.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckPolicyRestrictionsResult> response = Response.FromValue(CheckPolicyRestrictionsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

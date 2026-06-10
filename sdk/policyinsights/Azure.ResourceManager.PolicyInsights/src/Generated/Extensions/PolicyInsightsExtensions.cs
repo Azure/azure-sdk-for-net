@@ -52,6 +52,24 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PolicyRemediationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsArmClient.GetPolicyRemediationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PolicyRemediationResource"/> object. </returns>
+        public static PolicyRemediationResource GetPolicyRemediationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePolicyInsightsArmClient(client).GetPolicyRemediationResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of <see cref="PolicyRemediationCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
@@ -107,6 +125,24 @@ namespace Azure.ResourceManager.PolicyInsights
             Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockablePolicyInsightsArmClient(client).GetPolicyRemediationAsync(scope, remediationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PolicyAttestationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsArmClient.GetPolicyAttestationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
+        public static PolicyAttestationResource GetPolicyAttestationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePolicyInsightsArmClient(client).GetPolicyAttestationResource(id);
         }
 
         /// <summary>
@@ -930,44 +966,6 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsArmClient.CheckAtManagementGroupScopeAsync(ResourceIdentifier, CheckManagementGroupPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<CheckPolicyRestrictionsResult>> CheckAtManagementGroupScopeAsync(this ArmClient client, ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockablePolicyInsightsArmClient(client).CheckAtManagementGroupScopeAsync(scope, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsArmClient.CheckAtManagementGroupScope(ResourceIdentifier, CheckManagementGroupPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<CheckPolicyRestrictionsResult> CheckAtManagementGroupScope(this ArmClient client, ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePolicyInsightsArmClient(client).CheckAtManagementGroupScope(scope, content, cancellationToken);
-        }
-
-        /// <summary>
         /// Queries component policy states for the resource.
         /// <item>
         /// <term> Mocking. </term>
@@ -1212,116 +1210,6 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Gets a collection of PolicyRemediations in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyRemediations()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PolicyRemediations and their operations over a PolicyRemediationResource. </returns>
-        public static PolicyRemediationCollection GetPolicyRemediations(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyRemediations();
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at resource group scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyRemediationAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(this ResourceGroupResource resourceGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyRemediationAsync(remediationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at resource group scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyRemediation(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PolicyRemediationResource> GetPolicyRemediation(this ResourceGroupResource resourceGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyRemediation(remediationName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of PolicyAttestations in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyAttestations()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PolicyAttestations and their operations over a PolicyAttestationResource. </returns>
-        public static PolicyAttestationCollection GetPolicyAttestations(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyAttestations();
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at resource group scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyAttestationAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PolicyAttestationResource>> GetPolicyAttestationAsync(this ResourceGroupResource resourceGroupResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyAttestationAsync(attestationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at resource group scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyAttestation(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PolicyAttestationResource> GetPolicyAttestation(this ResourceGroupResource resourceGroupResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyAttestation(attestationName, cancellationToken);
-        }
-
-        /// <summary>
         /// Queries policy events for the resources under the resource group.
         /// <item>
         /// <term> Mocking. </term>
@@ -1476,42 +1364,6 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Checks what restrictions Azure Policy will place on a resource within a resource group. Use this when the resource group the resource will be created in is already known.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.CheckAtResourceGroupScopeAsync(CheckPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<CheckPolicyRestrictionsResult>> CheckAtResourceGroupScopeAsync(this ResourceGroupResource resourceGroupResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).CheckAtResourceGroupScopeAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on a resource within a resource group. Use this when the resource group the resource will be created in is already known.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.CheckAtResourceGroupScope(CheckPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<CheckPolicyRestrictionsResult> CheckAtResourceGroupScope(this ResourceGroupResource resourceGroupResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).CheckAtResourceGroupScope(content, cancellationToken);
-        }
-
-        /// <summary>
         /// Queries component policy states under resource group scope.
         /// <item>
         /// <term> Mocking. </term>
@@ -1587,116 +1439,6 @@ namespace Azure.ResourceManager.PolicyInsights
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroup(policyTrackedResourcesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of PolicyRemediations in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyRemediations()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of PolicyRemediations and their operations over a PolicyRemediationResource. </returns>
-        public static PolicyRemediationCollection GetPolicyRemediations(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyRemediations();
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at subscription scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyRemediationAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(this SubscriptionResource subscriptionResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyRemediationAsync(remediationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at subscription scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyRemediation(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PolicyRemediationResource> GetPolicyRemediation(this SubscriptionResource subscriptionResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyRemediation(remediationName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of PolicyAttestations in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyAttestations()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of PolicyAttestations and their operations over a PolicyAttestationResource. </returns>
-        public static PolicyAttestationCollection GetPolicyAttestations(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyAttestations();
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at subscription scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyAttestationAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PolicyAttestationResource>> GetPolicyAttestationAsync(this SubscriptionResource subscriptionResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyAttestationAsync(attestationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at subscription scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyAttestation(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PolicyAttestationResource> GetPolicyAttestation(this SubscriptionResource subscriptionResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyAttestation(attestationName, cancellationToken);
         }
 
         /// <summary>
@@ -1851,42 +1593,6 @@ namespace Azure.ResourceManager.PolicyInsights
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).TriggerSubscriptionEvaluation(waitUntil, cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on a resource within a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.CheckAtSubscriptionScopeAsync(CheckPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckPolicyRestrictionsResult>> CheckAtSubscriptionScopeAsync(this SubscriptionResource subscriptionResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).CheckAtSubscriptionScopeAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on a resource within a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.CheckAtSubscriptionScope(CheckPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckPolicyRestrictionsResult> CheckAtSubscriptionScope(this SubscriptionResource subscriptionResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).CheckAtSubscriptionScope(content, cancellationToken);
         }
 
         /// <summary>
@@ -2058,61 +1764,6 @@ namespace Azure.ResourceManager.PolicyInsights
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockablePolicyInsightsTenantResource(tenantResource).GetAll(queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of PolicyRemediations in the <see cref="ManagementGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsManagementGroupResource.GetPolicyRemediations()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PolicyRemediations and their operations over a PolicyRemediationResource. </returns>
-        public static PolicyRemediationCollection GetPolicyRemediations(this ManagementGroupResource managementGroupResource)
-        {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
-
-            return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyRemediations();
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at management group scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsManagementGroupResource.GetPolicyRemediationAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(this ManagementGroupResource managementGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
-
-            return await GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyRemediationAsync(remediationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at management group scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsManagementGroupResource.GetPolicyRemediation(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<PolicyRemediationResource> GetPolicyRemediation(this ManagementGroupResource managementGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
-
-            return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyRemediation(remediationName, cancellationToken);
         }
     }
 }

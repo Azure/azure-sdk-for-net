@@ -5,11 +5,8 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.PolicyInsights;
@@ -19,6 +16,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
     /// <summary> A class to add extension methods to <see cref="ManagementGroupResource"/>. </summary>
     public partial class MockablePolicyInsightsManagementGroupResource : ArmResource
     {
+        private ClientDiagnostics _policyRestrictionsClientDiagnostics;
+        private PolicyRestrictions _policyRestrictionsRestClient;
+
         /// <summary> Initializes a new instance of MockablePolicyInsightsManagementGroupResource for mocking. </summary>
         protected MockablePolicyInsightsManagementGroupResource()
         {
@@ -31,69 +31,8 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
         }
 
-        /// <summary> Gets a collection of PolicyRemediations in the <see cref="ManagementGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PolicyRemediations and their operations over a PolicyRemediationResource. </returns>
-        public virtual PolicyRemediationCollection GetPolicyRemediations()
-        {
-            return this.GetCachedClient(client => new PolicyRemediationCollection(client, Id));
-        }
+        private ClientDiagnostics PolicyRestrictionsClientDiagnostics => _policyRestrictionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets an existing remediation at management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Remediations_GetAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
-
-            return await GetPolicyRemediations().GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Remediations_GetAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PolicyRemediationResource> GetPolicyRemediation(string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
-
-            return GetPolicyRemediations().Get(remediationName, cancellationToken);
-        }
+        private PolicyRestrictions PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictions(PolicyRestrictionsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
     }
 }
