@@ -9,10 +9,12 @@ namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
     // - Renamed.
+    // - Suppress ConfigurationSetting in favor of custom method.
     /// <summary>
     /// Configuration Setting model factory that enables mocking for the AppConfiguration client library.
     /// </summary>
     [CodeGenType("AppConfigurationModelFactory")]
+    [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(string), typeof(bool?), typeof(ETag))]
     public static partial class ConfigurationModelFactory
     {
         /// <summary>

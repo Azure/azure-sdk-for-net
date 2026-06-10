@@ -17,34 +17,6 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
 
-        /// <summary> A key-value pair representing application settings. </summary>
-        /// <param name="key"> The key of the key-value. </param>
-        /// <param name="label"> The label the key-value belongs to. </param>
-        /// <param name="contentType"> The content type of the value stored within the key-value. </param>
-        /// <param name="value"> The value of the key-value. </param>
-        /// <param name="lastModified"> A date representing the last time the key-value was modified. </param>
-        /// <param name="tags"> The tags of the key-value. </param>
-        /// <param name="description"> The description of the key-value. </param>
-        /// <param name="isReadOnly"> Indicates whether the key-value is locked. </param>
-        /// <param name="eTag"> A value representing the current state of the resource. </param>
-        /// <returns> A new <see cref="AppConfiguration.ConfigurationSetting"/> instance for mocking. </returns>
-        public static ConfigurationSetting ConfigurationSetting(string key = default, string label = default, string contentType = default, string value = default, DateTimeOffset? lastModified = default, IDictionary<string, string> tags = default, string description = default, bool? isReadOnly = default, ETag eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfigurationSetting(
-                key,
-                label,
-                contentType,
-                value,
-                lastModified,
-                tags,
-                description,
-                isReadOnly,
-                eTag,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
