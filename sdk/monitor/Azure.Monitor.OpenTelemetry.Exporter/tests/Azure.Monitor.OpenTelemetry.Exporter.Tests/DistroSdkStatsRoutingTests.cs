@@ -3,7 +3,9 @@
 
 using System;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
@@ -167,6 +169,232 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 // HttpClient timeout fires (which surfaces as cancellation).
                 using var registration = cancellationToken.Register(() => _gate.GetType()); // no-op anchor
                 return await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        // -----------------------------------------------------------------------------
+        // End-to-end behavior of the distro path: config fetch → MeterProvider build.
+        // Each scenario uses a deterministic in-process StubHandler and awaits the
+        // exposed _configInitializationTask so assertions reflect the post-fetch state.
+        // -----------------------------------------------------------------------------
+
+        private const string NonEuCustomerCs =
+            "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://westus.in.applicationinsights.azure.com/";
+
+        private const string EuCustomerCs =
+            "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://westeurope.in.applicationinsights.azure.com/";
+
+        private const string UnknownRegionCustomerCs =
+            "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigReturnsUrl_BuildsMeterProviderWithConfigUrl()
+        {
+            var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"data.example.invalid\"}"));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.NotNull(statsbeat._statsbeat_ConnectionString);
+            Assert.Contains("data.example.invalid", statsbeat._statsbeat_ConnectionString!);
+            // Defense in depth: must NOT have fallen back to the legacy AI endpoints.
+            Assert.DoesNotContain("applicationinsights.azure.com", statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigUrlMissingScheme_PrependsHttps()
+        {
+            // Server contract returns a bare host like "data.stats.monitor.azure.com";
+            // the exporter must produce a usable IngestionEndpoint URL from it.
+            var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"bare.host.invalid\"}"));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeat_ConnectionString);
+            Assert.Contains("IngestionEndpoint=https://bare.host.invalid/", statsbeat._statsbeat_ConnectionString!);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigUrlHasScheme_PreservesScheme()
+        {
+            var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"https://full.url.invalid/\"}"));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            // The trailing slash is normalized away then re-added; the scheme is not duplicated.
+            Assert.Contains("IngestionEndpoint=https://full.url.invalid/", statsbeat._statsbeat_ConnectionString!);
+            Assert.DoesNotContain("https://https://", statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_RemoteDisabled_DoesNotBuildMeterProvider()
+        {
+            var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":false}"));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            // Explicit kill switch: no MeterProvider, no fallback.
+            Assert.Null(statsbeat._statsbeatMeterProvider);
+            Assert.Null(statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigFetchFails_FallsBackToLegacyNonEuEndpoint()
+        {
+            var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.NotFound));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU,
+                statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigFetchFails_FallsBackToLegacyEuEndpoint()
+        {
+            var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.InternalServerError));
+            var vars = ConnectionStringParser.GetValues(EuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_EU,
+                statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigFetchFails_UnknownRegion_FallsBackToLegacyNonEuEndpoint()
+        {
+            // GetStatsbeatConnectionString returns null for unknown regions; the distro
+            // path defaults to non-EU rather than throwing.
+            var handler = new StubHandler(_ => throw new HttpRequestException("dns failure"));
+            var vars = ConnectionStringParser.GetValues(UnknownRegionCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU,
+                statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigMalformedJson_FallsBackToLegacyEndpoint()
+        {
+            var handler = new StubHandler(_ => OkJson("not a json document"));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU,
+                statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigVerMismatch_FallsBackToLegacyEndpoint()
+        {
+            var handler = new StubHandler(_ => OkJson("{\"ver\":99,\"enabled\":true,\"url\":\"x\"}"));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU,
+                statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public async Task DistroSwitchOn_ConfigEnabledTrueWithoutUrl_FallsBackToLegacyEndpoint()
+        {
+            // ver=1, enabled=true, url omitted entirely — the "incomplete control plane"
+            // case. Must fall back so SDK statistics keep flowing.
+            var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true}"));
+            var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU,
+                statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public void GetLegacyFallbackConnectionString_KnownRegion_ReturnsRegionMatched()
+        {
+            var euVars = ConnectionStringParser.GetValues(EuCustomerCs);
+            var nonEuVars = ConnectionStringParser.GetValues(NonEuCustomerCs);
+
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_EU,
+                AzureMonitorStatsbeat.GetLegacyFallbackConnectionString(euVars.IngestionEndpoint));
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU,
+                AzureMonitorStatsbeat.GetLegacyFallbackConnectionString(nonEuVars.IngestionEndpoint));
+        }
+
+        [Fact]
+        public void GetLegacyFallbackConnectionString_UnknownRegion_DefaultsToNonEu()
+        {
+            var vars = ConnectionStringParser.GetValues(UnknownRegionCustomerCs);
+
+            Assert.Equal(
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU,
+                AzureMonitorStatsbeat.GetLegacyFallbackConnectionString(vars.IngestionEndpoint));
+        }
+
+        /// <summary>
+        /// Awaits the AzureMonitorStatsbeat distro-path background initialization task with
+        /// a generous timeout. Fails fast if the background task never completes.
+        /// </summary>
+        private static async Task AwaitInitAsync(AzureMonitorStatsbeat statsbeat)
+        {
+            var task = statsbeat._configInitializationTask;
+            Assert.NotNull(task);
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await task!.WaitAsync(cts.Token).ConfigureAwait(false);
+        }
+
+        private static HttpResponseMessage OkJson(string body) =>
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json"),
+            };
+
+        private sealed class StubHandler : HttpMessageHandler
+        {
+            private readonly Func<HttpRequestMessage, HttpResponseMessage> _responder;
+
+            public StubHandler(Func<HttpRequestMessage, HttpResponseMessage> responder)
+            {
+                _responder = responder;
+            }
+
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                return Task.FromResult(_responder(request));
             }
         }
     }

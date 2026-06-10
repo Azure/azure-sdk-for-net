@@ -38,6 +38,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal MeterProvider? _statsbeatMeterProvider;
 
+        /// <summary>
+        /// Background task that fetches the SDK statistics configuration and builds the
+        /// distro-path <see cref="MeterProvider"/>. Exposed for tests to await deterministic
+        /// completion; <see langword="null"/> when the legacy path is taken.
+        /// </summary>
+        internal Task? _configInitializationTask;
+
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
         internal AzureMonitorStatsbeat(
@@ -63,12 +70,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             if (routeToDistroEndpoint)
             {
                 // Distro path: fetch the remote configuration in the background. The
-                // MeterProvider is only built if the config responds with enabled=true and
-                // a valid url. On any failure, SDK statistics stay disabled for the
-                // process — the constructor must NOT throw because that would break the
-                // customer's exporter pin path.
+                // MeterProvider is built either from the config-supplied url (success path)
+                // or from the legacy region-derived endpoint (control-plane unavailable).
+                // The only no-emission case is an explicit remote kill switch
+                // (`enabled: false`). The constructor must NOT throw because that would
+                // break the customer's exporter pin path.
                 var configUrl = GetSdkStatsConfigUrl(connectionStringVars.IngestionEndpoint);
-                _ = Task.Run(() => InitializeFromConfigAsync(configUrl, sdkStatsConfigHttpHandler));
+                var ingestionEndpoint = connectionStringVars.IngestionEndpoint;
+                _configInitializationTask = Task.Run(() =>
+                    InitializeFromConfigAsync(configUrl, ingestionEndpoint, sdkStatsConfigHttpHandler));
                 return;
             }
 
@@ -87,31 +97,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private async Task InitializeFromConfigAsync(
             string configUrl,
+            string ingestionEndpoint,
             System.Net.Http.HttpMessageHandler? httpHandler)
         {
             try
             {
-                var config = await SdkStatsConfigFetcher.FetchAsync(configUrl, httpHandler).ConfigureAwait(false);
-                if (config == null || string.IsNullOrEmpty(config.url))
+                var result = await SdkStatsConfigFetcher.FetchAsync(configUrl, httpHandler).ConfigureAwait(false);
+
+                string connectionString;
+                switch (result.Status)
                 {
-                    // FetchAsync has already logged the reason; stay disabled.
-                    return;
+                    case SdkStatsConfigStatus.UseUrl:
+                        connectionString = BuildConnectionStringFromHost(result.Url!);
+                        break;
+                    case SdkStatsConfigStatus.Disabled:
+                        // Explicit remote kill switch. Honor it: do not build the
+                        // MeterProvider. FetchAsync already logged the reason.
+                        return;
+                    case SdkStatsConfigStatus.Fallback:
+                    default:
+                        // Control plane unavailable or returned an incomplete contract.
+                        // Fall back to the legacy region-derived endpoint so SDK statistics
+                        // keep flowing. Unknown regions default to non-EU.
+                        connectionString = GetLegacyFallbackConnectionString(ingestionEndpoint);
+                        break;
                 }
 
-                // Build a Breeze-compatible connection string from the config-supplied
-                // host. The transmitter appends the standard /v2.1/track path; the
-                // placeholder iKey is required by ConnectionStringParser but is ignored
-                // server-side by this endpoint family.
-                var host = config.url!.TrimEnd('/');
-                if (!host.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                    && !host.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-                {
-                    host = "https://" + host;
-                }
-                _statsbeat_ConnectionString =
-                    "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=" + host + "/";
-
-                BuildMeterProvider(_statsbeat_ConnectionString);
+                _statsbeat_ConnectionString = connectionString;
+                BuildMeterProvider(connectionString);
                 ScheduleInitialAttachFlush();
             }
             catch (Exception ex)
@@ -123,6 +136,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     configUrl,
                     $"MeterProvider build failed: {ex.GetType().Name}");
             }
+        }
+
+        private static string BuildConnectionStringFromHost(string host)
+        {
+            // Build a Breeze-compatible connection string from the config-supplied host.
+            // The transmitter appends the standard /v2.1/track path; the placeholder iKey
+            // is required by ConnectionStringParser but is ignored server-side by the
+            // distro endpoint family.
+            var trimmed = host.TrimEnd('/');
+            if (!trimmed.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                && !trimmed.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+            {
+                trimmed = "https://" + trimmed;
+            }
+            return "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=" + trimmed + "/";
+        }
+
+        /// <summary>
+        /// Returns the legacy AI internal Statsbeat connection string for the customer's
+        /// region. Unknown regions default to non-EU. Used by the distro path when the
+        /// remote configuration cannot be obtained, so SDK statistics keep flowing on the
+        /// same endpoint that non-distro callers have always used.
+        /// </summary>
+        internal static string GetLegacyFallbackConnectionString(string ingestionEndpoint)
+        {
+            var legacy = GetStatsbeatConnectionString(ingestionEndpoint);
+            return legacy ?? StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
         }
 
         private void BuildMeterProvider(string connectionString)

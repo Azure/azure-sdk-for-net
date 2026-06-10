@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; if the configuration cannot be obtained or instructs the client to stay off, SDK statistics are disabled for the process.
+- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; on success the configured destination is used, an explicit remote disable signal turns SDK statistics off, and any other outcome falls back to the existing region-derived ingestion endpoint so SDK statistics keep flowing. The AppContext switch has no effect on Statsbeat for callers that do not opt in.
 
 ### Breaking Changes
 
