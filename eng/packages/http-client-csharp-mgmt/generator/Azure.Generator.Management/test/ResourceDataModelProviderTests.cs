@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -125,6 +126,69 @@ namespace Azure.Generator.Mgmt.Tests
             var serializationContent = new TypeProviderWriter(serialization).Write().Content;
             Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
             Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
+        }
+
+        [Test]
+        public void ResourceDataWithCustomBaseDeserializesInheritedMetadata()
+        {
+            var customBaseModel = InputFactory.Model(
+                "SampleWritableResource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var childResourceModel = InputFactory.Model(
+                "ChildResource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("etag", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("properties", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [customBaseModel, childResourceModel]);
+
+            var customBaseProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(customBaseModel)!;
+            var childProvider = new ResourceDataModelProvider(childResourceModel);
+            SetCustomCodeView(childProvider, new CustomBaseCodeView(childProvider.Name, customBaseProvider.Type));
+
+            // Reproduce the generation ordering where serialization can be built before the
+            // inherited metadata properties are removed from the child model surface.
+            _ = childProvider.Constructors;
+            _ = childProvider.SerializationProviders.SelectMany(s => s.Methods).ToArray();
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(childResourceModel, childProvider);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.BaseModelProvider, Is.SameAs(customBaseProvider));
+            var propertyNames = result.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames, Does.Not.Contain("Id"));
+            Assert.That(propertyNames, Does.Not.Contain("Name"));
+            Assert.That(propertyNames, Does.Not.Contain("ResourceType"));
+            Assert.That(propertyNames, Does.Contain("ETag"));
+            Assert.That(propertyNames, Does.Contain("Properties"));
+
+            var serialization = result.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var serializationContent = new TypeProviderWriter(serialization).Write().Content;
+            Assert.That(serializationContent, Does.Contain("string id = default;"));
+            Assert.That(serializationContent, Does.Contain("string name = default;"));
+            Assert.That(serializationContent, Does.Contain("string @type = default;"));
+            Assert.That(serializationContent, Does.Contain("NameEquals(\"id\"u8)"));
+            Assert.That(serializationContent, Does.Contain("NameEquals(\"name\"u8)"));
+            Assert.That(serializationContent, Does.Contain("NameEquals(\"type\"u8)"));
+            Assert.That(serializationContent, Does.Contain("id = prop.Value.GetString();"));
+            Assert.That(serializationContent, Does.Contain("name = prop.Value.GetString();"));
+            Assert.That(serializationContent, Does.Contain("@type = prop.Value.GetString();"));
+            Assert.That(serializationContent, Does.Contain("new global::Samples.ChildResourceData("));
+            Assert.That(serializationContent, Does.Contain("id,"));
+            Assert.That(serializationContent, Does.Contain("name,"));
+            Assert.That(serializationContent, Does.Contain("@type,"));
         }
 
         [Test]
@@ -244,6 +308,31 @@ namespace Azure.Generator.Mgmt.Tests
             {
                 return base.VisitMethod(method);
             }
+        }
+
+        private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
+        {
+            var currentType = typeProvider.GetType();
+            while (currentType is not null)
+            {
+                var field = currentType.GetField("_customCodeView", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (field is not null)
+                {
+                    field.SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+                    return;
+                }
+
+                currentType = currentType.BaseType;
+            }
+
+            Assert.Fail("Could not find TypeProvider._customCodeView field.");
+        }
+
+        private class CustomBaseCodeView(string name, CSharpType baseType) : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => baseType;
+            protected override string BuildName() => name;
+            protected override string BuildRelativeFilePath() => $"{name}.cs";
         }
     }
 }
