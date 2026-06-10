@@ -52,7 +52,7 @@ public static class OptimizationConfigLoader
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"Failed to resolve optimization config for candidate '{candidateId}' from '{endpoint}': {ex.Message}");
+                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: Failed to resolve config for candidate '{candidateId}' from '{endpoint}': {ex.Message}");
                 // Resolver failure is non-fatal — fall through to next priority
             }
         }
@@ -120,9 +120,9 @@ public static class OptimizationConfigLoader
                 ParseSkillFile(content, Path.GetFileName(skillFolder), out string name, out string description, out string body);
                 skills.Add(new OptimizationSkill(name, description, body));
             }
-            catch (IOException)
+            catch (IOException ex)
             {
-                // Skip unreadable skill files
+                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: Failed to read skill file '{skillFile}': {ex.Message}");
             }
         }
 
@@ -218,9 +218,9 @@ public static class OptimizationConfigLoader
                     tools = OptimizationConfig.FromJson(wrappedDoc.RootElement).ToolDefinitions;
                 }
             }
-            catch (JsonException)
+            catch (JsonException ex)
             {
-                // Skip malformed tools.json
+                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: Failed to parse tools.json at '{toolsPath}': {ex.Message}");
             }
         }
 
