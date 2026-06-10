@@ -67,9 +67,18 @@ namespace Azure.AI.ContentUnderstanding
         /// <para>
         /// The markdown body contains the extracted text with page-break markers
         /// (<c>&lt;!-- InputPageNumber: N --&gt;</c>) inserted at page boundaries so
-        /// downstream consumers can locate content by page number. If the service
-        /// markdown already contains <c>&lt;!-- InputPageNumber:</c> markers, the
-        /// helper passes the markdown through unchanged.
+        /// downstream consumers can locate content by page number. <c>N</c> is the
+        /// <strong>original 1-based page number from the source document</strong>
+        /// (i.e., the page index in the analyzed PDF), not a counter that restarts
+        /// at 1 for each call. This matters when the analyze request specifies a
+        /// <see cref="ContentRange"/> (e.g., <c>"2-3,5"</c>): the markers in the
+        /// output will read <c>InputPageNumber: 2</c>, <c>3</c>, <c>5</c> &#8212;
+        /// not <c>1</c>, <c>2</c>, <c>3</c>. Downstream consumers (RAG indexers,
+        /// page-citation prompts) can rely on the marker value to cite the
+        /// correct source page even when only a subset of pages was analyzed.
+        /// If the service markdown already contains <c>&lt;!-- InputPageNumber:</c>
+        /// markers, the helper passes the markdown through unchanged to avoid
+        /// duplicate markers.
         /// </para>
         /// <para>
         /// Internal telemetry messages such as <c>LLMStats: ...</c> are filtered
