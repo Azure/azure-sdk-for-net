@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(CidrIPAddress)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BaseIPAddress))
+            if (Optional.IsDefined(BaseIPAddress ))
             {
                 writer.WritePropertyName("baseIpAddress"u8);
-                writer.WriteStringValue(BaseIPAddress);
+                writer.WriteStringValue(BaseIPAddress );
             }
             if (Optional.IsDefined(PrefixLength))
             {

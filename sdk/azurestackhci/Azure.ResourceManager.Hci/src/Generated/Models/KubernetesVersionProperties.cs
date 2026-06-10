@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="kubernetesVersionValue"> Represents kubernetes version. </param>
         internal KubernetesVersionProperties(string kubernetesVersionValue)
         {
-            KubernetesVersionValue = kubernetesVersionValue;
+            kubernetesVersionValue = kubernetesVersionValue;
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionProperties"/>. </summary>
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesVersionProperties(string kubernetesVersionValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            KubernetesVersionValue = kubernetesVersionValue;
+            kubernetesVersionValue = kubernetesVersionValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents kubernetes version. </summary>
         [WirePath("version")]
-        public string KubernetesVersionValue { get; }
+        public string kubernetesVersionValue { get; }
     }
 }

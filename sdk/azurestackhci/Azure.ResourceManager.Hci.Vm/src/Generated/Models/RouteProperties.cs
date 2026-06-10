@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal RouteProperties(string addressPrefix, string nextHopIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefix = addressPrefix;
-            NextHopIPAddress = nextHopIPAddress;
+            nextHopIPAddress = nextHopIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string AddressPrefix { get; set; }
 
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
-        public string NextHopIPAddress { get; set; }
+        public string nextHopIPAddress { get; set; }
     }
 }

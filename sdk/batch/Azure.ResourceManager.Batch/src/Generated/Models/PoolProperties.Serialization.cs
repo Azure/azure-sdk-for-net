@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
+            if (options.Format != "W" && Optional.IsDefined(provisioningStateTransitOn))
             {
                 writer.WritePropertyName("provisioningStateTransitionTime"u8);
-                writer.WriteStringValue(ProvisioningStateTransitOn.Value, "O");
+                writer.WriteStringValue(provisioningStateTransitOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AllocationState))
             {

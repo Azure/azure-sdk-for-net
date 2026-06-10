@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
             Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
             Argument.AssertNotNull(password, nameof(password));
 
-            Username = username;
+            username = username;
             Source = source;
             RelativeMountPath = relativeMountPath;
             Password = password;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BatchCifsMountConfiguration(string username, string source, string relativeMountPath, string mountOptions, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Username = username;
+            username = username;
             Source = source;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The user to use for authentication against the CIFS file system. </summary>
-        public string Username { get; set; }
+        public string username { get; set; }
 
         /// <summary> The URI of the file system to mount. </summary>
         public string Source { get; set; }

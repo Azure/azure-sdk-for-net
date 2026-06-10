@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Schedule = schedule;
             ExecutionParameters = executionParameters;
             Resources = resources;
-            CorrelationId = correlationId;
+            correlationId = correlationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal UserRequestResources Resources { get; }
 
         /// <summary> CorrelationId item. </summary>
-        public string CorrelationId { get; }
+        public string correlationId { get; }
 
         /// <summary> The resource ids used for the request. </summary>
         public IList<ResourceIdentifier> ResourcesIds

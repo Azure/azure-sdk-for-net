@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Represents kubernetes version. </summary>
         [WirePath("properties.version")]
-        public string KubernetesVersionValue
+        public string kubernetesVersionValue
         {
             get
             {
-                return Properties is null ? default : Properties.KubernetesVersionValue;
+                return Properties is null ? default : Properties.kubernetesVersionValue;
             }
         }
     }

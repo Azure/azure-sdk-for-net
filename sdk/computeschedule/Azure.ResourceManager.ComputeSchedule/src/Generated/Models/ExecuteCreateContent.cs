@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             ResourceConfigParameters = resourceConfigParameters;
             ExecutionParameters = executionParameters;
-            CorrelationId = correlationId;
+            correlationId = correlationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
 
         /// <summary> CorrelationId item. </summary>
-        public string CorrelationId { get; set; }
+        public string correlationId { get; set; }
     }
 }

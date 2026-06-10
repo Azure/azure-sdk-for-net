@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             Status = status;
             Description = description;
-            ActionRequired = actionRequired;
+            actionRequired = actionRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Batch.Models
         public string Description { get; set; }
 
         /// <summary> Action required on the private connection state. </summary>
-        public string ActionRequired { get; }
+        public string actionRequired { get; }
     }
 }

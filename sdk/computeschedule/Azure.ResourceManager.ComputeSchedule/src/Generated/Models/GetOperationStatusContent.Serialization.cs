@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("correlationid"u8);
-            writer.WriteStringValue(CorrelationId);
+            writer.WriteStringValue(correlationId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

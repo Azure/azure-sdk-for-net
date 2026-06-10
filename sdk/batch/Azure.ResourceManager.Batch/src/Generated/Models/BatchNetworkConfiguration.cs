@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal BatchNetworkConfiguration(ResourceIdentifier subnetId, DynamicVNetAssignmentScope? dynamicVNetAssignmentScope, PoolEndpointConfiguration endpointConfiguration, BatchPublicIPAddressConfiguration publicIPAddressConfiguration, bool? enableAcceleratedNetworking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetId = subnetId;
-            DynamicVNetAssignmentScope = dynamicVNetAssignmentScope;
+            dynamicVNetAssignmentScope = dynamicVNetAssignmentScope;
             EndpointConfiguration = endpointConfiguration;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
         public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> The scope of dynamic vnet assignment. </summary>
-        public DynamicVNetAssignmentScope? DynamicVNetAssignmentScope { get; set; }
+        public DynamicVNetAssignmentScope? dynamicVNetAssignmentScope { get; set; }
 
         /// <summary> The endpoint configuration for a pool. </summary>
         internal PoolEndpointConfiguration EndpointConfiguration { get; set; }

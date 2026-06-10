@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="toVersion"> Version upgraded to. </param>
         internal AppLinkUpgradeHistoryProperties(DateTimeOffset startOn, string initiatedBy, string fromVersion, string toVersion)
         {
-            StartOn = startOn;
+            startOn = startOn;
             InitiatedBy = initiatedBy;
             FromVersion = fromVersion;
             ToVersion = toVersion;
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AppLinkUpgradeHistoryProperties(DateTimeOffset startOn, DateTimeOffset? endOn, string initiatedBy, string fromVersion, string toVersion, AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            startOn = startOn;
+            endOn = endOn;
             InitiatedBy = initiatedBy;
             FromVersion = fromVersion;
             ToVersion = toVersion;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Start timestamp. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset startOn { get; }
 
         /// <summary> End timestamp. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? endOn { get; }
 
         /// <summary> Upgrade initiator. </summary>
         public string InitiatedBy { get; }

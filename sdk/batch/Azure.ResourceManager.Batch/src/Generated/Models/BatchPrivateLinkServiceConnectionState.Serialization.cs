@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionRequired))
+            if (options.Format != "W" && Optional.IsDefined(actionRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
-                writer.WriteStringValue(ActionRequired);
+                writer.WriteStringValue(actionRequired);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

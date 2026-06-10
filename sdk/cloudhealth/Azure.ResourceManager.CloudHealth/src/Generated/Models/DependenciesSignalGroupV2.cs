@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DegradedThreshold = degradedThreshold;
             UnhealthyThreshold = unhealthyThreshold;
             Unit = unit;
-            ShouldIgnoreUnknown = shouldIgnoreUnknown;
+            shouldIgnoreUnknown = shouldIgnoreUnknown;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public DependenciesAggregationUnit? Unit { get; set; }
 
         /// <summary> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </summary>
-        public bool? ShouldIgnoreUnknown { get; set; }
+        public bool? shouldIgnoreUnknown { get; set; }
     }
 }

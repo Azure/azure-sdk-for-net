@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             }
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(startOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "T");
+                writer.WriteStringValue(startOn.Value, "T");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(endOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "T");
+                writer.WriteStringValue(endOn.Value, "T");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

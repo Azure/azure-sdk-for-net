@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Attestation.Models
             Argument.AssertNotNull(kty, nameof(kty));
 
             Kty = kty;
-            X5C = new ChangeTrackingList<string>();
+            x5C = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AttestationJsonWebKey"/>. </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Attestation.Models
             Qi = qi;
             Use = use;
             X = x;
-            X5C = x5C;
+            x5C = x5C;
             Y = y;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// The PKIX certificate containing the key value MUST be the first
         /// certificate.
         /// </summary>
-        public IList<string> X5C { get; }
+        public IList<string> x5C { get; }
 
         /// <summary> Y coordinate for the Elliptic Curve point. </summary>
         public string Y { get; set; }

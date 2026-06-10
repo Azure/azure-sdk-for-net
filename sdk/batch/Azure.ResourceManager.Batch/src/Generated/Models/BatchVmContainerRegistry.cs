@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BatchVmContainerRegistry(string userName, string password, string registryServer, ComputeNodeIdentityReference identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UserName = userName;
+            userName = userName;
             Password = password;
             RegistryServer = registryServer;
             Identity = identity;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The user name to log into the registry server. </summary>
-        public string UserName { get; set; }
+        public string userName { get; set; }
 
         /// <summary> The password to log into the registry server. </summary>
         public string Password { get; set; }

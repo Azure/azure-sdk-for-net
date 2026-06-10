@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteObjectValue(ExecutionParameters, options);
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
-            if (Optional.IsDefined(CorrelationId))
+            if (Optional.IsDefined(correlationId))
             {
                 writer.WritePropertyName("correlationid"u8);
-                writer.WriteStringValue(CorrelationId);
+                writer.WriteStringValue(correlationId);
             }
             if (Optional.IsDefined(IsForceDeletion))
             {

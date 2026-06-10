@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(ErrorDetailsTimestamp))
+            if (Optional.IsDefined(errorDetailsTimestamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
-                writer.WriteStringValue(ErrorDetailsTimestamp.Value, "O");
+                writer.WriteStringValue(errorDetailsTimestamp.Value, "O");
             }
             if (Optional.IsDefined(AzureOperationName))
             {

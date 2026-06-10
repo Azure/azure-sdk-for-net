@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             ImageUriTargeted = imageUriTargeted;
             ImageUriTerminal = imageUriTerminal;
             AutoUpdateRingType = autoUpdateRingType;
-            MovedToTerminalStateOn = movedToTerminalStateOn;
+            movedToTerminalStateOn = movedToTerminalStateOn;
             RuleRequestedWeek = ruleRequestedWeek;
             RuleRequestedDay = ruleRequestedDay;
-            CreatedOn = createdOn;
-            UpdatedRegistryOn = updatedRegistryOn;
+            createdOn = createdOn;
+            updatedRegistryOn = updatedRegistryOn;
             PlanChangeLogText = planChangeLogText;
             AutoUpdateLastAppliedStatus = autoUpdateLastAppliedStatus;
             AutoUpdateLastAppliedStatusText = autoUpdateLastAppliedStatusText;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public int? AutoUpdateRingType { get; }
 
         /// <summary> Auto update image uri after update. </summary>
-        public DateTimeOffset? MovedToTerminalStateOn { get; }
+        public DateTimeOffset? movedToTerminalStateOn { get; }
 
         /// <summary> Auto update image uri before update. </summary>
         public int? RuleRequestedWeek { get; }
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public int? RuleRequestedDay { get; }
 
         /// <summary> Auto update entity created datetime. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? createdOn { get; }
 
         /// <summary> Auto update entity last updated datetime. </summary>
-        public DateTimeOffset? UpdatedRegistryOn { get; }
+        public DateTimeOffset? updatedRegistryOn { get; }
 
         /// <summary> This text describing the purpose of the plan of auto update. </summary>
         public string PlanChangeLogText { get; }

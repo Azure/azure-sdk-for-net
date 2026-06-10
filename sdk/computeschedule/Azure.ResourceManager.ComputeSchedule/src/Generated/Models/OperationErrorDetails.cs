@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ErrorCode = errorCode;
             ErrorDetails = errorDetails;
             Timestamp = timestamp;
-            ErrorDetailsTimestamp = errorDetailsTimestamp;
+            errorDetailsTimestamp = errorDetailsTimestamp;
             AzureOperationName = azureOperationName;
             CrpOperationId = crpOperationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public DateTimeOffset? Timestamp { get; }
 
         /// <summary> The timestamp of the error occurence. </summary>
-        public DateTimeOffset? ErrorDetailsTimestamp { get; }
+        public DateTimeOffset? errorDetailsTimestamp { get; }
 
         /// <summary> The compute operationid of the Start/Deallocate/Hibernate request. </summary>
         public string AzureOperationName { get; }

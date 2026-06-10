@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("autoUpdateRingType"u8);
                 writer.WriteNumberValue(AutoUpdateRingType.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MovedToTerminalStateOn))
+            if (options.Format != "W" && Optional.IsDefined(movedToTerminalStateOn))
             {
                 writer.WritePropertyName("movedToTerminalStateDateTime"u8);
-                writer.WriteStringValue(MovedToTerminalStateOn.Value, "O");
+                writer.WriteStringValue(movedToTerminalStateOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(RuleRequestedWeek))
             {
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("ruleRequestedDay"u8);
                 writer.WriteNumberValue(RuleRequestedDay.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(createdOn))
             {
                 writer.WritePropertyName("createdDateTimeUtc"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(createdOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedRegistryOn))
+            if (options.Format != "W" && Optional.IsDefined(updatedRegistryOn))
             {
                 writer.WritePropertyName("updatedRegistryDateTimeUtc"u8);
-                writer.WriteStringValue(UpdatedRegistryOn.Value, "O");
+                writer.WriteStringValue(updatedRegistryOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PlanChangeLogText))
             {

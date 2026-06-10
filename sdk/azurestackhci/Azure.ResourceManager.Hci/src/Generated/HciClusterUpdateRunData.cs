@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci
         internal HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UpdateRunProperties properties, string updateRunName, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            UpdateRunName = updateRunName;
+            updateRunName = updateRunName;
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> The name of the Update Run. </summary>
         [WirePath("name")]
-        public string UpdateRunName { get; }
+        public string updateRunName { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]

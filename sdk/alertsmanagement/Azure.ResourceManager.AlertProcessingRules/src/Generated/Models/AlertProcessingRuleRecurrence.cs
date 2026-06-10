@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         internal AlertProcessingRuleRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecurrenceType = recurrenceType;
-            StartOn = startOn;
-            EndOn = endOn;
+            startOn = startOn;
+            endOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         internal RecurrenceType RecurrenceType { get; set; }
 
         /// <summary> Start time for recurrence. </summary>
-        public TimeSpan? StartOn { get; set; }
+        public TimeSpan? startOn { get; set; }
 
         /// <summary> End time for recurrence. </summary>
-        public TimeSpan? EndOn { get; set; }
+        public TimeSpan? endOn { get; set; }
     }
 }

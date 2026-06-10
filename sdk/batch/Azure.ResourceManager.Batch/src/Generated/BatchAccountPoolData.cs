@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The time at which the pool entered its current state. </summary>
-        public DateTimeOffset? ProvisioningStateTransitOn
+        public DateTimeOffset? provisioningStateTransitOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningStateTransitOn;
+                return Properties is null ? default : Properties.provisioningStateTransitOn;
             }
         }
 
@@ -349,6 +349,40 @@ namespace Azure.ResourceManager.Batch
                     Properties = new PoolProperties();
                 }
                 Properties.UpgradePolicy = value;
+            }
+        }
+
+        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
+        public BatchVmConfiguration DeploymentvmConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentvmConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DeploymentvmConfiguration = value;
+            }
+        }
+
+        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
+        public BatchVmConfiguration DeploymentvmConfiguration
+        {
+            get
+            {
+                return DeploymentConfiguration is null ? default : DeploymentConfiguration.vmConfiguration;
+            }
+            set
+            {
+                if (DeploymentConfiguration is null)
+                {
+                    DeploymentConfiguration = new BatchDeploymentConfiguration();
+                }
+                DeploymentConfiguration.vmConfiguration = value;
             }
         }
     }

@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DynamicVNetAssignmentScope))
+            if (Optional.IsDefined(dynamicVNetAssignmentScope))
             {
                 writer.WritePropertyName("dynamicVnetAssignmentScope"u8);
-                writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToSerialString());
+                writer.WriteStringValue(dynamicVNetAssignmentScope.Value.ToSerialString());
             }
             if (Optional.IsDefined(EndpointConfiguration))
             {

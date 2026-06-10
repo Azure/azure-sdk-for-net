@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Batch.Models
             LastModifiedOn = lastModifiedOn;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
-            ProvisioningStateTransitOn = provisioningStateTransitOn;
+            provisioningStateTransitOn = provisioningStateTransitOn;
             AllocationState = allocationState;
             AllocationStateTransitionOn = allocationStateTransitionOn;
             VmSize = vmSize;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccountPoolProvisioningState? ProvisioningState { get; }
 
         /// <summary> The time at which the pool entered its current state. </summary>
-        public DateTimeOffset? ProvisioningStateTransitOn { get; }
+        public DateTimeOffset? provisioningStateTransitOn { get; }
 
         /// <summary> Whether the pool is resizing. </summary>
         public BatchAccountPoolAllocationState? AllocationState { get; }
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Batch.Models
         public UpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
-        public BatchVmConfiguration DeploymentVmConfiguration
+        public BatchVmConfiguration DeploymentvmConfiguration
         {
             get
             {
-                return DeploymentConfiguration is null ? default : DeploymentConfiguration.VmConfiguration;
+                return DeploymentConfiguration is null ? default : DeploymentConfiguration.vmConfiguration;
             }
             set
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     DeploymentConfiguration = new BatchDeploymentConfiguration();
                 }
-                DeploymentConfiguration.VmConfiguration = value;
+                DeploymentConfiguration.vmConfiguration = value;
             }
         }
     }

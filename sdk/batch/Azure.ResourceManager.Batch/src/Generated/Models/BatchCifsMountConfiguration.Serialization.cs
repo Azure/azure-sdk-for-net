@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
                 throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("userName"u8);
-            writer.WriteStringValue(Username);
+            writer.WriteStringValue(username);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
             writer.WritePropertyName("relativeMountPath"u8);

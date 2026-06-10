@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 throw new FormatException($"The model {nameof(AppLinkUpgradeHistoryProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTimestamp"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(startOn, "O");
+            if (Optional.IsDefined(endOn))
             {
                 writer.WritePropertyName("endTimestamp"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(endOn.Value, "O");
             }
             writer.WritePropertyName("initiatedBy"u8);
             writer.WriteStringValue(InitiatedBy);

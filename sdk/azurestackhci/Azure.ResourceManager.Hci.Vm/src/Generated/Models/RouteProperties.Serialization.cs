@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(NextHopIPAddress))
+            if (Optional.IsDefined(nextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
-                writer.WriteStringValue(NextHopIPAddress);
+                writer.WriteStringValue(nextHopIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

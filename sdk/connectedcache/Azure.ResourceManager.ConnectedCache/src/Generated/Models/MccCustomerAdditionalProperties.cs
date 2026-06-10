@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             SignupStatusText = signupStatusText;
             SignupPhaseStatusCode = signupPhaseStatusCode;
             SignupPhaseStatusText = signupPhaseStatusText;
-            PeeringDBLastUpdatedOn = peeringDBLastUpdatedOn;
+            peeringDBLastUpdatedOn = peeringDBLastUpdatedOn;
             CustomerOrgName = customerOrgName;
             CustomerEmail = customerEmail;
             CustomerTransitAsn = customerTransitAsn;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             CustomerEntitlementSkuId = customerEntitlementSkuId;
             CustomerEntitlementSkuGuid = customerEntitlementSkuGuid;
             CustomerEntitlementSkuName = customerEntitlementSkuName;
-            CustomerEntitlementExpiryOn = customerEntitlementExpiryOn;
+            customerEntitlementExpiryOn = customerEntitlementExpiryOn;
             OptionalProperty1 = optionalProperty1;
             OptionalProperty2 = optionalProperty2;
             OptionalProperty3 = optionalProperty3;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public string SignupPhaseStatusText { get; }
 
         /// <summary> Customer resource last PeeringDB update timestamp. </summary>
-        public DateTimeOffset? PeeringDBLastUpdatedOn { get; }
+        public DateTimeOffset? peeringDBLastUpdatedOn { get; }
 
         /// <summary> Customer resource owner organization name. </summary>
         public string CustomerOrgName { get; }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public string CustomerEntitlementSkuName { get; set; }
 
         /// <summary> Customer resource entitlement expiration date string. </summary>
-        public DateTimeOffset? CustomerEntitlementExpiryOn { get; set; }
+        public DateTimeOffset? customerEntitlementExpiryOn { get; set; }
 
         /// <summary> Optional property #1 of Mcc response object. </summary>
         public string OptionalProperty1 { get; set; }

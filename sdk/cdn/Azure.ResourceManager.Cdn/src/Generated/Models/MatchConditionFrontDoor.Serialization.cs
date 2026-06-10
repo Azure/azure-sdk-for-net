@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(MatchOperator.ToString());
+            writer.WriteStringValue(matchOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);

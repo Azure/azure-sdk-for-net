@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 writer.WritePropertyName("appServiceResourceId"u8);
                 writer.WriteStringValue(AppServiceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CosmosDBResourceId))
+            if (options.Format != "W" && Optional.IsDefined(cosmosDBResourceId))
             {
                 writer.WritePropertyName("cosmosDbResourceId"u8);
-                writer.WriteStringValue(CosmosDBResourceId);
+                writer.WriteStringValue(cosmosDBResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageAccountResourceId))
             {

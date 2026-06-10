@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             KubernetesVersion = kubernetesVersion;
             FullyManagedVersions = fullyManagedVersions;
-            SelfManagedVersionDetail = selfManagedVersionDetail;
+            selfManagedVersionDetail = selfManagedVersionDetail;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppLinkAvailableVersionProperties"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             KubernetesVersion = kubernetesVersion;
             FullyManagedVersions = fullyManagedVersions;
-            SelfManagedVersionDetail = selfManagedVersionDetail;
+            selfManagedVersionDetail = selfManagedVersionDetail;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         internal FullyManagedVersions FullyManagedVersions { get; }
 
         /// <summary> Self managed versions. </summary>
-        internal SelfManagedVersions SelfManagedVersionDetail { get; }
+        internal SelfManagedVersions selfManagedVersionDetail { get; }
 
         /// <summary> Provisioning state. </summary>
         public AppLinkProvisioningState? ProvisioningState { get; }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             get
             {
-                return SelfManagedVersionDetail is null ? default : SelfManagedVersionDetail.Versions;
+                return selfManagedVersionDetail is null ? default : selfManagedVersionDetail.Versions;
             }
         }
     }

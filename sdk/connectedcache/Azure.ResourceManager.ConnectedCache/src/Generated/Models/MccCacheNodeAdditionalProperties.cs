@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public string OptionalProperty5 { get; set; }
 
         /// <summary> Asn to ip address mapping. </summary>
-        public string BgpAsnToIPAddressMapping
+        public string BgpasnToIPAddressMapping
         {
             get
             {
-                return BgpConfiguration is null ? default : BgpConfiguration.AsnToIPAddressMapping;
+                return BgpConfiguration is null ? default : BgpConfiguration.asnToIPAddressMapping;
             }
             set
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 {
                     BgpConfiguration = new MccCacheNodeBgpConfiguration();
                 }
-                BgpConfiguration.AsnToIPAddressMapping = value;
+                BgpConfiguration.asnToIPAddressMapping = value;
             }
         }
 

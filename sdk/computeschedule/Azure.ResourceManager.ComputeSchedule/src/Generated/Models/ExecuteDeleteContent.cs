@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
-            CorrelationId = correlationId;
+            correlationId = correlationId;
             IsForceDeletion = isForceDeletion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal UserRequestResources Resources { get; }
 
         /// <summary> CorrelationId item. </summary>
-        public string CorrelationId { get; set; }
+        public string correlationId { get; set; }
 
         /// <summary> Forced delete resource item. </summary>
         public bool? IsForceDeletion { get; set; }

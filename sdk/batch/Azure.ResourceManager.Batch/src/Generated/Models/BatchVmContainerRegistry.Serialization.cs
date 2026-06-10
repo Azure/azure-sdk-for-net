@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(UserName))
+            if (Optional.IsDefined(userName))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(UserName);
+                writer.WriteStringValue(userName);
             }
             if (Optional.IsDefined(Password))
             {

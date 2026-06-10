@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             {
                 throw new FormatException($"The model {nameof(MccCacheNodeBgpConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AsnToIPAddressMapping))
+            if (Optional.IsDefined(asnToIPAddressMapping))
             {
                 writer.WritePropertyName("asnToIpAddressMapping"u8);
-                writer.WriteStringValue(AsnToIPAddressMapping);
+                writer.WriteStringValue(asnToIPAddressMapping);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             DeadlineType = deadlineType;
             State = state;
             Timezone = timezone;
-            OperationTimezone = operationTimezone;
+            operationTimezone = operationTimezone;
             ResourceOperationError = resourceOperationError;
             FallbackOperationInfo = fallbackOperationInfo;
             CompletedOn = completedOn;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string Timezone { get; }
 
         /// <summary> Timezone for the operation. </summary>
-        public string OperationTimezone { get; }
+        public string operationTimezone { get; }
 
         /// <summary> Operation level errors if they exist. </summary>
         public ResourceOperationError ResourceOperationError { get; }

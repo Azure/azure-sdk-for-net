@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("deadline"u8);
                 writer.WriteStringValue(Deadline.Value, "O");
             }
-            if (Optional.IsDefined(UserRequestDeadline))
+            if (Optional.IsDefined(userRequestDeadline))
             {
                 writer.WritePropertyName("deadLine"u8);
-                writer.WriteStringValue(UserRequestDeadline.Value, "O");
+                writer.WriteStringValue(userRequestDeadline.Value, "O");
             }
             if (Optional.IsDefined(Timezone))
             {
                 writer.WritePropertyName("timezone"u8);
                 writer.WriteStringValue(Timezone);
             }
-            if (Optional.IsDefined(UserRequestTimezone))
+            if (Optional.IsDefined(userRequestTimezone))
             {
                 writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(UserRequestTimezone);
+                writer.WriteStringValue(userRequestTimezone);
             }
             writer.WritePropertyName("deadlineType"u8);
             writer.WriteStringValue(DeadlineType.ToString());

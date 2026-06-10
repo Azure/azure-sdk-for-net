@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             InstanceUri = instanceUri;
             Version = version;
             AppServiceResourceId = appServiceResourceId;
-            CosmosDBResourceId = cosmosDBResourceId;
+            cosmosDBResourceId = cosmosDBResourceId;
             StorageAccountResourceId = storageAccountResourceId;
             KeyVaultResourceId = keyVaultResourceId;
             RedisCacheResourceId = redisCacheResourceId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public ResourceIdentifier AppServiceResourceId { get; }
 
         /// <summary> Cosmos Db resource Id. </summary>
-        public ResourceIdentifier CosmosDBResourceId { get; }
+        public ResourceIdentifier cosmosDBResourceId { get; }
 
         /// <summary> Storage account resource Id. </summary>
         public ResourceIdentifier StorageAccountResourceId { get; }

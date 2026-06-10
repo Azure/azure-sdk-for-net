@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CidrIPAddress(string baseIPAddress, int? prefixLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BaseIPAddress = baseIPAddress;
+            BaseIPAddress  = baseIPAddress;
             PrefixLength = prefixLength;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Ip address itself. </summary>
         [WirePath("baseIpAddress")]
-        public string BaseIPAddress { get; set; }
+        public string BaseIPAddress  { get; set; }
 
         /// <summary> The length of the prefix of the ip address. </summary>
         [WirePath("prefixLength")]

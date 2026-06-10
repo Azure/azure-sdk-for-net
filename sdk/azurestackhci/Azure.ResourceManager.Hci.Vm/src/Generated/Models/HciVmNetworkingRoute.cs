@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
-        public string NextHopIPAddress
+        public string nextHopIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.NextHopIPAddress;
+                return Properties is null ? default : Properties.nextHopIPAddress;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 {
                     Properties = new RouteProperties();
                 }
-                Properties.NextHopIPAddress = value;
+                Properties.nextHopIPAddress = value;
             }
         }
     }

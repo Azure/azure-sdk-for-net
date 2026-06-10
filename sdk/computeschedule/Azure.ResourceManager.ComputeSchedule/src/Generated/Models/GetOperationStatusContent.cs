@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Argument.AssertNotNull(correlationId, nameof(correlationId));
 
             OperationIds = operationIds.ToList();
-            CorrelationId = correlationId;
+            correlationId = correlationId;
         }
 
         /// <summary> Initializes a new instance of <see cref="GetOperationStatusContent"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal GetOperationStatusContent(IList<string> operationIds, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationIds = operationIds;
-            CorrelationId = correlationId;
+            correlationId = correlationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IList<string> OperationIds { get; }
 
         /// <summary> CorrelationId item. </summary>
-        public string CorrelationId { get; }
+        public string correlationId { get; }
     }
 }

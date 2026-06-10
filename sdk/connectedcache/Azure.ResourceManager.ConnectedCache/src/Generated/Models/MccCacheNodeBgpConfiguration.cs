@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MccCacheNodeBgpConfiguration(string asnToIPAddressMapping, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AsnToIPAddressMapping = asnToIPAddressMapping;
+            asnToIPAddressMapping = asnToIPAddressMapping;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Asn to ip address mapping. </summary>
-        public string AsnToIPAddressMapping { get; set; }
+        public string asnToIPAddressMapping { get; set; }
     }
 }

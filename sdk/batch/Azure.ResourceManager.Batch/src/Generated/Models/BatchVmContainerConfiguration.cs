@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Batch.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The container technology to be used. </summary>
+        public BatchVmContainerType containerType { get; set; }
+
         /// <summary> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </summary>
         public IList<string> ContainerImageNames { get; }
 

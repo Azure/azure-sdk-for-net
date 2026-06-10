@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(VmConfiguration))
+            if (Optional.IsDefined(vmConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
-                writer.WriteObjectValue(VmConfiguration, options);
+                writer.WriteObjectValue(vmConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

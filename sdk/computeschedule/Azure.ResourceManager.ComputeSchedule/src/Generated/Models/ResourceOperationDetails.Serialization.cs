@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("timezone"u8);
                 writer.WriteStringValue(Timezone);
             }
-            if (Optional.IsDefined(OperationTimezone))
+            if (Optional.IsDefined(operationTimezone))
             {
                 writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(OperationTimezone);
+                writer.WriteStringValue(operationTimezone);
             }
             if (Optional.IsDefined(ResourceOperationError))
             {

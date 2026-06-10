@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("synchWithAzureAttemptsCount"u8);
                 writer.WriteNumberValue(SynchWithAzureAttemptsCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncedWithAzureOn))
+            if (options.Format != "W" && Optional.IsDefined(lastSyncedWithAzureOn))
             {
                 writer.WritePropertyName("lastSyncWithAzureTimestamp"u8);
-                writer.WriteStringValue(LastSyncedWithAzureOn.Value, "O");
+                writer.WriteStringValue(lastSyncedWithAzureOn.Value, "O");
             }
             if (Optional.IsDefined(IsEnterpriseManaged))
             {

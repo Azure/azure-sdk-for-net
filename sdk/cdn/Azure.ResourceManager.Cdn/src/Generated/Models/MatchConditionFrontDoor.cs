@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(matchValue, nameof(matchValue));
 
             MatchVariable = matchVariable;
-            MatchOperator = matchOperator;
+            matchOperator = matchOperator;
             MatchValue = matchValue.ToList();
             Transforms = new ChangeTrackingList<TransformType>();
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             MatchVariable = matchVariable;
             Selector = selector;
-            MatchOperator = matchOperator;
+            matchOperator = matchOperator;
             NegateCondition = negateCondition;
             MatchValue = matchValue;
             Transforms = transforms;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Comparison type to use for matching with the variable value. </summary>
         [WirePath("operator")]
-        public MatchOperator MatchOperator { get; set; }
+        public MatchOperator matchOperator { get; set; }
 
         /// <summary> Describes if the result of this condition should be negated. </summary>
         [WirePath("negateCondition")]

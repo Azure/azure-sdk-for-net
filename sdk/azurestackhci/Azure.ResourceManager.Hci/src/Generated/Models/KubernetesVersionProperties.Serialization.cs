@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                 throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("version"u8);
-            writer.WriteStringValue(KubernetesVersionValue);
+            writer.WriteStringValue(kubernetesVersionValue);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

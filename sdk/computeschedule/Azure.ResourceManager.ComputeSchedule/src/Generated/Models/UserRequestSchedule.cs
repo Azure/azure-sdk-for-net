@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal UserRequestSchedule(DateTimeOffset? deadline, DateTimeOffset? userRequestDeadline, string timezone, string userRequestTimezone, ScheduledActionDeadlineType deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Deadline = deadline;
-            UserRequestDeadline = userRequestDeadline;
+            userRequestDeadline = userRequestDeadline;
             Timezone = timezone;
-            UserRequestTimezone = userRequestTimezone;
+            userRequestTimezone = userRequestTimezone;
             DeadlineType = deadlineType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public DateTimeOffset? Deadline { get; set; }
 
         /// <summary> The deadline for the operation. </summary>
-        public DateTimeOffset? UserRequestDeadline { get; set; }
+        public DateTimeOffset? userRequestDeadline { get; set; }
 
         /// <summary> The timezone for the operation. </summary>
         public string Timezone { get; set; }
 
         /// <summary> The timezone for the operation. </summary>
-        public string UserRequestTimezone { get; set; }
+        public string userRequestTimezone { get; set; }
 
         /// <summary> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </summary>
         public ScheduledActionDeadlineType DeadlineType { get; }

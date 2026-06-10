@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="cacheNodeStateShortText"> Cache node resource short state text. </param>
         /// <param name="cacheNodeState"> Cache node resource state as integer. </param>
         /// <param name="driveConfiguration"> Cache node resource drive configurations. </param>
-        /// <param name="bgpAsnToIPAddressMapping"> Asn to ip address mapping. </param>
+        /// <param name="bgpasnToIPAddressMapping"> Asn to ip address mapping. </param>
         /// <param name="proxyUri"> Host Proxy Address configuration along with port number. This can be a proxy or ip address. ex: xx.xx.xx.xxxx:80 or host name http://exampleproxy.com:80. </param>
         /// <param name="isProxyRequired"> Cache node resource requires a proxy. </param>
         /// <param name="osType"> Operating system of the cache node. </param>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeAdditionalProperties"/> instance for mocking. </returns>
-        public static MccCacheNodeAdditionalProperties MccCacheNodeAdditionalProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = default, IEnumerable<string> issuesList = default, int? issuesCount = default, MccCacheNodeTlsCertificate currentTlsCertificate = default, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = default, string aggregatedStatusDetails = default, string aggregatedStatusText = default, int? aggregatedStatusCode = default, string productVersion = default, bool? isProvisioned = default, string cacheNodeStateDetailedText = default, string cacheNodeStateShortText = default, int? cacheNodeState = default, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = default, string bgpAsnToIPAddressMapping = default, Uri proxyUri = default, MccCacheNodeProxyRequired? isProxyRequired = default, MccCacheNodeOSType? osType = default, string autoUpdateVersion = default, string updateInfoDetails = default, DateTimeOffset? updateRequestedOn = default, string autoUpdateNextAvailableVersion = default, DateTimeOffset? autoUpdateNextAvailableOn = default, string autoUpdateAppliedVersion = default, string autoUpdateLastAppliedDetails = default, string autoUpdateLastAppliedState = default, DateTimeOffset? autoUpdateLastAppliedOn = default, DateTimeOffset? autoUpdateLastTriggeredOn = default, int? creationMethod = default, string tlsStatus = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
+        public static MccCacheNodeAdditionalProperties MccCacheNodeAdditionalProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = default, IEnumerable<string> issuesList = default, int? issuesCount = default, MccCacheNodeTlsCertificate currentTlsCertificate = default, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = default, string aggregatedStatusDetails = default, string aggregatedStatusText = default, int? aggregatedStatusCode = default, string productVersion = default, bool? isProvisioned = default, string cacheNodeStateDetailedText = default, string cacheNodeStateShortText = default, int? cacheNodeState = default, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = default, string bgpasnToIPAddressMapping = default, Uri proxyUri = default, MccCacheNodeProxyRequired? isProxyRequired = default, MccCacheNodeOSType? osType = default, string autoUpdateVersion = default, string updateInfoDetails = default, DateTimeOffset? updateRequestedOn = default, string autoUpdateNextAvailableVersion = default, DateTimeOffset? autoUpdateNextAvailableOn = default, string autoUpdateAppliedVersion = default, string autoUpdateLastAppliedDetails = default, string autoUpdateLastAppliedState = default, DateTimeOffset? autoUpdateLastAppliedOn = default, DateTimeOffset? autoUpdateLastTriggeredOn = default, int? creationMethod = default, string tlsStatus = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
         {
             cacheNodePropertiesDetailsIssuesList ??= new ChangeTrackingList<string>();
             issuesList ??= new ChangeTrackingList<string>();
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 cacheNodeStateShortText,
                 cacheNodeState,
                 (driveConfiguration ?? new ChangeTrackingList<CacheNodeDriveConfiguration>()).ToList(),
-                bgpAsnToIPAddressMapping is null ? default : new MccCacheNodeBgpConfiguration(bgpAsnToIPAddressMapping, default),
+                bgpasnToIPAddressMapping is null ? default : new MccCacheNodeBgpConfiguration(bgpasnToIPAddressMapping, default),
                 proxyUri is null ? default : new MccCacheNodeProxyUriConfiguration(proxyUri, default),
                 isProxyRequired,
                 osType,

@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("signupPhaseStatusText"u8);
                 writer.WriteStringValue(SignupPhaseStatusText);
             }
-            if (options.Format != "W" && Optional.IsDefined(PeeringDBLastUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(peeringDBLastUpdatedOn))
             {
                 writer.WritePropertyName("peeringDbLastUpdateDate"u8);
-                writer.WriteStringValue(PeeringDBLastUpdatedOn.Value, "O");
+                writer.WriteStringValue(peeringDBLastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CustomerOrgName))
             {
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("customerEntitlementSkuName"u8);
                 writer.WriteStringValue(CustomerEntitlementSkuName);
             }
-            if (Optional.IsDefined(CustomerEntitlementExpiryOn))
+            if (Optional.IsDefined(customerEntitlementExpiryOn))
             {
                 writer.WritePropertyName("customerEntitlementExpiration"u8);
-                writer.WriteStringValue(CustomerEntitlementExpiryOn.Value, "O");
+                writer.WriteStringValue(customerEntitlementExpiryOn.Value, "O");
             }
             if (Optional.IsDefined(OptionalProperty1))
             {

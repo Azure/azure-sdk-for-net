@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             writer.WritePropertyName("fullyManagedVersions"u8);
             writer.WriteObjectValue(FullyManagedVersions, options);
             writer.WritePropertyName("selfManagedVersions"u8);
-            writer.WriteObjectValue(SelfManagedVersionDetail, options);
+            writer.WriteObjectValue(selfManagedVersionDetail, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

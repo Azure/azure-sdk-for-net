@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BatchDeploymentConfiguration(BatchVmConfiguration vmConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            VmConfiguration = vmConfiguration;
+            vmConfiguration = vmConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
-        public BatchVmConfiguration VmConfiguration { get; set; }
+        public BatchVmConfiguration vmConfiguration { get; set; }
     }
 }

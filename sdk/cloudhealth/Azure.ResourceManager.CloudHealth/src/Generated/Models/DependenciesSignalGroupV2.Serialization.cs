@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsDefined(ShouldIgnoreUnknown))
+            if (Optional.IsDefined(shouldIgnoreUnknown))
             {
                 writer.WritePropertyName("ignoreUnknown"u8);
-                writer.WriteBooleanValue(ShouldIgnoreUnknown.Value);
+                writer.WriteBooleanValue(shouldIgnoreUnknown.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

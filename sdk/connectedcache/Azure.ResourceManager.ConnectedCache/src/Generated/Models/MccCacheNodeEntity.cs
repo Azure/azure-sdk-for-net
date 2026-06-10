@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             ClientTenantId = clientTenantId;
             Category = category;
             ReleaseVersion = releaseVersion;
-            LastSyncedWithAzureOn = lastSyncedWithAzureOn;
-            LastUpdatedOn = lastUpdatedOn;
+            lastSyncedWithAzureOn = lastSyncedWithAzureOn;
+            lastUpdatedOn = lastUpdatedOn;
             SynchWithAzureAttemptsCount = synchWithAzureAttemptsCount;
             ContainerConfigurations = containerConfigurations;
             CidrCsv = cidrCsv;
-            CidrCsvLastUpdatedOn = cidrCsvLastUpdatedOn;
-            BgpCidrCsvLastUpdatedOn = bgpCidrCsvLastUpdatedOn;
-            BgpLastReportedOn = bgpLastReportedOn;
+            cidrCsvLastUpdatedOn = cidrCsvLastUpdatedOn;
+            bgpCidrCsvLastUpdatedOn = bgpCidrCsvLastUpdatedOn;
+            bgpLastReportedOn = bgpLastReportedOn;
             BgpReviewStateText = bgpReviewStateText;
             BgpReviewState = bgpReviewState;
             BgpReviewFeedback = bgpReviewFeedback;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             ConfigurationStateText = configurationStateText;
             AddressSpace = addressSpace;
             WorkerConnections = workerConnections;
-            WorkerConnectionsLastUpdatedOn = workerConnectionsLastUpdatedOn;
+            workerConnectionsLastUpdatedOn = workerConnectionsLastUpdatedOn;
             ContainerResyncTrigger = containerResyncTrigger;
             ImageUri = imageUri;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public int? ReleaseVersion { get; }
 
         /// <summary> Cache node resource last sync timestamp. </summary>
-        public DateTimeOffset? LastSyncedWithAzureOn { get; }
+        public DateTimeOffset? lastSyncedWithAzureOn { get; }
 
         /// <summary> Cache node resource last backend updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset? lastUpdatedOn { get; }
 
         /// <summary> Cache node resource attempts to sync with Azure. </summary>
         public int? SynchWithAzureAttemptsCount { get; }
@@ -205,13 +205,13 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public IList<string> CidrCsv { get; }
 
         /// <summary> Cache node resource last Cidr Csv update timestamp. </summary>
-        public DateTimeOffset? CidrCsvLastUpdatedOn { get; }
+        public DateTimeOffset? cidrCsvLastUpdatedOn { get; }
 
         /// <summary> Cache node resource last Bgp Cidr Csv update timestamp. </summary>
-        public DateTimeOffset? BgpCidrCsvLastUpdatedOn { get; }
+        public DateTimeOffset? bgpCidrCsvLastUpdatedOn { get; }
 
         /// <summary> Cache node resource last Bgp report timestamp. </summary>
-        public DateTimeOffset? BgpLastReportedOn { get; }
+        public DateTimeOffset? bgpLastReportedOn { get; }
 
         /// <summary> Cache node resource Bgp review state string text in detail. </summary>
         public string BgpReviewStateText { get; }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public int? WorkerConnections { get; }
 
         /// <summary> Cache node resource last updated Mcc container deployment worker connection count timestamp. </summary>
-        public DateTimeOffset? WorkerConnectionsLastUpdatedOn { get; }
+        public DateTimeOffset? workerConnectionsLastUpdatedOn { get; }
 
         /// <summary> Cache node resource Mcc container configuration details re-sync trigger. </summary>
         public int? ContainerResyncTrigger { get; }

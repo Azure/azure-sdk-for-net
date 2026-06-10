@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
-            if (Optional.IsCollectionDefined(X5C))
+            if (Optional.IsCollectionDefined(x5C))
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
-                foreach (string item in X5C)
+                foreach (string item in x5C)
                 {
                     if (item == null)
                     {

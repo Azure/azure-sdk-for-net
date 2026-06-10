@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             DeleteAsyncOperationId = deleteAsyncOperationId;
             ClientTenantId = clientTenantId;
             SynchWithAzureAttemptsCount = synchWithAzureAttemptsCount;
-            LastSyncedWithAzureOn = lastSyncedWithAzureOn;
+            lastSyncedWithAzureOn = lastSyncedWithAzureOn;
             IsEnterpriseManaged = isEnterpriseManaged;
             ShouldMigrate = shouldMigrate;
             ResendSignupCode = resendSignupCode;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public int? SynchWithAzureAttemptsCount { get; }
 
         /// <summary> Customer resource last Azure sync timestamp. </summary>
-        public DateTimeOffset? LastSyncedWithAzureOn { get; }
+        public DateTimeOffset? lastSyncedWithAzureOn { get; }
 
         /// <summary> Customer resource flag for enterprise management as boolean. </summary>
         public bool? IsEnterpriseManaged { get; set; }

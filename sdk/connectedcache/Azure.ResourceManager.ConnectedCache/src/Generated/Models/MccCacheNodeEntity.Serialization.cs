@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("releaseVersion"u8);
                 writer.WriteNumberValue(ReleaseVersion.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncedWithAzureOn))
+            if (options.Format != "W" && Optional.IsDefined(lastSyncedWithAzureOn))
             {
                 writer.WritePropertyName("lastSyncWithAzureTimestamp"u8);
-                writer.WriteStringValue(LastSyncedWithAzureOn.Value, "O");
+                writer.WriteStringValue(lastSyncedWithAzureOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(lastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                writer.WriteStringValue(lastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(SynchWithAzureAttemptsCount))
             {
@@ -200,20 +200,20 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CidrCsvLastUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(cidrCsvLastUpdatedOn))
             {
                 writer.WritePropertyName("cidrCsvLastUpdateTime"u8);
-                writer.WriteStringValue(CidrCsvLastUpdatedOn.Value, "O");
+                writer.WriteStringValue(cidrCsvLastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BgpCidrCsvLastUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(bgpCidrCsvLastUpdatedOn))
             {
                 writer.WritePropertyName("bgpCidrCsvLastUpdateTime"u8);
-                writer.WriteStringValue(BgpCidrCsvLastUpdatedOn.Value, "O");
+                writer.WriteStringValue(bgpCidrCsvLastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BgpLastReportedOn))
+            if (options.Format != "W" && Optional.IsDefined(bgpLastReportedOn))
             {
                 writer.WritePropertyName("bgpLastReportedTime"u8);
-                writer.WriteStringValue(BgpLastReportedOn.Value, "O");
+                writer.WriteStringValue(bgpLastReportedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BgpReviewStateText))
             {
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("workerConnections"u8);
                 writer.WriteNumberValue(WorkerConnections.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkerConnectionsLastUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(workerConnectionsLastUpdatedOn))
             {
                 writer.WritePropertyName("workerConnectionsLastUpdatedDateTime"u8);
-                writer.WriteStringValue(WorkerConnectionsLastUpdatedOn.Value, "O");
+                writer.WriteStringValue(workerConnectionsLastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ContainerResyncTrigger))
             {
