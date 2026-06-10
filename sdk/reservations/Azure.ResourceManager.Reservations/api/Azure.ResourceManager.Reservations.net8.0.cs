@@ -1383,6 +1383,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public ReservationPurchaseContent() { }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeProperties AppliedScopeProperties { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType.")]
         public System.Collections.Generic.IList<string> AppliedScopes { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeType? AppliedScopeType { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } set { } }
