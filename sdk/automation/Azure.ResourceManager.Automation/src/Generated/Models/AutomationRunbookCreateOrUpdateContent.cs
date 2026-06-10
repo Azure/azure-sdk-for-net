@@ -60,19 +60,21 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
         /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="runtimeEnvironment"> Environment of the runbook. </param>
         /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
         /// <param name="draft"> Gets or sets the draft runbook properties. </param>
         /// <param name="publishContentLink"> Gets or sets the published runbook content link. </param>
         /// <param name="description"> Gets or sets the description of the runbook. </param>
         /// <param name="logActivityTrace"> Gets or sets the activity-level tracing options of the runbook. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationRunbookCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, AutomationRunbookType runbookType, AutomationRunbookDraft draft, AutomationContentLink publishContentLink, string description, int? logActivityTrace, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationRunbookCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, string runtimeEnvironment, AutomationRunbookType runbookType, AutomationRunbookDraft draft, AutomationContentLink publishContentLink, string description, int? logActivityTrace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
             Tags = tags;
             IsLogVerboseEnabled = isLogVerboseEnabled;
             IsLogProgressEnabled = isLogProgressEnabled;
+            RuntimeEnvironment = runtimeEnvironment;
             RunbookType = runbookType;
             Draft = draft;
             PublishContentLink = publishContentLink;
@@ -96,6 +98,8 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsLogVerboseEnabled { get; set; }
         /// <summary> Gets or sets progress log option. </summary>
         public bool? IsLogProgressEnabled { get; set; }
+        /// <summary> Environment of the runbook. </summary>
+        public string RuntimeEnvironment { get; set; }
         /// <summary> Gets or sets the type of the runbook. </summary>
         public AutomationRunbookType RunbookType { get; }
         /// <summary> Gets or sets the draft runbook properties. </summary>

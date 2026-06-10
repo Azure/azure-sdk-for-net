@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
+            if (Optional.IsDefined(JobRuntimeEnvironment))
+            {
+                writer.WritePropertyName("jobRuntimeEnvironment"u8);
+                writer.WriteObjectValue(JobRuntimeEnvironment, options);
+            }
             if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
@@ -174,6 +179,7 @@ namespace Azure.ResourceManager.Automation
             RunbookAssociationProperty runbook = default;
             string startedBy = default;
             string runOn = default;
+            JobRuntimeEnvironment jobRuntimeEnvironment = default;
             Guid? jobId = default;
             DateTimeOffset? creationTime = default;
             AutomationJobStatus? status = default;
@@ -239,6 +245,15 @@ namespace Azure.ResourceManager.Automation
                         if (property0.NameEquals("runOn"u8))
                         {
                             runOn = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("jobRuntimeEnvironment"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            jobRuntimeEnvironment = JobRuntimeEnvironment.DeserializeJobRuntimeEnvironment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("jobId"u8))
@@ -358,6 +373,7 @@ namespace Azure.ResourceManager.Automation
                 runbook,
                 startedBy,
                 runOn,
+                jobRuntimeEnvironment,
                 jobId,
                 creationTime,
                 status,

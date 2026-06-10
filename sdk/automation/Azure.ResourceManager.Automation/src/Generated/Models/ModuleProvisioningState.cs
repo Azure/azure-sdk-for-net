@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
         Succeeded,
         /// <summary> Failed. </summary>
         Failed,
-        /// <summary> Cancelled. </summary>
+        /// <summary> Canceled. </summary>
         Cancelled,
         /// <summary> Updating. </summary>
         Updating

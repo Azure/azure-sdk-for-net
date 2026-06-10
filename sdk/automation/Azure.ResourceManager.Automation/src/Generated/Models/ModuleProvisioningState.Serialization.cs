@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             ModuleProvisioningState.ModuleImportRunbookComplete => "ModuleImportRunbookComplete",
             ModuleProvisioningState.Succeeded => "Succeeded",
             ModuleProvisioningState.Failed => "Failed",
-            ModuleProvisioningState.Cancelled => "Cancelled",
+            ModuleProvisioningState.Cancelled => "Canceled",
             ModuleProvisioningState.Updating => "Updating",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModuleProvisioningState value.")
         };
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ModuleImportRunbookComplete")) return ModuleProvisioningState.ModuleImportRunbookComplete;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return ModuleProvisioningState.Succeeded;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ModuleProvisioningState.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return ModuleProvisioningState.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return ModuleProvisioningState.Cancelled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating")) return ModuleProvisioningState.Updating;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModuleProvisioningState value.");
         }

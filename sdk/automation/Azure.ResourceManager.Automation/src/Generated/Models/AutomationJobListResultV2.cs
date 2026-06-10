@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Automation.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobListResultV2"/>. </summary>
-        internal AutomationJobListResultV2()
+        /// <param name="value"> The JobCollectionItem items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AutomationJobListResultV2(IEnumerable<AutomationJobCollectionItemData> value)
         {
-            Value = new ChangeTrackingList<AutomationJobCollectionItemData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobListResultV2"/>. </summary>
-        /// <param name="value"> List of jobs. </param>
-        /// <param name="nextLink"> The  link to the next page. </param>
+        /// <param name="value"> The JobCollectionItem items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationJobListResultV2(IReadOnlyList<AutomationJobCollectionItemData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationJobListResultV2(IReadOnlyList<AutomationJobCollectionItemData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of jobs. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobListResultV2"/> for deserialization. </summary>
+        internal AutomationJobListResultV2()
+        {
+        }
+
+        /// <summary> The JobCollectionItem items on this page. </summary>
         public IReadOnlyList<AutomationJobCollectionItemData> Value { get; }
-        /// <summary> The  link to the next page. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

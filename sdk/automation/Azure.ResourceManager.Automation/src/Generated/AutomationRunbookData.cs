@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> Gets or sets the etag of the resource. </param>
+        /// <param name="runtimeEnvironment"> Runtime Environment of the runbook execution. </param>
         /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
         /// <param name="publishContentLink"> Gets or sets the published runbook content link. </param>
         /// <param name="state"> Gets or sets the state of the runbook. </param>
@@ -83,9 +84,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string runtimeEnvironment, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
+            RuntimeEnvironment = runtimeEnvironment;
             RunbookType = runbookType;
             PublishContentLink = publishContentLink;
             State = state;
@@ -111,6 +113,8 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
+        /// <summary> Runtime Environment of the runbook execution. </summary>
+        public string RuntimeEnvironment { get; set; }
         /// <summary> Gets or sets the type of the runbook. </summary>
         public AutomationRunbookType? RunbookType { get; set; }
         /// <summary> Gets or sets the published runbook content link. </summary>

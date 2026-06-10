@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationPrivateLinkResourceListResult(IReadOnlyList<AutomationPrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationPrivateLinkResourceListResult(IReadOnlyList<AutomationPrivateLinkResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
         public IReadOnlyList<AutomationPrivateLinkResource> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
     /// A class representing the HybridRunbookWorker data model.
     /// Definition of hybrid runbook worker.
     /// </summary>
-    public partial class HybridRunbookWorkerData : ResourceData
+    public partial class HybridRunbookWorkerData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,7 +52,8 @@ namespace Azure.ResourceManager.Automation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>
-        public HybridRunbookWorkerData()
+        /// <param name="location"> The location. </param>
+        public HybridRunbookWorkerData(AzureLocation location) : base(location)
         {
         }
 
@@ -61,6 +62,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="ip"> Gets or sets the assigned machine IP address. </param>
         /// <param name="registeredOn"> Gets or sets the registration time of the worker machine. </param>
         /// <param name="lastSeenOn"> Last Heartbeat from the Worker. </param>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="workerType"> Type of the HybridWorker. </param>
         /// <param name="workerName"> Name of the HybridWorker. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, ResourceIdentifier vmResourceId, HybridWorkerType? workerType, string workerName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, ResourceIdentifier vmResourceId, HybridWorkerType? workerType, string workerName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             IP = ip;
             RegisteredOn = registeredOn;

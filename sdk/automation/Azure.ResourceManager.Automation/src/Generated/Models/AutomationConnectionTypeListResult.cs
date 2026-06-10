@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list connection type operation. </summary>
+    /// <summary> The response of a ConnectionType list operation. </summary>
     internal partial class AutomationConnectionTypeListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Automation.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeListResult"/>. </summary>
-        internal AutomationConnectionTypeListResult()
+        /// <param name="value"> The ConnectionType items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AutomationConnectionTypeListResult(IEnumerable<AutomationConnectionTypeData> value)
         {
-            Value = new ChangeTrackingList<AutomationConnectionTypeData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeListResult"/>. </summary>
-        /// <param name="value"> Gets or sets a list of connection types. </param>
-        /// <param name="nextLink"> Gets or sets the next link. </param>
+        /// <param name="value"> The ConnectionType items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationConnectionTypeListResult(IReadOnlyList<AutomationConnectionTypeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationConnectionTypeListResult(IReadOnlyList<AutomationConnectionTypeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets a list of connection types. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeListResult"/> for deserialization. </summary>
+        internal AutomationConnectionTypeListResult()
+        {
+        }
+
+        /// <summary> The ConnectionType items on this page. </summary>
         public IReadOnlyList<AutomationConnectionTypeData> Value { get; }
-        /// <summary> Gets or sets the next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

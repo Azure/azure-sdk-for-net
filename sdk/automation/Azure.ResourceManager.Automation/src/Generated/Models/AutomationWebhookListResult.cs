@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list webhook operation. </summary>
+    /// <summary> The response of a Webhook list operation. </summary>
     internal partial class AutomationWebhookListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Automation.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationWebhookListResult"/>. </summary>
-        internal AutomationWebhookListResult()
+        /// <param name="value"> The Webhook items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AutomationWebhookListResult(IEnumerable<AutomationWebhookData> value)
         {
-            Value = new ChangeTrackingList<AutomationWebhookData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationWebhookListResult"/>. </summary>
-        /// <param name="value"> Gets or sets a list of webhooks. </param>
-        /// <param name="nextLink"> Gets or sets the next link. </param>
+        /// <param name="value"> The Webhook items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationWebhookListResult(IReadOnlyList<AutomationWebhookData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationWebhookListResult(IReadOnlyList<AutomationWebhookData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets a list of webhooks. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookListResult"/> for deserialization. </summary>
+        internal AutomationWebhookListResult()
+        {
+        }
+
+        /// <summary> The Webhook items on this page. </summary>
         public IReadOnlyList<AutomationWebhookData> Value { get; }
-        /// <summary> Gets or sets the next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

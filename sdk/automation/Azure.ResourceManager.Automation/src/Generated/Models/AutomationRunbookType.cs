@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.Automation.Models
         private const string GraphPowerShellValue = "GraphPowerShell";
         private const string Python2Value = "Python2";
         private const string Python3Value = "Python3";
+        private const string PythonValue = "Python";
+        private const string PowerShell72Value = "PowerShell72";
 
         /// <summary> Script. </summary>
         public static AutomationRunbookType Script { get; } = new AutomationRunbookType(ScriptValue);
@@ -47,6 +49,10 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationRunbookType Python2 { get; } = new AutomationRunbookType(Python2Value);
         /// <summary> Python3. </summary>
         public static AutomationRunbookType Python3 { get; } = new AutomationRunbookType(Python3Value);
+        /// <summary> Python. </summary>
+        public static AutomationRunbookType Python { get; } = new AutomationRunbookType(PythonValue);
+        /// <summary> PowerShell72. </summary>
+        public static AutomationRunbookType PowerShell72 { get; } = new AutomationRunbookType(PowerShell72Value);
         /// <summary> Determines if two <see cref="AutomationRunbookType"/> values are the same. </summary>
         public static bool operator ==(AutomationRunbookType left, AutomationRunbookType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRunbookType"/> values are not the same. </summary>
