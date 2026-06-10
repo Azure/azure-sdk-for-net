@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The credential type used by the connection. </summary>
-    public readonly partial struct CredentialType : IEquatable<CredentialType>
+    internal readonly partial struct CredentialType : IEquatable<CredentialType>
     {
         private readonly string _value;
         /// <summary> API Key credential. </summary>

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public readonly partial struct AgentBlueprintReferenceType : IEquatable<AgentBlueprintReferenceType>
+    internal readonly partial struct AgentBlueprintReferenceType : IEquatable<AgentBlueprintReferenceType>
     {
         private readonly string _value;
         private const string ManagedAgentIdentityBlueprintValue = "ManagedAgentIdentityBlueprint";
