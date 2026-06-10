@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
-    internal partial class GoalResourcesGetAllCollectionResultOfT : Pageable<GoalResourceData>
+    internal partial class GoalResourcesGetAllCollectionResultOfT : Pageable<GoalMembersData>
     {
         private readonly GoalResources _client;
         private readonly string _serviceGroupName;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GoalResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<GoalResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<GoalMembersData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 GoalResourceListResult result = GoalResourceListResult.FromResponse(response);
-                yield return Page<GoalResourceData>.FromValues((IReadOnlyList<GoalResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<GoalMembersData>.FromValues((IReadOnlyList<GoalMembersData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

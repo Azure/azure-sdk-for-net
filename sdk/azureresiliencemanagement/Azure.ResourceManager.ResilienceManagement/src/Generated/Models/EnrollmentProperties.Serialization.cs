@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceIdentifier serviceGroupId = default;
-            ProvisioningState? provisioningState = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))

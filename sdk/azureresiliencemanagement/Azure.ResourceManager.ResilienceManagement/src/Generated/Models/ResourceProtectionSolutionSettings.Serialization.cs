@@ -93,19 +93,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             if (options.Format != "W" && Optional.IsDefined(ActiveLocation))
             {
                 writer.WritePropertyName("activeLocation"u8);
-                writer.WriteStringValue(ActiveLocation);
+                writer.WriteStringValue(ActiveLocation.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActiveLocations))
             {
                 writer.WritePropertyName("activeLocations"u8);
                 writer.WriteStartArray();
-                foreach (string item in ActiveLocations)
+                foreach (AzureLocation item in ActiveLocations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -225,8 +220,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResourceProtectionSolutionType? protectionSolutionType = default;
             ResourceProtectionStatus? protectionStatus = default;
             ResourceIdentifier resourceId = default;
-            string activeLocation = default;
-            IReadOnlyList<string> activeLocations = default;
+            AzureLocation? activeLocation = default;
+            IReadOnlyList<AzureLocation> activeLocations = default;
             IReadOnlyList<string> activePhysicalZones = default;
             IReadOnlyList<string> recoveryLocations = default;
             ResourceReplicationRole? replicationRole = default;
@@ -267,7 +262,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("activeLocation"u8))
                 {
-                    activeLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    activeLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activeLocations"u8))
@@ -276,17 +275,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     activeLocations = array;
                     continue;
@@ -405,7 +397,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 protectionStatus,
                 resourceId,
                 activeLocation,
-                activeLocations ?? new ChangeTrackingList<string>(),
+                activeLocations ?? new ChangeTrackingList<AzureLocation>(),
                 activePhysicalZones ?? new ChangeTrackingList<string>(),
                 recoveryLocations ?? new ChangeTrackingList<string>(),
                 replicationRole,

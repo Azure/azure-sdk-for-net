@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
             RecoveryPlanType planType = default;
             RecoveryPlanState? planState = default;
             string planDescription = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("planType"u8))

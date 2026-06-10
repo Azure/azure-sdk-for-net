@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="latestValidationStatus"> The status of the most recent validation performed. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPlanProperties(ProvisioningState? provisioningState, RecoveryPlanType planType, RecoveryPlanState? planState, string planDescription, RecoveryGroupsSetting recoveryGroupsSetting, RecoveryPlanFailoverOperationStatus latestFailoverStatus, RecoveryPlanOperationStatus latestValidationStatus, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPlanProperties(ResilienceManagementProvisioningState? provisioningState, RecoveryPlanType planType, RecoveryPlanState? planState, string planDescription, RecoveryGroupsSetting recoveryGroupsSetting, RecoveryPlanFailoverOperationStatus latestFailoverStatus, RecoveryPlanOperationStatus latestValidationStatus, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PlanType = planType;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The provisioning state of the recovery orchestration plan. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> The type of the recovery orchestration plan, which can be set during creation but cannot be changed afterward. </summary>
         public RecoveryPlanType PlanType { get; set; }

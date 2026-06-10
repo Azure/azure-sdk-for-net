@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             RbacNeededForDrillOnChaosResource = new ChangeTrackingList<string>();
             RbacNeededForDrillOnRecoveryPlan = new ChangeTrackingList<string>();
             ChaosResourceCreationFailureReasons = new ChangeTrackingList<string>();
-            DrillMonitoringErrors = new ChangeTrackingList<ErrorDetails>();
+            DrillMonitoringErrors = new ChangeTrackingList<ResilienceManagementErrorDetail>();
             RbacNeededForDrillOnDrillMonitoringResources = new ChangeTrackingList<string>();
             RbacNeededForDrillOnDrillResources = new ChangeTrackingList<string>();
             MissingRequiredResourceProviders = new ChangeTrackingList<string>();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="rbacNeededForDrillOnDrillResources"> Permissions needed by the Drill MSI to read health metrics data for resources in service group. </param>
         /// <param name="missingRequiredResourceProviders"> List of required required Azure resource providers that are not registered in the subscription specified for chaos resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttentionReason(RBACState? drillRbacOnChaosResource, IList<string> rbacNeededForDrillOnChaosResource, RBACState? drillRbacOnRecoveryPlan, IList<string> rbacNeededForDrillOnRecoveryPlan, RecoveryPlanState? roReadiness, RBACState? rbacOnTargetResources, RBACState? runbookFaultRbacOnTargets, ExtensionObjectState? chaosResource, IList<string> chaosResourceCreationFailureReasons, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState, ExtensionObjectState? drillUserMsi, ExtensionObjectState? chaosResourceUserMsi, ExtensionObjectState? includedResourceInDrill, RBACState? drillRbacOnMonitoringResources, IList<ErrorDetails> drillMonitoringErrors, ExtensionObjectState? drillMonitoringResources, RBACState? monitoringRbacOnDrillResources, IList<string> rbacNeededForDrillOnDrillMonitoringResources, IList<string> rbacNeededForDrillOnDrillResources, IList<string> missingRequiredResourceProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttentionReason(ResilienceManagementRbacState? drillRbacOnChaosResource, IList<string> rbacNeededForDrillOnChaosResource, ResilienceManagementRbacState? drillRbacOnRecoveryPlan, IList<string> rbacNeededForDrillOnRecoveryPlan, RecoveryPlanState? roReadiness, ResilienceManagementRbacState? rbacOnTargetResources, ResilienceManagementRbacState? runbookFaultRbacOnTargets, ExtensionObjectState? chaosResource, IList<string> chaosResourceCreationFailureReasons, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState, ExtensionObjectState? drillUserMsi, ExtensionObjectState? chaosResourceUserMsi, ExtensionObjectState? includedResourceInDrill, ResilienceManagementRbacState? drillRbacOnMonitoringResources, IList<ResilienceManagementErrorDetail> drillMonitoringErrors, ExtensionObjectState? drillMonitoringResources, ResilienceManagementRbacState? monitoringRbacOnDrillResources, IList<string> rbacNeededForDrillOnDrillMonitoringResources, IList<string> rbacNeededForDrillOnDrillResources, IList<string> missingRequiredResourceProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DrillRbacOnChaosResource = drillRbacOnChaosResource;
             RbacNeededForDrillOnChaosResource = rbacNeededForDrillOnChaosResource;
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Drill object does not have the necessary RBAC to run the chaos resource. </summary>
-        public RBACState? DrillRbacOnChaosResource { get; }
+        public ResilienceManagementRbacState? DrillRbacOnChaosResource { get; }
 
         /// <summary> Permissions needed by the Drill MSI to run the chaos resource. </summary>
         public IList<string> RbacNeededForDrillOnChaosResource { get; }
 
         /// <summary> Drill object does not have the necessary RBAC to run the Recovery Plan. </summary>
-        public RBACState? DrillRbacOnRecoveryPlan { get; }
+        public ResilienceManagementRbacState? DrillRbacOnRecoveryPlan { get; }
 
         /// <summary> Permissions needed by the Drill MSI to run the Recovery Plan. </summary>
         public IList<string> RbacNeededForDrillOnRecoveryPlan { get; }
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public RecoveryPlanState? RoReadiness { get; }
 
         /// <summary> RBAC required by Chaos Resource MSI not setup on the target resources. </summary>
-        public RBACState? RbacOnTargetResources { get; }
+        public ResilienceManagementRbacState? RbacOnTargetResources { get; }
 
         /// <summary> RBAC required by AutomationAccount for runbook MSI not setup on the target resources. </summary>
-        public RBACState? RunbookFaultRbacOnTargets { get; }
+        public ResilienceManagementRbacState? RunbookFaultRbacOnTargets { get; }
 
         /// <summary> Chaos resource for faulting exists or not. </summary>
         public ExtensionObjectState? ChaosResource { get; }
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ExtensionObjectState? IncludedResourceInDrill { get; }
 
         /// <summary> Drill MSI does not have the necessary RBAC to read the Drill Monitoring resources. </summary>
-        public RBACState? DrillRbacOnMonitoringResources { get; }
+        public ResilienceManagementRbacState? DrillRbacOnMonitoringResources { get; }
 
         /// <summary> Errors related to Drill Monitoring resources. </summary>
-        public IList<ErrorDetails> DrillMonitoringErrors { get; }
+        public IList<ResilienceManagementErrorDetail> DrillMonitoringErrors { get; }
 
         /// <summary> Monitoring Resources created for Drill. </summary>
         public ExtensionObjectState? DrillMonitoringResources { get; }
 
         /// <summary> Monitoring RBAC required by Drill MSI not setup on the target resources. </summary>
-        public RBACState? MonitoringRbacOnDrillResources { get; }
+        public ResilienceManagementRbacState? MonitoringRbacOnDrillResources { get; }
 
         /// <summary> Permissions needed by the Drill MSI to Upload service group health data for monitoring. </summary>
         public IList<string> RbacNeededForDrillOnDrillMonitoringResources { get; }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="actionName"> Name of the action. </param>
         /// <param name="actionDescription"> User description of the action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryGroupActionSettings(ActionTask? actionTask, int? actionSequence, RecoveryGroupActionType? recoveryGroupActionType, string actionName, string actionDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryGroupActionSettings(ResilienceManagementActionTask? actionTask, int? actionSequence, RecoveryGroupActionType? recoveryGroupActionType, string actionName, string actionDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionTask = actionTask;
             ActionSequence = actionSequence;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The action task associated with this job resource. </summary>
-        public ActionTask? ActionTask { get; }
+        public ResilienceManagementActionTask? ActionTask { get; }
 
         /// <summary> Sequence number for the action. </summary>
         public int? ActionSequence { get; }

@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             int faultDurationInMin = default;
-            ResourceLists resourceLists = default;
-            ForceInclusionAndUpdate? forceInclusionAndUpdate = default;
+            DrillResourcesList resourceLists = default;
+            ForceInclusionState? forceInclusionAndUpdate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    resourceLists = ResourceLists.DeserializeResourceLists(prop.Value, options);
+                    resourceLists = DrillResourcesList.DeserializeDrillResourcesList(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("forceInclusionAndUpdate"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    forceInclusionAndUpdate = new ForceInclusionAndUpdate(prop.Value.GetString());
+                    forceInclusionAndUpdate = new ForceInclusionState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

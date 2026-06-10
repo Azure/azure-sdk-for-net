@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Optional.IsDefined(RecordedOn))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(RecordedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Author))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             string notes = default;
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? recordedOn = default;
             string author = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    recordedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("author"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DrillRunAddNotesContent(notes, timestamp, author, additionalBinaryDataProperties);
+            return new DrillRunAddNotesContent(notes, recordedOn, author, additionalBinaryDataProperties);
         }
     }
 }

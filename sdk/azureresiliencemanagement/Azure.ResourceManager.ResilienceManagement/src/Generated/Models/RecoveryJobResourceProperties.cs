@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> The provisioning state of the recovery job resource. </param>
         /// <param name="protectionSolutionType"> A setting that indicates the protection solution selected. </param>
         /// <param name="recoveryGroupActionSettings"> The recovery action settings. </param>
-        internal RecoveryJobResourceProperties(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProvisioningState? provisioningState, ResourceProtectionSolutionType? protectionSolutionType, RecoveryGroupActionSettings recoveryGroupActionSettings) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
+        internal RecoveryJobResourceProperties(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState, ResourceProtectionSolutionType? protectionSolutionType, RecoveryGroupActionSettings recoveryGroupActionSettings) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProtectionSolutionType = protectionSolutionType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The provisioning state of the recovery job resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> A setting that indicates the protection solution selected. </summary>
         public ResourceProtectionSolutionType? ProtectionSolutionType { get; }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillProperties(ProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, RBACSetupMode? rbacSetupMode, AttentionReason attentionReason, SystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillProperties(ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, ResilienceManagementRbacSetupMode? rbacSetupMode, AttentionReason attentionReason, DrillSystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ServiceGroupId = serviceGroupId;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> Parent SG resource. </summary>
         public ResourceIdentifier ServiceGroupId { get; }
@@ -91,13 +91,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ExecutionReadinessState? ExecutionReadinessState { get; }
 
         /// <summary> RBAC setup mode. </summary>
-        public RBACSetupMode? RbacSetupMode { get; set; }
+        public ResilienceManagementRbacSetupMode? RbacSetupMode { get; set; }
 
         /// <summary> Attention reason if the ReadinessState is 'NeedsAttention'. </summary>
         public AttentionReason AttentionReason { get; }
 
         /// <summary> Internal System Metadata, to be used by internal components only. </summary>
-        public SystemMetadata SystemMetadata { get; }
+        public DrillSystemMetadata SystemMetadata { get; }
 
         /// <summary> Last run properties. </summary>
         public LastRunProperties LastRunProperties { get; }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResponseError ErrorDetails { get; }
 
         /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<MoboBrokerTarget> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<ManagedBrokerTarget> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

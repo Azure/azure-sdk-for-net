@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            RBACState? faultRbacOnTargetResource = default;
-            RBACState? runbookFaultRbacOnTargets = default;
-            RBACState? monitoringRbacOnTargets = default;
+            ResilienceManagementRbacState? faultRbacOnTargetResource = default;
+            ResilienceManagementRbacState? runbookFaultRbacOnTargets = default;
+            ResilienceManagementRbacState? monitoringRbacOnTargets = default;
             IList<DrillResourceState> resourceState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    faultRbacOnTargetResource = new RBACState(prop.Value.GetString());
+                    faultRbacOnTargetResource = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("runbookFaultRbacOnTargets"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    runbookFaultRbacOnTargets = new RBACState(prop.Value.GetString());
+                    runbookFaultRbacOnTargets = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("monitoringRbacOnTargets"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    monitoringRbacOnTargets = new RBACState(prop.Value.GetString());
+                    monitoringRbacOnTargets = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceState"u8))

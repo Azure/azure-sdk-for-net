@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RecoveryResourceData item in Value)
+            foreach (ResilienceMembersData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            IList<RecoveryResourceData> value = default;
+            IList<ResilienceMembersData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RecoveryResourceData> array = new List<RecoveryResourceData>();
+                    List<ResilienceMembersData> array = new List<ResilienceMembersData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryResourceData.DeserializeRecoveryResourceData(item, options));
+                        array.Add(ResilienceMembersData.DeserializeResilienceMembersData(item, options));
                     }
                     value = array;
                     continue;

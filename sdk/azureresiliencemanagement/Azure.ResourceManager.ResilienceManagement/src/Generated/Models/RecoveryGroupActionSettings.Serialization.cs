@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ActionTask? actionTask = default;
+            ResilienceManagementActionTask? actionTask = default;
             int? actionSequence = default;
             RecoveryGroupActionType? recoveryGroupActionType = default;
             string actionName = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    actionTask = new ActionTask(prop.Value.GetString());
+                    actionTask = new ResilienceManagementActionTask(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actionSequence"u8))

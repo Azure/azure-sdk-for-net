@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier actionResourceId = default;
             IDictionary<string, string> parameters = default;
-            AssociatedIdentity associatedIdentity = default;
+            ResilienceManagementAssociatedIdentity associatedIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    associatedIdentity = AssociatedIdentity.DeserializeAssociatedIdentity(prop.Value, options);
+                    associatedIdentity = ResilienceManagementAssociatedIdentity.DeserializeResilienceManagementAssociatedIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="actionResourceId"> The ARM Resource ID of the resource that includes the actionable script, such as a Runbook in an Automation Account. </param>
         /// <param name="parameters"> Key-value parameters for the operation. </param>
         /// <param name="associatedIdentity"> The identity associated with actionResourceId for RBAC. </param>
-        internal RecoveryGroupCustomRunbookAction(string name, string description, RecoveryGroupActionType @type, int timeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier actionResourceId, IDictionary<string, string> parameters, AssociatedIdentity associatedIdentity) : base(name, description, @type, timeoutInMinutes, additionalBinaryDataProperties)
+        internal RecoveryGroupCustomRunbookAction(string name, string description, RecoveryGroupActionType @type, int timeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier actionResourceId, IDictionary<string, string> parameters, ResilienceManagementAssociatedIdentity associatedIdentity) : base(name, description, @type, timeoutInMinutes, additionalBinaryDataProperties)
         {
             ActionResourceId = actionResourceId;
             Parameters = parameters;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public IDictionary<string, string> Parameters { get; }
 
         /// <summary> The identity associated with actionResourceId for RBAC. </summary>
-        public AssociatedIdentity AssociatedIdentity { get; set; }
+        public ResilienceManagementAssociatedIdentity AssociatedIdentity { get; set; }
     }
 }

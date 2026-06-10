@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="DrillRunAddNotesContent"/>. </summary>
         /// <param name="notes"> The notes string. </param>
-        /// <param name="timestamp"> System generated current Timestamp. </param>
+        /// <param name="recordedOn"> System generated current Timestamp. </param>
         /// <param name="author"> System generated Object Id of the notes author. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillRunAddNotesContent(string notes, DateTimeOffset? timestamp, string author, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillRunAddNotesContent(string notes, DateTimeOffset? recordedOn, string author, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Notes = notes;
-            Timestamp = timestamp;
+            RecordedOn = recordedOn;
             Author = author;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public string Notes { get; set; }
 
         /// <summary> System generated current Timestamp. </summary>
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? RecordedOn { get; }
 
         /// <summary> System generated Object Id of the notes author. </summary>
         public string Author { get; }

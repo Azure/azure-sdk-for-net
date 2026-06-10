@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryResourceQualification"/>. </summary>
         /// <param name="recoveryResource"> Recovery orchestration resource. </param>
         /// <param name="operationQualificationDetails"> Details of qualification for the operation. </param>
-        internal RecoveryResourceQualification(RecoveryResourceData recoveryResource, OperationQualificationDetails operationQualificationDetails)
+        internal RecoveryResourceQualification(ResilienceMembersData recoveryResource, OperationQualificationDetails operationQualificationDetails)
         {
             RecoveryResource = recoveryResource;
             OperationQualificationDetails = operationQualificationDetails;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="recoveryResource"> Recovery orchestration resource. </param>
         /// <param name="operationQualificationDetails"> Details of qualification for the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryResourceQualification(RecoveryResourceData recoveryResource, OperationQualificationDetails operationQualificationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryResourceQualification(ResilienceMembersData recoveryResource, OperationQualificationDetails operationQualificationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecoveryResource = recoveryResource;
             OperationQualificationDetails = operationQualificationDetails;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Recovery orchestration resource. </summary>
-        public RecoveryResourceData RecoveryResource { get; }
+        public ResilienceMembersData RecoveryResource { get; }
 
         /// <summary> Details of qualification for the operation. </summary>
         public OperationQualificationDetails OperationQualificationDetails { get; }

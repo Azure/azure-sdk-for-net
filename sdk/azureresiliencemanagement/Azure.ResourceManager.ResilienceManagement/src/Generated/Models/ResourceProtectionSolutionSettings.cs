@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ResourceProtectionSolutionSettings"/>. </summary>
         internal ResourceProtectionSolutionSettings()
         {
-            ActiveLocations = new ChangeTrackingList<string>();
+            ActiveLocations = new ChangeTrackingList<AzureLocation>();
             ActivePhysicalZones = new ChangeTrackingList<string>();
             RecoveryLocations = new ChangeTrackingList<string>();
             ReplicaResources = new ChangeTrackingList<ResourceIdentifier>();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="failoverState"> Failover state of the recovery orchestration resource. </param>
         /// <param name="testFailoverState"> TestFailover state of the recovery orchestration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType, ResourceProtectionStatus? protectionStatus, ResourceIdentifier resourceId, string activeLocation, IReadOnlyList<string> activeLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryLocations, ResourceReplicationRole? replicationRole, ResourceIdentifier primaryResource, IReadOnlyList<ResourceIdentifier> replicaResources, bool isAutoFailover, FailoverState? failoverState, TestFailoverState? testFailoverState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType, ResourceProtectionStatus? protectionStatus, ResourceIdentifier resourceId, AzureLocation? activeLocation, IReadOnlyList<AzureLocation> activeLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryLocations, ResourceReplicationRole? replicationRole, ResourceIdentifier primaryResource, IReadOnlyList<ResourceIdentifier> replicaResources, bool isAutoFailover, FailoverState? failoverState, TestFailoverState? testFailoverState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectionSolutionType = protectionSolutionType;
             ProtectionStatus = protectionStatus;
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Active location of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </summary>
-        public string ActiveLocation { get; }
+        public AzureLocation? ActiveLocation { get; }
 
         /// <summary> Active locations of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </summary>
-        public IReadOnlyList<string> ActiveLocations { get; }
+        public IReadOnlyList<AzureLocation> ActiveLocations { get; }
 
         /// <summary> Active Resource location and physical zones of Azure Resource. </summary>
         public IReadOnlyList<string> ActivePhysicalZones { get; }

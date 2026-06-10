@@ -2106,11 +2106,11 @@ namespace Azure.ResourceManager.ResilienceManagement
             }
         }
 
-        /// <summary> Gets a collection of RecoveryResources in the <see cref="RecoveryPlanResource"/>. </summary>
-        /// <returns> An object representing collection of RecoveryResources and their operations over a RecoveryResource. </returns>
-        public virtual RecoveryResourceCollection GetRecoveryResources()
+        /// <summary> Gets a collection of ResilienceMembers in the <see cref="RecoveryPlanResource"/>. </summary>
+        /// <returns> An object representing collection of ResilienceMembers and their operations over a ResilienceMembersResource. </returns>
+        public virtual ResilienceMembersCollection GetAllResilienceMembers()
         {
-            return GetCachedClient(client => new RecoveryResourceCollection(client, Id));
+            return GetCachedClient(client => new ResilienceMembersCollection(client, Id));
         }
 
         /// <summary> Get a RecoveryResource. </summary>
@@ -2119,11 +2119,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RecoveryResource>> GetRecoveryResourceAsync(string recoveryResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResilienceMembersResource>> GetResilienceMembersAsync(string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            return await GetRecoveryResources().GetAsync(recoveryResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetAllResilienceMembers().GetAsync(recoveryResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a RecoveryResource. </summary>
@@ -2132,11 +2132,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RecoveryResource> GetRecoveryResource(string recoveryResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ResilienceMembersResource> GetResilienceMembers(string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryResourceName, nameof(recoveryResourceName));
 
-            return GetRecoveryResources().Get(recoveryResourceName, cancellationToken);
+            return GetAllResilienceMembers().Get(recoveryResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RecoveryJobs in the <see cref="RecoveryPlanResource"/>. </summary>

@@ -700,11 +700,11 @@ namespace Azure.ResourceManager.ResilienceManagement
             }
         }
 
-        /// <summary> Gets a collection of GoalResources in the <see cref="GoalAssignmentResource"/>. </summary>
-        /// <returns> An object representing collection of GoalResources and their operations over a GoalResource. </returns>
-        public virtual GoalResourceCollection GetGoalResources()
+        /// <summary> Gets a collection of GoalMembers in the <see cref="GoalAssignmentResource"/>. </summary>
+        /// <returns> An object representing collection of GoalMembers and their operations over a GoalMembersResource. </returns>
+        public virtual GoalMembersCollection GetAllGoalMembers()
         {
-            return GetCachedClient(client => new GoalResourceCollection(client, Id));
+            return GetCachedClient(client => new GoalMembersCollection(client, Id));
         }
 
         /// <summary> Get a GoalResource. </summary>
@@ -713,11 +713,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <exception cref="ArgumentNullException"> <paramref name="goalResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GoalResource>> GetGoalResourceAsync(string goalResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GoalMembersResource>> GetGoalMembersAsync(string goalResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(goalResourceName, nameof(goalResourceName));
 
-            return await GetGoalResources().GetAsync(goalResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetAllGoalMembers().GetAsync(goalResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a GoalResource. </summary>
@@ -726,11 +726,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <exception cref="ArgumentNullException"> <paramref name="goalResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GoalResource> GetGoalResource(string goalResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<GoalMembersResource> GetGoalMembers(string goalResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(goalResourceName, nameof(goalResourceName));
 
-            return GetGoalResources().Get(goalResourceName, cancellationToken);
+            return GetAllGoalMembers().Get(goalResourceName, cancellationToken);
         }
     }
 }

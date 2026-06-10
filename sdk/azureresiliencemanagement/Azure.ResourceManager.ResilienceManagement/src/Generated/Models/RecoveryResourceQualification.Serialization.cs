@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            RecoveryResourceData recoveryResource = default;
+            ResilienceMembersData recoveryResource = default;
             OperationQualificationDetails operationQualificationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recoveryResource"u8))
                 {
-                    recoveryResource = RecoveryResourceData.DeserializeRecoveryResourceData(prop.Value, options);
+                    recoveryResource = ResilienceMembersData.DeserializeResilienceMembersData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("operationQualificationDetails"u8))

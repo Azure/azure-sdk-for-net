@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="UpdateRecoveryResourcesResult"/>. </summary>
         internal UpdateRecoveryResourcesResult()
         {
-            FailedResources = new ChangeTrackingList<RecoveryResourceData>();
+            FailedResources = new ChangeTrackingList<ResilienceMembersData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateRecoveryResourcesResult"/>. </summary>
         /// <param name="failedResources"> A list of error details associated with resources for which the update has failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRecoveryResourcesResult(IList<RecoveryResourceData> failedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateRecoveryResourcesResult(IList<ResilienceMembersData> failedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FailedResources = failedResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of error details associated with resources for which the update has failed. </summary>
-        public IList<RecoveryResourceData> FailedResources { get; }
+        public IList<ResilienceMembersData> FailedResources { get; }
     }
 }

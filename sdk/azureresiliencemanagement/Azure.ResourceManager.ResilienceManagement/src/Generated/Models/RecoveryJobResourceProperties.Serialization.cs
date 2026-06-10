@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             string taskName = default;
             JobResourceType jobResourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProvisioningState? provisioningState = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
             ResourceProtectionSolutionType? protectionSolutionType = default;
             RecoveryGroupActionSettings recoveryGroupActionSettings = default;
             foreach (var prop in element.EnumerateObject())
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("protectionSolutionType"u8))

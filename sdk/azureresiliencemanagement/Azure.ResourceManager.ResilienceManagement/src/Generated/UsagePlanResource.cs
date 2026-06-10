@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.ResilienceManagement
             }
         }
 
-        /// <summary> Gets a collection of Enrollments in the <see cref="UsagePlanResource"/>. </summary>
-        /// <returns> An object representing collection of Enrollments and their operations over a EnrollmentResource. </returns>
-        public virtual EnrollmentCollection GetEnrollments()
+        /// <summary> Gets a collection of UsagePlanEnrollments in the <see cref="UsagePlanResource"/>. </summary>
+        /// <returns> An object representing collection of UsagePlanEnrollments and their operations over a UsagePlanEnrollmentResource. </returns>
+        public virtual UsagePlanEnrollmentCollection GetUsagePlanEnrollments()
         {
-            return GetCachedClient(client => new EnrollmentCollection(client, Id));
+            return GetCachedClient(client => new UsagePlanEnrollmentCollection(client, Id));
         }
 
         /// <summary> Get an Enrollment. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <exception cref="ArgumentNullException"> <paramref name="enrollmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enrollmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnrollmentResource>> GetEnrollmentAsync(string enrollmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UsagePlanEnrollmentResource>> GetUsagePlanEnrollmentAsync(string enrollmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enrollmentName, nameof(enrollmentName));
 
-            return await GetEnrollments().GetAsync(enrollmentName, cancellationToken).ConfigureAwait(false);
+            return await GetUsagePlanEnrollments().GetAsync(enrollmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get an Enrollment. </summary>
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <exception cref="ArgumentNullException"> <paramref name="enrollmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enrollmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnrollmentResource> GetEnrollment(string enrollmentName, CancellationToken cancellationToken = default)
+        public virtual Response<UsagePlanEnrollmentResource> GetUsagePlanEnrollment(string enrollmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enrollmentName, nameof(enrollmentName));
 
-            return GetEnrollments().Get(enrollmentName, cancellationToken);
+            return GetUsagePlanEnrollments().Get(enrollmentName, cancellationToken);
         }
     }
 }

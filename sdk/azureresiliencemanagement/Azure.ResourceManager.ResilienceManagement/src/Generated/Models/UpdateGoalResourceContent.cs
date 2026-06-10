@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="UpdateGoalResourceContent"/>. </summary>
         /// <param name="resources"> List of update goal resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
-        public UpdateGoalResourceContent(IEnumerable<GoalResourceData> resources)
+        public UpdateGoalResourceContent(IEnumerable<GoalMembersData> resources)
         {
             Argument.AssertNotNull(resources, nameof(resources));
 
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="UpdateGoalResourceContent"/>. </summary>
         /// <param name="resources"> List of update goal resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateGoalResourceContent(IList<GoalResourceData> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateGoalResourceContent(IList<GoalMembersData> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of update goal resource. </summary>
-        public IList<GoalResourceData> Resources { get; }
+        public IList<GoalMembersData> Resources { get; }
     }
 }

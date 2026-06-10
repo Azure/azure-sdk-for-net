@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="UserConfirmationForHighAvailabilityItem"/>. </summary>
         /// <param name="solutionDisplayName"> The solution display name of the high availability solution. </param>
         /// <param name="confirmationStatus"> The confirmation status of the high availability solution. </param>
-        public UserConfirmationForHighAvailabilityItem(SolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus)
+        public UserConfirmationForHighAvailabilityItem(ResilienceManagementSolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus)
         {
             SolutionDisplayName = solutionDisplayName;
             ConfirmationStatus = confirmationStatus;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="confirmationStatus"> The confirmation status of the high availability solution. </param>
         /// <param name="reasonForRequestingConfirmation"> The reason for requesting user confirmation for the high availability solution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserConfirmationForHighAvailabilityItem(SolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus, ReasonForRequestingConfirmation? reasonForRequestingConfirmation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserConfirmationForHighAvailabilityItem(ResilienceManagementSolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus, ReasonForRequestingConfirmation? reasonForRequestingConfirmation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionDisplayName = solutionDisplayName;
             ConfirmationStatus = confirmationStatus;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The solution display name of the high availability solution. </summary>
-        public SolutionDisplayName SolutionDisplayName { get; set; }
+        public ResilienceManagementSolutionDisplayName SolutionDisplayName { get; set; }
 
         /// <summary> The confirmation status of the high availability solution. </summary>
         public ConfirmationStatus ConfirmationStatus { get; set; }

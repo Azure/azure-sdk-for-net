@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
-                writer.WriteStringValue(ResourceLocation);
+                writer.WriteStringValue(ResourceLocation.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ResourcePhysicalZones))
             {
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("inclusionState"u8);
                 writer.WriteStringValue(InclusionState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NeedsAttention))
+            if (options.Format != "W" && Optional.IsDefined(RequiresAttention))
             {
                 writer.WritePropertyName("needsAttention"u8);
-                writer.WriteBooleanValue(NeedsAttention.Value);
+                writer.WriteBooleanValue(RequiresAttention.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttentionReasons))
             {
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             string recoveryResourceUniqueId = default;
-            ProvisioningState? provisioningState = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
             ResourceIdentifier resourceId = default;
-            string resourceLocation = default;
+            AzureLocation? resourceLocation = default;
             IReadOnlyList<string> resourcePhysicalZones = default;
             ResourceInclusionState? inclusionState = default;
-            bool? needsAttention = default;
+            bool? requiresAttention = default;
             IReadOnlyList<string> attentionReasons = default;
             ResourceProtectionStatus? protectionStatus = default;
             IReadOnlyList<ResourceProtectionSolutionSettings> resourceProtectionSolutions = default;
             ResourceProtectionSolutionType? selectedProtectionSolutionType = default;
             ResourceBaseProtectionSolutionSetting selectedProtectionSolutionSetting = default;
             string recoveryGroupId = default;
-            AssociatedIdentity associatedIdentity = default;
+            ResilienceManagementAssociatedIdentity associatedIdentity = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
@@ -264,7 +264,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("resourceLocation"u8))
                 {
-                    resourceLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourcePhysicalZones"u8))
@@ -303,7 +307,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    needsAttention = prop.Value.GetBoolean();
+                    requiresAttention = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("attentionReasons"u8))
@@ -379,7 +383,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    associatedIdentity = AssociatedIdentity.DeserializeAssociatedIdentity(prop.Value, options);
+                    associatedIdentity = ResilienceManagementAssociatedIdentity.DeserializeResilienceManagementAssociatedIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))
@@ -403,7 +407,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 resourceLocation,
                 resourcePhysicalZones ?? new ChangeTrackingList<string>(),
                 inclusionState,
-                needsAttention,
+                requiresAttention,
                 attentionReasons ?? new ChangeTrackingList<string>(),
                 protectionStatus,
                 resourceProtectionSolutions ?? new ChangeTrackingList<ResourceProtectionSolutionSettings>(),

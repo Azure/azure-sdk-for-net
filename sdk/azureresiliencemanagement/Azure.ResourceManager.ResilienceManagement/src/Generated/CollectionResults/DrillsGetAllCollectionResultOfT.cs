@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
-    internal partial class DrillsGetAllCollectionResultOfT : Pageable<DrillData>
+    internal partial class DrillsGetAllCollectionResultOfT : Pageable<ResilienceManagementDrillData>
     {
         private readonly Drills _client;
         private readonly string _serviceGroupName;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DrillsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DrillData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ResilienceManagementDrillData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 DrillListResult result = DrillListResult.FromResponse(response);
-                yield return Page<DrillData>.FromValues((IReadOnlyList<DrillData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ResilienceManagementDrillData>.FromValues((IReadOnlyList<ResilienceManagementDrillData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

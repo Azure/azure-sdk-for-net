@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="EnrollmentListResult"/>. </summary>
         /// <param name="value"> The Enrollment items on this page. </param>
-        internal EnrollmentListResult(IEnumerable<EnrollmentData> value)
+        internal EnrollmentListResult(IEnumerable<UsagePlanEnrollmentData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="value"> The Enrollment items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnrollmentListResult(IList<EnrollmentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnrollmentListResult(IList<UsagePlanEnrollmentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The Enrollment items on this page. </summary>
-        public IList<EnrollmentData> Value { get; }
+        public IList<UsagePlanEnrollmentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

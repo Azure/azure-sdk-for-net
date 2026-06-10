@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Provisioning state of the enrollment. </param>
         /// <param name="errorDetails"> Details of any errors encountered during Enrollment create or update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnrollmentProperties(ResourceIdentifier serviceGroupId, ProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnrollmentProperties(ResourceIdentifier serviceGroupId, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceGroupId = serviceGroupId;
             ProvisioningState = provisioningState;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier ServiceGroupId { get; set; }
 
         /// <summary> Provisioning state of the enrollment. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> Details of any errors encountered during Enrollment create or update. </summary>
         public ResponseError ErrorDetails { get; }

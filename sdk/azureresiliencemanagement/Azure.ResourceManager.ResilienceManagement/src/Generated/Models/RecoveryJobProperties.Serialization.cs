@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ExecutionConfigurations executionConfigurations = default;
             JobTriggeredBy? triggeredBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProvisioningState? provisioningState = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("status"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

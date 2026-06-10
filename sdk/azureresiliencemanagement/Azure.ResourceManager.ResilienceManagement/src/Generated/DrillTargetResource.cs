@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     /// <summary>
     /// A class representing a DrillTarget along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DrillTargetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DrillResource"/> using the GetDrillTargets method.
+    /// Otherwise you can get one from its parent resource <see cref="ResilienceManagementDrillResource"/> using the GetDrillTargets method.
     /// </summary>
     public partial class DrillTargetResource : ArmResource
     {

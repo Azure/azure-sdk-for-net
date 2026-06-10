@@ -197,46 +197,46 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GoalResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GoalMembersResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalMembersResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GoalResource"/> object. </returns>
-        public static GoalResource GetGoalResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GoalMembersResource"/> object. </returns>
+        public static GoalMembersResource GetGoalMembersResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetGoalResource(id);
+            return GetMockableResilienceManagementArmClient(client).GetGoalMembersResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="GoalResourceCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="GoalMembersCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalResources(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetAllGoalMembers(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="GoalResource"/> objects. </returns>
-        public static GoalResourceCollection GetGoalResources(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="GoalMembersResource"/> objects. </returns>
+        public static GoalMembersCollection GetAllGoalMembers(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetGoalResources(scope);
+            return GetMockableResilienceManagementArmClient(client).GetAllGoalMembers(scope);
         }
 
         /// <summary>
         /// Get a GoalResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalMembers(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -245,18 +245,18 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<GoalResource> GetGoalResource(this ArmClient client, ResourceIdentifier scope, string goalResourceName, CancellationToken cancellationToken = default)
+        public static Response<GoalMembersResource> GetGoalMembers(this ArmClient client, ResourceIdentifier scope, string goalResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetGoalResource(scope, goalResourceName, cancellationToken);
+            return GetMockableResilienceManagementArmClient(client).GetGoalMembers(scope, goalResourceName, cancellationToken);
         }
 
         /// <summary>
         /// Get a GoalResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalMembersAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GoalResource>> GetGoalResourceAsync(this ArmClient client, ResourceIdentifier scope, string goalResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GoalMembersResource>> GetGoalMembersAsync(this ArmClient client, ResourceIdentifier scope, string goalResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableResilienceManagementArmClient(client).GetGoalResourceAsync(scope, goalResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResilienceManagementArmClient(client).GetGoalMembersAsync(scope, goalResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -349,46 +349,46 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ResilienceMembersResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetResilienceMembersResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RecoveryResource"/> object. </returns>
-        public static RecoveryResource GetRecoveryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResilienceMembersResource"/> object. </returns>
+        public static ResilienceMembersResource GetResilienceMembersResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetRecoveryResource(id);
+            return GetMockableResilienceManagementArmClient(client).GetResilienceMembersResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="RecoveryResourceCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="ResilienceMembersCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryResources(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetAllResilienceMembers(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="RecoveryResource"/> objects. </returns>
-        public static RecoveryResourceCollection GetRecoveryResources(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ResilienceMembersResource"/> objects. </returns>
+        public static ResilienceMembersCollection GetAllResilienceMembers(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetRecoveryResources(scope);
+            return GetMockableResilienceManagementArmClient(client).GetAllResilienceMembers(scope);
         }
 
         /// <summary>
         /// Get a RecoveryResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetResilienceMembers(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -397,18 +397,18 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RecoveryResource> GetRecoveryResource(this ArmClient client, ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
+        public static Response<ResilienceMembersResource> GetResilienceMembers(this ArmClient client, ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetRecoveryResource(scope, recoveryResourceName, cancellationToken);
+            return GetMockableResilienceManagementArmClient(client).GetResilienceMembers(scope, recoveryResourceName, cancellationToken);
         }
 
         /// <summary>
         /// Get a RecoveryResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetRecoveryResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetResilienceMembersAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -417,11 +417,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RecoveryResource>> GetRecoveryResourceAsync(this ArmClient client, ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResilienceMembersResource>> GetResilienceMembersAsync(this ArmClient client, ResourceIdentifier scope, string recoveryResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableResilienceManagementArmClient(client).GetRecoveryResourceAsync(scope, recoveryResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResilienceManagementArmClient(client).GetResilienceMembersAsync(scope, recoveryResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -577,46 +577,46 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DrillResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ResilienceManagementDrillResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetDrillResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetResilienceManagementDrillResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DrillResource"/> object. </returns>
-        public static DrillResource GetDrillResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResilienceManagementDrillResource"/> object. </returns>
+        public static ResilienceManagementDrillResource GetResilienceManagementDrillResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetDrillResource(id);
+            return GetMockableResilienceManagementArmClient(client).GetResilienceManagementDrillResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="DrillCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="ResilienceManagementDrillCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetDrills(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetResilienceManagementDrills(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="DrillResource"/> objects. </returns>
-        public static DrillCollection GetDrills(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ResilienceManagementDrillResource"/> objects. </returns>
+        public static ResilienceManagementDrillCollection GetResilienceManagementDrills(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetDrills(scope);
+            return GetMockableResilienceManagementArmClient(client).GetResilienceManagementDrills(scope);
         }
 
         /// <summary>
         /// Get a Drill
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetDrill(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetResilienceManagementDrill(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -625,18 +625,18 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DrillResource> GetDrill(this ArmClient client, ResourceIdentifier scope, string drillName, CancellationToken cancellationToken = default)
+        public static Response<ResilienceManagementDrillResource> GetResilienceManagementDrill(this ArmClient client, ResourceIdentifier scope, string drillName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetDrill(scope, drillName, cancellationToken);
+            return GetMockableResilienceManagementArmClient(client).GetResilienceManagementDrill(scope, drillName, cancellationToken);
         }
 
         /// <summary>
         /// Get a Drill
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetDrillAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetResilienceManagementDrillAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -645,11 +645,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DrillResource>> GetDrillAsync(this ArmClient client, ResourceIdentifier scope, string drillName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResilienceManagementDrillResource>> GetResilienceManagementDrillAsync(this ArmClient client, ResourceIdentifier scope, string drillName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableResilienceManagementArmClient(client).GetDrillAsync(scope, drillName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResilienceManagementArmClient(client).GetResilienceManagementDrillAsync(scope, drillName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -975,21 +975,21 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="EnrollmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="UsagePlanEnrollmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetEnrollmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetUsagePlanEnrollmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EnrollmentResource"/> object. </returns>
-        public static EnrollmentResource GetEnrollmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="UsagePlanEnrollmentResource"/> object. </returns>
+        public static UsagePlanEnrollmentResource GetUsagePlanEnrollmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResilienceManagementArmClient(client).GetEnrollmentResource(id);
+            return GetMockableResilienceManagementArmClient(client).GetUsagePlanEnrollmentResource(id);
         }
 
         /// <summary>

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("resources"u8);
             writer.WriteStartArray();
-            foreach (GoalResourceData item in Resources)
+            foreach (GoalMembersData item in Resources)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -139,16 +139,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            IList<GoalResourceData> resources = default;
+            IList<GoalMembersData> resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resources"u8))
                 {
-                    List<GoalResourceData> array = new List<GoalResourceData>();
+                    List<GoalMembersData> array = new List<GoalMembersData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GoalResourceData.DeserializeGoalResourceData(item, options));
+                        array.Add(GoalMembersData.DeserializeGoalMembersData(item, options));
                     }
                     resources = array;
                     continue;

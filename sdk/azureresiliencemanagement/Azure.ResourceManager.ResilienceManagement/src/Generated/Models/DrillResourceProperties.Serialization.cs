@@ -274,14 +274,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             DrillResourceReadinessState? readinessState = default;
             DrillResourceFaultState? faultState = default;
             FaultProperties faultProperties = default;
-            ForceInclusionAndUpdate? forceInclusionState = default;
-            HAStatus? haStatus = default;
+            ForceInclusionState? forceInclusionState = default;
+            HighAvailabilityStatus? haStatus = default;
             DrillResourceAttentionReason attentionReason = default;
             string advisorRecommendationTypeId = default;
             ResourceIdentifier advisorHaRecommendationId = default;
-            ErrorDetails rbacAssignmentError = default;
-            ErrorDetails monitoringRbacAssignmentError = default;
-            ProvisioningState? provisioningState = default;
+            ResilienceManagementErrorDetail rbacAssignmentError = default;
+            ResilienceManagementErrorDetail monitoringRbacAssignmentError = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    forceInclusionState = new ForceInclusionAndUpdate(prop.Value.GetString());
+                    forceInclusionState = new ForceInclusionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("haStatus"u8))
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    haStatus = new HAStatus(prop.Value.GetString());
+                    haStatus = new HighAvailabilityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("attentionReason"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    rbacAssignmentError = ErrorDetails.DeserializeErrorDetails(prop.Value, options);
+                    rbacAssignmentError = ResilienceManagementErrorDetail.DeserializeResilienceManagementErrorDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("monitoringRbacAssignmentError"u8))
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    monitoringRbacAssignmentError = ErrorDetails.DeserializeErrorDetails(prop.Value, options);
+                    monitoringRbacAssignmentError = ResilienceManagementErrorDetail.DeserializeResilienceManagementErrorDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

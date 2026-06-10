@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanPropertiesOfDrill"/>. </summary>
         /// <param name="identity"> Identity to use for RecoveryPlan operations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
-        public RecoveryPlanPropertiesOfDrill(AssociatedIdentity identity)
+        public RecoveryPlanPropertiesOfDrill(ResilienceManagementAssociatedIdentity identity)
         {
             Argument.AssertNotNull(identity, nameof(identity));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="recoveryPlanId"> Recovery Orchestration plan associated with this Drill. </param>
         /// <param name="recoveryPlanResourceExcludedCount"> Excluded resource count in RecoveryPlan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPlanPropertiesOfDrill(AssociatedIdentity identity, ResourceIdentifier recoveryPlanId, int? recoveryPlanResourceExcludedCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPlanPropertiesOfDrill(ResilienceManagementAssociatedIdentity identity, ResourceIdentifier recoveryPlanId, int? recoveryPlanResourceExcludedCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             RecoveryPlanId = recoveryPlanId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Identity to use for RecoveryPlan operations. </summary>
-        public AssociatedIdentity Identity { get; set; }
+        public ResilienceManagementAssociatedIdentity Identity { get; set; }
 
         /// <summary> Recovery Orchestration plan associated with this Drill. </summary>
         public ResourceIdentifier RecoveryPlanId { get; }

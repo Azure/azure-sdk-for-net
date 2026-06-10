@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="resourceLists"> Add, Update, Delete resource lists. </param>
         /// <param name="forceInclusionAndUpdate"> Whether to allow inclusion and update despite attention reasons. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddOrUpdateResourcesContent(int faultDurationInMin, ResourceLists resourceLists, ForceInclusionAndUpdate? forceInclusionAndUpdate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddOrUpdateResourcesContent(int faultDurationInMin, DrillResourcesList resourceLists, ForceInclusionState? forceInclusionAndUpdate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FaultDurationInMin = faultDurationInMin;
             ResourceLists = resourceLists;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public int FaultDurationInMin { get; }
 
         /// <summary> Add, Update, Delete resource lists. </summary>
-        public ResourceLists ResourceLists { get; set; }
+        public DrillResourcesList ResourceLists { get; set; }
 
         /// <summary> Whether to allow inclusion and update despite attention reasons. </summary>
-        public ForceInclusionAndUpdate? ForceInclusionAndUpdate { get; set; }
+        public ForceInclusionState? ForceInclusionAndUpdate { get; set; }
     }
 }

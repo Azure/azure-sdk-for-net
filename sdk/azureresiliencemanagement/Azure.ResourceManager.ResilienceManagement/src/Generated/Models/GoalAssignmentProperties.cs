@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalAssignmentProperties(ResourceIdentifier goalTemplateId, GoalAssignmentType goalAssignmentType, IList<ServiceLevelTarget> serviceLevelResources, ProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalAssignmentProperties(ResourceIdentifier goalTemplateId, GoalAssignmentType goalAssignmentType, IList<ServiceLevelTarget> serviceLevelResources, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GoalTemplateId = goalTemplateId;
             GoalAssignmentType = goalAssignmentType;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public IList<ServiceLevelTarget> ServiceLevelResources { get; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> Details of any errors encountered during the operation. </summary>
         public ResponseError ErrorDetails { get; }

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            AssociatedIdentity identity = default;
+            ResilienceManagementAssociatedIdentity identity = default;
             ResourceIdentifier recoveryPlanId = default;
             int? recoveryPlanResourceExcludedCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 if (prop.NameEquals("identity"u8))
                 {
-                    identity = AssociatedIdentity.DeserializeAssociatedIdentity(prop.Value, options);
+                    identity = ResilienceManagementAssociatedIdentity.DeserializeResilienceManagementAssociatedIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("recoveryPlanId"u8))

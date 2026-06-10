@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="DrillTargetResource"/> and their operations.
-    /// Each <see cref="DrillTargetResource"/> in the collection will belong to the same instance of <see cref="DrillResource"/>.
-    /// To get a <see cref="DrillTargetCollection"/> instance call the GetDrillTargets method from an instance of <see cref="DrillResource"/>.
+    /// Each <see cref="DrillTargetResource"/> in the collection will belong to the same instance of <see cref="ResilienceManagementDrillResource"/>.
+    /// To get a <see cref="DrillTargetCollection"/> instance call the GetDrillTargets method from an instance of <see cref="ResilienceManagementDrillResource"/>.
     /// </summary>
     public partial class DrillTargetCollection : ArmCollection, IEnumerable<DrillTargetResource>, IAsyncEnumerable<DrillTargetResource>
     {

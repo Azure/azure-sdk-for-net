@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ExclusionReason? exclusionReasonForDisasterRecoveryGoals = default;
             IList<UserConfirmationForHighAvailabilityItem> userConfirmationForHighAvailability = default;
             IReadOnlyList<ServiceGroupMembership> serviceGroupMemberships = default;
-            ProvisioningState? provisioningState = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

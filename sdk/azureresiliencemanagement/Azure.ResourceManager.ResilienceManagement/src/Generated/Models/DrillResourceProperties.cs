@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryPhysicalZones, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionAndUpdate? forceInclusionState, HAStatus? haStatus, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResourceIdentifier advisorHaRecommendationId, ErrorDetails rbacAssignmentError, ErrorDetails monitoringRbacAssignmentError, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryPhysicalZones, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, HighAvailabilityStatus? haStatus, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResourceIdentifier advisorHaRecommendationId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public FaultProperties FaultProperties { get; }
 
         /// <summary> ForceInclusion status for this resource. Has the customer forceIncluded it?. </summary>
-        public ForceInclusionAndUpdate? ForceInclusionState { get; }
+        public ForceInclusionState? ForceInclusionState { get; }
 
         /// <summary> HA status of the Drill resource. </summary>
-        public HAStatus? HaStatus { get; }
+        public HighAvailabilityStatus? HaStatus { get; }
 
         /// <summary> Attention reason if the Status is 'NeedsAttention'. </summary>
         public DrillResourceAttentionReason AttentionReason { get; }
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier AdvisorHaRecommendationId { get; }
 
         /// <summary> Last RBAC assignment error, if any. </summary>
-        public ErrorDetails RbacAssignmentError { get; }
+        public ResilienceManagementErrorDetail RbacAssignmentError { get; }
 
         /// <summary> Monitoring RBAC assignment error, if any. </summary>
-        public ErrorDetails MonitoringRbacAssignmentError { get; }
+        public ResilienceManagementErrorDetail MonitoringRbacAssignmentError { get; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
     }
 }

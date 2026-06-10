@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("resourcesToUpdate"u8);
                 writer.WriteStartArray();
-                foreach (RecoveryResourceData item in ResourcesToUpdate)
+                foreach (ResilienceMembersData item in ResourcesToUpdate)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            IList<RecoveryResourceData> resourcesToUpdate = default;
+            IList<ResilienceMembersData> resourcesToUpdate = default;
             IList<ResourceIdentifier> resourcesToRemove = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<RecoveryResourceData> array = new List<RecoveryResourceData>();
+                    List<ResilienceMembersData> array = new List<ResilienceMembersData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryResourceData.DeserializeRecoveryResourceData(item, options));
+                        array.Add(ResilienceMembersData.DeserializeResilienceMembersData(item, options));
                     }
                     resourcesToUpdate = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateRecoveryResourcesContent(resourcesToUpdate ?? new ChangeTrackingList<RecoveryResourceData>(), resourcesToRemove ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new UpdateRecoveryResourcesContent(resourcesToUpdate ?? new ChangeTrackingList<ResilienceMembersData>(), resourcesToRemove ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

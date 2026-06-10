@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            GoalsInfo goals = default;
+            ResilienceManagementProvisioningState? provisioningState = default;
+            ResilienceManagementGoalsInfo goals = default;
             RecommendationsData recommendations = default;
             DateTimeOffset lastModifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("goals"u8))
                 {
-                    goals = GoalsInfo.DeserializeGoalsInfo(prop.Value, options);
+                    goals = ResilienceManagementGoalsInfo.DeserializeResilienceManagementGoalsInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("recommendations"u8))

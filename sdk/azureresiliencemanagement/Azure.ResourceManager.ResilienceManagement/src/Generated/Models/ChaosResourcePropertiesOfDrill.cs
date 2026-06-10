@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="identity"> Identity to use for Chaos Resource operations. </param>
         /// <param name="chaosResourceIdentityForFaults"> Identity to be used by the Chaos Resource for invoking faults on resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="chaosResourceIdentityForFaults"/> is null. </exception>
-        public ChaosResourcePropertiesOfDrill(AssociatedIdentity identity, AssociatedIdentity chaosResourceIdentityForFaults)
+        public ChaosResourcePropertiesOfDrill(ResilienceManagementAssociatedIdentity identity, ResilienceManagementAssociatedIdentity chaosResourceIdentityForFaults)
         {
             Argument.AssertNotNull(identity, nameof(identity));
             Argument.AssertNotNull(chaosResourceIdentityForFaults, nameof(chaosResourceIdentityForFaults));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="chaosResourceId"> Chaos Resource created for this Drill. </param>
         /// <param name="faultDurationInMin"> Duration of faults. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosResourcePropertiesOfDrill(AssociatedIdentity identity, AssociatedIdentity chaosResourceIdentityForFaults, ResourceIdentifier chaosResourceId, int? faultDurationInMin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosResourcePropertiesOfDrill(ResilienceManagementAssociatedIdentity identity, ResilienceManagementAssociatedIdentity chaosResourceIdentityForFaults, ResourceIdentifier chaosResourceId, int? faultDurationInMin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             ChaosResourceIdentityForFaults = chaosResourceIdentityForFaults;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Identity to use for Chaos Resource operations. </summary>
-        public AssociatedIdentity Identity { get; set; }
+        public ResilienceManagementAssociatedIdentity Identity { get; set; }
 
         /// <summary> Identity to be used by the Chaos Resource for invoking faults on resources. </summary>
-        public AssociatedIdentity ChaosResourceIdentityForFaults { get; set; }
+        public ResilienceManagementAssociatedIdentity ChaosResourceIdentityForFaults { get; set; }
 
         /// <summary> Chaos Resource created for this Drill. </summary>
         public ResourceIdentifier ChaosResourceId { get; }

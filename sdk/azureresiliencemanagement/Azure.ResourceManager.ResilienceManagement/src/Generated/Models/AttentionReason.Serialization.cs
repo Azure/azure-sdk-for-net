@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("drillMonitoringErrors"u8);
                 writer.WriteStartArray();
-                foreach (ErrorDetails item in DrillMonitoringErrors)
+                foreach (ResilienceManagementErrorDetail item in DrillMonitoringErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -286,13 +286,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            RBACState? drillRbacOnChaosResource = default;
+            ResilienceManagementRbacState? drillRbacOnChaosResource = default;
             IList<string> rbacNeededForDrillOnChaosResource = default;
-            RBACState? drillRbacOnRecoveryPlan = default;
+            ResilienceManagementRbacState? drillRbacOnRecoveryPlan = default;
             IList<string> rbacNeededForDrillOnRecoveryPlan = default;
             RecoveryPlanState? roReadiness = default;
-            RBACState? rbacOnTargetResources = default;
-            RBACState? runbookFaultRbacOnTargets = default;
+            ResilienceManagementRbacState? rbacOnTargetResources = default;
+            ResilienceManagementRbacState? runbookFaultRbacOnTargets = default;
             ExtensionObjectState? chaosResource = default;
             IList<string> chaosResourceCreationFailureReasons = default;
             RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default;
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ExtensionObjectState? drillUserMsi = default;
             ExtensionObjectState? chaosResourceUserMsi = default;
             ExtensionObjectState? includedResourceInDrill = default;
-            RBACState? drillRbacOnMonitoringResources = default;
-            IList<ErrorDetails> drillMonitoringErrors = default;
+            ResilienceManagementRbacState? drillRbacOnMonitoringResources = default;
+            IList<ResilienceManagementErrorDetail> drillMonitoringErrors = default;
             ExtensionObjectState? drillMonitoringResources = default;
-            RBACState? monitoringRbacOnDrillResources = default;
+            ResilienceManagementRbacState? monitoringRbacOnDrillResources = default;
             IList<string> rbacNeededForDrillOnDrillMonitoringResources = default;
             IList<string> rbacNeededForDrillOnDrillResources = default;
             IList<string> missingRequiredResourceProviders = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    drillRbacOnChaosResource = new RBACState(prop.Value.GetString());
+                    drillRbacOnChaosResource = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rbacNeededForDrillOnChaosResource"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    drillRbacOnRecoveryPlan = new RBACState(prop.Value.GetString());
+                    drillRbacOnRecoveryPlan = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rbacNeededForDrillOnRecoveryPlan"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    rbacOnTargetResources = new RBACState(prop.Value.GetString());
+                    rbacOnTargetResources = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("runbookFaultRbacOnTargets"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    runbookFaultRbacOnTargets = new RBACState(prop.Value.GetString());
+                    runbookFaultRbacOnTargets = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("chaosResource"u8))
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    drillRbacOnMonitoringResources = new RBACState(prop.Value.GetString());
+                    drillRbacOnMonitoringResources = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("drillMonitoringErrors"u8))
@@ -487,10 +487,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<ErrorDetails> array = new List<ErrorDetails>();
+                    List<ResilienceManagementErrorDetail> array = new List<ResilienceManagementErrorDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetails.DeserializeErrorDetails(item, options));
+                        array.Add(ResilienceManagementErrorDetail.DeserializeResilienceManagementErrorDetail(item, options));
                     }
                     drillMonitoringErrors = array;
                     continue;
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    monitoringRbacOnDrillResources = new RBACState(prop.Value.GetString());
+                    monitoringRbacOnDrillResources = new ResilienceManagementRbacState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rbacNeededForDrillOnDrillMonitoringResources"u8))
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 chaosResourceUserMsi,
                 includedResourceInDrill,
                 drillRbacOnMonitoringResources,
-                drillMonitoringErrors ?? new ChangeTrackingList<ErrorDetails>(),
+                drillMonitoringErrors ?? new ChangeTrackingList<ResilienceManagementErrorDetail>(),
                 drillMonitoringResources,
                 monitoringRbacOnDrillResources,
                 rbacNeededForDrillOnDrillMonitoringResources ?? new ChangeTrackingList<string>(),

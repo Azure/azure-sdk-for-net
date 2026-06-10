@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            SolutionDisplayName solutionDisplayName = default;
+            ResilienceManagementSolutionDisplayName solutionDisplayName = default;
             ConfirmationStatus confirmationStatus = default;
             ReasonForRequestingConfirmation? reasonForRequestingConfirmation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 if (prop.NameEquals("solutionDisplayName"u8))
                 {
-                    solutionDisplayName = new SolutionDisplayName(prop.Value.GetString());
+                    solutionDisplayName = new ResilienceManagementSolutionDisplayName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("confirmationStatus"u8))

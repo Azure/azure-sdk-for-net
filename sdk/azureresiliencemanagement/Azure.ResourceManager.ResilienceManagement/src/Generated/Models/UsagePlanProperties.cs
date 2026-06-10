@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Provisioning state of the usage plan. </param>
         /// <param name="errorDetails"> Details of any errors encountered during Usage Plan create or update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsagePlanProperties(UsagePlanType? planType, ProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UsagePlanProperties(UsagePlanType? planType, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlanType = planType;
             ProvisioningState = provisioningState;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public UsagePlanType? PlanType { get; set; }
 
         /// <summary> Provisioning state of the usage plan. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> Details of any errors encountered during Usage Plan create or update. </summary>
         public ResponseError ErrorDetails { get; }

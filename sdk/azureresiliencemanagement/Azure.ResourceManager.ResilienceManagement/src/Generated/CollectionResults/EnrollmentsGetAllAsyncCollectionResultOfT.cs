@@ -15,7 +15,7 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
-    internal partial class EnrollmentsGetAllAsyncCollectionResultOfT : AsyncPageable<EnrollmentData>
+    internal partial class EnrollmentsGetAllAsyncCollectionResultOfT : AsyncPageable<UsagePlanEnrollmentData>
     {
         private readonly Enrollments _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EnrollmentsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<EnrollmentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<UsagePlanEnrollmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 EnrollmentListResult result = EnrollmentListResult.FromResponse(response);
-                yield return Page<EnrollmentData>.FromValues((IReadOnlyList<EnrollmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<UsagePlanEnrollmentData>.FromValues((IReadOnlyList<UsagePlanEnrollmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

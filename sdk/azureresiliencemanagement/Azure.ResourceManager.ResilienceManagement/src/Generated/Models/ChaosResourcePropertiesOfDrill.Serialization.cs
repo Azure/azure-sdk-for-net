@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            AssociatedIdentity identity = default;
-            AssociatedIdentity chaosResourceIdentityForFaults = default;
+            ResilienceManagementAssociatedIdentity identity = default;
+            ResilienceManagementAssociatedIdentity chaosResourceIdentityForFaults = default;
             ResourceIdentifier chaosResourceId = default;
             int? faultDurationInMin = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 if (prop.NameEquals("identity"u8))
                 {
-                    identity = AssociatedIdentity.DeserializeAssociatedIdentity(prop.Value, options);
+                    identity = ResilienceManagementAssociatedIdentity.DeserializeResilienceManagementAssociatedIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("chaosResourceIdentityForFaults"u8))
                 {
-                    chaosResourceIdentityForFaults = AssociatedIdentity.DeserializeAssociatedIdentity(prop.Value, options);
+                    chaosResourceIdentityForFaults = ResilienceManagementAssociatedIdentity.DeserializeResilienceManagementAssociatedIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("chaosResourceId"u8))

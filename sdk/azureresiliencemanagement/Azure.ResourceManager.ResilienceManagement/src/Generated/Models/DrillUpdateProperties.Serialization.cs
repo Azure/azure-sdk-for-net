@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
-            RBACSetupMode? rbacSetupMode = default;
+            ResilienceManagementRbacSetupMode? rbacSetupMode = default;
             MonitoringPropertiesOfDrill monitoringProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    rbacSetupMode = new RBACSetupMode(prop.Value.GetString());
+                    rbacSetupMode = new ResilienceManagementRbacSetupMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("monitoringProperties"u8))

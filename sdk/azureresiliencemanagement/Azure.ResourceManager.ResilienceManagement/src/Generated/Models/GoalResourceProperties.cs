@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="serviceGroupMemberships"> List of service groups of which this resource is memberof. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalResourceProperties(ResourceIdentifier resourceArmId, ExclusionState highAvailabilityGoalParticipation, AttestationState highAvailabilityAttestationStatus, ExclusionState? disasterRecoveryGoalParticipation, AttestationState? disasterRecoveryAttestationStatus, ExclusionReason? exclusionReasonForHighAvailabilityGoals, ExclusionReason? exclusionReasonForDisasterRecoveryGoals, IList<UserConfirmationForHighAvailabilityItem> userConfirmationForHighAvailability, IReadOnlyList<ServiceGroupMembership> serviceGroupMemberships, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalResourceProperties(ResourceIdentifier resourceArmId, ExclusionState highAvailabilityGoalParticipation, AttestationState highAvailabilityAttestationStatus, ExclusionState? disasterRecoveryGoalParticipation, AttestationState? disasterRecoveryAttestationStatus, ExclusionReason? exclusionReasonForHighAvailabilityGoals, ExclusionReason? exclusionReasonForDisasterRecoveryGoals, IList<UserConfirmationForHighAvailabilityItem> userConfirmationForHighAvailability, IReadOnlyList<ServiceGroupMembership> serviceGroupMemberships, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceArmId = resourceArmId;
             HighAvailabilityGoalParticipation = highAvailabilityGoalParticipation;
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public IReadOnlyList<ServiceGroupMembership> ServiceGroupMemberships { get; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
     }
 }

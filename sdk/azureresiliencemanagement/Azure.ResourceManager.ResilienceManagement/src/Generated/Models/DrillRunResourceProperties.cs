@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="jobResourceType"> Discriminator for the JobResource object hierarchy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the Drill Run Resource. </param>
-        internal DrillRunResourceProperties(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProvisioningState? provisioningState) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
+        internal DrillRunResourceProperties(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
         }
 
         /// <summary> The provisioning state of the Drill Run Resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
     }
 }

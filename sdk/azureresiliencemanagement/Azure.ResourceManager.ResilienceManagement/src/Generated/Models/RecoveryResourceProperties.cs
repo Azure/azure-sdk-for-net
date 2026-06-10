@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="resourceLocation"> Original location of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </param>
         /// <param name="resourcePhysicalZones"> Physical zones of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </param>
         /// <param name="inclusionState"> A state that indicates the resource status with respect to the recovery orchestration plan. </param>
-        /// <param name="needsAttention"> Indicating if resource needs user attention and action, details will be found in attentionReasons. </param>
+        /// <param name="requiresAttention"> Indicating if resource needs user attention and action, details will be found in attentionReasons. </param>
         /// <param name="attentionReasons"> Reason for the resource to be in need of attention. </param>
         /// <param name="protectionStatus"> A status that indicates the protection status of a resource with an Azure solution for regional or zonal recovery. </param>
         /// <param name="resourceProtectionSolutions"> A list of ResourceProtectionSolutions with which the recovery orchestration resource is protected. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="associatedIdentity"> Identity details associated to the resource, which will be used for performing any operations on it. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryResourceProperties(string recoveryResourceUniqueId, ProvisioningState? provisioningState, ResourceIdentifier resourceId, string resourceLocation, IReadOnlyList<string> resourcePhysicalZones, ResourceInclusionState? inclusionState, bool? needsAttention, IReadOnlyList<string> attentionReasons, ResourceProtectionStatus? protectionStatus, IReadOnlyList<ResourceProtectionSolutionSettings> resourceProtectionSolutions, ResourceProtectionSolutionType? selectedProtectionSolutionType, ResourceBaseProtectionSolutionSetting selectedProtectionSolutionSetting, string recoveryGroupId, AssociatedIdentity associatedIdentity, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryResourceProperties(string recoveryResourceUniqueId, ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier resourceId, AzureLocation? resourceLocation, IReadOnlyList<string> resourcePhysicalZones, ResourceInclusionState? inclusionState, bool? requiresAttention, IReadOnlyList<string> attentionReasons, ResourceProtectionStatus? protectionStatus, IReadOnlyList<ResourceProtectionSolutionSettings> resourceProtectionSolutions, ResourceProtectionSolutionType? selectedProtectionSolutionType, ResourceBaseProtectionSolutionSetting selectedProtectionSolutionSetting, string recoveryGroupId, ResilienceManagementAssociatedIdentity associatedIdentity, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecoveryResourceUniqueId = recoveryResourceUniqueId;
             ProvisioningState = provisioningState;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResourceLocation = resourceLocation;
             ResourcePhysicalZones = resourcePhysicalZones;
             InclusionState = inclusionState;
-            NeedsAttention = needsAttention;
+            RequiresAttention = requiresAttention;
             AttentionReasons = attentionReasons;
             ProtectionStatus = protectionStatus;
             ResourceProtectionSolutions = resourceProtectionSolutions;
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public string RecoveryResourceUniqueId { get; set; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource ID of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </summary>
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Original location of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </summary>
-        public string ResourceLocation { get; }
+        public AzureLocation? ResourceLocation { get; }
 
         /// <summary> Physical zones of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </summary>
         public IReadOnlyList<string> ResourcePhysicalZones { get; }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceInclusionState? InclusionState { get; set; }
 
         /// <summary> Indicating if resource needs user attention and action, details will be found in attentionReasons. </summary>
-        public bool? NeedsAttention { get; }
+        public bool? RequiresAttention { get; }
 
         /// <summary> Reason for the resource to be in need of attention. </summary>
         public IReadOnlyList<string> AttentionReasons { get; }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public string RecoveryGroupId { get; set; }
 
         /// <summary> Identity details associated to the resource, which will be used for performing any operations on it. </summary>
-        public AssociatedIdentity AssociatedIdentity { get; set; }
+        public ResilienceManagementAssociatedIdentity AssociatedIdentity { get; set; }
 
         /// <summary> Error details associated with the resource. </summary>
         public ResponseError ErrorDetails { get; }

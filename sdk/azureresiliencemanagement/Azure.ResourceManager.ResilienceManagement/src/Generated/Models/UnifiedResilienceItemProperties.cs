@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="goals"> Computed and copied data of resilience goals. </param>
         /// <param name="recommendations"> Computed and copied data of Azure recommendations. </param>
         /// <param name="lastModifiedOn"> Last modified time of the unified resilience item. </param>
-        internal UnifiedResilienceItemProperties(GoalsInfo goals, RecommendationsData recommendations, DateTimeOffset lastModifiedOn)
+        internal UnifiedResilienceItemProperties(ResilienceManagementGoalsInfo goals, RecommendationsData recommendations, DateTimeOffset lastModifiedOn)
         {
             Goals = goals;
             Recommendations = recommendations;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="recommendations"> Computed and copied data of Azure recommendations. </param>
         /// <param name="lastModifiedOn"> Last modified time of the unified resilience item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnifiedResilienceItemProperties(ProvisioningState? provisioningState, GoalsInfo goals, RecommendationsData recommendations, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnifiedResilienceItemProperties(ResilienceManagementProvisioningState? provisioningState, ResilienceManagementGoalsInfo goals, RecommendationsData recommendations, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Goals = goals;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResilienceManagementProvisioningState? ProvisioningState { get; }
 
         /// <summary> Computed and copied data of resilience goals. </summary>
-        public GoalsInfo Goals { get; }
+        public ResilienceManagementGoalsInfo Goals { get; }
 
         /// <summary> Computed and copied data of Azure recommendations. </summary>
         internal RecommendationsData Recommendations { get; }

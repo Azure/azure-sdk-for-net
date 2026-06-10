@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillUpdateProperties(RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, RBACSetupMode? rbacSetupMode, MonitoringPropertiesOfDrill monitoringProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillUpdateProperties(RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ResilienceManagementRbacSetupMode? rbacSetupMode, MonitoringPropertiesOfDrill monitoringProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecoveryPlanProperties = recoveryPlanProperties;
             DrillAssetProperties = drillAssetProperties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ChaosResourcePropertiesOfDrill ChaosResourceProperties { get; set; }
 
         /// <summary> RBAC setup mode. </summary>
-        public RBACSetupMode? RbacSetupMode { get; set; }
+        public ResilienceManagementRbacSetupMode? RbacSetupMode { get; set; }
 
         /// <summary> Monitoring properties of the Drill. </summary>
         public MonitoringPropertiesOfDrill MonitoringProperties { get; set; }

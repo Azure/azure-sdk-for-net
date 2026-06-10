@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            AssociatedIdentity identity = default;
+            ResilienceManagementAssociatedIdentity identity = default;
             ResourceIdentifier logAnalyticsWorkspaceId = default;
             ResourceIdentifier rawMetricsDataCollectionRuleId = default;
             ResourceIdentifier serviceGroupMetricsDataCollectionRuleId = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    identity = AssociatedIdentity.DeserializeAssociatedIdentity(prop.Value, options);
+                    identity = ResilienceManagementAssociatedIdentity.DeserializeResilienceManagementAssociatedIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logAnalyticsWorkspaceId"u8))

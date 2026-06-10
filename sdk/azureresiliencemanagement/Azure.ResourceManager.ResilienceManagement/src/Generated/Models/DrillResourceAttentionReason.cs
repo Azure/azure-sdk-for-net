@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringRbacOnTargets"> RBAC required by Drill MSI on the target resource for monitoring. </param>
         /// <param name="resourceState"> Drill Resource State (wrt SG and RO). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillResourceAttentionReason(RBACState? faultRbacOnTargetResource, RBACState? runbookFaultRbacOnTargets, RBACState? monitoringRbacOnTargets, IList<DrillResourceState> resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillResourceAttentionReason(ResilienceManagementRbacState? faultRbacOnTargetResource, ResilienceManagementRbacState? runbookFaultRbacOnTargets, ResilienceManagementRbacState? monitoringRbacOnTargets, IList<DrillResourceState> resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FaultRbacOnTargetResource = faultRbacOnTargetResource;
             RunbookFaultRbacOnTargets = runbookFaultRbacOnTargets;
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Chaos Resource MSI does not have the desired RBAC on the resource. </summary>
-        public RBACState? FaultRbacOnTargetResource { get; }
+        public ResilienceManagementRbacState? FaultRbacOnTargetResource { get; }
 
         /// <summary> RBAC required by AutomationAccount for runbook MSI not setup on the target resources. </summary>
-        public RBACState? RunbookFaultRbacOnTargets { get; }
+        public ResilienceManagementRbacState? RunbookFaultRbacOnTargets { get; }
 
         /// <summary> RBAC required by Drill MSI on the target resource for monitoring. </summary>
-        public RBACState? MonitoringRbacOnTargets { get; }
+        public ResilienceManagementRbacState? MonitoringRbacOnTargets { get; }
 
         /// <summary> Drill Resource State (wrt SG and RO). </summary>
         public IList<DrillResourceState> ResourceState { get; }
