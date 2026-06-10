@@ -411,7 +411,7 @@ namespace Azure.Generator.Management.Providers
             // Only generate tag methods if the resource model has tag properties, has get and update methods
             if (HasTags() && _readMethod is not null)
             {
-                (bool isPatch, ResourceMethod? tagUpdateMethod) = PopulateUpdateMethod();
+                (bool isPatch, ResourceMethod? tagUpdateMethod, bool canUpdateTags) = PopulateUpdateMethod();
                 if (tagUpdateMethod is not null)
                 {
                     var inputReadMethod = _readMethod.InputMethod;
@@ -425,12 +425,12 @@ namespace Azure.Generator.Management.Providers
                         var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
 
                         methods.AddRange([
-                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
+                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, canUpdateTags, true),
+                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, canUpdateTags, false),
+                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, canUpdateTags, true),
+                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, canUpdateTags, false),
+                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, canUpdateTags, true),
+                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, canUpdateTags, false)
                         ]);
                     }
                 }
@@ -456,24 +456,20 @@ namespace Azure.Generator.Management.Providers
             return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
         }
 
-        private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()
+        private (bool IsPatch, ResourceMethod? UpdateMethod, bool CanUpdateTags) PopulateUpdateMethod()
         {
-            // First try to find a patch method that has a body parameter whose model defines a tags property
-            // and returns content. A bodyless PATCH, one whose body model lacks tags, or one that returns
-            // no content cannot be used for tag operations — skip it.
+            // First try to find a patch method that has a body parameter. If the patch body model
+            // defines a tags property and the operation returns content, the PATCH can be used to
+            // actually apply tag changes (canUpdateTags = true). Otherwise, we still keep the PATCH
+            // as the update method so that tag manipulation methods are still generated, but the
+            // generated else branch will throw NotSupportedException because the Update method does
+            // not support updating tags.
             var patchMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update);
             var patchBodyParameter = patchMethod?.InputMethod.Operation.Parameters.OfType<InputBodyParameter>().FirstOrDefault();
             if (patchMethod is not null && patchBodyParameter is not null)
             {
-                if (ModelHasTags(patchBodyParameter.Type as InputModelType) && OperationReturnsContent(patchMethod.InputMethod))
-                {
-                    return (true, patchMethod);
-                }
-
-                // PATCH has a body but either the body model does not define tags or the operation
-                // returns no content — do not fall back to PUT, as the resource intentionally omits
-                // tags from its update path.
-                return (false, null);
+                bool canUpdateTags = ModelHasTags(patchBodyParameter.Type as InputModelType) && OperationReturnsContent(patchMethod.InputMethod);
+                return (true, patchMethod, canUpdateTags);
             }
 
             // If there is no patch method with a body, fall back to the put method.
@@ -481,7 +477,9 @@ namespace Azure.Generator.Management.Providers
             // because for non-singleton resources with an Update method, the Create method is only
             // assigned to the collection, not the resource.
             var putMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
-            return (false, putMethod);
+            // PUT body is the resource data which is guaranteed to have tags here (HasTags() is true
+            // on the resource model), so we can always update tags through PUT when it exists.
+            return (false, putMethod, putMethod is not null);
         }
 
         private static bool OperationReturnsContent(InputServiceMethod method)

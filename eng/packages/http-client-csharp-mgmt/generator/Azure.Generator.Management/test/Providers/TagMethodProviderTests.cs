@@ -218,36 +218,44 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_NoTagMethods_WhenPatchBodyHasNoTags()
+        public void Verify_TagMethodsGenerated_WhenPatchBodyHasNoTags()
         {
             var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
             Assert.That(resourceClientProvider, Is.Not.Null);
 
-            // Verify that no tag methods are generated when PATCH body does not define tags
+            // Tag methods should still be generated even when the PATCH body does not define a tags
+            // property. The else branch of each generated method must throw NotSupportedException
+            // because the Update method cannot update tags.
             var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when PATCH body does not define a tags property.");
+                Assert.That(method, Is.Not.Null, $"Tag method '{tagMethodName}' should be generated when PATCH body does not define a tags property.");
+                var body = method!.BodyStatements?.ToDisplayString();
+                Assert.That(body, Does.Contain("throw new global::System.NotSupportedException"), $"Tag method '{tagMethodName}' should throw NotSupportedException when the Update method cannot update tags.");
             }
         }
 
         [TestCase]
-        public void Verify_NoTagMethods_WhenPatchReturnsNoContent()
+        public void Verify_TagMethodsGenerated_WhenPatchReturnsNoContent()
         {
             var (client, models) = InputResourceData.ClientWithResourcePatchNoContent();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
             Assert.That(resourceClientProvider, Is.Not.Null);
 
-            // Verify that no tag methods are generated when PATCH returns no content
+            // Tag methods should still be generated even when the PATCH operation returns no content.
+            // The else branch of each generated method must throw NotSupportedException because the
+            // Update method cannot update tags.
             var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when PATCH returns no content.");
+                Assert.That(method, Is.Not.Null, $"Tag method '{tagMethodName}' should be generated when PATCH returns no content.");
+                var body = method!.BodyStatements?.ToDisplayString();
+                Assert.That(body, Does.Contain("throw new global::System.NotSupportedException"), $"Tag method '{tagMethodName}' should throw NotSupportedException when the Update method cannot update tags.");
             }
         }
 
