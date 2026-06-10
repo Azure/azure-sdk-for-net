@@ -145,11 +145,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsNotNull(allPecs);
             Assert.IsTrue(allPecs is IEnumerable<EventGridDomainPrivateEndpointConnectionResource>);
 
-            // Domain Network Security Perimeter Configurations
-            var nspCollection = domainResource.GetDomainNetworkSecurityPerimeterConfigurations();
-            var nspConfigs = await nspCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.NotNull(nspConfigs);
-
             await domainResource.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -167,11 +162,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await domainResource.GetDomainEventSubscriptionAsync("notexistingsub");
-            });
-
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await domainResource.GetDomainNetworkSecurityPerimeterConfigurationAsync("perimeterGuid", "association");
             });
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -202,25 +192,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await pecResource.UpdateAsync(WaitUntil.Completed, pecData);
-            });
-
-            var nspCollection = domainResource.GetDomainNetworkSecurityPerimeterConfigurations();
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await nspCollection.GetAsync("perimeterGuid", "association");
-            });
-
-            var nspResourceId = DomainNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier(
-                DefaultSubscription.Data.SubscriptionId, ResourceGroup.Data.Name, domainName, "perimeterGuid", "association");
-            var nspResource = new DomainNetworkSecurityPerimeterConfigurationResource(Client, nspResourceId);
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await nspResource.GetAsync();
-            });
-
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await nspResource.ReconcileAsync(WaitUntil.Completed);
             });
 
             await domainResource.DeleteAsync(WaitUntil.Completed);

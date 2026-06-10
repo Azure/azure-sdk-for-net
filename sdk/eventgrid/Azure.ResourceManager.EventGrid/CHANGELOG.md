@@ -4,11 +4,35 @@
 
 ### Features Added
 
+- Upgraded api-version to `2025-07-15-preview`.
+- Added new `Namespace`-parent Private Endpoint Connection resources (`NamespaceEventGridPrivateEndpointConnectionResource`/`Collection`).
+- Added new `Namespace`-parent Private Link Resource (`NamespaceEventGridPrivateLinkResource`/`Collection`).
+
 ### Breaking Changes
+
+This release migrates the library from AutoRest/Swagger-based generation to TypeSpec-based MPG generation. The following breaking changes affect callers compiled against `1.1.0`:
+
+- Return-type changes on `Update`/`UpdateAsync`:
+  - `EventGridDomainResource.Update`/`UpdateAsync`: `ArmOperation` → `ArmOperation<EventGridDomainResource>`.
+  - `EventGridTopicResource.Update`/`UpdateAsync`: `ArmOperation` → `ArmOperation<EventGridTopicResource>`.
+  - `PartnerNamespaceResource.Update`/`UpdateAsync`: `ArmOperation` → `ArmOperation<PartnerNamespaceResource>`.
+  - `PartnerRegistrationResource.Update`/`UpdateAsync`: `ArmOperation` → `ArmOperation<PartnerRegistrationResource>`.
+  - `PartnerTopicResource.Update`/`UpdateAsync`: `Response<PartnerTopicResource>` → `Response`.
+- Private Endpoint Connection collection signatures take an extra parent identifier (the new TypeSpec models PEC operations with a `PrivateEndpointConnectionsParentType` discriminator). `Get`/`GetAsync`/`Exists`/`ExistsAsync`/`GetIfExists`/`GetIfExistsAsync`/`CreateOrUpdate`/`CreateOrUpdateAsync` on `EventGridDomainPrivateEndpointConnectionCollection`, `EventGridTopicPrivateEndpointConnectionCollection`, and `EventGridPartnerNamespacePrivateEndpointConnectionCollection` now require explicit `parentType`/`parentName` parameters.
+- Private Link Resource collection signatures take an extra parent identifier (same discriminator pattern as PEC). `Get`/`GetAsync`/`Exists`/`ExistsAsync`/`GetIfExists`/`GetIfExistsAsync` on `EventGridDomainPrivateLinkResourceCollection`, `EventGridTopicPrivateLinkResourceCollection`, and `PartnerNamespacePrivateLinkResourceCollection` now require explicit `parentType`/`parentName` parameters.
+- `EventGridPrivateLinkResourceData` no longer inherits from `ResourceData`; identity fields (`Id`, `Name`, `ResourceType`) are exposed directly on the model.
+- `EventSubscriptionCollection` no longer implements `IEnumerable<EventSubscriptionResource>` (the `listByParent` operation is not modeled as the canonical paging operation).
+- Resource `AddTag`/`SetTags`/`RemoveTag`/`GetAvailableLocations` convenience helpers are no longer emitted by the new generator on `EventGridDomainResource`, `EventGridTopicResource`, `PartnerNamespaceResource`, and `PartnerRegistrationResource`. Use `Update`/`UpdateAsync` with a `Patch` model carrying the desired tags instead.
+- The per-parent collection types `DomainNetworkSecurityPerimeterConfigurationCollection` and `TopicNetworkSecurityPerimeterConfigurationCollection` are no longer emitted. The singleton TypeSpec model (`@singleton("{perimeterGuid}.{associationName}")`) combined with `Azure.ResourceManager.Legacy.RoutedOperations` causes the generator to emit per-parent `Resource` types only; callers must reach individual configurations via the `ArmClient.GetDomainNetworkSecurityPerimeterConfigurationResource(...)` / `ArmClient.GetTopicNetworkSecurityPerimeterConfigurationResource(...)` factory extensions.
 
 ### Bugs Fixed
 
+- `NetworkSecurityPerimeterProfileAccessRule.Subscriptions` is now typed as `IList<Azure.ResourceManager.Resources.Models.WritableSubResource>` (matching the `1.1.0` surface) instead of the per-service `NetworkSecurityPerimeterSubscription`. The wire format is unchanged.
+
 ### Other Changes
+
+- Migrated from AutoRest to TypeSpec-based code generation.
+- Removed the now-obsolete `Configuration.json` (replaced by `tsp-location.yaml`).
 
 ## 1.2.0-beta.2 (2025-09-03)
 

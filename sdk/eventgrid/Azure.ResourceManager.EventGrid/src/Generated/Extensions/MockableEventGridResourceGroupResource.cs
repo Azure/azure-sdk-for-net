@@ -8,115 +8,40 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableEventGridResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _eventSubscriptionClientDiagnostics;
-        private EventSubscriptionsRestOperations _eventSubscriptionRestClient;
-        private ClientDiagnostics _eventGridTopicTopicsClientDiagnostics;
-        private TopicsRestOperations _eventGridTopicTopicsRestClient;
+        private ClientDiagnostics _eventSubscriptionsClientDiagnostics;
+        private EventSubscriptions _eventSubscriptionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEventGridResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableEventGridResourceGroupResource for mocking. </summary>
         protected MockableEventGridResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEventGridResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEventGridResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEventGridResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics EventSubscriptionClientDiagnostics => _eventSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventSubscriptionResource.ResourceType.Namespace, Diagnostics);
-        private EventSubscriptionsRestOperations EventSubscriptionRestClient => _eventSubscriptionRestClient ??= new EventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventSubscriptionResource.ResourceType));
-        private ClientDiagnostics EventGridTopicTopicsClientDiagnostics => _eventGridTopicTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicResource.ResourceType.Namespace, Diagnostics);
-        private TopicsRestOperations EventGridTopicTopicsRestClient => _eventGridTopicTopicsRestClient ??= new TopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridTopicResource.ResourceType));
+        private ClientDiagnostics EventSubscriptionsClientDiagnostics => _eventSubscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(EventSubscriptionsClientDiagnostics, Pipeline, Endpoint, "2025-07-15-preview");
 
-        /// <summary> Gets a collection of EventGridDomainResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventGridDomainResources and their operations over a EventGridDomainResource. </returns>
-        public virtual EventGridDomainCollection GetEventGridDomains()
-        {
-            return GetCachedClient(client => new EventGridDomainCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get properties of a domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Domains_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridDomainResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="domainName"> Name of the domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(string domainName, CancellationToken cancellationToken = default)
-        {
-            return await GetEventGridDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Domains_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridDomainResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="domainName"> Name of the domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EventGridDomainResource> GetEventGridDomain(string domainName, CancellationToken cancellationToken = default)
-        {
-            return GetEventGridDomains().Get(domainName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EventGridNamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventGridNamespaceResources and their operations over a EventGridNamespaceResource. </returns>
+        /// <summary> Gets a collection of EventGridNamespaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridNamespaces and their operations over a EventGridNamespaceResource. </returns>
         public virtual EventGridNamespaceCollection GetEventGridNamespaces()
         {
             return GetCachedClient(client => new EventGridNamespaceCollection(client, Id));
@@ -126,20 +51,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Namespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,6 +71,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridNamespaceResource>> GetEventGridNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return await GetEventGridNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -157,20 +80,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Namespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,87 +100,13 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual Response<EventGridNamespaceResource> GetEventGridNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return GetEventGridNamespaces().Get(namespaceName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
-        /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
-        public virtual PartnerConfigurationResource GetPartnerConfiguration()
-        {
-            return new PartnerConfigurationResource(Client, Id.AppendProviderResource("Microsoft.EventGrid", "partnerConfigurations", "default"));
-        }
-
-        /// <summary> Gets a collection of PartnerDestinationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PartnerDestinationResources and their operations over a PartnerDestinationResource. </returns>
-        public virtual PartnerDestinationCollection GetPartnerDestinations()
-        {
-            return GetCachedClient(client => new PartnerDestinationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get properties of a partner destination.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerDestinations/{partnerDestinationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerDestinations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerDestinationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="partnerDestinationName"> Name of the partner destination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PartnerDestinationResource>> GetPartnerDestinationAsync(string partnerDestinationName, CancellationToken cancellationToken = default)
-        {
-            return await GetPartnerDestinations().GetAsync(partnerDestinationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get properties of a partner destination.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerDestinations/{partnerDestinationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerDestinations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerDestinationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="partnerDestinationName"> Name of the partner destination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PartnerDestinationResource> GetPartnerDestination(string partnerDestinationName, CancellationToken cancellationToken = default)
-        {
-            return GetPartnerDestinations().Get(partnerDestinationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PartnerNamespaceResources and their operations over a PartnerNamespaceResource. </returns>
+        /// <summary> Gets a collection of PartnerNamespaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PartnerNamespaces and their operations over a PartnerNamespaceResource. </returns>
         public virtual PartnerNamespaceCollection GetPartnerNamespaces()
         {
             return GetCachedClient(client => new PartnerNamespaceCollection(client, Id));
@@ -271,20 +116,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +136,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> GetPartnerNamespaceAsync(string partnerNamespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(partnerNamespaceName, nameof(partnerNamespaceName));
+
             return await GetPartnerNamespaces().GetAsync(partnerNamespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -302,20 +145,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,11 +165,170 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> GetPartnerNamespace(string partnerNamespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(partnerNamespaceName, nameof(partnerNamespaceName));
+
             return GetPartnerNamespaces().Get(partnerNamespaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PartnerRegistrationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PartnerRegistrationResources and their operations over a PartnerRegistrationResource. </returns>
+        /// <summary> Gets a collection of EventGridDomains in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridDomains and their operations over a EventGridDomainResource. </returns>
+        public virtual EventGridDomainCollection GetEventGridDomains()
+        {
+            return GetCachedClient(client => new EventGridDomainCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get properties of a domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Domains_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return await GetEventGridDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Domains_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridDomainResource> GetEventGridDomain(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return GetEventGridDomains().Get(domainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get properties of a partner configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerConfigurations/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerConfigurationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
+        public virtual PartnerConfigurationResource GetPartnerConfiguration()
+        {
+            return new PartnerConfigurationResource(Client, Id.AppendProviderResource("Microsoft.EventGrid", "partnerConfigurations", "default"));
+        }
+
+        /// <summary> Gets a collection of PartnerDestinations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PartnerDestinations and their operations over a PartnerDestinationResource. </returns>
+        public virtual PartnerDestinationCollection GetPartnerDestinations()
+        {
+            return GetCachedClient(client => new PartnerDestinationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get properties of a partner destination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerDestinations/{partnerDestinationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerDestinations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerDestinationName"> Name of the partner destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PartnerDestinationResource>> GetPartnerDestinationAsync(string partnerDestinationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+
+            return await GetPartnerDestinations().GetAsync(partnerDestinationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a partner destination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerDestinations/{partnerDestinationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerDestinations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerDestinationName"> Name of the partner destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PartnerDestinationResource> GetPartnerDestination(string partnerDestinationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+
+            return GetPartnerDestinations().Get(partnerDestinationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PartnerRegistrations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PartnerRegistrations and their operations over a PartnerRegistrationResource. </returns>
         public virtual PartnerRegistrationCollection GetPartnerRegistrations()
         {
             return GetCachedClient(client => new PartnerRegistrationCollection(client, Id));
@@ -340,20 +338,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Gets a partner registration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,6 +358,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerRegistrationResource>> GetPartnerRegistrationAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+
             return await GetPartnerRegistrations().GetAsync(partnerRegistrationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -371,20 +367,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Gets a partner registration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,11 +387,13 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual Response<PartnerRegistrationResource> GetPartnerRegistration(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+
             return GetPartnerRegistrations().Get(partnerRegistrationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PartnerTopicResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PartnerTopicResources and their operations over a PartnerTopicResource. </returns>
+        /// <summary> Gets a collection of PartnerTopics in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PartnerTopics and their operations over a PartnerTopicResource. </returns>
         public virtual PartnerTopicCollection GetPartnerTopics()
         {
             return GetCachedClient(client => new PartnerTopicCollection(client, Id));
@@ -409,20 +403,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a partner topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,6 +423,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerTopicResource>> GetPartnerTopicAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
+
             return await GetPartnerTopics().GetAsync(partnerTopicName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -440,20 +432,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a partner topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,11 +452,13 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual Response<PartnerTopicResource> GetPartnerTopic(string partnerTopicName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
+
             return GetPartnerTopics().Get(partnerTopicName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SystemTopicResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SystemTopicResources and their operations over a SystemTopicResource. </returns>
+        /// <summary> Gets a collection of SystemTopics in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SystemTopics and their operations over a SystemTopicResource. </returns>
         public virtual SystemTopicCollection GetSystemTopics()
         {
             return GetCachedClient(client => new SystemTopicCollection(client, Id));
@@ -478,20 +468,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a system topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -502,6 +488,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SystemTopicResource>> GetSystemTopicAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+
             return await GetSystemTopics().GetAsync(systemTopicName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -509,20 +497,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a system topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,11 +517,13 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual Response<SystemTopicResource> GetSystemTopic(string systemTopicName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+
             return GetSystemTopics().Get(systemTopicName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
+        /// <summary> Gets a collection of EventGridTopics in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridTopics and their operations over a EventGridTopicResource. </returns>
         public virtual EventGridTopicCollection GetEventGridTopics()
         {
             return GetCachedClient(client => new EventGridTopicCollection(client, Id));
@@ -547,20 +533,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Topics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -571,6 +553,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
             return await GetEventGridTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -578,20 +562,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Topics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Topics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventGridTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -602,7 +582,977 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual Response<EventGridTopicResource> GetEventGridTopic(string topicName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
             return GetEventGridTopics().Get(topicName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a specific network security perimeter configuration with a topic or domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual TopicNetworkSecurityPerimeterConfigurationResource GetTopicNetworkSecurityPerimeterConfiguration()
+        {
+            return new TopicNetworkSecurityPerimeterConfigurationResource(Client, Id.AppendProviderResource("microsoft.EventGrid", "topics", "{perimeterGuid}.{associationName}"));
+        }
+
+        /// <summary>
+        /// Get a specific network security perimeter configuration with a topic or domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual DomainNetworkSecurityPerimeterConfigurationResource GetDomainNetworkSecurityPerimeterConfiguration()
+        {
+            return new DomainNetworkSecurityPerimeterConfigurationResource(Client, Id.AppendProviderResource("microsoft.EventGrid", "domains", "{perimeterGuid}.{associationName}"));
+        }
+
+        /// <summary> Gets a collection of TopicEventGridPrivateEndpointConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="parentType"> The parentType for the resource. </param>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <returns> An object representing collection of TopicEventGridPrivateEndpointConnections and their operations over a EventGridTopicPrivateEndpointConnectionResource. </returns>
+        public virtual EventGridTopicPrivateEndpointConnectionCollection GetTopicEventGridPrivateEndpointConnections(PrivateEndpointConnectionsParentType parentType, string parentName)
+        {
+            return GetCachedClient(client => new EventGridTopicPrivateEndpointConnectionCollection(client, Id, parentType, parentName));
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The parentType for the resource. </param>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType0"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetTopicEventGridPrivateEndpointConnectionAsync(PrivateEndpointConnectionsParentType parentType, string parentName, PrivateEndpointConnectionsParentType parentType0, string parentName0, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetTopicEventGridPrivateEndpointConnections(parentType, parentName).GetAsync(parentType0, parentName0, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The parentType for the resource. </param>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType0"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridTopicPrivateEndpointConnectionResource> GetTopicEventGridPrivateEndpointConnection(PrivateEndpointConnectionsParentType parentType, string parentName, PrivateEndpointConnectionsParentType parentType0, string parentName0, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetTopicEventGridPrivateEndpointConnections(parentType, parentName).Get(parentType0, parentName0, privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DomainEventGridPrivateEndpointConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DomainEventGridPrivateEndpointConnections and their operations over a EventGridDomainPrivateEndpointConnectionResource. </returns>
+        public virtual EventGridDomainPrivateEndpointConnectionCollection GetDomainEventGridPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new EventGridDomainPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridDomainPrivateEndpointConnectionResource>> GetDomainEventGridPrivateEndpointConnectionAsync(PrivateEndpointConnectionsParentType parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetDomainEventGridPrivateEndpointConnections().GetAsync(parentType, parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridDomainPrivateEndpointConnectionResource> GetDomainEventGridPrivateEndpointConnection(PrivateEndpointConnectionsParentType parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetDomainEventGridPrivateEndpointConnections().Get(parentType, parentName, privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PartnerNamespaceEventGridPrivateEndpointConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PartnerNamespaceEventGridPrivateEndpointConnections and their operations over a EventGridPartnerNamespacePrivateEndpointConnectionResource. </returns>
+        public virtual EventGridPartnerNamespacePrivateEndpointConnectionCollection GetPartnerNamespaceEventGridPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new EventGridPartnerNamespacePrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetPartnerNamespaceEventGridPrivateEndpointConnectionAsync(PrivateEndpointConnectionsParentType parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetPartnerNamespaceEventGridPrivateEndpointConnections().GetAsync(parentType, parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridPartnerNamespacePrivateEndpointConnectionResource> GetPartnerNamespaceEventGridPrivateEndpointConnection(PrivateEndpointConnectionsParentType parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetPartnerNamespaceEventGridPrivateEndpointConnections().Get(parentType, parentName, privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NamespaceEventGridPrivateEndpointConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NamespaceEventGridPrivateEndpointConnections and their operations over a NamespaceEventGridPrivateEndpointConnectionResource. </returns>
+        public virtual NamespaceEventGridPrivateEndpointConnectionCollection GetNamespaceEventGridPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new NamespaceEventGridPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NamespaceEventGridPrivateEndpointConnectionResource>> GetNamespaceEventGridPrivateEndpointConnectionAsync(PrivateEndpointConnectionsParentType parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetNamespaceEventGridPrivateEndpointConnections().GetAsync(parentType, parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateEndpointConnectionName"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NamespaceEventGridPrivateEndpointConnectionResource> GetNamespaceEventGridPrivateEndpointConnection(PrivateEndpointConnectionsParentType parentType, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName, nameof(parentName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetNamespaceEventGridPrivateEndpointConnections().Get(parentType, parentName, privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TopicEventGridPrivateLinkResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <returns> An object representing collection of TopicEventGridPrivateLinkResources and their operations over a EventGridTopicPrivateLinkResource. </returns>
+        public virtual EventGridTopicPrivateLinkResourceCollection GetTopicEventGridPrivateLinkResources(string parentName)
+        {
+            return GetCachedClient(client => new EventGridTopicPrivateLinkResourceCollection(client, Id, parentName));
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetTopicEventGridPrivateLinkResourceAsync(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetTopicEventGridPrivateLinkResources(parentName).GetAsync(parentType, parentName0, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridTopicPrivateLinkResource> GetTopicEventGridPrivateLinkResource(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetTopicEventGridPrivateLinkResources(parentName).Get(parentType, parentName0, privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DomainEventGridPrivateLinkResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <returns> An object representing collection of DomainEventGridPrivateLinkResources and their operations over a EventGridDomainPrivateLinkResource. </returns>
+        public virtual EventGridDomainPrivateLinkResourceCollection GetDomainEventGridPrivateLinkResources(string parentName)
+        {
+            return GetCachedClient(client => new EventGridDomainPrivateLinkResourceCollection(client, Id, parentName));
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridDomainPrivateLinkResource>> GetDomainEventGridPrivateLinkResourceAsync(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetDomainEventGridPrivateLinkResources(parentName).GetAsync(parentType, parentName0, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridDomainPrivateLinkResource> GetDomainEventGridPrivateLinkResource(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetDomainEventGridPrivateLinkResources(parentName).Get(parentType, parentName0, privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PartnerNamespaceEventGridPrivateLinkResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <returns> An object representing collection of PartnerNamespaceEventGridPrivateLinkResources and their operations over a PartnerNamespacePrivateLinkResource. </returns>
+        public virtual PartnerNamespacePrivateLinkResourceCollection GetPartnerNamespaceEventGridPrivateLinkResources(string parentName)
+        {
+            return GetCachedClient(client => new PartnerNamespacePrivateLinkResourceCollection(client, Id, parentName));
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetPartnerNamespaceEventGridPrivateLinkResourceAsync(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetPartnerNamespaceEventGridPrivateLinkResources(parentName).GetAsync(parentType, parentName0, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PartnerNamespacePrivateLinkResource> GetPartnerNamespaceEventGridPrivateLinkResource(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetPartnerNamespaceEventGridPrivateLinkResources(parentName).Get(parentType, parentName0, privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NamespaceEventGridPrivateLinkResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <returns> An object representing collection of NamespaceEventGridPrivateLinkResources and their operations over a NamespaceEventGridPrivateLinkResource. </returns>
+        public virtual NamespaceEventGridPrivateLinkResourceCollection GetNamespaceEventGridPrivateLinkResources(string parentName)
+        {
+            return GetCachedClient(client => new NamespaceEventGridPrivateLinkResourceCollection(client, Id, parentName));
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NamespaceEventGridPrivateLinkResource>> GetNamespaceEventGridPrivateLinkResourceAsync(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetNamespaceEventGridPrivateLinkResources(parentName).GetAsync(parentType, parentName0, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get properties of a private link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentName"> The parentName for the resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \\'topics\\', \\'domains\\', or \\'partnerNamespaces\\' or \\'namespaces\\'. </param>
+        /// <param name="parentName0"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="parentName0"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NamespaceEventGridPrivateLinkResource> GetNamespaceEventGridPrivateLinkResource(string parentName, PrivateEndpointConnectionsParentType parentType, string parentName0, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(parentName0, nameof(parentName0));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetNamespaceEventGridPrivateLinkResources(parentName).Get(parentType, parentName0, privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all global event subscriptions under a specific Azure subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptions_ListGlobalByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventSubscriptionResource> GetEventSubscriptionsAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EventGridSubscriptionData, EventSubscriptionResource>(new EventSubscriptionsGetGlobalByResourceGroupAsyncCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetEventSubscriptions"), data => new EventSubscriptionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all global event subscriptions under a specific Azure subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptions_ListGlobalByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventSubscriptionResource> GetEventSubscriptions(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EventGridSubscriptionData, EventSubscriptionResource>(new EventSubscriptionsGetGlobalByResourceGroupCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetEventSubscriptions"), data => new EventSubscriptionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all global event subscriptions under a resource group for a specific topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptionsOperationGroup_ListGlobalByResourceGroupForTopicType. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridSubscriptionData> GetGlobalByResourceGroupForTopicTypeAsync(string topicTypeName, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventSubscriptionsGetGlobalByResourceGroupForTopicTypeAsyncCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                topicTypeName,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetGlobalByResourceGroupForTopicType");
+        }
+
+        /// <summary>
+        /// List all global event subscriptions under a resource group for a specific topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptionsOperationGroup_ListGlobalByResourceGroupForTopicType. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridSubscriptionData> GetGlobalByResourceGroupForTopicType(string topicTypeName, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                topicTypeName,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetGlobalByResourceGroupForTopicType");
+        }
+
+        /// <summary>
+        /// List all event subscriptions from the given location under a specific Azure subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptionsOperationGroup_ListRegionalByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridSubscriptionData> GetRegionalByResourceGroupAsync(AzureLocation location, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventSubscriptionsGetRegionalByResourceGroupAsyncCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetRegionalByResourceGroup");
+        }
+
+        /// <summary>
+        /// List all event subscriptions from the given location under a specific Azure subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptionsOperationGroup_ListRegionalByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridSubscriptionData> GetRegionalByResourceGroup(AzureLocation location, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventSubscriptionsGetRegionalByResourceGroupCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetRegionalByResourceGroup");
+        }
+
+        /// <summary>
+        /// List all event subscriptions from the given location under a specific Azure subscription and resource group and topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/topicTypes/{topicTypeName}/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptionsOperationGroup_ListRegionalByResourceGroupForTopicType. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridSubscriptionData> GetRegionalByResourceGroupForTopicTypeAsync(AzureLocation location, string topicTypeName, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventSubscriptionsGetRegionalByResourceGroupForTopicTypeAsyncCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                topicTypeName,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetRegionalByResourceGroupForTopicType");
+        }
+
+        /// <summary>
+        /// List all event subscriptions from the given location under a specific Azure subscription and resource group and topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/locations/{location}/topicTypes/{topicTypeName}/eventSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventSubscriptionsOperationGroup_ListRegionalByResourceGroupForTopicType. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EventGridSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridSubscriptionData> GetRegionalByResourceGroupForTopicType(AzureLocation location, string topicTypeName, string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventSubscriptionsGetRegionalByResourceGroupForTopicTypeCollectionResultOfT(
+                EventSubscriptionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                topicTypeName,
+                filter,
+                top,
+                context,
+                "MockableEventGridResourceGroupResource.GetRegionalByResourceGroupForTopicType");
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         // AAD Application ID. This is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the SANITIZED_APPLICATION_ID with the actual AAD Application ID used in your Azure Active Directory.
         // Go to Azure Portal -> Microsoft Entra ID -> App registrations -> EventGridWebhookAuthenticationApp -> Overview -> Application (client) ID
-        private const string AzureActiveDirectoryApplicationId = "api://SANITIZED_APPLICATION_ID";
+        private const string AzureActiveDirectoryApplicationId = "api://sanitized_application_id/";
 
         // AAD Tenant ID. This is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the SANITIZED_TENANT_ID with the actual AAD Tenant ID used in your Azure Active Directory.
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         // Event subscription destination endpoint. This endpoint URL is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the sig parameter with the actual signature from your Azure Logic App.
         // Go to Azure Portal -> Logic Apps -> sdk-test-logic-app -> Overview -> Workflow URL
-        private const string EventSubscriptionDestinationEndpoint = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
+        private const string EventSubscriptionDestinationEndpoint = "https://prod-16.centraluseuap.logic.azure.com/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
 
         private AzureLocation location = new AzureLocation("eastus2", "eastus2");
 
@@ -336,7 +336,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     {"updatedTag2", "updatedValue2"}
                 },
                 Sku = namespaceSku,
-                TopicsConfiguration = new UpdateTopicsConfigurationInfo(),
             };
 
             // Validate Custom Domain Ownership
@@ -347,9 +346,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             Assert.NotNull(customDomainValidationResponse);
             Assert.IsNotNull(customDomainValidationResponse.Value);
-            namespacePatch.TopicsConfiguration.CustomDomains.Add(new CustomDomainConfiguration()
+            namespacePatch.TopicsCustomDomains.Add(new CustomDomainConfiguration("www.contoso.com")
             {
-                FullyQualifiedDomainName = "www.contoso.com",
                 Identity = new CustomDomainIdentity()
                 {
                     IdentityType = CustomDomainIdentityType.UserAssigned,
@@ -377,7 +375,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, "www.contoso.com");
 
             // Delete 1st custom domain
-            namespacePatch.TopicsConfiguration.CustomDomains.RemoveAt(0);
+            namespacePatch.TopicsCustomDomains.RemoveAt(0);
             var updateNamespaceResponse2 = (await getUpdatedNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
             Assert.NotNull(updateNamespaceResponse2);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, updateNamespaceResponse2.Data.ProvisioningState);
@@ -457,9 +455,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 TokenIssuer = "sts.windows.net",
                 IssuerCertificates =
                 {
-                    new IssuerCertificateInfo()
+                    new IssuerCertificateInfo(new Uri(KeyVaultCertificateUrl))
                     {
-                        CertificateUri = new Uri(KeyVaultCertificateUrl),
                         Identity = new CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType.UserAssigned)
                         {
                             UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity")
@@ -480,7 +477,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Verify custom JWT authentication
             Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.Count, 1);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.AbsoluteUri, KeyVaultCertificateUrl);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.ToString(), KeyVaultCertificateUrl);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.TokenIssuer, "sts.windows.net");
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.IdentityType, CustomJwtAuthenticationManagedIdentityType.UserAssigned);
 
@@ -551,9 +548,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             namespacePatch.TopicSpacesConfiguration.ClientAuthentication = new ClientAuthenticationSettings();
             namespacePatch.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication = new WebhookAuthenticationSettings()
             {
-                Identity = new CustomWebhookAuthenticationManagedIdentity()
+                Identity = new CustomWebhookAuthenticationManagedIdentity(CustomWebhookAuthenticationManagedIdentityType.UserAssigned)
                 {
-                    IdentityType = CustomWebhookAuthenticationManagedIdentityType.UserAssigned,
                     UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity")
                 },
                 EndpointUri = new Uri(EventSubscriptionDestinationEndpoint),
@@ -572,8 +568,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Verify custom Webhook authentication
             Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, EventSubscriptionDestinationEndpoint);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, AzureActiveDirectoryApplicationId);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri.ToString(), EventSubscriptionDestinationEndpoint);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri.ToString(), AzureActiveDirectoryApplicationId);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, AzureActiveDirectoryTenantId);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType, CustomWebhookAuthenticationManagedIdentityType.UserAssigned);
 

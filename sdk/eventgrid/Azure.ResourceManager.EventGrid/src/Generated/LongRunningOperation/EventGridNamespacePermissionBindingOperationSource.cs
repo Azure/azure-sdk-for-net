@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class EventGridNamespacePermissionBindingOperationSource : IOperationSource<EventGridNamespacePermissionBindingResource>
+    /// <summary></summary>
+    internal partial class EventGridNamespacePermissionBindingOperationSource : IOperationSource<EventGridNamespacePermissionBindingResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EventGridNamespacePermissionBindingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EventGridNamespacePermissionBindingResource IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridNamespacePermissionBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EventGridNamespacePermissionBindingData data = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EventGridNamespacePermissionBindingResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EventGridNamespacePermissionBindingResource> IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridNamespacePermissionBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
-            return await Task.FromResult(new EventGridNamespacePermissionBindingResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EventGridNamespacePermissionBindingData data = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EventGridNamespacePermissionBindingResource(_client, data);
         }
     }
 }

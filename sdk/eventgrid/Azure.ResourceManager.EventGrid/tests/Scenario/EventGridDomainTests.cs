@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField", null)
+                    TopicSourceField = "myTopicField"
                 }
             };
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField", null)
+                    TopicSourceField = "myTopicField"
                 }
             };
 
@@ -240,10 +240,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             Assert.NotNull(createDomainResponse);
             Assert.AreEqual(createDomainResponse.Data.Name, domainName);
-
-            var NspCollection = createDomainResponse.GetDomainNetworkSecurityPerimeterConfigurations();
-            var listNSPConfigs = await NspCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, listNSPConfigs.Count());
 
             // Delete domain
             await createDomainResponse.DeleteAsync(WaitUntil.Completed);
@@ -271,7 +267,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 AutoDeleteTopicWithLastSubscription = false,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField", null)
+                    TopicSourceField = "myTopicField"
                 }
             };
 

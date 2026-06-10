@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             {
                 PartnerRegistrationImmutableId = Guid.Parse("0bd70ee2-7d95-447e-ab1f-c4f320019404"),
                 EndpointServiceContext = "This is an example",
-                ExpirationTimeIfNotActivatedUtc = DateTimeOffset.Parse("2022-03-14T19:33:43.430Z"),
+                ExpireOnIfNotActivated = DateTimeOffset.Parse("2022-03-14T19:33:43.430Z"),
                 EndpointBaseUri = new Uri("https://www.example/endpoint"),
                 MessageForActivation = "Sample Activation message",
             };

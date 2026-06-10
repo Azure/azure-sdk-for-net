@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class NamespaceTopicEventSubscriptionOperationSource : IOperationSource<NamespaceTopicEventSubscriptionResource>
+    /// <summary></summary>
+    internal partial class NamespaceTopicEventSubscriptionOperationSource : IOperationSource<NamespaceTopicEventSubscriptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NamespaceTopicEventSubscriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NamespaceTopicEventSubscriptionResource IOperationSource<NamespaceTopicEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NamespaceTopicEventSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NamespaceTopicEventSubscriptionData data = NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NamespaceTopicEventSubscriptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NamespaceTopicEventSubscriptionResource> IOperationSource<NamespaceTopicEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NamespaceTopicEventSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
-            return await Task.FromResult(new NamespaceTopicEventSubscriptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NamespaceTopicEventSubscriptionData data = NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NamespaceTopicEventSubscriptionResource(_client, data);
         }
     }
 }
