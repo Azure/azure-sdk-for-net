@@ -66,9 +66,13 @@ public static class OptimizationConfigLoader
 
         // ── Priority 3: Local baseline directory ────────────────────
         string localDir = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableLocalDirectory)?.Trim() ?? "";
-        if (!string.IsNullOrEmpty(localDir) && Directory.Exists(localDir))
+        if (!string.IsNullOrEmpty(localDir))
         {
-            return LoadFromLocalDirectory(localDir);
+            string baselinePath = Path.Combine(localDir, "baseline");
+            if (Directory.Exists(baselinePath))
+            {
+                return LoadFromLocalDirectory(baselinePath);
+            }
         }
 
         // ── No config found ─────────────────────────────────────────
