@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -39,9 +40,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource tenant Id. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
 
         /// <summary> Associated Gateway Resource Id. </summary>
+        [WirePath("properties.gatewayProperties.gatewayResourceId")]
         public ResourceIdentifier GatewayResourceId { get; set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
