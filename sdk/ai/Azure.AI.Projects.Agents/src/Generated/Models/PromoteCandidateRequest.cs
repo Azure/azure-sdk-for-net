@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Request body for promoting a candidate to a Foundry agent version. </summary>
+    [Experimental("AAIP001")]
     public partial class PromoteCandidateRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

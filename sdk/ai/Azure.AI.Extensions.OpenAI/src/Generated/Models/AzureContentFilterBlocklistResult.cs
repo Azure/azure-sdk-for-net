@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A collection of filtering results for configured custom blocklists. </summary>
+    [Experimental("AAIP001")]
     internal partial class AzureContentFilterBlocklistResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

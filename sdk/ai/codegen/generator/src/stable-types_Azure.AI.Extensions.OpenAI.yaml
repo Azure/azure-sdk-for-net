@@ -102,3 +102,7 @@ stableTypes:
 - Azure.AI.Extensions.OpenAI.WebSearchToolFilters
 # OpenAI-derived tool - Misc params
 - Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam
+# Manually added entries
+- Azure.AI.Extensions.OpenAI.ProjectConversation
+- Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions
+- Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions

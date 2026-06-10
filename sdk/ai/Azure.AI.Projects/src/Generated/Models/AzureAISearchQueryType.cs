@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Available query types for Azure AI Search tool. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct AzureAISearchQueryType : IEquatable<AzureAISearchQueryType>
     {
         private readonly string _value;

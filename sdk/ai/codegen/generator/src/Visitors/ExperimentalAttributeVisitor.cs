@@ -25,7 +25,7 @@ namespace Extensions.Plugin.Visitors
     /// </remarks>
     public class ExperimentalAttributeVisitor : ScmLibraryVisitor
     {
-        private const string DiagnosticId = "AOAIEXT001";
+        private const string DiagnosticId = "AAIP001";
 
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
 

@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal enum SearchContextSize
     {
         /// <summary> Low. </summary>

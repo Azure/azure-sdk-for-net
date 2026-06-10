@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The response data for a requested list of items. </summary>
+    [Experimental("AAIP001")]
     internal partial class AgentsPagedResultMemoryItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

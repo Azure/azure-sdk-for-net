@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -12,6 +13,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Experimental("AAIP001")]
     public static partial class ProjectsAgentsModelFactory
     {
 

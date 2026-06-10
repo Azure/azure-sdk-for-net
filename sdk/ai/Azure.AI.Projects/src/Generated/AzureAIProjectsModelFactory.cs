@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
@@ -13,6 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Projects
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Experimental("AAIP001")]
     public static partial class AzureAIProjectsModelFactory
     {
         /// <summary> Response from the list and get connections operations. </summary>

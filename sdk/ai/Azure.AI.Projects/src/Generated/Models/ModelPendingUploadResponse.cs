@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Represents the response for a model pending upload request. </summary>
+    [Experimental("AAIP001")]
     public partial class ModelPendingUploadResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

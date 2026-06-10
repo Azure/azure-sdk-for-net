@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Agent source for evaluator generation jobs — references an agent to fetch instructions and metadata from. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="AgentEvaluatorGenerationJobSource"/>. </summary>

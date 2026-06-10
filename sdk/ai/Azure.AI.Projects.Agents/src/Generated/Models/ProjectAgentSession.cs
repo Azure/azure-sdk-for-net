@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An agent session providing a long-lived compute sandbox for hosted agent invocations. </summary>
+    [Experimental("AAIP001")]
     public partial class ProjectAgentSession
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

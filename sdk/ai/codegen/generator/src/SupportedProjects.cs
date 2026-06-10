@@ -37,7 +37,7 @@ internal class SupportedPackages
         {
             return AzureAIExtensionsOpenAI._stableTypes.Value.Contains(type);
         }
-        return AzureAIProjectsAgents._stableTypes.Value.Contains(type);
+        return AzureAIProjects._stableTypes.Value.Contains(type);
     }
 
     public override string ToString() => _name;

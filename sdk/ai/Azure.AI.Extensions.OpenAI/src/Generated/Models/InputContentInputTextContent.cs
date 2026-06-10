@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input text. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputContentInputTextContent : InputContent
     {
         /// <summary> Initializes a new instance of <see cref="InputContentInputTextContent"/>. </summary>

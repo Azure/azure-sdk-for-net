@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Full per-task evaluation results for a candidate, returned by GET /candidates/{id}/results. </summary>
+    [Experimental("AAIP001")]
     public partial class CandidateResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

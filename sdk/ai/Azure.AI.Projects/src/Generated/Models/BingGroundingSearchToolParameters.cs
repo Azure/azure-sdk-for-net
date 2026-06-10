@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The bing grounding search tool parameters. </summary>
+    [Experimental("AAIP001")]
     internal partial class BingGroundingSearchToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

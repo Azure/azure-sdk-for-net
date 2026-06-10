@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     public readonly partial struct MemoryStoreListOrder : IEquatable<MemoryStoreListOrder>
     {
         private readonly string _value;

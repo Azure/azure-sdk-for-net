@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A single routine run returned from the run history API. </summary>
+    [Experimental("AAIP001")]
     public partial class RoutineRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

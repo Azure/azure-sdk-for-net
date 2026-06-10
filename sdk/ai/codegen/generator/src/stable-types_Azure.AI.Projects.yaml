@@ -45,3 +45,6 @@ stableTypes:
 - Azure.AI.Projects.AzureAISearchIndex
 - Azure.AI.Projects.EmbeddingConfiguration
 - Azure.AI.Projects.ManagedAzureAISearchIndex
+# Manually added entries
+- Azure.AI.Projects.AIProjectClient
+- Azure.AI.Projects.AIProjectClientOptions

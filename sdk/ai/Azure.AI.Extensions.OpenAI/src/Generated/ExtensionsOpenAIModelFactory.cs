@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Experimental("AAIP001")]
     public static partial class ExtensionsOpenAIModelFactory
     {
 

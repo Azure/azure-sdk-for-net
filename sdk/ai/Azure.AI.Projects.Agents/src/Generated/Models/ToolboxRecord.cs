@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
+    [Experimental("AAIP001")]
     public partial class ToolboxRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

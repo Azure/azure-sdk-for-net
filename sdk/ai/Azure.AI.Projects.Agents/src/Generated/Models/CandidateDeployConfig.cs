@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Deploy-config blob for a candidate. Suitable for setting OPTIMIZATION_CONFIG on a hosted-agent version. </summary>
+    [Experimental("AAIP001")]
     public partial class CandidateDeployConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

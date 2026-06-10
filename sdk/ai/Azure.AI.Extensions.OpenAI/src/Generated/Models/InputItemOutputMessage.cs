@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Output message. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemOutputMessage : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemOutputMessage"/>. </summary>

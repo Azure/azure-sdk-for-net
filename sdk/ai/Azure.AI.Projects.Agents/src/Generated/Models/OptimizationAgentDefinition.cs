@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Agent definition returned in response payloads (includes resolved config). </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationAgentDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

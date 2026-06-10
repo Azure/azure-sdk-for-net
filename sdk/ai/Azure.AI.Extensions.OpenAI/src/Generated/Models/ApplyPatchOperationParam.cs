@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Apply patch operation
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApplyPatchDeleteFileOperationParam"/> and <see cref="ApplyPatchUpdateFileOperationParam"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class ApplyPatchOperationParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

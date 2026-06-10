@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The discriminator values supported for routine actions. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct RoutineActionType : IEquatable<RoutineActionType>
     {
         private readonly string _value;

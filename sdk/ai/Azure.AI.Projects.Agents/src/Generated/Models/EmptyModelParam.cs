@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenAI
 {
     /// <summary> The EmptyModelParam. </summary>
+    [Experimental("AAIP001")]
     public partial class EmptyModelParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

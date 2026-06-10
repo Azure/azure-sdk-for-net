@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenAI
 {
@@ -11,6 +12,7 @@ namespace OpenAI
     /// The input format for the custom tool. Default is unconstrained text.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class CustomToolParamFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

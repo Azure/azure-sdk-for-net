@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct IsolationKeySourceKind : IEquatable<IsolationKeySourceKind>
     {
         private readonly string _value;

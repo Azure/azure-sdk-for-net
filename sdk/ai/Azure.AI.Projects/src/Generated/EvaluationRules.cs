@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -12,6 +13,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The EvaluationRules sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluationRules
     {
         private readonly Uri _endpoint;

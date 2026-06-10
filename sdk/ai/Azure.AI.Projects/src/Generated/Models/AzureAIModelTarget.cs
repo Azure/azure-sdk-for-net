@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
+    [Experimental("AAIP001")]
     public partial class AzureAIModelTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIModelTarget"/>. </summary>

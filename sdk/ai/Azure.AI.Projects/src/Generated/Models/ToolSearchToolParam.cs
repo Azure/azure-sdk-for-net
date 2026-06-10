@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Tool search tool. </summary>
+    [Experimental("AAIP001")]
     internal partial class ToolSearchToolParam : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="ToolSearchToolParam"/>. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+    [Experimental("AAIP001")]
     internal partial class OpenApiTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiTool"/>. </summary>

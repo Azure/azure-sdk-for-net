@@ -27,7 +27,6 @@ stableTypes:
 - Azure.AI.Projects.Agents.EntraAuthorizationScheme
 - Azure.AI.Projects.Agents.EntraIsolationKeySource
 - Azure.AI.Projects.Agents.ExportedDataTypes
-- Azure.AI.Projects.Agents.ExternalAgentDefinition
 - Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule
 - Azure.AI.Projects.Agents.HeaderIsolationKeySource
 - Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth
@@ -35,8 +34,6 @@ stableTypes:
 - Azure.AI.Projects.Agents.IsolationKeySource
 - Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference
 - Azure.AI.Projects.Agents.OtlpTelemetryEndpoint
-- Azure.AI.Projects.Agents.PatchAgentOptions
-- Azure.AI.Projects.Agents.ProjectAgentSession
 - Azure.AI.Projects.Agents.ProjectsAgentDefinition
 - Azure.AI.Projects.Agents.ProjectsAgentKind
 - Azure.AI.Projects.Agents.ProjectsAgentProtocol
@@ -44,8 +41,6 @@ stableTypes:
 - Azure.AI.Projects.Agents.ProjectsAgentVersion
 - Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions
 - Azure.AI.Projects.Agents.ProtocolVersionRecord
-- Azure.AI.Projects.Agents.SessionLogEvent
-- Azure.AI.Projects.Agents.SessionLogEventType
 - Azure.AI.Projects.Agents.StructuredInputDefinition
 - Azure.AI.Projects.Agents.TelemetryConfig
 - Azure.AI.Projects.Agents.TelemetryEndpoint
@@ -55,7 +50,6 @@ stableTypes:
 - Azure.AI.Projects.Agents.VersionRefIndicator
 - Azure.AI.Projects.Agents.VersionSelectionRule
 - Azure.AI.Projects.Agents.VersionSelector
-- Azure.AI.Projects.Agents.WorkflowAgentDefinition
 # Shared tool infrastructure
 - Azure.AI.Projects.Agents.ProjectsAgentTool
 - Azure.AI.Projects.Agents.ToolConfig
@@ -92,3 +86,16 @@ stableTypes:
 - Azure.AI.Projects.Agents.ToolSearchTool
 - OpenAI.EmptyModelParam
 - OpenAI.ToolSearchExecutionType
+# Manually commented entries
+# - Azure.AI.Projects.Agents.ExternalAgentDefinition
+# - Azure.AI.Projects.Agents.PatchAgentOptions
+# - Azure.AI.Projects.Agents.ProjectAgentSession
+# - Azure.AI.Projects.Agents.SessionLogEvent
+# - Azure.AI.Projects.Agents.SessionLogEventType
+# - Azure.AI.Projects.Agents.WorkflowAgentDefinition
+# Manually added entries
+- Azure.AI.Projects.Agents.ToolType
+- Azure.AI.Projects.Agents.AgentAdministrationClient
+- Azure.AI.Projects.Agents.AgentAdministrationClientOptions
+- Azure.AI.Projects.Agents.AgentListOrder
+- Azure.AI.Projects.Agents.ServiceVersion

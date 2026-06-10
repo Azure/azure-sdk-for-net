@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+    [Experimental("AAIP001")]
     internal partial class ToolConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

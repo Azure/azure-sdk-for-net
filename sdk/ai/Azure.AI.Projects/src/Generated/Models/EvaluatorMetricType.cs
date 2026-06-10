@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The type of the evaluator. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct EvaluatorMetricType : IEquatable<EvaluatorMetricType>
     {
         private readonly string _value;

@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer tool call. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemComputerToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/>. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported output file types for a data generation job. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct DataGenerationJobOutputType : IEquatable<DataGenerationJobOutputType>
     {
         private readonly string _value;
