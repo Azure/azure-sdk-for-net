@@ -71,7 +71,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
     public IReadOnlyList<ValueExpression> PopulateArguments(
         ScopedApi<ResourceIdentifier> idProperty,
         IReadOnlyList<ParameterProvider> requestParameters,
-        VariableExpression requestContext,
+        VariableExpression? requestContext,
         IReadOnlyList<ParameterProvider> methodParameters)
     {
         var arguments = new List<ValueExpression>();
@@ -177,7 +177,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             }
             else if (parameter.Type.Equals(typeof(RequestContext)))
             {
-                arguments.Add(requestContext);
+                arguments.Add(requestContext ?? Default);
             }
             else if (IsMatchConditionType(parameter.Type))
             {
