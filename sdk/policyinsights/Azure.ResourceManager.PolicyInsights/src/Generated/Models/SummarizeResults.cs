@@ -12,7 +12,7 @@ using Azure.ResourceManager.PolicyInsights;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Summarize action results. </summary>
-    public partial class SummarizeResults
+    internal partial class SummarizeResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

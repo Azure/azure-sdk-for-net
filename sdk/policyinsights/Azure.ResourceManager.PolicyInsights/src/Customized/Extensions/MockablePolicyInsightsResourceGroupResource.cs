@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtResourceGroupScopeAsync", typeof(CheckPolicyRestrictionsContent), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtResourceGroupScope", typeof(CheckPolicyRestrictionsContent), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupAsync", typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroup", typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupAsync", typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroup", typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceGroupAsync", typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceGroup", typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public partial class MockablePolicyInsightsResourceGroupResource
     {
         /// <summary>
@@ -113,6 +119,86 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        // ===== Renamed: GetQueryResultsForResourceGroup -> GetPolicyEventQueryResults / GetPolicyStateQueryResults =====
+
+        /// <summary> Queries policy events for the resources under the resource group. </summary>
+        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyEventsGetQueryResultsForResourceGroupAsyncCollectionResultOfT(
+                PolicyEventsRestClient, Id.SubscriptionId, Id.ResourceGroupName, policyEventType.ToString(),
+                default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsResourceGroupResource.GetPolicyEventQueryResults");
+        }
+
+        /// <summary> Queries policy events for the resources under the resource group. </summary>
+        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyEventsGetQueryResultsForResourceGroupCollectionResultOfT(
+                PolicyEventsRestClient, Id.SubscriptionId, Id.ResourceGroupName, policyEventType.ToString(),
+                default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsResourceGroupResource.GetPolicyEventQueryResults");
+        }
+
+        /// <summary> Queries policy states for the resources under the resource group. </summary>
+        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyStatesGetQueryResultsForResourceGroupAsyncCollectionResultOfT(
+                PolicyStatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, policyStateType.ToString(),
+                default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsResourceGroupResource.GetPolicyStateQueryResults");
+        }
+
+        /// <summary> Queries policy states for the resources under the resource group. </summary>
+        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyStatesGetQueryResultsForResourceGroupCollectionResultOfT(
+                PolicyStatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, policyStateType.ToString(),
+                default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsResourceGroupResource.GetPolicyStateQueryResults");
+        }
+
+        /// <summary> Summarizes policy states for the resources under the resource group. </summary>
+        public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            return new SinglePageAsyncPageable<PolicySummary>(async ct =>
+            {
+                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsResourceGroupResource.SummarizePolicyStates");
+                scope0.Start();
+                try
+                {
+                    RequestContext context = new RequestContext { CancellationToken = ct };
+                    HttpMessage message = PolicyStatesRestClient.CreateSummarizeForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, policyStateSummaryType.ToString(), default, default, default, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    SummarizeResults summary = SummarizeResults.FromResponse(result);
+                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
+                }
+                catch (Exception e) { scope0.Failed(e); throw; }
+            }, cancellationToken);
+        }
+
+        /// <summary> Summarizes policy states for the resources under the resource group. </summary>
+        public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            return new SinglePagePageable<PolicySummary>(ct =>
+            {
+                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsResourceGroupResource.SummarizePolicyStates");
+                scope0.Start();
+                try
+                {
+                    RequestContext context = new RequestContext { CancellationToken = ct };
+                    HttpMessage message = PolicyStatesRestClient.CreateSummarizeForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, policyStateSummaryType.ToString(), default, default, default, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    SummarizeResults summary = SummarizeResults.FromResponse(result);
+                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
+                }
+                catch (Exception e) { scope0.Failed(e); throw; }
+            }, cancellationToken);
         }
     }
 }

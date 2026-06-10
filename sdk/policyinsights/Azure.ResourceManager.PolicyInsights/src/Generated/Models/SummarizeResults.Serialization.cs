@@ -15,7 +15,7 @@ using Azure.ResourceManager.PolicyInsights;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Summarize action results. </summary>
-    public partial class SummarizeResults : IJsonModel<SummarizeResults>
+    internal partial class SummarizeResults : IJsonModel<SummarizeResults>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

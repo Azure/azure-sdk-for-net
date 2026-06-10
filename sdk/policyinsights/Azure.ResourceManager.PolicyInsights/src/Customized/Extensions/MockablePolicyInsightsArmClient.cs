@@ -17,106 +17,134 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScopeAsync", typeof(ResourceIdentifier), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScope", typeof(ResourceIdentifier), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
+    // PolicyEvents query-results re-hosted onto PolicyDefinition / PolicySetDefinition / PolicyAssignment resources
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicyDefinitionPolicyEventsAsync", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicyDefinitionPolicyEvents", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicySetDefinitionPolicyEventsAsync", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicySetDefinitionPolicyEvents", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // PolicyStates query-results re-hosted
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicyDefinitionPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicyDefinitionPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicySetDefinitionPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicySetDefinitionPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // SummarizeFor* re-hosted
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForPolicyDefinitionPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForPolicyDefinitionPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForPolicySetDefinitionPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForPolicySetDefinitionPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // ManagementGroup scope (re-hosted to MockablePolicyInsightsManagementGroupResource)
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroupAsync", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroup", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroupAsync", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroup", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForManagementGroupAsync", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForManagementGroup", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // Resource (arbitrary scope) — renamed in place to GetPolicyEventQueryResults / GetPolicyStateQueryResults / SummarizePolicyStates
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceAsync", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResource", typeof(ResourceIdentifier), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceAsync", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResource", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceAsync", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResource", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public partial class MockablePolicyInsightsArmClient
     {
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyRestrictionsOperationGroup_CheckAtManagementGroupScope. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+
+        // ===== Renamed (kept on ArmClient): GetQueryResultsForResource -> GetPolicyEventQueryResults/... (arbitrary scope) =====
+
+        /// <summary> Queries policy events for the resource. </summary>
+        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope0 = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CheckPolicyRestrictions");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(scope.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckPolicyRestrictionsResult> response = Response.FromValue(CheckPolicyRestrictionsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyEventsGetQueryResultsForResourceAsyncCollectionResultOfT(
+                PolicyEventsRestClient, policyEventType.ToString(), scope.ToString(),
+                default, default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsArmClient.GetPolicyEventQueryResults");
         }
 
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyRestrictionsOperationGroup_CheckAtManagementGroupScope. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+        /// <summary> Queries policy events for the resource. </summary>
+        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(content, nameof(content));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyEventsGetQueryResultsForResourceCollectionResultOfT(
+                PolicyEventsRestClient, policyEventType.ToString(), scope.ToString(),
+                default, default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsArmClient.GetPolicyEventQueryResults");
+        }
 
-            using DiagnosticScope scope0 = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CheckPolicyRestrictions");
-            scope0.Start();
-            try
+        /// <summary> Queries policy states for the resource. </summary>
+        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyStatesGetQueryResultsForResourceAsyncCollectionResultOfT(
+                PolicyStatesRestClient, policyStateType.ToString(), scope.ToString(),
+                default, default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsArmClient.GetPolicyStateQueryResults");
+        }
+
+        /// <summary> Queries policy states for the resource. </summary>
+        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyStatesGetQueryResultsForResourceCollectionResultOfT(
+                PolicyStatesRestClient, policyStateType.ToString(), scope.ToString(),
+                default, default, default, default, default, default, default, default, default,
+                context, "MockablePolicyInsightsArmClient.GetPolicyStateQueryResults");
+        }
+
+        /// <summary> Summarizes policy states for the resource. </summary>
+        public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            return new SinglePageAsyncPageable<PolicySummary>(async ct =>
             {
-                RequestContext context = new RequestContext
+                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.SummarizePolicyStates");
+                scope0.Start();
+                try
                 {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(scope.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckPolicyRestrictionsResult> response = Response.FromValue(CheckPolicyRestrictionsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = ct };
+                    HttpMessage message = PolicyStatesRestClient.CreateSummarizeForResourceRequest(policyStateSummaryType.ToString(), scope.ToString(), default, default, default, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    SummarizeResults summary = SummarizeResults.FromResponse(result);
+                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
                 }
-                return response;
-            }
-            catch (Exception e)
+                catch (Exception e) { scope0.Failed(e); throw; }
+            }, cancellationToken);
+        }
+
+        /// <summary> Summarizes policy states for the resource. </summary>
+        public virtual Pageable<PolicySummary> SummarizePolicyStates(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            return new SinglePagePageable<PolicySummary>(ct =>
             {
-                scope0.Failed(e);
-                throw;
-            }
+                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.SummarizePolicyStates");
+                scope0.Start();
+                try
+                {
+                    RequestContext context = new RequestContext { CancellationToken = ct };
+                    HttpMessage message = PolicyStatesRestClient.CreateSummarizeForResourceRequest(policyStateSummaryType.ToString(), scope.ToString(), default, default, default, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    SummarizeResults summary = SummarizeResults.FromResponse(result);
+                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
+                }
+                catch (Exception e) { scope0.Failed(e); throw; }
+            }, cancellationToken);
         }
     }
 }

@@ -462,17 +462,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
-        /// <param name="odataCount"> OData entity count; represents the number of summaries returned; always set to 1. </param>
-        /// <param name="value"> Summarize action results. </param>
-        /// <returns> A new <see cref="Models.SummarizeResults"/> instance for mocking. </returns>
-        public static SummarizeResults SummarizeResults(string odataContext = default, int? odataCount = default, IEnumerable<PolicySummary> value = default)
-        {
-            value ??= new ChangeTrackingList<PolicySummary>();
-
-            return new SummarizeResults(odataContext, odataCount, (value ?? new ChangeTrackingList<PolicySummary>()).ToList(), default);
-        }
-
         /// <param name="odataId"> OData entity ID; always set to null since summaries do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="results"> Compliance summary for all policy assignments. </param>
