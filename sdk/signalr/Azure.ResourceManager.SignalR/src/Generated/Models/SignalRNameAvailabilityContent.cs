@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ResourceType = resourceType;
+            resourceType = resourceType;
             Name = name;
         }
 
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SignalRNameAvailabilityContent(ResourceType resourceType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ResourceType = resourceType;
+            resourceType = resourceType;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR", "Microsoft.SignalRService/WebPubSub", "Microsoft.SignalRService/SignalR/replicas" or "Microsoft.SignalRService/WebPubSub/replicas". </summary>
         [WirePath("type")]
-        public ResourceType ResourceType { get; }
+        public ResourceType resourceType { get; }
 
         /// <summary> The resource name to validate. e.g."my-resource-name". </summary>
         [WirePath("name")]

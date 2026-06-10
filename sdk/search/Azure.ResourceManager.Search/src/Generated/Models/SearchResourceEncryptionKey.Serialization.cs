@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.Search.Models
             {
                 throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(KeyName))
+            if (Optional.IsDefined(keyName))
             {
                 writer.WritePropertyName("keyVaultKeyName"u8);
-                writer.WriteStringValue(KeyName);
+                writer.WriteStringValue(keyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (Optional.IsDefined(keyVersion))
             {
                 writer.WritePropertyName("keyVaultKeyVersion"u8);
-                writer.WriteStringValue(KeyVersion);
+                writer.WriteStringValue(keyVersion);
             }
-            if (Optional.IsDefined(VaultUri))
+            if (Optional.IsDefined(vaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
-                writer.WriteStringValue(VaultUri.AbsoluteUri);
+                writer.WriteStringValue(vaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Identity))
             {

@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkConfiguration(bool? isSecondaryIPEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsSecondaryIPEnabled = isSecondaryIPEnabled;
+            isSecondaryIPEnabled = isSecondaryIPEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
-        public bool? IsSecondaryIPEnabled { get; set; }
+        public bool? isSecondaryIPEnabled { get; set; }
     }
 }

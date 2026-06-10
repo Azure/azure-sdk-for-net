@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WritePropertyName("chipSku"u8);
                 writer.WriteStringValue(ChipSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAvailableOSVersion))
+            if (options.Format != "W" && Optional.IsDefined(lastAvailableOSVersion))
             {
                 writer.WritePropertyName("lastAvailableOsVersion"u8);
-                writer.WriteStringValue(LastAvailableOSVersion);
+                writer.WriteStringValue(lastAvailableOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastInstalledOSVersion))
+            if (options.Format != "W" && Optional.IsDefined(lastInstalledOSVersion))
             {
                 writer.WritePropertyName("lastInstalledOsVersion"u8);
-                writer.WriteStringValue(LastInstalledOSVersion);
+                writer.WriteStringValue(lastInstalledOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOSUpdateUtc))
+            if (options.Format != "W" && Optional.IsDefined(lastOSUpdateUtc))
             {
                 writer.WritePropertyName("lastOsUpdateUtc"u8);
-                writer.WriteStringValue(LastOSUpdateUtc.Value, "O");
+                writer.WriteStringValue(lastOSUpdateUtc.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdateRequestUtc))
             {

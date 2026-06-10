@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="permissions"> The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
         /// <param name="ipAddressOrRange"> An IP address or a range of IP addresses from which to accept requests. </param>
         /// <param name="protocols"> The protocol permitted for a request made with the account SAS. </param>
-        /// <param name="sharedAccessStartOn"> The time at which the SAS becomes valid. </param>
-        /// <param name="sharedAccessExpiryOn"> The time at which the shared access signature becomes invalid. </param>
+        /// <param name="sharedAccessStartTime"> The time at which the SAS becomes valid. </param>
+        /// <param name="sharedAccessExpiryTime"> The time at which the shared access signature becomes invalid. </param>
         /// <param name="identifier"> A unique value up to 64 characters in length that correlates to an access policy specified for the container, queue, or table. </param>
         /// <param name="partitionKeyStart"> The start of partition key. </param>
         /// <param name="partitionKeyEnd"> The end of partition key. </param>
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="contentLanguage"> The response header override for content language. </param>
         /// <param name="contentType"> The response header override for content type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceSasContent(string canonicalizedResource, ServiceSasSignedResourceType? resource, StorageAccountSasPermission? permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartOn, DateTimeOffset? sharedAccessExpiryOn, string identifier, string partitionKeyStart, string partitionKeyEnd, string rowKeyStart, string rowKeyEnd, string keyToSign, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceSasContent(string canonicalizedResource, ServiceSasSignedResourceType? resource, StorageAccountSasPermission? permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartTime, DateTimeOffset? sharedAccessExpiryTime, string identifier, string partitionKeyStart, string partitionKeyEnd, string rowKeyStart, string rowKeyEnd, string keyToSign, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CanonicalizedResource = canonicalizedResource;
             Resource = resource;
             Permissions = permissions;
             IPAddressOrRange = ipAddressOrRange;
             Protocols = protocols;
-            SharedAccessStartOn = sharedAccessStartOn;
-            SharedAccessExpiryOn = sharedAccessExpiryOn;
+            SharedAccessStartTime = sharedAccessStartTime;
+            SharedAccessExpiryTime = sharedAccessExpiryTime;
             Identifier = identifier;
             PartitionKeyStart = partitionKeyStart;
             PartitionKeyEnd = partitionKeyEnd;
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The time at which the SAS becomes valid. </summary>
         [WirePath("signedStart")]
-        public DateTimeOffset? SharedAccessStartOn { get; set; }
+        public DateTimeOffset? SharedAccessStartTime { get; set; }
 
         /// <summary> The time at which the shared access signature becomes invalid. </summary>
         [WirePath("signedExpiry")]
-        public DateTimeOffset? SharedAccessExpiryOn { get; set; }
+        public DateTimeOffset? SharedAccessExpiryTime { get; set; }
 
         /// <summary> A unique value up to 64 characters in length that correlates to an access policy specified for the container, queue, or table. </summary>
         [WirePath("signedIdentifier")]

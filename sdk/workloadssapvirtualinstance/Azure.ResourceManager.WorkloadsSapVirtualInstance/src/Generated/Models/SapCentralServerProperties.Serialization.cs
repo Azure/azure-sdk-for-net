@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WritePropertyName("instanceNo"u8);
                 writer.WriteStringValue(InstanceNo);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubnetId))
+            if (options.Format != "W" && Optional.IsDefined(subnetId))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteStringValue(SubnetId);
+                writer.WriteStringValue(subnetId);
             }
             if (Optional.IsDefined(MessageServerProperties))
             {

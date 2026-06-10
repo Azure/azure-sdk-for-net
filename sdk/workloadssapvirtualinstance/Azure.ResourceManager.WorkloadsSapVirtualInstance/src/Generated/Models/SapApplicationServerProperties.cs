@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         internal SapApplicationServerProperties(string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, IPAddress ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, string dispatcherStatus, LoadBalancerDetails loadBalancerDetails, IReadOnlyList<ApplicationServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceNo = instanceNo;
-            SubnetId = subnetId;
+            subnetId = subnetId;
             Hostname = hostname;
             KernelVersion = kernelVersion;
             KernelPatch = kernelPatch;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public string InstanceNo { get; }
 
         /// <summary> Application server Subnet. </summary>
-        public ResourceIdentifier SubnetId { get; }
+        public ResourceIdentifier subnetId { get; }
 
         /// <summary> Application server instance SAP hostname. </summary>
         public string Hostname { get; }

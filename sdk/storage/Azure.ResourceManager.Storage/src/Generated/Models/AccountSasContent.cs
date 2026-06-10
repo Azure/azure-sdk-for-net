@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="permissions"> The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
         /// <param name="ipAddressOrRange"> An IP address or a range of IP addresses from which to accept requests. </param>
         /// <param name="protocols"> The protocol permitted for a request made with the account SAS. </param>
-        /// <param name="sharedAccessStartOn"> The time at which the SAS becomes valid. </param>
+        /// <param name="sharedAccessStartTime"> The time at which the SAS becomes valid. </param>
         /// <param name="sharedAccessExpireOn"> The time at which the shared access signature becomes invalid. </param>
         /// <param name="keyToSign"> The key to sign the account SAS token with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartOn, DateTimeOffset sharedAccessExpireOn, string keyToSign, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartTime, DateTimeOffset sharedAccessExpireOn, string keyToSign, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Services = services;
             ResourceTypes = resourceTypes;
             Permissions = permissions;
             IPAddressOrRange = ipAddressOrRange;
             Protocols = protocols;
-            SharedAccessStartOn = sharedAccessStartOn;
+            SharedAccessStartTime = sharedAccessStartTime;
             SharedAccessExpireOn = sharedAccessExpireOn;
             KeyToSign = keyToSign;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The time at which the SAS becomes valid. </summary>
         [WirePath("signedStart")]
-        public DateTimeOffset? SharedAccessStartOn { get; set; }
+        public DateTimeOffset? SharedAccessStartTime { get; set; }
 
         /// <summary> The time at which the shared access signature becomes invalid. </summary>
         [WirePath("signedExpiry")]

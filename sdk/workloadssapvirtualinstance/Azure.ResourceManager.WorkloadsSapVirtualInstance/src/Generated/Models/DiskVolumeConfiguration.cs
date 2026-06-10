@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
-            SizeInGB = sizeInGB;
+            sizeInGB = sizeInGB;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public long? Count { get; set; }
 
         /// <summary> The disk size in GB. </summary>
-        public long? SizeInGB { get; set; }
+        public long? sizeInGB { get; set; }
 
         /// <summary> The disk SKU details. </summary>
         internal SapDiskSku Sku { get; set; }

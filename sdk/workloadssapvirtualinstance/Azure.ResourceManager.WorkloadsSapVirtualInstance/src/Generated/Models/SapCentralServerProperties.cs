@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         internal SapCentralServerProperties(string instanceNo, ResourceIdentifier subnetId, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, LoadBalancerDetails loadBalancerDetails, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceNo = instanceNo;
-            SubnetId = subnetId;
+            subnetId = subnetId;
             MessageServerProperties = messageServerProperties;
             EnqueueServerProperties = enqueueServerProperties;
             GatewayServerProperties = gatewayServerProperties;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public string InstanceNo { get; }
 
         /// <summary> The central services instance subnet. </summary>
-        public ResourceIdentifier SubnetId { get; }
+        public ResourceIdentifier subnetId { get; }
 
         /// <summary> Defines the SAP message server properties. </summary>
         public MessageServerProperties MessageServerProperties { get; set; }

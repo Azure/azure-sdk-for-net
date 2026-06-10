@@ -29,5 +29,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             IsSuccessful = isSuccessful;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The result of the operation or request. </summary>
+        public bool? operationResult { get; }
     }
 }

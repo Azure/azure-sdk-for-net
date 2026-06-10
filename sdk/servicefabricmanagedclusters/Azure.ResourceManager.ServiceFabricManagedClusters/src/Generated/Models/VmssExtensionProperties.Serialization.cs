@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("publisher"u8);
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(VmssExtensionPropertiesType);
+            writer.WriteStringValue(vmssExtensionPropertiesType);
             writer.WritePropertyName("typeHandlerVersion"u8);
             writer.WriteStringValue(TypeHandlerVersion);
             if (Optional.IsDefined(AutoUpgradeMinorVersion))

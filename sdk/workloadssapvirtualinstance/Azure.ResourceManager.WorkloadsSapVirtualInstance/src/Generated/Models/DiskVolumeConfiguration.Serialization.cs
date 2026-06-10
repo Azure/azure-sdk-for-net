@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(SizeInGB))
+            if (Optional.IsDefined(sizeInGB))
             {
                 writer.WritePropertyName("sizeGB"u8);
-                writer.WriteNumberValue(SizeInGB.Value);
+                writer.WriteNumberValue(sizeInGB.Value);
             }
             if (Optional.IsDefined(Sku))
             {

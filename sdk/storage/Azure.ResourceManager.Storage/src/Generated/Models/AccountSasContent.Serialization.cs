@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SharedAccessStartOn))
+            if (Optional.IsDefined(SharedAccessStartTime))
             {
                 writer.WritePropertyName("signedStart"u8);
-                writer.WriteStringValue(SharedAccessStartOn.Value, "O");
+                writer.WriteStringValue(SharedAccessStartTime.Value, "O");
             }
             writer.WritePropertyName("signedExpiry"u8);
             writer.WriteStringValue(SharedAccessExpireOn, "O");
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountSasPermission permissions = default;
             string ipAddressOrRange = default;
             StorageAccountHttpProtocol? protocols = default;
-            DateTimeOffset? sharedAccessStartOn = default;
+            DateTimeOffset? sharedAccessStartTime = default;
             DateTimeOffset sharedAccessExpireOn = default;
             string keyToSign = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    sharedAccessStartOn = prop.Value.GetDateTimeOffset("O");
+                    sharedAccessStartTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("signedExpiry"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Storage.Models
                 permissions,
                 ipAddressOrRange,
                 protocols,
-                sharedAccessStartOn,
+                sharedAccessStartTime,
                 sharedAccessExpireOn,
                 keyToSign,
                 additionalBinaryDataProperties);

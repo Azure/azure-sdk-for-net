@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SharedAccessStartOn))
+            if (Optional.IsDefined(SharedAccessStartTime))
             {
                 writer.WritePropertyName("signedStart"u8);
-                writer.WriteStringValue(SharedAccessStartOn.Value, "O");
+                writer.WriteStringValue(SharedAccessStartTime.Value, "O");
             }
-            if (Optional.IsDefined(SharedAccessExpiryOn))
+            if (Optional.IsDefined(SharedAccessExpiryTime))
             {
                 writer.WritePropertyName("signedExpiry"u8);
-                writer.WriteStringValue(SharedAccessExpiryOn.Value, "O");
+                writer.WriteStringValue(SharedAccessExpiryTime.Value, "O");
             }
             if (Optional.IsDefined(Identifier))
             {
@@ -224,8 +224,8 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountSasPermission? permissions = default;
             string ipAddressOrRange = default;
             StorageAccountHttpProtocol? protocols = default;
-            DateTimeOffset? sharedAccessStartOn = default;
-            DateTimeOffset? sharedAccessExpiryOn = default;
+            DateTimeOffset? sharedAccessStartTime = default;
+            DateTimeOffset? sharedAccessExpiryTime = default;
             string identifier = default;
             string partitionKeyStart = default;
             string partitionKeyEnd = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    sharedAccessStartOn = prop.Value.GetDateTimeOffset("O");
+                    sharedAccessStartTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("signedExpiry"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    sharedAccessExpiryOn = prop.Value.GetDateTimeOffset("O");
+                    sharedAccessExpiryTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("signedIdentifier"u8))
@@ -361,8 +361,8 @@ namespace Azure.ResourceManager.Storage.Models
                 permissions,
                 ipAddressOrRange,
                 protocols,
-                sharedAccessStartOn,
-                sharedAccessExpiryOn,
+                sharedAccessStartTime,
+                sharedAccessExpiryTime,
                 identifier,
                 partitionKeyStart,
                 partitionKeyEnd,

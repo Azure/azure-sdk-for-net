@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         internal SelfHelpError(string code, string errorType, string message, IReadOnlyList<SelfHelpError> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
-            ErrorType = errorType;
+            ErrorType  = errorType;
             Message = message;
             Details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string Code { get; }
 
         /// <summary> Service specific error type which serves as additional context for the error herein. </summary>
-        public string ErrorType { get; }
+        public string ErrorType  { get; }
 
         /// <summary> Description of the error. </summary>
         public string Message { get; }

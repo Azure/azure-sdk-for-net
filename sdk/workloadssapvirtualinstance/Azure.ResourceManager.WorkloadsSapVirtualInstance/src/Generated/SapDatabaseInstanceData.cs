@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         internal SapDatabaseProperties Properties { get; set; }
 
         /// <summary> Database subnet. </summary>
-        public ResourceIdentifier SubnetId
+        public ResourceIdentifier subnetId
         {
             get
             {
-                return Properties is null ? default : Properties.SubnetId;
+                return Properties is null ? default : Properties.subnetId;
             }
         }
 

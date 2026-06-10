@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Subscription.Models
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
             ProvisioningState = provisioningState;
-            AcceptOwnershipUri = acceptOwnershipUri;
+            acceptOwnershipUri = acceptOwnershipUri;
             AcceptOwnershipState = acceptOwnershipState;
             BillingScope = billingScope;
             Workload = workload;
             ResellerId = resellerId;
             SubscriptionOwnerId = subscriptionOwnerId;
             ManagementGroupId = managementGroupId;
-            CreatedOn = createdOn;
+            createdOn = createdOn;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public SubscriptionProvisioningState? ProvisioningState { get; }
 
         /// <summary> Url to accept ownership of the subscription. </summary>
-        public Uri AcceptOwnershipUri { get; }
+        public Uri acceptOwnershipUri { get; }
 
         /// <summary> The accept ownership state of the resource. </summary>
         public AcceptOwnershipState? AcceptOwnershipState { get; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public string ManagementGroupId { get; }
 
         /// <summary> Created Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? createdOn { get; }
 
         /// <summary> Tags for the subscription. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }

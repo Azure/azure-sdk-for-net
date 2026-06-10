@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(typeHandlerVersion, nameof(typeHandlerVersion));
 
             Publisher = publisher;
-            VmssExtensionPropertiesType = vmssExtensionPropertiesType;
+            vmssExtensionPropertiesType = vmssExtensionPropertiesType;
             TypeHandlerVersion = typeHandlerVersion;
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
             SetupOrder = new ChangeTrackingList<VmssExtensionSetupOrder>();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         internal VmssExtensionProperties(string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled, IList<VmssExtensionSetupOrder> setupOrder, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
-            VmssExtensionPropertiesType = vmssExtensionPropertiesType;
+            vmssExtensionPropertiesType = vmssExtensionPropertiesType;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             Settings = settings;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string Publisher { get; set; }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string VmssExtensionPropertiesType { get; set; }
+        public string vmssExtensionPropertiesType { get; set; }
 
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }

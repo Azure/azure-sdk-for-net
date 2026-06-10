@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SapDatabaseProperties(ResourceIdentifier subnetId, string databaseSid, string databaseType, IPAddress ipAddress, LoadBalancerDetails loadBalancerDetails, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SubnetId = subnetId;
+            subnetId = subnetId;
             DatabaseSid = databaseSid;
             DatabaseType = databaseType;
             IPAddress = ipAddress;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> Database subnet. </summary>
-        public ResourceIdentifier SubnetId { get; }
+        public ResourceIdentifier subnetId { get; }
 
         /// <summary> Database SID name. </summary>
         public string DatabaseSid { get; }

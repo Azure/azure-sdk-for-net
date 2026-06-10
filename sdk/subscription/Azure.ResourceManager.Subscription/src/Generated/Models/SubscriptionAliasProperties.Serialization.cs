@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipUri))
+            if (options.Format != "W" && Optional.IsDefined(acceptOwnershipUri))
             {
                 writer.WritePropertyName("acceptOwnershipUrl"u8);
-                writer.WriteStringValue(AcceptOwnershipUri.AbsoluteUri);
+                writer.WriteStringValue(acceptOwnershipUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipState))
             {
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(createdOn))
             {
                 writer.WritePropertyName("createdTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(createdOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Tags))
             {

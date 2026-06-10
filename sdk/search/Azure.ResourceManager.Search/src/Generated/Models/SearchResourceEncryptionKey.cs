@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SearchResourceEncryptionKey(string keyName, string keyVersion, Uri vaultUri, SearchDataIdentity identity, SearchAadApplicationCredentials accessCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            KeyName = keyName;
-            KeyVersion = keyVersion;
-            VaultUri = vaultUri;
+            keyName = keyName;
+            keyVersion = keyVersion;
+            vaultUri = vaultUri;
             Identity = identity;
             AccessCredentials = accessCredentials;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> The name of your Azure Key Vault key to be used to encrypt your data at rest. </summary>
         [WirePath("keyVaultKeyName")]
-        public string KeyName { get; set; }
+        public string keyName { get; set; }
 
         /// <summary> The version of your Azure Key Vault key to be used to encrypt your data at rest. </summary>
         [WirePath("keyVaultKeyVersion")]
-        public string KeyVersion { get; set; }
+        public string keyVersion { get; set; }
 
         /// <summary> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </summary>
         [WirePath("keyVaultUri")]
-        public Uri VaultUri { get; set; }
+        public Uri vaultUri { get; set; }
 
         /// <summary> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </summary>
         [WirePath("identity")]

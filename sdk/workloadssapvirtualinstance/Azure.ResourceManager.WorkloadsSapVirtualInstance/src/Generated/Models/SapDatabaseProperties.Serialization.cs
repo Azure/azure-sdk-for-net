@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 throw new FormatException($"The model {nameof(SapDatabaseProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(SubnetId))
+            if (options.Format != "W" && Optional.IsDefined(subnetId))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteStringValue(SubnetId);
+                writer.WriteStringValue(subnetId);
             }
             if (options.Format != "W" && Optional.IsDefined(DatabaseSid))
             {

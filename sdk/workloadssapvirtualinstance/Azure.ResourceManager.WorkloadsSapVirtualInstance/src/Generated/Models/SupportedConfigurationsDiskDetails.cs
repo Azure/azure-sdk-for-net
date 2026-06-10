@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         internal SupportedConfigurationsDiskDetails(SapDiskSku sku, long? sizeInGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
-            SizeInGB = sizeInGB;
+            sizeInGB = sizeInGB;
             MinimumSupportedDiskCount = minimumSupportedDiskCount;
             MaximumSupportedDiskCount = maximumSupportedDiskCount;
             IopsReadWrite = iopsReadWrite;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         internal SapDiskSku Sku { get; }
 
         /// <summary> The disk size in GB. </summary>
-        public long? SizeInGB { get; }
+        public long? sizeInGB { get; }
 
         /// <summary> The minimum supported disk count. </summary>
         public long? MinimumSupportedDiskCount { get; }

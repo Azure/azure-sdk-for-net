@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string VmssExtensionPropertiesType
+        public string vmssExtensionPropertiesType
         {
             get
             {
-                return Properties is null ? default : Properties.VmssExtensionPropertiesType;
+                return Properties is null ? default : Properties.vmssExtensionPropertiesType;
             }
             set
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     Properties = new VmssExtensionProperties();
                 }
-                Properties.VmssExtensionPropertiesType = value;
+                Properties.vmssExtensionPropertiesType = value;
             }
         }
 

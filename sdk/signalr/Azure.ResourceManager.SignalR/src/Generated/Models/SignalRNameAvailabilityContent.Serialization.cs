@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 throw new FormatException($"The model {nameof(SignalRNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
+            writer.WriteStringValue(resourceType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

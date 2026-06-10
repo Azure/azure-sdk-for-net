@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 throw new FormatException($"The model {nameof(NetworkConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsSecondaryIPEnabled))
+            if (Optional.IsDefined(isSecondaryIPEnabled))
             {
                 writer.WritePropertyName("isSecondaryIpEnabled"u8);
-                writer.WriteBooleanValue(IsSecondaryIPEnabled.Value);
+                writer.WriteBooleanValue(isSecondaryIPEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

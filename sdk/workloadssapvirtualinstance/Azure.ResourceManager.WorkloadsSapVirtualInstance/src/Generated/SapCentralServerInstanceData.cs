@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         }
 
         /// <summary> The central services instance subnet. </summary>
-        public ResourceIdentifier SubnetId
+        public ResourceIdentifier subnetId
         {
             get
             {
-                return Properties is null ? default : Properties.SubnetId;
+                return Properties is null ? default : Properties.subnetId;
             }
         }
 

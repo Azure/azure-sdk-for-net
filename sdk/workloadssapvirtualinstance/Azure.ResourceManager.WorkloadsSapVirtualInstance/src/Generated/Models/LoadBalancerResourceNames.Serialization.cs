@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WritePropertyName("loadBalancerName"u8);
                 writer.WriteStringValue(LoadBalancerName);
             }
-            if (Optional.IsCollectionDefined(FrontendIPConfigurationNames))
+            if (Optional.IsCollectionDefined(frontendIPConfigurationNames))
             {
                 writer.WritePropertyName("frontendIpConfigurationNames"u8);
                 writer.WriteStartArray();
-                foreach (string item in FrontendIPConfigurationNames)
+                foreach (string item in frontendIPConfigurationNames)
                 {
                     if (item == null)
                     {

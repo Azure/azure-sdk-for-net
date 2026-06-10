@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Sphere.Models
         {
             DeviceId = deviceId;
             ChipSku = chipSku;
-            LastAvailableOSVersion = lastAvailableOSVersion;
-            LastInstalledOSVersion = lastInstalledOSVersion;
-            LastOSUpdateUtc = lastOSUpdateUtc;
+            lastAvailableOSVersion = lastAvailableOSVersion;
+            lastInstalledOSVersion = lastInstalledOSVersion;
+            lastOSUpdateUtc = lastOSUpdateUtc;
             LastUpdateRequestUtc = lastUpdateRequestUtc;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Sphere.Models
         public string ChipSku { get; }
 
         /// <summary> OS version available for installation when update requested. </summary>
-        public string LastAvailableOSVersion { get; }
+        public string lastAvailableOSVersion { get; }
 
         /// <summary> OS version running on device when update requested. </summary>
-        public string LastInstalledOSVersion { get; }
+        public string lastInstalledOSVersion { get; }
 
         /// <summary> Time when update requested and new OS version available. </summary>
-        public DateTimeOffset? LastOSUpdateUtc { get; }
+        public DateTimeOffset? lastOSUpdateUtc { get; }
 
         /// <summary> Time when update was last requested. </summary>
         public DateTimeOffset? LastUpdateRequestUtc { get; }

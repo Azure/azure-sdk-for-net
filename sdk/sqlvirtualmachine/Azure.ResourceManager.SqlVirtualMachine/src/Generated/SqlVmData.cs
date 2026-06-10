@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         internal SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineProperties properties, string sqlVmName, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            SqlVmName = sqlVmName;
+            sqlVmName = sqlVmName;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         internal SqlVirtualMachineProperties Properties { get; set; }
 
         /// <summary> Name of the SQL virtual machine. </summary>
-        public string SqlVmName { get; }
+        public string sqlVmName { get; }
 
         /// <summary> DO NOT USE. This value will be deprecated. Azure Active Directory identity of the server. </summary>
         public ManagedServiceIdentity Identity { get; set; }

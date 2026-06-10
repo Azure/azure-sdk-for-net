@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> Initializes a new instance of <see cref="LoadBalancerResourceNames"/>. </summary>
         public LoadBalancerResourceNames()
         {
-            FrontendIPConfigurationNames = new ChangeTrackingList<string>();
+            frontendIPConfigurationNames = new ChangeTrackingList<string>();
             BackendPoolNames = new ChangeTrackingList<string>();
             HealthProbeNames = new ChangeTrackingList<string>();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         internal LoadBalancerResourceNames(string loadBalancerName, IList<string> frontendIPConfigurationNames, IList<string> backendPoolNames, IList<string> healthProbeNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoadBalancerName = loadBalancerName;
-            FrontendIPConfigurationNames = frontendIPConfigurationNames;
+            frontendIPConfigurationNames = frontendIPConfigurationNames;
             BackendPoolNames = backendPoolNames;
             HealthProbeNames = healthProbeNames;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public string LoadBalancerName { get; set; }
 
         /// <summary> The list of frontend IP configuration names. If provided as input, size of this list should be 2 for cs layer and should be 1 for database layer. </summary>
-        public IList<string> FrontendIPConfigurationNames { get; }
+        public IList<string> frontendIPConfigurationNames { get; }
 
         /// <summary> The list of backend pool names. Currently, ACSS deploys only one backend pool and hence, size of this list should be 1. </summary>
         public IList<string> BackendPoolNames { get; }
