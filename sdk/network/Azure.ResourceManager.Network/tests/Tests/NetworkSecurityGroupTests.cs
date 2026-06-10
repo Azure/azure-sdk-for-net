@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup, System.Threading.CancellationToken.None);
             Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(listNsgSubsciptionResponse);
 
             // Delete NSG
-            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
@@ -122,9 +122,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 SecurityRules = {
                     new SecurityRuleData()
-                    {
-                        Name = securityRule1,
-                        Access = SecurityRuleAccess.Allow,
+                    {Access = SecurityRuleAccess.Allow,
                         Description = "Test security rule",
                         DestinationAddressPrefix = "*",
                         DestinationPortRange = destinationPortRange,
@@ -139,7 +137,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup, System.Threading.CancellationToken.None);
             Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
@@ -188,9 +186,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Add a new security rule
             var securityRule = new SecurityRuleData()
-            {
-                Name = securityRule2,
-                Access = SecurityRuleAccess.Deny,
+            {Access = SecurityRuleAccess.Deny,
                 Description = "Test outbound security rule",
                 DestinationAddressPrefix = "*",
                 DestinationPortRange = destinationPortRange,
@@ -203,7 +199,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             networkSecurityGroup.SecurityRules.Add(securityRule);
 
-            putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup, System.Threading.CancellationToken.None);
             await putNsgResponseOperation.WaitForCompletionAsync();
             ;
             // Get NSG
@@ -232,7 +228,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Assert.AreEqual(listDefaultSecurityGroups.First().Name, getDefaultSecurityGroups.Value.Name);
 
             // Delete NSG
-            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();

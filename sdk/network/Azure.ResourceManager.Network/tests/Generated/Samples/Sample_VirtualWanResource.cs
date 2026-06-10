@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualWanResource virtualWan = client.GetVirtualWanResource(virtualWanResourceId);
 
             // invoke the operation
-            await virtualWan.DeleteAsync(WaitUntil.Completed);
+            await virtualWan.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Samples
                 VpnServerConfigurationResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnconfig1"),
                 AuthenticationMethod = NetworkAuthenticationMethod.Eaptls,
             };
-            ArmOperation<VpnProfileResponse> lro = await virtualWan.GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(WaitUntil.Completed, content);
+            ArmOperation<VpnProfileResponse> lro = await virtualWan.GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             VpnProfileResponse result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 VpnSites = { "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnSites/abc" },
             };
-            await virtualWan.DownloadVpnSitesConfigurationAsync(WaitUntil.Completed, content);
+            await virtualWan.DownloadVpnSitesConfigurationAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualWanResource virtualWan = client.GetVirtualWanResource(virtualWanResourceId);
 
             // invoke the operation
-            ArmOperation<VpnServerConfigurationsResponse> lro = await virtualWan.GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(WaitUntil.Completed);
+            ArmOperation<VpnServerConfigurationsResponse> lro = await virtualWan.GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             VpnServerConfigurationsResponse result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

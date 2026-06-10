@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Network.Samples
                     Status = "Approved",
                     Description = "approved it for some reason.",
                 },
-                Name = "connection1",
             };
-            ArmOperation<ApplicationGatewayPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            ArmOperation<ApplicationGatewayPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             ApplicationGatewayPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

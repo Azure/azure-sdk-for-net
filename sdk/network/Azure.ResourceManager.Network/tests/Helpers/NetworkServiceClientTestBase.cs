@@ -409,9 +409,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public async Task<ExpressRouteCircuitResource> CreateDefaultExpressRouteCircuit(Resources.ResourceGroupResource resourceGroup, string circuitName, string location)
         {
             var sku = new ExpressRouteCircuitSku
-            {
-                Name = "Premium_MeteredData",
-                Tier = "Premium",
+            {Tier = "Premium",
                 Family = "MeteredData"
             };
 
@@ -443,9 +441,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public async Task<ExpressRouteCircuitResource> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(Resources.ResourceGroupResource resourceGroup, string circuitName)
         {
             var peering = new ExpressRouteCircuitPeeringData()
-            {
-                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
-                PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
+            {PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
                 PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
@@ -484,9 +480,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             var peering = new ExpressRouteCircuitPeeringData()
-            {
-                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
-                PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
+            {PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
                 IPv6PeeringConfig = iPv6Peering
@@ -505,9 +499,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             RouteFilterResource filter)
         {
             var peering = new ExpressRouteCircuitPeeringData()
-            {
-                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
-                PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
+            {PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
                 SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix,
@@ -556,9 +548,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Location = location,
                 Tags = { { "key", "value" } },
                 Sku = new PublicIPAddressSku()
-                {
-                    Name = PublicIPAddressSkuName.Standard,
-                    Tier = PublicIPAddressSkuTier.Regional
+                {Tier = PublicIPAddressSkuTier.Regional
                 },
                 PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
@@ -602,9 +592,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                         Name = ipConfigName,
-                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                          Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
@@ -638,9 +626,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                         Name = ipConfigName,
-                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                          Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
@@ -679,7 +665,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
@@ -703,7 +689,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
             };
 
             await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put RouteTable
             var routeTableCollection = resourceGroup.GetRouteTables();
-            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
+            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable, System.Threading.CancellationToken.None);
             Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getRouteTableResponse.Value.Id, listRouteTableResponse.First().Id);
 
             // Delete RouteTable
-            var deleteOperation = await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -92,9 +92,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Add a route
             var route1 = new RouteData()
             {
-                AddressPrefix = "192.168.1.0/24",
-                Name = route1Name,
-                NextHopIPAddress = "23.108.1.1",
+                AddressPrefix = "192.168.1.0/24",NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 
@@ -102,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put RouteTable
             var routeTableCollection = resourceGroup.GetRouteTables();
-            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
+            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable, System.Threading.CancellationToken.None);
             Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -119,13 +117,11 @@ namespace Azure.ResourceManager.Network.Tests
             // Add another route
             var route2 = new RouteData()
             {
-                AddressPrefix = "10.0.1.0/24",
-                Name = route2Name,
-                NextHopType = RouteNextHopType.VnetLocal
+                AddressPrefix = "10.0.1.0/24",NextHopType = RouteNextHopType.VnetLocal
             };
             getRouteTableResponse.Value.Data.Routes.Add(route2);
 
-            await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, getRouteTableResponse.Value.Data);
+            await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, getRouteTableResponse.Value.Data, System.Threading.CancellationToken.None);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
             Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
@@ -138,7 +134,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Delete a route
             getRouteTableResponse.Value.Data.Routes.RemoveAt(0);
 
-            await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, getRouteTableResponse.Value.Data);
+            await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, getRouteTableResponse.Value.Data, System.Threading.CancellationToken.None);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
             Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
@@ -149,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(RouteNextHopType.VnetLocal, getRouteTableResponse.Value.Data.Routes[0].NextHopType);
 
             // Delete RouteTable
-            var deleteOperation = await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
+            var deleteOperation = await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -174,9 +170,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var route1 = new RouteData()
             {
-                AddressPrefix = "192.168.1.0/24",
-                Name = route1Name,
-                NextHopIPAddress = "23.108.1.1",
+                AddressPrefix = "192.168.1.0/24",NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 
@@ -184,7 +178,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put RouteTable
             var routeTableCollection = resourceGroup.GetRouteTables();
-            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
+            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable, System.Threading.CancellationToken.None);
             Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -213,9 +207,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Subnets = {
                     new SubnetData()
-                    {
-                        Name = subnetName,
-                        AddressPrefix = "10.0.0.0/24",
+                    {AddressPrefix = "10.0.0.0/24",
                         RouteTable = new RouteTableData()
                         {
                             Id = getRouteTableResponse.Value.Id,
@@ -224,7 +216,7 @@ namespace Azure.ResourceManager.Network.Tests
                 }
             };
 
-            var putVnetResponseOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.ResourceManager.Network.Models;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             using var sr = new StreamReader(Path.Combine("TestData", "ServiceTags.json"));
             using var jsonContent = JsonDocument.Parse(sr.BaseStream);
-            var data = AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(jsonContent.RootElement);
+            var data = AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(jsonContent.RootElement, ModelReaderWriterOptions.Json);
             Assert.NotNull(data.ChangeNumber);
         }
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             using var sr = new StreamReader(Path.Combine("TestData", "ManagedRuleSetRuleGroup.json"));
             using var jsonContent = JsonDocument.Parse(sr.BaseStream);
-            var data = ManagedRuleSetRuleGroup.DeserializeManagedRuleSetRuleGroup(jsonContent.RootElement);
+            var data = ManagedRuleSetRuleGroup.DeserializeManagedRuleSetRuleGroup(jsonContent.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.NotNull(data.Rules);
             Assert.AreEqual(6, data.Rules.Count);

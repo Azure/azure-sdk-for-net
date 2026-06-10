@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Update route filter
             filterRule.Data.Access = NetworkAccess.Deny;
-            var operation = InstrumentOperation(await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, filterRule.Data));
+            var operation = InstrumentOperation(await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, filterRule.Data, System.Threading.CancellationToken.None));
             await operation.WaitForCompletionAsync();
             Assert.AreEqual(ruleName, filterRule.Data.Name);
             Assert.AreEqual(NetworkAccess.Deny, filterRule.Data.Access);
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(ruleName, filter.Data.Rules[0].Name);
 
             // Delete fileter rule
-            await filterRule.DeleteAsync(WaitUntil.Completed);
+            await filterRule.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             var rules = await filter.GetRouteFilterRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(rules);
 
             // Delete filter
-            await filter.DeleteAsync(WaitUntil.Completed);
+            await filter.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             Assert.False(allFilters.Any(f => filter.Id == f.Id));
         }
@@ -118,9 +118,7 @@ namespace Azure.ResourceManager.Network.Tests
             if (containsRule)
             {
                 var rule = new RouteFilterRuleData()
-                {
-                    Name = Recording.GenerateAssetName("test"),
-                    Access = NetworkAccess.Allow,
+                {Access = NetworkAccess.Allow,
                     Communities = { Filter_Commmunity },
                     Location = TestEnvironment.Location
                 };
@@ -129,7 +127,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Put route filter
-            Operation<RouteFilterResource> filterOperation = InstrumentOperation(await filterCollection.CreateOrUpdateAsync(WaitUntil.Completed, filterName, filter));
+            Operation<RouteFilterResource> filterOperation = InstrumentOperation(await filterCollection.CreateOrUpdateAsync(WaitUntil.Completed, filterName, filter, System.Threading.CancellationToken.None));
             return await filterOperation.WaitForCompletionAsync();
         }
 
@@ -143,7 +141,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put route filter rule
-            Operation<RouteFilterRuleResource> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, rule);
+            Operation<RouteFilterRuleResource> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, rule, System.Threading.CancellationToken.None);
             Response<RouteFilterRuleResource> ruleResponse = await ruleOperation.WaitForCompletionAsync();
             return ruleResponse;
         }

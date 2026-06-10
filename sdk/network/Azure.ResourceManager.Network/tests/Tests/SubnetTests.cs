@@ -56,23 +56,21 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() { Name = subnet1Name, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             // Create a Subnet
             // Populate paramters for a Subnet
             var subnet = new SubnetData()
-            {
-                Name = subnet2Name,
-                AddressPrefix = "10.0.1.0/24",
+            {AddressPrefix = "10.0.1.0/24",
             };
 
             #region Verification
-            var putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnet2Name, subnet);
+            var putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnet2Name, subnet, System.Threading.CancellationToken.None);
             await putSubnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
@@ -89,7 +87,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(AreSubnetListsEqual(getVnetResponse.Value.Data.Subnets, getSubnetListResponse));
 
             // Delete the subnet "subnet1"
-            await getSubnetResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getSubnetResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Verify that the deletion was successful
             getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
@@ -122,11 +120,11 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
@@ -138,8 +136,7 @@ namespace Azure.ResourceManager.Network.Tests
             //    Location = location,
             //    Sku = new Microsoft.Azure.Management.Redis.Models.Sku()
             //    {
-            //        Name = SkuName.Premium,
-            //        Family = SkuFamily.P,
+            ////        Family = SkuFamily.P,
             //        Capacity = 1
             //    },
             //    SubnetId = getSubnetResponse.Id

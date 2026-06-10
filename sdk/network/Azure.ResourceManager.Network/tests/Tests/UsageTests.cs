@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup, System.Threading.CancellationToken.None);
             Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
