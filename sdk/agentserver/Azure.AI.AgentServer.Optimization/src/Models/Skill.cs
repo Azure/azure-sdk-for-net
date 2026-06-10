@@ -14,7 +14,7 @@ public readonly struct OptimizationSkill : IEquatable<OptimizationSkill>
     /// <param name="name">The skill name.</param>
     /// <param name="description">A short description of the skill.</param>
     /// <param name="body">The skill body text.</param>
-    public OptimizationSkill(string name, string description, string? body = "")
+    public OptimizationSkill(string name, string description, string body = "")
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Description = description ?? throw new ArgumentNullException(nameof(description));
@@ -37,7 +37,7 @@ public readonly struct OptimizationSkill : IEquatable<OptimizationSkill>
         && Body == other.Body;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is OptimizationSkill other && Equals(other);
+    public override bool Equals(object obj) => obj is OptimizationSkill other && Equals(other);
 
     /// <inheritdoc/>
     public override int GetHashCode()

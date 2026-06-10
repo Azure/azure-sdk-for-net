@@ -25,13 +25,13 @@ public class OptimizationConfig
     /// Initializes a new instance of the <see cref="OptimizationConfig"/> class.
     /// </summary>
     public OptimizationConfig(
-        string? instructions = null,
-        string? model = null,
+        string instructions = null,
+        string model = null,
         double? temperature = null,
-        IReadOnlyList<OptimizationSkill>? skills = null,
-        IReadOnlyList<ToolDefinition>? toolDefinitions = null,
+        IReadOnlyList<OptimizationSkill> skills = null,
+        IReadOnlyList<ToolDefinition> toolDefinitions = null,
         string source = "defaults",
-        string? candidateId = null)
+        string candidateId = null)
     {
         Instructions = instructions;
         Model = model;
@@ -45,13 +45,13 @@ public class OptimizationConfig
     /// <summary>
     /// Creates an <see cref="OptimizationConfig"/> from a JSON element (API response or env var payload).
     /// </summary>
-    internal static OptimizationConfig FromJson(JsonElement data, string source = "defaults", string? candidateId = null)
+    internal static OptimizationConfig FromJson(JsonElement data, string source = "defaults", string candidateId = null)
     {
-        string? instructions = data.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String
+        string instructions = data.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String
             ? instrProp.GetString()
             : null;
 
-        string? model = data.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String
+        string model = data.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String
             ? modelProp.GetString()
             : null;
 
@@ -158,10 +158,10 @@ public class OptimizationConfig
     }
 
     /// <summary>Optimized system prompt text.</summary>
-    public string? Instructions { get; }
+    public string Instructions { get; }
 
     /// <summary>Model deployment name (e.g. "gpt-4o").</summary>
-    public string? Model { get; }
+    public string Model { get; }
 
     /// <summary>Sampling temperature.</summary>
     public double? Temperature { get; }
@@ -176,7 +176,7 @@ public class OptimizationConfig
     public string Source { get; }
 
     /// <summary>The candidate identifier, if resolved from the API.</summary>
-    public string? CandidateId { get; }
+    public string CandidateId { get; }
 
     /// <summary>
     /// Gets a value indicating whether this config carries any inline skill data.

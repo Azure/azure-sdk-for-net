@@ -26,8 +26,8 @@ public static class OptimizationConfigLoader
     /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static async Task<OptimizationConfig?> LoadConfigAsync(
-        AuthenticationTokenProvider? tokenProvider = null,
+    public static async Task<OptimizationConfig> LoadConfigAsync(
+        AuthenticationTokenProvider tokenProvider = null,
         CancellationToken cancellationToken = default)
     {
         string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableCandidateId)?.Trim() ?? "";
@@ -72,7 +72,7 @@ public static class OptimizationConfigLoader
     /// </summary>
     /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
     /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static OptimizationConfig? LoadConfig(AuthenticationTokenProvider? tokenProvider = null)
+    public static OptimizationConfig LoadConfig(AuthenticationTokenProvider tokenProvider = null)
     {
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
         return LoadConfigAsync(tokenProvider).GetAwaiter().GetResult();

@@ -21,7 +21,7 @@ internal static class CandidateResolver
     public static async Task<JsonElement?> ResolveAsync(
         string candidateId,
         string endpoint,
-        AuthenticationTokenProvider? tokenProvider,
+        AuthenticationTokenProvider tokenProvider,
         CancellationToken cancellationToken = default)
     {
         ValidateCandidateId(candidateId);
@@ -102,7 +102,7 @@ internal static class CandidateResolver
         return builder.Uri;
     }
 
-    private static ClientPipeline BuildPipeline(AuthenticationTokenProvider? tokenProvider)
+    private static ClientPipeline BuildPipeline(AuthenticationTokenProvider tokenProvider)
     {
         if (tokenProvider == null)
         {
