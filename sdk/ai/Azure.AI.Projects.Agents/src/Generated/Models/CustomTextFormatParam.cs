@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenAI
 {
     /// <summary> Text format. </summary>
+    [Experimental("AAIP001")]
     internal partial class CustomTextFormatParam : CustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="CustomTextFormatParam"/>. </summary>

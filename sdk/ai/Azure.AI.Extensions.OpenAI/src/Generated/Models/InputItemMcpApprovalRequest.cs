@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP approval request. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemMcpApprovalRequest : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpApprovalRequest"/>. </summary>

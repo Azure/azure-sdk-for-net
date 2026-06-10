@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The AgentToolboxes sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentToolboxes
     {
         private readonly Uri _endpoint;

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -371,6 +372,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(WaitParam))]
     [ModelReaderWriterBuildable(typeof(WebSearchActionSearchSources))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
+    [Experimental("AAIP001")]
     public partial class AzureAIExtensionsOpenAIContext : ModelReaderWriterContext
     {
     }

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Paged collection of Deployment items. </summary>
+    [Experimental("AAIP001")]
     internal partial class PagedDeployment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The response data for a requested list of items. </summary>
+    [Experimental("AAIP001")]
     internal partial class AgentsPagedResultToolboxObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

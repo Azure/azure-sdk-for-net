@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Token consumption summary for an evaluator generation job. Populated when the job reaches a terminal state. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluatorGenerationTokenUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
+    [Experimental("AAIP001")]
     internal partial class FunctionShellToolParamEnvironmentContainerReferenceParam : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>

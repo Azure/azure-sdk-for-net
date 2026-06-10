@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
+    [Experimental("AAIP001")]
     internal partial class BrowserAutomationToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

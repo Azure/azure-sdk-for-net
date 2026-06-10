@@ -4,10 +4,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The AIProjectModels sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class AIProjectModels
     {
         private readonly Uri _endpoint;

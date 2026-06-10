@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct ContainerSkillType : IEquatable<ContainerSkillType>
     {
         private readonly string _value;

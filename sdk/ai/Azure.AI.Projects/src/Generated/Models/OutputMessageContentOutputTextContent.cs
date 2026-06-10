@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Output text. </summary>
+    [Experimental("AAIP001")]
     internal partial class OutputMessageContentOutputTextContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>

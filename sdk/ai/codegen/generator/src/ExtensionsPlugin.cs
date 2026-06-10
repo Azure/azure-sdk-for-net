@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.ClientModel;
 using Extensions.Plugin.Visitors;
 
 namespace Extensions.Plugin

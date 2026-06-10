@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Promotion metadata recorded when a candidate is deployed to a Foundry agent. </summary>
+    [Experimental("AAIP001")]
     public partial class PromotionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

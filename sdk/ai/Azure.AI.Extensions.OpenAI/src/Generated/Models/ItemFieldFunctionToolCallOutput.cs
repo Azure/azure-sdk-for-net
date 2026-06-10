@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Function tool call output. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldFunctionToolCallOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionToolCallOutput"/>. </summary>

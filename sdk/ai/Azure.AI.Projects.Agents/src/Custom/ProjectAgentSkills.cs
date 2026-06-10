@@ -4,15 +4,11 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 
 namespace Azure.AI.Projects.Agents;
 
-[Experimental("AAIP001")]
 [CodeGenType("Skills")]
 [CodeGenSuppress("GetSkills", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetSkillsAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]

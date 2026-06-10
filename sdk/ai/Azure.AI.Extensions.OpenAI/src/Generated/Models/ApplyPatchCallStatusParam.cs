@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Status values reported for apply_patch tool calls. </summary>
+    [Experimental("AAIP001")]
     internal enum ApplyPatchCallStatusParam
     {
         /// <summary> InProgress. </summary>

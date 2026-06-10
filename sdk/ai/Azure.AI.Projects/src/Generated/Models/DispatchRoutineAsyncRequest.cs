@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The DispatchRoutineAsyncRequest. </summary>
+    [Experimental("AAIP001")]
     internal partial class DispatchRoutineAsyncRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

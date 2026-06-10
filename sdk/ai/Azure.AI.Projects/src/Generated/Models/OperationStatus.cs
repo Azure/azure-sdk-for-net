@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Enum describing allowed operation states. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct OperationStatus : IEquatable<OperationStatus>
     {
         private readonly string _value;

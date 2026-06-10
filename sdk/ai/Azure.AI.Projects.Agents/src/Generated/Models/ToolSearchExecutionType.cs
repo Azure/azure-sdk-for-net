@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace OpenAI
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     public enum ToolSearchExecutionType
     {
         /// <summary> Server. </summary>

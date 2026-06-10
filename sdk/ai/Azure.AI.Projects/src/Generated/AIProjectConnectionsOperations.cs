@@ -5,12 +5,14 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The AIProjectConnectionsOperations sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class AIProjectConnectionsOperations
     {
         private readonly Uri _endpoint;

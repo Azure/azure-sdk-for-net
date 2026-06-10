@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Feature opt-in keys for agent definition operations supporting hosted or workflow agents. </summary>
+    [Experimental("AAIP001")]
     public enum AgentDefinitionOptInKeys
     {
         /// <summary> HostedAgentsV1Preview. </summary>

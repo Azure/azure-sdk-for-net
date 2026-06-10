@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A specific version of a toolbox. </summary>
+    [Experimental("AAIP001")]
     public partial class ToolboxVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

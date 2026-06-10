@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insight task for the schedule. </summary>
+    [Experimental("AAIP001")]
     public partial class InsightScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="InsightScheduleTask"/>. </summary>

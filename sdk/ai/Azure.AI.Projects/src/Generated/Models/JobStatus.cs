@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Extensible status values shared by Foundry jobs. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct JobStatus : IEquatable<JobStatus>
     {
         private readonly string _value;

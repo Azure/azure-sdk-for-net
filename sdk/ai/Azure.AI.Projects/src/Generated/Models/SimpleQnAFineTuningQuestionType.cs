@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported question types for SimpleQnA data generation jobs used for fine-tuning scenarios. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct SimpleQnAFineTuningQuestionType : IEquatable<SimpleQnAFineTuningQuestionType>
     {
         private readonly string _value;

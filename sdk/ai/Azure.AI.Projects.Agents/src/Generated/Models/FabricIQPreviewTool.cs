@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A FabricIQ server-side tool. </summary>
+    [Experimental("AAIP001")]
     public partial class FabricIQPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/>. </summary>

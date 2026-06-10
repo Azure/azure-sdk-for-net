@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationCandidate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

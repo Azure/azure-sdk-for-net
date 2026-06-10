@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects
     /// The FunctionShellToolParamEnvironment.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ContainerAutoParam"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class FunctionShellToolParamEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -13,6 +14,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> The AIProjectMemoryStores sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class AIProjectMemoryStores
     {
         private readonly Uri _endpoint;

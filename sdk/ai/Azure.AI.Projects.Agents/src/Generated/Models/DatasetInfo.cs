@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Metadata about the dataset used for optimization, surfaced in the response. </summary>
+    [Experimental("AAIP001")]
     public partial class DatasetInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

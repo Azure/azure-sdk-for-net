@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects
     /// A content part that makes up an input or output item.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SummaryTextContent"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class MessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

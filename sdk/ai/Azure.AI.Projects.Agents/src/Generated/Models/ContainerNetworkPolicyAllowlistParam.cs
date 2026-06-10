@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
+    [Experimental("AAIP001")]
     internal partial class ContainerNetworkPolicyAllowlistParam : ContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyAllowlistParam"/>. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
+    [Experimental("AAIP001")]
     internal partial class A2APreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>

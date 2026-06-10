@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary> Inline skill payload. </summary>
+    [Experimental("AAIP001")]
     internal partial class InlineSkillSourceParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

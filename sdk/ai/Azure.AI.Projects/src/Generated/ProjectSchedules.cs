@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Evaluation;
@@ -12,6 +13,7 @@ using Azure.AI.Projects.Evaluation;
 namespace Azure.AI.Projects
 {
     /// <summary> The ProjectSchedules sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class ProjectSchedules
     {
         private readonly Uri _endpoint;

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> MCP tool call. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemMcpToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpToolCall"/>. </summary>

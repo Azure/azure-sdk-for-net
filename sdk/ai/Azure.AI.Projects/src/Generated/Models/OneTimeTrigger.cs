@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> One-time trigger. </summary>
+    [Experimental("AAIP001")]
     public partial class OneTimeTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="OneTimeTrigger"/>. </summary>

@@ -5,12 +5,14 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The AgentOptimizationJobs sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentOptimizationJobs
     {
         private readonly Uri _endpoint;

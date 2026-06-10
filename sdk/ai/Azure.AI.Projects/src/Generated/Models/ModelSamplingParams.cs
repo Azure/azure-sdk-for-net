@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
+    [Experimental("AAIP001")]
     public partial class ModelSamplingParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
