@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
