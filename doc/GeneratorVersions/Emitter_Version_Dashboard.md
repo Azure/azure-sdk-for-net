@@ -1,24 +1,24 @@
 # Emitter Version Dashboard
 
-> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-06-08 05:50:36 UTC.
+> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-06-10 01:43:27 UTC.
 > Run that script to refresh this file after dependency version changes.
 
 ## Latest Published Version Chain
 
 ```
-@typespec/http-client-csharp (alpha.20260605.4)
-  └─ @azure-typespec/http-client-csharp (alpha.20260604.2)
-       └─ @azure-typespec/http-client-csharp-mgmt (alpha.20260604.1)
-            └─ @azure-typespec/http-client-csharp-provisioning (alpha.20260602.4)
+@typespec/http-client-csharp (alpha.20260609.5)
+  └─ @azure-typespec/http-client-csharp (alpha.20260609.3)
+       └─ @azure-typespec/http-client-csharp-mgmt (alpha.20260607.3)
+            └─ @azure-typespec/http-client-csharp-provisioning (alpha.20260608.1)
 ```
 
 ## Emitter Versions
 
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
-| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | [1.0.0-alpha.20260603.4](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260603.4) | [1.0.0-alpha.20260605.4](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260605.4) | [8e3c0ba](https://github.com/microsoft/typespec/commit/8e3c0ba4ef17db2a551338556aa7100c129ef554) |
-| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | [1.0.0-alpha.20260604.2](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260604.2) | [1.0.0-alpha.20260604.2](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260604.2) | [0a4de43](https://github.com/Azure/azure-sdk-for-net/commit/0a4de43cb2860336e23ddaf00da7f255ac32d395) |
-| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | [1.0.0-alpha.20260601.2](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260601.2) | [1.0.0-alpha.20260604.1](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260604.1) | [fe53ea6](https://github.com/Azure/azure-sdk-for-net/commit/fe53ea60912a2bee98da88441f42eaca872880df) |
+| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | [1.0.0-alpha.20260609.2](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260609.2) | [1.0.0-alpha.20260609.5](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260609.5) | [2498f8e](https://github.com/microsoft/typespec/commit/2498f8e963f1a02c3daa1ce12c77d66d61527e10) |
+| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | [1.0.0-alpha.20260609.3](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260609.3) | [1.0.0-alpha.20260609.3](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260609.3) | [0a4de43](https://github.com/Azure/azure-sdk-for-net/commit/0a4de43cb2860336e23ddaf00da7f255ac32d395) |
+| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | [1.0.0-alpha.20260601.2](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260601.2) | [1.0.0-alpha.20260607.3](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260607.3) | [fe53ea6](https://github.com/Azure/azure-sdk-for-net/commit/fe53ea60912a2bee98da88441f42eaca872880df) |
 
 ## Source Files
 

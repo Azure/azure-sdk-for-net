@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MaterializedViewsBuilderServiceResourceCreateUpdateProperties : ServiceResourceCreateUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>. </summary>
-        public MaterializedViewsBuilderServiceResourceCreateUpdateProperties()
+        public MaterializedViewsBuilderServiceResourceCreateUpdateProperties() : base(CosmosDBServiceType.MaterializedViewsBuilder)
         {
-            ServiceType = CosmosDBServiceType.MaterializedViewsBuilder;
         }
 
         /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>. </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaterializedViewsBuilderServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceSize, instanceCount, serviceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MaterializedViewsBuilderServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceSize, instanceCount, serviceType, additionalBinaryDataProperties)
         {
-            ServiceType = serviceType;
         }
     }
 }
