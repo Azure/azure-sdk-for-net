@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBClientEncryptionIncludedPath : IUtf8JsonSerializable, IJsonModel<CosmosDBClientEncryptionIncludedPath>
+    /// <summary> . </summary>
+    public partial class CosmosDBClientEncryptionIncludedPath : IJsonModel<CosmosDBClientEncryptionIncludedPath>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBClientEncryptionIncludedPath>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CosmosDBClientEncryptionIncludedPath"/> for deserialization. </summary>
+        internal CosmosDBClientEncryptionIncludedPath()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CosmosDBClientEncryptionIncludedPath PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCosmosDBClientEncryptionIncludedPath(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBClientEncryptionIncludedPath)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBClientEncryptionIncludedPath)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CosmosDBClientEncryptionIncludedPath>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBClientEncryptionIncludedPath IPersistableModel<CosmosDBClientEncryptionIncludedPath>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBClientEncryptionIncludedPath>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBClientEncryptionIncludedPath>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBClientEncryptionIncludedPath)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("clientEncryptionKeyId"u8);
@@ -43,15 +87,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(EncryptionType);
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,22 +104,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        CosmosDBClientEncryptionIncludedPath IJsonModel<CosmosDBClientEncryptionIncludedPath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBClientEncryptionIncludedPath IJsonModel<CosmosDBClientEncryptionIncludedPath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CosmosDBClientEncryptionIncludedPath JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBClientEncryptionIncludedPath)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCosmosDBClientEncryptionIncludedPath(document.RootElement, options);
         }
 
-        internal static CosmosDBClientEncryptionIncludedPath DeserializeCosmosDBClientEncryptionIncludedPath(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CosmosDBClientEncryptionIncludedPath DeserializeCosmosDBClientEncryptionIncludedPath(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,177 +133,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string clientEncryptionKeyId = default;
             string encryptionType = default;
             string encryptionAlgorithm = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("path"u8))
+                if (prop.NameEquals("path"u8))
                 {
-                    path = property.Value.GetString();
+                    path = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientEncryptionKeyId"u8))
+                if (prop.NameEquals("clientEncryptionKeyId"u8))
                 {
-                    clientEncryptionKeyId = property.Value.GetString();
+                    clientEncryptionKeyId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionType"u8))
+                if (prop.NameEquals("encryptionType"u8))
                 {
-                    encryptionType = property.Value.GetString();
+                    encryptionType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionAlgorithm"u8))
+                if (prop.NameEquals("encryptionAlgorithm"u8))
                 {
-                    encryptionAlgorithm = property.Value.GetString();
+                    encryptionAlgorithm = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosDBClientEncryptionIncludedPath(path, clientEncryptionKeyId, encryptionType, encryptionAlgorithm, serializedAdditionalRawData);
+            return new CosmosDBClientEncryptionIncludedPath(path, clientEncryptionKeyId, encryptionType, encryptionAlgorithm, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  path: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Path))
-                {
-                    builder.Append("  path: ");
-                    if (Path.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Path}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Path}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientEncryptionKeyId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clientEncryptionKeyId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClientEncryptionKeyId))
-                {
-                    builder.Append("  clientEncryptionKeyId: ");
-                    if (ClientEncryptionKeyId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientEncryptionKeyId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientEncryptionKeyId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  encryptionType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EncryptionType))
-                {
-                    builder.Append("  encryptionType: ");
-                    if (EncryptionType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EncryptionType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EncryptionType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionAlgorithm), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  encryptionAlgorithm: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EncryptionAlgorithm))
-                {
-                    builder.Append("  encryptionAlgorithm: ");
-                    if (EncryptionAlgorithm.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EncryptionAlgorithm}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EncryptionAlgorithm}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CosmosDBClientEncryptionIncludedPath>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBClientEncryptionIncludedPath)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CosmosDBClientEncryptionIncludedPath IPersistableModel<CosmosDBClientEncryptionIncludedPath>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBClientEncryptionIncludedPath>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCosmosDBClientEncryptionIncludedPath(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBClientEncryptionIncludedPath)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CosmosDBClientEncryptionIncludedPath>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

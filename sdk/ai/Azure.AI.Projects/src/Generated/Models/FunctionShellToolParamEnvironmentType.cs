@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal readonly partial struct FunctionShellToolParamEnvironmentType : IEquatable<FunctionShellToolParamEnvironmentType>
+    public readonly partial struct FunctionShellToolParamEnvironmentType : IEquatable<FunctionShellToolParamEnvironmentType>
     {
         private readonly string _value;
         private const string ContainerAutoValue = "container_auto";

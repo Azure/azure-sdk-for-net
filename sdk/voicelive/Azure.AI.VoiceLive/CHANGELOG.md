@@ -1,6 +1,29 @@
 # Release History
 
-## 1.1.0 (2026-06-02)
+## 1.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.1 (2026-06-09)
+
+### Features Added
+
+- Added `AzureRealtimeNativeVoice` and `AzureRealtimeNativeVoiceName` with 12 new voice options (Aarti, Andrew, Ava, Denise, Diya, Elsa, Florian, Francisca, Meera, Xiaoxiao, Ximena, Yunxi).
+- Added `SmartEndOfTurnDetection` (end-of-utterance detection with `ThresholdLevel` and `TimeoutMs`).
+- Added `ParallelToolCalls` property on `VoiceLiveSessionOptions`.
+- Added `Channels` and `ReferenceSource` (`EchoCancellationReferenceSource`) properties on `AudioEchoCancellation`.
+- Added RTC call support: `ClientEventRtcCallSdpCreate`, `ServerEventRtcCallSdpCreated`, `ServerEventRtcCallError`, `RtcCallErrorDetails`.
+- Added output audio buffer events: `ServerEventOutputAudioBufferStarted`, `ServerEventOutputAudioBufferStopped`.
+- Added streaming text input events: `ClientEventInputTextDelta`, `ClientEventInputTextDone`.
+- Added `ServerEventResponseInvocationDelta` for streaming invocation deltas.
+
+## 1.1.0 (2026-06-03)
  
 ### Features Added
  
@@ -24,6 +47,10 @@
 - Renamed `PhotoAvatarBaseModes` to `PhotoAvatarBaseMode` (singular). `AvatarConfiguration.Model` was renamed to `AvatarConfiguration.BaseMode` and now uses the new type.
 - Renamed `AvatarConfiguration.OutputAuditAudio` to `AvatarConfiguration.AuditOutputAudio`.
 - Renamed `ReasoningEffort.Xhigh` to `ReasoningEffort.ExtraHigh`.
+
+### Bugs Fixed
+
+- Telemetry: `gen_ai.event.content` on `.done` and related response events now correctly respects the content recording opt-in (`OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` or `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED`). Previously these events emitted message content (transcripts, function-call arguments, response bodies) unconditionally. To restore the previous behavior, set one of those environment variables to `true`.
 
 ### Other Changes
 

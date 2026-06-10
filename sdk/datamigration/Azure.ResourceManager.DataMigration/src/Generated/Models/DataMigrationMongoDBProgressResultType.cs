@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     internal readonly partial struct DataMigrationMongoDBProgressResultType : IEquatable<DataMigrationMongoDBProgressResultType>
     {
         private readonly string _value;
+        /// <summary> Migration. </summary>
+        private const string MigrationValue = "Migration";
+        /// <summary> Database. </summary>
+        private const string DatabaseValue = "Database";
+        /// <summary> Collection. </summary>
+        private const string CollectionValue = "Collection";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBProgressResultType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationMongoDBProgressResultType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MigrationValue = "Migration";
-        private const string DatabaseValue = "Database";
-        private const string CollectionValue = "Collection";
+            _value = value;
+        }
 
         /// <summary> Migration. </summary>
         public static DataMigrationMongoDBProgressResultType Migration { get; } = new DataMigrationMongoDBProgressResultType(MigrationValue);
+
         /// <summary> Database. </summary>
         public static DataMigrationMongoDBProgressResultType Database { get; } = new DataMigrationMongoDBProgressResultType(DatabaseValue);
+
         /// <summary> Collection. </summary>
         public static DataMigrationMongoDBProgressResultType Collection { get; } = new DataMigrationMongoDBProgressResultType(CollectionValue);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBProgressResultType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationMongoDBProgressResultType left, DataMigrationMongoDBProgressResultType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBProgressResultType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationMongoDBProgressResultType left, DataMigrationMongoDBProgressResultType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationMongoDBProgressResultType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBProgressResultType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationMongoDBProgressResultType(string value) => new DataMigrationMongoDBProgressResultType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBProgressResultType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationMongoDBProgressResultType?(string value) => value == null ? null : new DataMigrationMongoDBProgressResultType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationMongoDBProgressResultType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationMongoDBProgressResultType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,6 +13,7 @@ using OpenAI.Files;
 
 namespace Azure.AI.Extensions.OpenAI;
 
+/// <summary> Provides OpenAI clients scoped to an Azure AI project. </summary>
 public partial class ProjectOpenAIClient : OpenAIClient
 {
     private ProjectConversationsClient _cachedConversationClient;
@@ -32,6 +33,10 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
     }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectOpenAIClient"/>. </summary>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
     public ProjectOpenAIClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
         : base(
             pipeline: CreatePipeline(
@@ -45,6 +50,9 @@ public partial class ProjectOpenAIClient : OpenAIClient
         _options = GetMergedOptions(projectEndpoint, tokenProvider, options);
     }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectOpenAIClient"/>. </summary>
+    /// <param name="authenticationPolicy"> The authentication policy used by the client pipeline. </param>
+    /// <param name="options"> The options used to configure the client. </param>
     public ProjectOpenAIClient(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
         : base(
             pipeline: CreatePipeline(authenticationPolicy, options),
@@ -57,19 +65,27 @@ public partial class ProjectOpenAIClient : OpenAIClient
         _options = options;
     }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectOpenAIClient"/>. </summary>
+    /// <param name="pipeline"> The client pipeline used to send requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
     protected internal ProjectOpenAIClient(ClientPipeline pipeline, ProjectOpenAIClientOptions options)
         : base(pipeline, options)
     {
         _options = options;
     }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectOpenAIClient"/> for mocking. </summary>
     protected ProjectOpenAIClient()
     { }
 
+    /// <summary> Gets the project conversations client as the default conversation client. </summary>
+    /// <returns> The project conversations client. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ConversationClient GetConversationClient()
         => GetProjectConversationsClient();
 
+    /// <summary> Gets a client for project conversation operations. </summary>
+    /// <returns> The project conversations client. </returns>
     public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
         return Volatile.Read(ref _cachedConversationClient)
@@ -77,6 +93,8 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedConversationClient;
     }
 
+    /// <summary> Gets a client for project file operations. </summary>
+    /// <returns> The project files client. </returns>
     public virtual ProjectFilesClient GetProjectFilesClient()
     {
         return Volatile.Read(ref _cachedFileClient)
@@ -84,9 +102,13 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedFileClient;
     }
 
+    /// <summary> Gets the project files client as the default OpenAI file client. </summary>
+    /// <returns> The project files client. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override OpenAIFileClient GetOpenAIFileClient() => GetProjectFilesClient();
 
+    /// <summary> Gets a client for project vector store operations. </summary>
+    /// <returns> The project vector stores client. </returns>
     public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
         return Volatile.Read(ref _cachedVectorStoreClient)
@@ -94,6 +116,8 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedVectorStoreClient;
     }
 
+    /// <summary> Gets a client for project response operations. </summary>
+    /// <returns> The project responses client. </returns>
     public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
@@ -101,6 +125,10 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedResponseClient;
     }
 
+    /// <summary> Gets a project responses client that uses a default agent. </summary>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    /// <returns> The project responses client configured with the default agent. </returns>
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgent(AgentReference defaultAgent, string defaultConversationId = null)
     {
         Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));
@@ -111,6 +139,11 @@ public partial class ProjectOpenAIClient : OpenAIClient
             defaultConversationId);
     }
 
+    /// <summary> Gets a project responses client that sends requests to the specified agent endpoint. </summary>
+    /// <param name="agentName"> The name of the agent endpoint to use. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    /// <param name="options"> The options used to configure the project responses client. </param>
+    /// <returns> The project responses client configured for the agent endpoint. </returns>
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, ProjectOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(agentName, nameof(agentName));
@@ -131,6 +164,10 @@ public partial class ProjectOpenAIClient : OpenAIClient
         );
     }
 
+    /// <summary> Gets a project responses client that uses a default model. </summary>
+    /// <param name="defaultModel"> The default model used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    /// <returns> The project responses client configured with the default model. </returns>
     public virtual ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null)
     {
         Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    internal readonly partial struct DogKind : IEquatable<DogKind>
+    public readonly partial struct DogKind : IEquatable<DogKind>
     {
         public DogKind(string value) => throw null;
 
