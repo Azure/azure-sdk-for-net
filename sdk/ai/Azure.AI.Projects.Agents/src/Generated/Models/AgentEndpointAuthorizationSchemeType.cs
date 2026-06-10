@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    internal readonly partial struct AgentEndpointAuthorizationSchemeType : IEquatable<AgentEndpointAuthorizationSchemeType>
+    public readonly partial struct AgentEndpointAuthorizationSchemeType : IEquatable<AgentEndpointAuthorizationSchemeType>
     {
         private readonly string _value;
         private const string EntraValue = "Entra";

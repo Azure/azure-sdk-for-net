@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.Memory
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Create a memory store.
+        /// [Protocol Method] Creates a memory store resource with the provided configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Create a memory store.
+        /// [Protocol Method] Creates a memory store resource with the provided configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create a memory store. </summary>
+        /// <summary> Creates a memory store resource with the provided configuration. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The memory store definition. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
-        /// <summary> Create a memory store. </summary>
+        /// <summary> Creates a memory store resource with the provided configuration. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The memory store definition. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Update a memory store.
+        /// [Protocol Method] Updates the specified memory store with the supplied configuration changes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Update a memory store.
+        /// [Protocol Method] Updates the specified memory store with the supplied configuration changes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -165,7 +165,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Update a memory store. </summary>
+        /// <summary> Updates the specified memory store with the supplied configuration changes. </summary>
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
-        /// <summary> Update a memory store. </summary>
+        /// <summary> Updates the specified memory store with the supplied configuration changes. </summary>
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
@@ -200,7 +200,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a memory store.
+        /// [Protocol Method] Retrieves the specified memory store and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -222,7 +222,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a memory store.
+        /// [Protocol Method] Retrieves the specified memory store and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -243,7 +243,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Retrieve a memory store. </summary>
+        /// <summary> Retrieves the specified memory store and its current configuration. </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -257,7 +257,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieve a memory store. </summary>
+        /// <summary> Retrieves the specified memory store and its current configuration. </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -272,7 +272,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a memory store.
+        /// [Protocol Method] Deletes the specified memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -294,7 +294,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a memory store.
+        /// [Protocol Method] Deletes the specified memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -315,7 +315,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete a memory store. </summary>
+        /// <summary> Deletes the specified memory store. </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -329,7 +329,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((DeleteMemoryStoreResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Delete a memory store. </summary>
+        /// <summary> Deletes the specified memory store. </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -344,7 +344,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Search for relevant memories from a memory store based on conversation context.
+        /// [Protocol Method] Searches the specified memory store for memories relevant to the provided conversation context.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -368,7 +368,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Search for relevant memories from a memory store based on conversation context.
+        /// [Protocol Method] Searches the specified memory store for memories relevant to the provided conversation context.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -392,7 +392,8 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Update memory store with conversation memories.
+        /// [Protocol Method] Starts an update that writes conversation memories into the specified memory store.
+        /// The operation returns a long-running status location for polling the update result.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -416,7 +417,8 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Update memory store with conversation memories.
+        /// [Protocol Method] Starts an update that writes conversation memories into the specified memory store.
+        /// The operation returns a long-running status location for polling the update result.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -440,7 +442,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Get memory store update result.
+        /// [Protocol Method] Retrieves the status and result of a memory store update operation.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -464,7 +466,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Get memory store update result.
+        /// [Protocol Method] Retrieves the status and result of a memory store update operation.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -487,7 +489,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get memory store update result. </summary>
+        /// <summary> Retrieves the status and result of a memory store update operation. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -503,7 +505,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Get memory store update result. </summary>
+        /// <summary> Retrieves the status and result of a memory store update operation. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -520,7 +522,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Delete all memories associated with a specific scope from a memory store.
+        /// [Protocol Method] Deletes all memories in the specified memory store that are associated with the provided scope.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -544,7 +546,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Delete all memories associated with a specific scope from a memory store.
+        /// [Protocol Method] Deletes all memories in the specified memory store that are associated with the provided scope.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -567,7 +569,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete all memories associated with a specific scope from a memory store. </summary>
+        /// <summary> Deletes all memories in the specified memory store that are associated with the provided scope. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -584,7 +586,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStoreDeleteScopeResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Delete all memories associated with a specific scope from a memory store. </summary>
+        /// <summary> Deletes all memories in the specified memory store that are associated with the provided scope. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -602,7 +604,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Create a memory item in a memory store.
+        /// [Protocol Method] Creates a memory item in the specified memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -626,7 +628,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Create a memory item in a memory store.
+        /// [Protocol Method] Creates a memory item in the specified memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -649,7 +651,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create a memory item in a memory store. </summary>
+        /// <summary> Creates a memory item in the specified memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
@@ -669,7 +671,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
 
-        /// <summary> Create a memory item in a memory store. </summary>
+        /// <summary> Creates a memory item in the specified memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
@@ -690,7 +692,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Update a memory item in a memory store.
+        /// [Protocol Method] Updates the specified memory item in the memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -716,7 +718,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Update a memory item in a memory store.
+        /// [Protocol Method] Updates the specified memory item in the memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -741,7 +743,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Update a memory item in a memory store. </summary>
+        /// <summary> Updates the specified memory item in the memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The updated content of the memory. </param>
@@ -760,7 +762,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
 
-        /// <summary> Update a memory item in a memory store. </summary>
+        /// <summary> Updates the specified memory item in the memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The updated content of the memory. </param>
@@ -780,7 +782,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a memory item from a memory store.
+        /// [Protocol Method] Retrieves the specified memory item from the memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -804,7 +806,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a memory item from a memory store.
+        /// [Protocol Method] Retrieves the specified memory item from the memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -827,7 +829,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Retrieve a memory item from a memory store. </summary>
+        /// <summary> Retrieves the specified memory item from the memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -843,7 +845,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieve a memory item from a memory store. </summary>
+        /// <summary> Retrieves the specified memory item from the memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -860,7 +862,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] List all memory items in a memory store.
+        /// [Protocol Method] Returns memory items from the specified memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -911,7 +913,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a memory item from a memory store.
+        /// [Protocol Method] Deletes the specified memory item from the memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -935,7 +937,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a memory item from a memory store.
+        /// [Protocol Method] Deletes the specified memory item from the memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -958,7 +960,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete a memory item from a memory store. </summary>
+        /// <summary> Deletes the specified memory item from the memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -974,7 +976,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((DeleteMemoryResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Delete a memory item from a memory store. </summary>
+        /// <summary> Deletes the specified memory item from the memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

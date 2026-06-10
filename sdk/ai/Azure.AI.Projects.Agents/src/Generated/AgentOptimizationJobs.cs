@@ -36,7 +36,8 @@ namespace Azure.AI.Projects.Agents
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry.
+        /// [Protocol Method] Creates an agent optimization job and returns the queued job.
+        /// Honors `Operation-Id` for idempotent retry.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -56,7 +57,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry.
+        /// [Protocol Method] Creates an agent optimization job and returns the queued job.
+        /// Honors `Operation-Id` for idempotent retry.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -75,7 +77,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+        /// <summary>
+        /// Creates an agent optimization job and returns the queued job.
+        /// Honors `Operation-Id` for idempotent retry.
+        /// </summary>
         /// <param name="inputs"> The optimization job inputs. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
@@ -87,7 +92,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+        /// <summary>
+        /// Creates an agent optimization job and returns the queued job.
+        /// Honors `Operation-Id` for idempotent retry.
+        /// </summary>
         /// <param name="inputs"> The optimization job inputs. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
@@ -100,7 +108,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id. Returns 202 while in progress, 200 when terminal.
+        /// [Protocol Method] Retrieves the specified agent optimization job.
+        /// Returns 202 while the job is in progress and 200 after it reaches a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -119,7 +128,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id. Returns 202 while in progress, 200 when terminal.
+        /// [Protocol Method] Retrieves the specified agent optimization job.
+        /// Returns 202 while the job is in progress and 200 after it reaches a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -137,7 +147,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get an optimization job by id. Returns 202 while in progress, 200 when terminal. </summary>
+        /// <summary>
+        /// Retrieves the specified agent optimization job.
+        /// Returns 202 while the job is in progress and 200 after it reaches a terminal state.
+        /// </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -148,7 +161,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Get an optimization job by id. Returns 202 while in progress, 200 when terminal. </summary>
+        /// <summary>
+        /// Retrieves the specified agent optimization job.
+        /// Returns 202 while the job is in progress and 200 after it reaches a terminal state.
+        /// </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -160,7 +176,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation. Idempotent on terminal states.
+        /// [Protocol Method] Requests cancellation of the specified agent optimization job.
+        /// The operation remains idempotent after the job reaches a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -179,7 +196,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation. Idempotent on terminal states.
+        /// [Protocol Method] Requests cancellation of the specified agent optimization job.
+        /// The operation remains idempotent after the job reaches a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -197,7 +215,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Request cancellation. Idempotent on terminal states. </summary>
+        /// <summary>
+        /// Requests cancellation of the specified agent optimization job.
+        /// The operation remains idempotent after the job reaches a terminal state.
+        /// </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -208,7 +229,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Request cancellation. Idempotent on terminal states. </summary>
+        /// <summary>
+        /// Requests cancellation of the specified agent optimization job.
+        /// The operation remains idempotent after the job reaches a terminal state.
+        /// </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -220,7 +244,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the job and its candidate artifacts. Cancels first if non-terminal.
+        /// [Protocol Method] Deletes the specified agent optimization job and its candidate artifacts.
+        /// Cancels the job first when it is still in a non-terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -240,7 +265,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the job and its candidate artifacts. Cancels first if non-terminal.
+        /// [Protocol Method] Deletes the specified agent optimization job and its candidate artifacts.
+        /// Cancels the job first when it is still in a non-terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -259,7 +285,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
+        /// <summary>
+        /// Deletes the specified agent optimization job and its candidate artifacts.
+        /// Cancels the job first when it is still in a non-terminal state.
+        /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="force"> When true, force-delete even if the job is in a non-terminal state. </param>
@@ -270,7 +299,10 @@ namespace Azure.AI.Projects.Agents
             return Delete(jobId, foundryFeatures?.ToSerialString(), force, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
+        /// <summary>
+        /// Deletes the specified agent optimization job and its candidate artifacts.
+        /// Cancels the job first when it is still in a non-terminal state.
+        /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="force"> When true, force-delete even if the job is in a non-terminal state. </param>
@@ -282,139 +314,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] List candidates produced by a job.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetCandidates(string jobId, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidatesRequest(jobId, foundryFeatures, limit, order, after, before, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] List candidates produced by a job.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetCandidatesAsync(string jobId, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidatesRequest(jobId, foundryFeatures, limit, order, after, before, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> List candidates produced by a job. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<AgentsPagedResultOptimizationCandidate> GetCandidates(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetCandidates(jobId, foundryFeatures?.ToSerialString(), limit, order?.ToString(), after, before, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentsPagedResultOptimizationCandidate)result, result.GetRawResponse());
-        }
-
-        /// <summary> List candidates produced by a job. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<AgentsPagedResultOptimizationCandidate>> GetCandidatesAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetCandidatesAsync(jobId, foundryFeatures?.ToSerialString(), limit, order?.ToString(), after, before, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentsPagedResultOptimizationCandidate)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a single candidate's metadata, manifest, and promotion info.
+        /// [Protocol Method] Retrieves metadata, manifest information, and promotion details for the specified candidate.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -434,7 +334,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get a single candidate's metadata, manifest, and promotion info.
+        /// [Protocol Method] Retrieves metadata, manifest information, and promotion details for the specified candidate.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -453,7 +353,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get a single candidate's metadata, manifest, and promotion info. </summary>
+        /// <summary> Retrieves metadata, manifest information, and promotion details for the specified candidate. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -465,7 +365,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((CandidateMetadata)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a single candidate's metadata, manifest, and promotion info. </summary>
+        /// <summary> Retrieves metadata, manifest information, and promotion details for the specified candidate. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -478,7 +378,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate.
+        /// [Protocol Method] Retrieves the deploy configuration JSON for the specified candidate.
+        /// Clients can use it to compose `agents.create_version(...)` requests.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -498,7 +399,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate.
+        /// [Protocol Method] Retrieves the deploy configuration JSON for the specified candidate.
+        /// Clients can use it to compose `agents.create_version(...)` requests.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -517,7 +419,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate. </summary>
+        /// <summary>
+        /// Retrieves the deploy configuration JSON for the specified candidate.
+        /// Clients can use it to compose `agents.create_version(...)` requests.
+        /// </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -529,7 +434,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((CandidateDeployConfig)result, result.GetRawResponse());
         }
 
-        /// <summary> Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate. </summary>
+        /// <summary>
+        /// Retrieves the deploy configuration JSON for the specified candidate.
+        /// Clients can use it to compose `agents.create_version(...)` requests.
+        /// </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -542,7 +450,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get full per-task evaluation results for a candidate.
+        /// [Protocol Method] Retrieves full per-task evaluation results for the specified candidate.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -562,7 +470,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get full per-task evaluation results for a candidate.
+        /// [Protocol Method] Retrieves full per-task evaluation results for the specified candidate.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -581,7 +489,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get full per-task evaluation results for a candidate. </summary>
+        /// <summary> Retrieves full per-task evaluation results for the specified candidate. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -593,7 +501,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((CandidateResults)result, result.GetRawResponse());
         }
 
-        /// <summary> Get full per-task evaluation results for a candidate. </summary>
+        /// <summary> Retrieves full per-task evaluation results for the specified candidate. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -606,7 +514,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Stream a specific file from the candidate's blob directory.
+        /// [Protocol Method] Streams the specified file from the candidate's blob directory.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -627,7 +535,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Stream a specific file from the candidate's blob directory.
+        /// [Protocol Method] Streams the specified file from the candidate's blob directory.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -647,7 +555,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Stream a specific file from the candidate's blob directory. </summary>
+        /// <summary> Streams the specified file from the candidate's blob directory. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="path"> Relative path of the file to download (e.g. 'files/examples.jsonl'). </param>
@@ -660,7 +568,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
-        /// <summary> Stream a specific file from the candidate's blob directory. </summary>
+        /// <summary> Streams the specified file from the candidate's blob directory. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id. </param>
         /// <param name="path"> Relative path of the file to download (e.g. 'files/examples.jsonl'). </param>
@@ -674,7 +582,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Promotes a candidate, recording the deployment timestamp and target agent version.
+        /// [Protocol Method] Promotes the specified candidate and records the deployment timestamp and target agent version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -695,7 +603,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Promotes a candidate, recording the deployment timestamp and target agent version.
+        /// [Protocol Method] Promotes the specified candidate and records the deployment timestamp and target agent version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -715,7 +623,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Promotes a candidate, recording the deployment timestamp and target agent version. </summary>
+        /// <summary> Promotes the specified candidate and records the deployment timestamp and target agent version. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id to promote. </param>
         /// <param name="candidateRequest"> Promotion details. </param>
@@ -728,7 +636,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((PromoteCandidateResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Promotes a candidate, recording the deployment timestamp and target agent version. </summary>
+        /// <summary> Promotes the specified candidate and records the deployment timestamp and target agent version. </summary>
         /// <param name="jobId"> The optimization job id. </param>
         /// <param name="candidateId"> The candidate id to promote. </param>
         /// <param name="candidateRequest"> Promotion details. </param>

@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct CustomToolParamFormatType : IEquatable<CustomToolParamFormatType>
+    public readonly partial struct CustomToolParamFormatType : IEquatable<CustomToolParamFormatType>
     {
         private readonly string _value;
         private const string TextValue = "text";
