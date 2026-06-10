@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisIotFhirDestinationOperationSource : IOperationSource<HealthcareApisIotFhirDestinationResource>
+    /// <summary></summary>
+    internal partial class HealthcareApisIotFhirDestinationOperationSource : IOperationSource<HealthcareApisIotFhirDestinationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HealthcareApisIotFhirDestinationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HealthcareApisIotFhirDestinationResource IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HealthcareApisIotFhirDestinationData data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HealthcareApisIotFhirDestinationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HealthcareApisIotFhirDestinationResource> IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
-            return await Task.FromResult(new HealthcareApisIotFhirDestinationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HealthcareApisIotFhirDestinationData data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisIotFhirDestinationResource(_client, data);
         }
     }
 }

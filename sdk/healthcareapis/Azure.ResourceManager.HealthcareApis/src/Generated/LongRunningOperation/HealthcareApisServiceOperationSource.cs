@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisServiceOperationSource : IOperationSource<HealthcareApisServiceResource>
+    /// <summary></summary>
+    internal partial class HealthcareApisServiceOperationSource : IOperationSource<HealthcareApisServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HealthcareApisServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HealthcareApisServiceResource IOperationSource<HealthcareApisServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HealthcareApisServiceData data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HealthcareApisServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HealthcareApisServiceResource> IOperationSource<HealthcareApisServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
-            return await Task.FromResult(new HealthcareApisServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HealthcareApisServiceData data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisServiceResource(_client, data);
         }
     }
 }

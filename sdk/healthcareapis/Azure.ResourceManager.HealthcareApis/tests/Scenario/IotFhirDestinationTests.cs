@@ -14,8 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Tests
 {
-    [NUnit.Framework.Ignore("Recordings need re-recording with current EventHubs SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57316")]
-
     internal class IotFhirDestinationTests : HealthcareApisManagementTestBase
     {
         private const string _fhirDestinationPrefixName = "fhirdestination";

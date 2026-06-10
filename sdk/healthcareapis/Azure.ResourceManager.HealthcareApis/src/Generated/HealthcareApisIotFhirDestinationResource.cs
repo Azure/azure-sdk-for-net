@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A Class representing a HealthcareApisIotFhirDestination along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisIotFhirDestinationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisIotFhirDestinationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisIotConnectorResource"/> using the GetHealthcareApisIotFhirDestination method.
+    /// A class representing a HealthcareApisIotFhirDestination along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisIotFhirDestinationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisIotConnectorResource"/> using the GetHealthcareApisIotFhirDestinations method.
     /// </summary>
     public partial class HealthcareApisIotFhirDestinationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HealthcareApisIotFhirDestinationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="iotConnectorName"> The iotConnectorName. </param>
-        /// <param name="fhirDestinationName"> The fhirDestinationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics;
-        private readonly IotConnectorFhirDestinationRestOperations _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient;
+        private readonly ClientDiagnostics _iotConnectorFhirDestinationClientDiagnostics;
+        private readonly IotConnectorFhirDestination _iotConnectorFhirDestinationRestClient;
         private readonly HealthcareApisIotFhirDestinationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations";
 
-        /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotFhirDestinationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationResource for mocking. </summary>
         protected HealthcareApisIotFhirDestinationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotFhirDestinationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotFhirDestinationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisIotFhirDestinationResource(ArmClient client, HealthcareApisIotFhirDestinationData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.HealthcareApis
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotFhirDestinationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotFhirDestinationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthcareApisIotFhirDestinationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string healthcareApisIotFhirDestinationIotConnectorFhirDestinationApiVersion);
-            _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient = new IotConnectorFhirDestinationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisIotFhirDestinationIotConnectorFhirDestinationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string healthcareApisIotFhirDestinationApiVersion);
+            _iotConnectorFhirDestinationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
+            _iotConnectorFhirDestinationRestClient = new IotConnectorFhirDestination(_iotConnectorFhirDestinationClientDiagnostics, Pipeline, Endpoint, healthcareApisIotFhirDestinationApiVersion ?? "2025-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HealthcareApisIotFhirDestinationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="iotConnectorName"> The iotConnectorName. </param>
+        /// <param name="fhirDestinationName"> The fhirDestinationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the properties of the specified Iot Connector FHIR destination.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotConnectorFhirDestination_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotFhirDestinations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisIotFhirDestinationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HealthcareApisIotFhirDestinationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Get");
+            using DiagnosticScope scope = _iotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Get");
             scope.Start();
             try
             {
-                var response = await _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthcareApisIotFhirDestinationData> response = Response.FromValue(HealthcareApisIotFhirDestinationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthcareApisIotFhirDestinationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Gets the properties of the specified Iot Connector FHIR destination.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotConnectorFhirDestination_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotFhirDestinations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisIotFhirDestinationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HealthcareApisIotFhirDestinationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Get");
+            using DiagnosticScope scope = _iotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Get");
             scope.Start();
             try
             {
-                var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthcareApisIotFhirDestinationData> response = Response.FromValue(HealthcareApisIotFhirDestinationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthcareApisIotFhirDestinationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Deletes an IoT Connector FHIR destination.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotConnectorFhirDestination_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotFhirDestinations_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisIotFhirDestinationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +213,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Delete");
+            using DiagnosticScope scope = _iotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation(_healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_iotConnectorFhirDestinationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Deletes an IoT Connector FHIR destination.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotConnectorFhirDestination_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotFhirDestinations_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisIotFhirDestinationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,14 +262,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Delete");
+            using DiagnosticScope scope = _iotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Delete");
             scope.Start();
             try
             {
-                var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HealthcareApisArmOperation(_healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_iotConnectorFhirDestinationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -254,23 +287,23 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// Creates or updates an IoT Connector FHIR destination resource with the specified parameters.
+        /// Update a HealthcareApisIotFhirDestination.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotConnectorFhirDestination_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotFhirDestinations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisIotFhirDestinationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,14 +315,27 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
+            using DiagnosticScope scope = _iotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
             scope.Start();
             try
             {
-                var response = await _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HealthcareApisIotFhirDestinationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource> operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(
+                    new HealthcareApisIotFhirDestinationOperationSource(Client),
+                    _iotConnectorFhirDestinationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -300,23 +346,23 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// Creates or updates an IoT Connector FHIR destination resource with the specified parameters.
+        /// Update a HealthcareApisIotFhirDestination.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotConnectorFhirDestination_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotFhirDestinations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisIotFhirDestinationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,14 +374,27 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
+            using DiagnosticScope scope = _iotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
             scope.Start();
             try
             {
-                var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HealthcareApisIotFhirDestinationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource> operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(
+                    new HealthcareApisIotFhirDestinationOperationSource(Client),
+                    _iotConnectorFhirDestinationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

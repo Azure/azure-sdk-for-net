@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceResourceVersionPolicyConfiguration : IUtf8JsonSerializable, IJsonModel<FhirServiceResourceVersionPolicyConfiguration>
+    /// <summary> The settings for history tracking for FHIR resources. </summary>
+    public partial class FhirServiceResourceVersionPolicyConfiguration : IJsonModel<FhirServiceResourceVersionPolicyConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceResourceVersionPolicyConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FhirServiceResourceVersionPolicyConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFhirServiceResourceVersionPolicyConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FhirServiceResourceVersionPolicyConfiguration IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FhirServiceResourceVersionPolicyConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
@@ -50,15 +90,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,93 +107,65 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
         }
 
-        FhirServiceResourceVersionPolicyConfiguration IJsonModel<FhirServiceResourceVersionPolicyConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FhirServiceResourceVersionPolicyConfiguration IJsonModel<FhirServiceResourceVersionPolicyConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FhirServiceResourceVersionPolicyConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFhirServiceResourceVersionPolicyConfiguration(document.RootElement, options);
         }
 
-        internal static FhirServiceResourceVersionPolicyConfiguration DeserializeFhirServiceResourceVersionPolicyConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FhirServiceResourceVersionPolicyConfiguration DeserializeFhirServiceResourceVersionPolicyConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FhirResourceVersionPolicy? @default = default;
             IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("default"u8))
+                if (prop.NameEquals("default"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @default = new FhirResourceVersionPolicy(property.Value.GetString());
+                    @default = new FhirResourceVersionPolicy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceTypeOverrides"u8))
+                if (prop.NameEquals("resourceTypeOverrides"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, FhirResourceVersionPolicy> dictionary = new Dictionary<string, FhirResourceVersionPolicy>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, new FhirResourceVersionPolicy(property0.Value.GetString()));
+                        dictionary.Add(prop0.Name, new FhirResourceVersionPolicy(prop0.Value.GetString()));
                     }
                     resourceTypeOverrides = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FhirServiceResourceVersionPolicyConfiguration(@default, resourceTypeOverrides ?? new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>(), serializedAdditionalRawData);
+            return new FhirServiceResourceVersionPolicyConfiguration(@default, resourceTypeOverrides ?? new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FhirServiceResourceVersionPolicyConfiguration IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFhirServiceResourceVersionPolicyConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

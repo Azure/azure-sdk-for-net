@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A Class representing a HealthcareApisServicePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisServicePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisServiceResource"/> using the GetHealthcareApisServicePrivateEndpointConnection method.
+    /// A class representing a HealthcareApisServicePrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisServiceResource"/> using the GetHealthcareApisServicePrivateEndpointConnections method.
     /// </summary>
     public partial class HealthcareApisServicePrivateEndpointConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics;
+        private readonly HealthcareApisServicePrivateEndpointConnections _healthcareApisServicePrivateEndpointConnectionsRestClient;
         private readonly HealthcareApisPrivateEndpointConnectionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HealthcareApisServicePrivateEndpointConnectionResource for mocking. </summary>
         protected HealthcareApisServicePrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisServicePrivateEndpointConnectionResource(ArmClient client, HealthcareApisPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.HealthcareApis
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthcareApisServicePrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-            _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string healthcareApisServicePrivateEndpointConnectionApiVersion);
+            _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
+            _healthcareApisServicePrivateEndpointConnectionsRestClient = new HealthcareApisServicePrivateEndpointConnections(_healthcareApisServicePrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, healthcareApisServicePrivateEndpointConnectionApiVersion ?? "2025-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HealthcareApisPrivateEndpointConnectionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified private endpoint connection associated with the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServicePrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HealthcareApisServicePrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthcareApisPrivateEndpointConnectionData> response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthcareApisServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Gets the specified private endpoint connection associated with the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServicePrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HealthcareApisServicePrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthcareApisPrivateEndpointConnectionData> response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthcareApisServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Deletes a private endpoint connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionDescriptions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServicePrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation(_healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_healthcareApisServicePrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Deletes a private endpoint connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionDescriptions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServicePrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HealthcareApisArmOperation(_healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_healthcareApisServicePrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// Update the state of the specified private endpoint connection associated with the service.
+        /// Update a HealthcareApisServicePrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionDescriptions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServicePrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisServicePrivateEndpointConnectionOperationSource(Client), _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthcareApisPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> operation = new HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>(
+                    new HealthcareApisServicePrivateEndpointConnectionOperationSource(Client),
+                    _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// Update the state of the specified private endpoint connection associated with the service.
+        /// Update a HealthcareApisServicePrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionDescriptions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisServicePrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisServicePrivateEndpointConnectionOperationSource(Client), _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthcareApisPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> operation = new HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>(
+                    new HealthcareApisServicePrivateEndpointConnectionOperationSource(Client),
+                    _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

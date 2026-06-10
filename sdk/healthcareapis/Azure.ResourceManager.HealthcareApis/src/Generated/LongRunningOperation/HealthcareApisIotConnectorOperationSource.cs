@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisIotConnectorOperationSource : IOperationSource<HealthcareApisIotConnectorResource>
+    /// <summary></summary>
+    internal partial class HealthcareApisIotConnectorOperationSource : IOperationSource<HealthcareApisIotConnectorResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HealthcareApisIotConnectorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HealthcareApisIotConnectorResource IOperationSource<HealthcareApisIotConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HealthcareApisIotConnectorData data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HealthcareApisIotConnectorResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HealthcareApisIotConnectorResource> IOperationSource<HealthcareApisIotConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
-            return await Task.FromResult(new HealthcareApisIotConnectorResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HealthcareApisIotConnectorData data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisIotConnectorResource(_client, data);
         }
     }
 }

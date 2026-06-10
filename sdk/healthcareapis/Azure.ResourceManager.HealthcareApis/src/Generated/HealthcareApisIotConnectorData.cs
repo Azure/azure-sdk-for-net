@@ -7,134 +7,94 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary>
-    /// A class representing the HealthcareApisIotConnector data model.
-    /// IoT Connector definition.
-    /// </summary>
+    /// <summary> IoT Connector definition. </summary>
     public partial class HealthcareApisIotConnectorData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public HealthcareApisIotConnectorData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="ingestionEndpointConfiguration"> Source configuration. </param>
-        /// <param name="deviceMapping"> Device Mappings. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> IoT Connector configuration. </param>
+        /// <param name="tags"> The common properties of tracked resources in the service. </param>
+        /// <param name="eTag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareApisIotConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration, HealthcareApisIotMappingProperties deviceMapping, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HealthcareApisIotConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, HealthcareApisIotConnectorProperties properties, IDictionary<string, string> tags, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            IngestionEndpointConfiguration = ingestionEndpointConfiguration;
-            DeviceMapping = deviceMapping;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             Identity = identity;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorData"/> for deserialization. </summary>
-        internal HealthcareApisIotConnectorData()
-        {
-        }
+        /// <summary> IoT Connector configuration. </summary>
+        internal HealthcareApisIotConnectorProperties Properties { get; set; }
 
-        /// <summary> The provisioning state. </summary>
-        public HealthcareApisProvisioningState? ProvisioningState { get; }
-        /// <summary> Source configuration. </summary>
-        public HealthcareApisIotConnectorEventHubIngestionConfiguration IngestionEndpointConfiguration { get; set; }
-        /// <summary> Device Mappings. </summary>
-        internal HealthcareApisIotMappingProperties DeviceMapping { get; set; }
-        /// <summary>
-        /// The mapping.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData DeviceMappingContent
-        {
-            get => DeviceMapping is null ? default : DeviceMapping.Content;
-            set
-            {
-                if (DeviceMapping is null)
-                    DeviceMapping = new HealthcareApisIotMappingProperties();
-                DeviceMapping.Content = value;
-            }
-        }
+        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
+        public ETag? ETag { get; set; }
 
         /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
-        public ETag? ETag { get; set; }
+
+        /// <summary> The provisioning state. </summary>
+        public HealthcareApisProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Source configuration. </summary>
+        public HealthcareApisIotConnectorEventHubIngestionConfiguration IngestionEndpointConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngestionEndpointConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthcareApisIotConnectorProperties();
+                }
+                Properties.IngestionEndpointConfiguration = value;
+            }
+        }
+
+        /// <summary> The mapping. </summary>
+        public BinaryData DeviceMappingContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeviceMappingContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthcareApisIotConnectorProperties();
+                }
+                Properties.DeviceMappingContent = value;
+            }
+        }
     }
 }

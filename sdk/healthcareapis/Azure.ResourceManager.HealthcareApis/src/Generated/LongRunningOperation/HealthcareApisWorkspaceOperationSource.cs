@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisWorkspaceOperationSource : IOperationSource<HealthcareApisWorkspaceResource>
+    /// <summary></summary>
+    internal partial class HealthcareApisWorkspaceOperationSource : IOperationSource<HealthcareApisWorkspaceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HealthcareApisWorkspaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HealthcareApisWorkspaceResource IOperationSource<HealthcareApisWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HealthcareApisWorkspaceData data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HealthcareApisWorkspaceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HealthcareApisWorkspaceResource> IOperationSource<HealthcareApisWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
-            return await Task.FromResult(new HealthcareApisWorkspaceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HealthcareApisWorkspaceData data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisWorkspaceResource(_client, data);
         }
     }
 }

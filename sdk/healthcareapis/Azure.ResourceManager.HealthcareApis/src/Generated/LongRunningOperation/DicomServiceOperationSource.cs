@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class DicomServiceOperationSource : IOperationSource<DicomServiceResource>
+    /// <summary></summary>
+    internal partial class DicomServiceOperationSource : IOperationSource<DicomServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DicomServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DicomServiceResource IOperationSource<DicomServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DicomServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DicomServiceData data = DicomServiceData.DeserializeDicomServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DicomServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DicomServiceResource> IOperationSource<DicomServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DicomServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
-            return await Task.FromResult(new DicomServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DicomServiceData data = DicomServiceData.DeserializeDicomServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DicomServiceResource(_client, data);
         }
     }
 }
