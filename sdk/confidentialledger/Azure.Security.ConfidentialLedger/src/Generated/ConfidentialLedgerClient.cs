@@ -226,77 +226,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(string,string,RequestContext)']/*" />
-        public virtual Response GetLedgerEntry(string transactionId, string collectionId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        // GetLedgerEntry / GetLedgerEntryAsync are suppressed via [CodeGenSuppress] on the
+        // ConfidentialLedgerClient partial in ConfidentialLedgerClient.cs and reimplemented
+        // there to poll the service while the entry is in the "Loading" state.
 
         /// <summary>
         /// [Protocol Method] Gets a receipt certifying ledger contents at a particular transaction id.
