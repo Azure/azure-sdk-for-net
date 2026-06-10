@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.Get
-            var watchName = Recording.GenerateAssetName("testWatchlists-");
+            var watchName = GenerateAssetNameFromRecording("testWatchlists-", "watchlists");
             var watch1 = await CreateWatchlistAsync(operationalInsights, watchName);
             SecurityInsightsWatchlistResource watch2 = await watch1.GetAsync();
 

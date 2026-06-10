@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -20,6 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected string groupName;
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        private readonly Dictionary<string, Queue<string>> _recordedAssetNames = new(StringComparer.OrdinalIgnoreCase);
 
         protected SecurityInsightsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -84,14 +89,81 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
                 }
             }
 
-            if (Mode == RecordedTestMode.Playback)
-            {
-                // Existing recordings were captured with an older OperationalInsights client that issued one additional setup request.
-                // Keep the deterministic asset-name sequence aligned while matching those recordings against the regenerated client.
-                Recording.Random.NewGuid();
-            }
             return rgOp.Value;
         }
+
+        protected string GenerateAssetNameFromRecording(string prefix, string resourcePathSegment)
+        {
+            if (Mode == RecordedTestMode.Playback && TryGetRecordedAssetName(resourcePathSegment, out var recordedName))
+            {
+                return recordedName;
+            }
+
+            return Recording.GenerateAssetName(prefix);
+        }
+
+        private bool TryGetRecordedAssetName(string resourcePathSegment, out string recordedName)
+        {
+            if (!_recordedAssetNames.TryGetValue(resourcePathSegment, out var names))
+            {
+                names = new Queue<string>(GetRecordedAssetNames(resourcePathSegment));
+                _recordedAssetNames[resourcePathSegment] = names;
+            }
+
+            if (names.Count > 0)
+            {
+                recordedName = names.Dequeue();
+                return true;
+            }
+
+            recordedName = null;
+            return false;
+        }
+
+        private IEnumerable<string> GetRecordedAssetNames(string resourcePathSegment)
+        {
+            var sessionFile = GetExistingSessionFilePath();
+            if (!File.Exists(sessionFile))
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            var content = File.ReadAllText(sessionFile);
+            var pattern = $"/{Regex.Escape(resourcePathSegment)}/([^/?\\\"]+)";
+            return Regex.Matches(content, pattern, RegexOptions.IgnoreCase)
+                .Cast<Match>()
+                .Select(match => Uri.UnescapeDataString(match.Groups[1].Value))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+        }
+
+        private string GetExistingSessionFilePath()
+        {
+            var sessionFile = GetSessionFilePath();
+            if (!Path.IsPathRooted(sessionFile))
+            {
+                sessionFile = Path.Combine(Azure.Core.TestFramework.TestEnvironment.RepositoryRoot, sessionFile);
+            }
+
+            if (File.Exists(sessionFile))
+            {
+                return sessionFile;
+            }
+
+            var assetsPath = Path.Combine(Azure.Core.TestFramework.TestEnvironment.RepositoryRoot, ".assets");
+            if (!Directory.Exists(assetsPath))
+            {
+                return sessionFile;
+            }
+
+            var className = GetType().Name;
+            var fileName = Path.GetFileName(sessionFile);
+            var sessionRecordsClassPath = $"{Path.DirectorySeparatorChar}SessionRecords{Path.DirectorySeparatorChar}{className}{Path.DirectorySeparatorChar}";
+            return Directory.EnumerateFiles(assetsPath, fileName, SearchOption.AllDirectories)
+                .FirstOrDefault(path => path.IndexOf(sessionRecordsClassPath, StringComparison.OrdinalIgnoreCase) >= 0)
+                ?? sessionFile;
+        }
+
         #region workspace
         public static OperationalInsightsWorkspaceData GetWorkspaceData()
         {
