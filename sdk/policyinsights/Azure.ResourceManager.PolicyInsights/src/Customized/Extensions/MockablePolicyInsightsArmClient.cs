@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResource", typeof(ResourceIdentifier), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceAsync", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResource", typeof(ResourceIdentifier), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // PolicyTrackedResources renames (ArmClient + MG re-host)
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceAsync", typeof(ResourceIdentifier), typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResource", typeof(ResourceIdentifier), typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroupAsync", typeof(ResourceIdentifier), typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroup", typeof(ResourceIdentifier), typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public partial class MockablePolicyInsightsArmClient
     {
 
@@ -145,6 +150,30 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 }
                 catch (Exception e) { scope0.Failed(e); throw; }
             }, cancellationToken);
+        }
+
+        // ===== PolicyTrackedResources (renamed): GetQueryResultsForResource/ManagementGroup -> GetPolicyTrackedResourceQueryResults =====
+
+        /// <summary> Queries policy tracked resources for the resource. </summary>
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyTrackedResourcesGetQueryResultsForResourceAsyncCollectionResultOfT(
+                PolicyTrackedResourcesRestClient, scope.ToString(), policyTrackedResourceType.ToString(),
+                default, default,
+                context, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults");
+        }
+
+        /// <summary> Queries policy tracked resources for the resource. </summary>
+        public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyTrackedResourcesGetQueryResultsForResourceCollectionResultOfT(
+                PolicyTrackedResourcesRestClient, scope.ToString(), policyTrackedResourceType.ToString(),
+                default, default,
+                context, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults");
         }
     }
 }

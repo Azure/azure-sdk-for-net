@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private PolicyStates PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStates(PolicyStatesClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
         private ClientDiagnostics PolicyRestrictionsClientDiagnostics => _policyRestrictionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PolicyRestrictions PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictions(PolicyRestrictionsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
+        private ClientDiagnostics _policyTrackedResourcesClientDiagnostics;
+        private PolicyTrackedResources _policyTrackedResourcesRestClient;
+        private ClientDiagnostics PolicyTrackedResourcesClientDiagnostics => _policyTrackedResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private PolicyTrackedResources PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResources(PolicyTrackedResourcesClientDiagnostics, Pipeline, Endpoint, "2018-07-01-preview");
 
         /// <summary> Checks what restrictions Azure Policy will place on resources within a management group. </summary>
         /// <param name="content"> The check policy restrictions parameters. </param>
@@ -183,6 +187,26 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 }
                 catch (Exception e) { scope0.Failed(e); throw; }
             }, cancellationToken);
+        }
+
+        /// <summary> Queries policy tracked resources under the management group. </summary>
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyTrackedResourcesGetQueryResultsForManagementGroupAsyncCollectionResultOfT(
+                PolicyTrackedResourcesRestClient, Id.Name, policyTrackedResourceType.ToString(),
+                default, default,
+                context, "MockablePolicyInsightsManagementGroupResource.GetPolicyTrackedResourceQueryResults");
+        }
+
+        /// <summary> Queries policy tracked resources under the management group. </summary>
+        public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyTrackedResourcesGetQueryResultsForManagementGroupCollectionResultOfT(
+                PolicyTrackedResourcesRestClient, Id.Name, policyTrackedResourceType.ToString(),
+                default, default,
+                context, "MockablePolicyInsightsManagementGroupResource.GetPolicyTrackedResourceQueryResults");
         }
     }
 }

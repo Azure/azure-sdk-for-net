@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroup", typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceGroupAsync", typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceGroup", typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupAsync", typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroup", typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public partial class MockablePolicyInsightsResourceGroupResource
     {
         /// <summary>
@@ -199,6 +201,26 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 }
                 catch (Exception e) { scope0.Failed(e); throw; }
             }, cancellationToken);
+        }
+
+        /// <summary> Queries policy tracked resources under the resource group. </summary>
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyTrackedResourcesGetQueryResultsForResourceGroupAsyncCollectionResultOfT(
+                PolicyTrackedResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, policyTrackedResourceType.ToString(),
+                default, default,
+                context, "MockablePolicyInsightsResourceGroupResource.GetPolicyTrackedResourceQueryResults");
+        }
+
+        /// <summary> Queries policy tracked resources under the resource group. </summary>
+        public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PolicyTrackedResourcesGetQueryResultsForResourceGroupCollectionResultOfT(
+                PolicyTrackedResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, policyTrackedResourceType.ToString(),
+                default, default,
+                context, "MockablePolicyInsightsResourceGroupResource.GetPolicyTrackedResourceQueryResults");
         }
     }
 }
