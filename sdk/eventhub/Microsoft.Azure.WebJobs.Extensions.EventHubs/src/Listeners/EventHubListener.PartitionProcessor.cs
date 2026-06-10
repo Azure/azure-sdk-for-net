@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             // Idle checkpoint: when BatchCheckpointFrequency > 1, force a checkpoint after
             // this duration of no new events to prevent stale checkpoints from blocking scale-in.
-            private const int IdleCheckpointIntervalSeconds = 600;
+            internal static readonly TimeSpan IdleCheckpointInterval = TimeSpan.FromMinutes(10);
             private EventData _lastProcessedEvent;
             private DateTimeOffset _lastBatchProcessedTime;
 
@@ -235,17 +235,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
 
                 // Idle checkpoint: if no new events arrived and we have un-checkpointed batches
-                // older than the idle interval, piggyback on the existing checkpoint flow to keep
-                // the blob current for accurate scale metrics.
+                // older than the idle interval, force a checkpoint to keep the blob current
+                // for accurate scale metrics.
                 if (eventToCheckpoint == null
+                    && _enableCheckpointing
                     && _batchCheckpointFrequency > 1
                     && _batchCounter > 0
                     && _lastProcessedEvent != null
-                    && (DateTimeOffset.UtcNow - _lastBatchProcessedTime).TotalSeconds >= IdleCheckpointIntervalSeconds)
+                    && (DateTimeOffset.UtcNow - _lastBatchProcessedTime) >= IdleCheckpointInterval
+                    && !_listenerCancellationToken.IsCancellationRequested
+                    && !_functionExecutionToken.IsCancellationRequested
+                    && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
-                    eventToCheckpoint = _lastProcessedEvent;
-                    context.PartitionContext.IsCheckpointingAfterInvocation = true;
+                    await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
+                    _batchCounter = 0;
                     _lastBatchProcessedTime = DateTimeOffset.UtcNow;
+                    _logger.LogDebug(GetOperationDetails(context, "IdleCheckpoint"));
                 }
 
                 // If enabled, checkpoint if we processed any events, the listener is not stopping,
