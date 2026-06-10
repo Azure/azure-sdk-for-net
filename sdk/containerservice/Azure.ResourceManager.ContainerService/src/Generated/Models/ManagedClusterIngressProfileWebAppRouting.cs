@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfileWebAppRouting"/>. </summary>
         /// <param name="isEnabled"> Whether to enable the Application Routing add-on. </param>
-        /// <param name="gatewayAPIImplementations"> Configurations for Gateway API providers to be used for managed ingress with App Routing. See https://aka.ms/k8s-gateway-api for more information on the Gateway API. </param>
+        /// <param name="gatewayApiImplementations"> Configurations for Gateway API providers to be used for managed ingress with App Routing. See https://aka.ms/k8s-gateway-api for more information on the Gateway API. </param>
         /// <param name="dnsZoneResourceIds"> Resource IDs of the DNS zones to be associated with the Application Routing add-on. Used only when Application Routing add-on is enabled. Public and private DNS zones can be in different resource groups, but all public DNS zones must be in the same resource group and all private DNS zones must be in the same resource group. </param>
         /// <param name="nginx"> Configuration for the default NginxIngressController. See more at https://learn.microsoft.com/en-us/azure/aks/app-routing-nginx-configuration#the-default-nginx-ingress-controller. </param>
         /// <param name="identity"> Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, ManagedClusterWebAppRoutingGatewayAPIImplementations gatewayAPIImplementations, IList<ResourceIdentifier> dnsZoneResourceIds, ManagedClusterIngressProfileNginx nginx, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, ManagedClusterWebAppRoutingGatewayApiImplementations gatewayApiImplementations, IList<ResourceIdentifier> dnsZoneResourceIds, ManagedClusterIngressProfileNginx nginx, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
-            GatewayAPIImplementations = gatewayAPIImplementations;
+            GatewayApiImplementations = gatewayApiImplementations;
             DnsZoneResourceIds = dnsZoneResourceIds;
             Nginx = nginx;
             Identity = identity;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Configurations for Gateway API providers to be used for managed ingress with App Routing. See https://aka.ms/k8s-gateway-api for more information on the Gateway API. </summary>
         [WirePath("gatewayAPIImplementations")]
-        internal ManagedClusterWebAppRoutingGatewayAPIImplementations GatewayAPIImplementations { get; set; }
+        internal ManagedClusterWebAppRoutingGatewayApiImplementations GatewayApiImplementations { get; set; }
 
         /// <summary> Resource IDs of the DNS zones to be associated with the Application Routing add-on. Used only when Application Routing add-on is enabled. Public and private DNS zones can be in different resource groups, but all public DNS zones must be in the same resource group and all private DNS zones must be in the same resource group. </summary>
         [WirePath("dnsZoneResourceIds")]
@@ -60,6 +60,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions. </summary>
         [WirePath("identity")]
         public ContainerServiceUserAssignedIdentity Identity { get; }
+
+        /// <summary> Whether to enable Istio as a Gateway API implementation for managed ingress with App Routing. </summary>
+        [WirePath("gatewayAPIImplementations.appRoutingIstio.mode")]
+        public GatewayApiIstioMode? GatewayApiImplementationsIstioMode
+        {
+            get
+            {
+                return GatewayApiImplementations is null ? default : GatewayApiImplementations.IstioMode;
+            }
+            set
+            {
+                if (GatewayApiImplementations is null)
+                {
+                    GatewayApiImplementations = new ManagedClusterWebAppRoutingGatewayApiImplementations();
+                }
+                GatewayApiImplementations.IstioMode = value;
+            }
+        }
 
         /// <summary> Ingress type for the default NginxIngressController custom resource. </summary>
         [WirePath("nginx.defaultIngressControllerType")]

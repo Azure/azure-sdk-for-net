@@ -1229,6 +1229,25 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterIngressProfile(webAppRouting, gatewayApiInstallation is null ? default : new ManagedClusterIngressProfileGatewayConfiguration(gatewayApiInstallation, default), default);
         }
 
+        /// <param name="isEnabled"> Whether to enable the Application Routing add-on. </param>
+        /// <param name="gatewayApiImplementationsIstioMode"> Whether to enable Istio as a Gateway API implementation for managed ingress with App Routing. </param>
+        /// <param name="dnsZoneResourceIds"> Resource IDs of the DNS zones to be associated with the Application Routing add-on. Used only when Application Routing add-on is enabled. Public and private DNS zones can be in different resource groups, but all public DNS zones must be in the same resource group and all private DNS zones must be in the same resource group. </param>
+        /// <param name="nginxDefaultIngressControllerType"> Ingress type for the default NginxIngressController custom resource. </param>
+        /// <param name="identity"> Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterIngressProfileWebAppRouting"/> instance for mocking. </returns>
+        public static ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled = default, GatewayApiIstioMode? gatewayApiImplementationsIstioMode = default, IEnumerable<ResourceIdentifier> dnsZoneResourceIds = default, NginxIngressControllerType? nginxDefaultIngressControllerType = default, ContainerServiceUserAssignedIdentity identity = default)
+        {
+            dnsZoneResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new ManagedClusterIngressProfileWebAppRouting(
+                isEnabled,
+                default,
+                (dnsZoneResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                nginxDefaultIngressControllerType is null ? default : new ManagedClusterIngressProfileNginx(nginxDefaultIngressControllerType, default),
+                identity,
+                default);
+        }
+
         /// <param name="isKedaEnabled"> Whether to enable KEDA. </param>
         /// <param name="isVpaEnabled"> Whether to enable VPA. Default value is false. </param>
         /// <returns> A new <see cref="Models.ManagedClusterWorkloadAutoScalerProfile"/> instance for mocking. </returns>

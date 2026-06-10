@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(ManagedClusterUpgradeProfileProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterUpgradeProfileResource))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterVerticalPodAutoscaler))]
-    [ModelReaderWriterBuildable(typeof(ManagedClusterWebAppRoutingGatewayAPIImplementations))]
+    [ModelReaderWriterBuildable(typeof(ManagedClusterWebAppRoutingGatewayApiImplementations))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterWindowsProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterWorkloadAutoScalerProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterWorkloadAutoScalerProfileKeda))]

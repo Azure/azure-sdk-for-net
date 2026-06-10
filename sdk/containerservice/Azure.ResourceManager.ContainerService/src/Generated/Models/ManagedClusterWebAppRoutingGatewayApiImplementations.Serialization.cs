@@ -14,51 +14,51 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Configurations for Gateway API providers to be used for managed ingress with App Routing. </summary>
-    internal partial class ManagedClusterWebAppRoutingGatewayAPIImplementations : IJsonModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>
+    internal partial class ManagedClusterWebAppRoutingGatewayApiImplementations : IJsonModel<ManagedClusterWebAppRoutingGatewayApiImplementations>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterWebAppRoutingGatewayAPIImplementations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterWebAppRoutingGatewayApiImplementations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayApiImplementations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedClusterWebAppRoutingGatewayAPIImplementations(document.RootElement, options);
+                        return DeserializeManagedClusterWebAppRoutingGatewayApiImplementations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayAPIImplementations)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayApiImplementations)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayApiImplementations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayAPIImplementations)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayApiImplementations)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterWebAppRoutingGatewayApiImplementations>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterWebAppRoutingGatewayAPIImplementations IPersistableModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterWebAppRoutingGatewayApiImplementations IPersistableModel<ManagedClusterWebAppRoutingGatewayApiImplementations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterWebAppRoutingGatewayApiImplementations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterWebAppRoutingGatewayApiImplementations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayApiImplementations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayAPIImplementations)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayApiImplementations)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(AppRoutingIstio))
             {
@@ -98,24 +98,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterWebAppRoutingGatewayAPIImplementations IJsonModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterWebAppRoutingGatewayApiImplementations IJsonModel<ManagedClusterWebAppRoutingGatewayApiImplementations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterWebAppRoutingGatewayAPIImplementations JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterWebAppRoutingGatewayApiImplementations JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayAPIImplementations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWebAppRoutingGatewayApiImplementations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayAPIImplementations)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterWebAppRoutingGatewayApiImplementations)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedClusterWebAppRoutingGatewayAPIImplementations(document.RootElement, options);
+            return DeserializeManagedClusterWebAppRoutingGatewayApiImplementations(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedClusterWebAppRoutingGatewayAPIImplementations DeserializeManagedClusterWebAppRoutingGatewayAPIImplementations(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterWebAppRoutingGatewayApiImplementations DeserializeManagedClusterWebAppRoutingGatewayApiImplementations(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterWebAppRoutingGatewayAPIImplementations(appRoutingIstio, additionalBinaryDataProperties);
+            return new ManagedClusterWebAppRoutingGatewayApiImplementations(appRoutingIstio, additionalBinaryDataProperties);
         }
     }
 }
