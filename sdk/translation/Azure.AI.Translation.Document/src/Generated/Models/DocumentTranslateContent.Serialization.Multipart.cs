@@ -5,21 +5,15 @@
 
 #nullable disable
 
-using System.ClientModel;
-
 #pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.AI.Translation.Document
 {
     /// <summary></summary>
     public partial class DocumentTranslateContent
     {
-        /// <summary></summary>
-        internal MultiPartFormContent ToMultipartFormContent()
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/> for deserialization. </summary>
+        internal DocumentTranslateContent()
         {
-            MultiPartFormContent content = new MultiPartFormContent();
-
-
-            return content;
         }
     }
 }

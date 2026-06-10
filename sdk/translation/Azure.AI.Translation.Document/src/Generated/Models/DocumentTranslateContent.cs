@@ -5,10 +5,22 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Document Translate Request Content. </summary>
     public partial class DocumentTranslateContent
     {
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
+        /// <param name="multipartDocument"> Document to be translated in the form. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="multipartDocument"/> is null. </exception>
+        public DocumentTranslateContent(MultipartFormFileData multipartDocument)
+        {
+            Argument.AssertNotNull(multipartDocument, nameof(multipartDocument));
+
+            MultipartDocument = multipartDocument;
+            MultipartGlossary = new ChangeTrackingList<MultipartFormFileData>();
+        }
     }
 }
