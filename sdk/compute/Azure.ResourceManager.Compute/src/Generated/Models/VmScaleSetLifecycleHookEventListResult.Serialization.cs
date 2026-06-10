@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VmScaleSetLifecycleHookEventData item in Value)
+            foreach (VirtualMachineScaleSetLifecycleHookEventData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<VmScaleSetLifecycleHookEventData> value = default;
+            IList<VirtualMachineScaleSetLifecycleHookEventData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VmScaleSetLifecycleHookEventData> array = new List<VmScaleSetLifecycleHookEventData>();
+                    List<VirtualMachineScaleSetLifecycleHookEventData> array = new List<VirtualMachineScaleSetLifecycleHookEventData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmScaleSetLifecycleHookEventData.DeserializeVmScaleSetLifecycleHookEventData(item, options));
+                        array.Add(VirtualMachineScaleSetLifecycleHookEventData.DeserializeVirtualMachineScaleSetLifecycleHookEventData(item, options));
                     }
                     value = array;
                     continue;

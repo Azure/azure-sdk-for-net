@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine scale set lifecycle hook events created for a virtual machine scale set resource. </param>
-        internal VmScaleSetLifecycleHookEventListResult(IEnumerable<VmScaleSetLifecycleHookEventData> value)
+        internal VmScaleSetLifecycleHookEventListResult(IEnumerable<VirtualMachineScaleSetLifecycleHookEventData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> The list of virtual machine scale set lifecycle hook events created for a virtual machine scale set resource. </param>
         /// <param name="nextLink"> The uri to fetch the next page of virtual machine scale set lifecycle hook events. Call ListNext() with this to fetch the next page of virtual machine scale set lifecycle hook events. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmScaleSetLifecycleHookEventListResult(IList<VmScaleSetLifecycleHookEventData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmScaleSetLifecycleHookEventListResult(IList<VirtualMachineScaleSetLifecycleHookEventData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of virtual machine scale set lifecycle hook events created for a virtual machine scale set resource. </summary>
-        public IList<VmScaleSetLifecycleHookEventData> Value { get; }
+        public IList<VirtualMachineScaleSetLifecycleHookEventData> Value { get; }
 
         /// <summary> The uri to fetch the next page of virtual machine scale set lifecycle hook events. Call ListNext() with this to fetch the next page of virtual machine scale set lifecycle hook events. </summary>
         public Uri NextLink { get; }

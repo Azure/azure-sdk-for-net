@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VmScaleSetLifecycleHookEventResource"/> and their operations.
-    /// Each <see cref="VmScaleSetLifecycleHookEventResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetResource"/>.
-    /// To get a <see cref="VmScaleSetLifecycleHookEventCollection"/> instance call the GetVmScaleSetLifecycleHookEvents method from an instance of <see cref="VirtualMachineScaleSetResource"/>.
+    /// A class representing a collection of <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> and their operations.
+    /// Each <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetResource"/>.
+    /// To get a <see cref="VirtualMachineScaleSetLifecycleHookEventDataCollection"/> instance call the GetVirtualMachineScaleSetLifecycleHookEventDatas method from an instance of <see cref="VirtualMachineScaleSetResource"/>.
     /// </summary>
-    public partial class VmScaleSetLifecycleHookEventCollection : ArmCollection, IEnumerable<VmScaleSetLifecycleHookEventResource>, IAsyncEnumerable<VmScaleSetLifecycleHookEventResource>
+    public partial class VirtualMachineScaleSetLifecycleHookEventDataCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetLifecycleHookEventDataResource>, IAsyncEnumerable<VirtualMachineScaleSetLifecycleHookEventDataResource>
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics;
         private readonly VirtualMachineScaleSetLifeCycleHookEvents _virtualMachineScaleSetLifeCycleHookEventsRestClient;
 
-        /// <summary> Initializes a new instance of VmScaleSetLifecycleHookEventCollection for mocking. </summary>
-        protected VmScaleSetLifecycleHookEventCollection()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetLifecycleHookEventDataCollection for mocking. </summary>
+        protected VirtualMachineScaleSetLifecycleHookEventDataCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventDataCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VmScaleSetLifecycleHookEventCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VirtualMachineScaleSetLifecycleHookEventDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VmScaleSetLifecycleHookEventResource.ResourceType, out string vmScaleSetLifecycleHookEventApiVersion);
-            _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VmScaleSetLifecycleHookEventResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetLifeCycleHookEventsRestClient = new VirtualMachineScaleSetLifeCycleHookEvents(_virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, Endpoint, vmScaleSetLifecycleHookEventApiVersion ?? "2025-11-01");
+            TryGetApiVersion(VirtualMachineScaleSetLifecycleHookEventDataResource.ResourceType, out string virtualMachineScaleSetLifecycleHookEventDataApiVersion);
+            _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetLifecycleHookEventDataResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetLifeCycleHookEventsRestClient = new VirtualMachineScaleSetLifeCycleHookEvents(_virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetLifecycleHookEventDataApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VmScaleSetLifecycleHookEventResource>> GetAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventDataResource>> GetAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VmScaleSetLifecycleHookEventCollection.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VmScaleSetLifecycleHookEventData> response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
+                Response<VirtualMachineScaleSetLifecycleHookEventData> response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VmScaleSetLifecycleHookEventResource> Get(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetLifecycleHookEventDataResource> Get(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VmScaleSetLifecycleHookEventCollection.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VmScaleSetLifecycleHookEventData> response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
+                Response<VirtualMachineScaleSetLifecycleHookEventData> response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmScaleSetLifecycleHookEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmScaleSetLifecycleHookEventResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSetLifecycleHookEventDataResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VmScaleSetLifecycleHookEventData, VmScaleSetLifecycleHookEventResource>(new VirtualMachineScaleSetLifeCycleHookEventsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineScaleSetLifecycleHookEventData, VirtualMachineScaleSetLifecycleHookEventDataResource>(new VirtualMachineScaleSetLifeCycleHookEventsGetAllAsyncCollectionResultOfT(
                 _virtualMachineScaleSetLifeCycleHookEventsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "VmScaleSetLifecycleHookEventCollection.GetAll"), data => new VmScaleSetLifecycleHookEventResource(Client, data));
+                "VirtualMachineScaleSetLifecycleHookEventDataCollection.GetAll"), data => new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, data));
         }
 
         /// <summary>
@@ -204,20 +204,20 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmScaleSetLifecycleHookEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmScaleSetLifecycleHookEventResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineScaleSetLifecycleHookEventDataResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VmScaleSetLifecycleHookEventData, VmScaleSetLifecycleHookEventResource>(new VirtualMachineScaleSetLifeCycleHookEventsGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineScaleSetLifecycleHookEventData, VirtualMachineScaleSetLifecycleHookEventDataResource>(new VirtualMachineScaleSetLifeCycleHookEventsGetAllCollectionResultOfT(
                 _virtualMachineScaleSetLifeCycleHookEventsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "VmScaleSetLifecycleHookEventCollection.GetAll"), data => new VmScaleSetLifecycleHookEventResource(Client, data));
+                "VirtualMachineScaleSetLifecycleHookEventDataCollection.GetAll"), data => new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VmScaleSetLifecycleHookEventCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<VmScaleSetLifecycleHookEventData> response = default;
+                Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
+                        response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmScaleSetLifecycleHookEventData)null, result);
+                        response = Response.FromValue((VirtualMachineScaleSetLifecycleHookEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VmScaleSetLifecycleHookEventCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataCollection.Exists");
             scope.Start();
             try
             {
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<VmScaleSetLifecycleHookEventData> response = default;
+                Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
+                        response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmScaleSetLifecycleHookEventData)null, result);
+                        response = Response.FromValue((VirtualMachineScaleSetLifecycleHookEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<VmScaleSetLifecycleHookEventResource>> GetIfExistsAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<VirtualMachineScaleSetLifecycleHookEventDataResource>> GetIfExistsAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VmScaleSetLifecycleHookEventCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -370,23 +370,23 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<VmScaleSetLifecycleHookEventData> response = default;
+                Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
+                        response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmScaleSetLifecycleHookEventData)null, result);
+                        response = Response.FromValue((VirtualMachineScaleSetLifecycleHookEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<VmScaleSetLifecycleHookEventResource>(response.GetRawResponse());
+                    return new NoValueResponse<VirtualMachineScaleSetLifecycleHookEventDataResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<VmScaleSetLifecycleHookEventResource> GetIfExists(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<VirtualMachineScaleSetLifecycleHookEventDataResource> GetIfExists(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VmScaleSetLifecycleHookEventCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -431,23 +431,23 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<VmScaleSetLifecycleHookEventData> response = default;
+                Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmScaleSetLifecycleHookEventData.FromResponse(result), result);
+                        response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmScaleSetLifecycleHookEventData)null, result);
+                        response = Response.FromValue((VirtualMachineScaleSetLifecycleHookEventData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<VmScaleSetLifecycleHookEventResource>(response.GetRawResponse());
+                    return new NoValueResponse<VirtualMachineScaleSetLifecycleHookEventDataResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<VmScaleSetLifecycleHookEventResource> IEnumerable<VmScaleSetLifecycleHookEventResource>.GetEnumerator()
+        IEnumerator<VirtualMachineScaleSetLifecycleHookEventDataResource> IEnumerable<VirtualMachineScaleSetLifecycleHookEventDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<VmScaleSetLifecycleHookEventResource> IAsyncEnumerable<VmScaleSetLifecycleHookEventResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualMachineScaleSetLifecycleHookEventDataResource> IAsyncEnumerable<VirtualMachineScaleSetLifecycleHookEventDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

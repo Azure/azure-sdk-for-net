@@ -2893,11 +2893,11 @@ namespace Azure.ResourceManager.Compute
             return GetVirtualMachineScaleSetExtensions().Get(vmssExtensionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VmScaleSetLifecycleHookEvents in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
-        /// <returns> An object representing collection of VmScaleSetLifecycleHookEvents and their operations over a VmScaleSetLifecycleHookEventResource. </returns>
-        public virtual VmScaleSetLifecycleHookEventCollection GetVmScaleSetLifecycleHookEvents()
+        /// <summary> Gets a collection of VirtualMachineScaleSetLifecycleHookEventData in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetLifecycleHookEventData and their operations over a VirtualMachineScaleSetLifecycleHookEventDataResource. </returns>
+        public virtual VirtualMachineScaleSetLifecycleHookEventDataCollection GetAllVirtualMachineScaleSetLifecycleHookEventData()
         {
-            return GetCachedClient(client => new VmScaleSetLifecycleHookEventCollection(client, Id));
+            return GetCachedClient(client => new VirtualMachineScaleSetLifecycleHookEventDataCollection(client, Id));
         }
 
         /// <summary> Gets a virtual machine scale set lifecycle hook event. </summary>
@@ -2906,11 +2906,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VmScaleSetLifecycleHookEventResource>> GetVmScaleSetLifecycleHookEventAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventDataResource>> GetVirtualMachineScaleSetLifecycleHookEventDataAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            return await GetVmScaleSetLifecycleHookEvents().GetAsync(lifecycleHookEventName, cancellationToken).ConfigureAwait(false);
+            return await GetAllVirtualMachineScaleSetLifecycleHookEventData().GetAsync(lifecycleHookEventName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a virtual machine scale set lifecycle hook event. </summary>
@@ -2919,11 +2919,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VmScaleSetLifecycleHookEventResource> GetVmScaleSetLifecycleHookEvent(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetLifecycleHookEventDataResource> GetVirtualMachineScaleSetLifecycleHookEventData(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            return GetVmScaleSetLifecycleHookEvents().Get(lifecycleHookEventName, cancellationToken);
+            return GetAllVirtualMachineScaleSetLifecycleHookEventData().Get(lifecycleHookEventName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualMachineScaleSetVms in the <see cref="VirtualMachineScaleSetResource"/>. </summary>

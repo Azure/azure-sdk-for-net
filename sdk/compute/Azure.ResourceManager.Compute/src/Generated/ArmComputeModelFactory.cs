@@ -1601,10 +1601,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Defines the virtual machine scale set lifecycle hook event properties. </param>
-        /// <returns> A new <see cref="Compute.VmScaleSetLifecycleHookEventData"/> instance for mocking. </returns>
-        public static VmScaleSetLifecycleHookEventData VmScaleSetLifecycleHookEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VmScaleSetLifecycleHookEventProperties properties = default)
+        /// <returns> A new <see cref="Compute.VirtualMachineScaleSetLifecycleHookEventData"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventData VirtualMachineScaleSetLifecycleHookEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VmScaleSetLifecycleHookEventProperties properties = default)
         {
-            return new VmScaleSetLifecycleHookEventData(
+            return new VirtualMachineScaleSetLifecycleHookEventData(
                 id,
                 name,
                 resourceType,
@@ -4898,7 +4898,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
@@ -4906,8 +4905,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identifierUniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
         /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
         /// <param name="identity"> The identity of the gallery, if configured. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryPatch"/> instance for mocking. </returns>
-        public static GalleryPatch GalleryPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, ManagedServiceIdentity identity = default)
+        public static GalleryPatch GalleryPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4916,8 +4916,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && isSoftDeleteEnabled is null && sharingStatus is null ? default : new GalleryProperties(
                     description,
                     new GalleryIdentifier(identifierUniqueName, default),
@@ -4926,24 +4924,7 @@ namespace Azure.ResourceManager.Compute.Models
                     new SoftDeletePolicy(isSoftDeleteEnabled, default),
                     sharingStatus,
                     default),
-                identity);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.UpdateResourceDefinition"/> instance for mocking. </returns>
-        public static UpdateResourceDefinition UpdateResourceDefinition(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new UpdateResourceDefinition(
-                id,
-                name,
-                resourceType,
-                systemData,
+                identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
@@ -5119,7 +5100,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="description"> The description of this gallery image definition resource. This property is updatable. </param>
         /// <param name="eula"> The Eula agreement for the gallery image definition. </param>
         /// <param name="privacyStatementUri"> The privacy statement uri. </param>
@@ -5136,8 +5116,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryImagePatch"/> instance for mocking. </returns>
-        public static GalleryImagePatch GalleryImagePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, HyperVGeneration? hyperVGeneration = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, ImagePurchasePlan purchasePlan = default, GalleryProvisioningState? provisioningState = default, IEnumerable<GalleryImageFeature> features = default, ArchitectureType? architecture = default, bool? allowUpdateImage = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static GalleryImagePatch GalleryImagePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, HyperVGeneration? hyperVGeneration = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, ImagePurchasePlan purchasePlan = default, GalleryProvisioningState? provisioningState = default, IEnumerable<GalleryImageFeature> features = default, ArchitectureType? architecture = default, bool? allowUpdateImage = default, IEnumerable<string> disallowedDiskTypes = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5146,8 +5127,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && osType is null && osState is null && hyperVGeneration is null && endOfLifeOn is null && identifier is null && recommended is null && disallowedDiskTypes is null && purchasePlan is null && provisioningState is null && features is null && architecture is null && allowUpdateImage is null ? default : new GalleryImageProperties(
                     description,
                     eula,
@@ -5165,7 +5144,9 @@ namespace Azure.ResourceManager.Compute.Models
                     (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
                     architecture,
                     allowUpdateImage,
-                    default));
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5503,7 +5484,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
@@ -5512,8 +5492,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
-        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? restore = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? restore = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5522,8 +5503,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && restore is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
@@ -5533,7 +5512,9 @@ namespace Azure.ResourceManager.Compute.Models
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
                     restore,
                     validationsProfile,
-                    default));
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5606,7 +5587,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="description"> The description of this gallery Application Definition resource. This property is updatable. </param>
         /// <param name="eula"> The Eula agreement for the gallery Application Definition. </param>
         /// <param name="privacyStatementUri"> The privacy statement uri. </param>
@@ -5614,8 +5594,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="endOfLifeOn"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryApplicationPatch"/> instance for mocking. </returns>
-        public static GalleryApplicationPatch GalleryApplicationPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, DateTimeOffset? endOfLifeOn = default, SupportedOperatingSystemType? supportedOSType = default, IEnumerable<GalleryApplicationCustomAction> customActions = default)
+        public static GalleryApplicationPatch GalleryApplicationPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, DateTimeOffset? endOfLifeOn = default, SupportedOperatingSystemType? supportedOSType = default, IEnumerable<GalleryApplicationCustomAction> customActions = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5624,8 +5605,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && endOfLifeOn is null && supportedOSType is null && customActions is null ? default : new GalleryApplicationProperties(
                     description,
                     eula,
@@ -5634,7 +5613,9 @@ namespace Azure.ResourceManager.Compute.Models
                     endOfLifeOn,
                     supportedOSType.GetValueOrDefault(),
                     (customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>()).ToList(),
-                    default));
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5742,13 +5723,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryApplicationVersionPatch"/> instance for mocking. </returns>
-        public static GalleryApplicationVersionPatch GalleryApplicationVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, GalleryApplicationVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, ReplicationStatus replicationStatus = default, bool? allowDeletionOfReplicatedLocations = default)
+        public static GalleryApplicationVersionPatch GalleryApplicationVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryApplicationVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, ReplicationStatus replicationStatus = default, bool? allowDeletionOfReplicatedLocations = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5757,9 +5738,9 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
+                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryApplicationVersionProperties(publishingProfile, new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryApplicationVersionProperties(publishingProfile, new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default));
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5810,7 +5791,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="description"> The description of this gallery script definition resource. This property is updatable. </param>
         /// <param name="eula"> The Eula agreement (End User License Agreement) for the gallery Script Definition. </param>
         /// <param name="privacyStatementUri"> The privacy statement uri. </param>
@@ -5818,8 +5798,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="endOfLifeOn"> The end of life date of the gallery Script Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryScriptPatch"/> instance for mocking. </returns>
-        public static GalleryScriptPatch GalleryScriptPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, DateTimeOffset? endOfLifeOn = default, SupportedOperatingSystemType? supportedOSType = default, GalleryProvisioningState? provisioningState = default)
+        public static GalleryScriptPatch GalleryScriptPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, DateTimeOffset? endOfLifeOn = default, SupportedOperatingSystemType? supportedOSType = default, GalleryProvisioningState? provisioningState = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5828,8 +5809,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && endOfLifeOn is null && supportedOSType is null && provisioningState is null ? default : new GalleryScriptProperties(
                     description,
                     eula,
@@ -5838,7 +5817,9 @@ namespace Azure.ResourceManager.Compute.Models
                     endOfLifeOn,
                     supportedOSType.GetValueOrDefault(),
                     provisioningState,
-                    default));
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5960,13 +5941,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryScriptVersionPatch"/> instance for mocking. </returns>
-        public static GalleryScriptVersionPatch GalleryScriptVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, GalleryScriptVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, ReplicationStatus replicationStatus = default, bool? allowDeletionOfReplicatedLocations = default)
+        public static GalleryScriptVersionPatch GalleryScriptVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryScriptVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, ReplicationStatus replicationStatus = default, bool? allowDeletionOfReplicatedLocations = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5975,9 +5956,9 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
+                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryScriptVersionProperties(publishingProfile, new GalleryScriptVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryScriptVersionProperties(publishingProfile, new GalleryScriptVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default));
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -6024,10 +6005,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Describes the properties of a gallery inVMAccessControlProfile. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryInVmAccessControlProfilePatch"/> instance for mocking. </returns>
-        public static GalleryInVmAccessControlProfilePatch GalleryInVmAccessControlProfilePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, GalleryInVmAccessControlProfileProperties properties = default)
+        public static GalleryInVmAccessControlProfilePatch GalleryInVmAccessControlProfilePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryInVmAccessControlProfileProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -6036,9 +6017,9 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                properties);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -6147,7 +6128,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="targetLocations"> The target regions where the Resource Profile version is going to be replicated to. This property is updatable. </param>
         /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Resource Profile won't use this Profile version. </param>
         /// <param name="publishedOn"> The timestamp for when the Resource Profile Version is published. </param>
@@ -6156,8 +6136,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="mode"> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </param>
         /// <param name="defaultAccess"> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </param>
         /// <param name="rules"> This is the Access Control Rules specification for an inVMAccessControlProfile version. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryInVmAccessControlProfileVersionPatch"/> instance for mocking. </returns>
-        public static GalleryInVmAccessControlProfileVersionPatch GalleryInVmAccessControlProfileVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, IEnumerable<TargetRegion> targetLocations = default, bool? excludeFromLatest = default, DateTimeOffset? publishedOn = default, GalleryProvisioningState? provisioningState = default, ReplicationStatus replicationStatus = default, GalleryInVmAccessControlRulesMode? mode = default, ComputeGalleryEndpointAccess? defaultAccess = default, GalleryInVmAccessControlRules rules = default)
+        public static GalleryInVmAccessControlProfileVersionPatch GalleryInVmAccessControlProfileVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<TargetRegion> targetLocations = default, bool? excludeFromLatest = default, DateTimeOffset? publishedOn = default, GalleryProvisioningState? provisioningState = default, ReplicationStatus replicationStatus = default, GalleryInVmAccessControlRulesMode? mode = default, ComputeGalleryEndpointAccess? defaultAccess = default, GalleryInVmAccessControlRules rules = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -6166,8 +6147,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 targetLocations is null && excludeFromLatest is null && publishedOn is null && provisioningState is null && replicationStatus is null && mode is null && defaultAccess is null && rules is null ? default : new GalleryInVmAccessControlProfileVersionProperties(
                     (targetLocations ?? new ChangeTrackingList<TargetRegion>()).ToList(),
                     excludeFromLatest,
@@ -6177,7 +6156,9 @@ namespace Azure.ResourceManager.Compute.Models
                     default,
                     mode.GetValueOrDefault(),
                     defaultAccess.GetValueOrDefault(),
-                    rules));
+                    rules),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="name"> Resource name. </param>
@@ -8583,8 +8564,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && isSoftDeleteEnabled is null && sharingStatus is null ? default : new GalleryProperties(
                     description,
                     new GalleryIdentifier(identifierUniqueName, default),
@@ -8593,42 +8572,9 @@ namespace Azure.ResourceManager.Compute.Models
                     new SoftDeletePolicy(isSoftDeleteEnabled, default),
                     sharingStatus,
                     default),
-                identity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GalleryApplicationPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of this gallery Application Definition resource. This property is updatable. </param>
-        /// <param name="eula"> The Eula agreement for the gallery Application Definition. </param>
-        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
-        /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </param>
-        /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.GalleryApplicationPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GalleryApplicationPatch GalleryApplicationPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, DateTimeOffset? endOfLifeOn = default, SupportedOperatingSystemType? supportedOSType = default, IEnumerable<GalleryApplicationCustomAction> customActions = default, IDictionary<string, string> tags = default)
-        {
-            return new GalleryApplicationPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
+                identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && endOfLifeOn is null && supportedOSType is null && customActions is null ? default : new GalleryApplicationProperties(
-                    description,
-                    eula,
-                    privacyStatementUri,
-                    releaseNoteUri,
-                    endOfLifeOn,
-                    supportedOSType.GetValueOrDefault(),
-                    (customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>()).ToList(),
-                    default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.GalleryApplicationVersionData"/>. </summary>
@@ -8676,9 +8622,9 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
+                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryApplicationVersionProperties(publishingProfile, new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryApplicationVersionProperties(publishingProfile, new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.GalleryImageData"/>. </summary>
@@ -8767,8 +8713,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && osType is null && osState is null && hyperVGeneration is null && endOfLifeOn is null && identifier is null && recommended is null && disallowedDiskTypes is null && purchasePlan is null && provisioningState is null && features is null && architecture is null && allowUpdateImage is null ? default : new GalleryImageProperties(
                     description,
                     eula,
@@ -8786,7 +8730,9 @@ namespace Azure.ResourceManager.Compute.Models
                     (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
                     architecture,
                     allowUpdateImage,
-                    default));
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.GalleryImageVersionData"/>. </summary>
@@ -8851,8 +8797,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && restore is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
@@ -8862,100 +8806,9 @@ namespace Azure.ResourceManager.Compute.Models
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
                     restore,
                     validationsProfile,
-                    default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GalleryInVmAccessControlProfilePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Describes the properties of a gallery inVMAccessControlProfile. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.GalleryInVmAccessControlProfilePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GalleryInVmAccessControlProfilePatch GalleryInVmAccessControlProfilePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryInVmAccessControlProfileProperties properties = default, IDictionary<string, string> tags = default)
-        {
-            return new GalleryInVmAccessControlProfilePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
+                    default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GalleryInVmAccessControlProfileVersionPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetLocations"> The target regions where the Resource Profile version is going to be replicated to. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Resource Profile won't use this Profile version. </param>
-        /// <param name="publishedOn"> The timestamp for when the Resource Profile Version is published. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="mode"> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </param>
-        /// <param name="defaultAccess"> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </param>
-        /// <param name="rules"> This is the Access Control Rules specification for an inVMAccessControlProfile version. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.GalleryInVmAccessControlProfileVersionPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GalleryInVmAccessControlProfileVersionPatch GalleryInVmAccessControlProfileVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<TargetRegion> targetLocations = default, bool? excludeFromLatest = default, DateTimeOffset? publishedOn = default, GalleryProvisioningState? provisioningState = default, ReplicationStatus replicationStatus = default, GalleryInVmAccessControlRulesMode? mode = default, ComputeGalleryEndpointAccess? defaultAccess = default, GalleryInVmAccessControlRules rules = default, IDictionary<string, string> tags = default)
-        {
-            return new GalleryInVmAccessControlProfileVersionPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                targetLocations is null && excludeFromLatest is null && publishedOn is null && provisioningState is null && replicationStatus is null && mode is null && defaultAccess is null && rules is null ? default : new GalleryInVmAccessControlProfileVersionProperties(
-                    (targetLocations ?? new ChangeTrackingList<TargetRegion>()).ToList(),
-                    excludeFromLatest,
-                    publishedOn,
-                    provisioningState,
-                    replicationStatus,
-                    default,
-                    mode.GetValueOrDefault(),
-                    defaultAccess.GetValueOrDefault(),
-                    rules));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GalleryScriptPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of this gallery script definition resource. This property is updatable. </param>
-        /// <param name="eula"> The Eula agreement (End User License Agreement) for the gallery Script Definition. </param>
-        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
-        /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery Script Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.GalleryScriptPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GalleryScriptPatch GalleryScriptPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string eula = default, Uri privacyStatementUri = default, Uri releaseNoteUri = default, DateTimeOffset? endOfLifeOn = default, SupportedOperatingSystemType? supportedOSType = default, GalleryProvisioningState? provisioningState = default, IDictionary<string, string> tags = default)
-        {
-            return new GalleryScriptPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && endOfLifeOn is null && supportedOSType is null && provisioningState is null ? default : new GalleryScriptProperties(
-                    description,
-                    eula,
-                    privacyStatementUri,
-                    releaseNoteUri,
-                    endOfLifeOn,
-                    supportedOSType.GetValueOrDefault(),
-                    provisioningState,
-                    default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryScriptVersionPatch"/>. </summary>
@@ -8977,9 +8830,9 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
+                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryScriptVersionProperties(publishingProfile, new GalleryScriptVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                publishingProfile is null && allowDeletionOfReplicatedLocations is null && provisioningState is null && replicationStatus is null ? default : new GalleryScriptVersionProperties(publishingProfile, new GalleryScriptVersionSafetyProfile(allowDeletionOfReplicatedLocations, default), provisioningState, replicationStatus, default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryApplicationVersionPublishingProfile"/>. </summary>
@@ -10084,8 +9937,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && isSoftDeleteEnabled is null && sharingStatus is null ? default : new GalleryProperties(
                     description,
                     new GalleryIdentifier(identifierUniqueName, default),
@@ -10094,6 +9945,8 @@ namespace Azure.ResourceManager.Compute.Models
                     new SoftDeletePolicy(isSoftDeleteEnabled, default),
                     sharingStatus,
                     default),
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -10181,8 +10034,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && osType is null && osState is null && hyperVGeneration is null && endOfLifeOn is null && identifier is null && recommended is null && disallowedDiskTypes is null && purchasePlan is null && provisioningState is null && features is null && architecture is null ? default : new GalleryImageProperties(
                     description,
                     eula,
@@ -10200,7 +10051,9 @@ namespace Azure.ResourceManager.Compute.Models
                     (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
                     architecture,
                     default,
-                    default));
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.GalleryImageVersionData"/>. </summary>
@@ -10272,8 +10125,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
@@ -10283,7 +10134,9 @@ namespace Azure.ResourceManager.Compute.Models
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
                     default,
                     default,
-                    default));
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.AvailabilitySetData"/>. </summary>

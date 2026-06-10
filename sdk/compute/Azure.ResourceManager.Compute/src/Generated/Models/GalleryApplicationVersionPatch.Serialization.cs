@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery Application Version that you want to update. </summary>
-    public partial class GalleryApplicationVersionPatch : UpdateResourceDefinition, IJsonModel<GalleryApplicationVersionPatch>
+    public partial class GalleryApplicationVersionPatch : ResourceData, IJsonModel<GalleryApplicationVersionPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,6 +93,37 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -101,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -124,9 +155,9 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            GalleryApplicationVersionProperties properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GalleryApplicationVersionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -161,6 +192,15 @@ namespace Azure.ResourceManager.Compute.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = GalleryApplicationVersionProperties.DeserializeGalleryApplicationVersionProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -182,15 +222,6 @@ namespace Azure.ResourceManager.Compute.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = GalleryApplicationVersionProperties.DeserializeGalleryApplicationVersionProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -201,9 +232,9 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties,
-                properties);
+                additionalBinaryDataProperties);
         }
     }
 }
