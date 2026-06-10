@@ -150,9 +150,13 @@ namespace Azure.Generator.Provisioning
             foreach (var inputModel in reachableModels)
             {
                 var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && model is not ProvisioningResourceProvider)
+                if (model is not null)
                 {
                     providers.Add(model);
+                    if (model is ProvisioningResourceProvider resource)
+                    {
+                        ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
+                    }
                 }
             }
 

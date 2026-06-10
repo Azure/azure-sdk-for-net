@@ -2,35 +2,35 @@ namespace Azure.Provisioning.Cdn
 {
     public enum AfdCipherSuiteSetType
     {
+        Customized = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS10_2019")]
-        Tls1_0_2019 = 0,
+        TLS102019 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS12_2022")]
-        Tls1_2_2022 = 1,
+        TLS122022 = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS12_2023")]
-        Tls1_2_2023 = 2,
-        Customized = 3,
+        TLS122023 = 3,
     }
     public enum AfdCustomizedCipherSuiteForTls12
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES128_GCM_SHA256")]
-        Ecdhe_Rsa_Aes128_Gcm_Sha256 = 0,
+        ECDHERSAAES128GCMSHA256 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES256_GCM_SHA384")]
-        Ecdhe_Rsa_Aes256_Gcm_Sha384 = 1,
+        ECDHERSAAES256GCMSHA384 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="DHE_RSA_AES256_GCM_SHA384")]
-        Dhe_Rsa_Aes256_Gcm_Sha384 = 2,
+        DHERSAAES256GCMSHA384 = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="DHE_RSA_AES128_GCM_SHA256")]
-        Dhe_Rsa_Aes128_Gcm_Sha256 = 3,
+        DHERSAAES128GCMSHA256 = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES128_SHA256")]
-        Ecdhe_Rsa_Aes128_Sha256 = 4,
+        ECDHERSAAES128SHA256 = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES256_SHA384")]
-        Ecdhe_Rsa_Aes256_Sha384 = 5,
+        ECDHERSAAES256SHA384 = 5,
     }
     public enum AfdCustomizedCipherSuiteForTls13
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_AES_128_GCM_SHA256")]
-        Tls_Aes_128_Gcm_Sha256 = 0,
+        TLSAES128GCMSHA256 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_AES_256_GCM_SHA384")]
-        Tls_Aes_256_Gcm_Sha384 = 1,
+        TLSAES256GCMSHA384 = 1,
     }
     public partial class AzureFirstPartyManagedCertificateProperties : Azure.Provisioning.Cdn.FrontDoorSecretProperties
     {
@@ -59,7 +59,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.RuleQueryStringCachingBehavior> QueryStringCachingBehavior { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class CacheExpirationActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CacheExpirationActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public CacheExpirationActionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CacheBehaviorSetting> CacheBehavior { get { throw null; } set { } }
@@ -67,54 +67,39 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnCacheLevel> CacheType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum CacheExpirationActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleCacheExpirationActionParameters")]
-        CacheExpirationAction = 0,
-    }
-    public partial class CacheKeyQueryStringActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CacheKeyQueryStringActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public CacheKeyQueryStringActionProperties() { }
         public Azure.Provisioning.BicepValue<string> QueryParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.QueryStringBehavior> QueryStringBehavior { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum CacheKeyQueryStringActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleCacheKeyQueryStringBehaviorActionParameters")]
-        CacheKeyQueryStringBehaviorAction = 0,
-    }
     public enum CdnCacheLevel
     {
         All = 0,
     }
-    public partial class CdnCertificateSource : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CdnCertificateSource : Azure.Provisioning.Cdn.CertificateSourceProperties
     {
         public CdnCertificateSource() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnManagedCertificateType> CertificateType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum CdnCertificateSourceType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="CdnCertificateSourceParameters")]
-        CdnCertificateSource = 0,
-    }
     public partial class CdnCustomDomain : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CdnCustomDomain(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.Cdn.CustomDomainHttpsContent CustomDomainHttpsContent { get { throw null; } }
+        public CdnCustomDomain(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.Cdn.CustomDomainHttpsContent CustomDomainHttpsContent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CustomHttpsAvailabilityState> CustomHttpsAvailabilityState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CustomHttpsProvisioningState> CustomHttpsProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnEndpoint? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnEndpoint Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CustomHttpsProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CustomDomainResourceState> ResourceState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.CdnCustomDomain FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.CdnCustomDomain FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -122,9 +107,8 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class CdnEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CdnEndpoint(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CdnEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> ContentTypesToCompress { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.CdnCustomDomain> CustomDomains { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.DeepCreatedCustomDomain> DeepCreatedCustomDomains { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DefaultOriginGroupId { get { throw null; } set { } }
         public Azure.Provisioning.Cdn.EndpointDeliveryPolicy DeliveryPolicy { get { throw null; } set { } }
@@ -141,7 +125,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> OriginHostHeader { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OriginPath { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.DeepCreatedOrigin> Origins { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProbePath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnEndpointProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.QueryStringCachingBehavior> QueryStringCachingBehavior { get { throw null; } set { } }
@@ -151,7 +135,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.UriSigningKey> UriSigningKeys { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.CdnEndpoint FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.CdnEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -173,20 +157,18 @@ namespace Azure.Provisioning.Cdn
     public partial class CdnManagedHttpsContent : Azure.Provisioning.Cdn.CustomDomainHttpsContent
     {
         public CdnManagedHttpsContent() { }
-        public Azure.Provisioning.Cdn.CdnCertificateSource CertificateSourceParameters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnManagedCertificateType> CertificateType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CdnMinimumTlsVersion
     {
         None = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS 1.0")]
-        Tls1_0 = 1,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS 1.2")]
-        Tls1_2 = 2,
+        TLS10 = 1,
+        TLS12 = 2,
     }
     public partial class CdnOrigin : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CdnOrigin(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CdnOrigin(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> HttpPort { get { throw null; } set { } }
@@ -194,7 +176,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OriginHostHeader { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnEndpoint? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnEndpoint Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.PrivateEndpointStatus> PrivateEndpointStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PrivateLinkAlias { get { throw null; } set { } }
@@ -206,7 +188,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.CdnOrigin FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.CdnOrigin FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -214,19 +196,19 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class CdnOriginGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CdnOriginGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CdnOriginGroup(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Cdn.HealthProbeSettings HealthProbeSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> Origins { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnEndpoint? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnEndpoint Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.OriginGroupProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.OriginGroupResourceState> ResourceState { get { throw null; } }
         public Azure.Provisioning.Cdn.ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.CdnOriginGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.CdnOriginGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -234,7 +216,7 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class CdnProfile : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CdnProfile(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CdnProfile(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepDictionary<string> ExtendedProperties { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> FrontDoorId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -250,12 +232,18 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.CdnProfile FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.CdnProfile FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
         }
+    }
+    public partial class CdnSku : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CdnSku() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnSkuName> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum CdnSkuName
     {
@@ -288,7 +276,7 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class CdnWebApplicationFirewallPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CdnWebApplicationFirewallPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CdnWebApplicationFirewallPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.CustomRule> CustomRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> EndpointLinks { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
@@ -305,7 +293,8 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.CdnWebApplicationFirewallPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.CdnWebApplicationFirewallPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -315,11 +304,16 @@ namespace Azure.Provisioning.Cdn
     {
         NoAction = 0,
     }
+    public partial class CertificateSourceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CertificateSourceProperties() { }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum CertificateUpdateAction
     {
         NoAction = 0,
     }
-    public partial class ClientPortMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ClientPortMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public ClientPortMatchCondition() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.ClientPortOperator> ClientPortOperator { get { throw null; } set { } }
@@ -327,11 +321,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<bool> NegateCondition { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum ClientPortMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleClientPortConditionParameters")]
-        ClientPortCondition = 0,
     }
     public enum ClientPortOperator
     {
@@ -346,7 +335,7 @@ namespace Azure.Provisioning.Cdn
         GreaterThanOrEqual = 8,
         RegEx = 9,
     }
-    public partial class CookiesMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CookiesMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public CookiesMatchCondition() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CookiesOperator> CookiesOperator { get { throw null; } set { } }
@@ -355,11 +344,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> Selector { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum CookiesMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleCookiesConditionParameters")]
-        CookiesCondition = 0,
     }
     public enum CookiesOperator
     {
@@ -395,7 +379,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SecretSourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> SubjectAlternativeNames { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> SubjectAlternativeNames { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> UseLatestVersion { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -450,9 +434,16 @@ namespace Azure.Provisioning.Cdn
     public partial class DeepCreatedCustomDomain : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DeepCreatedCustomDomain() { }
-        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DeepCreatedCustomDomainProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DeepCreatedCustomDomainProperties() { }
+        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DeepCreatedOrigin : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -497,6 +488,11 @@ namespace Azure.Provisioning.Cdn
         public DeliveryRuleAction() { }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class DeliveryRuleActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DeliveryRuleActionProperties() { }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class DeliveryRuleCacheExpirationAction : Azure.Provisioning.Cdn.DeliveryRuleAction
     {
         public DeliveryRuleCacheExpirationAction() { }
@@ -518,6 +514,11 @@ namespace Azure.Provisioning.Cdn
     public partial class DeliveryRuleCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DeliveryRuleCondition() { }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DeliveryRuleConditionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DeliveryRuleConditionProperties() { }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DeliveryRuleCookiesCondition : Azure.Provisioning.Cdn.DeliveryRuleCondition
@@ -624,12 +625,11 @@ namespace Azure.Provisioning.Cdn
     }
     public enum DeliveryRuleSslProtocol
     {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TLSv1")]
-        Tls1_0 = 0,
+        TLSv1 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLSv1.1")]
-        Tls1_1 = 1,
+        TLSv11 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLSv1.2")]
-        Tls1_2 = 2,
+        TLSv12 = 2,
     }
     public partial class DeliveryRuleSslProtocolCondition : Azure.Provisioning.Cdn.DeliveryRuleCondition
     {
@@ -637,7 +637,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.Cdn.DeliveryRuleSslProtocolMatchCondition Properties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class DeliveryRuleSslProtocolMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class DeliveryRuleSslProtocolMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public DeliveryRuleSslProtocolMatchCondition() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.DeliveryRuleSslProtocol> MatchValues { get { throw null; } set { } }
@@ -738,7 +738,7 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorCustomDomain : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorCustomDomain(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorCustomDomain(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DnsZoneId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.DomainValidationState> DomainValidationState { get { throw null; } }
@@ -746,7 +746,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PreValidatedCustomDomainResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProfileName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
@@ -754,7 +754,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.Cdn.FrontDoorCustomDomainHttpsContent TlsSettings { get { throw null; } set { } }
         public Azure.Provisioning.Cdn.DomainValidationProperties ValidationProperties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorCustomDomain FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorCustomDomain FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -786,7 +786,7 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorEndpoint(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.DomainNameLabelScope> AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.EnabledState> EnabledState { get { throw null; } set { } }
@@ -794,14 +794,13 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProfileName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorEndpoint FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -814,16 +813,13 @@ namespace Azure.Provisioning.Cdn
     }
     public enum FrontDoorMinimumTlsVersion
     {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS 1.0")]
-        Tls1_0 = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS 1.2")]
-        Tls1_2 = 1,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS 1.3")]
-        Tls1_3 = 2,
+        TLS10 = 0,
+        TLS12 = 1,
+        TLS13 = 2,
     }
     public partial class FrontDoorOrigin : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorOrigin(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorOrigin(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.EnabledState> EnabledState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnforceCertificateNameCheck { get { throw null; } set { } }
@@ -835,15 +831,14 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> OriginGroupName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> OriginHostHeader { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> OriginId { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.FrontDoorOriginGroup? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.FrontDoorOriginGroup Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Cdn.SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorOrigin FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorOrigin FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -851,22 +846,21 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorOriginGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorOriginGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorOriginGroup(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Cdn.OriginAuthenticationProperties Authentication { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
         public Azure.Provisioning.Cdn.HealthProbeSettings HealthProbeSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Cdn.LoadBalancingSettings LoadBalancingSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProfileName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.EnabledState> SessionAffinityState { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TrafficRestorationTimeInMinutes { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorOriginGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorOriginGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -889,7 +883,7 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorRoute : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorRoute(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorRoute(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Cdn.FrontDoorRouteCacheConfiguration CacheConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.FrontDoorActivatedResourceInfo> CustomDomains { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
@@ -902,15 +896,14 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> OriginGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OriginPath { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.FrontDoorEndpoint? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.FrontDoorEndpoint Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> PatternsToMatch { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> RuleSets { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.FrontDoorEndpointProtocol> SupportedProtocols { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorRoute FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorRoute FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -926,7 +919,7 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.DeliveryRuleAction> Actions { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.DeliveryRuleCondition> Conditions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
@@ -934,12 +927,12 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.MatchProcessingBehavior> MatchProcessingBehavior { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Order { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.FrontDoorRuleSet? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.FrontDoorRuleSet Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RuleSetName { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -947,16 +940,16 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorRuleSet : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorRuleSet(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorRuleSet(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProfileName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorRuleSet FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorRuleSet FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -964,17 +957,17 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorSecret : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorSecret(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorSecret(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProfileName { get { throw null; } }
         public Azure.Provisioning.Cdn.FrontDoorSecretProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorSecret FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorSecret FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -987,17 +980,17 @@ namespace Azure.Provisioning.Cdn
     }
     public partial class FrontDoorSecurityPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorSecurityPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorSecurityPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorDeploymentStatus> DeploymentStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.CdnProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProfileName { get { throw null; } }
         public Azure.Provisioning.Cdn.SecurityPolicyProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.FrontDoorProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Cdn.FrontDoorSecurityPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Cdn.FrontDoorSecurityPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -1022,18 +1015,13 @@ namespace Azure.Provisioning.Cdn
         Overwrite = 1,
         Delete = 2,
     }
-    public partial class HeaderActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class HeaderActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public HeaderActionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.HeaderAction> HeaderAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> HeaderName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum HeaderActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleHeaderActionParameters")]
-        HeaderAction = 0,
     }
     public enum HealthProbeProtocol
     {
@@ -1058,7 +1046,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.HealthProbeRequestType> ProbeRequestType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class HostNameMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class HostNameMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public HostNameMatchCondition() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.HostNameOperator> HostNameOperator { get { throw null; } set { } }
@@ -1066,11 +1054,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<bool> NegateCondition { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum HostNameMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleHostNameConditionParameters")]
-        HostNameCondition = 0,
     }
     public enum HostNameOperator
     {
@@ -1097,7 +1080,7 @@ namespace Azure.Provisioning.Cdn
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class HttpVersionMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class HttpVersionMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public HttpVersionMatchCondition() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.HttpVersionOperator> HttpVersionOperator { get { throw null; } set { } }
@@ -1106,16 +1089,11 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum HttpVersionMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleHttpVersionConditionParameters")]
-        HttpVersionCondition = 0,
-    }
     public enum HttpVersionOperator
     {
         Equal = 0,
     }
-    public partial class IsDeviceMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class IsDeviceMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public IsDeviceMatchCondition() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.IsDeviceOperator> IsDeviceOperator { get { throw null; } set { } }
@@ -1129,16 +1107,11 @@ namespace Azure.Provisioning.Cdn
         Mobile = 0,
         Desktop = 1,
     }
-    public enum IsDeviceMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleIsDeviceConditionParameters")]
-        IsDeviceCondition = 0,
-    }
     public enum IsDeviceOperator
     {
         Equal = 0,
     }
-    public partial class KeyVaultCertificateSource : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class KeyVaultCertificateSource : Azure.Provisioning.Cdn.CertificateSourceProperties
     {
         public KeyVaultCertificateSource() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CertificateDeleteAction> DeleteRule { get { throw null; } set { } }
@@ -1149,11 +1122,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CertificateUpdateAction> UpdateRule { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VaultName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum KeyVaultCertificateSourceType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="KeyVaultCertificateSourceParameters")]
-        KeyVaultCertificateSource = 0,
     }
     public partial class KeyVaultSigningKey : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1191,6 +1159,21 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ManagedRuleDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedRuleDefinition() { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RuleId { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedRuleGroupDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedRuleGroupDefinition() { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RuleGroupName { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.ManagedRuleDefinition> Rules { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ManagedRuleGroupOverrideSetting : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedRuleGroupOverrideSetting() { }
@@ -1204,6 +1187,29 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.OverrideActionType> Action { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.ManagedRuleSetupState> EnabledState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RuleId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedRuleSetDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedRuleSetDefinition() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RuleSetType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RuleSetVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnSkuName> SkuName { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedRuleSetDefinitionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedRuleSetDefinitionProperties() { }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RuleSetType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RuleSetVersion { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ManagedRuleSetupState
@@ -1262,19 +1268,14 @@ namespace Azure.Provisioning.Cdn
     public partial class OriginGroupOverrideAction : Azure.Provisioning.Cdn.DeliveryRuleAction
     {
         public OriginGroupOverrideAction() { }
-        public Azure.Provisioning.Cdn.OriginGroupOverrideActionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> OriginGroupId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class OriginGroupOverrideActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class OriginGroupOverrideActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public OriginGroupOverrideActionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> OriginGroupId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum OriginGroupOverrideActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleOriginGroupOverrideActionParameters")]
-        OriginGroupOverrideAction = 0,
     }
     public enum OriginGroupProvisioningState
     {
@@ -1336,17 +1337,20 @@ namespace Azure.Provisioning.Cdn
         Disabled = 4,
         Deleting = 5,
     }
-    public partial class PolicySettingsDefaultCustomBlockResponseStatusCode : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public enum PolicySettingsDefaultCustomBlockResponseStatusCode
     {
-        public PolicySettingsDefaultCustomBlockResponseStatusCode() { }
-        public Azure.Provisioning.Cdn.PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredFive { get { throw null; } }
-        public Azure.Provisioning.Cdn.PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredSix { get { throw null; } }
-        public Azure.Provisioning.Cdn.PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredThree { get { throw null; } }
-        public Azure.Provisioning.Cdn.PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredTwentyNine { get { throw null; } }
-        public Azure.Provisioning.Cdn.PolicySettingsDefaultCustomBlockResponseStatusCode TwoHundred { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="200")]
+        TwoHundred = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="403")]
+        FourHundredThree = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="405")]
+        FourHundredFive = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="406")]
+        FourHundredSix = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="429")]
+        FourHundredTwentyNine = 4,
     }
-    public partial class PostArgsMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class PostArgsMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public PostArgsMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1355,11 +1359,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> Selector { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum PostArgsMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRulePostArgsConditionParameters")]
-        PostArgsCondition = 0,
     }
     public enum PostArgsOperator
     {
@@ -1443,12 +1442,12 @@ namespace Azure.Provisioning.Cdn
     }
     public enum QueryStringCachingBehavior
     {
-        NotSet = 0,
-        IgnoreQueryString = 1,
-        BypassCaching = 2,
-        UseQueryString = 3,
+        IgnoreQueryString = 0,
+        BypassCaching = 1,
+        UseQueryString = 2,
+        NotSet = 3,
     }
-    public partial class QueryStringMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class QueryStringMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public QueryStringMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1456,11 +1455,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.QueryStringOperator> QueryStringOperator { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum QueryStringMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleQueryStringConditionParameters")]
-        QueryStringCondition = 0,
     }
     public enum QueryStringOperator
     {
@@ -1475,9 +1469,14 @@ namespace Azure.Provisioning.Cdn
         GreaterThanOrEqual = 8,
         RegEx = 9,
     }
-    public partial class RateLimitRule : Azure.Provisioning.Cdn.CustomRule
+    public partial class RateLimitRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RateLimitRule() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.OverrideActionType> Action { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CustomRuleEnabledState> EnabledState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.CustomRuleMatchCondition> MatchConditions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RateLimitDurationInMinutes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RateLimitThreshold { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1489,7 +1488,7 @@ namespace Azure.Provisioning.Cdn
         TemporaryRedirect = 2,
         PermanentRedirect = 3,
     }
-    public partial class RemoteAddressMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RemoteAddressMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public RemoteAddressMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1498,18 +1497,13 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum RemoteAddressMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleRemoteAddressConditionParameters")]
-        RemoteAddressCondition = 0,
-    }
     public enum RemoteAddressOperator
     {
         Any = 0,
         IPMatch = 1,
         GeoMatch = 2,
     }
-    public partial class RequestBodyMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RequestBodyMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public RequestBodyMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1517,11 +1511,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.RequestBodyOperator> RequestBodyOperator { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum RequestBodyMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleRequestBodyConditionParameters")]
-        RequestBodyCondition = 0,
     }
     public enum RequestBodyOperator
     {
@@ -1536,7 +1525,7 @@ namespace Azure.Provisioning.Cdn
         GreaterThanOrEqual = 8,
         RegEx = 9,
     }
-    public partial class RequestHeaderMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RequestHeaderMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public RequestHeaderMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1545,11 +1534,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> Selector { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum RequestHeaderMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleRequestHeaderConditionParameters")]
-        RequestHeaderCondition = 0,
     }
     public enum RequestHeaderOperator
     {
@@ -1564,7 +1548,7 @@ namespace Azure.Provisioning.Cdn
         GreaterThanOrEqual = 8,
         RegEx = 9,
     }
-    public partial class RequestMethodMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RequestMethodMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public RequestMethodMatchCondition() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.RequestMethodMatchConditionMatchValue> MatchValues { get { throw null; } set { } }
@@ -1590,16 +1574,11 @@ namespace Azure.Provisioning.Cdn
         [System.Runtime.Serialization.DataMemberAttribute(Name="TRACE")]
         Trace = 6,
     }
-    public enum RequestMethodMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleRequestMethodConditionParameters")]
-        RequestMethodCondition = 0,
-    }
     public enum RequestMethodOperator
     {
         Equal = 0,
     }
-    public partial class RequestSchemeMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RequestSchemeMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public RequestSchemeMatchCondition() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.RequestSchemeMatchConditionMatchValue> MatchValues { get { throw null; } set { } }
@@ -1615,16 +1594,11 @@ namespace Azure.Provisioning.Cdn
         [System.Runtime.Serialization.DataMemberAttribute(Name="HTTPS")]
         Https = 1,
     }
-    public enum RequestSchemeMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleRequestSchemeConditionParameters")]
-        RequestSchemeCondition = 0,
-    }
     public enum RequestSchemeOperator
     {
         Equal = 0,
     }
-    public partial class RequestUriMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RequestUriMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public RequestUriMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1632,11 +1606,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.RequestUriOperator> RequestUriOperator { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum RequestUriMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleRequestUriConditionParameters")]
-        RequestUriCondition = 0,
     }
     public enum RequestUriOperator
     {
@@ -1672,17 +1641,12 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<bool> IsCompressionEnabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class RouteConfigurationOverrideActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RouteConfigurationOverrideActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public RouteConfigurationOverrideActionProperties() { }
         public Azure.Provisioning.Cdn.CacheConfiguration CacheConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.Cdn.OriginGroupOverride OriginGroupOverride { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum RouteConfigurationOverrideActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleRouteConfigurationOverrideActionParameters")]
-        RouteConfigurationOverrideAction = 0,
     }
     public enum RuleCacheBehavior
     {
@@ -1741,7 +1705,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<string> PatternsToMatch { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ServerPortMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ServerPortMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public ServerPortMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1749,11 +1713,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.ServerPortOperator> ServerPortOperator { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum ServerPortMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleServerPortConditionParameters")]
-        ServerPortCondition = 0,
     }
     public enum ServerPortOperator
     {
@@ -1786,7 +1745,7 @@ namespace Azure.Provisioning.Cdn
         Disconnected = 3,
         Timeout = 4,
     }
-    public partial class SocketAddressMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class SocketAddressMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public SocketAddressMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1795,20 +1754,10 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum SocketAddressMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleSocketAddrConditionParameters")]
-        SocketAddressCondition = 0,
-    }
     public enum SocketAddressOperator
     {
         Any = 0,
         IPMatch = 1,
-    }
-    public enum SslProtocolMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleSslProtocolConditionParameters")]
-        SslProtocolCondition = 0,
     }
     public enum SslProtocolOperator
     {
@@ -1825,7 +1774,7 @@ namespace Azure.Provisioning.Cdn
         UriEncode = 4,
         RemoveNulls = 5,
     }
-    public partial class UriFileExtensionMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class UriFileExtensionMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public UriFileExtensionMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1833,11 +1782,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.UriFileExtensionOperator> UriFileExtensionOperator { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum UriFileExtensionMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleUrlFileExtensionMatchConditionParameters")]
-        UriFileExtensionMatchCondition = 0,
     }
     public enum UriFileExtensionOperator
     {
@@ -1852,7 +1796,7 @@ namespace Azure.Provisioning.Cdn
         GreaterThanOrEqual = 8,
         RegEx = 9,
     }
-    public partial class UriFileNameMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class UriFileNameMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public UriFileNameMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1860,11 +1804,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.UriFileNameOperator> UriFileNameOperator { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum UriFileNameMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleUrlFilenameConditionParameters")]
-        UriFilenameCondition = 0,
     }
     public enum UriFileNameOperator
     {
@@ -1879,7 +1818,7 @@ namespace Azure.Provisioning.Cdn
         GreaterThanOrEqual = 8,
         RegEx = 9,
     }
-    public partial class UriPathMatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class UriPathMatchCondition : Azure.Provisioning.Cdn.DeliveryRuleConditionProperties
     {
         public UriPathMatchCondition() { }
         public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
@@ -1887,11 +1826,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.PreTransformCategory> Transforms { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.UriPathOperator> UriPathOperator { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum UriPathMatchConditionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleUrlPathMatchConditionParameters")]
-        UriPathMatchCondition = 0,
     }
     public enum UriPathOperator
     {
@@ -1913,7 +1847,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.Cdn.UriRedirectActionProperties Properties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class UriRedirectActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class UriRedirectActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public UriRedirectActionProperties() { }
         public Azure.Provisioning.BicepValue<string> CustomFragment { get { throw null; } set { } }
@@ -1924,18 +1858,13 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.RedirectType> RedirectType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum UriRedirectActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleUrlRedirectActionParameters")]
-        UriRedirectAction = 0,
-    }
     public partial class UriRewriteAction : Azure.Provisioning.Cdn.DeliveryRuleAction
     {
         public UriRewriteAction() { }
         public Azure.Provisioning.Cdn.UriRewriteActionProperties Properties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class UriRewriteActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class UriRewriteActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public UriRewriteActionProperties() { }
         public Azure.Provisioning.BicepValue<string> Destination { get { throw null; } set { } }
@@ -1943,28 +1872,18 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> SourcePattern { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum UriRewriteActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleUrlRewriteActionParameters")]
-        UriRewriteAction = 0,
-    }
     public partial class UriSigningAction : Azure.Provisioning.Cdn.DeliveryRuleAction
     {
         public UriSigningAction() { }
         public Azure.Provisioning.Cdn.UriSigningActionProperties Properties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class UriSigningActionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class UriSigningActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
     {
         public UriSigningActionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.UriSigningAlgorithm> Algorithm { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.UriSigningParamIdentifier> ParameterNameOverride { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum UriSigningActionType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="DeliveryRuleUrlSigningActionParameters")]
-        UriSigningAction = 0,
     }
     public enum UriSigningAlgorithm
     {
@@ -2024,7 +1943,7 @@ namespace Azure.Provisioning.Cdn
     {
         public WafPolicySettings() { }
         public Azure.Provisioning.BicepValue<System.BinaryData> DefaultCustomBlockResponseBody { get { throw null; } set { } }
-        public Azure.Provisioning.Cdn.PolicySettingsDefaultCustomBlockResponseStatusCode DefaultCustomBlockResponseStatusCode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.PolicySettingsDefaultCustomBlockResponseStatusCode> DefaultCustomBlockResponseStatusCode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> DefaultRedirectUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.PolicyEnabledState> EnabledState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.PolicyMode> Mode { get { throw null; } set { } }
