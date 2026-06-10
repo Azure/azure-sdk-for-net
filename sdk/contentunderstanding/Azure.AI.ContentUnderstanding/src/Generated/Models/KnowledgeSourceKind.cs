@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Knowledge source kind. </summary>
-    internal readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
+    public readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
     {
         private readonly string _value;
         /// <summary> A labeled data knowledge source. </summary>

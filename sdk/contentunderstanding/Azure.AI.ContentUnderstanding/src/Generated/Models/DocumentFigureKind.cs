@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Figure kind. </summary>
-    internal readonly partial struct DocumentFigureKind : IEquatable<DocumentFigureKind>
+    public readonly partial struct DocumentFigureKind : IEquatable<DocumentFigureKind>
     {
         private readonly string _value;
         /// <summary> Unknown figure kind. </summary>
