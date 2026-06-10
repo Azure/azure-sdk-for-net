@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
+    /// <summary>
+    /// Output for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, and <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput))]
-    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>
+    public abstract partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutput : IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MigrateOracleAzureDBPostgreSqlSyncTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutput)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateOracleAzureDBPostgreSqlSyncTaskOutput IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +72,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutput)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -41,15 +84,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("resultType"u8);
             writer.WriteStringValue(ResultType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,69 +101,48 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        MigrateOracleAzureDBPostgreSqlSyncTaskOutput IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateOracleAzureDBPostgreSqlSyncTaskOutput IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MigrateOracleAzureDBPostgreSqlSyncTaskOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
         }
 
-        internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("resultType", out JsonElement discriminator))
+            if (element.TryGetProperty("resultType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelErrorOutput": return MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(element, options);
-                    case "DatabaseLevelOutput": return MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(element, options);
-                    case "ErrorOutput": return MigrateOracleAzureDBPostgreSqlSyncTaskOutputError.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(element, options);
-                    case "MigrationLevelOutput": return MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(element, options);
-                    case "TableLevelOutput": return MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(element, options);
+                    case "MigrationLevelOutput":
+                        return MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(element, options);
+                    case "DatabaseLevelOutput":
+                        return MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(element, options);
+                    case "TableLevelOutput":
+                        return MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(element, options);
+                    case "ErrorOutput":
+                        return MigrateOracleAzureDBPostgreSqlSyncTaskOutputError.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(element, options);
+                    case "DatabaseLevelErrorOutput":
+                        return MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError.DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(element, options);
                 }
             }
             return UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput.DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(element, options);
         }
-
-        BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MigrateOracleAzureDBPostgreSqlSyncTaskOutput IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

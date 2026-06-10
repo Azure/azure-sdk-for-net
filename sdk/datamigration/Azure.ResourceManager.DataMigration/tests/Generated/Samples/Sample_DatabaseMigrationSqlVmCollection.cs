@@ -33,14 +33,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
             DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData
             {
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
-            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
+            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetDBName, data);
             DatabaseMigrationSqlVmResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -108,14 +107,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
             DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData
             {
@@ -152,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
-            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
+            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetDBName, data);
             DatabaseMigrationSqlVmResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -178,17 +176,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            DatabaseMigrationSqlVmResource result = await collection.GetAsync(sqlVirtualMachineName, targetDBName, expand: expand);
+            DatabaseMigrationSqlVmResource result = await collection.GetAsync(targetDBName, expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -213,16 +210,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
-            DatabaseMigrationSqlVmResource result = await collection.GetAsync(sqlVirtualMachineName, targetDBName);
+            DatabaseMigrationSqlVmResource result = await collection.GetAsync(targetDBName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -247,17 +243,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            bool result = await collection.ExistsAsync(sqlVirtualMachineName, targetDBName, expand: expand);
+            bool result = await collection.ExistsAsync(targetDBName, expand: expand);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -278,16 +273,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
-            bool result = await collection.ExistsAsync(sqlVirtualMachineName, targetDBName);
+            bool result = await collection.ExistsAsync(targetDBName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -308,17 +302,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            NullableResponse<DatabaseMigrationSqlVmResource> response = await collection.GetIfExistsAsync(sqlVirtualMachineName, targetDBName, expand: expand);
+            NullableResponse<DatabaseMigrationSqlVmResource> response = await collection.GetIfExistsAsync(targetDBName, expand: expand);
             DatabaseMigrationSqlVmResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -351,16 +344,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlVirtualMachineName = "testvm";
 
             // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+            DatabaseMigrationSqlVmCollection collection = client.GetDatabaseMigrationSqlVms(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 
             // invoke the operation
-            string sqlVirtualMachineName = "testvm";
             string targetDBName = "db1";
-            NullableResponse<DatabaseMigrationSqlVmResource> response = await collection.GetIfExistsAsync(sqlVirtualMachineName, targetDBName);
+            NullableResponse<DatabaseMigrationSqlVmResource> response = await collection.GetIfExistsAsync(targetDBName);
             DatabaseMigrationSqlVmResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

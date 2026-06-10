@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal readonly partial struct IndexType : IEquatable<IndexType>
+    public readonly partial struct IndexType : IEquatable<IndexType>
     {
         private readonly string _value;
         /// <summary> Azure search. </summary>

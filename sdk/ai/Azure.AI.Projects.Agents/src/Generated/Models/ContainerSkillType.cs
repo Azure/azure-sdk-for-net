@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct ContainerSkillType : IEquatable<ContainerSkillType>
+    public readonly partial struct ContainerSkillType : IEquatable<ContainerSkillType>
     {
         private readonly string _value;
         private const string SkillReferenceValue = "skill_reference";

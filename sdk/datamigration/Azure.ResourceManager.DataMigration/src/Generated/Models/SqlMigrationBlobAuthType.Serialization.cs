@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     internal static partial class SqlMigrationBlobAuthTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SqlMigrationBlobAuthType value) => value switch
         {
             SqlMigrationBlobAuthType.AccountKey => "AccountKey",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlMigrationBlobAuthType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SqlMigrationBlobAuthType ToSqlMigrationBlobAuthType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountKey")) return SqlMigrationBlobAuthType.AccountKey;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedIdentity")) return SqlMigrationBlobAuthType.ManagedIdentity;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountKey"))
+            {
+                return SqlMigrationBlobAuthType.AccountKey;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedIdentity"))
+            {
+                return SqlMigrationBlobAuthType.ManagedIdentity;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlMigrationBlobAuthType value.");
         }
     }

@@ -6,144 +6,73 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal partial class FilesRestOperations
+    internal partial class Files
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of FilesRestOperations. </summary>
+        /// <summary> Initializes a new instance of Files for mocking. </summary>
+        protected Files()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Files. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FilesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Files(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-06-30";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string groupName, string serviceName, string projectName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string fileName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string groupName, string serviceName, string projectName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The project resource is a nested resource representing a stored migration project. This method returns a list of files owned by a project resource. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileList>> ListAsync(string subscriptionId, string groupName, string serviceName, string projectName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string fileName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListRequest(subscriptionId, groupName, serviceName, projectName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FileList.DeserializeFileList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The project resource is a nested resource representing a stored migration project. This method returns a list of files owned by a project resource. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileList> List(string subscriptionId, string groupName, string serviceName, string projectName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListRequest(subscriptionId, groupName, serviceName, projectName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FileList.DeserializeFileList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
@@ -152,228 +81,26 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(projectName, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> The files resource is a nested, proxy-only resource representing a file stored under the project resource. This method retrieves information about a file. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationProjectFileData>> GetAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateGetRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectFileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataMigrationProjectFileData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The files resource is a nested, proxy-only resource representing a file stored under the project resource. This method retrieves information about a file. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationProjectFileData> Get(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateGetRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectFileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataMigrationProjectFileData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> The PUT method creates a new file or updates an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="data"> Information about the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationProjectFileData>> CreateOrUpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string fileName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, groupName, serviceName, projectName, fileName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        DataMigrationProjectFileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The PUT method creates a new file or updates an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="data"> Information about the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationProjectFileData> CreateOrUpdate(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, groupName, serviceName, projectName, fileName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        DataMigrationProjectFileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
@@ -382,214 +109,26 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(projectName, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This method deletes a file. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateDeleteRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This method deletes a file. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateDeleteRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> This method updates an existing file. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="data"> Information about the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationProjectFileData>> UpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string fileName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateUpdateRequest(subscriptionId, groupName, serviceName, projectName, fileName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectFileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This method updates an existing file. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="data"> Information about the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationProjectFileData> Update(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateUpdateRequest(subscriptionId, groupName, serviceName, projectName, fileName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectFileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateReadRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
@@ -598,298 +137,117 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(projectName, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileName, true);
-            uri.AppendPath("/read", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateReadRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendPath("/read", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Delete;
             return message;
         }
 
-        /// <summary> This method is used for requesting storage information using which contents of the file can be downloaded. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationFileStorageInfo>> ReadAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateReadRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationFileStorageInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This method is used for requesting storage information using which contents of the file can be downloaded. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationFileStorageInfo> Read(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateReadRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationFileStorageInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateReadWriteRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendPath("/readwrite", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateReadWriteRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendPath("/readwrite", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/files", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This method is used for requesting information for reading and writing the file content. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationFileStorageInfo>> ReadWriteAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateReadWriteRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationFileStorageInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This method is used for requesting information for reading and writing the file content. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="fileName"> Name of the File. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationFileStorageInfo> ReadWrite(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var message = CreateReadWriteRequest(subscriptionId, groupName, serviceName, projectName, fileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationFileStorageInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The project resource is a nested resource representing a stored migration project. This method returns a list of files owned by a project resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileList>> ListNextPageAsync(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string groupName, string serviceName, string projectName, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, groupName, serviceName, projectName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        FileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FileList.DeserializeFileList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> The project resource is a nested resource representing a stored migration project. This method returns a list of files owned by a project resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileList> ListNextPage(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateReadRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string fileName, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, groupName, serviceName, projectName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            uri.AppendPath("/read", false);
+            if (_apiVersion != null)
             {
-                case 200:
-                    {
-                        FileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FileList.DeserializeFileList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateReadWriteRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string fileName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            uri.AppendPath("/readwrite", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }
