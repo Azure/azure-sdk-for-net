@@ -80,6 +80,15 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             return new HciVmSecurityRuleResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
+        public virtual SnapshotResource GetSnapshotResource(ResourceIdentifier id)
+        {
+            SnapshotResource.ValidateResourceId(id);
+            return new SnapshotResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="HciVmStorageContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciVmStorageContainerResource"/> object. </returns>
@@ -200,6 +209,15 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         {
             HciVmNatGatewayResource.ValidateResourceId(id);
             return new HciVmNatGatewayResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="InboundRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InboundRuleResource"/> object. </returns>
+        public virtual InboundRuleResource GetInboundRuleResource(ResourceIdentifier id)
+        {
+            InboundRuleResource.ValidateResourceId(id);
+            return new InboundRuleResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HciVmLoadBalancerResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -94,16 +94,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InboundNatRules))
-            {
-                writer.WritePropertyName("inboundNATRules"u8);
-                writer.WriteStartArray();
-                foreach (HciVmInboundNatRule item in InboundNatRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -158,7 +148,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             IList<HciVmPublicIPAddressArmReference> publicIPAddresses = default;
             IReadOnlyList<HciVmVirtualNetworkSubnetArmReference> subnets = default;
-            IList<HciVmInboundNatRule> inboundNatRules = default;
             HciVmProvisioningState? provisioningState = default;
             HciVmNatGatewayStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -192,20 +181,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     subnets = array;
                     continue;
                 }
-                if (prop.NameEquals("inboundNATRules"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<HciVmInboundNatRule> array = new List<HciVmInboundNatRule>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(HciVmInboundNatRule.DeserializeHciVmInboundNatRule(item, options));
-                    }
-                    inboundNatRules = array;
-                    continue;
-                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -229,13 +204,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmNatGatewayProperties(
-                publicIPAddresses ?? new ChangeTrackingList<HciVmPublicIPAddressArmReference>(),
-                subnets ?? new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>(),
-                inboundNatRules ?? new ChangeTrackingList<HciVmInboundNatRule>(),
-                provisioningState,
-                status,
-                additionalBinaryDataProperties);
+            return new HciVmNatGatewayProperties(publicIPAddresses ?? new ChangeTrackingList<HciVmPublicIPAddressArmReference>(), subnets ?? new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>(), provisioningState, status, additionalBinaryDataProperties);
         }
     }
 }

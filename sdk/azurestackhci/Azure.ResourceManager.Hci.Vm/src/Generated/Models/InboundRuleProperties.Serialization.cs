@@ -13,57 +13,57 @@ using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Inbound nat rule properties. </summary>
-    public partial class HciVmInboundNatRuleProperties : IJsonModel<HciVmInboundNatRuleProperties>
+    /// <summary> Inbound rule properties - extends InboundNATRuleProperties with additional status tracking. </summary>
+    public partial class InboundRuleProperties : IJsonModel<InboundRuleProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HciVmInboundNatRuleProperties"/> for deserialization. </summary>
-        internal HciVmInboundNatRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="InboundRuleProperties"/> for deserialization. </summary>
+        internal InboundRuleProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmInboundNatRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InboundRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInboundNatRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InboundRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHciVmInboundNatRuleProperties(document.RootElement, options);
+                        return DeserializeInboundRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciVmInboundNatRuleProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInboundNatRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InboundRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HciVmInboundNatRuleProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmInboundNatRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<InboundRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmInboundNatRuleProperties IPersistableModel<HciVmInboundNatRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InboundRuleProperties IPersistableModel<InboundRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmInboundNatRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InboundRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HciVmInboundNatRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InboundRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInboundNatRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InboundRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciVmInboundNatRuleProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundRuleProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
@@ -89,6 +89,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             writer.WriteObjectValue(BackendIPConfiguration, options);
             writer.WritePropertyName("publicIPAddress"u8);
             writer.WriteObjectValue(PublicIPAddress, options);
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -108,24 +118,24 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmInboundNatRuleProperties IJsonModel<HciVmInboundNatRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InboundRuleProperties IJsonModel<InboundRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmInboundNatRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InboundRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInboundNatRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InboundRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciVmInboundNatRuleProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundRuleProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHciVmInboundNatRuleProperties(document.RootElement, options);
+            return DeserializeInboundRuleProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciVmInboundNatRuleProperties DeserializeHciVmInboundNatRuleProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static InboundRuleProperties DeserializeInboundRuleProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,6 +146,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             int backendPort = default;
             HciVmIPConfigurationArmReference backendIPConfiguration = default;
             HciVmPublicIPAddressArmReference publicIPAddress = default;
+            HciVmProvisioningState? provisioningState = default;
+            InboundRuleStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,17 +176,37 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     publicIPAddress = HciVmPublicIPAddressArmReference.DeserializeHciVmPublicIPAddressArmReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new HciVmProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = InboundRuleStatus.DeserializeInboundRuleStatus(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmInboundNatRuleProperties(
+            return new InboundRuleProperties(
                 protocol,
                 frontendPort,
                 backendPort,
                 backendIPConfiguration,
                 publicIPAddress,
+                provisioningState,
+                status,
                 additionalBinaryDataProperties);
         }
     }

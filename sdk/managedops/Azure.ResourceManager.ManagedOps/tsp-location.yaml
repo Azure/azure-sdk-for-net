@@ -1,5 +1,5 @@
 directory: specification/managedoperations/ManagedOps.Management
-commit: 4862f420165ef2f394897d1a7d1da7874c460812
+commit: c28dd2c2cb0b768fba67263bc8482a83098f3690
 repo: ArcturusZhang/azure-rest-api-specs
 additionalDirectories: 
 

@@ -251,5 +251,26 @@ namespace Azure.ResourceManager.Hci.Vm
             request.Method = RequestMethod.Post;
             return message;
         }
+
+        internal HttpMessage CreatePowerOffRequest(string resourceUri, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/powerOff", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
     }
 }
