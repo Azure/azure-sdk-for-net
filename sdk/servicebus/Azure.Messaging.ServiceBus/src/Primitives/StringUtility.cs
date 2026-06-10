@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
+using System.Linq;
 
 namespace Azure.Messaging.ServiceBus.Primitives
 {
@@ -12,24 +12,13 @@ namespace Azure.Messaging.ServiceBus.Primitives
     {
         public static string GetFormattedLockTokens(IEnumerable<Guid> lockTokens)
         {
-            var lockTokenBuilder = new StringBuilder();
-            foreach (var lockToken in lockTokens)
-            {
-                lockTokenBuilder.AppendFormat(CultureInfo.InvariantCulture, "<LockToken>{0}</LockToken>", lockToken.ToString());
-            }
-
-            return lockTokenBuilder.ToString();
+            // ReceiveAndDelete messages have empty lock tokens, so skip them to avoid noisy logs.
+            return string.Join(", ", lockTokens.Where(static token => token != Guid.Empty));
         }
 
         public static string GetFormattedSequenceNumbers(IEnumerable<long> sequenceNumbers)
         {
-            var sequenceNumberBuilder = new StringBuilder();
-            foreach (var sequenceNumber in sequenceNumbers)
-            {
-                sequenceNumberBuilder.AppendFormat(CultureInfo.InvariantCulture, "<SequenceNumber>{0}</SequenceNumber>", sequenceNumber);
-            }
-
-            return sequenceNumberBuilder.ToString();
+            return string.Join(", ", sequenceNumbers);
         }
 
         /// <summary>
