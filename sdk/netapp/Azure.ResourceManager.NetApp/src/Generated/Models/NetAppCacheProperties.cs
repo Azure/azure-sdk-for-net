@@ -68,8 +68,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
+        /// <param name="fileAccessLogs"> Flag indicating whether file access logs are enabled for the Cache, based on active diagnostic settings present on the Cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppCacheProperties(string filePath, long size, NetAppCachePropertiesExportPolicy exportPolicy, IList<NetAppProtocolType> protocolTypes, NetAppCacheProvisioningState? provisioningState, NetAppCacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<NetAppCacheMountTargetProperties> mountTargets, NetAppKerberosState? kerberos, NetAppSmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, NetAppEncryptionState? encryption, NetAppVolumeLanguage? language, NetAppLdapState? ldap, NetAppLdapServerType? ldapServerType, NetAppOriginClusterInformation originClusterInformation, NetAppCifsChangeNotifyState? cifsChangeNotifications, NetAppGlobalFileLockingState? globalFileLocking, NetAppEnableWriteBackState? writeBack, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppCacheProperties(string filePath, long size, NetAppCachePropertiesExportPolicy exportPolicy, IList<NetAppProtocolType> protocolTypes, NetAppCacheProvisioningState? provisioningState, NetAppCacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<NetAppCacheMountTargetProperties> mountTargets, NetAppKerberosState? kerberos, NetAppSmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, NetAppEncryptionState? encryption, NetAppVolumeLanguage? language, NetAppLdapState? ldap, NetAppLdapServerType? ldapServerType, NetAppOriginClusterInformation originClusterInformation, NetAppCifsChangeNotifyState? cifsChangeNotifications, NetAppGlobalFileLockingState? globalFileLocking, NetAppEnableWriteBackState? writeBack, CacheFileAccessLogs? fileAccessLogs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilePath = filePath;
             Size = size;
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.NetApp.Models
             CifsChangeNotifications = cifsChangeNotifications;
             GlobalFileLocking = globalFileLocking;
             WriteBack = writeBack;
+            FileAccessLogs = fileAccessLogs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -169,6 +171,9 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Flag indicating whether writeback is enabled for the cache. </summary>
         public NetAppEnableWriteBackState? WriteBack { get; set; }
+
+        /// <summary> Flag indicating whether file access logs are enabled for the Cache, based on active diagnostic settings present on the Cache. </summary>
+        public CacheFileAccessLogs? FileAccessLogs { get; }
 
         /// <summary> Export policy rule. </summary>
         public IList<NetAppVolumeExportPolicyRule> ExportRules
