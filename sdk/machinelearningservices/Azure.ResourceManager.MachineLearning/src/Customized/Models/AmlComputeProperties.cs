@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [CodeGenSuppress("Errors")]
     public partial class AmlComputeProperties
     {
-        // Customized: TypeSpec property renaming is not applied to this generated property declaration.
+        // Customized: restore legacy property name; TypeSpec rename is not applied to this generated property declaration.
         [WirePath("errors")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<MachineLearningError> Errors { get; }

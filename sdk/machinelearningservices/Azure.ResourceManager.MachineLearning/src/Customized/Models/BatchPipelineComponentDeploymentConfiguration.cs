@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [CodeGenSuppress("ComponentId")]
     public partial class BatchPipelineComponentDeploymentConfiguration
     {
-        // Customized: TypeSpec property renaming is not applied to this generated property declaration.
+        // Customized: restore legacy property name; TypeSpec rename is not applied to this generated property declaration.
         [WirePath("componentId")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MachineLearningIdAssetReference ComponentId { get; set; }
