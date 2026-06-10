@@ -291,11 +291,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("targetResourceType"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetResourceType = new ResourceType(property0.Value.GetString());
+                            ReadTargetResourceType(property0, ref targetResourceType);
                             continue;
                         }
                         if (property0.NameEquals("targetResourceRegion"u8))
