@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Requirement Type. </summary>
-    internal readonly partial struct RequirementType : IEquatable<RequirementType>
+    public readonly partial struct RequirementType : IEquatable<RequirementType>
     {
         private readonly string _value;
         /// <summary> Any. </summary>

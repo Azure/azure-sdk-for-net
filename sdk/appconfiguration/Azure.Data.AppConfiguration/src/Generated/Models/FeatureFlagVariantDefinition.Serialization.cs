@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag Variants object. </summary>
-    internal partial class FeatureFlagVariantDefinition : IJsonModel<FeatureFlagVariantDefinition>
+    public partial class FeatureFlagVariantDefinition : IJsonModel<FeatureFlagVariantDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="FeatureFlagVariantDefinition"/> for deserialization. </summary>
         internal FeatureFlagVariantDefinition()

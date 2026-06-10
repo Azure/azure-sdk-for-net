@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag Telemetry object. </summary>
-    internal partial class FeatureFlagTelemetryConfiguration
+    public partial class FeatureFlagTelemetryConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

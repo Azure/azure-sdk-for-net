@@ -45,6 +45,50 @@ namespace Azure.Data.AppConfiguration
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A feature flag. </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="enabled"> The enabled state of the feature flag. </param>
+        /// <param name="label"> The label the feature flag belongs to. </param>
+        /// <param name="description"> The description of the feature flag. </param>
+        /// <param name="conditions"> The conditions of the feature flag. </param>
+        /// <param name="variants"> The variants of the feature flag. </param>
+        /// <param name="allocation"> The allocation of the feature flag. </param>
+        /// <param name="telemetry"> The telemetry settings of the feature flag. </param>
+        /// <param name="tags"> The tags of the feature flag. </param>
+        /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
+        /// <param name="etag"> A value representing the current state of the resource. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
+        public static FeatureFlag FeatureFlag(string name = default, bool? enabled = default, string label = default, string description = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, DateTimeOffset? lastModified = default, string etag = default)
+        {
+            variants ??= new ChangeTrackingList<FeatureFlagVariantDefinition>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FeatureFlag(
+                name,
+                enabled,
+                label,
+                description,
+                conditions,
+                variants.ToList(),
+                allocation,
+                telemetry,
+                tags,
+                lastModified,
+                etag,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The conditions that must be met for the feature flag to be enabled. </summary>
+        /// <param name="requirementType"> The requirement type for the conditions. </param>
+        /// <param name="filters"> The filters that will conditionally enable or disable the flag. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagConditions"/> instance for mocking. </returns>
+        public static FeatureFlagConditions FeatureFlagConditions(RequirementType? requirementType = default, IEnumerable<FeatureFlagFilter> filters = default)
+        {
+            filters ??= new ChangeTrackingList<FeatureFlagFilter>();
+
+            return new FeatureFlagConditions(requirementType, filters.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Feature Flag Filter object. </summary>
         /// <param name="name"> The name of the filter. </param>
         /// <param name="parameters"> The parameters used by the filter. </param>
@@ -54,6 +98,84 @@ namespace Azure.Data.AppConfiguration
             parameters ??= new ChangeTrackingDictionary<string, object>();
 
             return new FeatureFlagFilter(name, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Variants object. </summary>
+        /// <param name="name"> The name of the variant. </param>
+        /// <param name="value"> The value of the variant. </param>
+        /// <param name="contentType"> The content type of the value stored within the key-value. </param>
+        /// <param name="statusOverride"> Determines if the variant should override the status of the flag. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagVariantDefinition"/> instance for mocking. </returns>
+        public static FeatureFlagVariantDefinition FeatureFlagVariantDefinition(string name = default, string value = default, string contentType = default, StatusOverride? statusOverride = default)
+        {
+            return new FeatureFlagVariantDefinition(name, value, contentType, statusOverride, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines how to allocate variants based on context. </summary>
+        /// <param name="defaultWhenDisabled"> The default variant to use when disabled. </param>
+        /// <param name="defaultWhenEnabled"> The default variant to use when enabled but not allocated. </param>
+        /// <param name="percentile"> Allocates percentiles to variants. </param>
+        /// <param name="user"> Allocates users to variants. </param>
+        /// <param name="group"> Allocates groups to variants. </param>
+        /// <param name="seed"> The seed used for random allocation. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagAllocation"/> instance for mocking. </returns>
+        public static FeatureFlagAllocation FeatureFlagAllocation(string defaultWhenDisabled = default, string defaultWhenEnabled = default, IEnumerable<PercentileAllocation> percentile = default, IEnumerable<UserAllocation> user = default, IEnumerable<GroupAllocation> @group = default, string seed = default)
+        {
+            percentile ??= new ChangeTrackingList<PercentileAllocation>();
+            user ??= new ChangeTrackingList<UserAllocation>();
+            @group ??= new ChangeTrackingList<GroupAllocation>();
+
+            return new FeatureFlagAllocation(
+                defaultWhenDisabled,
+                defaultWhenEnabled,
+                percentile.ToList(),
+                user.ToList(),
+                @group.ToList(),
+                seed,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag PercentileAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="from"> The lower bounds for this percentile allocation. </param>
+        /// <param name="to"> The upper bounds for this percentile allocation. </param>
+        /// <returns> A new <see cref="AppConfiguration.PercentileAllocation"/> instance for mocking. </returns>
+        public static PercentileAllocation PercentileAllocation(string variant = default, int @from = default, int to = default)
+        {
+            return new PercentileAllocation(variant, @from, to, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag UserAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="users"> The users to get this variant. </param>
+        /// <returns> A new <see cref="AppConfiguration.UserAllocation"/> instance for mocking. </returns>
+        public static UserAllocation UserAllocation(string variant = default, IEnumerable<string> users = default)
+        {
+            users ??= new ChangeTrackingList<string>();
+
+            return new UserAllocation(variant, users.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag GroupAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="groups"> The groups to get this variant. </param>
+        /// <returns> A new <see cref="AppConfiguration.GroupAllocation"/> instance for mocking. </returns>
+        public static GroupAllocation GroupAllocation(string variant = default, IEnumerable<string> groups = default)
+        {
+            groups ??= new ChangeTrackingList<string>();
+
+            return new GroupAllocation(variant, groups.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Telemetry object. </summary>
+        /// <param name="enabled"> The enabled state of the telemetry. </param>
+        /// <param name="metadata"> The metadata to include on outbound telemetry. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagTelemetryConfiguration"/> instance for mocking. </returns>
+        public static FeatureFlagTelemetryConfiguration FeatureFlagTelemetryConfiguration(bool enabled = default, IDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FeatureFlagTelemetryConfiguration(enabled, metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>

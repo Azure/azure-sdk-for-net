@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag fields. </summary>
-    internal readonly partial struct FeatureFlagFields : IEquatable<FeatureFlagFields>
+    public readonly partial struct FeatureFlagFields : IEquatable<FeatureFlagFields>
     {
         private readonly string _value;
         /// <summary> Name field. </summary>

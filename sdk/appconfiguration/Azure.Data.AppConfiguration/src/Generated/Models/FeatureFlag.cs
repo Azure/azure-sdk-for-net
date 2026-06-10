@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A feature flag. </summary>
-    internal partial class FeatureFlag
+    public partial class FeatureFlag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Status Override. </summary>
-    internal readonly partial struct StatusOverride : IEquatable<StatusOverride>
+    public readonly partial struct StatusOverride : IEquatable<StatusOverride>
     {
         private readonly string _value;
         /// <summary> None. </summary>

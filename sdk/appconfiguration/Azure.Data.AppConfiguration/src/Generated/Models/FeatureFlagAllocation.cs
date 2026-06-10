@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Defines how to allocate variants based on context. </summary>
-    internal partial class FeatureFlagAllocation
+    public partial class FeatureFlagAllocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

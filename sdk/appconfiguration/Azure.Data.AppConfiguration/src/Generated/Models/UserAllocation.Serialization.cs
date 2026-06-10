@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag UserAllocation object. </summary>
-    internal partial class UserAllocation : IJsonModel<UserAllocation>
+    public partial class UserAllocation : IJsonModel<UserAllocation>
     {
         /// <summary> Initializes a new instance of <see cref="UserAllocation"/> for deserialization. </summary>
         internal UserAllocation()

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag GroupAllocation object. </summary>
-    internal partial class GroupAllocation
+    public partial class GroupAllocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

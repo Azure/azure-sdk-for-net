@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> The conditions that must be met for the feature flag to be enabled. </summary>
-    internal partial class FeatureFlagConditions : IJsonModel<FeatureFlagConditions>
+    public partial class FeatureFlagConditions : IJsonModel<FeatureFlagConditions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

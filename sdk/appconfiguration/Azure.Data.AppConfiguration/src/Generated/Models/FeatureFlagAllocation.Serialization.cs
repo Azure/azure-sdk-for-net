@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Defines how to allocate variants based on context. </summary>
-    internal partial class FeatureFlagAllocation : IJsonModel<FeatureFlagAllocation>
+    public partial class FeatureFlagAllocation : IJsonModel<FeatureFlagAllocation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

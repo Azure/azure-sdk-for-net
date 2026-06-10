@@ -15,7 +15,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A feature flag. </summary>
-    internal partial class FeatureFlag : IJsonModel<FeatureFlag>
+    public partial class FeatureFlag : IJsonModel<FeatureFlag>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

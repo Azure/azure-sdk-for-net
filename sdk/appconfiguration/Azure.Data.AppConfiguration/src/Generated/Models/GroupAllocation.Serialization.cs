@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag GroupAllocation object. </summary>
-    internal partial class GroupAllocation : IJsonModel<GroupAllocation>
+    public partial class GroupAllocation : IJsonModel<GroupAllocation>
     {
         /// <summary> Initializes a new instance of <see cref="GroupAllocation"/> for deserialization. </summary>
         internal GroupAllocation()

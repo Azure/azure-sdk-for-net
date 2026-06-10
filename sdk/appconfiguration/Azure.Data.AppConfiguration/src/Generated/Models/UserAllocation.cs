@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag UserAllocation object. </summary>
-    internal partial class UserAllocation
+    public partial class UserAllocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

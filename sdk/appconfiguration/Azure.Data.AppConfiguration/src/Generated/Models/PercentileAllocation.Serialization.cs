@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag PercentileAllocation object. </summary>
-    internal partial class PercentileAllocation : IJsonModel<PercentileAllocation>
+    public partial class PercentileAllocation : IJsonModel<PercentileAllocation>
     {
         /// <summary> Initializes a new instance of <see cref="PercentileAllocation"/> for deserialization. </summary>
         internal PercentileAllocation()

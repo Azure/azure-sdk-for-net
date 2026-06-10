@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag Telemetry object. </summary>
-    internal partial class FeatureFlagTelemetryConfiguration : IJsonModel<FeatureFlagTelemetryConfiguration>
+    public partial class FeatureFlagTelemetryConfiguration : IJsonModel<FeatureFlagTelemetryConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="FeatureFlagTelemetryConfiguration"/> for deserialization. </summary>
         internal FeatureFlagTelemetryConfiguration()
