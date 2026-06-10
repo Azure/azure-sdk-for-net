@@ -1,6 +1,5 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-extensions-openai
-# TODO: Switch back to using "oficial" emitterPackageJsonPath when the emitter will support the plugins from the typespec.
-commit: cc1ed52737f3733e6f0a7770f2c067bec5aaaa96
+commit: 7e01d054b6c219565a96b3eef54f664f406a36de
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 - specification/ai-foundry/data-plane/Foundry/src/common
@@ -10,5 +9,4 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/tools
 - specification/ai-foundry/data-plane/Foundry/src/servicepatterns.tsp
 
-emitterPackageJsonPath: sdk/ai/Azure.AI.Extensions.OpenAI/emitter-package.json
-#emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

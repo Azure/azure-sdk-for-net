@@ -35,6 +35,7 @@ namespace Extensions.Plugin.Visitors
             string fullName = $"{type.Type.Namespace}.{type.Name}";
             if ((type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public)
                     || type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Protected))
+                && !type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Internal)
                 && !SupportedPackages.IsStable(fullName)
                 && !type.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
                 && _attributedTypes.Add(fullName))
