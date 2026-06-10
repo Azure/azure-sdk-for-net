@@ -20,8 +20,8 @@ namespace System.ClientModel.Primitives;
 public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
 {
-    private ModelReaderWriterOptions _options;
-    private ModelReaderWriterContext? _context;
+    private readonly ModelReaderWriterOptions _options;
+    private readonly ModelReaderWriterContext? _context;
 
     /// <summary>
     /// Initializes a new instance of <see cref="JsonModelConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
@@ -92,7 +92,9 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         {
             throw new InvalidOperationException($"Either {typeToConvert.ToFriendlyName()} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
         }
-        var result = iJsonModel.Create(ref reader, _options);
+
+        var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        var result = callOptions.ReadWithChain(typeToConvert, iJsonModel, ref reader);
         return (IJsonModel<object>?)result;
     }
 
@@ -101,6 +103,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        value.Write(writer, _options);
+        var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        callOptions.ResolveProxy(value).Write(writer, callOptions);
     }
 }
