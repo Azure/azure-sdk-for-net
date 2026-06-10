@@ -20,13 +20,13 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
-using Azure.ResourceManager.SecurityCenter.Models;
 using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-[Obsolete("This API is no longer supported by the service.", false)]
+    [Obsolete("This API is no longer supported by the service.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ServicePrincipalProperties : IJsonModel<ServicePrincipalProperties>, IPersistableModel<ServicePrincipalProperties>
     {

@@ -20,13 +20,13 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
-using Azure.ResourceManager.SecurityCenter.Models;
 using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-// Compatibility customization: the generated factory overload exposes an internal AzureResourceLink type after the
+    // Compatibility customization: the generated factory overload exposes an internal AzureResourceLink type after the
     // assessmentDefinitions property is hidden behind the public SubResource compatibility property below.
     // Suppress the invalid generated overload and preserve the previous public ModelFactory signature.
     [CodeGenSuppress("SecureScoreControlDefinitionItem", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(int?), typeof(IEnumerable<AzureResourceLink>), typeof(SecurityControlType?))]

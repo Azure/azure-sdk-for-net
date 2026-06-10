@@ -21,13 +21,13 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
-using Azure.ResourceManager.SecurityCenter.Models;
 using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-public partial class SecuritySolutionsReferenceData
+    public partial class SecuritySolutionsReferenceData
     {
         public SecuritySolutionsReferenceData(SecurityFamily securityFamily, string alertVendorName, System.Uri packageInfoUri, string productName, string publisher, string publisherDisplayName, string template) : this(new SecuritySolutionsReferenceDataProperties(securityFamily, alertVendorName, packageInfoUri?.AbsoluteUri, productName, publisher, publisherDisplayName, template))
         {

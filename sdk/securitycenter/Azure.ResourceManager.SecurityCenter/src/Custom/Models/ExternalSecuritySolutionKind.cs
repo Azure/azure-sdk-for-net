@@ -20,13 +20,13 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
-using Azure.ResourceManager.SecurityCenter.Models;
 using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-public readonly partial struct ExternalSecuritySolutionKind
+    public readonly partial struct ExternalSecuritySolutionKind
     {
         public static ExternalSecuritySolutionKind Aad => AAD;
         public static ExternalSecuritySolutionKind Ata => ATA;

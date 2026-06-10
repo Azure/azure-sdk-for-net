@@ -20,13 +20,13 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
-using Azure.ResourceManager.SecurityCenter.Models;
 using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-public readonly partial struct SecurityCenterPricingTier : System.IEquatable<SecurityCenterPricingTier>
+    public readonly partial struct SecurityCenterPricingTier : System.IEquatable<SecurityCenterPricingTier>
     {
         public SecurityCenterPricingTier(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
         public static SecurityCenterPricingTier Free => new SecurityCenterPricingTier("Free");

@@ -21,13 +21,13 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
-using Azure.ResourceManager.SecurityCenter.Models;
 using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-public static partial class SecurityCenterExtensions
+    public static partial class SecurityCenterExtensions
     {
         // Backward compatibility for legacy provider-action list methods that are now generated as resource-returning APIs.
         [Obsolete("This API is no longer supported by the service.", false)]

@@ -20,13 +20,13 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
-using Azure.ResourceManager.SecurityCenter.Models;
 using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-public readonly partial struct SecurityCenterCloudName : System.IEquatable<SecurityCenterCloudName>
+    public readonly partial struct SecurityCenterCloudName : System.IEquatable<SecurityCenterCloudName>
     {
         public SecurityCenterCloudName(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
         public static SecurityCenterCloudName Aws => new SecurityCenterCloudName("AWS");
