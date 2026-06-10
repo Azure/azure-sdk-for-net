@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("fromName"u8);
                 writer.WriteStringValue(FromName);
             }
-            if (Optional.IsDefined(StartTlsPolicy))
+            if (Optional.IsDefined(StartTLSPolicy))
             {
                 writer.WritePropertyName("startTLSPolicy"u8);
-                writer.WriteStringValue(StartTlsPolicy.Value.ToString());
+                writer.WriteStringValue(StartTLSPolicy.Value.ToString());
             }
             if (Optional.IsDefined(SkipVerify))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Grafana.Models
             string password = default;
             string fromAddress = default;
             string fromName = default;
-            GrafanaStartTlsPolicy? startTlsPolicy = default;
+            StartTLSPolicy? startTLSPolicy = default;
             bool? skipVerify = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    startTlsPolicy = new GrafanaStartTlsPolicy(property.Value.GetString());
+                    startTLSPolicy = new StartTLSPolicy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("skipVerify"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 password,
                 fromAddress,
                 fromName,
-                startTlsPolicy,
+                startTLSPolicy,
                 skipVerify,
                 serializedAdditionalRawData);
         }

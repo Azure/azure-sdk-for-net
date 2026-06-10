@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public string Host { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public bool? SkipVerify { get { throw null; } set { } }
-        public Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy? StartTlsPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Grafana.Models.StartTLSPolicy? StartTLSPolicy { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Grafana.Models.Smtp System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Grafana.Models.Smtp>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1131,6 +1131,24 @@ namespace Azure.ResourceManager.Grafana.Models
         Azure.ResourceManager.Grafana.Models.Smtp System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StartTLSPolicy : System.IEquatable<Azure.ResourceManager.Grafana.Models.StartTLSPolicy>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StartTLSPolicy(string value) { throw null; }
+        public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy MandatoryStartTLS { get { throw null; } }
+        public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy NoStartTLS { get { throw null; } }
+        public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy OpportunisticStartTLS { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Grafana.Models.StartTLSPolicy other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Grafana.Models.StartTLSPolicy left, Azure.ResourceManager.Grafana.Models.StartTLSPolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Grafana.Models.StartTLSPolicy (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Grafana.Models.StartTLSPolicy left, Azure.ResourceManager.Grafana.Models.StartTLSPolicy right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SubscriptionTerm : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Grafana.Models.SubscriptionTerm>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.SubscriptionTerm>
     {

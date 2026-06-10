@@ -1,4 +1,0 @@
-# Obsolete StartTLSPolicy API is removed in favor of GrafanaStartTlsPolicy/StartTlsPolicy naming.
-TypesMustExist : Type 'Azure.ResourceManager.Grafana.Models.StartTLSPolicy' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.Nullable<Azure.ResourceManager.Grafana.Models.StartTLSPolicy> Azure.ResourceManager.Grafana.Models.Smtp.StartTLSPolicy.get()' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public void Azure.ResourceManager.Grafana.Models.Smtp.StartTLSPolicy.set(System.Nullable<Azure.ResourceManager.Grafana.Models.StartTLSPolicy>)' does not exist in the implementation but it does exist in the contract.
