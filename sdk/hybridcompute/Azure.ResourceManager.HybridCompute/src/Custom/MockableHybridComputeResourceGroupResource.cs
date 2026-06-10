@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             }
 
             Guid? tenantId = Guid.TryParse(data.TenantId, out Guid parsedTenantId) ? parsedTenantId : default(Guid?);
-            return new ArcSettings(data.Id, data.Name, data.ResourceType, data.SystemData, tenantId, data.GatewayResourceId, null);
+            return ArmHybridComputeModelFactory.ArcSettings(data.Id, data.Name, data.ResourceType, data.SystemData, tenantId, data.GatewayResourceId);
         }
 
         // Backward-compat justification: the GA mockable resource group APIs exposed machine get overloads with an expand parameter.

@@ -23,7 +23,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
         }
 
-        internal ArcSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier gatewayResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <summary> Initializes a new instance of <see cref="ArcSettings"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tenantId"> Azure resource tenant Id. </param>
+        /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        public ArcSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier gatewayResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             GatewayResourceId = gatewayResourceId;
@@ -31,11 +39,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource tenant Id. </summary>
-        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
 
         /// <summary> Associated Gateway Resource Id. </summary>
-        [WirePath("properties.gatewayResourceId")]
         public ResourceIdentifier GatewayResourceId { get; set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
