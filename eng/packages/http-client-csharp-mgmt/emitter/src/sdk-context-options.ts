@@ -227,6 +227,24 @@ export function setHasClientNameOverride(
     inputModel.decorators.push(marker);
   }
 
+  for (const sdkModel of sdkContext.sdkPackage.models) {
+    for (const sdkProperty of sdkModel.properties) {
+      const raw = sdkProperty.__raw;
+      if (!raw) {
+        continue;
+      }
+      const override = getClientNameOverride(sdkContext, raw, "csharp");
+      if (override === undefined) {
+        continue;
+      }
+      sdkProperty.decorators ??= [];
+      sdkProperty.decorators.push({
+        name: hasClientNameOverrideDecorator,
+        arguments: {}
+      });
+    }
+  }
+
   for (const sdkClient of getAllSdkClients(sdkContext)) {
     for (const sdkMethod of sdkClient.methods) {
       const raw = sdkMethod.__raw;

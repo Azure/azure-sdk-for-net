@@ -142,6 +142,35 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestClientNameOverridePreservesPropertyNameExactly()
+        {
+            const string testModelName = "TestModel";
+            const string testPropertyName = "PrivateIPAddress";
+            var clientNameOverrideMarker = new InputDecoratorInfo(
+                "Azure.ResourceManager.@hasClientNameOverride",
+                new Dictionary<string, BinaryData>());
+            var modelProperty = InputFactory.Property(
+                testPropertyName,
+                InputPrimitiveType.String,
+                serializedName: "privateIpAddress",
+                isReadOnly: true,
+                decorators: [clientNameOverrideMarker]);
+            var model = InputFactory.Model(testModelName, properties: [modelProperty]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], path: "/providers/a/test", decorators: []);
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation)],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
+
+            var type = plugin.Object.TypeFactory.CreateModel(model);
+            Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName));
+        }
+
+        [Test]
         public void TestPatchModelRenameRespectsResourceDerivedClientNameOverride()
         {
             var (client, models, patchModel) = InputResourceData.ClientWithResourcePatchBodyEquivalentModelInstance();
