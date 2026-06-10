@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="eTag"> The ETag of the storage insight. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageInsightProperties properties, string eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageInsightProperties properties, ETag? eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The ETag of the storage insight. </summary>
         [WirePath("eTag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="eTag"> The etag of the workspace. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, Identity identity = default, string eTag = default)
+        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -299,26 +299,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsWorkspaceFailoverProperties OperationalInsightsWorkspaceFailoverProperties(OperationalInsightsWorkspaceFailoverState? state = default, DateTimeOffset? lastModifiedOn = default)
         {
             return new OperationalInsightsWorkspaceFailoverProperties(state, lastModifiedOn, default);
-        }
-
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <param name="type"> Type of managed service identity. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.Identity"/> instance for mocking. </returns>
-        public static Identity Identity(string principalId = default, string tenantId = default, IdentityType @type = default, IDictionary<string, UserIdentityProperties> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserIdentityProperties>();
-
-            return new Identity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserIdentityProperties>(), default);
-        }
-
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserIdentityProperties"/> instance for mocking. </returns>
-        public static UserIdentityProperties UserIdentityProperties(string principalId = default, string clientId = default)
-        {
-            return new UserIdentityProperties(principalId, clientId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -523,11 +503,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
-        /// <param name="eTag"> The ETag of the data source. </param>
+        /// <param name="etag"> The ETag of the data source. </param>
         /// <param name="kind"> The kind of the DataSource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsDataSourceData"/> instance for mocking. </returns>
-        public static OperationalInsightsDataSourceData OperationalInsightsDataSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BinaryData properties = default, string eTag = default, OperationalInsightsDataSourceKind kind = default, IDictionary<string, string> tags = default)
+        public static OperationalInsightsDataSourceData OperationalInsightsDataSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BinaryData properties = default, ETag? etag = default, OperationalInsightsDataSourceKind kind = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -537,7 +517,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 resourceType,
                 systemData,
                 properties,
-                eTag,
+                etag,
                 kind,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -580,7 +560,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="eTag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/>, <paramref name="displayName"/> or <paramref name="query"/> is null. </exception>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/> instance for mocking. </returns>
-        public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string category = default, string displayName = default, string query = default, string functionAlias = default, string functionParameters = default, long? version = default, IEnumerable<OperationalInsightsTag> tags = default, string eTag = default)
+        public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string category = default, string displayName = default, string query = default, string functionAlias = default, string functionParameters = default, long? version = default, IEnumerable<OperationalInsightsTag> tags = default, ETag? eTag = default)
         {
             return new OperationalInsightsSavedSearchData(
                 id,
@@ -1019,7 +999,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="eTag"> The ETag of the storage insight. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="OperationalInsights.StorageInsightData"/> instance for mocking. </returns>
-        public static StorageInsightData StorageInsightData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> containers = default, IEnumerable<string> tables = default, OperationalInsightsStorageAccount storageAccount = default, StorageInsightStatus status = default, string eTag = default, IDictionary<string, string> tags = default)
+        public static StorageInsightData StorageInsightData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> containers = default, IEnumerable<string> tables = default, OperationalInsightsStorageAccount storageAccount = default, StorageInsightStatus status = default, ETag? eTag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1218,31 +1198,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsDataSourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
-        /// <param name="etag"> The ETag of the data source. </param>
-        /// <param name="kind"> The kind of the DataSource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsDataSourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsDataSourceData OperationalInsightsDataSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BinaryData properties = default, ETag? etag = default, OperationalInsightsDataSourceKind kind = default, IDictionary<string, string> tags = default)
-        {
-            return new OperationalInsightsDataSourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default,
-                kind,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1297,7 +1252,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     version,
                     (tags ?? new ChangeTrackingList<OperationalInsightsTag>()).ToList(),
                     default),
-                default,
+                etag,
                 default);
         }
 
@@ -1322,7 +1277,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 resourceType,
                 systemData,
                 containers is null && tables is null && storageAccount is null && status is null ? default : new StorageInsightProperties((containers ?? new ChangeTrackingList<string>()).ToList(), (tables ?? new ChangeTrackingList<string>()).ToList(), storageAccount, status, default),
-                default,
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
@@ -1379,8 +1334,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     replication,
                     failover,
                     default),
-                default,
-                default,
+                identity,
+                etag,
                 default);
         }
 
@@ -1572,8 +1527,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         default),
                     default,
                     default),
-                default,
-                default,
+                identity,
+                etag,
                 default);
         }
 

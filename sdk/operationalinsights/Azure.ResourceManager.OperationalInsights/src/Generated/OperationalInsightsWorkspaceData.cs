@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="eTag"> The etag of the workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, Models.Identity identity, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -50,11 +51,11 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public Models.Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The etag of the workspace. </summary>
         [WirePath("etag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> The provisioning state of the workspace. </summary>
         [WirePath("properties.provisioningState")]

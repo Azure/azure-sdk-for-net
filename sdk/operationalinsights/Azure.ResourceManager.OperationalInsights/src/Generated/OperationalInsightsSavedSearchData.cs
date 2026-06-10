@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="properties"> The properties of the saved search. </param>
         /// <param name="eTag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SavedSearchProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SavedSearchProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> The category of the saved search. This helps the user to find a saved search faster. </summary>
         [WirePath("properties.category")]

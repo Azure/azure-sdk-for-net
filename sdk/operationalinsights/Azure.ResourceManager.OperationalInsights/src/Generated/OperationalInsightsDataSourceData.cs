@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="kind"> The kind of the DataSource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsDataSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, string eTag, OperationalInsightsDataSourceKind kind, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsDataSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, ETag? eTag, OperationalInsightsDataSourceKind kind, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The ETag of the data source. </summary>
         [WirePath("etag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> The kind of the DataSource. </summary>
         [WirePath("kind")]
