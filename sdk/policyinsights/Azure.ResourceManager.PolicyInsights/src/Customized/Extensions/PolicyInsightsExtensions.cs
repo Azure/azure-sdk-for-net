@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.PolicyInsights
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtResourceGroupScope", typeof(ResourceGroupResource), typeof(CheckPolicyRestrictionsContent), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtSubscriptionScopeAsync", typeof(SubscriptionResource), typeof(CheckPolicyRestrictionsContent), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtSubscriptionScope", typeof(SubscriptionResource), typeof(CheckPolicyRestrictionsContent), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScopeAsync", typeof(ManagementGroupResource), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScope", typeof(ManagementGroupResource), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScopeAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScope", typeof(ArmClient), typeof(ResourceIdentifier), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
     public static partial class PolicyInsightsExtensions
     {
         /// <summary>
@@ -102,36 +102,38 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Checks what restrictions Azure Policy will place on resources within a management group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsManagementGroupResource.CheckPolicyRestrictionsAsync(CheckManagementGroupPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsArmClient.CheckPolicyRestrictionsAsync(ResourceIdentifier, CheckManagementGroupPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        public static async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this ManagementGroupResource managementGroupResource, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this ArmClient client, ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePolicyInsightsArmClient(client).CheckPolicyRestrictionsAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks what restrictions Azure Policy will place on resources within a management group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsManagementGroupResource.CheckPolicyRestrictions(CheckManagementGroupPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsArmClient.CheckPolicyRestrictions(ResourceIdentifier, CheckManagementGroupPolicyRestrictionsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        public static Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this ManagementGroupResource managementGroupResource, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public static Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this ArmClient client, ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).CheckPolicyRestrictions(content, cancellationToken);
+            return GetMockablePolicyInsightsArmClient(client).CheckPolicyRestrictions(scope, content, cancellationToken);
         }
     }
 }

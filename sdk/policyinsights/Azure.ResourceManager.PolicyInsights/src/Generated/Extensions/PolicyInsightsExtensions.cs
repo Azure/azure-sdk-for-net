@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.PolicyInsights.Mocking;
 using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
@@ -43,12 +42,6 @@ namespace Azure.ResourceManager.PolicyInsights
         private static MockablePolicyInsightsTenantResource GetMockablePolicyInsightsTenantResource(TenantResource tenantResource)
         {
             return tenantResource.GetCachedClient(client => new MockablePolicyInsightsTenantResource(client, tenantResource.Id));
-        }
-
-        /// <param name="managementGroupResource"></param>
-        private static MockablePolicyInsightsManagementGroupResource GetMockablePolicyInsightsManagementGroupResource(ManagementGroupResource managementGroupResource)
-        {
-            return managementGroupResource.GetCachedClient(client => new MockablePolicyInsightsManagementGroupResource(client, managementGroupResource.Id));
         }
 
         /// <summary>

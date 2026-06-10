@@ -15,16 +15,16 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScopeAsync", typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScope", typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
-    public partial class MockablePolicyInsightsManagementGroupResource
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScopeAsync", typeof(ResourceIdentifier), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CheckAtManagementGroupScope", typeof(ResourceIdentifier), typeof(CheckManagementGroupPolicyRestrictionsContent), typeof(CancellationToken))]
+    public partial class MockablePolicyInsightsArmClient
     {
         /// <summary>
         /// Checks what restrictions Azure Policy will place on resources within a management group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
+        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -36,22 +36,24 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsManagementGroupResource.CheckPolicyRestrictions");
-            scope.Start();
+            using DiagnosticScope scope0 = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CheckPolicyRestrictions");
+            scope0.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(Id.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
+                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(scope.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckPolicyRestrictionsResult> response = Response.FromValue(CheckPolicyRestrictionsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
+        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -84,22 +86,24 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(ResourceIdentifier scope, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsManagementGroupResource.CheckPolicyRestrictions");
-            scope.Start();
+            using DiagnosticScope scope0 = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CheckPolicyRestrictions");
+            scope0.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(Id.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
+                HttpMessage message = PolicyRestrictionsRestClient.CreateCheckAtManagementGroupScopeRequest(scope.Name, CheckManagementGroupPolicyRestrictionsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckPolicyRestrictionsResult> response = Response.FromValue(CheckPolicyRestrictionsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
