@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Enum discriminator for STAC item and collection types. </summary>
-    internal readonly partial struct StacModelType : IEquatable<StacModelType>
+    public readonly partial struct StacModelType : IEquatable<StacModelType>
     {
         private readonly string _value;
         /// <summary> GeoJSON Feature type. </summary>

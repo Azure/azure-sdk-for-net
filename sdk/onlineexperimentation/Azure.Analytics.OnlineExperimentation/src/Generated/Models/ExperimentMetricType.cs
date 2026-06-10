@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary> How the metric definition calculates metric values from event data. </summary>
-    internal readonly partial struct ExperimentMetricType : IEquatable<ExperimentMetricType>
+    public readonly partial struct ExperimentMetricType : IEquatable<ExperimentMetricType>
     {
         private readonly string _value;
         /// <summary> Counts the occurrences of an event. Experiment analysis accounts for unequal traffic allocation. </summary>

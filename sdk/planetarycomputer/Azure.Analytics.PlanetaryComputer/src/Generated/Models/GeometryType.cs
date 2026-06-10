@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Represents the type of a GeoJSON geometry. </summary>
-    internal readonly partial struct GeometryType : IEquatable<GeometryType>
+    public readonly partial struct GeometryType : IEquatable<GeometryType>
     {
         private readonly string _value;
         /// <summary> Represents a Point geometry. </summary>
