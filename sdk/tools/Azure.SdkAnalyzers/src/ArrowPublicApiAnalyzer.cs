@@ -61,6 +61,8 @@ namespace Azure.SdkAnalyzers
                 ReportIfArrow(context, implemented, namedType, location);
             }
 
+            AnalyzeTypeParameterConstraints(context, namedType.TypeParameters, namedType, location);
+
             if (namedType.TypeKind == TypeKind.Delegate && namedType.DelegateInvokeMethod is { } invoke)
             {
                 ReportIfArrow(context, invoke.ReturnType, namedType, location);
@@ -79,11 +81,30 @@ namespace Azure.SdkAnalyzers
                 return;
             }
 
-            ReportIfArrow(context, method.ReturnType, method, method.Locations.FirstOrDefault());
+            var location = method.Locations.FirstOrDefault();
+
+            ReportIfArrow(context, method.ReturnType, method, location);
 
             foreach (var parameter in method.Parameters)
             {
                 ReportIfArrow(context, parameter.Type, method, parameter.Locations.FirstOrDefault());
+            }
+
+            AnalyzeTypeParameterConstraints(context, method.TypeParameters, method, location);
+        }
+
+        private static void AnalyzeTypeParameterConstraints(
+            SymbolAnalysisContext context,
+            ImmutableArray<ITypeParameterSymbol> typeParameters,
+            ISymbol member,
+            Location location)
+        {
+            foreach (var typeParameter in typeParameters)
+            {
+                foreach (var constraint in typeParameter.ConstraintTypes)
+                {
+                    ReportIfArrow(context, constraint, member, location);
+                }
             }
         }
 
@@ -141,6 +162,7 @@ namespace Azure.SdkAnalyzers
                 case IPointerTypeSymbol pointer:
                     return FindArrowType(pointer.PointedAtType, visited);
                 case ITypeParameterSymbol:
+                    // Constraints are analyzed at the declaration site (type/method) to report once at a stable location.
                     return null;
                 case INamedTypeSymbol named:
                     if (IsArrowType(named))

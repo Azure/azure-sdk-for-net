@@ -211,6 +211,56 @@ namespace Azure.Test
         }
 
         [Test]
+        public async Task AZC0040_ProducedForArrowTypeParameterConstraintOnType()
+        {
+            string code = @"
+using Apache.Arrow;
+" + ArrowStub + @"
+namespace Azure.Test
+{
+    public class {|AZC0040:CustomContainer|}<T> where T : Table
+    {
+    }
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
+        public async Task AZC0040_ProducedForArrowTypeParameterConstraintOnMethod()
+        {
+            string code = @"
+using Apache.Arrow;
+" + ArrowStub + @"
+namespace Azure.Test
+{
+    public class TableClient
+    {
+        public void {|AZC0040:Process|}<T>(T item) where T : Table { }
+    }
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
+        public async Task AZC0040_NotProducedForNonArrowTypeParameterConstraint()
+        {
+            string code = @"
+using System;
+" + ArrowStub + @"
+namespace Azure.Test
+{
+    public class CustomContainer<T> where T : IDisposable
+    {
+        public void Process<TItem>(TItem item) where TItem : class { }
+    }
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
         public async Task AZC0040_NotProducedForInternalMember()
         {
             string code = @"
