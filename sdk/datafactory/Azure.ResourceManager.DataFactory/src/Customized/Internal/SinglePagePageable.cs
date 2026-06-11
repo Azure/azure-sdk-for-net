@@ -7,18 +7,19 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    // Generic single-page Pageable<T> used to convert MPG-emitted paged operations back to the
-    // upstream Pageable<T> back-compat surface.
+    // Generic single-page Pageable<T> that restores the pre-MPG (AutoRest) Pageable<T>/AsyncPageable<T>
+    // back-compat surface for DataFactory operations the MPG generator emits as a single Response<Wrapper>.
     //
-    // Spec/generator context: several DataFactory list operations are marked as paged in swagger via
-    // x-ms-pageable (e.g. Factories.queryByPipelineRun -> GetActivityRun, Triggers.queryByFactory ->
-    // GetTriggers, IntegrationRuntimes.listOutboundNetworkDependenciesEndpoints, etc.) but the
-    // TypeSpec models do not carry that marker. As a result the MPG generator emits a single
-    // non-paged Response<Wrapper> call rather than a true Pageable<TItem>. The pre-MPG AutoRest SDK
-    // returned Pageable<TItem>/AsyncPageable<TItem>, so consumers iterate with `foreach`. This helper
-    // wraps the single-response value (already materialized into an IReadOnlyList<TItem>) into a
-    // one-page Pageable<TItem>, allowing the resource-level customizations to expose the original
-    // signature without modifying the wire format.
+    // Why custom code instead of a spec decorator: the affected operations are POST "query" actions
+    // (Factories.queryByFactory -> GetPipelineRuns, queryByPipelineRun -> GetActivityRun,
+    // triggersQueryByFactory / triggerRunsQueryByFactory, listOutboundNetworkDependenciesEndpoints, ...).
+    // In swagger they were x-ms-pageable with nextLinkName:null -- a single page with no continuation token.
+    // The TypeSpec @list / @@markAsPageable decorators only model GET list operations that carry
+    // @nextLink/@items, so they cannot reproduce a no-continuation POST query; and the GA surface exposes
+    // these under hand-curated method names (GetActivityRun, GetPipelineRuns, GetTriggers, ...) that need a
+    // resource-level customization regardless. This wrapper materializes the single response value (already
+    // an IReadOnlyList<TItem>) into a one-page Pageable<TItem> so those customizations keep the original
+    // signature without touching the wire format.
     internal sealed class SinglePagePageable<T> : Pageable<T>
     {
         private readonly Response _rawResponse;

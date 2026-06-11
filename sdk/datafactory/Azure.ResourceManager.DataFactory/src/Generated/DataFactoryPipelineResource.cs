@@ -314,13 +314,13 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="parameterValueSpecification"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
         /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
         /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
         /// <param name="startFromFailure"> In recovery mode, if set to true, the rerun will start from failed activities. The property will be used only if startActivityName is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PipelineCreateRunResult>> CreateRunAsync(IDictionary<string, BinaryData> parameters = default, string referencePipelineRunId = default, bool? isRecovery = default, string startActivityName = default, bool? startFromFailure = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PipelineCreateRunResult>> CreateRunAsync(IDictionary<string, BinaryData> parameterValueSpecification = default, string referencePipelineRunId = default, bool? isRecovery = default, string startActivityName = default, bool? startFromFailure = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineResource.CreateRun");
             scope.Start();
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameters), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
+                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameterValueSpecification), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PipelineCreateRunResult> response = Response.FromValue(PipelineCreateRunResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -367,13 +367,13 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="parameterValueSpecification"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
         /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
         /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
         /// <param name="startFromFailure"> In recovery mode, if set to true, the rerun will start from failed activities. The property will be used only if startActivityName is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PipelineCreateRunResult> CreateRun(IDictionary<string, BinaryData> parameters = default, string referencePipelineRunId = default, bool? isRecovery = default, string startActivityName = default, bool? startFromFailure = default, CancellationToken cancellationToken = default)
+        public virtual Response<PipelineCreateRunResult> CreateRun(IDictionary<string, BinaryData> parameterValueSpecification = default, string referencePipelineRunId = default, bool? isRecovery = default, string startActivityName = default, bool? startFromFailure = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineResource.CreateRun");
             scope.Start();
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameters), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
+                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameterValueSpecification), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PipelineCreateRunResult> response = Response.FromValue(PipelineCreateRunResult.FromResponse(result), result);
                 if (response.Value == null)
