@@ -116,6 +116,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Sku = new ApplicationGatewaySku()
                 {
+                    Name = ApplicationGatewaySkuName.StandardV2,
                     Tier = ApplicationGatewayTier.StandardV2,
                     Capacity = 2
                 },
@@ -425,6 +426,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Sku = new ApplicationGatewaySku()
                 {
+                    Name = ApplicationGatewaySkuName.StandardV2,
                     Tier = ApplicationGatewayTier.StandardV2,
                     Capacity = 2
                 },
@@ -486,7 +488,6 @@ namespace Azure.ResourceManager.Network.Tests
                             Id = GetChildAppGwResourceId(subscriptionId,
                                 resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                         },
-                        SslCertificate = null,
                         Protocol = ApplicationGatewayProtocol.Http
                     }
                 },

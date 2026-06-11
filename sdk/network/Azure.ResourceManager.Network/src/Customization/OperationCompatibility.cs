@@ -16,8 +16,13 @@ namespace Azure.ResourceManager.Network
 {
     public partial class AzureFirewallCollection
     {
-        public virtual Task<ArmOperation<AzureFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken) => default;
-        public virtual ArmOperation<AzureFirewallResource> CreateOrUpdate(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken) => default;
+        [global::Azure.Core.ForwardsClientCalls]
+        public virtual Task<ArmOperation<AzureFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken)
+            => CreateOrUpdateAsync(waitUntil, azureFirewallName, data, createAfcControlPlane: default, cancellationToken);
+
+        [global::Azure.Core.ForwardsClientCalls]
+        public virtual ArmOperation<AzureFirewallResource> CreateOrUpdate(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, azureFirewallName, data, createAfcControlPlane: default, cancellationToken);
     }
 
     public partial class AzureFirewallResource
@@ -96,8 +101,14 @@ namespace Azure.ResourceManager.Network
 
     public partial class FirewallPolicyResource
     {
-        public virtual Task<ArmOperation> DeployFirewallPolicyDeploymentAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
-        public virtual ArmOperation DeployFirewallPolicyDeployment(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        [global::Azure.Core.ForwardsClientCalls]
+        public virtual Task<ArmOperation> DeployFirewallPolicyDeploymentAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => DeployAsync(waitUntil, cancellationToken);
+
+        [global::Azure.Core.ForwardsClientCalls]
+        public virtual ArmOperation DeployFirewallPolicyDeployment(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => Deploy(waitUntil, cancellationToken);
+
         public virtual Task<Response<IdpsSignatureListResult>> GetFirewallPolicyIdpsSignatureAsync(IdpsQueryContent content, CancellationToken cancellationToken) => default;
         public virtual Response<IdpsSignatureListResult> GetFirewallPolicyIdpsSignature(IdpsQueryContent content, CancellationToken cancellationToken) => default;
         public virtual Task<Response<SignatureOverridesFilterValuesResult>> GetFirewallPolicyIdpsSignaturesFilterValueAsync(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken) => default;

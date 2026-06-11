@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
-                    {PublicIPAddress = new PublicIPAddressData()
+                    {Name = frontendIpConfigName, PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = lbPublicIp.Id
                         }
@@ -1223,11 +1223,11 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 BackendAddressPools = {
                     new BackendAddressPoolData()
-                    {}
+                    {Name = backEndAddressPoolName}
                 },
                 LoadBalancingRules = {
                     new LoadBalancingRuleData()
-                    {Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
+                    {Name = loadBalancingRuleName, Properties = new LoadBalancingRuleProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPort: 80)
                         {
                             FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
                             BackendPort = 80,
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 Probes = {
                     new ProbeData()
-                    {Protocol = ProbeProtocol.Http,
+                    {Name = probeName, Protocol = ProbeProtocol.Http,
                         Port = 80,
                         RequestPath = "healthcheck.aspx",
                         IntervalInSeconds = 10,
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 InboundNatRules = {
                     new InboundNatRuleData()
-                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
+                    {Name = inboundNatRule1Name, FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.Network.Tests
                         EnableFloatingIP = false
                     },
                     new InboundNatRuleData()
-                    {FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
+                    {Name = inboundNatRule2Name, FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName),
                         Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,

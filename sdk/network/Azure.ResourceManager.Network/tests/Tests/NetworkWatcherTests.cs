@@ -129,15 +129,21 @@ namespace Azure.ResourceManager.Network.Tests
             NetworkWatcherResource networkWatcher = networkWatcherLro.Value;
 
             // Create two VMs for test vm connectivity
-            var vm1 = await CreateWindowsVM(Recording.GenerateAssetName("vm"), Recording.GenerateAssetName("nic"), location, resourceGroup);
-            var vm2 = await CreateWindowsVM(Recording.GenerateAssetName("vm"), Recording.GenerateAssetName("nic"), location, resourceGroup);
-            await deployWindowsNetworkAgent(vm1.Data.Name, location, resourceGroup);
-            await deployWindowsNetworkAgent(vm2.Data.Name, location, resourceGroup);
+            string vm1Name = Recording.GenerateAssetName("vm");
+            string nic1Name = Recording.GenerateAssetName("nic");
+            var vm1 = await CreateWindowsVM(vm1Name, nic1Name, location, resourceGroup);
+            string vm2Name = Recording.GenerateAssetName("vm");
+            string nic2Name = Recording.GenerateAssetName("nic");
+            var vm2 = await CreateWindowsVM(vm2Name, nic2Name, location, resourceGroup);
+            await deployWindowsNetworkAgent(vm1Name, location, resourceGroup);
+            await deployWindowsNetworkAgent(vm2Name, location, resourceGroup);
 
             // Test connectivity
+            ResourceIdentifier vm1Id = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vm1Name}");
+            ResourceIdentifier vm2Id = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vm2Name}");
             ConnectivityContent content = new ConnectivityContent(
-                new ConnectivitySource(vm1.Id),
-                new ConnectivityDestination() { Port = 22, ResourceId = vm2.Id });
+                new ConnectivitySource(vm1Id),
+                new ConnectivityDestination() { Port = 22, ResourceId = vm2Id });
             var connectivityResult = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content, System.Threading.CancellationToken.None);
             Assert.IsNotNull(connectivityResult.Value.NetworkConnectionStatus);
             Assert.IsNull(connectivityResult.Value.Hops.First().Links.First().ResourceId);

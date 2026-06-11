@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
             catch (Exception ex)
             {
-                Assert.True(ex.Message.Contains("cannot belong to different subnets"));
+                Assert.True(ex.Message.Contains("cannot belong to different subnets"), ex.ToString());
             }
         }
 
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.Network.Tests
                         }
                     }
                 },
-                NetworkSecurityGroup = putNsgResponse.Value.Data
+                NetworkSecurityGroup = new NetworkSecurityGroupData() { Id = putNsgResponse.Value.Id, Location = location }
             };
 
             // Test NIC apis

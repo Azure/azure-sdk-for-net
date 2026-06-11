@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class RouteFilterTests : NetworkServiceClientTestBase
     {
-        public RouteFilterTests(bool isAsync) : base(isAsync)
+        public RouteFilterTests(bool isAsync) : base(isAsync, RouteFilterRuleResource.ResourceType, "2023-02-01")
         {
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     Access = NetworkAccess.Allow,
                     Communities = { Filter_Commmunity },
-                    Location = TestEnvironment.Location
+                    RouteFilterRuleType = RouteFilterRuleType.Community
                 };
 
                 filter.Rules.Add(rule);
@@ -136,9 +136,10 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var rule = new RouteFilterRuleData()
             {
+                Name = ruleName,
                 Access = NetworkAccess.Allow,
                 Communities = { Filter_Commmunity },
-                Location = filter.Data.Location
+                RouteFilterRuleType = RouteFilterRuleType.Community
             };
 
             // Put route filter rule
