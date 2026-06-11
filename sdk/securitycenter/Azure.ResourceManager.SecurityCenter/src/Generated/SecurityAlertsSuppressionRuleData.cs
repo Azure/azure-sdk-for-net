@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The last time this rule was modified. </summary>
-        public DateTimeOffset? LastModifiedUtc
+        public DateTimeOffset? LastModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastModifiedUtc;
+                return Properties is null ? default : Properties.LastModifiedOn;
             }
         }
 
         /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
-        public DateTimeOffset? ExpirationDateUtc
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationDateUtc;
+                return Properties is null ? default : Properties.ExpireOn;
             }
             set
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     Properties = new AlertsSuppressionRuleProperties();
                 }
-                Properties.ExpirationDateUtc = value;
+                Properties.ExpireOn = value;
             }
         }
 
@@ -97,6 +97,26 @@ namespace Azure.ResourceManager.SecurityCenter
                     Properties = new AlertsSuppressionRuleProperties();
                 }
                 Properties.Reason = value;
+            }
+        }
+
+        /// <summary> Possible states of the rule. </summary>
+        public SecurityAlertsSuppressionRuleState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AlertsSuppressionRuleProperties();
+                    }
+                    Properties.State = value.Value;
+                }
             }
         }
 

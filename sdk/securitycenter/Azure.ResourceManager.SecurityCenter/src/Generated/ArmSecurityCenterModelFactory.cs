@@ -167,6 +167,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AlertSimulatorBundlesRequestProperties(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (bundles ?? new ChangeTrackingList<BundleType>()).ToList());
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
+        /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
+        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
+        /// <param name="reason"> The reason for dismissing the alert. </param>
+        /// <param name="state"> Possible states of the rule. </param>
+        /// <param name="comment"> Any comment regarding the rule. </param>
+        /// <param name="suppressionAlertsScopeAllOf"> All the conditions inside need to be true in order to suppress the alert. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityAlertsSuppressionRuleData"/> instance for mocking. </returns>
+        public static SecurityAlertsSuppressionRuleData SecurityAlertsSuppressionRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertType = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? expireOn = default, string reason = default, SecurityAlertsSuppressionRuleState? state = default, string comment = default, IEnumerable<SuppressionAlertsScopeElement> suppressionAlertsScopeAllOf = default)
+        {
+            return new SecurityAlertsSuppressionRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                alertType is null && lastModifiedOn is null && expireOn is null && reason is null && state is null && comment is null && suppressionAlertsScopeAllOf is null ? default : new AlertsSuppressionRuleProperties(
+                    alertType,
+                    lastModifiedOn,
+                    expireOn,
+                    reason,
+                    state.GetValueOrDefault(),
+                    comment,
+                    new SuppressionAlertsScope((suppressionAlertsScopeAllOf ?? new ChangeTrackingList<SuppressionAlertsScopeElement>()).ToList(), default),
+                    default),
+                default);
+        }
+
         /// <param name="field"> The alert entity type to suppress by. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.SuppressionAlertsScopeElement"/> instance for mocking. </returns>
@@ -4741,6 +4772,86 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> The external security solution kind. </param>
         /// <param name="location"> The resource location. </param>
+        /// <param name="properties"> The ATA solution properties. </param>
+        /// <returns> A new <see cref="Models.AtaExternalSecuritySolution"/> instance for mocking. </returns>
+        public static AtaExternalSecuritySolution AtaExternalSecuritySolution(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExternalSecuritySolutionKind? kind = default, AzureLocation? location = default, AtaSolutionProperties properties = default)
+        {
+            return new AtaExternalSecuritySolution(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                location,
+                default,
+                properties);
+        }
+
+        /// <param name="deviceVendor"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="workspaceId"> Azure resource ID of the connected OMS workspace. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="lastEventReceived"></param>
+        /// <returns> A new <see cref="Models.AtaSolutionProperties"/> instance for mocking. </returns>
+        public static AtaSolutionProperties AtaSolutionProperties(string deviceVendor = default, string deviceType = default, ResourceIdentifier workspaceId = default, IDictionary<string, BinaryData> additionalProperties = default, string lastEventReceived = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AtaSolutionProperties(deviceVendor, deviceType, workspaceId is null ? default : new ConnectedWorkspace(workspaceId, default), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), lastEventReceived);
+        }
+
+        /// <param name="deviceVendor"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="workspaceId"> Azure resource ID of the connected OMS workspace. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.ExternalSecuritySolutionProperties"/> instance for mocking. </returns>
+        public static ExternalSecuritySolutionProperties ExternalSecuritySolutionProperties(string deviceVendor = default, string deviceType = default, ResourceIdentifier workspaceId = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ExternalSecuritySolutionProperties(deviceVendor, deviceType, workspaceId is null ? default : new ConnectedWorkspace(workspaceId, default), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> The external security solution kind. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="properties"> The AAD solution properties. </param>
+        /// <returns> A new <see cref="Models.AadExternalSecuritySolution"/> instance for mocking. </returns>
+        public static AadExternalSecuritySolution AadExternalSecuritySolution(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExternalSecuritySolutionKind? kind = default, AzureLocation? location = default, AadSolutionProperties properties = default)
+        {
+            return new AadExternalSecuritySolution(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                location,
+                default,
+                properties);
+        }
+
+        /// <param name="deviceVendor"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="workspaceId"> Azure resource ID of the connected OMS workspace. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="connectivityState"> The connectivity state of the external AAD solution. </param>
+        /// <returns> A new <see cref="Models.AadSolutionProperties"/> instance for mocking. </returns>
+        public static AadSolutionProperties AadSolutionProperties(string deviceVendor = default, string deviceType = default, ResourceIdentifier workspaceId = default, IDictionary<string, BinaryData> additionalProperties = default, AadConnectivityStateType? connectivityState = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AadSolutionProperties(deviceVendor, deviceType, workspaceId is null ? default : new ConnectedWorkspace(workspaceId, default), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), connectivityState);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> The external security solution kind. </param>
+        /// <param name="location"> The resource location. </param>
         /// <param name="properties"> The CEF solution properties. </param>
         /// <returns> A new <see cref="Models.CefExternalSecuritySolution"/> instance for mocking. </returns>
         public static CefExternalSecuritySolution CefExternalSecuritySolution(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExternalSecuritySolutionKind? kind = default, AzureLocation? location = default, CefSolutionProperties properties = default)
@@ -4776,86 +4887,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 hostname,
                 agent,
                 lastEventReceived);
-        }
-
-        /// <param name="deviceVendor"></param>
-        /// <param name="deviceType"></param>
-        /// <param name="workspaceId"> Azure resource ID of the connected OMS workspace. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.ExternalSecuritySolutionProperties"/> instance for mocking. </returns>
-        public static ExternalSecuritySolutionProperties ExternalSecuritySolutionProperties(string deviceVendor = default, string deviceType = default, ResourceIdentifier workspaceId = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ExternalSecuritySolutionProperties(deviceVendor, deviceType, workspaceId is null ? default : new ConnectedWorkspace(workspaceId, default), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="kind"> The external security solution kind. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="properties"> The ATA solution properties. </param>
-        /// <returns> A new <see cref="Models.AtaExternalSecuritySolution"/> instance for mocking. </returns>
-        public static AtaExternalSecuritySolution AtaExternalSecuritySolution(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExternalSecuritySolutionKind? kind = default, AzureLocation? location = default, AtaSolutionProperties properties = default)
-        {
-            return new AtaExternalSecuritySolution(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                location,
-                default,
-                properties);
-        }
-
-        /// <param name="deviceVendor"></param>
-        /// <param name="deviceType"></param>
-        /// <param name="workspaceId"> Azure resource ID of the connected OMS workspace. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="lastEventReceived"></param>
-        /// <returns> A new <see cref="Models.AtaSolutionProperties"/> instance for mocking. </returns>
-        public static AtaSolutionProperties AtaSolutionProperties(string deviceVendor = default, string deviceType = default, ResourceIdentifier workspaceId = default, IDictionary<string, BinaryData> additionalProperties = default, string lastEventReceived = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new AtaSolutionProperties(deviceVendor, deviceType, workspaceId is null ? default : new ConnectedWorkspace(workspaceId, default), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), lastEventReceived);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="kind"> The external security solution kind. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="properties"> The AAD solution properties. </param>
-        /// <returns> A new <see cref="Models.AadExternalSecuritySolution"/> instance for mocking. </returns>
-        public static AadExternalSecuritySolution AadExternalSecuritySolution(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExternalSecuritySolutionKind? kind = default, AzureLocation? location = default, AadSolutionProperties properties = default)
-        {
-            return new AadExternalSecuritySolution(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                location,
-                default,
-                properties);
-        }
-
-        /// <param name="deviceVendor"></param>
-        /// <param name="deviceType"></param>
-        /// <param name="workspaceId"> Azure resource ID of the connected OMS workspace. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="connectivityState"> The connectivity state of the external AAD solution. </param>
-        /// <returns> A new <see cref="Models.AadSolutionProperties"/> instance for mocking. </returns>
-        public static AadSolutionProperties AadSolutionProperties(string deviceVendor = default, string deviceType = default, ResourceIdentifier workspaceId = default, IDictionary<string, BinaryData> additionalProperties = default, AadConnectivityStateType? connectivityState = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new AadSolutionProperties(deviceVendor, deviceType, workspaceId is null ? default : new ConnectedWorkspace(workspaceId, default), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), connectivityState);
         }
     }
 }

@@ -2172,10 +2172,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public SecurityAlertsSuppressionRuleData() { }
         public string AlertType { get { throw null; } set { } }
         public string Comment { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpirationDateUtc { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedUtc { get { throw null; } }
         public string Reason { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertsSuppressionRuleState? State { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf { get { throw null; } set { } }

@@ -46,6 +46,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
 
+        /// <summary> Name of the recommendation. </summary>
+        public string RecommendationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendationName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTSecurityAggregatedRecommendationProperties();
+                }
+                Properties.RecommendationName = value;
+            }
+        }
+
         /// <summary> Display name of the recommendation type. </summary>
         public string RecommendationDisplayName
         {

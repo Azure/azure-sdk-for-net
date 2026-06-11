@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("allOf"u8);
             writer.WriteStartArray();
-            foreach (SuppressionAlertsScopeElement item in AllOf)
+            foreach (SuppressionAlertsScopeElement item in SuppressionAlertsScopeAllOf)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<SuppressionAlertsScopeElement> allOf = default;
+            IList<SuppressionAlertsScopeElement> suppressionAlertsScopeAllOf = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item, options));
                     }
-                    allOf = array;
+                    suppressionAlertsScopeAllOf = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SuppressionAlertsScope(allOf, additionalBinaryDataProperties);
+            return new SuppressionAlertsScope(suppressionAlertsScopeAllOf, additionalBinaryDataProperties);
         }
     }
 }
