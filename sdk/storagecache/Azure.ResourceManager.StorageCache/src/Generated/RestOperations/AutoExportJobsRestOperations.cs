@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string autoExportJobName, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, string autoExportJobName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             uri.AppendPath("/autoExportJobs/", false);
             uri.AppendPath(autoExportJobName, true);
             if (_apiVersion != null)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string autoExportJobName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, string autoExportJobName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             uri.AppendPath("/autoExportJobs/", false);
             uri.AppendPath(autoExportJobName, true);
             if (_apiVersion != null)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string autoExportJobName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, string autoExportJobName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             uri.AppendPath("/autoExportJobs/", false);
             uri.AppendPath(autoExportJobName, true);
             if (_apiVersion != null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string autoExportJobName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, string autoExportJobName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             uri.AppendPath("/autoExportJobs/", false);
             uri.AppendPath(autoExportJobName, true);
             if (_apiVersion != null)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateGetByAmlFilesystemRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContext context)
+        internal HttpMessage CreateGetByAmlFilesystemRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             uri.AppendPath("/autoExportJobs", false);
             if (_apiVersion != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateNextGetByAmlFilesystemRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContext context)
+        internal HttpMessage CreateNextGetByAmlFilesystemRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

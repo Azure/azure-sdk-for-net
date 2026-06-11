@@ -34,15 +34,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the AML file system. </param>
-        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="identity"> The managed identity used by the AML file system, if configured. </param>
         /// <param name="sku"> SKU for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AmlFilesystemProperties properties, string amlFileSystemName, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AmlFilesystemProperties properties, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            AmlFileSystemName = amlFileSystemName;
             Identity = identity;
             Sku = sku;
             Zones = zones;
@@ -51,9 +49,6 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary> Properties of the AML file system. </summary>
         internal AmlFilesystemProperties Properties { get; set; }
-
-        /// <summary> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </summary>
-        public string AmlFileSystemName { get; }
 
         /// <summary> The managed identity used by the AML file system, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }

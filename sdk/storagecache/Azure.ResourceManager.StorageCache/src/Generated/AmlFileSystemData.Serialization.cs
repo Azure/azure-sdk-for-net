@@ -180,7 +180,6 @@ namespace Azure.ResourceManager.StorageCache
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             AmlFilesystemProperties properties = default;
-            string amlFileSystemName = default;
             ManagedServiceIdentity identity = default;
             StorageCacheSkuName sku = default;
             IList<string> zones = default;
@@ -306,7 +305,6 @@ namespace Azure.ResourceManager.StorageCache
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                amlFileSystemName,
                 identity,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),

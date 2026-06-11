@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateArchiveRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateArchiveRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             uri.AppendPath("/archive", false);
             if (_apiVersion != null)
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        internal HttpMessage CreateCancelArchiveRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContext context)
+        internal HttpMessage CreateCancelArchiveRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFileSystemName, true);
+            uri.AppendPath(amlFilesystemName, true);
             uri.AppendPath("/cancelArchive", false);
             if (_apiVersion != null)
             {

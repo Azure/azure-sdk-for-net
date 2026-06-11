@@ -410,12 +410,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="hsm"> Hydration and archive settings and status. </param>
         /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
         /// <param name="keyEncryptionKey"> Specifies the location of the encryption key in Key Vault. </param>
-        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="identity"> The managed identity used by the AML file system, if configured. </param>
         /// <param name="skuName"> SKU name for this resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
-        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, float? storageCapacityTiB = default, float? currentStorageCapacityTiB = default, Guid? clusterUuid = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, string amlFileSystemName = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default)
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, float? storageCapacityTiB = default, float? currentStorageCapacityTiB = default, Guid? clusterUuid = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -441,7 +440,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                     hsm,
                     rootSquashSettings,
                     default),
-                amlFileSystemName,
                 identity,
                 skuName is null ? default : new StorageCacheSkuName(skuName, default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -1040,7 +1038,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                     hsm,
                     rootSquashSettings,
                     default),
-                default,
                 identity,
                 skuName is null ? default : new StorageCacheSkuName(skuName, default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -1245,7 +1242,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                     hsm,
                     default,
                     default),
-                default,
                 identity,
                 skuName is null ? default : new StorageCacheSkuName(skuName, default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),

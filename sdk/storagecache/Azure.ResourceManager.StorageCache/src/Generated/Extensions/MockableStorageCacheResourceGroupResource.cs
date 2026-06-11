@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AmlFileSystemResource>> GetAmlFileSystemAsync(string amlFileSystemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemResource>> GetAmlFileSystemAsync(string amlFilesystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
+            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
 
-            return await GetAmlFileSystems().GetAsync(amlFileSystemName, cancellationToken).ConfigureAwait(false);
+            return await GetAmlFileSystems().GetAsync(amlFilesystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -149,16 +149,16 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AmlFileSystemResource> GetAmlFileSystem(string amlFileSystemName, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemResource> GetAmlFileSystem(string amlFilesystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
+            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
 
-            return GetAmlFileSystems().Get(amlFileSystemName, cancellationToken);
+            return GetAmlFileSystems().Get(amlFilesystemName, cancellationToken);
         }
     }
 }

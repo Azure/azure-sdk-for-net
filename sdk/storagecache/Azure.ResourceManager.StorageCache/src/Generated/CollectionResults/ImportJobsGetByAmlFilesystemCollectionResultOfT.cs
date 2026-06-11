@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageCache
         private readonly ImportJobs _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _amlFileSystemName;
+        private readonly string _amlFilesystemName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="client"> The ImportJobs client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ImportJobsGetByAmlFilesystemCollectionResultOfT(ImportJobs client, string subscriptionId, string resourceGroupName, string amlFileSystemName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ImportJobsGetByAmlFilesystemCollectionResultOfT(ImportJobs client, string subscriptionId, string resourceGroupName, string amlFilesystemName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _amlFileSystemName = amlFileSystemName;
+            _amlFilesystemName = amlFilesystemName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByAmlFilesystemRequest(nextLink, _subscriptionId, _resourceGroupName, _amlFileSystemName, _context) : _client.CreateGetByAmlFilesystemRequest(_subscriptionId, _resourceGroupName, _amlFileSystemName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByAmlFilesystemRequest(nextLink, _subscriptionId, _resourceGroupName, _amlFilesystemName, _context) : _client.CreateGetByAmlFilesystemRequest(_subscriptionId, _resourceGroupName, _amlFilesystemName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
