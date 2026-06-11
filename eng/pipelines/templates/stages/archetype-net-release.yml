@@ -206,10 +206,9 @@ stages:
                   condition: >-
                     and(
                       succeeded(),
-                       ne(variables['Skip.PublishDocs'], 'true'), 
+                       ne(variables['Skip.PublishDocs'], 'true'),
                        ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr')
                     )
-                  dependsOn: PublishPackage
 
                   pool:
                     name: $(LINUXPOOL)
@@ -240,10 +239,10 @@ stages:
               - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
                 - job: PublishDocs
                   displayName: Publish Docs to GitHub pages
-                  condition: >- 
+                  condition: >-
                     and(
-                      succeeded(), 
-                      ne(variables['Skip.PublishDocs'], 'true'), 
+                      succeeded(),
+                      ne(variables['Skip.PublishDocs'], 'true'),
                       ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr')
                     )
                   dependsOn: PublishPackage
@@ -320,9 +319,9 @@ stages:
           os: windows
 
         templateContext:
-          type: releaseJob 
+          type: releaseJob
           isProduction: true
-          inputs: 
+          inputs:
             - input: pipelineArtifact
               artifactName: ${{parameters.ArtifactName}}-signed
               targetPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
@@ -348,19 +347,19 @@ stages:
                       packageParentPath: '$(Pipeline.Workspace)'
                       packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                       publishVstsFeed: $(DevOpsFeedID)
-                
+
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
         condition: >-
           and(
-            succeeded(), 
+            succeeded(),
             or(
-              eq(variables['SetDevVersion'], 'true'), 
+              eq(variables['SetDevVersion'], 'true'),
               and(
-                eq(variables['Build.Reason'],'Schedule'), 
+                eq(variables['Build.Reason'],'Schedule'),
                 eq(variables['System.TeamProject'], 'internal')
               )
-            ), 
+            ),
             ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr')
           )
         pool:
