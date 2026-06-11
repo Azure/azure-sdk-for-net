@@ -18,6 +18,7 @@ public class OptimizationConfigLoaderTests
             "OPTIMIZATION_CONFIG",
             "OPTIMIZATION_CANDIDATE_ID",
             "OPTIMIZATION_RESOLVE_ENDPOINT",
+            "OPTIMIZATION_LOCAL_DIR",
         };
 
         foreach (var v in envVars)
@@ -108,5 +109,88 @@ public class OptimizationConfigLoaderTests
         var result = await OptimizationConfigLoader.LoadConfigAsync();
 
         Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public async Task LoadConfigAsync_LoadsFromLocalCandidateDirectory_Priority3()
+    {
+        // Simulate the layout written by `azd ai agent optimize apply --candidate`:
+        //   <root>/baseline/instructions.md
+        //   <root>/cand_abc123/instructions.md
+        // When OPTIMIZATION_CANDIDATE_ID is set to cand_abc123, the candidate
+        // folder must win over baseline.
+        string root = Path.Combine(Path.GetTempPath(), $"opt-loader-tests-{Guid.NewGuid():N}");
+        try
+        {
+            string baselineDir = Path.Combine(root, "baseline");
+            string candidateDir = Path.Combine(root, "cand_abc123");
+            Directory.CreateDirectory(baselineDir);
+            Directory.CreateDirectory(candidateDir);
+            File.WriteAllText(Path.Combine(baselineDir, "instructions.md"), "baseline instructions");
+            File.WriteAllText(Path.Combine(candidateDir, "instructions.md"), "optimized instructions");
+
+            Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
+            Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_abc123");
+
+            var result = await OptimizationConfigLoader.LoadConfigAsync();
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.Instructions, Is.EqualTo("optimized instructions"));
+            Assert.That(result.CandidateId, Is.EqualTo("cand_abc123"));
+            Assert.That(result.Source, Does.Contain("cand_abc123"));
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task LoadConfigAsync_FallsBackToBaseline_WhenCandidateDirectoryMissing()
+    {
+        string root = Path.Combine(Path.GetTempPath(), $"opt-loader-tests-{Guid.NewGuid():N}");
+        try
+        {
+            string baselineDir = Path.Combine(root, "baseline");
+            Directory.CreateDirectory(baselineDir);
+            File.WriteAllText(Path.Combine(baselineDir, "instructions.md"), "baseline instructions");
+
+            Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
+            Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_does_not_exist");
+
+            var result = await OptimizationConfigLoader.LoadConfigAsync();
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.Instructions, Is.EqualTo("baseline instructions"));
+            Assert.That(result.CandidateId, Is.Null);
+            Assert.That(result.Source, Does.Contain("baseline"));
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task LoadConfigAsync_LoadsBaseline_WhenOnlyLocalDirSet()
+    {
+        string root = Path.Combine(Path.GetTempPath(), $"opt-loader-tests-{Guid.NewGuid():N}");
+        try
+        {
+            string baselineDir = Path.Combine(root, "baseline");
+            Directory.CreateDirectory(baselineDir);
+            File.WriteAllText(Path.Combine(baselineDir, "instructions.md"), "baseline only");
+
+            Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
+
+            var result = await OptimizationConfigLoader.LoadConfigAsync();
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.Instructions, Is.EqualTo("baseline only"));
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+        }
     }
 }

@@ -8,14 +8,15 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Loads optimization config with graceful fallback using a 3-priority resolution waterfall.
+/// Loads optimization config with graceful fallback using a 4-priority resolution waterfall.
 /// </summary>
 /// <remarks>
 /// Resolution order (first match wins):
 /// <list type="number">
 /// <item><description><b>Resolver API</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> and <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> are both set.</description></item>
 /// <item><description><b>Inline JSON</b> — <c>OPTIMIZATION_CONFIG</c> env var contains the full config as JSON.</description></item>
-/// <item><description><b>Local baseline directory</b> — <c>OPTIMIZATION_LOCAL_DIR</c> points to a folder with instructions.md, tools.json, and skills/.</description></item>
+/// <item><description><b>Local candidate directory</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> is set and <c>OPTIMIZATION_LOCAL_DIR/&lt;candidate_id&gt;/</c> exists on disk. This is what <c>azd ai agent optimize apply --candidate</c> writes.</description></item>
+/// <item><description><b>Local baseline directory</b> — <c>OPTIMIZATION_LOCAL_DIR/baseline/</c> exists on disk.</description></item>
 /// <item><description>When none of the above match, returns <c>null</c>.</description></item>
 /// </list>
 /// </remarks>
@@ -64,8 +65,24 @@ public static class OptimizationConfigLoader
             return LoadFromEnvVar(rawConfig);
         }
 
-        // ── Priority 3: Local baseline directory ────────────────────
+        // ── Priority 3: Local candidate directory ───────────────────
+        // When `azd ai agent optimize apply --candidate <id>` runs, it writes
+        // the candidate config to `<OPTIMIZATION_LOCAL_DIR>/<candidate_id>/`
+        // and sets OPTIMIZATION_CANDIDATE_ID on the agent. If the candidate
+        // directory exists on disk, prefer it over baseline so the deployed
+        // container actually exercises the optimized config when the resolver
+        // API endpoint is not configured (the common offline / preview case).
         string localDir = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableLocalDirectory)?.Trim() ?? "";
+        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(localDir))
+        {
+            string candidatePath = Path.Combine(localDir, candidateId);
+            if (Directory.Exists(candidatePath))
+            {
+                return LoadFromLocalDirectory(candidatePath, candidateId);
+            }
+        }
+
+        // ── Priority 4: Local baseline directory ────────────────────
         if (!string.IsNullOrEmpty(localDir))
         {
             string baselinePath = Path.Combine(localDir, "baseline");
@@ -194,7 +211,7 @@ public static class OptimizationConfigLoader
         }
     }
 
-    private static OptimizationConfig LoadFromLocalDirectory(string localDir)
+    private static OptimizationConfig LoadFromLocalDirectory(string localDir, string candidateId = null)
     {
         // Read instructions.md
         string instructionsPath = Path.Combine(localDir, "instructions.md");
@@ -233,6 +250,7 @@ public static class OptimizationConfigLoader
             skills: skills,
             skillsDirectory: Directory.Exists(skillsDir) ? Path.GetFullPath(skillsDir) : null,
             toolDefinitions: tools,
-            source: $"local:{localDir}");
+            source: $"local:{localDir}",
+            candidateId: candidateId);
     }
 }
