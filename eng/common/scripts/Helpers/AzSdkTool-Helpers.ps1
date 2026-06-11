@@ -1,5 +1,20 @@
 Set-StrictMode -Version 4
 
+function Get-GitHubAuthHeaders {
+    # Returns Authorization headers when a GitHub token is present in the environment.
+    # Authenticated requests get a much higher rate limit (5000/hour) than the
+    # anonymous limit (60/hour per IP), which otherwise causes 403 failures.
+    $headers = @{}
+    foreach ($variable in @('GITHUB_TOKEN', 'GH_TOKEN')) {
+        $token = [Environment]::GetEnvironmentVariable($variable)
+        if ($token) {
+            $headers['Authorization'] = "Bearer $($token.Trim())"
+            break
+        }
+    }
+    return $headers
+}
+
 function Get-SystemArchitecture {
     $unameOutput = uname -m
     switch ($unameOutput) {
@@ -136,10 +151,14 @@ function Install-Standalone-Tool (
 
     $tag = "${Package}_${Version}"
 
+    # Authenticate GitHub requests when a token is available so the unauthenticated
+    # rate limit (60 requests/hour per IP) doesn't cause installs to fail with 403.
+    $githubHeaders = Get-GitHubAuthHeaders
+
     if (!$Version -or $Version -eq "*") {
         Write-Host "Attempting to find latest version for package '$Package'"
         $releasesUrl = "https://api.github.com/repos/$Repository/releases"
-        $releases = Invoke-RestMethod -Uri $releasesUrl
+        $releases = Invoke-RestMethod -Uri $releasesUrl -Headers $githubHeaders
         $found = $false
         foreach ($release in $releases) {
             if ($release.tag_name -like "$Package*") {
@@ -163,7 +182,7 @@ function Install-Standalone-Tool (
 
     if (isNewVersion $version $downloadFolder) {
         Write-Host "Installing '$Package' '$Version' to '$downloadFolder' from $downloadUrl"
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation -Headers $githubHeaders
 
         if ($downloadFile -like "*.zip") {
             Expand-Archive -Path $downloadLocation -DestinationPath $downloadFolder -Force
