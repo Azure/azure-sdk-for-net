@@ -31,14 +31,14 @@ namespace Azure.AI.Language.Text
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BaseRedactionPolicy(RedactionPolicyKind policyKind, IList<PiiCategoriesExclude> entityTypes, string policyName, bool? isDefaultPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BaseRedactionPolicy(RedactionPolicyKind policyKind, IList<PiiCategoriesExclude> entityTypes, string policyName, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyKind = policyKind;
             EntityTypes = entityTypes;
             PolicyName = policyName;
-            IsDefaultPolicy = isDefaultPolicy;
+            IsDefault = isDefault;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,6 +52,6 @@ namespace Azure.AI.Language.Text
         public string PolicyName { get; set; }
 
         /// <summary> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </summary>
-        public bool? IsDefaultPolicy { get; set; }
+        public bool? IsDefault { get; set; }
     }
 }
