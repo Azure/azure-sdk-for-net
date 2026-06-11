@@ -107,7 +107,7 @@ steps:
       parameters:
         TokenOwners:
           - ${{ parameters.TargetDocRepoOwner }}
-
+        ScriptDirectory: ${{ parameters.ScriptDirectory }}
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
       parameters:
         BaseRepoBranch: $(TargetBranchName)
