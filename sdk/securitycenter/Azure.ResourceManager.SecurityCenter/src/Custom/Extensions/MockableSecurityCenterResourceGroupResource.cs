@@ -3,7 +3,7 @@
 
 #nullable disable
 
-#pragma warning disable CS1591 // Hidden obsolete compatibility shims do not need public docs.
+#pragma warning disable CS1591 // Hidden compatibility shims do not need public docs.
 
 using System;
 using System.ClientModel.Primitives;
@@ -31,29 +31,5 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         [ForwardsClientCalls]
         public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(string ascLocation)
             => GetJitNetworkAccessPolicies(new AzureLocation(ascLocation));
-
-        [ForwardsClientCalls]
-        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(string ascLocation)
-            => GetResourceGroupSecurityAlerts(new AzureLocation(ascLocation));
-
-        [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityAlert(new AzureLocation(ascLocation), alertName, cancellationToken);
-
-        [ForwardsClientCalls]
-        public virtual Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityAlertAsync(new AzureLocation(ascLocation), alertName, cancellationToken);
-
-        [ForwardsClientCalls]
-        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
-            => GetResourceGroupSecurityTasks(new AzureLocation(ascLocation));
-
-        [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityTask(new AzureLocation(ascLocation), taskName, cancellationToken);
-
-        [ForwardsClientCalls]
-        public virtual Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetResourceGroupSecurityTaskAsync(new AzureLocation(ascLocation), taskName, cancellationToken);
     }
 }

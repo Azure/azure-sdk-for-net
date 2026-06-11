@@ -88,33 +88,15 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<SecurityAlertData> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
+        [ForwardsClientCalls]
+        public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
         [ForwardsClientCalls]
         public static JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, string ascLocation)
             => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicies(ascLocation);
-        [ForwardsClientCalls]
-        public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, string ascLocation)
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
-        [ForwardsClientCalls]
-        public static Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(this ResourceGroupResource resourceGroupResource, string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlert(ascLocation, alertName, cancellationToken);
-        [ForwardsClientCalls]
-        public static Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(this ResourceGroupResource resourceGroupResource, string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlertAsync(ascLocation, alertName, cancellationToken);
-        [ForwardsClientCalls]
-        public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, string ascLocation)
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
-        [ForwardsClientCalls]
-        public static Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(this ResourceGroupResource resourceGroupResource, string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTask(ascLocation, taskName, cancellationToken);
-        [ForwardsClientCalls]
-        public static Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(this ResourceGroupResource resourceGroupResource, string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTaskAsync(ascLocation, taskName, cancellationToken);
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = default(SecurityScoreODataExpand?), CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
