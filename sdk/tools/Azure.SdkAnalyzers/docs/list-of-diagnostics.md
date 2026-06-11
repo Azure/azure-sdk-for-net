@@ -209,6 +209,6 @@ namespace Azure.Data.Analytics
 
 ### Notes
 
-- This analyzer only checks public and protected members of public types in Azure SDK namespaces (namespaces starting with `Azure.` except `Azure.Core.*`)
+- This analyzer only checks public and protected members of public types in Azure SDK namespaces (namespaces starting with `Azure.` except `Azure.Core.*`). `protected internal` members are included; `private protected` and `internal` members are not
 - A type is treated as an `Apache.Arrow` type when its containing namespace is `Apache.Arrow` or begins with `Apache.Arrow.`
 - Return types, parameter types, property types, field types, event types, base types, implemented interfaces, generic type arguments, array element types, and generic type parameter constraints are all analyzed

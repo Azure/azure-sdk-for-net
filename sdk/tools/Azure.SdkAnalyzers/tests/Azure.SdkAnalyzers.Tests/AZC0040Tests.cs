@@ -261,6 +261,40 @@ namespace Azure.Test
         }
 
         [Test]
+        public async Task AZC0040_ProducedForProtectedInternalMember()
+        {
+            string code = @"
+using Apache.Arrow;
+" + ArrowStub + @"
+namespace Azure.Test
+{
+    public class TableModel
+    {
+        protected internal Table {|AZC0040:Data|} { get; set; }
+    }
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
+        public async Task AZC0040_NotProducedForPrivateProtectedMember()
+        {
+            string code = @"
+using Apache.Arrow;
+" + ArrowStub + @"
+namespace Azure.Test
+{
+    public class TableModel
+    {
+        private protected Table Data { get; set; }
+    }
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
         public async Task AZC0040_NotProducedForInternalMember()
         {
             string code = @"
