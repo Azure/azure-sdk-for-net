@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private const string CancellingValue = "Cancelling";
         /// <summary> The migration operation has been cancelled. </summary>
         private const string CancelledValue = "Cancelled";
+        /// <summary> The migration operation cancellation has failed. </summary>
+        private const string CancellationFailedValue = "CancellationFailed";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -60,6 +62,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> The migration operation has been cancelled. </summary>
         public static RedisEnterpriseMigrationProvisioningState Cancelled { get; } = new RedisEnterpriseMigrationProvisioningState(CancelledValue);
+
+        /// <summary> The migration operation cancellation has failed. </summary>
+        public static RedisEnterpriseMigrationProvisioningState CancellationFailed { get; } = new RedisEnterpriseMigrationProvisioningState(CancellationFailedValue);
 
         /// <summary> Determines if two <see cref="RedisEnterpriseMigrationProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

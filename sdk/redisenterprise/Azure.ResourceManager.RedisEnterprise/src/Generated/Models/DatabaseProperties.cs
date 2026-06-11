@@ -36,8 +36,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="redisVersion"> Version of Redis the database is running on, e.g. '6.0'. </param>
         /// <param name="deferUpgrade"> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </param>
         /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
+        /// <param name="notifyKeyspaceEvents"> Specifies which keyspace events should trigger notifications. Default is an empty string, meaning this feature is disabled. When enabled, at least 'K' (keyspace events) or 'E' (keyevent events) must be present. For example, 'AKE' enables all standard events. See https://redis.io/docs/latest/develop/use/keyspace-notifications/ for the complete list of event types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseProperties(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseProperties(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication, string notifyKeyspaceEvents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientProtocol = clientProtocol;
             Port = port;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisVersion = redisVersion;
             DeferUpgrade = deferUpgrade;
             AccessKeysAuthentication = accessKeysAuthentication;
+            NotifyKeyspaceEvents = notifyKeyspaceEvents;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -101,5 +103,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </summary>
         [WirePath("accessKeysAuthentication")]
         public AccessKeysAuthentication? AccessKeysAuthentication { get; set; }
+
+        /// <summary> Specifies which keyspace events should trigger notifications. Default is an empty string, meaning this feature is disabled. When enabled, at least 'K' (keyspace events) or 'E' (keyevent events) must be present. For example, 'AKE' enables all standard events. See https://redis.io/docs/latest/develop/use/keyspace-notifications/ for the complete list of event types. </summary>
+        [WirePath("notifyKeyspaceEvents")]
+        public string NotifyKeyspaceEvents { get; set; }
     }
 }

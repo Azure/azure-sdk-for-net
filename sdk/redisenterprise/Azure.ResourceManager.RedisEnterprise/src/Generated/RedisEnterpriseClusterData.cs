@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="kind"> Distinguishes the kind of cluster. Read-only. </param>
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterCreateProperties properties, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IList<string> zones, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         [WirePath("zones")]
         public IList<string> Zones { get; }
 
-        /// <summary> The identity of the resource. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
@@ -171,6 +171,16 @@ namespace Azure.ResourceManager.RedisEnterprise
                     Properties = new ClusterCreateProperties();
                 }
                 return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </summary>
+        [WirePath("properties.migratedEndpoint")]
+        public string MigratedEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigratedEndpoint;
             }
         }
 
