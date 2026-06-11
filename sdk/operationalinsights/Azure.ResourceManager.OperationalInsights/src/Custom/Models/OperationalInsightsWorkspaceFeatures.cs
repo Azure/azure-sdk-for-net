@@ -12,11 +12,10 @@ using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    // Backward-compat justification: the GA SDK exposed AdditionalProperties with a WirePath attribute on workspace features.
+    // Backward-compat justification: the GA SDK exposed AdditionalProperties on workspace features; keep a minimal custom deserializer so unknown properties continue to populate that dictionary without duplicating generated write/create logic.
     public partial class OperationalInsightsWorkspaceFeatures
     {
         /// <summary> Gets the AdditionalProperties. </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
 
         internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options)

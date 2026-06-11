@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights;
@@ -33,12 +34,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="properties"> Workspace properties. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. Optional. </param>
+        /// <param name="eTag"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkspaceProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkspaceProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;
             Tags = tags;
+            ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

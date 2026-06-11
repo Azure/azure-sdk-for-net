@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -39,34 +39,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new OperationalInsightsWorkspacePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                eTag,
-                provisioningState is null && customerId is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && defaultDataCollectionRuleResourceId is null && replication is null && failover is null ? default : new WorkspaceProperties(
-                    provisioningState,
-                    customerId,
-                    sku,
-                    retentionInDays,
-                    workspaceCapping,
-                    createdOn,
-                    modifiedOn,
-                    publicNetworkAccessForIngestion,
-                    publicNetworkAccessForQuery,
-                    forceCmkForQuery,
-                    (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
-                    features,
-                    defaultDataCollectionRuleResourceId,
-                    replication,
-                    failover,
-                    null),
-                identity,
-                tags);
+            return OperationalInsightsWorkspacePatch(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                provisioningState: provisioningState,
+                customerId: customerId,
+                sku: sku,
+                retentionInDays: retentionInDays,
+                workspaceCapping: workspaceCapping,
+                createdOn: createdOn,
+                modifiedOn: modifiedOn,
+                publicNetworkAccessForIngestion: publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery: publicNetworkAccessForQuery,
+                forceCmkForQuery: forceCmkForQuery,
+                privateLinkScopedResources: privateLinkScopedResources,
+                features: features,
+                defaultDataCollectionRuleResourceId: defaultDataCollectionRuleResourceId,
+                replication: replication,
+                failover: failover,
+                identity: identity,
+                tags: tags,
+                eTag: eTag is null ? default(ETag?) : new ETag(eTag));
         }
     }
 }
