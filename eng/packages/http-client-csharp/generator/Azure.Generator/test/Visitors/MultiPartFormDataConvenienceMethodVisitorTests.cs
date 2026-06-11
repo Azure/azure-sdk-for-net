@@ -45,6 +45,36 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void ConvertsMultiPartMixedConvenienceMethodPayload()
+        {
+            var inputModel = InputFactory.Model("cat", properties:
+            [
+                InputFactory.Property("name", InputPrimitiveType.String, isRequired: true),
+                InputFactory.Property("age", InputPrimitiveType.Int32, isRequired: true),
+            ],
+            usage: InputModelTypeUsage.Input | InputModelTypeUsage.MultipartFormData,
+            serializationOptions: new InputSerializationOptions(
+                json: null,
+                multipart: new InputMultipartOptions("cat", false, false, [], null, null)));
+            var contentTypeParameter = InputFactory.ContentTypeParameter("multipart/mixed");
+            var bodyParameter = InputFactory.BodyParameter("body", inputModel, isRequired: true, contentTypes: ["multipart/mixed"], defaultContentType: "multipart/mixed");
+            var operation = InputFactory.Operation("Upload", parameters: [contentTypeParameter, bodyParameter], requestMediaTypes: ["multipart/mixed"]);
+            var serviceMethod = InputFactory.BasicServiceMethod("Upload", operation, parameters: [InputFactory.MethodParameter("body", inputModel, isRequired: true)]);
+            var client = InputFactory.Client("client", methods: [serviceMethod]);
+            var plugin = MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
+
+            var visitor = new TestMultiPartFormDataConvenienceMethodVisitor();
+            visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
+
+            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.OfType<ClientProvider>().First();
+            var convenienceMethod = clientProvider.Methods
+                .OfType<ScmMethodProvider>()
+                .Single(m => m.Kind == ScmMethodKind.Convenience && m.Signature.Name == "Upload");
+
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), convenienceMethod.BodyStatements!.ToDisplayString());
+        }
+
+        [Test]
         public void PreservesNonBodyParametersInProtocolInvocation()
         {
             var inputModel = InputFactory.Model("cat", properties:
@@ -142,38 +172,6 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
 
             Assert.AreEqual(expected, convenienceMethod.BodyStatements!.ToDisplayString());
-        }
-
-        [Test]
-        public void ReproMixedContentType()
-        {
-            var inputModel = InputFactory.Model("cat", properties:
-            [
-                InputFactory.Property("name", InputPrimitiveType.String, isRequired: true),
-                InputFactory.Property("age", InputPrimitiveType.Int32, isRequired: true),
-            ],
-            usage: InputModelTypeUsage.Input | InputModelTypeUsage.MultipartFormData,
-            serializationOptions: new InputSerializationOptions(
-                json: null,
-                multipart: new InputMultipartOptions("cat", false, false, [], null, null)));
-            var contentTypeParameter = InputFactory.ContentTypeParameter("multipart/mixed");
-            var bodyParameter = InputFactory.BodyParameter("body", inputModel, isRequired: true, contentTypes: ["multipart/mixed"], defaultContentType: "multipart/mixed");
-            var operation = InputFactory.Operation("Upload", parameters: [contentTypeParameter, bodyParameter], requestMediaTypes: ["multipart/mixed"]);
-            var serviceMethod = InputFactory.BasicServiceMethod("Upload", operation, parameters: [InputFactory.MethodParameter("body", inputModel, isRequired: true)]);
-            var client = InputFactory.Client("client", methods: [serviceMethod]);
-            var plugin = MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
-
-            var visitor = new TestMultiPartFormDataConvenienceMethodVisitor();
-            visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
-
-            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.OfType<ClientProvider>().First();
-            var convenienceMethod = clientProvider.Methods
-                .OfType<ScmMethodProvider>()
-                .Single(m => m.Kind == ScmMethodKind.Convenience && m.Signature.Name == "Upload");
-
-            System.Console.WriteLine("=== REPRO BODY ===");
-            System.Console.WriteLine(convenienceMethod.BodyStatements!.ToDisplayString());
-            System.Console.WriteLine("=== END REPRO ===");
         }
 
         private class TestMultiPartFormDataConvenienceMethodVisitor : MultiPartFormDataConvenienceMethodVisitor

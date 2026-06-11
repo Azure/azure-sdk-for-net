@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -14,12 +16,14 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Visitors
 {
     /// <summary>
-    /// Rewrites the generated multipart/form-data convenience methods so the multipart payload produced by the
-    /// upstream generator is wrapped in a <c>RequestContent</c> via the <c>RequestContent.Create</c> factory method
-    /// before being passed to the protocol method.
+    /// Rewrites the generated multipart convenience methods (both <c>multipart/form-data</c> and other multipart
+    /// subtypes such as <c>multipart/mixed</c>) so the multipart payload produced by the upstream generator is wrapped
+    /// in a <c>RequestContent</c> via the <c>RequestContent.Create</c> factory method before being passed to the
+    /// protocol method.
     /// </summary>
     internal class MultiPartFormDataConvenienceMethodVisitor : ScmLibraryVisitor
     {
+        private const string MultipartMediaTypePrefix = "multipart/";
         private const string RequestContentVariableName = "requestContent";
         private string? _protocolMethodName;
         private VariableExpression? _requestContentVariable;
@@ -28,13 +32,18 @@ namespace Azure.Generator.Visitors
         protected override MethodProvider? VisitMethod(MethodProvider method)
         {
             _protocolMethodName = method is ScmMethodProvider { Kind: ScmMethodKind.Convenience, ServiceMethod: { } serviceMethod } scmMethod
-                && serviceMethod.Operation.IsMultipartFormData
+                && IsMultipartOperation(serviceMethod.Operation)
                     ? scmMethod.Signature.Name
                     : null;
             _requestContentVariable = null;
             _multipartContentVariable = null;
             return base.VisitMethod(method);
         }
+
+        private static bool IsMultipartOperation(InputOperation operation)
+            => operation.IsMultipartFormData
+                || (operation.RequestMediaTypes?.Any(mediaType =>
+                    mediaType.StartsWith(MultipartMediaTypePrefix, StringComparison.OrdinalIgnoreCase)) ?? false);
 
         protected override MethodBodyStatement VisitStatements(MethodBodyStatements statements, MethodProvider method)
         {
