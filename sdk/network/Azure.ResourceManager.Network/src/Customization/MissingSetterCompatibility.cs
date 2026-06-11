@@ -94,13 +94,12 @@ namespace Azure.ResourceManager.Network
 
     public partial class LoadBalancingRuleData
     {
+        private Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties _properties;
+
         public Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties Properties
         {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
+            get => _properties;
+            set => _properties = value;
         }
     }
 
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Network
     {
         public System.Nullable<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkStatus> Status
         {
-            get => default;
+            get => Properties is null ? default : Properties.Status;
             set
             {
                 // Compatibility setter for previous GA surface; service value remains read-only.
@@ -314,66 +313,6 @@ namespace Azure.ResourceManager.Network.Models
         }
     }
 
-    public partial class ApplicationGatewaySslPredefinedPolicy
-    {
-        public System.Nullable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol> MinProtocolVersion
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
-    }
-
-    public partial class BgpCommunity
-    {
-        public System.String CommunityName
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
-
-        public System.String CommunityValue
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
-
-        public System.Nullable<System.Boolean> IsAuthorizedToUse
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
-
-        public System.String ServiceGroup
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
-
-        public System.String ServiceSupportedRegion
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
-    }
-
     public partial class BgpServiceCommunity
     {
         public System.String ServiceName
@@ -433,13 +372,12 @@ namespace Azure.ResourceManager.Network.Models
 
     public partial class LoadBalancerInboundNatPool
     {
+        private Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties _properties;
+
         public Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties Properties
         {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
+            get => _properties;
+            set => _properties = value;
         }
     }
 

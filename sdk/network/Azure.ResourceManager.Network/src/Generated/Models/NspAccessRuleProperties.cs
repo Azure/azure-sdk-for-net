@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<SubscriptionId>();
+            Subscriptions = new ChangeTrackingList<WritableSubResource>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
         /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRuleProperties(NetworkSecurityPerimeterProvisioningState? provisioningState, NetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<SubscriptionId> subscriptions, IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters, IList<string> emailAddresses, IList<string> phoneNumbers, IList<string> serviceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NspAccessRuleProperties(NetworkSecurityPerimeterProvisioningState? provisioningState, NetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<WritableSubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters, IList<string> emailAddresses, IList<string> phoneNumbers, IList<string> serviceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Direction = direction;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of subscription ids. </summary>
         [WirePath("subscriptions")]
-        public IList<SubscriptionId> Subscriptions { get; } = new ChangeTrackingList<SubscriptionId>();
+        public IList<WritableSubResource> Subscriptions { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Rule specified by the perimeter id. </summary>
         [WirePath("networkSecurityPerimeters")]

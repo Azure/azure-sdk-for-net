@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24" } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -1110,7 +1110,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             var route1 = new RouteData()
             {
-                AddressPrefix = "192.168.1.0/24",NextHopIPAddress = "23.108.1.1",
+                AddressPrefix = "192.168.1.0/24",
+                NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 
@@ -1128,7 +1129,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", RouteTable = putRouteTableResponse.Value.Data } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", RouteTable = putRouteTableResponse.Value.Data } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();

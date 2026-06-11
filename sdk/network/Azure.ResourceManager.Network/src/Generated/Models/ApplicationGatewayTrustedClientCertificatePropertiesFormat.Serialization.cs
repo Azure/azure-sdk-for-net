@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteStringValue(Data);
+                writer.WriteBase64StringValue(Data.ToArray(), "D");
             }
             if (options.Format != "W" && Optional.IsDefined(ValidatedCertData))
             {
                 writer.WritePropertyName("validatedCertData"u8);
-                writer.WriteStringValue(ValidatedCertData);
+                writer.WriteBase64StringValue(ValidatedCertData.ToArray(), "D");
             }
             if (options.Format != "W" && Optional.IsDefined(ClientCertIssuerDN))
             {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string data = default;
-            string validatedCertData = default;
+            BinaryData data = default;
+            BinaryData validatedCertData = default;
             string clientCertIssuerDN = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,12 +145,20 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    data = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("validatedCertData"u8))
                 {
-                    validatedCertData = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validatedCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("clientCertIssuerDN"u8))

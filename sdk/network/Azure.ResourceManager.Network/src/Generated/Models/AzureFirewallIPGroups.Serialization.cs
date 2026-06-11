@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("changeNumber"u8))
                 {
-                    changeNumber = prop.Value.GetString();
+                    changeNumber = prop.Value.ValueKind == JsonValueKind.String ? prop.Value.GetString() : prop.Value.GetRawText();
                     continue;
                 }
                 if (options.Format != "W")

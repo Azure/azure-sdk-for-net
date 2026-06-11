@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProperties(NetworkSecurityPerimeterProvisioningState? provisioningState, string perimeterGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterProperties(NetworkSecurityPerimeterProvisioningState? provisioningState, Guid? perimeterGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PerimeterGuid = perimeterGuid;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> perimeter guid of the network security perimeter. </summary>
         [WirePath("perimeterGuid")]
-        public string PerimeterGuid { get; }
+        public Guid? PerimeterGuid { get; }
     }
 }

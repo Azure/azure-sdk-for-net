@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(RemotePerimeterGuid))
             {
                 writer.WritePropertyName("remotePerimeterGuid"u8);
-                writer.WriteStringValue(RemotePerimeterGuid);
+                writer.WriteStringValue(RemotePerimeterGuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RemotePerimeterLocation))
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default;
             ResourceIdentifier remotePerimeterResourceId = default;
-            string remotePerimeterGuid = default;
+            Guid? remotePerimeterGuid = default;
             string remotePerimeterLocation = default;
             IList<string> localInboundProfiles = default;
             IReadOnlyList<string> localOutboundProfiles = default;
@@ -240,7 +240,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("remotePerimeterGuid"u8))
                 {
-                    remotePerimeterGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remotePerimeterGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("remotePerimeterLocation"u8))

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -21,11 +22,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationData"/>. </summary>
-        /// <param name="properties"> Network interface IP configuration properties. </param>
-        /// <param name="name"> The name of the ip configuration. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationData(NetworkInterfaceIPConfigurationPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(properties, name, eTag, additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Network interface IP configuration properties. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, NetworkInterfaceIPConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType, properties, eTag)
         {
         }
     }

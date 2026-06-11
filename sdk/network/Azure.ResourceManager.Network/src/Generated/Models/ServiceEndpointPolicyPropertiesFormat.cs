@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serviceAlias"> The alias indicating if the policy belongs to a service. </param>
         /// <param name="contextualServiceEndpointPolicies"> A collection of contextual service endpoint policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceEndpointPolicyPropertiesFormat(IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, string resourceGuid, NetworkProvisioningState? provisioningState, string serviceAlias, IList<string> contextualServiceEndpointPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceEndpointPolicyPropertiesFormat(IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string serviceAlias, IList<string> contextualServiceEndpointPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceEndpointPolicyDefinitions = serviceEndpointPolicyDefinitions;
             Subnets = subnets;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the service endpoint policy resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the service endpoint policy resource. </summary>
         [WirePath("provisioningState")]

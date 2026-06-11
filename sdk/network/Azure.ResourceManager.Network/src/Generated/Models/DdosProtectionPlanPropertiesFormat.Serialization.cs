@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -88,9 +90,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIPAddresses)
+                foreach (WritableSubResource item in PublicIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,9 +105,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in VirtualNetworks)
+                foreach (WritableSubResource item in VirtualNetworks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,16 +158,20 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
-            IReadOnlyList<NetworkSubResource> publicIPAddresses = default;
-            IReadOnlyList<NetworkSubResource> virtualNetworks = default;
+            IReadOnlyList<WritableSubResource> publicIPAddresses = default;
+            IReadOnlyList<WritableSubResource> virtualNetworks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -173,10 +189,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     publicIPAddresses = array;
                     continue;
@@ -187,10 +210,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     virtualNetworks = array;
                     continue;
@@ -200,7 +230,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, publicIPAddresses ?? new ChangeTrackingList<NetworkSubResource>(), virtualNetworks ?? new ChangeTrackingList<NetworkSubResource>(), additionalBinaryDataProperties);
+            return new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(), virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Network
 
     public partial class NetworkInterfaceData
     {
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> IPConfigurations => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> IPConfigurations => IpConfigurations;
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource VirtualMachine
         {
             get => VirtualMachineId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = VirtualMachineId };
@@ -427,8 +427,8 @@ namespace Azure.ResourceManager.Network
     {
         public global::System.String NextHopIPAddress
         {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
+            get => NextHopIpAddress;
+            set => NextHopIpAddress = value;
         }
     }
 
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Network
     {
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations => default;
         public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> IPConfigurationProfiles => default;
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.NetworkIPConfiguration> IPConfigurations => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.NetworkIPConfiguration> IPConfigurations => Properties is null ? default : Properties.IpConfigurations;
         public global::System.Nullable<global::Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicy
         {
             get => default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Network
             get => default;
             set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
         }
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> IPConfigurations => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> IPConfigurations => Properties is null ? default : Properties.IpConfigurations;
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource GatewayDefaultSite
         {
             get => GatewayDefaultSiteId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = GatewayDefaultSiteId };

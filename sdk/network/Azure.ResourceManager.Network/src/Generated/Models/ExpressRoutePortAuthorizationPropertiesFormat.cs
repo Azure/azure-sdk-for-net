@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="circuitResourceUri"> The reference to the ExpressRoute circuit resource using the authorization. </param>
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRoutePortAuthorizationPropertiesFormat(string authorizationKey, ExpressRoutePortAuthorizationUseStatus? authorizationUseStatus, string circuitResourceUri, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRoutePortAuthorizationPropertiesFormat(string authorizationKey, ExpressRoutePortAuthorizationUseStatus? authorizationUseStatus, Uri circuitResourceUri, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationKey = authorizationKey;
             AuthorizationUseStatus = authorizationUseStatus;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The reference to the ExpressRoute circuit resource using the authorization. </summary>
         [WirePath("circuitResourceUri")]
-        public string CircuitResourceUri { get; }
+        public Uri CircuitResourceUri { get; }
 
         /// <summary> The provisioning state of the authorization resource. </summary>
         [WirePath("provisioningState")]

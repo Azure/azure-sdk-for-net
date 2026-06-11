@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destination"> Indicates the destination for this particular rule. </param>
         /// <param name="nextHop"> Indicates the next hop for this particular rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRulePropertiesFormat(string description, NetworkProvisioningState? provisioningState, string resourceGuid, RoutingRuleRouteDestination destination, RoutingRuleNextHop nextHop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingRulePropertiesFormat(string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, RoutingRuleRouteDestination destination, RoutingRuleNextHop nextHop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Unique identifier for this resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> Indicates the destination for this particular rule. </summary>
         [WirePath("destination")]

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         public VirtualRouterPropertiesFormat()
         {
             VirtualRouterIps = new ChangeTrackingList<string>();
-            Peerings = new ChangeTrackingList<NetworkSubResource>();
+            Peerings = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPropertiesFormat"/>. </summary>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualRouterPropertiesFormat(long? virtualRouterAsn, IList<string> virtualRouterIps, NetworkSubResource hostedSubnet, NetworkSubResource hostedGateway, IReadOnlyList<NetworkSubResource> peerings, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualRouterPropertiesFormat(long? virtualRouterAsn, IList<string> virtualRouterIps, NetworkSubResource hostedSubnet, NetworkSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualRouterAsn = virtualRouterAsn;
             VirtualRouterIps = virtualRouterIps;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of references to VirtualRouterPeerings. </summary>
         [WirePath("peerings")]
-        public IReadOnlyList<NetworkSubResource> Peerings { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> Peerings { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("provisioningState")]

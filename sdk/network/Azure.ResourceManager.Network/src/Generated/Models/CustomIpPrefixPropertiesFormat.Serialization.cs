@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(FailedReason))
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? noInternetAdvertise = default;
             CustomIPPrefixType? prefixType = default;
             IReadOnlyList<NetworkSubResource> publicIpPrefixes = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             string failedReason = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -324,7 +324,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failedReason"u8))

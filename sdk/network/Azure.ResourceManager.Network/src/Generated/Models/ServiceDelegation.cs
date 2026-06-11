@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -15,44 +16,31 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Details the service to which the subnet is delegated. </summary>
     public partial class ServiceDelegation : NetworkWritableResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ServiceDelegation"/>. </summary>
         public ServiceDelegation()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceDelegation"/>. </summary>
-        /// <param name="properties"> Properties of the subnet. </param>
-        /// <param name="name"> The name of the resource that is unique within a subnet. This name can be used to access the resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceDelegation(ServiceDelegationPropertiesFormat properties, string name, ETag? eTag, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Properties of the subnet. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ServiceDelegation(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ServiceDelegationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
-            Name = name;
             ETag = eTag;
-            Type = @type;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the subnet. </summary>
         [WirePath("properties")]
         internal ServiceDelegationPropertiesFormat Properties { get; set; }
 
-        /// <summary> The name of the resource that is unique within a subnet. This name can be used to access the resource. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; set; }
 
         /// <summary> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </summary>
         [WirePath("properties.serviceName")]

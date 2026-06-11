@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(CircuitResourceUri))
             {
                 writer.WritePropertyName("circuitResourceUri"u8);
-                writer.WriteStringValue(CircuitResourceUri);
+                writer.WriteStringValue(CircuitResourceUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string authorizationKey = default;
             ExpressRoutePortAuthorizationUseStatus? authorizationUseStatus = default;
-            string circuitResourceUri = default;
+            Uri circuitResourceUri = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("circuitResourceUri"u8))
                 {
-                    circuitResourceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    circuitResourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

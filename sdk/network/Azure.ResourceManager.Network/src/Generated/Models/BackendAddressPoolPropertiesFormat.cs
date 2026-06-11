@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -24,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
             TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
             LoadBalancerBackendAddresses = new ChangeTrackingList<LoadBalancerBackendAddress>();
             BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
-            LoadBalancingRules = new ChangeTrackingList<NetworkSubResource>();
-            OutboundRules = new ChangeTrackingList<NetworkSubResource>();
-            InboundNatRules = new ChangeTrackingList<NetworkSubResource>();
+            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
+            OutboundRules = new ChangeTrackingList<WritableSubResource>();
+            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendAddressPoolPropertiesFormat"/>. </summary>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualNetwork"> A reference to a virtual network. </param>
         /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendAddressPoolPropertiesFormat(string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<NetworkSubResource> loadBalancingRules, NetworkSubResource outboundRule, IReadOnlyList<NetworkSubResource> outboundRules, IReadOnlyList<NetworkSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, NetworkSubResource virtualNetwork, BackendAddressSyncMode? syncMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendAddressPoolPropertiesFormat(string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, NetworkSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, NetworkSubResource virtualNetwork, BackendAddressSyncMode? syncMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             TunnelInterfaces = tunnelInterfaces;
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
         [WirePath("loadBalancingRules")]
-        public IReadOnlyList<NetworkSubResource> LoadBalancingRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> A reference to an outbound rule that uses this backend address pool. </summary>
         [WirePath("outboundRule")]
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
         [WirePath("outboundRules")]
-        public IReadOnlyList<NetworkSubResource> OutboundRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> OutboundRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of references to inbound NAT rules that use this backend address pool. </summary>
         [WirePath("inboundNatRules")]
-        public IReadOnlyList<NetworkSubResource> InboundNatRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> InboundNatRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The provisioning state of the backend address pool resource. </summary>
         [WirePath("provisioningState")]

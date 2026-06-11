@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,8 +28,8 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(virtualNetworkGateway1, nameof(virtualNetworkGateway1));
 
             VirtualNetworkGateway1 = virtualNetworkGateway1;
-            IngressNatRules = new ChangeTrackingList<NetworkSubResource>();
-            EgressNatRules = new ChangeTrackingList<NetworkSubResource>();
+            IngressNatRules = new ChangeTrackingList<WritableSubResource>();
+            EgressNatRules = new ChangeTrackingList<WritableSubResource>();
             ConnectionType = connectionType;
             TunnelProperties = new ChangeTrackingList<VirtualNetworkGatewayConnectionTunnelProperties>();
             TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="certificateAuthentication"> Certificate Authentication information for a certificate based authentication connection. </param>
         /// <param name="routingConfiguration"> The routing configuration indicating the associated and propagated route tables for this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayConnectionPropertiesFormat(string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<NetworkSubResource> ingressNatRules, IList<NetworkSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, NetworkSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIpAddresses, bool? useLocalAzureIpAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, ConnectionAuthenticationType? authenticationType, CertificateAuthentication certificateAuthentication, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayConnectionPropertiesFormat(string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, NetworkSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIpAddresses, bool? useLocalAzureIpAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, ConnectionAuthenticationType? authenticationType, CertificateAuthentication certificateAuthentication, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationKey = authorizationKey;
             VirtualNetworkGateway1 = virtualNetworkGateway1;
@@ -124,11 +125,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of ingress NatRules. </summary>
         [WirePath("ingressNatRules")]
-        public IList<NetworkSubResource> IngressNatRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> IngressNatRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of egress NatRules. </summary>
         [WirePath("egressNatRules")]
-        public IList<NetworkSubResource> EgressNatRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> EgressNatRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Gateway connection type. </summary>
         [WirePath("connectionType")]
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the virtual network gateway connection resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the virtual network gateway connection resource. </summary>
         [WirePath("provisioningState")]

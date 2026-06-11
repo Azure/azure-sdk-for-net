@@ -16,34 +16,27 @@ namespace Azure.ResourceManager.Network
     /// <summary> IPConfiguration in a network interface. </summary>
     public partial class NetworkInterfaceIPConfigurationData : NetworkWritableResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationData"/>. </summary>
         public NetworkInterfaceIPConfigurationData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationData"/>. </summary>
-        /// <param name="properties"> Network interface IP configuration properties. </param>
-        /// <param name="name"> The name of the ip configuration. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterfaceIPConfigurationData(NetworkInterfaceIPConfigurationPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Network interface IP configuration properties. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, NetworkInterfaceIPConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
-            Name = name;
             ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Network interface IP configuration properties. </summary>
         [WirePath("properties")]
         internal NetworkInterfaceIPConfigurationPropertiesFormat Properties { get; set; }
-
-        /// <summary> The name of the ip configuration. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -15,34 +16,27 @@ namespace Azure.ResourceManager.Network
     /// <summary> Route resource. </summary>
     public partial class RouteData : NetworkWritableResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         public RouteData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
-        /// <param name="properties"> Properties of the route. </param>
-        /// <param name="name"> The name of the route. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouteData(RoutePropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Properties of the route. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal RouteData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, RoutePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
-            Name = name;
             ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the route. </summary>
         [WirePath("properties")]
         internal RoutePropertiesFormat Properties { get; set; }
-
-        /// <summary> The name of the route. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

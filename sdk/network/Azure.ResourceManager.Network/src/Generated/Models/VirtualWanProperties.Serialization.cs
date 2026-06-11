@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -83,9 +85,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("virtualHubs"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in VirtualHubs)
+                foreach (WritableSubResource item in VirtualHubs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,9 +100,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("vpnSites"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in VpnSites)
+                foreach (WritableSubResource item in VpnSites)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,8 +179,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             bool? disableVpnEncryption = default;
-            IReadOnlyList<NetworkSubResource> virtualHubs = default;
-            IReadOnlyList<NetworkSubResource> vpnSites = default;
+            IReadOnlyList<WritableSubResource> virtualHubs = default;
+            IReadOnlyList<WritableSubResource> vpnSites = default;
             bool? allowBranchToBranchTraffic = default;
             bool? allowVnetToVnetTraffic = default;
             OfficeTrafficCategory? office365LocalBreakoutCategory = default;
@@ -192,10 +204,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     virtualHubs = array;
                     continue;
@@ -206,10 +225,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     vpnSites = array;
                     continue;
@@ -262,8 +288,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new VirtualWanProperties(
                 disableVpnEncryption,
-                virtualHubs ?? new ChangeTrackingList<NetworkSubResource>(),
-                vpnSites ?? new ChangeTrackingList<NetworkSubResource>(),
+                virtualHubs ?? new ChangeTrackingList<WritableSubResource>(),
+                vpnSites ?? new ChangeTrackingList<WritableSubResource>(),
                 allowBranchToBranchTraffic,
                 allowVnetToVnetTraffic,
                 office365LocalBreakoutCategory,

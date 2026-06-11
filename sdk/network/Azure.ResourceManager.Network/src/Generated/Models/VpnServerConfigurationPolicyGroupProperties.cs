@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public VpnServerConfigurationPolicyGroupProperties()
         {
             PolicyMembers = new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>();
-            P2SConnectionConfigurations = new ChangeTrackingList<NetworkSubResource>();
+            P2SConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupProperties"/>. </summary>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="p2SConnectionConfigurations"> List of references to P2SConnectionConfigurations. </param>
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfigurationPolicyGroup resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnServerConfigurationPolicyGroupProperties(bool? isDefault, int? priority, IList<VpnServerConfigurationPolicyGroupMember> policyMembers, IReadOnlyList<NetworkSubResource> p2SConnectionConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnServerConfigurationPolicyGroupProperties(bool? isDefault, int? priority, IList<VpnServerConfigurationPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> p2SConnectionConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDefault = isDefault;
             Priority = priority;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of references to P2SConnectionConfigurations. </summary>
         [WirePath("p2SConnectionConfigurations")]
-        public IReadOnlyList<NetworkSubResource> P2SConnectionConfigurations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> P2SConnectionConfigurations { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The provisioning state of the VpnServerConfigurationPolicyGroup resource. </summary>
         [WirePath("provisioningState")]

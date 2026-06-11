@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,10 +22,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationPropertiesFormat"/>. </summary>
         public FrontendIPConfigurationPropertiesFormat()
         {
-            InboundNatRules = new ChangeTrackingList<NetworkSubResource>();
-            InboundNatPools = new ChangeTrackingList<NetworkSubResource>();
-            OutboundRules = new ChangeTrackingList<NetworkSubResource>();
-            LoadBalancingRules = new ChangeTrackingList<NetworkSubResource>();
+            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
+            InboundNatPools = new ChangeTrackingList<WritableSubResource>();
+            OutboundRules = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationPropertiesFormat"/>. </summary>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
         /// <param name="ddosSettings"> The DDoS protection settings associated with the frontend IP configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontendIPConfigurationPropertiesFormat(IReadOnlyList<NetworkSubResource> inboundNatRules, IReadOnlyList<NetworkSubResource> inboundNatPools, IReadOnlyList<NetworkSubResource> outboundRules, IReadOnlyList<NetworkSubResource> loadBalancingRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkSubResource publicIPPrefix, NetworkSubResource gatewayLoadBalancer, NetworkProvisioningState? provisioningState, DdosFrontendIpConfigurationSettings ddosSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontendIPConfigurationPropertiesFormat(IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkSubResource publicIPPrefix, NetworkSubResource gatewayLoadBalancer, NetworkProvisioningState? provisioningState, DdosFrontendIpConfigurationSettings ddosSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InboundNatRules = inboundNatRules;
             InboundNatPools = inboundNatPools;
@@ -62,19 +63,19 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of references to inbound rules that use this frontend IP. </summary>
         [WirePath("inboundNatRules")]
-        public IReadOnlyList<NetworkSubResource> InboundNatRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> InboundNatRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of references to inbound pools that use this frontend IP. </summary>
         [WirePath("inboundNatPools")]
-        public IReadOnlyList<NetworkSubResource> InboundNatPools { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> InboundNatPools { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of references to outbound rules that use this frontend IP. </summary>
         [WirePath("outboundRules")]
-        public IReadOnlyList<NetworkSubResource> OutboundRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> OutboundRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of references to load balancing rules that use this frontend IP. </summary>
         [WirePath("loadBalancingRules")]
-        public IReadOnlyList<NetworkSubResource> LoadBalancingRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("privateIPAddress")]

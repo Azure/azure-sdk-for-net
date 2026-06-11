@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProfilePropertiesFormat(IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkProfilePropertiesFormat(IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerNetworkInterfaces = containerNetworkInterfaces;
             ContainerNetworkInterfaceConfigurations = containerNetworkInterfaceConfigurations;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the network profile resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the network profile resource. </summary>
         [WirePath("provisioningState")]

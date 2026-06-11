@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<InboundNatRuleData> inboundNatRules = default;
             IList<LoadBalancerInboundNatPool> inboundNatPools = default;
             IList<OutboundRuleData> outboundRules = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             LoadBalancerScope? scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -314,7 +314,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

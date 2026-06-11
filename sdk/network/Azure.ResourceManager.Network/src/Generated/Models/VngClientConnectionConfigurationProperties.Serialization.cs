@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -83,9 +85,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteObjectValue(VpnClientAddressPool, options);
             writer.WritePropertyName("virtualNetworkGatewayPolicyGroups"u8);
             writer.WriteStartArray();
-            foreach (NetworkSubResource item in VirtualNetworkGatewayPolicyGroups)
+            foreach (WritableSubResource item in VirtualNetworkGatewayPolicyGroups)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -136,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             VirtualNetworkAddressSpace vpnClientAddressPool = default;
-            IList<NetworkSubResource> virtualNetworkGatewayPolicyGroups = default;
+            IList<WritableSubResource> virtualNetworkGatewayPolicyGroups = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,10 +155,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
                 {
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     virtualNetworkGatewayPolicyGroups = array;
                     continue;

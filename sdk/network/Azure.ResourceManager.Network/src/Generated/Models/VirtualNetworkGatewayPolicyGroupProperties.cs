@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             IsDefault = isDefault;
             Priority = priority;
             PolicyMembers = policyMembers.ToList();
-            VngClientConnectionConfigurations = new ChangeTrackingList<NetworkSubResource>();
+            VngClientConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroupProperties"/>. </summary>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vngClientConnectionConfigurations"> List of references to vngClientConnectionConfigurations. </param>
         /// <param name="provisioningState"> The provisioning state of the VirtualNetworkGatewayPolicyGroup resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayPolicyGroupProperties(bool isDefault, int priority, IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers, IReadOnlyList<NetworkSubResource> vngClientConnectionConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayPolicyGroupProperties(bool isDefault, int priority, IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> vngClientConnectionConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDefault = isDefault;
             Priority = priority;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of references to vngClientConnectionConfigurations. </summary>
         [WirePath("vngClientConnectionConfigurations")]
-        public IReadOnlyList<NetworkSubResource> VngClientConnectionConfigurations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> VngClientConnectionConfigurations { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The provisioning state of the VirtualNetworkGatewayPolicyGroup resource. </summary>
         [WirePath("provisioningState")]

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,8 +23,8 @@ namespace Azure.ResourceManager.Network.Models
         {
             InternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
             ExternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
-            EgressVpnSiteLinkConnections = new ChangeTrackingList<NetworkSubResource>();
-            IngressVpnSiteLinkConnections = new ChangeTrackingList<NetworkSubResource>();
+            EgressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
+            IngressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnGatewayNatRuleProperties"/>. </summary>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="egressVpnSiteLinkConnections"> List of egress VpnSiteLinkConnections. </param>
         /// <param name="ingressVpnSiteLinkConnections"> List of ingress VpnSiteLinkConnections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnGatewayNatRuleProperties(NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<NetworkSubResource> egressVpnSiteLinkConnections, IReadOnlyList<NetworkSubResource> ingressVpnSiteLinkConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnGatewayNatRuleProperties(NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             VpnNatRuleType = vpnNatRuleType;
@@ -75,10 +76,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of egress VpnSiteLinkConnections. </summary>
         [WirePath("egressVpnSiteLinkConnections")]
-        public IReadOnlyList<NetworkSubResource> EgressVpnSiteLinkConnections { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of ingress VpnSiteLinkConnections. </summary>
         [WirePath("ingressVpnSiteLinkConnections")]
-        public IReadOnlyList<NetworkSubResource> IngressVpnSiteLinkConnections { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> IngressVpnSiteLinkConnections { get; } = new ChangeTrackingList<WritableSubResource>();
     }
 }

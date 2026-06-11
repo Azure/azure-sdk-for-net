@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using System.ClientModel.Primitives;
 using Azure.ResourceManager.Network.Models;
 using NUnit.Framework;
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the route table resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the route table. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouteTablePropertiesFormat(IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, DisablePeeringRoute? disablePeeringRoute, NetworkProvisioningState? provisioningState, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouteTablePropertiesFormat(IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, DisablePeeringRoute? disablePeeringRoute, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Routes = routes;
             Subnets = subnets;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the route table. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

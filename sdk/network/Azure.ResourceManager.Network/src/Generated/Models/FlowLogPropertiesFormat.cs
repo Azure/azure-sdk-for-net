@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogPropertiesFormat(ResourceIdentifier targetResourceId, string targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowLogPropertiesFormat(ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             TargetResourceGuid = targetResourceGuid;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Guid of network security group to which flow log will be applied. </summary>
         [WirePath("targetResourceGuid")]
-        public string TargetResourceGuid { get; }
+        public Guid? TargetResourceGuid { get; }
 
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
         [WirePath("storageId")]

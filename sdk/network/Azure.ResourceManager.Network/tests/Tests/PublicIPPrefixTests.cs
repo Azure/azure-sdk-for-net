@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
                 PrefixLength = 28,
                 Sku = new PublicIPPrefixSku()
-                {}
+                { }
             }, System.Threading.CancellationToken.None)).WaitForCompletionAsync();
 
             Assert.True(await container.ExistsAsync(name));

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionState"> Connection State. </param>
         /// <param name="description"> A description of the scope connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScopeConnectionProperties(string tenantId, ResourceIdentifier resourceId, ScopeConnectionState? connectionState, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScopeConnectionProperties(Guid? tenantId, ResourceIdentifier resourceId, ScopeConnectionState? connectionState, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             ResourceId = resourceId;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Tenant ID. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("resourceId")]

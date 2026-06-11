@@ -92,7 +92,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Add a route
             var route1 = new RouteData()
             {
-                AddressPrefix = "192.168.1.0/24",NextHopIPAddress = "23.108.1.1",
+                AddressPrefix = "192.168.1.0/24",
+                NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 
@@ -117,7 +118,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Add another route
             var route2 = new RouteData()
             {
-                AddressPrefix = "10.0.1.0/24",NextHopType = RouteNextHopType.VnetLocal
+                AddressPrefix = "10.0.1.0/24",
+                NextHopType = RouteNextHopType.VnetLocal
             };
             getRouteTableResponse.Value.Data.Routes.Add(route2);
 
@@ -170,7 +172,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             var route1 = new RouteData()
             {
-                AddressPrefix = "192.168.1.0/24",NextHopIPAddress = "23.108.1.1",
+                AddressPrefix = "192.168.1.0/24",
+                NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 

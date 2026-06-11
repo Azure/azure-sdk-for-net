@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="audiences"> List of acceptable audience claims that can be present in the token (aud claim). A maximum of 5 audiences are permitted. </param>
         /// <param name="provisioningState"> The provisioning state of the entra jwt validation configuration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayEntraJWTValidationConfigPropertiesFormat(ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction, string tenantId, string clientId, IList<string> audiences, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayEntraJWTValidationConfigPropertiesFormat(ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction, Guid? tenantId, string clientId, IList<string> audiences, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UnAuthorizedRequestAction = unAuthorizedRequestAction;
             TenantId = tenantId;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Tenant ID of the Microsoft Entra ID application. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> The Client ID of the Microsoft Entra ID application. </summary>
         [WirePath("clientId")]

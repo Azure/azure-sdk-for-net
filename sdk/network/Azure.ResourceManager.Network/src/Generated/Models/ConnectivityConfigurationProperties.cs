@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityConfigurationProperties(string description, ConnectivityTopology connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityConfigurationProperties(string description, ConnectivityTopology connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ConnectivityTopology = connectivityTopology;
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Unique identifier for this resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

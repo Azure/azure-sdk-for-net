@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hsm"> Managed HSM properties of the Application Gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewaySslCertificatePropertiesFormat(string data, string password, string publicCertData, string keyVaultSecretId, ApplicationGatewayManagedHsm hsm, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewaySslCertificatePropertiesFormat(BinaryData data, string password, BinaryData publicCertData, string keyVaultSecretId, ApplicationGatewayManagedHsm hsm, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             Password = password;
@@ -41,17 +41,47 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Base-64 encoded pfx certificate. Only applicable in PUT Request. </summary>
+        /// <summary>
+        /// Base-64 encoded pfx certificate. Only applicable in PUT Request.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         [WirePath("data")]
-        public string Data { get; set; }
+        public BinaryData Data { get; set; }
 
         /// <summary> Password for the pfx file specified in data. Only applicable in PUT request. </summary>
         [WirePath("password")]
         public string Password { get; set; }
 
-        /// <summary> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </summary>
+        /// <summary>
+        /// Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         [WirePath("publicCertData")]
-        public string PublicCertData { get; }
+        public BinaryData PublicCertData { get; }
 
         /// <summary> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </summary>
         [WirePath("keyVaultSecretId")]

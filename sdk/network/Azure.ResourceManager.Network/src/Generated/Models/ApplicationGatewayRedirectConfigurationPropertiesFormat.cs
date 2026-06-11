@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRedirectConfigurationPropertiesFormat"/>. </summary>
         public ApplicationGatewayRedirectConfigurationPropertiesFormat()
         {
-            RequestRoutingRules = new ChangeTrackingList<NetworkSubResource>();
-            UrlPathMaps = new ChangeTrackingList<NetworkSubResource>();
-            PathRules = new ChangeTrackingList<NetworkSubResource>();
+            RequestRoutingRules = new ChangeTrackingList<WritableSubResource>();
+            UrlPathMaps = new ChangeTrackingList<WritableSubResource>();
+            PathRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRedirectConfigurationPropertiesFormat"/>. </summary>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayRedirectConfigurationPropertiesFormat(ApplicationGatewayRedirectType? redirectType, NetworkSubResource targetListener, string targetUri, bool? includePath, bool? includeQueryString, IList<NetworkSubResource> requestRoutingRules, IList<NetworkSubResource> urlPathMaps, IList<NetworkSubResource> pathRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayRedirectConfigurationPropertiesFormat(ApplicationGatewayRedirectType? redirectType, NetworkSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedirectType = redirectType;
             TargetListener = targetListener;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Url to redirect the request to. </summary>
         [WirePath("targetUrl")]
-        public string TargetUri { get; set; }
+        public Uri TargetUri { get; set; }
 
         /// <summary> Include path in the redirected url. </summary>
         [WirePath("includePath")]
@@ -71,15 +72,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Request routing specifying redirect configuration. </summary>
         [WirePath("requestRoutingRules")]
-        public IList<NetworkSubResource> RequestRoutingRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> RequestRoutingRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Url path maps specifying default redirect configuration. </summary>
         [WirePath("urlPathMaps")]
-        public IList<NetworkSubResource> UrlPathMaps { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> UrlPathMaps { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Path rules specifying redirect configuration. </summary>
         [WirePath("pathRules")]
-        public IList<NetworkSubResource> PathRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> PathRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Resource ID. </summary>
         [WirePath("targetListener.id")]

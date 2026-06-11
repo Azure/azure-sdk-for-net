@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Add a route
             var route1 = new RouteData()
             {
-                AddressPrefix = "192.168.1.0/24",NextHopIPAddress = "23.108.1.1",
+                AddressPrefix = "192.168.1.0/24",
+                NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 
@@ -83,7 +84,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Add another route
             var route2 = new RouteData()
             {
-                AddressPrefix = "10.0.1.0/24",NextHopType = RouteNextHopType.VnetLocal
+                AddressPrefix = "10.0.1.0/24",
+                NextHopType = RouteNextHopType.VnetLocal
             };
 
             await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route2Name, route2, System.Threading.CancellationToken.None);
@@ -160,7 +162,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Add a route
             var route1 = new RouteData()
             {
-                AddressPrefix = "192.168.1.0/24",NextHopIPAddress = "23.108.1.1",
+                AddressPrefix = "192.168.1.0/24",
+                NextHopIPAddress = "23.108.1.1",
                 NextHopType = RouteNextHopType.VirtualAppliance
             };
 
@@ -183,21 +186,24 @@ namespace Azure.ResourceManager.Network.Tests
             // Add another route
             var route2 = new RouteData()
             {
-                AddressPrefix = "10.0.1.0/24",NextHopType = RouteNextHopType.VnetLocal
+                AddressPrefix = "10.0.1.0/24",
+                NextHopType = RouteNextHopType.VnetLocal
             };
             await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route2Name, route2, System.Threading.CancellationToken.None);
 
             // Add another route
             var route3 = new RouteData()
             {
-                AddressPrefix = "0.0.0.0/0",NextHopType = RouteNextHopType.Internet
+                AddressPrefix = "0.0.0.0/0",
+                NextHopType = RouteNextHopType.Internet
             };
             await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route3Name, route3, System.Threading.CancellationToken.None);
 
             // Add another route
             var route4 = new RouteData()
             {
-                AddressPrefix = "10.0.2.0/24",NextHopType = RouteNextHopType.None
+                AddressPrefix = "10.0.2.0/24",
+                NextHopType = RouteNextHopType.None
             };
             await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route4Name, route4, System.Threading.CancellationToken.None);
 

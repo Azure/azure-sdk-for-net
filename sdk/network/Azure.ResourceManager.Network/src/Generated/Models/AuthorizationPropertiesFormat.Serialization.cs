@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ConnectionResourceUri))
             {
                 writer.WritePropertyName("connectionResourceUri"u8);
-                writer.WriteStringValue(ConnectionResourceUri);
+                writer.WriteStringValue(ConnectionResourceUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string authorizationKey = default;
             AuthorizationUseStatus? authorizationUseStatus = default;
-            string connectionResourceUri = default;
+            Uri connectionResourceUri = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("connectionResourceUri"u8))
                 {
-                    connectionResourceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionResourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

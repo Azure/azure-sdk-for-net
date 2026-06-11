@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -100,9 +102,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in IngressNatRules)
+                foreach (WritableSubResource item in IngressNatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,9 +117,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in EgressNatRules)
+                foreach (WritableSubResource item in EgressNatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -231,7 +243,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -309,8 +321,8 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkGatewayData virtualNetworkGateway1 = default;
             VirtualNetworkGatewayData virtualNetworkGateway2 = default;
             LocalNetworkGatewayData localNetworkGateway2 = default;
-            IList<NetworkSubResource> ingressNatRules = default;
-            IList<NetworkSubResource> egressNatRules = default;
+            IList<WritableSubResource> ingressNatRules = default;
+            IList<WritableSubResource> egressNatRules = default;
             VirtualNetworkGatewayConnectionType connectionType = default;
             VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default;
             int? routingWeight = default;
@@ -329,7 +341,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? usePolicyBasedTrafficSelectors = default;
             IList<IPsecPolicy> ipsecPolicies = default;
             IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             bool? expressRouteGatewayBypass = default;
             bool? enablePrivateLinkFastPath = default;
@@ -373,10 +385,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     ingressNatRules = array;
                     continue;
@@ -387,10 +406,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     egressNatRules = array;
                     continue;
@@ -576,7 +602,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -643,8 +673,8 @@ namespace Azure.ResourceManager.Network.Models
                 virtualNetworkGateway1,
                 virtualNetworkGateway2,
                 localNetworkGateway2,
-                ingressNatRules ?? new ChangeTrackingList<NetworkSubResource>(),
-                egressNatRules ?? new ChangeTrackingList<NetworkSubResource>(),
+                ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                egressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
                 connectionType,
                 connectionProtocol,
                 routingWeight,

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -123,9 +125,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("circuits"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in Circuits)
+                foreach (WritableSubResource item in Circuits)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             if (Optional.IsDefined(BillingType))
             {
@@ -194,9 +201,9 @@ namespace Azure.ResourceManager.Network.Models
             string etherType = default;
             string allocationDate = default;
             IList<ExpressRouteLinkData> links = default;
-            IReadOnlyList<NetworkSubResource> circuits = default;
+            IReadOnlyList<WritableSubResource> circuits = default;
             NetworkProvisioningState? provisioningState = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             ExpressRoutePortsBillingType? billingType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -268,10 +275,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     circuits = array;
                     continue;
@@ -287,7 +301,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingType"u8))
@@ -313,7 +331,7 @@ namespace Azure.ResourceManager.Network.Models
                 etherType,
                 allocationDate,
                 links ?? new ChangeTrackingList<ExpressRouteLinkData>(),
-                circuits ?? new ChangeTrackingList<NetworkSubResource>(),
+                circuits ?? new ChangeTrackingList<WritableSubResource>(),
                 provisioningState,
                 resourceGuid,
                 billingType,

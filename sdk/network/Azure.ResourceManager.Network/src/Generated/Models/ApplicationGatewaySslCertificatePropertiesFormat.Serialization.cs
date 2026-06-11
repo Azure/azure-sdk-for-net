@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteStringValue(Data);
+                writer.WriteBase64StringValue(Data.ToArray(), "D");
             }
             if (Optional.IsDefined(Password))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(PublicCertData))
             {
                 writer.WritePropertyName("publicCertData"u8);
-                writer.WriteStringValue(PublicCertData);
+                writer.WriteBase64StringValue(PublicCertData.ToArray(), "D");
             }
             if (Optional.IsDefined(KeyVaultSecretId))
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string data = default;
+            BinaryData data = default;
             string password = default;
-            string publicCertData = default;
+            BinaryData publicCertData = default;
             string keyVaultSecretId = default;
             ApplicationGatewayManagedHsm hsm = default;
             NetworkProvisioningState? provisioningState = default;
@@ -157,7 +157,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    data = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
@@ -167,7 +171,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("publicCertData"u8))
                 {
-                    publicCertData = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretId"u8))

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -20,19 +21,25 @@ namespace Azure.ResourceManager.Network
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
-        public DdosProtectionPlanData()
+        public DdosProtectionPlanData() : base(default)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the DDoS protection plan. </param>
-        /// <param name="name"> The name of the DDoS protection plan. </param>
+        /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosProtectionPlanData(DdosProtectionPlanPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DdosProtectionPlanPropertiesFormat properties, string ddosProtectionPlanName, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            Name = name;
+            Name = ddosProtectionPlanName;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

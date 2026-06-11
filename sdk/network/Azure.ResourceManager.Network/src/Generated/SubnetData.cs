@@ -16,34 +16,27 @@ namespace Azure.ResourceManager.Network
     /// <summary> Subnet in a virtual network resource. </summary>
     public partial class SubnetData : NetworkWritableResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         public SubnetData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
-        /// <param name="properties"> Properties of the subnet. </param>
-        /// <param name="name"> The name of the subnet. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetData(SubnetPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Properties of the subnet. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal SubnetData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, SubnetPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
-            Name = name;
             ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the subnet. </summary>
         [WirePath("properties")]
         internal SubnetPropertiesFormat Properties { get; set; }
-
-        /// <summary> The name of the subnet. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

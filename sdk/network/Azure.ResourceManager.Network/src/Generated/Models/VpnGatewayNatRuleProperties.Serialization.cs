@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -118,9 +120,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("egressVpnSiteLinkConnections"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in EgressVpnSiteLinkConnections)
+                foreach (WritableSubResource item in EgressVpnSiteLinkConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,9 +135,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ingressVpnSiteLinkConnections"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in IngressVpnSiteLinkConnections)
+                foreach (WritableSubResource item in IngressVpnSiteLinkConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -182,8 +194,8 @@ namespace Azure.ResourceManager.Network.Models
             IList<VpnNatRuleMapping> internalMappings = default;
             IList<VpnNatRuleMapping> externalMappings = default;
             string ipConfigurationId = default;
-            IReadOnlyList<NetworkSubResource> egressVpnSiteLinkConnections = default;
-            IReadOnlyList<NetworkSubResource> ingressVpnSiteLinkConnections = default;
+            IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections = default;
+            IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -253,10 +265,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     egressVpnSiteLinkConnections = array;
                     continue;
@@ -267,10 +286,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     ingressVpnSiteLinkConnections = array;
                     continue;
@@ -287,8 +313,8 @@ namespace Azure.ResourceManager.Network.Models
                 internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
                 externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
                 ipConfigurationId,
-                egressVpnSiteLinkConnections ?? new ChangeTrackingList<NetworkSubResource>(),
-                ingressVpnSiteLinkConnections ?? new ChangeTrackingList<NetworkSubResource>(),
+                egressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>(),
+                ingressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 additionalBinaryDataProperties);
         }
     }

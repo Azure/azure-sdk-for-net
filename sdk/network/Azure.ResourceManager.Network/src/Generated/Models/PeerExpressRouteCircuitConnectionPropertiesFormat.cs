@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="authResourceGuid"> The resource guid of the authorization used for the express route circuit connection. </param>
         /// <param name="provisioningState"> The provisioning state of the peer express route circuit connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeerExpressRouteCircuitConnectionPropertiesFormat(NetworkSubResource expressRouteCircuitPeering, NetworkSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeerExpressRouteCircuitConnectionPropertiesFormat(NetworkSubResource expressRouteCircuitPeering, NetworkSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, Guid? authResourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource guid of the authorization used for the express route circuit connection. </summary>
         [WirePath("authResourceGuid")]
-        public string AuthResourceGuid { get; }
+        public Guid? AuthResourceGuid { get; }
 
         /// <summary> The provisioning state of the peer express route circuit connection resource. </summary>
         [WirePath("provisioningState")]

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkGroupProperties(string description, NetworkGroupMemberType? memberType, NetworkProvisioningState? provisioningState, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkGroupProperties(string description, NetworkGroupMemberType? memberType, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             MemberType = memberType;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Unique identifier for this resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

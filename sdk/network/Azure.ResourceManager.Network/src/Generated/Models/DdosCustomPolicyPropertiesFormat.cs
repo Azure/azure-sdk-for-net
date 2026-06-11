@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             DetectionRules = new ChangeTrackingList<DdosDetectionRule>();
             FrontEndIpConfiguration = new ChangeTrackingList<NetworkSubResource>();
-            PublicIPAddresses = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyPropertiesFormat"/>. </summary>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="frontEndIpConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
         /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosCustomPolicyPropertiesFormat(string resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<NetworkSubResource> frontEndIpConfiguration, IReadOnlyList<NetworkSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DdosCustomPolicyPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<NetworkSubResource> frontEndIpConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the DDoS custom policy resource. </summary>
         [WirePath("provisioningState")]
@@ -60,6 +61,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of public IP addresses associated with the custom policy. This list is read-only. </summary>
         [WirePath("publicIPAddresses")]
-        public IReadOnlyList<NetworkSubResource> PublicIPAddresses { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> PublicIPAddresses { get; } = new ChangeTrackingList<WritableSubResource>();
     }
 }

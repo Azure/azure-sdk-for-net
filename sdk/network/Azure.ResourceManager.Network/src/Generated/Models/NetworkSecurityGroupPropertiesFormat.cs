@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the network security group resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityGroupPropertiesFormat(bool? flushConnection, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, string resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityGroupPropertiesFormat(bool? flushConnection, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FlushConnection = flushConnection;
             SecurityRules = securityRules;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the network security group resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the network security group resource. </summary>
         [WirePath("provisioningState")]

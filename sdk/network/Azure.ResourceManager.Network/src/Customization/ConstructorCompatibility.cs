@@ -22,9 +22,8 @@ namespace Azure.ResourceManager.Network
 
     public partial class DdosProtectionPlanData
     {
-        public DdosProtectionPlanData(AzureLocation location) : this()
+        public DdosProtectionPlanData(AzureLocation location) : base(location)
         {
-            Location = location;
         }
     }
 
@@ -54,9 +53,8 @@ namespace Azure.ResourceManager.Network
 
     public partial class NetworkSecurityPerimeterData
     {
-        public NetworkSecurityPerimeterData(AzureLocation location) : this()
+        public NetworkSecurityPerimeterData(AzureLocation location) : base(location)
         {
-            Location = location;
         }
     }
 

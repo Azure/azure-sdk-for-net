@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHttpSettingsPropertiesFormat"/>. </summary>
         public ApplicationGatewayBackendHttpSettingsPropertiesFormat()
         {
-            AuthenticationCertificates = new ChangeTrackingList<NetworkSubResource>();
-            TrustedRootCertificates = new ChangeTrackingList<NetworkSubResource>();
+            AuthenticationCertificates = new ChangeTrackingList<WritableSubResource>();
+            TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHttpSettingsPropertiesFormat"/>. </summary>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sniName"> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendHttpSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, NetworkSubResource probe, IList<NetworkSubResource> authenticationCertificates, IList<NetworkSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, bool? dedicatedBackendConnection, bool? validateCertChainAndExpiry, bool? validateSNI, string sniName, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayBackendHttpSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, NetworkSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, bool? dedicatedBackendConnection, bool? validateCertChainAndExpiry, bool? validateSNI, string sniName, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
             Protocol = protocol;
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Array of references to application gateway authentication certificates. </summary>
         [WirePath("authenticationCertificates")]
-        public IList<NetworkSubResource> AuthenticationCertificates { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> AuthenticationCertificates { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
         [WirePath("trustedRootCertificates")]
-        public IList<NetworkSubResource> TrustedRootCertificates { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> TrustedRootCertificates { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Connection draining of the backend http settings resource. </summary>
         [WirePath("connectionDraining")]

@@ -84,7 +84,8 @@ namespace Azure.ResourceManager.Network.Tests
             firewallData.Location = _firewallLocation;
             firewallData.IPConfigurations.Add(
                 new AzureFirewallIPConfiguration()
-                {PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
+                {
+                    PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
                     Subnet = new WritableSubResource()
                     {
                         Id = _networkIdentifier.AppendChildResource(

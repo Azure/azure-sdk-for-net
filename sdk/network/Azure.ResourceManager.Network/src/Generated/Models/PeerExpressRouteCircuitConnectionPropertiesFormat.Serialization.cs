@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(AuthResourceGuid))
             {
                 writer.WritePropertyName("authResourceGuid"u8);
-                writer.WriteStringValue(AuthResourceGuid);
+                writer.WriteStringValue(AuthResourceGuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
             string addressPrefix = default;
             CircuitConnectionStatus? circuitConnectionStatus = default;
             string connectionName = default;
-            string authResourceGuid = default;
+            Guid? authResourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -200,7 +200,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("authResourceGuid"u8))
                 {
-                    authResourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authResourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

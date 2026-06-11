@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="auxiliaryMode"> Auxiliary mode of Network Interface resource. </param>
         /// <param name="auxiliarySku"> Auxiliary sku of Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterfacePropertiesFormat(NetworkSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? vnetEncryptionSupported, bool? defaultOutboundConnectivityEnabled, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, NetworkSubResource dscpConfiguration, string resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkInterfacePropertiesFormat(NetworkSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? vnetEncryptionSupported, bool? defaultOutboundConnectivityEnabled, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, NetworkSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachine = virtualMachine;
             NetworkSecurityGroup = networkSecurityGroup;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the network interface resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the network interface resource. </summary>
         [WirePath("provisioningState")]

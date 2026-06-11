@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="appliesTo"> Groups for configuration. </param>
         /// <param name="disableBgpRoutePropagation"> Determines whether BGP route propagation is enabled. Defaults to true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRuleCollectionPropertiesFormat(string description, NetworkProvisioningState? provisioningState, string resourceGuid, IList<NetworkManagerRoutingGroupItem> appliesTo, DisableBgpRoutePropagation? disableBgpRoutePropagation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingRuleCollectionPropertiesFormat(string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IList<NetworkManagerRoutingGroupItem> appliesTo, DisableBgpRoutePropagation? disableBgpRoutePropagation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Unique identifier for this resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> Groups for configuration. </summary>
         [WirePath("appliesTo")]

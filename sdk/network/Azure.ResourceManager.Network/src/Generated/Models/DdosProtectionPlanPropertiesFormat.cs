@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanPropertiesFormat"/>. </summary>
         public DdosProtectionPlanPropertiesFormat()
         {
-            PublicIPAddresses = new ChangeTrackingList<NetworkSubResource>();
-            VirtualNetworks = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
+            VirtualNetworks = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanPropertiesFormat"/>. </summary>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS protection plan resource. This list is read-only. </param>
         /// <param name="virtualNetworks"> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosProtectionPlanPropertiesFormat(string resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkSubResource> publicIPAddresses, IReadOnlyList<NetworkSubResource> virtualNetworks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DdosProtectionPlanPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IReadOnlyList<WritableSubResource> virtualNetworks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the DDoS protection plan resource. </summary>
         [WirePath("provisioningState")]
@@ -49,10 +50,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of public IPs associated with the DDoS protection plan resource. This list is read-only. </summary>
         [WirePath("publicIPAddresses")]
-        public IReadOnlyList<NetworkSubResource> PublicIPAddresses { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> PublicIPAddresses { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </summary>
         [WirePath("virtualNetworks")]
-        public IReadOnlyList<NetworkSubResource> VirtualNetworks { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> VirtualNetworks { get; } = new ChangeTrackingList<WritableSubResource>();
     }
 }

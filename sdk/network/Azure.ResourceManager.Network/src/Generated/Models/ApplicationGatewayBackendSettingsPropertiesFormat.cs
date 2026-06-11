@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettingsPropertiesFormat"/>. </summary>
         public ApplicationGatewayBackendSettingsPropertiesFormat()
         {
-            TrustedRootCertificates = new ChangeTrackingList<NetworkSubResource>();
+            TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettingsPropertiesFormat"/>. </summary>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableL4ClientIpPreservation"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, int? timeout, NetworkSubResource probe, IList<NetworkSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? enableL4ClientIpPreservation, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayBackendSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, int? timeout, NetworkSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? enableL4ClientIpPreservation, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
             Protocol = protocol;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
         [WirePath("trustedRootCertificates")]
-        public IList<NetworkSubResource> TrustedRootCertificates { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> TrustedRootCertificates { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Server name indication to be sent to the backend servers for Tls protocol. </summary>
         [WirePath("hostName")]

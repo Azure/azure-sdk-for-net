@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             PublicIpAddressesV6 = new ChangeTrackingList<NetworkSubResource>();
             PublicIpPrefixes = new ChangeTrackingList<NetworkSubResource>();
             PublicIpPrefixesV6 = new ChangeTrackingList<NetworkSubResource>();
-            Subnets = new ChangeTrackingList<NetworkSubResource>();
+            Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NatGatewayPropertiesFormat"/>. </summary>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NatGatewayPropertiesFormat(int? idleTimeoutInMinutes, IList<NetworkSubResource> publicIpAddresses, IList<NetworkSubResource> publicIpAddressesV6, IList<NetworkSubResource> publicIpPrefixes, IList<NetworkSubResource> publicIpPrefixesV6, IReadOnlyList<NetworkSubResource> subnets, NetworkSubResource sourceVirtualNetwork, NetworkSubResource serviceGateway, Nat64State? nat64, string resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NatGatewayPropertiesFormat(int? idleTimeoutInMinutes, IList<NetworkSubResource> publicIpAddresses, IList<NetworkSubResource> publicIpAddressesV6, IList<NetworkSubResource> publicIpPrefixes, IList<NetworkSubResource> publicIpPrefixesV6, IReadOnlyList<WritableSubResource> subnets, NetworkSubResource sourceVirtualNetwork, NetworkSubResource serviceGateway, Nat64State? nat64, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             PublicIpAddresses = publicIpAddresses;
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
         [WirePath("subnets")]
-        public IReadOnlyList<NetworkSubResource> Subnets { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> Subnets { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> A reference to the source virtual network using this nat gateway resource. </summary>
         [WirePath("sourceVirtualNetwork")]
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the NAT gateway resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the NAT gateway resource. </summary>
         [WirePath("provisioningState")]

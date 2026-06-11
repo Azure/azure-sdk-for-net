@@ -17,16 +17,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VpnClientRootCertificate : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
-        /// <param name="publicCertData"> The certificate public data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
-        public VpnClientRootCertificate(string publicCertData)
-        {
-            Argument.AssertNotNull(publicCertData, nameof(publicCertData));
-
-            Properties = new VpnClientRootCertificatePropertiesFormat(publicCertData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>

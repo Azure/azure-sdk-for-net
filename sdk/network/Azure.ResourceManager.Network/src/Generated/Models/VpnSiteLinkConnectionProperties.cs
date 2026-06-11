@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,8 +24,8 @@ namespace Azure.ResourceManager.Network.Models
         {
             VpnGatewayCustomBgpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
             IpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
-            IngressNatRules = new ChangeTrackingList<NetworkSubResource>();
-            EgressNatRules = new ChangeTrackingList<NetworkSubResource>();
+            IngressNatRules = new ChangeTrackingList<WritableSubResource>();
+            EgressNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionProperties"/>. </summary>
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="egressNatRules"> List of egress NatRules. </param>
         /// <param name="dpdTimeoutSeconds"> Dead Peer Detection timeout in seconds for VpnLink connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnSiteLinkConnectionProperties(NetworkSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, NetworkProvisioningState? provisioningState, IList<NetworkSubResource> ingressNatRules, IList<NetworkSubResource> egressNatRules, int? dpdTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnSiteLinkConnectionProperties(NetworkSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, NetworkProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, int? dpdTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnSiteLink = vpnSiteLink;
             RoutingWeight = routingWeight;
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of ingress NatRules. </summary>
         [WirePath("ingressNatRules")]
-        public IList<NetworkSubResource> IngressNatRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> IngressNatRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of egress NatRules. </summary>
         [WirePath("egressNatRules")]
-        public IList<NetworkSubResource> EgressNatRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> EgressNatRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Dead Peer Detection timeout in seconds for VpnLink connection. </summary>
         [WirePath("dpdTimeoutSeconds")]

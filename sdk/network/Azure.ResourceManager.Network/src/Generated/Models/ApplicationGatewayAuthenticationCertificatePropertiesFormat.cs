@@ -26,16 +26,31 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="data"> Certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayAuthenticationCertificatePropertiesFormat(string data, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayAuthenticationCertificatePropertiesFormat(BinaryData data, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Certificate public data. </summary>
+        /// <summary>
+        /// Certificate public data.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         [WirePath("data")]
-        public string Data { get; set; }
+        public BinaryData Data { get; set; }
 
         /// <summary> The provisioning state of the authentication certificate resource. </summary>
         [WirePath("provisioningState")]

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,8 +28,8 @@ namespace Azure.ResourceManager.Network.Models
             CustomRules = new ChangeTrackingList<WebApplicationFirewallCustomRule>();
             ApplicationGateways = new ChangeTrackingList<ApplicationGatewayData>();
             ManagedRules = managedRules;
-            HttpListeners = new ChangeTrackingList<NetworkSubResource>();
-            PathBasedRules = new ChangeTrackingList<NetworkSubResource>();
+            HttpListeners = new ChangeTrackingList<WritableSubResource>();
+            PathBasedRules = new ChangeTrackingList<WritableSubResource>();
             ApplicationGatewayForContainers = new ChangeTrackingList<ApplicationGatewayForContainersReferenceDefinition>();
         }
 
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
         /// <param name="applicationGatewayForContainers"> A collection of references to application gateway for containers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPolicyPropertiesFormat(PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<NetworkSubResource> httpListeners, IReadOnlyList<NetworkSubResource> pathBasedRules, IReadOnlyList<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebApplicationFirewallPolicyPropertiesFormat(PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules, IReadOnlyList<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicySettings = policySettings;
             CustomRules = customRules;
@@ -83,11 +84,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A collection of references to application gateway http listeners. </summary>
         [WirePath("httpListeners")]
-        public IReadOnlyList<NetworkSubResource> HttpListeners { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> HttpListeners { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> A collection of references to application gateway path rules. </summary>
         [WirePath("pathBasedRules")]
-        public IReadOnlyList<NetworkSubResource> PathBasedRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> PathBasedRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> A collection of references to application gateway for containers. </summary>
         [WirePath("applicationGatewayForContainers")]

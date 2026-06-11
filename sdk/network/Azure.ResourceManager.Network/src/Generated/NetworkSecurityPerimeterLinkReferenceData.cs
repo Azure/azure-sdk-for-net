@@ -23,10 +23,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="properties"> Properties of the network security perimeter linkReference resource. </param>
         /// <param name="name"> The name of the NSP linkReference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLinkReferenceData(NspLinkReferenceProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterLinkReferenceData(NspLinkReferenceProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : this(default, name, default, default, properties, name, additionalBinaryDataProperties)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceData"/>. </summary>
+        internal NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NspLinkReferenceProperties properties, string linkReferenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Name = name;
+            Name = linkReferenceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

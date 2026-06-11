@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PacketCaptureTargetType value) => value switch
         {
-            PacketCaptureTargetType.AzureVM => "AzureVM",
-            PacketCaptureTargetType.AzureVMSS => "AzureVMSS",
+            PacketCaptureTargetType.AzureVm => "AzureVM",
+            PacketCaptureTargetType.AzureVmss => "AzureVMSS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PacketCaptureTargetType value.")
         };
 
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureVM"))
             {
-                return PacketCaptureTargetType.AzureVM;
+                return PacketCaptureTargetType.AzureVm;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureVMSS"))
             {
-                return PacketCaptureTargetType.AzureVMSS;
+                return PacketCaptureTargetType.AzureVmss;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PacketCaptureTargetType value.");
         }

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(TargetResourceGuid))
             {
                 writer.WritePropertyName("targetResourceGuid"u8);
-                writer.WriteStringValue(TargetResourceGuid);
+                writer.WriteStringValue(TargetResourceGuid.Value);
             }
             writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            string targetResourceGuid = default;
+            Guid? targetResourceGuid = default;
             ResourceIdentifier storageId = default;
             string enabledFilteringCriteria = default;
             string recordTypes = default;
@@ -186,7 +186,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("targetResourceGuid"u8))
                 {
-                    targetResourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageId"u8))

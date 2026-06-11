@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -173,9 +175,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("virtualApplianceSites"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in VirtualApplianceSites)
+                foreach (WritableSubResource item in VirtualApplianceSites)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -183,9 +190,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("virtualApplianceConnections"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in VirtualApplianceConnections)
+                foreach (WritableSubResource item in VirtualApplianceConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,9 +205,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("inboundSecurityRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in InboundSecurityRules)
+                foreach (WritableSubResource item in InboundSecurityRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -288,9 +305,9 @@ namespace Azure.ResourceManager.Network.Models
             NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
             IList<InternetIngressPublicIpsProperties> internetIngressPublicIps = default;
-            IReadOnlyList<NetworkSubResource> virtualApplianceSites = default;
-            IReadOnlyList<NetworkSubResource> virtualApplianceConnections = default;
-            IReadOnlyList<NetworkSubResource> inboundSecurityRules = default;
+            IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
+            IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
+            IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
             NetworkProvisioningState? provisioningState = default;
             string deploymentType = default;
             VirtualApplianceDelegationProperties delegation = default;
@@ -441,10 +458,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     virtualApplianceSites = array;
                     continue;
@@ -455,10 +479,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     virtualApplianceConnections = array;
                     continue;
@@ -469,10 +500,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     inboundSecurityRules = array;
                     continue;
@@ -546,9 +584,9 @@ namespace Azure.ResourceManager.Network.Models
                 networkProfile,
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
                 internetIngressPublicIps ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>(),
-                virtualApplianceSites ?? new ChangeTrackingList<NetworkSubResource>(),
-                virtualApplianceConnections ?? new ChangeTrackingList<NetworkSubResource>(),
-                inboundSecurityRules ?? new ChangeTrackingList<NetworkSubResource>(),
+                virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),
                 provisioningState,
                 deploymentType,
                 delegation,

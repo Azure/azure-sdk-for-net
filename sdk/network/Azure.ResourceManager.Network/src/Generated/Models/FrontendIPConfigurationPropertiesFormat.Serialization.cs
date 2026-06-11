@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -78,9 +80,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in InboundNatRules)
+                foreach (WritableSubResource item in InboundNatRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,9 +95,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("inboundNatPools"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in InboundNatPools)
+                foreach (WritableSubResource item in InboundNatPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,9 +110,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("outboundRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in OutboundRules)
+                foreach (WritableSubResource item in OutboundRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,9 +125,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in LoadBalancingRules)
+                foreach (WritableSubResource item in LoadBalancingRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -201,10 +223,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkSubResource> inboundNatRules = default;
-            IReadOnlyList<NetworkSubResource> inboundNatPools = default;
-            IReadOnlyList<NetworkSubResource> outboundRules = default;
-            IReadOnlyList<NetworkSubResource> loadBalancingRules = default;
+            IReadOnlyList<WritableSubResource> inboundNatRules = default;
+            IReadOnlyList<WritableSubResource> inboundNatPools = default;
+            IReadOnlyList<WritableSubResource> outboundRules = default;
+            IReadOnlyList<WritableSubResource> loadBalancingRules = default;
             string privateIPAddress = default;
             NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             NetworkIPVersion? privateIPAddressVersion = default;
@@ -223,10 +245,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     inboundNatRules = array;
                     continue;
@@ -237,10 +266,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     inboundNatPools = array;
                     continue;
@@ -251,10 +287,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     outboundRules = array;
                     continue;
@@ -265,10 +308,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     loadBalancingRules = array;
                     continue;
@@ -356,10 +406,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new FrontendIPConfigurationPropertiesFormat(
-                inboundNatRules ?? new ChangeTrackingList<NetworkSubResource>(),
-                inboundNatPools ?? new ChangeTrackingList<NetworkSubResource>(),
-                outboundRules ?? new ChangeTrackingList<NetworkSubResource>(),
-                loadBalancingRules ?? new ChangeTrackingList<NetworkSubResource>(),
+                inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundNatPools ?? new ChangeTrackingList<WritableSubResource>(),
+                outboundRules ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
                 privateIPAddress,
                 privateIPAllocationMethod,
                 privateIPAddressVersion,

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -83,9 +85,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ruleCollectionGroups"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in RuleCollectionGroups)
+                foreach (WritableSubResource item in RuleCollectionGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,9 +110,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("firewalls"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in Firewalls)
+                foreach (WritableSubResource item in Firewalls)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,9 +125,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("childPolicies"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in ChildPolicies)
+                foreach (WritableSubResource item in ChildPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -212,11 +229,11 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string size = default;
-            IReadOnlyList<NetworkSubResource> ruleCollectionGroups = default;
+            IReadOnlyList<WritableSubResource> ruleCollectionGroups = default;
             NetworkProvisioningState? provisioningState = default;
             NetworkSubResource basePolicy = default;
-            IReadOnlyList<NetworkSubResource> firewalls = default;
-            IReadOnlyList<NetworkSubResource> childPolicies = default;
+            IReadOnlyList<WritableSubResource> firewalls = default;
+            IReadOnlyList<WritableSubResource> childPolicies = default;
             AzureFirewallThreatIntelMode? threatIntelMode = default;
             FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default;
             FirewallPolicyInsights insights = default;
@@ -241,10 +258,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     ruleCollectionGroups = array;
                     continue;
@@ -273,10 +297,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     firewalls = array;
                     continue;
@@ -287,10 +318,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     childPolicies = array;
                     continue;
@@ -392,11 +430,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new FirewallPolicyPropertiesFormat(
                 size,
-                ruleCollectionGroups ?? new ChangeTrackingList<NetworkSubResource>(),
+                ruleCollectionGroups ?? new ChangeTrackingList<WritableSubResource>(),
                 provisioningState,
                 basePolicy,
-                firewalls ?? new ChangeTrackingList<NetworkSubResource>(),
-                childPolicies ?? new ChangeTrackingList<NetworkSubResource>(),
+                firewalls ?? new ChangeTrackingList<WritableSubResource>(),
+                childPolicies ?? new ChangeTrackingList<WritableSubResource>(),
                 threatIntelMode,
                 threatIntelWhitelist,
                 insights,

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -103,9 +105,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("authenticationCertificates"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in AuthenticationCertificates)
+                foreach (WritableSubResource item in AuthenticationCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,9 +120,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in TrustedRootCertificates)
+                foreach (WritableSubResource item in TrustedRootCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -221,8 +233,8 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default;
             int? requestTimeout = default;
             NetworkSubResource probe = default;
-            IList<NetworkSubResource> authenticationCertificates = default;
-            IList<NetworkSubResource> trustedRootCertificates = default;
+            IList<WritableSubResource> authenticationCertificates = default;
+            IList<WritableSubResource> trustedRootCertificates = default;
             ApplicationGatewayConnectionDraining connectionDraining = default;
             string hostName = default;
             bool? pickHostNameFromBackendAddress = default;
@@ -288,10 +300,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     authenticationCertificates = array;
                     continue;
@@ -302,10 +321,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     trustedRootCertificates = array;
                     continue;
@@ -404,8 +430,8 @@ namespace Azure.ResourceManager.Network.Models
                 cookieBasedAffinity,
                 requestTimeout,
                 probe,
-                authenticationCertificates ?? new ChangeTrackingList<NetworkSubResource>(),
-                trustedRootCertificates ?? new ChangeTrackingList<NetworkSubResource>(),
+                authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
                 connectionDraining,
                 hostName,
                 pickHostNameFromBackendAddress,

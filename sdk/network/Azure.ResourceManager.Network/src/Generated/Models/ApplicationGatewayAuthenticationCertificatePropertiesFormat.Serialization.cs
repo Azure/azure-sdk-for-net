@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteStringValue(Data);
+                writer.WriteBase64StringValue(Data.ToArray(), "D");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -126,14 +126,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string data = default;
+            BinaryData data = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    data = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

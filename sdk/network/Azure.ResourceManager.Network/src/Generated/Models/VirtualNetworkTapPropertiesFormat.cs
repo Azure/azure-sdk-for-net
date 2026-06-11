@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkTapPropertiesFormat(IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, string resourceGuid, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkTapPropertiesFormat(IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;
             ResourceGuid = resourceGuid;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the virtual network tap resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the virtual network tap resource. </summary>
         [WirePath("provisioningState")]

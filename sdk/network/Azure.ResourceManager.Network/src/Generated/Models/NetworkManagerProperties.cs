@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerProperties(string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkManagerProperties(string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             NetworkManagerScopes = networkManagerScopes;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Unique identifier for this resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

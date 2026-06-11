@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             if (Optional.IsDefined(PeerCompleteVnets))
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkPeeringLevel? peeringSyncLevel = default;
             NetworkProvisioningState? provisioningState = default;
             bool? doNotVerifyRemoteGateways = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             bool? peerCompleteVnets = default;
             bool? enableOnlyIPv6Peering = default;
             IList<string> localSubnetNames = default;
@@ -396,7 +396,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("peerCompleteVnets"u8))

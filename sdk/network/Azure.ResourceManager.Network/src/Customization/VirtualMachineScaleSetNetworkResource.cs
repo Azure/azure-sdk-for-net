@@ -3,10 +3,17 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using System;
 using System.Diagnostics;
+using System.Threading;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
@@ -50,6 +57,34 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
+        }
+
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceResource, NetworkInterfaceData>(resourceGroup.GetVirtualMachineScaleSetNetworkInterfacesAsync(Id.Name, cancellationToken), resource => resource.Data);
+        }
+
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceResource, NetworkInterfaceData>(resourceGroup.GetVirtualMachineScaleSetNetworkInterfaces(Id.Name, cancellationToken), resource => resource.Data);
+        }
+
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return resourceGroup.GetVirtualMachineScaleSetPublicIPAddressesAsync(Id.Name, cancellationToken);
+        }
+
+        [ForwardsClientCalls]
+        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return resourceGroup.GetVirtualMachineScaleSetPublicIPAddresses(Id.Name, cancellationToken);
         }
     }
 }

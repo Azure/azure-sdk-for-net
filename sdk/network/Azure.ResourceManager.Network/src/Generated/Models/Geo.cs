@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The Geo for CIDR advertising. Should be an Geo code. </summary>
-    internal readonly partial struct Geo : IEquatable<Geo>
+    public readonly partial struct Geo : IEquatable<Geo>
     {
         private readonly string _value;
         /// <summary> GLOBAL. </summary>

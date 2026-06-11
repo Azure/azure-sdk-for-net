@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdminPropertiesFormat(string description, SecurityConfigurationRuleProtocol protocol, IList<AddressPrefixItem> sources, IList<AddressPrefixItem> destinations, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityConfigurationRuleAccess access, int priority, SecurityConfigurationRuleDirection direction, NetworkProvisioningState? provisioningState, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdminPropertiesFormat(string description, SecurityConfigurationRuleProtocol protocol, IList<AddressPrefixItem> sources, IList<AddressPrefixItem> destinations, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityConfigurationRuleAccess access, int priority, SecurityConfigurationRuleDirection direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Protocol = protocol;
@@ -105,6 +105,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Unique identifier for this resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

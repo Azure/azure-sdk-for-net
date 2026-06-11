@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the service gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayPropertiesFormat(VirtualNetworkData virtualNetwork, RouteTargetAddressPropertiesFormat routeTargetAddress, RouteTargetAddressPropertiesFormat routeTargetAddressV6, string resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceGatewayPropertiesFormat(VirtualNetworkData virtualNetwork, RouteTargetAddressPropertiesFormat routeTargetAddress, RouteTargetAddressPropertiesFormat routeTargetAddressV6, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetwork = virtualNetwork;
             RouteTargetAddress = routeTargetAddress;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the service gateway resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the service gateway resource. </summary>
         [WirePath("provisioningState")]

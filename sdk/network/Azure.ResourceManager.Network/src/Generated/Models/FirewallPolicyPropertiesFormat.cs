@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyPropertiesFormat"/>. </summary>
         public FirewallPolicyPropertiesFormat()
         {
-            RuleCollectionGroups = new ChangeTrackingList<NetworkSubResource>();
-            Firewalls = new ChangeTrackingList<NetworkSubResource>();
-            ChildPolicies = new ChangeTrackingList<NetworkSubResource>();
+            RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
+            Firewalls = new ChangeTrackingList<WritableSubResource>();
+            ChildPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyPropertiesFormat"/>. </summary>
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyPropertiesFormat(string size, IReadOnlyList<NetworkSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, NetworkSubResource basePolicy, IReadOnlyList<NetworkSubResource> firewalls, IReadOnlyList<NetworkSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallPolicyPropertiesFormat(string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, NetworkSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             RuleCollectionGroups = ruleCollectionGroups;
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
         [WirePath("ruleCollectionGroups")]
-        public IReadOnlyList<NetworkSubResource> RuleCollectionGroups { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> RuleCollectionGroups { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The provisioning state of the firewall policy resource. </summary>
         [WirePath("provisioningState")]
@@ -83,11 +84,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of references to Azure Firewalls that this Firewall Policy is associated with. </summary>
         [WirePath("firewalls")]
-        public IReadOnlyList<NetworkSubResource> Firewalls { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> Firewalls { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of references to Child Firewall Policies. </summary>
         [WirePath("childPolicies")]
-        public IReadOnlyList<NetworkSubResource> ChildPolicies { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> ChildPolicies { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The operation mode for Threat Intelligence. </summary>
         [WirePath("threatIntelMode")]

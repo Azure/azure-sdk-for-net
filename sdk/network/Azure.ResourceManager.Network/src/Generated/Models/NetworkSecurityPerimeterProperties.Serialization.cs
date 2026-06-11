@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(PerimeterGuid))
             {
                 writer.WritePropertyName("perimeterGuid"u8);
-                writer.WriteStringValue(PerimeterGuid);
+                writer.WriteStringValue(PerimeterGuid.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             NetworkSecurityPerimeterProvisioningState? provisioningState = default;
-            string perimeterGuid = default;
+            Guid? perimeterGuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("perimeterGuid"u8))
                 {
-                    perimeterGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perimeterGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

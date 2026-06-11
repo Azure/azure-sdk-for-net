@@ -78,7 +78,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             return
                 new ApplicationGatewayAuthenticationCertificate()
-                {Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Cert)))
+                {
+                    Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Cert)))
                 };
         }
 
@@ -114,7 +115,8 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Sku = new ApplicationGatewaySku()
-                {Tier = ApplicationGatewayTier.StandardV2,
+                {
+                    Tier = ApplicationGatewayTier.StandardV2,
                     Capacity = 2
                 },
                 GatewayIPConfigurations = {
@@ -422,7 +424,8 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Sku = new ApplicationGatewaySku()
-                {Tier = ApplicationGatewayTier.StandardV2,
+                {
+                    Tier = ApplicationGatewayTier.StandardV2,
                     Capacity = 2
                 },
                 GatewayIPConfigurations = {

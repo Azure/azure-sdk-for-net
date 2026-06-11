@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -118,9 +120,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (SubscriptionId item in Subscriptions)
+                foreach (WritableSubResource item in Subscriptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -225,7 +232,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSecurityPerimeterAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
             IList<string> fullyQualifiedDomainNames = default;
-            IList<SubscriptionId> subscriptions = default;
+            IList<WritableSubResource> subscriptions = default;
             IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = default;
             IList<string> emailAddresses = default;
             IList<string> phoneNumbers = default;
@@ -299,10 +306,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<SubscriptionId> array = new List<SubscriptionId>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionId.DeserializeSubscriptionId(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     subscriptions = array;
                     continue;
@@ -394,7 +408,7 @@ namespace Azure.ResourceManager.Network.Models
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<SubscriptionId>(),
+                subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
                 phoneNumbers ?? new ChangeTrackingList<string>(),

@@ -5,11 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ClientModel.Primitives;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -52,12 +49,6 @@ namespace Azure.ResourceManager.Network
     public partial class ScopeConnectionData : ResourceData { }
     public partial class SecurityAdminConfigurationData : ResourceData { }
     public partial class StaticCidrData : ResourceData { }
-
-    public partial class NetworkInterfaceIPConfigurationData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData { }
-    public partial class RouteData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData { }
-    public partial class SecurityRuleData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData { }
-    public partial class SubnetData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData { }
-    public partial class VirtualNetworkPeeringData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData { }
 
     public partial class P2SVpnGatewayData : NetworkTrackedResourceData { }
     public partial class RouteFilterData : NetworkTrackedResourceData { }
@@ -104,29 +95,6 @@ namespace Azure.ResourceManager.Network
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Common base type for writable network subresources. </summary>
-    public partial class NetworkWritableResourceData : IJsonModel<NetworkWritableResourceData>, IPersistableModel<NetworkWritableResourceData>
-    {
-        /// <summary> Resource identifier. </summary>
-        [Azure.ResourceManager.Network.WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
-        /// <summary> Resource name. </summary>
-        [Azure.ResourceManager.Network.WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> Resource type. </summary>
-        [Azure.ResourceManager.Network.WirePath("type")]
-        public ResourceType? ResourceType { get; set; }
-
-        NetworkWritableResourceData IJsonModel<NetworkWritableResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new NetworkWritableResourceData();
-        void IJsonModel<NetworkWritableResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
-        NetworkWritableResourceData IPersistableModel<NetworkWritableResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => new NetworkWritableResourceData();
-        string IPersistableModel<NetworkWritableResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        BinaryData IPersistableModel<NetworkWritableResourceData>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
-
-        /// <summary> Writes the model as JSON. </summary>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
-    }
-
     public partial class FirewallPacketCaptureContent : NetworkSubResource { }
     public partial class NetworkSecurityPerimeterAssociableResourceType : ResourceData { }
     public partial class TrackedResourceWithSettableIdOptionalLocation : NetworkTrackedResourceData { }
@@ -185,8 +153,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VngClientConnectionConfiguration : NetworkResourceData { }
     public partial class VpnClientRevokedCertificate : NetworkResourceData { }
     public partial class VpnClientRootCertificate : NetworkResourceData { }
-
-    public partial class ServiceDelegation : NetworkWritableResourceData { }
 }
 #pragma warning restore CS0108, CS0114
 #pragma warning restore SA1402

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
         /// <param name="status"> The NSP link state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspLinkProperties(NetworkSecurityPerimeterLinkProvisioningState? provisioningState, ResourceIdentifier autoApprovedRemotePerimeterResourceId, string remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NspLinkProperties(NetworkSecurityPerimeterLinkProvisioningState? provisioningState, ResourceIdentifier autoApprovedRemotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AutoApprovedRemotePerimeterResourceId = autoApprovedRemotePerimeterResourceId;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Remote NSP Guid with which the link gets created. </summary>
         [WirePath("remotePerimeterGuid")]
-        public string RemotePerimeterGuid { get; }
+        public Guid? RemotePerimeterGuid { get; }
 
         /// <summary> Remote NSP location with which the link gets created. </summary>
         [WirePath("remotePerimeterLocation")]

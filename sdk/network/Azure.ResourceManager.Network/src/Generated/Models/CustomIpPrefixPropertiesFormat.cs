@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIpPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIpPrefixParent, IReadOnlyList<NetworkSubResource> childCustomIpPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, Geo? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIpPrefixes, string resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomIpPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIpPrefixParent, IReadOnlyList<NetworkSubResource> childCustomIpPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, Geo? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIpPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Asn = asn;
             Cidr = cidr;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the custom IP prefix resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The reason why resource is in failed state. </summary>
         [WirePath("failedReason")]

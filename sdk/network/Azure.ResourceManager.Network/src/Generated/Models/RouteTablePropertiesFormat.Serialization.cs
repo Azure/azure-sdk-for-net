@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? disableBgpRoutePropagation = default;
             DisablePeeringRoute? disablePeeringRoute = default;
             NetworkProvisioningState? provisioningState = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

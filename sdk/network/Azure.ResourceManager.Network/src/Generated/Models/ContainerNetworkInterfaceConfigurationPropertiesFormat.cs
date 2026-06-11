@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public ContainerNetworkInterfaceConfigurationPropertiesFormat()
         {
             IpConfigurations = new ChangeTrackingList<NetworkIPConfigurationProfile>();
-            ContainerNetworkInterfaces = new ChangeTrackingList<NetworkSubResource>();
+            ContainerNetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceConfigurationPropertiesFormat"/>. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="containerNetworkInterfaces"> A list of container network interfaces created from this container network interface configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface configuration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerNetworkInterfaceConfigurationPropertiesFormat(IList<NetworkIPConfigurationProfile> ipConfigurations, IList<NetworkSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerNetworkInterfaceConfigurationPropertiesFormat(IList<NetworkIPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpConfigurations = ipConfigurations;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of container network interfaces created from this container network interface configuration. </summary>
         [WirePath("containerNetworkInterfaces")]
-        public IList<NetworkSubResource> ContainerNetworkInterfaces { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> ContainerNetworkInterfaces { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The provisioning state of the container network interface configuration resource. </summary>
         [WirePath("provisioningState")]

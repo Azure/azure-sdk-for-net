@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -98,9 +100,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in TrustedRootCertificates)
+                foreach (WritableSubResource item in TrustedRootCertificates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayProtocol? protocol = default;
             int? timeout = default;
             NetworkSubResource probe = default;
-            IList<NetworkSubResource> trustedRootCertificates = default;
+            IList<WritableSubResource> trustedRootCertificates = default;
             string hostName = default;
             bool? pickHostNameFromBackendAddress = default;
             bool? enableL4ClientIpPreservation = default;
@@ -220,10 +227,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     trustedRootCertificates = array;
                     continue;
@@ -270,7 +284,7 @@ namespace Azure.ResourceManager.Network.Models
                 protocol,
                 timeout,
                 probe,
-                trustedRootCertificates ?? new ChangeTrackingList<NetworkSubResource>(),
+                trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
                 hostName,
                 pickHostNameFromBackendAddress,
                 enableL4ClientIpPreservation,

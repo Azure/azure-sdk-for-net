@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ClientId))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             string clientId = default;
             IList<string> audiences = default;
             NetworkProvisioningState? provisioningState = default;
@@ -170,7 +170,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIpConfiguration, NetworkSubResource customIPPrefix, string resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIpConfiguration, NetworkSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPAddressVersion = publicIPAddressVersion;
             IpTags = ipTags;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the public IP prefix resource. </summary>
         [WirePath("provisioningState")]

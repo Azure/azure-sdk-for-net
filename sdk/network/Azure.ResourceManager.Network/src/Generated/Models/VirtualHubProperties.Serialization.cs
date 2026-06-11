@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -148,9 +150,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("bgpConnections"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in BgpConnections)
+                foreach (WritableSubResource item in BgpConnections)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,9 +175,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("routeMaps"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in RouteMaps)
+                foreach (WritableSubResource item in RouteMaps)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -269,9 +281,9 @@ namespace Azure.ResourceManager.Network.Models
             IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2s = default;
             string sku = default;
             RoutingState? routingState = default;
-            IReadOnlyList<NetworkSubResource> bgpConnections = default;
+            IReadOnlyList<WritableSubResource> bgpConnections = default;
             IReadOnlyList<NetworkSubResource> ipConfigurations = default;
-            IReadOnlyList<NetworkSubResource> routeMaps = default;
+            IReadOnlyList<WritableSubResource> routeMaps = default;
             long? virtualRouterAsn = default;
             IList<string> virtualRouterIps = default;
             bool? allowBranchToBranchTraffic = default;
@@ -397,10 +409,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     bgpConnections = array;
                     continue;
@@ -425,10 +444,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     routeMaps = array;
                     continue;
@@ -518,9 +544,9 @@ namespace Azure.ResourceManager.Network.Models
                 virtualHubRouteTableV2s ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(),
                 sku,
                 routingState,
-                bgpConnections ?? new ChangeTrackingList<NetworkSubResource>(),
+                bgpConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 ipConfigurations ?? new ChangeTrackingList<NetworkSubResource>(),
-                routeMaps ?? new ChangeTrackingList<NetworkSubResource>(),
+                routeMaps ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualRouterAsn,
                 virtualRouterIps ?? new ChangeTrackingList<string>(),
                 allowBranchToBranchTraffic,

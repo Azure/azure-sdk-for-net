@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             writer.WritePropertyName("appliesTo"u8);
             writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string description = default;
             NetworkProvisioningState? provisioningState = default;
-            string resourceGuid = default;
+            Guid? resourceGuid = default;
             IList<NetworkManagerRoutingGroupItem> appliesTo = default;
             DisableBgpRoutePropagation? disableBgpRoutePropagation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,7 +172,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    resourceGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("appliesTo"u8))

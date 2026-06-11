@@ -118,7 +118,8 @@ namespace Azure.ResourceManager.Network.Tests
             if (containsRule)
             {
                 var rule = new RouteFilterRuleData()
-                {Access = NetworkAccess.Allow,
+                {
+                    Access = NetworkAccess.Allow,
                     Communities = { Filter_Commmunity },
                     Location = TestEnvironment.Location
                 };

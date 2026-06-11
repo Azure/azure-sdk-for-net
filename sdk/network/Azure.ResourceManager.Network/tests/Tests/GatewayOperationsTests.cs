@@ -70,7 +70,8 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Sku = new VirtualNetworkGatewaySku()
-                {Tier = VirtualNetworkGatewaySkuTier.Basic
+                {
+                    Tier = VirtualNetworkGatewaySkuTier.Basic
                 },
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
@@ -272,7 +273,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.54.0.0/16", }
                 },
-                Subnets = { new SubnetData() {AddressPrefix = "10.54.0.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.54.0.0/24" } }
             };
             var virtualNetworkCollection = resourceGroup1.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName1, vnetData1, System.Threading.CancellationToken.None);
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.55.0.0/16", }
                 },
-                Subnets = { new SubnetData() {AddressPrefix = "10.55.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.55.0.0/24", } }
             };
             var virtualNetworkCollection2 = resourceGroup2.GetVirtualNetworks();
             var putVnetResponseOperation2 = await virtualNetworkCollection2.CreateOrUpdateAsync(WaitUntil.Completed, vnetName2, vnetData2, System.Threading.CancellationToken.None);
@@ -466,7 +467,8 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
-                {Tier = VirtualNetworkGatewaySkuTier.Basic
+                {
+                    Tier = VirtualNetworkGatewaySkuTier.Basic
                 }
             };
 
@@ -488,7 +490,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // 3. ResizeVirtualNetworkGateway API
             getVirtualNetworkGatewayResponse.Value.Data.Sku = new VirtualNetworkGatewaySku()
-            {Tier = VirtualNetworkGatewaySkuTier.Standard
+            {
+                Tier = VirtualNetworkGatewaySkuTier.Standard
             };
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
@@ -681,7 +684,8 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
-                {Tier = "Standard"
+                {
+                    Tier = "Standard"
                 },
                 BgpSettings = new BgpSettings()
                 {
@@ -828,7 +832,8 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
-                {Tier = VirtualNetworkGatewaySkuTier.Standard
+                {
+                    Tier = VirtualNetworkGatewaySkuTier.Standard
                 }
             };
 
@@ -1312,7 +1317,8 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
                 Sku = new VirtualNetworkGatewaySku
-                {Tier = VirtualNetworkGatewaySkuTier.Basic,
+                {
+                    Tier = VirtualNetworkGatewaySkuTier.Basic,
                 },
                 GatewayDefaultSite = new WritableSubResource() { Id = getLocalNetworkGatewayResponse.Value.Id },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
@@ -1371,8 +1377,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:Missing the value of a special environment variable, which is currently uncertain
             string clientRootCertName = "ClientRootCertName";// this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.ClientRootCertName.ToString()];
             string samplePublicCertData = "SamplePublicCertData";// this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.SamplePublicCertData.ToString()];
-            VpnClientRootCertificate clientRootCert = new VpnClientRootCertificate(samplePublicCertData)
-            {};
+            VpnClientRootCertificate clientRootCert = new VpnClientRootCertificate(BinaryData.FromString(samplePublicCertData))
+            { };
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientRootCertificates.Add(clientRootCert);
 
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
@@ -1412,7 +1418,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:Missing the value of a special environment variable, which is currently uncertain
             string sampleCertThumpprint = "SampleCertThumbprint";//this._testEnvironment.ConnectionString.KeyValue.DataPairs[TestEnvironmentSettings.SampleCertThumbprint.ToString()];
             VpnClientRevokedCertificate sampleClientCert = new VpnClientRevokedCertificate()
-            {Thumbprint = sampleCertThumpprint
+            {
+                Thumbprint = sampleCertThumpprint
             };
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientRevokedCertificates.Add(sampleClientCert);
 
@@ -1471,14 +1478,16 @@ namespace Azure.ResourceManager.Network.Tests
             string virtualNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
             string ipConfigName1 = Recording.GenerateAssetName("azsmnet");
             VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
-            {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+            {
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = nic1publicIp1.Id },
                 Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
             };
 
             string ipConfigName2 = Recording.GenerateAssetName("azsmnet");
             VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
-            {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+            {
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = nic1publicIp2.Id },
                 Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
             };
@@ -1493,7 +1502,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations = { ipconfig1, ipconfig2 },
-                Sku = new VirtualNetworkGatewaySku() {Tier = VirtualNetworkGatewaySkuTier.HighPerformance }
+                Sku = new VirtualNetworkGatewaySku() { Tier = VirtualNetworkGatewaySkuTier.HighPerformance }
             };
 
             var virtualNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
@@ -1566,7 +1575,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.1.0.0/16" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.1.1.0/24" } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.1.1.0/24" } }
             };
             PublicIPAddressResource publicIPAddress = await CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location);
             var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
@@ -1574,7 +1583,8 @@ namespace Azure.ResourceManager.Network.Tests
             Response<VirtualNetworkResource> vnet1Response = await virtualNetworksCreateOrUpdateOperation.WaitForCompletionAsync();
             Response<SubnetResource> gw1Subnet = await virtualNetworkCollection.Get(vnet1Name).Value.GetSubnets().GetAsync(gatewaySubnetName);
             VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
-            {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+            {
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = publicIPAddress.Id },
                 Subnet = new WritableSubResource() { Id = gw1Subnet.Value.Id }
             };
@@ -1584,7 +1594,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations = { ipconfig1 },
-                Sku = new VirtualNetworkGatewaySku() {Tier = VirtualNetworkGatewaySkuTier.Standard },
+                Sku = new VirtualNetworkGatewaySku() { Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 1337, BgpPeeringAddress = null, PeerWeight = 5 }
             };
 
@@ -1593,13 +1603,14 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.2.0.0/16" } },
-                Subnets = { new SubnetData() {AddressPrefix = "10.2.1.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.2.1.0/24", } }
             };
             var vnet2Operation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnet2Name, vnet2, System.Threading.CancellationToken.None);
             VirtualNetworkResource vnet2Response = await vnet2Operation.WaitForCompletionAsync();
             Response<SubnetResource> gw2Subnet = await virtualNetworkCollection.Get(vnet2Name).Value.GetSubnets().GetAsync(gatewaySubnetName);
             VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
-            {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+            {
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = gw2Ip.Id },
                 Subnet = new WritableSubResource() { Id = gw2Subnet.Value.Id }
             };
@@ -1609,7 +1620,7 @@ namespace Azure.ResourceManager.Network.Tests
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations = { ipconfig2 },
-                Sku = new VirtualNetworkGatewaySku() {Tier = VirtualNetworkGatewaySkuTier.Standard },
+                Sku = new VirtualNetworkGatewaySku() { Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 9001, BgpPeeringAddress = null, PeerWeight = 5 }
             };
 
@@ -1720,7 +1731,7 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:Missing the value of a special environment variable, which is currently uncertain
             string clientRootCertName = "0";// this._testEnvironment.ConnectionString.KeyValue.DataPairs[TestEnvironmentSettings.ClientRootCertName.ToString()];
             string samplePublicCertData = "1";// this._testEnvironment.ConnectionString.KeyValue.DataPairs[TestEnvironmentSettings.SamplePublicCertData.ToString()];
-            VpnClientRootCertificate clientRootCert = new VpnClientRootCertificate(samplePublicCertData) { Name = clientRootCertName };
+            VpnClientRootCertificate clientRootCert = new VpnClientRootCertificate(BinaryData.FromString(samplePublicCertData)) { Name = clientRootCertName };
             var virtualNetworkGateway = new VirtualNetworkGatewayData()
             {
                 Location = location,
@@ -1744,7 +1755,8 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
-                {Tier = VirtualNetworkGatewaySkuTier.VpnGw2
+                {
+                    Tier = VirtualNetworkGatewaySkuTier.VpnGw2
                 }
             };
 
@@ -1881,7 +1893,8 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
-                {Tier = VirtualNetworkGatewaySkuTier.Standard
+                {
+                    Tier = VirtualNetworkGatewaySkuTier.Standard
                 }
             };
 

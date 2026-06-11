@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.Network.Models
         public IpGroupPropertiesFormat()
         {
             IpAddresses = new ChangeTrackingList<string>();
-            Firewalls = new ChangeTrackingList<NetworkSubResource>();
-            FirewallPolicies = new ChangeTrackingList<NetworkSubResource>();
+            Firewalls = new ChangeTrackingList<WritableSubResource>();
+            FirewallPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpGroupPropertiesFormat"/>. </summary>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="firewalls"> List of references to Firewall resources that this IpGroups is associated with. </param>
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpGroupPropertiesFormat(NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<NetworkSubResource> firewalls, IReadOnlyList<NetworkSubResource> firewallPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IpGroupPropertiesFormat(NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             IpAddresses = ipAddresses;
@@ -50,10 +51,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of references to Firewall resources that this IpGroups is associated with. </summary>
         [WirePath("firewalls")]
-        public IReadOnlyList<NetworkSubResource> Firewalls { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> Firewalls { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of references to Firewall Policies resources that this IpGroups is associated with. </summary>
         [WirePath("firewallPolicies")]
-        public IReadOnlyList<NetworkSubResource> FirewallPolicies { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> FirewallPolicies { get; } = new ChangeTrackingList<WritableSubResource>();
     }
 }

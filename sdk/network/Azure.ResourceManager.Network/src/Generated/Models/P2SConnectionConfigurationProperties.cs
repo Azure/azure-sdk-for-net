@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="P2SConnectionConfigurationProperties"/>. </summary>
         public P2SConnectionConfigurationProperties()
         {
-            ConfigurationPolicyGroupAssociations = new ChangeTrackingList<NetworkSubResource>();
+            ConfigurationPolicyGroupAssociations = new ChangeTrackingList<WritableSubResource>();
             PreviousConfigurationPolicyGroupAssociations = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal P2SConnectionConfigurationProperties(VirtualNetworkAddressSpace vpnClientAddressPool, RoutingConfigurationNfv routingConfiguration, bool? enableInternetSecurity, IList<NetworkSubResource> configurationPolicyGroupAssociations, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal P2SConnectionConfigurationProperties(VirtualNetworkAddressSpace vpnClientAddressPool, RoutingConfigurationNfv routingConfiguration, bool? enableInternetSecurity, IList<WritableSubResource> configurationPolicyGroupAssociations, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             RoutingConfiguration = routingConfiguration;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </summary>
         [WirePath("configurationPolicyGroupAssociations")]
-        public IList<NetworkSubResource> ConfigurationPolicyGroupAssociations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> ConfigurationPolicyGroupAssociations { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </summary>
         [WirePath("previousConfigurationPolicyGroupAssociations")]

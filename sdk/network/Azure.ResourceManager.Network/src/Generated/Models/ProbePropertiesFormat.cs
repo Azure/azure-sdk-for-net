@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="port"> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </param>
         public ProbePropertiesFormat(ProbeProtocol protocol, int port)
         {
-            LoadBalancingRules = new ChangeTrackingList<NetworkSubResource>();
+            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
             Protocol = protocol;
             Port = port;
         }
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProbePropertiesFormat(IReadOnlyList<NetworkSubResource> loadBalancingRules, ProbeProtocol protocol, int port, int? intervalInSeconds, ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior, int? numberOfProbes, int? probeThreshold, string requestPath, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProbePropertiesFormat(IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol protocol, int port, int? intervalInSeconds, ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior, int? numberOfProbes, int? probeThreshold, string requestPath, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoadBalancingRules = loadBalancingRules;
             Protocol = protocol;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The load balancer rules that use this probe. </summary>
         [WirePath("loadBalancingRules")]
-        public IReadOnlyList<NetworkSubResource> LoadBalancingRules { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
         [WirePath("protocol")]

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string tenantId = default;
+            Guid? tenantId = default;
             ResourceIdentifier resourceId = default;
             ScopeConnectionState? connectionState = default;
             string description = default;
@@ -146,7 +146,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))

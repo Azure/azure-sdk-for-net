@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the DSCP Configuration resource. </param>
         /// <param name="provisioningState"> The provisioning state of the DSCP Configuration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DscpConfigurationPropertiesFormat(IList<int> markings, IList<QosIPRange> sourceIpRanges, IList<QosIPRange> destinationIpRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, string resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DscpConfigurationPropertiesFormat(IList<int> markings, IList<QosIPRange> sourceIpRanges, IList<QosIPRange> destinationIpRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Markings = markings;
             SourceIpRanges = sourceIpRanges;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the DSCP Configuration resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the DSCP Configuration resource. </summary>
         [WirePath("provisioningState")]

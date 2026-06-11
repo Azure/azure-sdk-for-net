@@ -84,7 +84,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Add a new security rule
             var securityRule = new SecurityRuleData()
-            {Access = SecurityRuleAccess.Deny,
+            {
+                Access = SecurityRuleAccess.Deny,
                 Description = "Test outbound security rule",
                 DestinationAddressPrefix = "*",
                 DestinationPortRange = destinationPortRange,

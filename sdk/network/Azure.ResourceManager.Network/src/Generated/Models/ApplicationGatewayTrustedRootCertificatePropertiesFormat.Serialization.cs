@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteStringValue(Data);
+                writer.WriteBase64StringValue(Data.ToArray(), "D");
             }
             if (Optional.IsDefined(KeyVaultSecretId))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string data = default;
+            BinaryData data = default;
             string keyVaultSecretId = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    data = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretId"u8))

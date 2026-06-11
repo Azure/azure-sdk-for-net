@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to a public IP address. </summary>
-    internal partial class ReferencedPublicIpAddress : IJsonModel<ReferencedPublicIpAddress>
+    public partial class ReferencedPublicIpAddress : IJsonModel<ReferencedPublicIpAddress>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -15,34 +16,27 @@ namespace Azure.ResourceManager.Network
     /// <summary> Network security rule. </summary>
     public partial class SecurityRuleData : NetworkWritableResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SecurityRuleData"/>. </summary>
         public SecurityRuleData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityRuleData"/>. </summary>
-        /// <param name="properties"> Properties of the security rule. </param>
-        /// <param name="name"> The name of the security rule. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityRuleData(SecurityRulePropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Properties of the security rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal SecurityRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, SecurityRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
-            Name = name;
             ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the security rule. </summary>
         [WirePath("properties")]
         internal SecurityRulePropertiesFormat Properties { get; set; }
-
-        /// <summary> The name of the security rule. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

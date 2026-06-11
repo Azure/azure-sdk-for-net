@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProfilePropertiesFormat"/>. </summary>
         public ApplicationGatewaySslProfilePropertiesFormat()
         {
-            TrustedClientCertificates = new ChangeTrackingList<NetworkSubResource>();
+            TrustedClientCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProfilePropertiesFormat"/>. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewaySslProfilePropertiesFormat(IList<NetworkSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewaySslProfilePropertiesFormat(IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TrustedClientCertificates = trustedClientCertificates;
             SslPolicy = sslPolicy;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Array of references to application gateway trusted client certificates. </summary>
         [WirePath("trustedClientCertificates")]
-        public IList<NetworkSubResource> TrustedClientCertificates { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> TrustedClientCertificates { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> SSL policy of the application gateway resource. </summary>
         [WirePath("sslPolicy")]

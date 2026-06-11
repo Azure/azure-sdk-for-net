@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionResourceUri"> The reference to the ExpressRoute connection resource using the authorization. </param>
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationPropertiesFormat(string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, string connectionResourceUri, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizationPropertiesFormat(string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, Uri connectionResourceUri, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationKey = authorizationKey;
             AuthorizationUseStatus = authorizationUseStatus;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The reference to the ExpressRoute connection resource using the authorization. </summary>
         [WirePath("connectionResourceUri")]
-        public string ConnectionResourceUri { get; }
+        public Uri ConnectionResourceUri { get; }
 
         /// <summary> The provisioning state of the authorization resource. </summary>
         [WirePath("provisioningState")]

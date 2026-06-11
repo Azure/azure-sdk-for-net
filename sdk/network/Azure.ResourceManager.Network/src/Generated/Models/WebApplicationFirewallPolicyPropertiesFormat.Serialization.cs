@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -120,9 +122,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("httpListeners"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in HttpListeners)
+                foreach (WritableSubResource item in HttpListeners)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,9 +137,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("pathBasedRules"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PathBasedRules)
+                foreach (WritableSubResource item in PathBasedRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,8 +206,8 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             WebApplicationFirewallPolicyResourceState? resourceState = default;
             ManagedRulesDefinition managedRules = default;
-            IReadOnlyList<NetworkSubResource> httpListeners = default;
-            IReadOnlyList<NetworkSubResource> pathBasedRules = default;
+            IReadOnlyList<WritableSubResource> httpListeners = default;
+            IReadOnlyList<WritableSubResource> pathBasedRules = default;
             IReadOnlyList<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -266,10 +278,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     httpListeners = array;
                     continue;
@@ -280,10 +299,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     pathBasedRules = array;
                     continue;
@@ -314,8 +340,8 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState,
                 resourceState,
                 managedRules,
-                httpListeners ?? new ChangeTrackingList<NetworkSubResource>(),
-                pathBasedRules ?? new ChangeTrackingList<NetworkSubResource>(),
+                httpListeners ?? new ChangeTrackingList<WritableSubResource>(),
+                pathBasedRules ?? new ChangeTrackingList<WritableSubResource>(),
                 applicationGatewayForContainers ?? new ChangeTrackingList<ApplicationGatewayForContainersReferenceDefinition>(),
                 additionalBinaryDataProperties);
         }

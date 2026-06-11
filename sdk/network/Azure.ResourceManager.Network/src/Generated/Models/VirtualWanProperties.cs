@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualWanProperties"/>. </summary>
         public VirtualWanProperties()
         {
-            VirtualHubs = new ChangeTrackingList<NetworkSubResource>();
-            VpnSites = new ChangeTrackingList<NetworkSubResource>();
+            VirtualHubs = new ChangeTrackingList<WritableSubResource>();
+            VpnSites = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualWanProperties"/>. </summary>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the virtual WAN resource. </param>
         /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualWanProperties(bool? disableVpnEncryption, IReadOnlyList<NetworkSubResource> virtualHubs, IReadOnlyList<NetworkSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualWanProperties(bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisableVpnEncryption = disableVpnEncryption;
             VirtualHubs = virtualHubs;
@@ -53,11 +54,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of VirtualHubs in the VirtualWAN. </summary>
         [WirePath("virtualHubs")]
-        public IReadOnlyList<NetworkSubResource> VirtualHubs { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> VirtualHubs { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of VpnSites in the VirtualWAN. </summary>
         [WirePath("vpnSites")]
-        public IReadOnlyList<NetworkSubResource> VpnSites { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> VpnSites { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> True if branch to branch traffic is allowed. </summary>
         [WirePath("allowBranchToBranchTraffic")]

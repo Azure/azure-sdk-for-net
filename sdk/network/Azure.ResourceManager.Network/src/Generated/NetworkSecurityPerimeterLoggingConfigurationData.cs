@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,10 +28,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="properties"> Properties of the NSP logging configuration. </param>
         /// <param name="name"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLoggingConfigurationData(NspLoggingConfigurationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterLoggingConfigurationData(NspLoggingConfigurationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : this(default, name, default, default, properties, name, additionalBinaryDataProperties)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
+        internal NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NspLoggingConfigurationProperties properties, string loggingConfigurationName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Name = name;
+            Name = loggingConfigurationName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

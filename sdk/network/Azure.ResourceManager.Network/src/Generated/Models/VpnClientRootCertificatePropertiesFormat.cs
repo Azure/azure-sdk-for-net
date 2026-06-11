@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificatePropertiesFormat"/>. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
-        public VpnClientRootCertificatePropertiesFormat(string publicCertData)
+        public VpnClientRootCertificatePropertiesFormat(BinaryData publicCertData)
         {
             Argument.AssertNotNull(publicCertData, nameof(publicCertData));
 
@@ -31,16 +31,31 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client root certificate resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnClientRootCertificatePropertiesFormat(string publicCertData, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnClientRootCertificatePropertiesFormat(BinaryData publicCertData, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicCertData = publicCertData;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The certificate public data. </summary>
+        /// <summary>
+        /// The certificate public data.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         [WirePath("publicCertData")]
-        public string PublicCertData { get; set; }
+        public BinaryData PublicCertData { get; set; }
 
         /// <summary> The provisioning state of the VPN client root certificate resource. </summary>
         [WirePath("provisioningState")]

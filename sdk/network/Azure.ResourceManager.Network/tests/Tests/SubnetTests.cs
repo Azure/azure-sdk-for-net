@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
@@ -66,7 +66,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Create a Subnet
             // Populate paramters for a Subnet
             var subnet = new SubnetData()
-            {AddressPrefix = "10.0.1.0/24",
+            {
+                AddressPrefix = "10.0.1.0/24",
             };
 
             #region Verification
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() {AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();

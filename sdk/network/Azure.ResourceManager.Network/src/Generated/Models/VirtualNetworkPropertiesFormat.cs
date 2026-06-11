@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultPublicNatGateway"> A reference to the default public nat gateway being used by this virtual network resource. </param>
         /// <param name="summarizedGatewayPrefixes"> A configurable list of summarized gateway prefixes advertised for the virtual network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPropertiesFormat(VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, string resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<NetworkSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVNetPolicies, NetworkSubResource defaultPublicNatGateway, VirtualNetworkAddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPropertiesFormat(VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<NetworkSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVNetPolicies, NetworkSubResource defaultPublicNatGateway, VirtualNetworkAddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressSpace = addressSpace;
             DhcpOptions = dhcpOptions;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resourceGuid property of the Virtual Network resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the virtual network resource. </summary>
         [WirePath("provisioningState")]

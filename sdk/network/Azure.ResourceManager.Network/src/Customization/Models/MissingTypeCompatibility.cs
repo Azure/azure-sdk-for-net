@@ -4,10 +4,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 #pragma warning disable SA1402 // Compatibility shims for multiple removed GA types are grouped intentionally.
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <inheritdoc/>
         public override string ToString() => _value ?? string.Empty;
     }
-    #pragma warning restore SA1402
+#pragma warning restore SA1402
 
     /// <summary> DDoS custom policy trigger sensitivity override. </summary>
     [Obsolete]
@@ -186,43 +187,6 @@ namespace Azure.ResourceManager.Network.Models
         public VpnPacketCaptureStopParameters()
         {
         }
-    }
-
-    /// <summary> Compatibility type for available SSL options info. </summary>
-    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData, IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>, IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>
-    {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
-        public ApplicationGatewayAvailableSslOptionsInfo()
-        {
-            PredefinedPolicies = new List<WritableSubResource>();
-            AvailableCipherSuites = new List<ApplicationGatewaySslCipherSuite>();
-            AvailableProtocols = new List<ApplicationGatewaySslProtocol>();
-        }
-
-        /// <summary> Predefined policies. </summary>
-        [Azure.ResourceManager.Network.WirePath("properties.predefinedPolicies")]
-        public IList<WritableSubResource> PredefinedPolicies { get; }
-
-        /// <summary> Default policy. </summary>
-        [Azure.ResourceManager.Network.WirePath("properties.defaultPolicy")]
-        public ApplicationGatewaySslPolicyName? DefaultPolicy { get; set; }
-
-        /// <summary> Available cipher suites. </summary>
-        [Azure.ResourceManager.Network.WirePath("properties.availableCipherSuites")]
-        public IList<ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get; }
-
-        /// <summary> Available protocols. </summary>
-        [Azure.ResourceManager.Network.WirePath("properties.availableProtocols")]
-        public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; }
-
-        ApplicationGatewayAvailableSslOptionsInfo IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new ApplicationGatewayAvailableSslOptionsInfo();
-        void IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
-        ApplicationGatewayAvailableSslOptionsInfo IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => new ApplicationGatewayAvailableSslOptionsInfo();
-        string IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        BinaryData IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
-
-        /// <summary> Writes the model as JSON. </summary>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
     }
 
     /// <summary> Compatibility type for connection state snapshots. </summary>

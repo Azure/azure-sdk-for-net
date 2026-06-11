@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
         /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurations"/> is null. </exception>
-        public OutboundRulePropertiesFormat(IEnumerable<NetworkSubResource> frontendIPConfigurations, LoadBalancerOutboundRuleProtocol protocol)
+        public OutboundRulePropertiesFormat(IEnumerable<WritableSubResource> frontendIPConfigurations, LoadBalancerOutboundRuleProtocol protocol)
         {
             Argument.AssertNotNull(frontendIPConfigurations, nameof(frontendIPConfigurations));
 
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundRulePropertiesFormat(int? allocatedOutboundPorts, IList<NetworkSubResource> frontendIPConfigurations, NetworkSubResource backendAddressPool, NetworkProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol protocol, bool? enableTcpReset, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutboundRulePropertiesFormat(int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, NetworkSubResource backendAddressPool, NetworkProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol protocol, bool? enableTcpReset, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllocatedOutboundPorts = allocatedOutboundPorts;
             FrontendIPConfigurations = frontendIPConfigurations;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Frontend IP addresses of the load balancer. </summary>
         [WirePath("frontendIPConfigurations")]
-        public IList<NetworkSubResource> FrontendIPConfigurations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> FrontendIPConfigurations { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
         [WirePath("backendAddressPool")]

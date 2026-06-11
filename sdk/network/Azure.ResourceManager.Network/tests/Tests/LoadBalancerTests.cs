@@ -850,7 +850,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Add a ProbeResource to the lb rule
             getLoadBalancer.Value.Data.Probes.Add(
                 new ProbeData()
-                {Protocol = ProbeProtocol.Http,
+                {
+                    Protocol = ProbeProtocol.Http,
                     Port = 80,
                     RequestPath = "healthcheck.aspx",
                     IntervalInSeconds = 10,
@@ -1121,7 +1122,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Add a new nat pool
             LoadBalancerInboundNatPool natpool2 = new LoadBalancerInboundNatPool()
-            {Properties = new LoadBalancerInboundNatPoolProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPortRangeStart: 107, frontendPortRangeEnd: 110, backendPort: 81)
+            {
+                Properties = new LoadBalancerInboundNatPoolProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPortRangeStart: 107, frontendPortRangeEnd: 110, backendPort: 81)
                 {
                     FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
                 }

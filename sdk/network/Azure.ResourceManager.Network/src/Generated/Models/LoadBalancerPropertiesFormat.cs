@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
         /// <param name="scope"> Indicates the scope of the load balancer: external (Public) or internal (Private). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerPropertiesFormat(IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, string resourceGuid, NetworkProvisioningState? provisioningState, LoadBalancerScope? scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadBalancerPropertiesFormat(IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState, LoadBalancerScope? scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrontendIPConfigurations = frontendIPConfigurations;
             BackendAddressPools = backendAddressPools;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the load balancer resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The provisioning state of the load balancer resource. </summary>
         [WirePath("provisioningState")]

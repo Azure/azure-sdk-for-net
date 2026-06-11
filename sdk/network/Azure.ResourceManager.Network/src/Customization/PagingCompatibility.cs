@@ -5,9 +5,11 @@
 
 #pragma warning disable CS0612, CS0618, CS1591
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -94,24 +96,6 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<RadiusAuthServer> GetRadiusSecrets(CancellationToken cancellationToken = default) => default;
     }
 
-    public partial class VirtualMachineScaleSetNetworkResource
-    {
-        public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken) => default;
-        public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken) => default;
-        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken) => default;
-        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken) => default;
-    }
-
-    public partial class VirtualMachineScaleSetVmNetworkResource
-    {
-        public virtual AsyncPageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken) => default;
-        public virtual Pageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken) => default;
-        public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken) => default;
-        public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken) => default;
-        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken) => default;
-        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken) => default;
-    }
-
     [CodeGenSuppress("GetRadiusSecretsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetRadiusSecrets", typeof(CancellationToken))]
     public partial class VpnServerConfigurationResource
@@ -122,14 +106,35 @@ namespace Azure.ResourceManager.Network
 
     public static partial class NetworkExtensions
     {
-        public static AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
-        public static Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
-        public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
-        public static Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
-        public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
-        public static Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
-        public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
-        public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => default;
+        public static AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetExpressRouteGatewaysAsync(cancellationToken);
+        public static Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetExpressRouteGateways(cancellationToken);
+        public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetAppGatewayAvailableWafRuleSetsAsync(cancellationToken);
+        public static Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetAppGatewayAvailableWafRuleSets(cancellationToken);
+        public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(cancellationToken);
+        public static Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableWafRuleSetsAsync(cancellationToken);
+        public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(cancellationToken);
+        public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslPredefinedPolicies(cancellationToken);
+
+        internal static ApplicationGatewaySslPredefinedPolicy NormalizeApplicationGatewaySslPredefinedPolicy(ApplicationGatewaySslPredefinedPolicy policy, string subscriptionId)
+        {
+            if (policy is not null)
+            {
+                policy.Id = CreateApplicationGatewaySslPredefinedPolicyIdentifier(subscriptionId, policy.Name);
+            }
+
+            return policy;
+        }
+
+        internal static ResourceIdentifier CreateApplicationGatewaySslPredefinedPolicyIdentifier(string subscriptionId, string policyName)
+            => new ResourceIdentifier($"/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/ApplicationGatewaySslPredefinedPolicy/{policyName}");
     }
 }
 
@@ -141,7 +146,19 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(CancellationToken cancellationToken) => default;
         public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken) => default;
         public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(CancellationToken cancellationToken) => default;
-        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken) => default;
-        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(CancellationToken cancellationToken) => default;
+        public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(CancellationToken cancellationToken) => default;
+        public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken) => default;
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken)
+        {
+            var resource = Client.GetApplicationGatewayAvailableSslOptionsInfoResource(ApplicationGatewayAvailableSslOptionsInfoResource.CreateResourceIdentifier(Id.SubscriptionId));
+            return new AsyncPageableWrapper<ApplicationGatewaySslPredefinedPolicy, ApplicationGatewaySslPredefinedPolicy>(resource.GetAvailableSslPredefinedPoliciesAsync(cancellationToken), policy => NetworkExtensions.NormalizeApplicationGatewaySslPredefinedPolicy(policy, Id.SubscriptionId));
+        }
+        [ForwardsClientCalls]
+        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(CancellationToken cancellationToken)
+        {
+            var resource = Client.GetApplicationGatewayAvailableSslOptionsInfoResource(ApplicationGatewayAvailableSslOptionsInfoResource.CreateResourceIdentifier(Id.SubscriptionId));
+            return new PageableWrapper<ApplicationGatewaySslPredefinedPolicy, ApplicationGatewaySslPredefinedPolicy>(resource.GetAvailableSslPredefinedPolicies(cancellationToken), policy => NetworkExtensions.NormalizeApplicationGatewaySslPredefinedPolicy(policy, Id.SubscriptionId));
+        }
     }
 }

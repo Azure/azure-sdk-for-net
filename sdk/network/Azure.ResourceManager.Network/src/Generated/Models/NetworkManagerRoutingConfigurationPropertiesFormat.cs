@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="routeTableUsageMode"> Route table usage mode defines which route table will be used by the configuration. If not defined, this will default to 'ManagedOnly'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerRoutingConfigurationPropertiesFormat(string description, NetworkProvisioningState? provisioningState, string resourceGuid, RouteTableUsageMode? routeTableUsageMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkManagerRoutingConfigurationPropertiesFormat(string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, RouteTableUsageMode? routeTableUsageMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Unique identifier for this resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> Route table usage mode defines which route table will be used by the configuration. If not defined, this will default to 'ManagedOnly'. </summary>
         [WirePath("routeTableUsageMode")]

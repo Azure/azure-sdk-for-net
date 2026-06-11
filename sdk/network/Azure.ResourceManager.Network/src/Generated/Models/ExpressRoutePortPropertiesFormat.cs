@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public ExpressRoutePortPropertiesFormat()
         {
             Links = new ChangeTrackingList<ExpressRouteLinkData>();
-            Circuits = new ChangeTrackingList<NetworkSubResource>();
+            Circuits = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortPropertiesFormat"/>. </summary>
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
         /// <param name="billingType"> The billing type of the ExpressRoutePort resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRoutePortPropertiesFormat(string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<NetworkSubResource> circuits, NetworkProvisioningState? provisioningState, string resourceGuid, ExpressRoutePortsBillingType? billingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRoutePortPropertiesFormat(string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ExpressRoutePortsBillingType? billingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringLocation = peeringLocation;
             BandwidthInGbps = bandwidthInGbps;
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </summary>
         [WirePath("circuits")]
-        public IReadOnlyList<NetworkSubResource> Circuits { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> Circuits { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The provisioning state of the express route port resource. </summary>
         [WirePath("provisioningState")]
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource GUID property of the express route port resource. </summary>
         [WirePath("resourceGuid")]
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
 
         /// <summary> The billing type of the ExpressRoutePort resource. </summary>
         [WirePath("billingType")]
