@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
-        /// <param name="aRecords"> The list of A records in the record set. </param>
-        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        /// <param name="nsRecords"> The list of NS records in the record set. </param>
-        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        /// <param name="srvRecords"> The list of SRV records in the record set. </param>
-        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        /// <param name="soaRecord"> The SOA record in the record set. </param>
-        /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        /// <param name="dsRecords"> The list of DS records in the record set. </param>
-        /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
-        /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
+        /// <param name="dnsARecords"> The list of A records in the record set. </param>
+        /// <param name="dnsAaaaRecords"> The list of AAAA records in the record set. </param>
+        /// <param name="dnsMXRecords"> The list of MX records in the record set. </param>
+        /// <param name="dnsNSRecords"> The list of NS records in the record set. </param>
+        /// <param name="dnsPtrRecords"> The list of PTR records in the record set. </param>
+        /// <param name="dnsSrvRecords"> The list of SRV records in the record set. </param>
+        /// <param name="dnsTxtRecords"> The list of TXT records in the record set. </param>
+        /// <param name="dnsSoaRecordInfo"> The SOA record in the record set. </param>
+        /// <param name="dnsCaaRecords"> The list of CAA records in the record set. </param>
+        /// <param name="dnsDSRecords"> The list of DS records in the record set. </param>
+        /// <param name="dnsTlsaRecords"> The list of TLSA records in the record set. </param>
+        /// <param name="dnsNaptrRecords"> The list of NAPTR records in the record set. </param>
         /// <param name="cname"> The canonical name for this CNAME record. </param>
         /// <param name="eTag"> The etag of the record set. </param>
         /// <returns> A new <see cref="Dns.DnsRecordData"/> instance for mocking. </returns>
-        public static DnsRecordData DnsRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, WritableSubResource trafficManagementProfile = default, IEnumerable<DnsARecordInfo> aRecords = default, IEnumerable<DnsAaaaRecordInfo> aaaaRecords = default, IEnumerable<DnsMXRecordInfo> mxRecords = default, IEnumerable<DnsNSRecordInfo> nsRecords = default, IEnumerable<DnsPtrRecordInfo> ptrRecords = default, IEnumerable<DnsSrvRecordInfo> srvRecords = default, IEnumerable<DnsTxtRecordInfo> txtRecords = default, DnsSoaRecordInfo soaRecord = default, IEnumerable<DnsCaaRecordInfo> caaRecords = default, IEnumerable<DnsDSRecordInfo> dsRecords = default, IEnumerable<DnsTlsaRecordInfo> tlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> naptrRecords = default, string cname = default, ETag? eTag = default)
+        public static DnsRecordData DnsRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, WritableSubResource trafficManagementProfile = default, IEnumerable<DnsARecordInfo> dnsARecords = default, IEnumerable<DnsAaaaRecordInfo> dnsAaaaRecords = default, IEnumerable<DnsMXRecordInfo> dnsMXRecords = default, IEnumerable<DnsNSRecordInfo> dnsNSRecords = default, IEnumerable<DnsPtrRecordInfo> dnsPtrRecords = default, IEnumerable<DnsSrvRecordInfo> dnsSrvRecords = default, IEnumerable<DnsTxtRecordInfo> dnsTxtRecords = default, DnsSoaRecordInfo dnsSoaRecordInfo = default, IEnumerable<DnsCaaRecordInfo> dnsCaaRecords = default, IEnumerable<DnsDSRecordInfo> dnsDSRecords = default, IEnumerable<DnsTlsaRecordInfo> dnsTlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> dnsNaptrRecords = default, string cname = default, ETag? eTag = default)
         {
             return new DnsRecordData(
                 id,
@@ -105,26 +105,26 @@ namespace Azure.ResourceManager.Dns.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                metadata is null && ttlInSeconds is null && fqdn is null && provisioningState is null && targetResource is null && trafficManagementProfile is null && aRecords is null && aaaaRecords is null && mxRecords is null && nsRecords is null && ptrRecords is null && srvRecords is null && txtRecords is null && soaRecord is null && caaRecords is null && dsRecords is null && tlsaRecords is null && naptrRecords is null && cname is null ? default : new RecordSetProperties(
+                metadata is null && ttlInSeconds is null && fqdn is null && provisioningState is null && targetResource is null && trafficManagementProfile is null && dnsARecords is null && dnsAaaaRecords is null && dnsMXRecords is null && dnsNSRecords is null && dnsPtrRecords is null && dnsSrvRecords is null && dnsTxtRecords is null && dnsSoaRecordInfo is null && dnsCaaRecords is null && dnsDSRecords is null && dnsTlsaRecords is null && dnsNaptrRecords is null && cname is null ? default : new RecordSetProperties(
                     metadata,
                     ttlInSeconds,
                     fqdn,
                     provisioningState,
                     targetResource,
                     trafficManagementProfile,
-                    (aRecords ?? new ChangeTrackingList<DnsARecordInfo>()).ToList(),
-                    (aaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>()).ToList(),
-                    (mxRecords ?? new ChangeTrackingList<DnsMXRecordInfo>()).ToList(),
-                    (nsRecords ?? new ChangeTrackingList<DnsNSRecordInfo>()).ToList(),
-                    (ptrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>()).ToList(),
-                    (srvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>()).ToList(),
-                    (txtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>()).ToList(),
+                    (dnsARecords ?? new ChangeTrackingList<DnsARecordInfo>()).ToList(),
+                    (dnsAaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>()).ToList(),
+                    (dnsMXRecords ?? new ChangeTrackingList<DnsMXRecordInfo>()).ToList(),
+                    (dnsNSRecords ?? new ChangeTrackingList<DnsNSRecordInfo>()).ToList(),
+                    (dnsPtrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>()).ToList(),
+                    (dnsSrvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>()).ToList(),
+                    (dnsTxtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>()).ToList(),
                     new DnsCnameRecordInfo(cname, null),
-                    soaRecord,
-                    (caaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>()).ToList(),
-                    (dsRecords ?? new ChangeTrackingList<DnsDSRecordInfo>()).ToList(),
-                    (tlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>()).ToList(),
-                    (naptrRecords ?? new ChangeTrackingList<DnsNaptrRecordInfo>()).ToList(),
+                    dnsSoaRecordInfo,
+                    (dnsCaaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>()).ToList(),
+                    (dnsDSRecords ?? new ChangeTrackingList<DnsDSRecordInfo>()).ToList(),
+                    (dnsTlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>()).ToList(),
+                    (dnsNaptrRecords ?? new ChangeTrackingList<DnsNaptrRecordInfo>()).ToList(),
                     null),
                 eTag);
         }

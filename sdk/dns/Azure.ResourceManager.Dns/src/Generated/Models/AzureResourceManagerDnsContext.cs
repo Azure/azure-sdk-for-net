@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsPtrRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsRecordData))]
     [ModelReaderWriterBuildable(typeof(Models.DnsResourceReference))]
-    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceRequest))]
+    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceContent))]
     [ModelReaderWriterBuildable(typeof(DnsResourceReferenceRequestProperties))]
     [ModelReaderWriterBuildable(typeof(DnsResourceReferenceResult))]
     [ModelReaderWriterBuildable(typeof(DnsResourceReferenceResultProperties))]

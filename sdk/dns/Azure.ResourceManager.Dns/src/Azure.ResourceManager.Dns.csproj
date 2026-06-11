@@ -9,4 +9,7 @@
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Customization\Models\" />
+  </ItemGroup>
 </Project>

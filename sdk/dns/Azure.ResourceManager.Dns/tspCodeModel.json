@@ -2551,7 +2551,7 @@
               {
                 "$id": "196",
                 "kind": "property",
-                "name": "ARecords",
+                "name": "DnsARecords",
                 "serializedName": "ARecords",
                 "doc": "The list of A records in the record set.",
                 "type": {
@@ -2629,7 +2629,7 @@
               {
                 "$id": "201",
                 "kind": "property",
-                "name": "AaaaRecords",
+                "name": "DnsAaaaRecords",
                 "serializedName": "AAAARecords",
                 "doc": "The list of AAAA records in the record set.",
                 "type": {
@@ -2707,7 +2707,7 @@
               {
                 "$id": "206",
                 "kind": "property",
-                "name": "MxRecords",
+                "name": "DnsMXRecords",
                 "serializedName": "MXRecords",
                 "doc": "The list of MX records in the record set.",
                 "type": {
@@ -2811,7 +2811,7 @@
               {
                 "$id": "213",
                 "kind": "property",
-                "name": "NsRecords",
+                "name": "DnsNSRecords",
                 "serializedName": "NSRecords",
                 "doc": "The list of NS records in the record set.",
                 "type": {
@@ -2889,7 +2889,7 @@
               {
                 "$id": "218",
                 "kind": "property",
-                "name": "PtrRecords",
+                "name": "DnsPtrRecords",
                 "serializedName": "PTRRecords",
                 "doc": "The list of PTR records in the record set.",
                 "type": {
@@ -2967,7 +2967,7 @@
               {
                 "$id": "223",
                 "kind": "property",
-                "name": "SrvRecords",
+                "name": "DnsSrvRecords",
                 "serializedName": "SRVRecords",
                 "doc": "The list of SRV records in the record set.",
                 "type": {
@@ -3123,7 +3123,7 @@
               {
                 "$id": "234",
                 "kind": "property",
-                "name": "TxtRecords",
+                "name": "DnsTxtRecords",
                 "serializedName": "TXTRecords",
                 "doc": "The list of TXT records in the record set.",
                 "type": {
@@ -3208,7 +3208,7 @@
               {
                 "$id": "240",
                 "kind": "property",
-                "name": "CnameRecord",
+                "name": "DnsCnameRecord",
                 "serializedName": "CNAMERecord",
                 "doc": "The CNAME record in the  record set.",
                 "type": {
@@ -3279,7 +3279,7 @@
               {
                 "$id": "244",
                 "kind": "property",
-                "name": "SoaRecord",
+                "name": "DnsSoaRecordInfo",
                 "serializedName": "SOARecord",
                 "doc": "The SOA record in the record set.",
                 "type": {
@@ -3506,7 +3506,7 @@
               {
                 "$id": "260",
                 "kind": "property",
-                "name": "CaaRecords",
+                "name": "DnsCaaRecords",
                 "serializedName": "caaRecords",
                 "doc": "The list of CAA records in the record set.",
                 "type": {
@@ -3636,7 +3636,7 @@
               {
                 "$id": "269",
                 "kind": "property",
-                "name": "DsRecords",
+                "name": "DnsDSRecords",
                 "serializedName": "DSRecords",
                 "doc": "The list of DS records in the record set.",
                 "type": {
@@ -3837,7 +3837,7 @@
               {
                 "$id": "282",
                 "kind": "property",
-                "name": "TlsaRecords",
+                "name": "DnsTlsaRecords",
                 "serializedName": "TLSARecords",
                 "doc": "The list of TLSA records in the record set.",
                 "type": {
@@ -3993,7 +3993,7 @@
               {
                 "$id": "293",
                 "kind": "property",
-                "name": "NaptrRecords",
+                "name": "DnsNaptrRecords",
                 "serializedName": "NAPTRRecords",
                 "doc": "The list of NAPTR records in the record set.",
                 "type": {
@@ -4977,7 +4977,7 @@
     {
       "$id": "352",
       "kind": "model",
-      "name": "DnsResourceReferenceRequest",
+      "name": "DnsResourceReferenceContent",
       "namespace": "Azure.ResourceManager.Dns",
       "crossLanguageDefinitionId": "Microsoft.Network.DnsResourceReferenceRequest",
       "usage": "Input,Json",
@@ -4985,6 +4985,10 @@
       "decorators": [
         {
           "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ResourceManager.@hasClientNameOverride",
           "arguments": {}
         }
       ],
