@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {

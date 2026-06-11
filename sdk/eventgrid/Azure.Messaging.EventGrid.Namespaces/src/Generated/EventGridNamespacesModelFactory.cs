@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
-using Azure.Messaging;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {

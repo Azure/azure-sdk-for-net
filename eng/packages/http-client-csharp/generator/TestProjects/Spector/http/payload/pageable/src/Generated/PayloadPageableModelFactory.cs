@@ -5,12 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Payload.Pageable._PageSize;
-using Payload.Pageable._ServerDrivenPagination;
 using Payload.Pageable._ServerDrivenPagination.AlternateInitialVerb;
-using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
 
 namespace Payload.Pageable
 {

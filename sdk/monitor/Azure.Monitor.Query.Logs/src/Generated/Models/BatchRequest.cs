@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Monitor.Query.Logs;
 
 namespace Azure.Monitor.Query.Logs.Models
 {

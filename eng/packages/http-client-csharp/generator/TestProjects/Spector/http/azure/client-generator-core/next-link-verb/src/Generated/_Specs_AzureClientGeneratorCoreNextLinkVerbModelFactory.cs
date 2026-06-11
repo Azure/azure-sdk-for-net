@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 
 namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 {
