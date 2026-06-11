@@ -10,6 +10,7 @@ using Azure.AI.Language.Documents;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.VisualBasic;
 using NUnit.Framework;
 
@@ -23,48 +24,46 @@ namespace Azure.AI.Language.Documents.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversation()
+        public async Task SubmitJob()
         {
-            var data = new
+            MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
+            documents.Documents.Add(
+                new MultiLanguageInput(
+                    "1",
+                    new AzureBlobDocumentLocation(TestEnvironment.SourceLocation),
+                    new AzureContainerFolderDocumentLocation(TestEnvironment.TargetLocation))
+                {
+                    Language = "en",
+                });
+
+            PiiEntityRecognitionAction piiAction = new PiiEntityRecognitionAction
             {
-                AnalysisInput = new
-                {
-                    ConversationItem = new
+                Parameters = DocumentsServiceModelFactory.PiiActionContent(
+                    redactionPolicies: new[]
                     {
-                        Text = "Send an email to Carol about the tomorrow's demo",
-                        Id = "1",
-                        ParticipantId = "1",
-                    }
-                },
-                Parameters = new
-                {
-                    ProjectName = TestEnvironment.ProjectName,
-                    DeploymentName = TestEnvironment.DeploymentName,
-                },
-                Kind = "Conversation",
+                        new EntityMaskRedactionPolicy
+                        {
+                            PolicyName = "defaultPolicy",
+                            IsDefault = true,
+                        },
+                    }),
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            AnalyzeDocumentsOperationInput request = new AnalyzeDocumentsOperationInput(
+                documents,
+                new AnalyzeDocumentsOperationAction[] { piiAction })
+            {
+                DisplayName = "Document Analysis.",
+            };
 
-            // assert - main object
-            Assert.IsNotNull(response);
+            Operation operation = await Client.AnalyzeDocumentsSubmitOperationAsync(
+                WaitUntil.Started,
+                request);
 
-            // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            Assert.IsNotNull(conversationalTaskResult);
-
-            // assert - prediction type
-            Assert.AreEqual("Conversation", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
-
-            // assert - top intent
-            Assert.AreEqual("SendEmail", (string)conversationalTaskResult.Result.Prediction.TopIntent);
-
-            // cast prediction
-            dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
-            Assert.IsNotNull(conversationPrediction);
-
-            // assert - not empty
-            Assert.IsNotEmpty((IEnumerable)conversationPrediction.Intents);
+            Assert.IsNotNull(operation);
+            Assert.IsNotNull(operation.Id);
+            Assert.IsNotEmpty(operation.Id);
+            Assert.IsNotNull(operation.GetRawResponse());
         }
     }
 }

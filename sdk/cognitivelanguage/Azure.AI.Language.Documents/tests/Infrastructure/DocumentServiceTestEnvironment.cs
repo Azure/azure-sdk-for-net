@@ -39,5 +39,15 @@ namespace Azure.AI.Language.Documents.Tests
         /// Gets the endpoint.
         /// </summary>
         public Uri Endpoint => new(GetRecordedVariable("DOCUMENTS_ENDPOINT"), UriKind.Absolute);
+
+        /// <summary>
+        /// Gets the source blob location.
+        /// </summary>
+        public string SourceLocation => GetRecordedVariable("DOCUMENTS_SOURCE_LOCATION");
+
+        /// <summary>
+        /// Gets the target blob folder location.
+        /// </summary>
+        public string TargetLocation => GetRecordedVariable("DOCUMENTS_TARGET_LOCATION");
     }
 }

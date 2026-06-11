@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.Language.Documents.Tests
 {
@@ -47,7 +48,7 @@ namespace Azure.AI.Language.Documents.Tests
             DocumentsServiceClientOptions options = new DocumentsServiceClientOptions(ServiceVersion);
             Client = CreateClient<TClient>(
                 TestEnvironment.Endpoint,
-                new AzureKeyCredential(TestEnvironment.ApiKey),
+                new DefaultAzureCredential(),
                 InstrumentClientOptions(options));
         }
     }
