@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             get
             {
-                 throw new NotSupportedException("This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType.");
+                throw new NotSupportedException("This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType.");
             }
             set
             {
