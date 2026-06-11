@@ -143,9 +143,19 @@ namespace Azure.SdkAnalyzers
                 context.ReportDiagnostic(Diagnostic.Create(
                     Descriptors.AZC0040,
                     location,
-                    member.Name,
+                    GetMemberDisplayName(member),
                     arrowType.ToDisplayString()));
             }
+        }
+
+        private static string GetMemberDisplayName(ISymbol member)
+        {
+            if (member is IMethodSymbol { MethodKind: MethodKind.Constructor } constructor)
+            {
+                return constructor.ContainingType.Name;
+            }
+
+            return member.Name;
         }
 
         private static ITypeSymbol FindArrowType(ITypeSymbol type, HashSet<ITypeSymbol> visited)

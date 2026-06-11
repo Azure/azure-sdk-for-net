@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 using Verifier = Azure.SdkAnalyzers.Tests.AzureAnalyzerVerifier<Azure.SdkAnalyzers.ArrowPublicApiAnalyzer>;
 
@@ -292,6 +294,52 @@ namespace Azure.Test
 }";
 
             await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
+        public async Task AZC0040_ConstructorMessageUsesContainingTypeName()
+        {
+            const string code = @"
+using Apache.Arrow;
+
+namespace Apache.Arrow
+{
+    public class Table { }
+}
+
+namespace Azure.Test
+{
+    public class TableModel
+    {
+        public TableModel(Table table) { }
+    }
+}";
+
+            var diagnostics = await GetAnalyzerDiagnosticsAsync(code);
+
+            Assert.That(diagnostics, Has.Count.EqualTo(1));
+            var message = diagnostics[0].GetMessage();
+            Assert.That(message, Does.Not.Contain(".ctor"), "Constructor diagnostics should not surface the '.ctor' symbol name.");
+            Assert.That(message, Does.Contain("TableModel"), "Constructor diagnostics should reference the containing type name.");
+        }
+
+        private static async Task<System.Collections.Generic.IReadOnlyList<Microsoft.CodeAnalysis.Diagnostic>> GetAnalyzerDiagnosticsAsync(string source)
+        {
+            var refAssemblies = await AzureTestReferences.DefaultReferenceAssemblies.ResolveAsync(
+                Microsoft.CodeAnalysis.LanguageNames.CSharp, System.Threading.CancellationToken.None);
+
+            var syntaxTree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree.ParseText(source);
+            var compilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation.Create(
+                "TestAssembly",
+                new[] { syntaxTree },
+                refAssemblies,
+                new Microsoft.CodeAnalysis.CSharp.CSharpCompilationOptions(Microsoft.CodeAnalysis.OutputKind.DynamicallyLinkedLibrary));
+
+            var withAnalyzers = ((Microsoft.CodeAnalysis.Compilation)compilation).WithAnalyzers(
+                System.Collections.Immutable.ImmutableArray.Create<Microsoft.CodeAnalysis.Diagnostics.DiagnosticAnalyzer>(new ArrowPublicApiAnalyzer()));
+
+            var diagnostics = await withAnalyzers.GetAnalyzerDiagnosticsAsync(System.Threading.CancellationToken.None);
+            return diagnostics.Where(d => d.Id == "AZC0040").ToList();
         }
 
         [Test]
