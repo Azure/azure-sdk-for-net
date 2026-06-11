@@ -260,7 +260,7 @@ IsSequential = true,
             })
             };
             string referencePipelineRunId = null;
-            PipelineCreateRunResult result = await dataFactoryPipeline.CreateRunAsync(parameters: parameterValueSpecification, referencePipelineRunId: referencePipelineRunId);
+            PipelineCreateRunResult result = await dataFactoryPipeline.CreateRunAsync(parameterValueSpecification: parameterValueSpecification, referencePipelineRunId: referencePipelineRunId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

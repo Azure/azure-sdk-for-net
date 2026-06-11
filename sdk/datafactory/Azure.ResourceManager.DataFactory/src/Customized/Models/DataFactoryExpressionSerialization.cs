@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static DataFactoryElement<T> ReadElement<T>(JsonProperty property)
             => property.Value.ValueKind == JsonValueKind.Null
                 ? null
-                : ModelReaderWriter.Read<DataFactoryElement<T>>(BinaryData.FromString(property.Value.GetRawText()), WireOptions, DataFactoryContext.Default);
+                : ModelReaderWriter.Read<DataFactoryElement<T>>(BinaryData.FromString(property.Value.GetRawText()), WireOptions, AzureResourceManagerDataFactoryContext.Default);
 
         internal static DataFactoryLinkedServiceReference ReadLinkedServiceReference(JsonProperty property)
             => property.Value.ValueKind == JsonValueKind.Null
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var list = new System.Collections.Generic.List<DataFactoryElement<T>>();
             foreach (var item in property.Value.EnumerateArray())
             {
-                list.Add(item.ValueKind == JsonValueKind.Null ? null : ModelReaderWriter.Read<DataFactoryElement<T>>(BinaryData.FromString(item.GetRawText()), WireOptions, DataFactoryContext.Default));
+                list.Add(item.ValueKind == JsonValueKind.Null ? null : ModelReaderWriter.Read<DataFactoryElement<T>>(BinaryData.FromString(item.GetRawText()), WireOptions, AzureResourceManagerDataFactoryContext.Default));
             }
             return list;
         }
