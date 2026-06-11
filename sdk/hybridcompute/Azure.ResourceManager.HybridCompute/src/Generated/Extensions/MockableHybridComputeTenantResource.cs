@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="publisher"> The publisher for the resource. </param>
         /// <param name="extensionType"> The extensionType for the resource. </param>
         /// <returns> An object representing collection of ExtensionValueV2s and their operations over a ExtensionValueV2Resource. </returns>
-        public virtual ExtensionValueV2Collection GetExtensionValueV2s(string location, string publisher, string extensionType)
+        public virtual ExtensionValueV2Collection GetExtensionValueV2s(AzureLocation location, string publisher, string extensionType)
         {
             return GetCachedClient(client => new ExtensionValueV2Collection(client, Id, location, publisher, extensionType));
         }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtensionValueV2Resource>> GetExtensionValueV2Async(string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtensionValueV2Resource>> GetExtensionValueV2Async(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtensionValueV2Resource> GetExtensionValueV2(string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual Response<ExtensionValueV2Resource> GetExtensionValueV2(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 

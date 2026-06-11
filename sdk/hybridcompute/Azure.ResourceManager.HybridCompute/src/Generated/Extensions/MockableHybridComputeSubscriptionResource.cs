@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="publisher"> The publisher for the resource. </param>
         /// <param name="extensionType"> The extensionType for the resource. </param>
         /// <returns> An object representing collection of HybridComputeExtensionValues and their operations over a HybridComputeExtensionValueResource. </returns>
-        public virtual HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(string location, string publisher, string extensionType)
+        public virtual HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(AzureLocation location, string publisher, string extensionType)
         {
             return GetCachedClient(client => new HybridComputeExtensionValueCollection(client, Id, location, publisher, extensionType));
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 

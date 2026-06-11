@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridCompute
     {
         private readonly ExtensionMetadata _client;
         private readonly string _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _publisher;
         private readonly string _extensionType;
         private readonly RequestContext _context;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="extensionType"> The extensionType of the Extension being received. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ExtensionMetadataGetAllAsyncCollectionResultOfT(ExtensionMetadata client, string subscriptionId, string location, string publisher, string extensionType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ExtensionMetadataGetAllAsyncCollectionResultOfT(ExtensionMetadata client, string subscriptionId, AzureLocation location, string publisher, string extensionType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

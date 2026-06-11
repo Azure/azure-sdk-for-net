@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="publisher"> The publisher. </param>
         /// <param name="extensionType"> The extensionType. </param>
         /// <param name="version"> The version. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string location, string publisher, string extensionType, string version)
+        public static ResourceIdentifier CreateResourceIdentifier(AzureLocation location, string publisher, string extensionType, string version)
         {
             string resourceId = $"/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}";
             return new ResourceIdentifier(resourceId);

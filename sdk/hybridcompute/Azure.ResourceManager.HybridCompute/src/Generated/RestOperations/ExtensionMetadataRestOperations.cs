@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string location, string publisher, string extensionType, string version, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisher, true);
             uri.AppendPath("/extensionTypes/", false);
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string location, string publisher, string extensionType, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, AzureLocation location, string publisher, string extensionType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisher, true);
             uri.AppendPath("/extensionTypes/", false);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string location, string publisher, string extensionType, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, AzureLocation location, string publisher, string extensionType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

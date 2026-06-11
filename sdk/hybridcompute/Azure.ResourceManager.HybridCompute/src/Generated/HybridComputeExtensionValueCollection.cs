@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly ClientDiagnostics _extensionMetadataClientDiagnostics;
         private readonly ExtensionMetadata _extensionMetadataRestClient;
         /// <summary> The location. </summary>
-        private readonly string _location;
+        private readonly AzureLocation _location;
         /// <summary> The publisher. </summary>
         private readonly string _publisher;
         /// <summary> The extensionType. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisher"> The publisher for the resource. </param>
         /// <param name="extensionType"> The extensionType for the resource. </param>
-        internal HybridComputeExtensionValueCollection(ArmClient client, ResourceIdentifier id, string location, string publisher, string extensionType) : base(client, id)
+        internal HybridComputeExtensionValueCollection(ArmClient client, ResourceIdentifier id, AzureLocation location, string publisher, string extensionType) : base(client, id)
         {
             TryGetApiVersion(HybridComputeExtensionValueResource.ResourceType, out string hybridComputeExtensionValueApiVersion);
             _location = location;

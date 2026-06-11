@@ -12,35 +12,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 {
     public partial class MockableHybridComputeSubscriptionResource
     {
-        // Backward-compat justification: the GA mockable subscription APIs exposed AzureLocation-based extension value overloads.
-        /// <summary>
-        /// Gets a collection of HybridComputeExtensionValues.
-        /// This overload accepts <see cref="AzureLocation"/> for backward compatibility.
-        /// Use <see cref="GetHybridComputeExtensionValues(string, string, string)"/> instead.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(AzureLocation location, string publisher, string extensionType)
-            => GetHybridComputeExtensionValues(location.ToString(), publisher, extensionType);
-
-        /// <summary>
-        /// Gets an Extension Metadata based on location, publisher, extensionType and version.
-        /// This overload accepts <see cref="AzureLocation"/> for backward compatibility.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
-            => GetHybridComputeExtensionValueAsync(location.ToString(), publisher, extensionType, version, cancellationToken);
-
-        /// <summary>
-        /// Gets an Extension Metadata based on location, publisher, extensionType and version.
-        /// This overload accepts <see cref="AzureLocation"/> for backward compatibility.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
-            => GetHybridComputeExtensionValue(location.ToString(), publisher, extensionType, version, cancellationToken);
-
         // Backward-compat justification: the GA mockable subscription APIs exposed the GetValidationDetailsPrivateLinkScope legacy name.
         /// <summary>
         /// Returns a Azure Arc PrivateLinkScope's validation details.

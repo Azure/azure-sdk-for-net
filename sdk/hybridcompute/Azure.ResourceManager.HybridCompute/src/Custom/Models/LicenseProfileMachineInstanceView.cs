@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     // Backward-compat justification: the GA instance view model exposed settable flattened license profile properties.
+    // These cannot be made settable only with TypeSpec @usage because the backing nested properties are marked visibility.read.
     public partial class LicenseProfileMachineInstanceView
     {
         /// <summary> Gets or sets the SoftwareAssurance. </summary>

@@ -14,45 +14,6 @@ namespace Azure.ResourceManager.HybridCompute
     public static partial class HybridComputeExtensions
     {
         // ----- SubscriptionResource overloads -----
-        // Backward-compat justification: the GA subscription extension methods exposed legacy names and AzureLocation-based overloads.
-
-        /// <summary>
-        /// Gets a collection of HybridComputeExtensionValues.
-        /// This overload accepts <see cref="AzureLocation"/> for backward compatibility.
-        /// Use <see cref="GetHybridComputeExtensionValues(SubscriptionResource, string, string, string)"/> instead.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputeExtensionValues(location, publisher, extensionType);
-        }
-
-        /// <summary>
-        /// Gets an Extension Metadata based on location, publisher, extensionType and version.
-        /// This overload accepts <see cref="AzureLocation"/> for backward compatibility.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputeExtensionValueAsync(location, publisher, extensionType, version, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an Extension Metadata based on location, publisher, extensionType and version.
-        /// This overload accepts <see cref="AzureLocation"/> for backward compatibility.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputeExtensionValue(location, publisher, extensionType, version, cancellationToken);
-        }
-
         /// <summary>
         /// Returns a Azure Arc PrivateLinkScope's validation details.
         /// This method was renamed to <see cref="GetValidationDetailsAsync(SubscriptionResource, AzureLocation, string, CancellationToken)"/>.

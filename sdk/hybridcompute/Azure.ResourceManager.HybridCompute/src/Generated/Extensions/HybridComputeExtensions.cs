@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets a collection of HybridComputeExtensionValues in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeExtensionValues(string, string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeExtensionValues(AzureLocation, string, string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="extensionType"> The extensionType for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of HybridComputeExtensionValues and their operations over a HybridComputeExtensionValueResource. </returns>
-        public static HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(this SubscriptionResource subscriptionResource, string location, string publisher, string extensionType)
+        public static HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeExtensionValueAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeExtensionValueAsync(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(this SubscriptionResource subscriptionResource, string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeExtensionValue(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeExtensionValue(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(this SubscriptionResource subscriptionResource, string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public static Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets a collection of ExtensionValueV2s in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2s(string, string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2s(AzureLocation, string, string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="extensionType"> The extensionType for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of ExtensionValueV2s and their operations over a ExtensionValueV2Resource. </returns>
-        public static ExtensionValueV2Collection GetExtensionValueV2s(this TenantResource tenantResource, string location, string publisher, string extensionType)
+        public static ExtensionValueV2Collection GetExtensionValueV2s(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2Async(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2Async(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ExtensionValueV2Resource>> GetExtensionValueV2Async(this TenantResource tenantResource, string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public static async Task<Response<ExtensionValueV2Resource>> GetExtensionValueV2Async(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ExtensionValueV2Resource> GetExtensionValueV2(this TenantResource tenantResource, string location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public static Response<ExtensionValueV2Resource> GetExtensionValueV2(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

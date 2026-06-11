@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute
     internal partial class ExtensionMetadataV2GetAllAsyncCollectionResultOfT : AsyncPageable<ExtensionValueV2Data>
     {
         private readonly ExtensionMetadataV2 _client;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _publisher;
         private readonly string _extensionType;
         private readonly RequestContext _context;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="extensionType"> The extensionType of the Extension being received. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ExtensionMetadataV2GetAllAsyncCollectionResultOfT(ExtensionMetadataV2 client, string location, string publisher, string extensionType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ExtensionMetadataV2GetAllAsyncCollectionResultOfT(ExtensionMetadataV2 client, AzureLocation location, string publisher, string extensionType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _location = location;
