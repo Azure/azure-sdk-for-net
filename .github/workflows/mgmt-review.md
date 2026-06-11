@@ -157,6 +157,27 @@ Then check CI status: list the check runs and commit statuses for the PR head co
 - If CI checks have passed, proceed with the review normally.
 - If CI checks are still in progress (`queued` or `in_progress`), proceed with the naming and API review but note in the review summary that CI results are pending and cannot be analyzed yet.
 
+If CI is not failed and this was not a `check_run` failure trigger, run the incremental low-risk preflight before doing scanner/API review work:
+
+1. Fetch prior reviews from this workflow. A comparable review is authored by `github-actions[bot]`, contains `### Management SDK Review Summary`, and contains an `Analyzed by <this workflow name>:` footer marker.
+2. Find the latest comparable review that was a non-blocking `COMMENT` and whose body says there were no management SDK review findings. If none exists, continue with the full review.
+3. Compare changed files from that review's `commit_id` to the current PR head SHA. If the prior review has no `commit_id`, or the comparison fails, continue with the full review.
+4. Use the low-risk fast path only when every file changed since that reviewed commit is clearly low risk:
+   - `sdk/<service>/Azure.ResourceManager.<Package>/assets.json`
+   - `sdk/<service>/Azure.ResourceManager.<Package>/tests/**`
+   - `sdk/<service>/Azure.ResourceManager.<Package>/samples/**`
+   - `sdk/<service>/Azure.ResourceManager.<Package>/README.md`
+   - `sdk/<service>/Azure.ResourceManager.<Package>/tsp-location.yaml`, only when it is the only changed file or all other changed files are also on this low-risk list
+5. If any changed file is outside the allowlist, or matches an API/source/review-affecting path, continue with the full review. Treat unknown paths as full review.
+6. API/source/review-affecting paths always require full review, including `api/**`, `src/**`, `.csproj`, `CHANGELOG.md`, `.github/workflows/**`, and `.github/skills/**`.
+7. If the low-risk fast path applies, do not run the scanner or apply the full skill review. Submit a compact neutral `COMMENT` review and emit `dismiss_stale_change_requests`:
+
+```markdown
+### Management SDK Review Summary
+
+Skipped full management SDK review because only low-risk files changed since the previous no-finding management review. No new management SDK review findings.
+```
+
 ## Step 1 - Determine review scope
 
 Fetch changed files for the PR.
