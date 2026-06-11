@@ -24,6 +24,8 @@ namespace Azure.Identity
 
         public bool IsForceRefreshEnabled { get; set; }
 
+        internal MsalManagedIdentityClient MsalManagedIdentityClientOverride { get; set; }
+
         public ManagedIdentityClientOptions Clone()
         {
             var cloned = new ManagedIdentityClientOptions
@@ -34,6 +36,7 @@ namespace Azure.Identity
                 Pipeline = Pipeline,
                 ExcludeTokenExchangeManagedIdentitySource = ExcludeTokenExchangeManagedIdentitySource,
                 IsForceRefreshEnabled = IsForceRefreshEnabled,
+                MsalManagedIdentityClientOverride = MsalManagedIdentityClientOverride,
             };
 
             if (Options != null)
