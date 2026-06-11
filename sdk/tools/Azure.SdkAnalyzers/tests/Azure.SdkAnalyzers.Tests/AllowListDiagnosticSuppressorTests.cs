@@ -283,7 +283,7 @@ namespace TestNs
 
             var options = new AnalyzerOptions(additional, provider);
             DiagnosticAnalyzer reporter = useErrorSeverityDescriptor
-                ? (DiagnosticAnalyzer)new TestErrorSeverityAzc0034Analyzer()
+                ? (DiagnosticAnalyzer)new TestErrorSeverityAzc0035Analyzer()
                 : new TestTypeAzc0034Analyzer();
             ImmutableArray<DiagnosticAnalyzer> analyzers = ImmutableArray.Create<DiagnosticAnalyzer>(
                 reporter,
@@ -341,7 +341,7 @@ namespace TestNs
 #pragma warning disable RS1036
 #pragma warning disable RS2008
         [DiagnosticAnalyzer(LanguageNames.CSharp)]
-        private sealed class TestErrorSeverityAzc0034Analyzer : DiagnosticAnalyzer
+        private sealed class TestErrorSeverityAzc0035Analyzer : DiagnosticAnalyzer
         {
             private static readonly DiagnosticDescriptor s_descriptor = new(
                 id: "AZC0035",
