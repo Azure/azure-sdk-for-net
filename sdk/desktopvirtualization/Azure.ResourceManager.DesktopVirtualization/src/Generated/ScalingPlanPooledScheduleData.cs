@@ -36,6 +36,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [WirePath("properties")]
         internal ScalingPlanPooledScheduleProperties Properties { get; set; }
 
+        /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
+        [WirePath("properties.name")]
+        public string ScheduleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduleName;
+            }
+        }
+
         /// <summary> Set of days of the week on which this schedule is active. </summary>
         [WirePath("properties.daysOfWeek")]
         public IList<DesktopVirtualizationDayOfWeek> DaysOfWeek
@@ -47,6 +57,42 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
                 return Properties.DaysOfWeek;
+            }
+        }
+
+        /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
+        [WirePath("properties.scalingMethod")]
+        public DesktopVirtualizationScalingMethodType? ScalingMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScalingMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledScheduleProperties();
+                }
+                Properties.ScalingMethod = value;
+            }
+        }
+
+        /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
+        [WirePath("properties.createDelete")]
+        public DesktopVirtualizationCreateDeleteProperties CreateDelete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateDelete;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScalingPlanPooledScheduleProperties();
+                }
+                Properties.CreateDelete = value;
             }
         }
 

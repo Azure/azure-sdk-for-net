@@ -168,5 +168,41 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 return Properties.PrivateEndpointConnections;
             }
         }
+
+        /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("properties.oboTenantId")]
+        public string OboTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OboTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.OboTenantId = value;
+            }
+        }
+
+        /// <summary> DeploymentScope type for Workspace. </summary>
+        [WirePath("properties.deploymentScope")]
+        public DesktopVirtualizationDeploymentScope? DeploymentScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.DeploymentScope = value;
+            }
+        }
     }
 }

@@ -489,5 +489,167 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 return Properties.PrivateEndpointConnections;
             }
         }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.managedPrivateUDP")]
+        public DesktopVirtualizationManagedPrivateUdp? ManagedPrivateUdp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedPrivateUdp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.ManagedPrivateUdp = value;
+            }
+        }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.directUDP")]
+        public DesktopVirtualizationDirectUdp? DirectUdp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DirectUdp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.DirectUdp = value;
+            }
+        }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.publicUDP")]
+        public DesktopVirtualizationPublicUdp? PublicUdp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicUdp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.PublicUdp = value;
+            }
+        }
+
+        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
+        [WirePath("properties.relayUDP")]
+        public DesktopVirtualizationRelayUdp? RelayUdp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelayUdp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.RelayUdp = value;
+            }
+        }
+
+        /// <summary> The type of management for this hostpool, Automated or Standard. The default value is Automated. </summary>
+        [WirePath("properties.managementType")]
+        public DesktopVirtualizationManagementType? ManagementType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.ManagementType = value;
+            }
+        }
+
+        /// <summary> DeploymentScope type for HostPool. </summary>
+        [WirePath("properties.deploymentScope")]
+        public DesktopVirtualizationDeploymentScope? DeploymentScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.DeploymentScope = value;
+            }
+        }
+
+        /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("properties.oboTenantId")]
+        public string OboTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OboTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.OboTenantId = value;
+            }
+        }
+
+        /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
+        [WirePath("properties.allowRDPShortPathWithPrivateLink")]
+        public DesktopVirtualizationAllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowRdpShortPathWithPrivateLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.AllowRdpShortPathWithPrivateLink = value;
+            }
+        }
+
+        /// <summary> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </summary>
+        [WirePath("properties.conditionalRdpProperty")]
+        public string ConditionalRdpProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConditionalRdpProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolProperties();
+                }
+                Properties.ConditionalRdpProperty = value;
+            }
+        }
     }
 }

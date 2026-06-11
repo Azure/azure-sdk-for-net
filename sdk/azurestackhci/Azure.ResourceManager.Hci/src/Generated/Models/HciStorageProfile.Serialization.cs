@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Storage configurations for HCI device. </summary>
-    internal partial class HciStorageProfile : IJsonModel<HciStorageProfile>
+    public partial class HciStorageProfile : IJsonModel<HciStorageProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("poolableDisksCount"u8);
                 writer.WriteNumberValue(PoolableDisksCount.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            {
+                writer.WritePropertyName("disks"u8);
+                writer.WriteStartArray();
+                foreach (EdgeDeviceDisks item in Disks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             long? poolableDisksCount = default;
+            IReadOnlyList<EdgeDeviceDisks> disks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +145,26 @@ namespace Azure.ResourceManager.Hci.Models
                     poolableDisksCount = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("disks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EdgeDeviceDisks> array = new List<EdgeDeviceDisks>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EdgeDeviceDisks.DeserializeEdgeDeviceDisks(item, options));
+                    }
+                    disks = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciStorageProfile(poolableDisksCount, additionalBinaryDataProperties);
+            return new HciStorageProfile(poolableDisksCount, disks ?? new ChangeTrackingList<EdgeDeviceDisks>(), additionalBinaryDataProperties);
         }
     }
 }

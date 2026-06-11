@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of the cluster agent. Indicates the current connectivity, validation, and deployment state of the agent within the cluster. </param>
         /// <param name="connectivityStatus"> Overall connectivity status for the cluster resource. Indicates whether the cluster is connected to Azure, partially connected, or has not recently communicated. </param>
         /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="ring"> The ring to which this cluster belongs to. </param>
         /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
         /// <param name="aadClientId"> App id of cluster AAD identity. </param>
         /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="isolatedVmAttestationConfiguration"> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </param>
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
         /// <param name="billingModel"> Type of billing applied to the resource. </param>
+        /// <param name="billingProperties"> Billing properties of the cluster, including upcoming billing model details. </param>
         /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
         /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
@@ -50,15 +52,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
         /// <param name="secretsLocations"> List of secret locations. </param>
         /// <param name="clusterPattern"> Supported Storage Type for HCI Cluster. </param>
+        /// <param name="confidentialVmProperties"> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </param>
+        /// <param name="sdnProperties"> Software Defined Networking Properties of the cluster. </param>
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
+        /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, IList<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, HciStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
             ConnectivityStatus = connectivityStatus;
             CloudId = cloudId;
+            Ring = ring;
             CloudManagementEndpoint = cloudManagementEndpoint;
             AadClientId = aadClientId;
             AadTenantId = aadTenantId;
@@ -73,6 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
             IsolatedVmAttestationConfiguration = isolatedVmAttestationConfiguration;
             TrialDaysRemaining = trialDaysRemaining;
             BillingModel = billingModel;
+            BillingProperties = billingProperties;
             RegistrationTimestamp = registrationTimestamp;
             LastSyncTimestamp = lastSyncTimestamp;
             LastBillingTimestamp = lastBillingTimestamp;
@@ -80,8 +87,11 @@ namespace Azure.ResourceManager.Hci.Models
             ResourceProviderObjectId = resourceProviderObjectId;
             SecretsLocations = secretsLocations;
             ClusterPattern = clusterPattern;
+            ConfidentialVmProperties = confidentialVmProperties;
+            SdnProperties = sdnProperties;
             LocalAvailabilityZones = localAvailabilityZones;
             IdentityProvider = identityProvider;
+            StorageType = storageType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -100,6 +110,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Unique, immutable resource id. </summary>
         [WirePath("cloudId")]
         public Guid? CloudId { get; }
+
+        /// <summary> The ring to which this cluster belongs to. </summary>
+        [WirePath("ring")]
+        public string Ring { get; }
 
         /// <summary> Endpoint configured for management from the Azure portal. </summary>
         [WirePath("cloudManagementEndpoint")]
@@ -157,6 +171,10 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("billingModel")]
         public string BillingModel { get; }
 
+        /// <summary> Billing properties of the cluster, including upcoming billing model details. </summary>
+        [WirePath("billingProperties")]
+        internal ClusterBillingProperties BillingProperties { get; }
+
         /// <summary> First cluster sync timestamp. </summary>
         [WirePath("registrationTimestamp")]
         public DateTimeOffset? RegistrationTimestamp { get; }
@@ -185,6 +203,14 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("clusterPattern")]
         public ClusterPattern? ClusterPattern { get; }
 
+        /// <summary> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </summary>
+        [WirePath("confidentialVmProperties")]
+        public ConfidentialVmProperties ConfidentialVmProperties { get; }
+
+        /// <summary> Software Defined Networking Properties of the cluster. </summary>
+        [WirePath("sdnProperties")]
+        public ClusterSdnProperties SdnProperties { get; }
+
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
         [WirePath("localAvailabilityZones")]
         public IList<LocalAvailabilityZones> LocalAvailabilityZones { get; } = new ChangeTrackingList<LocalAvailabilityZones>();
@@ -192,5 +218,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Identity Provider for the cluster. </summary>
         [WirePath("identityProvider")]
         public HciIdentityProvider? IdentityProvider { get; }
+
+        /// <summary> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </summary>
+        [WirePath("storageType")]
+        public HciStorageType? StorageType { get; }
+
+        /// <summary> The next billing model to be applied to the cluster. </summary>
+        [WirePath("billingProperties.nextBillingModel")]
+        public NextBillingModel NextBillingModel
+        {
+            get
+            {
+                return BillingProperties is null ? default : BillingProperties.NextBillingModel;
+            }
+        }
     }
 }

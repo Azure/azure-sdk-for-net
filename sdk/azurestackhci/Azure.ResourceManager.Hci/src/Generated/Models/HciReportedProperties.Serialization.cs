@@ -129,6 +129,8 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciEdgeDeviceState? deviceState = default;
             ExtensionProfile extensionProfile = default;
+            DateTimeOffset? lastSyncedOn = default;
+            ConfidentialVmProfile confidentialVmProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             HciNetworkProfile networkProfile = default;
             HciOSProfile osProfile = default;
@@ -153,6 +155,24 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     extensionProfile = ExtensionProfile.DeserializeExtensionProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("lastSyncTimestamp"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastSyncedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("confidentialVmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidentialVmProfile = ConfidentialVmProfile.DeserializeConfidentialVmProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -208,6 +228,8 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciReportedProperties(
                 deviceState,
                 extensionProfile,
+                lastSyncedOn,
+                confidentialVmProfile,
                 additionalBinaryDataProperties,
                 networkProfile,
                 osProfile,

@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
+        /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
+        /// <param name="deploymentScope"> DeploymentScope type for Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPCResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPCResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, string oboTenantId, DesktopVirtualizationDeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IsCloudPCResource = isCloudPCResource;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
+            OboTenantId = oboTenantId;
+            DeploymentScope = deploymentScope;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,5 +71,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> List of private endpoint connection associated with the specified resource. </summary>
         [WirePath("privateEndpointConnections")]
         public IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections { get; } = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
+
+        /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("oboTenantId")]
+        public string OboTenantId { get; set; }
+
+        /// <summary> DeploymentScope type for Workspace. </summary>
+        [WirePath("deploymentScope")]
+        public DesktopVirtualizationDeploymentScope? DeploymentScope { get; set; }
     }
 }

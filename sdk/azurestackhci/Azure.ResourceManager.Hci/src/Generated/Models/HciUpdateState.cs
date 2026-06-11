@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ScanFailedValue = "ScanFailed";
         /// <summary> Additional content is required to proceed with the update. </summary>
         private const string AdditionalContentRequiredValue = "AdditionalContentRequired";
+        /// <summary> The health check has expired and needs to be redone. </summary>
+        private const string HealthCheckExpiredValue = "HealthCheckExpired";
+        /// <summary> The update is pending OEM validation before it can proceed. </summary>
+        private const string PendingOEMValidationValue = "PendingOEMValidation";
 
         /// <summary> Initializes a new instance of <see cref="HciUpdateState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -120,6 +124,12 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Additional content is required to proceed with the update. </summary>
         public static HciUpdateState AdditionalContentRequired { get; } = new HciUpdateState(AdditionalContentRequiredValue);
+
+        /// <summary> The health check has expired and needs to be redone. </summary>
+        public static HciUpdateState HealthCheckExpired { get; } = new HciUpdateState(HealthCheckExpiredValue);
+
+        /// <summary> The update is pending OEM validation before it can proceed. </summary>
+        public static HciUpdateState PendingOEMValidation { get; } = new HciUpdateState(PendingOEMValidationValue);
 
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

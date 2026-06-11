@@ -123,6 +123,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(OboTenantId))
+            {
+                writer.WritePropertyName("oboTenantId"u8);
+                writer.WriteStringValue(OboTenantId);
+            }
+            if (Optional.IsDefined(DeploymentScope))
+            {
+                writer.WritePropertyName("deploymentScope"u8);
+                writer.WriteStringValue(DeploymentScope.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -172,6 +182,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             bool? isCloudPCResource = default;
             DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
+            string oboTenantId = default;
+            DesktopVirtualizationDeploymentScope? deploymentScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -243,6 +255,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (prop.NameEquals("oboTenantId"u8))
+                {
+                    oboTenantId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("deploymentScope"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deploymentScope = new DesktopVirtualizationDeploymentScope(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -256,6 +282,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 isCloudPCResource,
                 publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),
+                oboTenantId,
+                deploymentScope,
                 additionalBinaryDataProperties);
         }
     }

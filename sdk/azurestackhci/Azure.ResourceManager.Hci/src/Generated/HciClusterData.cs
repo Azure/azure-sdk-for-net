@@ -34,11 +34,13 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Cluster properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
+            Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,6 +51,10 @@ namespace Azure.ResourceManager.Hci
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
 
         /// <summary> Provisioning state. Indicates the current lifecycle status of the resource, including creation, update, deletion, connectivity, and error states. </summary>
         [WirePath("properties.provisioningState")]
@@ -87,6 +93,16 @@ namespace Azure.ResourceManager.Hci
             get
             {
                 return Properties is null ? default : Properties.CloudId;
+            }
+        }
+
+        /// <summary> The ring to which this cluster belongs to. </summary>
+        [WirePath("properties.ring")]
+        public string Ring
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Ring;
             }
         }
 
@@ -376,6 +392,26 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        /// <summary> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </summary>
+        [WirePath("properties.confidentialVmProperties")]
+        public ConfidentialVmProperties ConfidentialVmProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfidentialVmProperties;
+            }
+        }
+
+        /// <summary> Software Defined Networking Properties of the cluster. </summary>
+        [WirePath("properties.sdnProperties")]
+        public ClusterSdnProperties SdnProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SdnProperties;
+            }
+        }
+
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
         [WirePath("properties.localAvailabilityZones")]
         public IList<LocalAvailabilityZones> LocalAvailabilityZones
@@ -397,6 +433,26 @@ namespace Azure.ResourceManager.Hci
             get
             {
                 return Properties is null ? default : Properties.IdentityProvider;
+            }
+        }
+
+        /// <summary> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </summary>
+        [WirePath("properties.storageType")]
+        public HciStorageType? StorageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageType;
+            }
+        }
+
+        /// <summary> The next billing model to be applied to the cluster. </summary>
+        [WirePath("properties.billingProperties.nextBillingModel")]
+        public NextBillingModel NextBillingModel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextBillingModel;
             }
         }
     }

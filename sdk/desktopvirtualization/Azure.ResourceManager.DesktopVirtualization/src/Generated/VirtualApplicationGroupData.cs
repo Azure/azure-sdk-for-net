@@ -206,5 +206,33 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Properties.ShowInFeed = value;
             }
         }
+
+        /// <summary> Tenant that the resource is being requested on behalf of. </summary>
+        [WirePath("properties.oboTenantId")]
+        public string OboTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OboTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGroupProperties();
+                }
+                Properties.OboTenantId = value;
+            }
+        }
+
+        /// <summary> DeploymentScope type for ApplicationGroup. </summary>
+        [WirePath("properties.deploymentScope")]
+        public DesktopVirtualizationDeploymentScope? DeploymentScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentScope;
+            }
+        }
     }
 }

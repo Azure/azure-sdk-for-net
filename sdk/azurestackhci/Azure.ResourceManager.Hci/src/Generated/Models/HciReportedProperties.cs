@@ -22,13 +22,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
         /// <param name="deviceState"> edge device state. </param>
         /// <param name="extensionProfile"> Extensions details for edge device. </param>
+        /// <param name="lastSyncedOn"> Most recent edge device sync timestamp in UTC. </param>
+        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkProfile"> HCI device network information. </param>
         /// <param name="osProfile"> HCI device OS specific information. </param>
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <param name="storageProfile"> Hci device storage specific information. </param>
         /// <param name="hardwareProfile"> Hci device hardware specific information. </param>
-        internal HciReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, HciStorageProfile storageProfile, HciHardwareProfile hardwareProfile) : base(deviceState, extensionProfile, additionalBinaryDataProperties)
+        internal HciReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncedOn, ConfidentialVmProfile confidentialVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, HciStorageProfile storageProfile, HciHardwareProfile hardwareProfile) : base(deviceState, extensionProfile, lastSyncedOn, confidentialVmProfile, additionalBinaryDataProperties)
         {
             NetworkProfile = networkProfile;
             OSProfile = osProfile;
@@ -51,21 +53,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Hci device storage specific information. </summary>
         [WirePath("storageProfile")]
-        internal HciStorageProfile StorageProfile { get; }
+        public HciStorageProfile StorageProfile { get; }
 
         /// <summary> Hci device hardware specific information. </summary>
         [WirePath("hardwareProfile")]
         internal HciHardwareProfile HardwareProfile { get; }
-
-        /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
-        [WirePath("storageProfile.poolableDisksCount")]
-        public long? StoragePoolableDisksCount
-        {
-            get
-            {
-                return StorageProfile is null ? default : StorageProfile.PoolableDisksCount;
-            }
-        }
 
         /// <summary> Process type of the device. </summary>
         [WirePath("hardwareProfile.processorType")]

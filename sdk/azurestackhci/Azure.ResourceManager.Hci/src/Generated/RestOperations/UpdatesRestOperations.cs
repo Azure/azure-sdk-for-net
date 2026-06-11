@@ -183,5 +183,29 @@ namespace Azure.ResourceManager.Hci
             request.Method = RequestMethod.Post;
             return message;
         }
+
+        internal HttpMessage CreatePrepareRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string updateName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/updates/", false);
+            uri.AppendPath(updateName, true);
+            uri.AppendPath("/prepare", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            return message;
+        }
     }
 }

@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             HostPoolPatchProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,6 +228,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     properties = HostPoolPatchProperties.DeserializeHostPoolPatchProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -234,6 +249,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
+                identity,
                 additionalBinaryDataProperties);
         }
     }

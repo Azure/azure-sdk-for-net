@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Storage configurations for HCI device. </summary>
-    internal partial class HciStorageProfile
+    public partial class HciStorageProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,19 +20,26 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciStorageProfile"/>. </summary>
         internal HciStorageProfile()
         {
+            Disks = new ChangeTrackingList<EdgeDeviceDisks>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciStorageProfile"/>. </summary>
         /// <param name="poolableDisksCount"> Number of storage disks in the device with $CanPool as true. </param>
+        /// <param name="disks"> List of storage disks on the device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciStorageProfile(long? poolableDisksCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciStorageProfile(long? poolableDisksCount, IReadOnlyList<EdgeDeviceDisks> disks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PoolableDisksCount = poolableDisksCount;
+            Disks = disks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
         [WirePath("poolableDisksCount")]
         public long? PoolableDisksCount { get; }
+
+        /// <summary> List of storage disks on the device. </summary>
+        [WirePath("disks")]
+        public IReadOnlyList<EdgeDeviceDisks> Disks { get; }
     }
 }

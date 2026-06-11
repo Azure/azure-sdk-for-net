@@ -30,14 +30,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
         /// <param name="remoteSupportNodeSettings"></param>
         /// <param name="remoteSupportSessionDetails"></param>
+        /// <param name="remoteSupportProvisioningState"> Remote Support Provisioning State. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings, IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings, IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails, RemoteSupportProvisioningState? remoteSupportProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessLevel = accessLevel;
             ExpireOn = expireOn;
             RemoteSupportType = remoteSupportType;
             RemoteSupportNodeSettings = remoteSupportNodeSettings;
             RemoteSupportSessionDetails = remoteSupportSessionDetails;
+            RemoteSupportProvisioningState = remoteSupportProvisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +62,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Gets the RemoteSupportSessionDetails. </summary>
         [WirePath("remoteSupportSessionDetails")]
         public IReadOnlyList<PerNodeRemoteSupportSession> RemoteSupportSessionDetails { get; }
+
+        /// <summary> Remote Support Provisioning State. </summary>
+        [WirePath("remoteSupportProvisioningState")]
+        public RemoteSupportProvisioningState? RemoteSupportProvisioningState { get; }
     }
 }

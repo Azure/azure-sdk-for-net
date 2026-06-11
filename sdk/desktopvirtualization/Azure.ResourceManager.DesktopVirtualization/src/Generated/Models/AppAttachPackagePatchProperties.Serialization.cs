@@ -105,6 +105,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("failHealthCheckOnStagingFailure"u8);
                 writer.WriteStringValue(FailHealthCheckOnStagingFailure.Value.ToString());
             }
+            if (Optional.IsDefined(PackageLookbackUri))
+            {
+                writer.WritePropertyName("packageLookbackUrl"u8);
+                writer.WriteStringValue(PackageLookbackUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(CustomData))
+            {
+                writer.WritePropertyName("customData"u8);
+                writer.WriteStringValue(CustomData);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,6 +161,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IList<ResourceIdentifier> hostPoolReferences = default;
             Uri keyVaultUri = default;
             FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default;
+            Uri packageLookbackUri = default;
+            string customData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,12 +214,33 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     failHealthCheckOnStagingFailure = new FailHealthCheckOnStagingFailure(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("packageLookbackUrl"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    packageLookbackUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("customData"u8))
+                {
+                    customData = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppAttachPackagePatchProperties(image, hostPoolReferences ?? new ChangeTrackingList<ResourceIdentifier>(), keyVaultUri, failHealthCheckOnStagingFailure, additionalBinaryDataProperties);
+            return new AppAttachPackagePatchProperties(
+                image,
+                hostPoolReferences ?? new ChangeTrackingList<ResourceIdentifier>(),
+                keyVaultUri,
+                failHealthCheckOnStagingFailure,
+                packageLookbackUri,
+                customData,
+                additionalBinaryDataProperties);
         }
     }
 }
