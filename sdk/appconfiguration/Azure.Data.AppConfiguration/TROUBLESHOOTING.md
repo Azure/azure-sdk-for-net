@@ -20,8 +20,8 @@ All app configuration service operations will throw a [RequestFailedException](h
 Here's an example of how to catch an exception:
 
 ```C# Snippet:ThrowNotFoundError
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
 try
 {
