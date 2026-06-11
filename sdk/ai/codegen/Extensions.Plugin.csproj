@@ -26,6 +26,6 @@
     <ItemGroup>
       <SourceDir Include="$(OutputPath)**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\dist\%(RecursiveDir)" />
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)\dist\%(RecursiveDir)" />
   </Target>
 </Project>
