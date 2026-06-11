@@ -4,6 +4,7 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {

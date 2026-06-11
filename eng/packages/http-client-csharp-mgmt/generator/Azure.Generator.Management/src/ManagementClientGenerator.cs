@@ -7,13 +7,11 @@ using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
@@ -84,7 +82,7 @@ namespace Azure.Generator.Management
             base.Configure();
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
-            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenResourceDataAttributeDefinition);
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(CodeGenResourceDataAttribute).Assembly.Location));
             // renaming should come first
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
@@ -99,23 +97,6 @@ namespace Azure.Generator.Management
             if (IsWirePathEnabled())
             {
                 AddVisitor(new WirePathVisitor());
-            }
-        }
-
-        private void AddCustomCodeAttributeProvider(TypeProvider provider)
-        {
-            // CustomCodeAttributeProviders is not extensible today, but mgmt-specific
-            // CodeGen attributes must be available while compiling customization sources.
-            var property = typeof(CodeModelGenerator).GetProperty(
-                "CustomCodeAttributeProviders",
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            var field = typeof(CodeModelGenerator).GetField(
-                "<CustomCodeAttributeProviders>k__BackingField",
-                BindingFlags.Instance | BindingFlags.NonPublic);
-
-            if (property?.GetValue(this) is IReadOnlyList<TypeProvider> existingProviders && field is not null)
-            {
-                field.SetValue(this, existingProviders.Concat([provider]).ToArray());
             }
         }
 

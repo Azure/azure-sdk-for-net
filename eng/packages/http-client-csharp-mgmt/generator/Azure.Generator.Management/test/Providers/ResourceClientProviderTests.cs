@@ -11,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using System.Reflection;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
@@ -44,12 +43,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var content = new TypeProviderWriter(attributeProvider!).Write().Content;
             Assert.That(content, Does.Contain("internal partial class CodeGenResourceDataAttribute : global::System.Attribute"));
             Assert.That(content, Does.Contain("public CodeGenResourceDataAttribute(global::System.Type dataType)"));
-
-            var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
-                "CustomCodeAttributeProviders",
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
-                .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
-            Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenResourceDataAttribute"), Is.True);
+            Assert.That(content, Does.Contain("namespace Microsoft.TypeSpec.Generator.Customizations"));
         }
 
         [TestCase]

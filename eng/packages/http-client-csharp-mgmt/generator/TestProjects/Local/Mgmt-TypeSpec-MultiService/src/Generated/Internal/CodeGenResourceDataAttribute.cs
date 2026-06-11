@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage(AttributeTargets.Class)]
     internal partial class CodeGenResourceDataAttribute : Attribute
