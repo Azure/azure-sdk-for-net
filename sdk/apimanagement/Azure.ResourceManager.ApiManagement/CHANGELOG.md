@@ -4,18 +4,14 @@
 
 ### Features Added
 
+- Upgraded to TypeSpec-based code generation using `@azure-typespec/http-client-csharp-mgmt` emitter.
+- Upgraded API version to `2025-03-01-preview`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.3.1 (2026-04-17)
-
-### Other Changes
-
-- Upgraded dependent `Azure.Core` to `1.53.0`.
-- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.3.0 (2025-05-21)
 

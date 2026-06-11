@@ -6,54 +6,43 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an ApiManagementUser along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementUserResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementUserResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementUser method.
+    /// A class representing a ApiManagementUser along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementUserResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApiManagementUsers method.
     /// </summary>
     public partial class ApiManagementUserResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApiManagementUserResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="userId"> The userId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string userId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _apiManagementUserUserClientDiagnostics;
-        private readonly UserRestOperations _apiManagementUserUserRestClient;
+        private readonly ClientDiagnostics _userClientDiagnostics;
+        private readonly User _userRestClient;
         private readonly ClientDiagnostics _userGroupClientDiagnostics;
-        private readonly UserGroupRestOperations _userGroupRestClient;
-        private readonly ClientDiagnostics _userIdentitiesClientDiagnostics;
-        private readonly UserIdentitiesRestOperations _userIdentitiesRestClient;
+        private readonly UserGroup _userGroupRestClient;
         private readonly ClientDiagnostics _userConfirmationPasswordClientDiagnostics;
-        private readonly UserConfirmationPasswordRestOperations _userConfirmationPasswordRestClient;
+        private readonly UserConfirmationPassword _userConfirmationPasswordRestClient;
+        private readonly ClientDiagnostics _userIdentitiesClientDiagnostics;
+        private readonly UserIdentities _userIdentitiesRestClient;
         private readonly UserContractData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/users";
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementUserResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiManagementUserResource for mocking. </summary>
         protected ApiManagementUserResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementUserResource(ArmClient client, UserContractData data) : this(client, data.Id)
@@ -62,146 +51,99 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementUserResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementUserUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiManagementUserUserApiVersion);
-            _apiManagementUserUserRestClient = new UserRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementUserUserApiVersion);
-            _userGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _userGroupRestClient = new UserGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _userIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _userIdentitiesRestClient = new UserIdentitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _userConfirmationPasswordClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _userConfirmationPasswordRestClient = new UserConfirmationPasswordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string apiManagementUserApiVersion);
+            _userClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _userRestClient = new User(_userClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            _userGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _userGroupRestClient = new UserGroup(_userGroupClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            _userConfirmationPasswordClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _userConfirmationPasswordRestClient = new UserConfirmationPassword(_userConfirmationPasswordClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            _userIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _userIdentitiesRestClient = new UserIdentities(_userIdentitiesClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual UserContractData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="userId"> The userId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string userId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ApiManagementUserSubscriptionResources in the ApiManagementUser. </summary>
-        /// <returns> An object representing collection of ApiManagementUserSubscriptionResources and their operations over a ApiManagementUserSubscriptionResource. </returns>
-        public virtual ApiManagementUserSubscriptionCollection GetApiManagementUserSubscriptions()
-        {
-            return GetCachedClient(client => new ApiManagementUserSubscriptionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified Subscription entity associated with a particular user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions/{sid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetApiManagementUserSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
-        {
-            return await GetApiManagementUserSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified Subscription entity associated with a particular user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions/{sid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementUserSubscriptionResource> GetApiManagementUserSubscription(string sid, CancellationToken cancellationToken = default)
-        {
-            return GetApiManagementUserSubscriptions().Get(sid, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the details of the user specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementUserResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Get");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementUserUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,126 +157,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the details of the user specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementUserResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Get");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementUserUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes specific user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="deleteSubscriptions"> Whether to delete user's subscription or not. </param>
-        /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
-        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = null, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementUserUserRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, notify, appType, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(_apiManagementUserUserClientDiagnostics, Pipeline, _apiManagementUserUserRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, notify, appType).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes specific user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="deleteSubscriptions"> Whether to delete user's subscription or not. </param>
-        /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
-        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = null, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementUserUserRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, notify, appType, cancellationToken);
-                var operation = new ApiManagementArmOperation(_apiManagementUserUserClientDiagnostics, Pipeline, _apiManagementUserUserRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, notify, appType).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -347,20 +205,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Updates the details of the user specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,11 +230,21 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiManagementUserUserRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementUserPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,20 +258,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Updates the details of the user specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,11 +283,21 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
             scope.Start();
             try
             {
-                var response = _apiManagementUserUserRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementUserPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -430,34 +308,240 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Deletes specific user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="deleteSubscriptions"> Whether to delete user's subscription or not. </param>
+        /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
+        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = default, bool? notify = default, AppType? appType = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, notify, appType?.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(_userClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes specific user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="deleteSubscriptions"> Whether to delete user's subscription or not. </param>
+        /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
+        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = default, bool? notify = default, AppType? appType = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, notify, appType?.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(_userClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all user groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/groups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|------------------------|-----------------------------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementGroupData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGroupData> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UserGroupGetAllAsyncCollectionResultOfT(
+                _userGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ApiManagementUserResource.GetAll");
+        }
+
+        /// <summary>
+        /// Lists all user groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/groups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|------------------------|-----------------------------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementGroupData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGroupData> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UserGroupGetAllCollectionResultOfT(
+                _userGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ApiManagementUserResource.GetAll");
+        }
+
+        /// <summary>
         /// Retrieves a redirection URL containing an authentication token for signing a given user into the developer portal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/generateSsoUrl</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/generateSsoUrl. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_GenerateSsoUri</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_GenerateSsoUrl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GenerateSsoUriResult>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateSsoUriResult>> GenerateSsoUrlAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GenerateSsoUri");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.GenerateSsoUrl");
             scope.Start();
             try
             {
-                var response = await _apiManagementUserUserRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateGenerateSsoUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GenerateSsoUriResult> response = Response.FromValue(GenerateSsoUriResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -471,31 +555,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Retrieves a redirection URL containing an authentication token for signing a given user into the developer portal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/generateSsoUrl</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/generateSsoUrl. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_GenerateSsoUri</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_GenerateSsoUrl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GenerateSsoUriResult> GenerateSsoUri(CancellationToken cancellationToken = default)
+        public virtual Response<GenerateSsoUriResult> GenerateSsoUrl(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GenerateSsoUri");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.GenerateSsoUrl");
             scope.Start();
             try
             {
-                var response = _apiManagementUserUserRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateGenerateSsoUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GenerateSsoUriResult> response = Response.FromValue(GenerateSsoUriResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -509,20 +603,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the Shared Access Authorization Token for the User.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/token</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/token. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_GetSharedAccessToken</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_GetSharedAccessToken. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,11 +627,21 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GetSharedAccessToken");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.GetSharedAccessToken");
             scope.Start();
             try
             {
-                var response = await _apiManagementUserUserRestClient.GetSharedAccessTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateGetSharedAccessTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UserTokenContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<UserTokenResult> response = Response.FromValue(UserTokenResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -551,20 +655,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the Shared Access Authorization Token for the User.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/token</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/token. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_GetSharedAccessToken</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_GetSharedAccessToken. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -575,11 +679,109 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GetSharedAccessToken");
+            using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.GetSharedAccessToken");
             scope.Start();
             try
             {
-                var response = _apiManagementUserUserRestClient.GetSharedAccessToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userRestClient.CreateGetSharedAccessTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UserTokenContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<UserTokenResult> response = Response.FromValue(UserTokenResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sends confirmation
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/confirmations/password/send. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Send. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SendAsync(AppType? appType = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _userConfirmationPasswordClientDiagnostics.CreateScope("ApiManagementUserResource.Send");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userConfirmationPasswordRestClient.CreateSendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appType?.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sends confirmation
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/confirmations/password/send. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_Send. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Send(AppType? appType = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _userConfirmationPasswordClientDiagnostics.CreateScope("ApiManagementUserResource.Send");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _userConfirmationPasswordRestClient.CreateSendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appType?.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -593,198 +795,111 @@ namespace Azure.ResourceManager.ApiManagement
         /// List of all user identities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserIdentities_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_UserIdentitiesList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserIdentityContract> GetUserIdentitiesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List of all user identities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserIdentities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserIdentityContract> GetUserIdentities(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UserIdentityContract> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UserIdentitiesGetAllAsyncCollectionResultOfT(
+                _userIdentitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ApiManagementUserResource.GetAll");
         }
 
         /// <summary>
-        /// Sends confirmation
+        /// List of all user identities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/confirmations/password/send</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserConfirmationPassword_Send</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_UserIdentitiesList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SendUserConfirmationPasswordAsync(AppType? appType = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _userConfirmationPasswordClientDiagnostics.CreateScope("ApiManagementUserResource.SendUserConfirmationPassword");
-            scope.Start();
-            try
-            {
-                var response = await _userConfirmationPasswordRestClient.SendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appType, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Sends confirmation
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/confirmations/password/send</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserConfirmationPassword_Send</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SendUserConfirmationPassword(AppType? appType = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _userConfirmationPasswordClientDiagnostics.CreateScope("ApiManagementUserResource.SendUserConfirmationPassword");
-            scope.Start();
-            try
-            {
-                var response = _userConfirmationPasswordRestClient.Send(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appType, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the user specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UserIdentityContract> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GetEntityTag");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await _apiManagementUserUserRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new UserIdentitiesGetAllCollectionResultOfT(
+                _userIdentitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ApiManagementUserResource.GetAll");
         }
 
-        /// <summary>
-        /// Gets the entity state (Etag) version of the user specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>User_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of ApiManagementUserSubscriptions in the <see cref="ApiManagementUserResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementUserSubscriptions and their operations over a ApiManagementUserSubscriptionResource. </returns>
+        public virtual ApiManagementUserSubscriptionCollection GetApiManagementUserSubscriptions()
         {
-            using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementUserUserRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new ApiManagementUserSubscriptionCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified Subscription entity associated with a particular user. </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetApiManagementUserSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            return await GetApiManagementUserSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified Subscription entity associated with a particular user. </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementUserSubscriptionResource> GetApiManagementUserSubscription(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            return GetApiManagementUserSubscriptions().Get(sid, cancellationToken);
         }
     }
 }

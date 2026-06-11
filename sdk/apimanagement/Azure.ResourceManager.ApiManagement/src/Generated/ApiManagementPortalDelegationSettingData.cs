@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementPortalDelegationSetting data model.
-    /// Delegation settings for a developer portal.
-    /// </summary>
+    /// <summary> Delegation settings for a developer portal. </summary>
     public partial class ApiManagementPortalDelegationSettingData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPortalDelegationSettingData"/>. </summary>
         public ApiManagementPortalDelegationSettingData()
@@ -57,57 +25,91 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPortalDelegationSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="uri"> A delegation Url. </param>
-        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="subscriptions"> Subscriptions delegation settings. </param>
-        /// <param name="userRegistration"> User registration delegation settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties subscriptions, RegistrationDelegationSettingProperties userRegistration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Delegation settings contract properties. </param>
+        internal ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PortalDelegationSettingsProperties properties) : base(id, name, resourceType, systemData)
         {
-            Uri = uri;
-            ValidationKey = validationKey;
-            Subscriptions = subscriptions;
-            UserRegistration = userRegistration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Delegation settings contract properties. </summary>
+        [WirePath("properties")]
+        internal PortalDelegationSettingsProperties Properties { get; set; }
 
         /// <summary> A delegation Url. </summary>
         [WirePath("properties.url")]
-        public Uri Uri { get; set; }
+        public Uri Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalDelegationSettingsProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
+
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
         [WirePath("properties.validationKey")]
-        public string ValidationKey { get; set; }
-        /// <summary> Subscriptions delegation settings. </summary>
-        internal SubscriptionDelegationSettingProperties Subscriptions { get; set; }
+        public string ValidationKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidationKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalDelegationSettingsProperties();
+                }
+                Properties.ValidationKey = value;
+            }
+        }
+
         /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("properties.subscriptions.enabled")]
         public bool? IsSubscriptionDelegationEnabled
         {
-            get => Subscriptions is null ? default : Subscriptions.IsSubscriptionDelegationEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.IsSubscriptionDelegationEnabled;
+            }
             set
             {
-                if (Subscriptions is null)
-                    Subscriptions = new SubscriptionDelegationSettingProperties();
-                Subscriptions.IsSubscriptionDelegationEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new PortalDelegationSettingsProperties();
+                }
+                Properties.IsSubscriptionDelegationEnabled = value;
             }
         }
 
-        /// <summary> User registration delegation settings. </summary>
-        internal RegistrationDelegationSettingProperties UserRegistration { get; set; }
         /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("properties.userRegistration.enabled")]
         public bool? IsUserRegistrationDelegationEnabled
         {
-            get => UserRegistration is null ? default : UserRegistration.IsUserRegistrationDelegationEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.IsUserRegistrationDelegationEnabled;
+            }
             set
             {
-                if (UserRegistration is null)
-                    UserRegistration = new RegistrationDelegationSettingProperties();
-                UserRegistration.IsUserRegistrationDelegationEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new PortalDelegationSettingsProperties();
+                }
+                Properties.IsUserRegistrationDelegationEnabled = value;
             }
         }
     }

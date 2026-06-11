@@ -7,75 +7,157 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementGateway data model.
-    /// Gateway details.
-    /// </summary>
+    /// <summary> A single API Management gateway resource in List or Get response. </summary>
     public partial class ApiManagementGatewayData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayData"/>. </summary>
-        public ApiManagementGatewayData()
+        /// <param name="sku"> SKU properties of the API Management gateway. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public ApiManagementGatewayData(ApiManagementGatewaySkuProperties sku, AzureLocation location)
         {
+            Argument.AssertNotNull(sku, nameof(sku));
+
+            Sku = sku;
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="locationData"> Gateway location. </param>
-        /// <param name="description"> Gateway description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceLocationDataContract locationData, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the API Management gateway. </param>
+        /// <param name="sku"> SKU properties of the API Management gateway. </param>
+        /// <param name="eTag"> ETag of the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal ApiManagementGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementGatewayProperties properties, ApiManagementGatewaySkuProperties sku, ETag? eTag, IDictionary<string, string> tags, AzureLocation location) : base(id, name, resourceType, systemData)
         {
-            LocationData = locationData;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Sku = sku;
+            ETag = eTag;
+            Tags = tags;
+            Location = location;
         }
 
-        /// <summary> Gateway location. </summary>
-        [WirePath("properties.locationData")]
-        public ResourceLocationDataContract LocationData { get; set; }
-        /// <summary> Gateway description. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        /// <summary> Properties of the API Management gateway. </summary>
+        [WirePath("properties")]
+        internal ApiManagementGatewayProperties Properties { get; set; }
+
+        /// <summary> SKU properties of the API Management gateway. </summary>
+        [WirePath("sku")]
+        public ApiManagementGatewaySkuProperties Sku { get; set; }
+
+        /// <summary> ETag of the resource. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
+
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation Location { get; set; }
+
+        /// <summary> The current provisioning state of the API Management gateway which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </summary>
+        [WirePath("properties.targetProvisioningState")]
+        public string TargetProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetProvisioningState;
+            }
+        }
+
+        /// <summary> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.createdAtUtc")]
+        public DateTimeOffset? CreatedAtUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedAtUtc;
+            }
+        }
+
+        /// <summary> The type of VPN in which API Management gateway needs to be configured in. </summary>
+        [WirePath("properties.virtualNetworkType")]
+        public VirtualNetworkType? VirtualNetworkType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiManagementGatewayProperties();
+                }
+                Properties.VirtualNetworkType = value;
+            }
+        }
+
+        /// <summary> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </summary>
+        [WirePath("properties.frontend.defaultHostname")]
+        public string FrontendDefaultHostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendDefaultHostname;
+            }
+        }
+
+        /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
+        [WirePath("properties.backend.subnet.id")]
+        public string BackendSubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendSubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiManagementGatewayProperties();
+                }
+                Properties.BackendSubnetId = value;
+            }
+        }
+
+        /// <summary> Hostname to which the agent connects to propagate configuration to the cloud. </summary>
+        [WirePath("properties.configurationApi.hostname")]
+        public string ConfigurationApiHostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationApiHostname;
+            }
+        }
     }
 }

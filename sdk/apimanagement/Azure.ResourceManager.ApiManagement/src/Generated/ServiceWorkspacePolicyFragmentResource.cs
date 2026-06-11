@@ -6,49 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing a ServiceWorkspacePolicyFragment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceWorkspacePolicyFragmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServiceWorkspacePolicyFragmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceContractResource"/> using the GetServiceWorkspacePolicyFragment method.
+    /// A class representing a ServiceWorkspacePolicyFragment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceWorkspacePolicyFragmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkspaceContractResource"/> using the GetServiceWorkspacePolicyFragments method.
     /// </summary>
     public partial class ServiceWorkspacePolicyFragmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServiceWorkspacePolicyFragmentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="workspaceId"> The workspaceId. </param>
-        /// <param name="id"> The id. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string id)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics;
-        private readonly WorkspacePolicyFragmentRestOperations _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient;
+        private readonly ClientDiagnostics _workspacePolicyFragmentClientDiagnostics;
+        private readonly WorkspacePolicyFragment _workspacePolicyFragmentRestClient;
         private readonly PolicyFragmentContractData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/policyFragments";
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspacePolicyFragmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceWorkspacePolicyFragmentResource for mocking. </summary>
         protected ServiceWorkspacePolicyFragmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspacePolicyFragmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceWorkspacePolicyFragmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceWorkspacePolicyFragmentResource(ArmClient client, PolicyFragmentContractData data) : this(client, data.Id)
@@ -57,72 +44,95 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspacePolicyFragmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceWorkspacePolicyFragmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceWorkspacePolicyFragmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serviceWorkspacePolicyFragmentWorkspacePolicyFragmentApiVersion);
-            _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient = new WorkspacePolicyFragmentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspacePolicyFragmentWorkspacePolicyFragmentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string serviceWorkspacePolicyFragmentApiVersion);
+            _workspacePolicyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspacePolicyFragmentRestClient = new WorkspacePolicyFragment(_workspacePolicyFragmentClientDiagnostics, Pipeline, Endpoint, serviceWorkspacePolicyFragmentApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PolicyFragmentContractData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="workspaceId"> The workspaceId. </param>
+        /// <param name="id"> The id. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string id)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a policy fragment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="format"> Policy fragment content format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceWorkspacePolicyFragmentResource>> GetAsync(PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspacePolicyFragmentResource>> GetAsync(PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Get");
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format?.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyFragmentContractData> response = Response.FromValue(PolicyFragmentContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspacePolicyFragmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,34 +146,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets a policy fragment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="format"> Policy fragment content format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceWorkspacePolicyFragmentResource> Get(PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspacePolicyFragmentResource> Get(PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Get");
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format?.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyFragmentContractData> response = Response.FromValue(PolicyFragmentContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspacePolicyFragmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -177,20 +195,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes a policy fragment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,16 +217,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Delete");
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -222,20 +247,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes a policy fragment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,16 +269,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Delete");
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var uri = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -264,23 +296,123 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates a policy fragment.
+        /// Lists policy resources that reference the policy fragment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}/listReferences. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_ListReferences. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ResourceListResult>> GetReferencesAsync(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.GetReferences");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateGetReferencesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skip, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceListResult> response = Response.FromValue(ResourceListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists policy resources that reference the policy fragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}/listReferences. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_ListReferences. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ResourceListResult> GetReferences(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.GetReferences");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateGetReferencesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skip, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceListResult> response = Response.FromValue(ResourceListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a ServiceWorkspacePolicyFragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,18 +421,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspacePolicyFragmentResource>> UpdateAsync(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceWorkspacePolicyFragmentResource>> UpdateAsync(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Update");
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ServiceWorkspacePolicyFragmentResource>(new ServiceWorkspacePolicyFragmentOperationSource(Client), _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics, Pipeline, _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ApiManagementArmOperation<ServiceWorkspacePolicyFragmentResource> operation = new ApiManagementArmOperation<ServiceWorkspacePolicyFragmentResource>(
+                    new ServiceWorkspacePolicyFragmentOperationSource(Client),
+                    _workspacePolicyFragmentClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -311,23 +456,23 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates a policy fragment.
+        /// Update a ServiceWorkspacePolicyFragment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspacePolicyFragmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,157 +481,32 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspacePolicyFragmentResource> Update(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceWorkspacePolicyFragmentResource> Update(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Update");
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ServiceWorkspacePolicyFragmentResource>(new ServiceWorkspacePolicyFragmentOperationSource(Client), _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics, Pipeline, _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ApiManagementArmOperation<ServiceWorkspacePolicyFragmentResource> operation = new ApiManagementArmOperation<ServiceWorkspacePolicyFragmentResource>(
+                    new ServiceWorkspacePolicyFragmentOperationSource(Client),
+                    _workspacePolicyFragmentClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists policy resources that reference the policy fragment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}/listReferences</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_ListReferences</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceCollectionValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceCollectionValueItem> GetReferencesAsync(int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateListReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ResourceCollectionValueItem.DeserializeResourceCollectionValueItem(e), _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics, Pipeline, "ServiceWorkspacePolicyFragmentResource.GetReferences", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists policy resources that reference the policy fragment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}/listReferences</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_ListReferences</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceCollectionValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceCollectionValueItem> GetReferences(int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.CreateListReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ResourceCollectionValueItem.DeserializeResourceCollectionValueItem(e), _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics, Pipeline, "ServiceWorkspacePolicyFragmentResource.GetReferences", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of a policy fragment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = await _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of a policy fragment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePolicyFragment_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspacePolicyFragmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics.CreateScope("ServiceWorkspacePolicyFragmentResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

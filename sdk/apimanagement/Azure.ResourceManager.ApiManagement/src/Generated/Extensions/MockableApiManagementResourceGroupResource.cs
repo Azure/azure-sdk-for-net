@@ -8,102 +8,256 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement;
+using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableApiManagementResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableApiManagementResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _apiClientDiagnostics;
+        private Api _apiRestClient;
+        private ClientDiagnostics _policyClientDiagnostics;
+        private Policy _policyRestClient;
+        private ClientDiagnostics _apiManagementTagClientDiagnostics;
+        private ApiManagementTag _apiManagementTagRestClient;
+        private ClientDiagnostics _productClientDiagnostics;
+        private Product _productRestClient;
+        private ClientDiagnostics _diagnosticClientDiagnostics;
+        private Diagnostic _diagnosticRestClient;
+        private ClientDiagnostics _issueClientDiagnostics;
+        private Issue _issueRestClient;
+        private ClientDiagnostics _apiVersionSetClientDiagnostics;
+        private ApiVersionSet _apiVersionSetRestClient;
+        private ClientDiagnostics _authorizationProviderClientDiagnostics;
+        private AuthorizationProvider _authorizationProviderRestClient;
+        private ClientDiagnostics _authorizationServerClientDiagnostics;
+        private AuthorizationServer _authorizationServerRestClient;
+        private ClientDiagnostics _backendClientDiagnostics;
+        private Backend _backendRestClient;
+        private ClientDiagnostics _cacheClientDiagnostics;
+        private Cache _cacheRestClient;
+        private ClientDiagnostics _certificateClientDiagnostics;
+        private Certificate _certificateRestClient;
+        private ClientDiagnostics _contentTypeClientDiagnostics;
+        private ContentType _contentTypeRestClient;
+        private ClientDiagnostics _documentationClientDiagnostics;
+        private Documentation _documentationRestClient;
+        private ClientDiagnostics _emailTemplateClientDiagnostics;
+        private EmailTemplate _emailTemplateRestClient;
+        private ClientDiagnostics _gatewayClientDiagnostics;
+        private Gateway _gatewayRestClient;
+        private ClientDiagnostics _groupClientDiagnostics;
+        private Group _groupRestClient;
+        private ClientDiagnostics _userClientDiagnostics;
+        private User _userRestClient;
+        private ClientDiagnostics _identityProviderClientDiagnostics;
+        private IdentityProvider _identityProviderRestClient;
+        private ClientDiagnostics _loggerClientDiagnostics;
+        private Logger _loggerRestClient;
+        private ClientDiagnostics _namedValueClientDiagnostics;
+        private NamedValue _namedValueRestClient;
+        private ClientDiagnostics _notificationClientDiagnostics;
+        private Notification _notificationRestClient;
+        private ClientDiagnostics _openIdConnectProviderClientDiagnostics;
+        private OpenIdConnectProvider _openIdConnectProviderRestClient;
+        private ClientDiagnostics _policyFragmentClientDiagnostics;
+        private PolicyFragment _policyFragmentRestClient;
+        private ClientDiagnostics _policyRestrictionClientDiagnostics;
+        private PolicyRestriction _policyRestrictionRestClient;
+        private ClientDiagnostics _portalConfigClientDiagnostics;
+        private PortalConfig _portalConfigRestClient;
+        private ClientDiagnostics _clientApplicationClientDiagnostics;
+        private ClientApplication _clientApplicationRestClient;
+        private ClientDiagnostics _portalRevisionClientDiagnostics;
+        private PortalRevision _portalRevisionRestClient;
+        private ClientDiagnostics _subscriptionClientDiagnostics;
+        private Subscription _subscriptionRestClient;
+        private ClientDiagnostics _globalSchemaClientDiagnostics;
+        private GlobalSchema _globalSchemaRestClient;
+        private ClientDiagnostics _tenantSettingsClientDiagnostics;
+        private TenantSettings _tenantSettingsRestClient;
+        private ClientDiagnostics _tenantAccessClientDiagnostics;
+        private TenantAccess _tenantAccessRestClient;
+        private ClientDiagnostics _workspaceClientDiagnostics;
+        private Workspace _workspaceRestClient;
+        private ClientDiagnostics _apiGatewayConfigConnectionClientDiagnostics;
+        private ApiGatewayConfigConnection _apiGatewayConfigConnectionRestClient;
+        private ClientDiagnostics _apiManagementWorkspaceLinksClientDiagnostics;
+        private ApiManagementWorkspaceLinks _apiManagementWorkspaceLinksRestClient;
+        private ClientDiagnostics _apiGatewayHostnameBindingClientDiagnostics;
+        private ApiGatewayHostnameBinding _apiGatewayHostnameBindingRestClient;
+        private ClientDiagnostics _privateEndpointConnectionClientDiagnostics;
+        private PrivateEndpointConnection _privateEndpointConnectionRestClient;
+
+        /// <summary> Initializes a new instance of MockableApiManagementResourceGroupResource for mocking. </summary>
         protected MockableApiManagementResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApiManagementResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApiManagementResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApiManagementResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics ApiClientDiagnostics => _apiClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of ApiGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApiGatewayResources and their operations over a ApiGatewayResource. </returns>
-        public virtual ApiGatewayCollection GetApiGateways()
-        {
-            return GetCachedClient(client => new ApiGatewayCollection(client, Id));
-        }
+        private Api ApiRestClient => _apiRestClient ??= new Api(ApiClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
-        /// <summary>
-        /// Gets an API Management gateway resource description.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGateway_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayName"> The name of the API Management gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiGatewayResource>> GetApiGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
-        {
-            return await GetApiGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
-        }
+        private ClientDiagnostics PolicyClientDiagnostics => _policyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets an API Management gateway resource description.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGateway_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayName"> The name of the API Management gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiGatewayResource> GetApiGateway(string gatewayName, CancellationToken cancellationToken = default)
-        {
-            return GetApiGateways().Get(gatewayName, cancellationToken);
-        }
+        private Policy PolicyRestClient => _policyRestClient ??= new Policy(PolicyClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
-        /// <summary> Gets a collection of ApiManagementServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
+        private ClientDiagnostics ApiManagementTagClientDiagnostics => _apiManagementTagClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ApiManagementTag ApiManagementTagRestClient => _apiManagementTagRestClient ??= new ApiManagementTag(ApiManagementTagClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ProductClientDiagnostics => _productClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Product ProductRestClient => _productRestClient ??= new Product(ProductClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics DiagnosticClientDiagnostics => _diagnosticClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Diagnostic DiagnosticRestClient => _diagnosticRestClient ??= new Diagnostic(DiagnosticClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics IssueClientDiagnostics => _issueClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Issue IssueRestClient => _issueRestClient ??= new Issue(IssueClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ApiVersionSetClientDiagnostics => _apiVersionSetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ApiVersionSet ApiVersionSetRestClient => _apiVersionSetRestClient ??= new ApiVersionSet(ApiVersionSetClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics AuthorizationProviderClientDiagnostics => _authorizationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AuthorizationProvider AuthorizationProviderRestClient => _authorizationProviderRestClient ??= new AuthorizationProvider(AuthorizationProviderClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics AuthorizationServerClientDiagnostics => _authorizationServerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AuthorizationServer AuthorizationServerRestClient => _authorizationServerRestClient ??= new AuthorizationServer(AuthorizationServerClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics BackendClientDiagnostics => _backendClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Backend BackendRestClient => _backendRestClient ??= new Backend(BackendClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics CacheClientDiagnostics => _cacheClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Cache CacheRestClient => _cacheRestClient ??= new Cache(CacheClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics CertificateClientDiagnostics => _certificateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Certificate CertificateRestClient => _certificateRestClient ??= new Certificate(CertificateClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ContentTypeClientDiagnostics => _contentTypeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ContentType ContentTypeRestClient => _contentTypeRestClient ??= new ContentType(ContentTypeClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics DocumentationClientDiagnostics => _documentationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Documentation DocumentationRestClient => _documentationRestClient ??= new Documentation(DocumentationClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics EmailTemplateClientDiagnostics => _emailTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EmailTemplate EmailTemplateRestClient => _emailTemplateRestClient ??= new EmailTemplate(EmailTemplateClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics GatewayClientDiagnostics => _gatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Gateway GatewayRestClient => _gatewayRestClient ??= new Gateway(GatewayClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics GroupClientDiagnostics => _groupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Group GroupRestClient => _groupRestClient ??= new Group(GroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics UserClientDiagnostics => _userClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private User UserRestClient => _userRestClient ??= new User(UserClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics IdentityProviderClientDiagnostics => _identityProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private IdentityProvider IdentityProviderRestClient => _identityProviderRestClient ??= new IdentityProvider(IdentityProviderClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics LoggerClientDiagnostics => _loggerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Logger LoggerRestClient => _loggerRestClient ??= new Logger(LoggerClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics NamedValueClientDiagnostics => _namedValueClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NamedValue NamedValueRestClient => _namedValueRestClient ??= new NamedValue(NamedValueClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics NotificationClientDiagnostics => _notificationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Notification NotificationRestClient => _notificationRestClient ??= new Notification(NotificationClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics OpenIdConnectProviderClientDiagnostics => _openIdConnectProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OpenIdConnectProvider OpenIdConnectProviderRestClient => _openIdConnectProviderRestClient ??= new OpenIdConnectProvider(OpenIdConnectProviderClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics PolicyFragmentClientDiagnostics => _policyFragmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PolicyFragment PolicyFragmentRestClient => _policyFragmentRestClient ??= new PolicyFragment(PolicyFragmentClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics PolicyRestrictionClientDiagnostics => _policyRestrictionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PolicyRestriction PolicyRestrictionRestClient => _policyRestrictionRestClient ??= new PolicyRestriction(PolicyRestrictionClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics PortalConfigClientDiagnostics => _portalConfigClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PortalConfig PortalConfigRestClient => _portalConfigRestClient ??= new PortalConfig(PortalConfigClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ClientApplicationClientDiagnostics => _clientApplicationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ClientApplication ClientApplicationRestClient => _clientApplicationRestClient ??= new ClientApplication(ClientApplicationClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics PortalRevisionClientDiagnostics => _portalRevisionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PortalRevision PortalRevisionRestClient => _portalRevisionRestClient ??= new PortalRevision(PortalRevisionClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics SubscriptionClientDiagnostics => _subscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Subscription SubscriptionRestClient => _subscriptionRestClient ??= new Subscription(SubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics GlobalSchemaClientDiagnostics => _globalSchemaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GlobalSchema GlobalSchemaRestClient => _globalSchemaRestClient ??= new GlobalSchema(GlobalSchemaClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics TenantSettingsClientDiagnostics => _tenantSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private TenantSettings TenantSettingsRestClient => _tenantSettingsRestClient ??= new TenantSettings(TenantSettingsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics TenantAccessClientDiagnostics => _tenantAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private TenantAccess TenantAccessRestClient => _tenantAccessRestClient ??= new TenantAccess(TenantAccessClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Workspace WorkspaceRestClient => _workspaceRestClient ??= new Workspace(WorkspaceClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ApiGatewayConfigConnectionClientDiagnostics => _apiGatewayConfigConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ApiGatewayConfigConnection ApiGatewayConfigConnectionRestClient => _apiGatewayConfigConnectionRestClient ??= new ApiGatewayConfigConnection(ApiGatewayConfigConnectionClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ApiManagementWorkspaceLinksClientDiagnostics => _apiManagementWorkspaceLinksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ApiManagementWorkspaceLinks ApiManagementWorkspaceLinksRestClient => _apiManagementWorkspaceLinksRestClient ??= new ApiManagementWorkspaceLinks(ApiManagementWorkspaceLinksClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ApiGatewayHostnameBindingClientDiagnostics => _apiGatewayHostnameBindingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ApiGatewayHostnameBinding ApiGatewayHostnameBindingRestClient => _apiGatewayHostnameBindingRestClient ??= new ApiGatewayHostnameBinding(ApiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics PrivateEndpointConnectionClientDiagnostics => _privateEndpointConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateEndpointConnection PrivateEndpointConnectionRestClient => _privateEndpointConnectionRestClient ??= new PrivateEndpointConnection(PrivateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        /// <summary> Gets a collection of ApiManagementServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementServices and their operations over a ApiManagementServiceResource. </returns>
         public virtual ApiManagementServiceCollection GetApiManagementServices()
         {
             return GetCachedClient(client => new ApiManagementServiceCollection(client, Id));
@@ -113,20 +267,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// Gets an API Management service resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +287,8 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return await GetApiManagementServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +296,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// Gets an API Management service resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,7 +316,3629 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApiManagementServiceResource> GetApiManagementService(string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return GetApiManagementServices().Get(serviceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementGateways and their operations over a ApiManagementGatewayResource. </returns>
+        public virtual ApiManagementGatewayCollection GetApiManagementGateways()
+        {
+            return GetCachedClient(client => new ApiManagementGatewayCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway resource description.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiManagementGatewayResource>> GetApiManagementGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            return await GetApiManagementGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway resource description.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementGatewayResource> GetApiManagementGateway(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            return GetApiManagementGateways().Get(gatewayName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementPortalSignInSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementPortalSignInSettings and their operations over a ApiManagementPortalSignInSettingResource. </returns>
+        public virtual ApiManagementPortalSignInSettingCollection GetApiManagementPortalSignInSettings()
+        {
+            return GetCachedClient(client => new ApiManagementPortalSignInSettingCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Sign In Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignInSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiManagementPortalSignInSettingResource>> GetApiManagementPortalSignInSettingAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return await GetApiManagementPortalSignInSettings().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Sign In Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignInSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementPortalSignInSettingResource> GetApiManagementPortalSignInSetting(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return GetApiManagementPortalSignInSettings().Get(serviceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementPortalSignUpSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementPortalSignUpSettings and their operations over a ApiManagementPortalSignUpSettingResource. </returns>
+        public virtual ApiManagementPortalSignUpSettingCollection GetApiManagementPortalSignUpSettings()
+        {
+            return GetCachedClient(client => new ApiManagementPortalSignUpSettingCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Sign Up Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignUpSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiManagementPortalSignUpSettingResource>> GetApiManagementPortalSignUpSettingAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return await GetApiManagementPortalSignUpSettings().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Sign Up Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignUpSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementPortalSignUpSettingResource> GetApiManagementPortalSignUpSetting(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return GetApiManagementPortalSignUpSettings().Get(serviceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementPortalDelegationSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementPortalDelegationSettings and their operations over a ApiManagementPortalDelegationSettingResource. </returns>
+        public virtual ApiManagementPortalDelegationSettingCollection GetApiManagementPortalDelegationSettings()
+        {
+            return GetCachedClient(client => new ApiManagementPortalDelegationSettingCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Delegation Settings for the Portal.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiManagementPortalDelegationSettingResource>> GetApiManagementPortalDelegationSettingAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return await GetApiManagementPortalDelegationSettings().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Delegation Settings for the Portal.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementPortalDelegationSettingResource> GetApiManagementPortalDelegationSetting(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return GetApiManagementPortalDelegationSettings().Get(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all APIs of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq, ne |  |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="tags"> Include tags in the response. </param>
+        /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiResource> GetApisAsync(string serviceName, string filter = default, int? top = default, int? skip = default, string tags = default, bool? expandApiVersionSet = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiData, ApiResource>(new ApiGetByServiceAsyncCollectionResultOfT(
+                ApiRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                tags,
+                expandApiVersionSet,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApis"), data => new ApiResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all APIs of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq, ne |  |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="tags"> Include tags in the response. </param>
+        /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiResource> GetApis(string serviceName, string filter = default, int? top = default, int? skip = default, string tags = default, bool? expandApiVersionSet = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiData, ApiResource>(new ApiGetByServiceCollectionResultOfT(
+                ApiRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                tags,
+                expandApiVersionSet,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApis"), data => new ApiResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the Global Policy definitions of the Api Management service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Policy_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementPolicyResource> GetApiManagementPoliciesAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PolicyContractData, ApiManagementPolicyResource>(new PolicyGetByServiceAsyncCollectionResultOfT(
+                PolicyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementPolicies"), data => new ApiManagementPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the Global Policy definitions of the Api Management service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Policy_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementPolicyResource> GetApiManagementPolicies(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PolicyContractData, ApiManagementPolicyResource>(new PolicyGetByServiceCollectionResultOfT(
+                PolicyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementPolicies"), data => new ApiManagementPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of tags defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TagContractOperationGroup_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementTagResource> GetApiManagementTagsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, string scope = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TagContractData, ApiManagementTagResource>(new ApiManagementTagGetByServiceAsyncCollectionResultOfT(
+                ApiManagementTagRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                scope,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementTags"), data => new ApiManagementTagResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of tags defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TagContractOperationGroup_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementTagResource> GetApiManagementTags(string serviceName, string filter = default, int? top = default, int? skip = default, string scope = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TagContractData, ApiManagementTagResource>(new ApiManagementTagGetByServiceCollectionResultOfT(
+                ApiManagementTagRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                scope,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementTags"), data => new ApiManagementTagResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of products in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| terms | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> When set to true, the response contains an array of groups that have visibility to the product. The default is false. </param>
+        /// <param name="tags"> Products which are part of a specific tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementProductResource> GetApiManagementProductsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, string tags = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementProductData, ApiManagementProductResource>(new ProductGetByServiceAsyncCollectionResultOfT(
+                ProductRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                expandGroups,
+                tags,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementProducts"), data => new ApiManagementProductResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of products in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| terms | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> When set to true, the response contains an array of groups that have visibility to the product. The default is false. </param>
+        /// <param name="tags"> Products which are part of a specific tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementProductResource> GetApiManagementProducts(string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, string tags = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementProductData, ApiManagementProductResource>(new ProductGetByServiceCollectionResultOfT(
+                ProductRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                expandGroups,
+                tags,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementProducts"), data => new ApiManagementProductResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all diagnostics of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostic_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementDiagnosticResource> GetApiManagementDiagnosticsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DiagnosticContractData, ApiManagementDiagnosticResource>(new DiagnosticGetByServiceAsyncCollectionResultOfT(
+                DiagnosticRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementDiagnostics"), data => new ApiManagementDiagnosticResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all diagnostics of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Diagnostic_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementDiagnosticResource> GetApiManagementDiagnostics(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DiagnosticContractData, ApiManagementDiagnosticResource>(new DiagnosticGetByServiceCollectionResultOfT(
+                DiagnosticRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementDiagnostics"), data => new ApiManagementDiagnosticResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of issues in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Issue_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| authorName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIssueResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementIssueResource> GetApiManagementIssuesAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueGetByServiceAsyncCollectionResultOfT(
+                IssueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementIssues"), data => new ApiManagementIssueResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of issues in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Issue_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| authorName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIssueResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementIssueResource> GetApiManagementIssues(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueGetByServiceCollectionResultOfT(
+                IssueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementIssues"), data => new ApiManagementIssueResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of API Version Sets in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiVersionSetContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiVersionSetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiVersionSetResource> GetApiVersionSetsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiVersionSetData, ApiVersionSetResource>(new ApiVersionSetGetByServiceAsyncCollectionResultOfT(
+                ApiVersionSetRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiVersionSets"), data => new ApiVersionSetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of API Version Sets in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiVersionSetContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiVersionSetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiVersionSetResource> GetApiVersionSets(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiVersionSetData, ApiVersionSetResource>(new ApiVersionSetGetByServiceCollectionResultOfT(
+                ApiVersionSetRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiVersionSets"), data => new ApiVersionSetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization providers defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationProviderContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AuthorizationProviderContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AuthorizationProviderContractResource> GetAuthorizationProviderContractsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AuthorizationProviderContractData, AuthorizationProviderContractResource>(new AuthorizationProviderGetByServiceAsyncCollectionResultOfT(
+                AuthorizationProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetAuthorizationProviderContracts"), data => new AuthorizationProviderContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization providers defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationProviderContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AuthorizationProviderContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AuthorizationProviderContractResource> GetAuthorizationProviderContracts(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AuthorizationProviderContractData, AuthorizationProviderContractResource>(new AuthorizationProviderGetByServiceCollectionResultOfT(
+                AuthorizationProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetAuthorizationProviderContracts"), data => new AuthorizationProviderContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization servers defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementAuthorizationServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementAuthorizationServerResource> GetApiManagementAuthorizationServersAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementAuthorizationServerData, ApiManagementAuthorizationServerResource>(new AuthorizationServerGetByServiceAsyncCollectionResultOfT(
+                AuthorizationServerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementAuthorizationServers"), data => new ApiManagementAuthorizationServerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization servers defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementAuthorizationServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementAuthorizationServerResource> GetApiManagementAuthorizationServers(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementAuthorizationServerData, ApiManagementAuthorizationServerResource>(new AuthorizationServerGetByServiceCollectionResultOfT(
+                AuthorizationServerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementAuthorizationServers"), data => new ApiManagementAuthorizationServerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of backends in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| url | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementBackendResource> GetApiManagementBackendsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementBackendData, ApiManagementBackendResource>(new BackendGetByServiceAsyncCollectionResultOfT(
+                BackendRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementBackends"), data => new ApiManagementBackendResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of backends in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| url | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementBackendResource> GetApiManagementBackends(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementBackendData, ApiManagementBackendResource>(new BackendGetByServiceCollectionResultOfT(
+                BackendRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementBackends"), data => new ApiManagementBackendResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of all external Caches in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/caches. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CacheContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCacheResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementCacheResource> GetApiManagementCachesAsync(string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new CacheGetByServiceAsyncCollectionResultOfT(
+                CacheRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementCaches"), data => new ApiManagementCacheResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of all external Caches in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/caches. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CacheContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCacheResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementCacheResource> GetApiManagementCaches(string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new CacheGetByServiceCollectionResultOfT(
+                CacheRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementCaches"), data => new ApiManagementCacheResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of all certificates in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/certificates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| subject | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| thumbprint | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| expirationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only certificates entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementCertificateResource> GetApiManagementCertificatesAsync(string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementCertificateData, ApiManagementCertificateResource>(new CertificateGetByServiceAsyncCollectionResultOfT(
+                CertificateRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                isKeyVaultRefreshFailed,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementCertificates"), data => new ApiManagementCertificateResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of all certificates in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/certificates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| subject | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| thumbprint | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| expirationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only certificates entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementCertificateResource> GetApiManagementCertificates(string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementCertificateData, ApiManagementCertificateResource>(new CertificateGetByServiceCollectionResultOfT(
+                CertificateRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                isKeyVaultRefreshFailed,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementCertificates"), data => new ApiManagementCertificateResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ContentTypeContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ContentTypeContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContentTypeContractResource> GetContentTypeContractsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContentTypeContractData, ContentTypeContractResource>(new ContentTypeGetByServiceAsyncCollectionResultOfT(
+                ContentTypeRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetContentTypeContracts"), data => new ContentTypeContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ContentTypeContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ContentTypeContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContentTypeContractResource> GetContentTypeContracts(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContentTypeContractData, ContentTypeContractResource>(new ContentTypeGetByServiceCollectionResultOfT(
+                ContentTypeRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetContentTypeContracts"), data => new ContentTypeContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all Documentations of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/documentations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DocumentationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | eq |  contains |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DocumentationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DocumentationContractResource> GetDocumentationContractsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DocumentationContractData, DocumentationContractResource>(new DocumentationGetByServiceAsyncCollectionResultOfT(
+                DocumentationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetDocumentationContracts"), data => new DocumentationContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all Documentations of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/documentations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DocumentationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | eq |  contains |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DocumentationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DocumentationContractResource> GetDocumentationContracts(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DocumentationContractData, DocumentationContractResource>(new DocumentationGetByServiceCollectionResultOfT(
+                DocumentationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetDocumentationContracts"), data => new DocumentationContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all email templates
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EmailTemplateContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementEmailTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplatesAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceAsyncCollectionResultOfT(
+                EmailTemplateRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementEmailTemplates"), data => new ApiManagementEmailTemplateResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all email templates
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EmailTemplateContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementEmailTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplates(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceCollectionResultOfT(
+                EmailTemplateRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementEmailTemplates"), data => new ApiManagementEmailTemplateResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of gateways registered with service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GatewayContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| region | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiGatewayData, ApiGatewayResource>(new GatewayGetByServiceAsyncCollectionResultOfT(
+                GatewayRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiGateways"), data => new ApiGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of gateways registered with service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GatewayContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| region | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiGatewayResource> GetApiGateways(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiGatewayData, ApiGatewayResource>(new GatewayGetByServiceCollectionResultOfT(
+                GatewayRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiGateways"), data => new ApiGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of groups defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| externalId | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGroupResource> GetApiManagementGroupsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementGroupData, ApiManagementGroupResource>(new GroupGetByServiceAsyncCollectionResultOfT(
+                GroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementGroups"), data => new ApiManagementGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of groups defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| externalId | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGroupResource> GetApiManagementGroups(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementGroupData, ApiManagementGroupResource>(new GroupGetByServiceCollectionResultOfT(
+                GroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementGroups"), data => new ApiManagementGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of registered users in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| firstName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| lastName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| email | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| registrationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;| note | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> Detailed Group in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementUserResource> GetApiManagementUsersAsync(string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<UserContractData, ApiManagementUserResource>(new UserGetByServiceAsyncCollectionResultOfT(
+                UserRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                expandGroups,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementUsers"), data => new ApiManagementUserResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of registered users in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| firstName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| lastName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| email | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| registrationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;| note | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> Detailed Group in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementUserResource> GetApiManagementUsers(string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<UserContractData, ApiManagementUserResource>(new UserGetByServiceCollectionResultOfT(
+                UserRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                expandGroups,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementUsers"), data => new ApiManagementUserResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of Identity Provider configured in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementIdentityProviderResource> GetApiManagementIdentityProvidersAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceAsyncCollectionResultOfT(
+                IdentityProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementIdentityProviders"), data => new ApiManagementIdentityProviderResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of Identity Provider configured in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementIdentityProviderResource> GetApiManagementIdentityProviders(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceCollectionResultOfT(
+                IdentityProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementIdentityProviders"), data => new ApiManagementIdentityProviderResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of loggers in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoggerContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| loggerType | filter | eq |     |&lt;/br&gt;| resourceId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementLoggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementLoggerResource> GetApiManagementLoggersAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementLoggerData, ApiManagementLoggerResource>(new LoggerGetByServiceAsyncCollectionResultOfT(
+                LoggerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementLoggers"), data => new ApiManagementLoggerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of loggers in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoggerContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| loggerType | filter | eq |     |&lt;/br&gt;| resourceId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementLoggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementLoggerResource> GetApiManagementLoggers(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementLoggerData, ApiManagementLoggerResource>(new LoggerGetByServiceCollectionResultOfT(
+                LoggerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementLoggers"), data => new ApiManagementLoggerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of named values defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamedValueContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| tags | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only named value entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNamedValueResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementNamedValueResource> GetApiManagementNamedValuesAsync(string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementNamedValueData, ApiManagementNamedValueResource>(new NamedValueGetByServiceAsyncCollectionResultOfT(
+                NamedValueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                isKeyVaultRefreshFailed,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementNamedValues"), data => new ApiManagementNamedValueResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of named values defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamedValueContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| tags | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only named value entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNamedValueResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementNamedValueResource> GetApiManagementNamedValues(string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementNamedValueData, ApiManagementNamedValueResource>(new NamedValueGetByServiceCollectionResultOfT(
+                NamedValueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                isKeyVaultRefreshFailed,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementNamedValues"), data => new ApiManagementNamedValueResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of properties defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NotificationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNotificationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementNotificationResource> GetApiManagementNotificationsAsync(string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementNotificationData, ApiManagementNotificationResource>(new NotificationGetByServiceAsyncCollectionResultOfT(
+                NotificationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementNotifications"), data => new ApiManagementNotificationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of properties defined within a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NotificationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNotificationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementNotificationResource> GetApiManagementNotifications(string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementNotificationData, ApiManagementNotificationResource>(new NotificationGetByServiceCollectionResultOfT(
+                NotificationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementNotifications"), data => new ApiManagementNotificationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists of all the OpenId Connect Providers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OpenidConnectProviderContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementOpenIdConnectProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvidersAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new OpenIdConnectProviderGetByServiceAsyncCollectionResultOfT(
+                OpenIdConnectProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementOpenIdConnectProviders"), data => new ApiManagementOpenIdConnectProviderResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists of all the OpenId Connect Providers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OpenidConnectProviderContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementOpenIdConnectProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProviders(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new OpenIdConnectProviderGetByServiceCollectionResultOfT(
+                OpenIdConnectProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementOpenIdConnectProviders"), data => new ApiManagementOpenIdConnectProviderResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all policy fragments.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyFragmentContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter, orderBy | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| value | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PolicyFragmentContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyFragmentContractResource> GetPolicyFragmentContractsAsync(string serviceName, string filter = default, string @orderby = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PolicyFragmentContractData, PolicyFragmentContractResource>(new PolicyFragmentGetByServiceAsyncCollectionResultOfT(
+                PolicyFragmentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                @orderby,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetPolicyFragmentContracts"), data => new PolicyFragmentContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all policy fragments.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyFragmentContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter, orderBy | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| value | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PolicyFragmentContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyFragmentContractResource> GetPolicyFragmentContracts(string serviceName, string filter = default, string @orderby = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PolicyFragmentContractData, PolicyFragmentContractResource>(new PolicyFragmentGetByServiceCollectionResultOfT(
+                PolicyFragmentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                @orderby,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetPolicyFragmentContracts"), data => new PolicyFragmentContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all policy restrictions of API Management services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PolicyRestrictionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyRestrictionContractResource> GetPolicyRestrictionContractsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceAsyncCollectionResultOfT(
+                PolicyRestrictionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetPolicyRestrictionContracts"), data => new PolicyRestrictionContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all policy restrictions of API Management services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PolicyRestrictionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyRestrictionContractResource> GetPolicyRestrictionContracts(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceCollectionResultOfT(
+                PolicyRestrictionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetPolicyRestrictionContracts"), data => new PolicyRestrictionContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the developer portal configurations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PortalConfigContractResource> GetPortalConfigContractsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceAsyncCollectionResultOfT(
+                PortalConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetPortalConfigContracts"), data => new PortalConfigContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the developer portal configurations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PortalConfigContractResource> GetPortalConfigContracts(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceCollectionResultOfT(
+                PortalConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetPortalConfigContracts"), data => new PortalConfigContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of client applications in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/clientApplications. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClientApplicationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt; state | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ClientApplicationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ClientApplicationContractResource> GetClientApplicationContractsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ClientApplicationContractData, ClientApplicationContractResource>(new ClientApplicationGetByServiceAsyncCollectionResultOfT(
+                ClientApplicationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetClientApplicationContracts"), data => new ClientApplicationContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of client applications in the specified service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/clientApplications. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClientApplicationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt; state | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ClientApplicationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ClientApplicationContractResource> GetClientApplicationContracts(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ClientApplicationContractData, ClientApplicationContractResource>(new ClientApplicationGetByServiceCollectionResultOfT(
+                ClientApplicationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetClientApplicationContracts"), data => new ClientApplicationContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists developer portal's revisions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PortalRevisionContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter">
+        /// | Field       | Supported operators    | Supported functions               |
+        /// |-------------|------------------------|-----------------------------------|
+        /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |isCurrent | eq, ne |    |
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPortalRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementPortalRevisionResource> GetApiManagementPortalRevisionsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementPortalRevisionData, ApiManagementPortalRevisionResource>(new PortalRevisionGetByServiceAsyncCollectionResultOfT(
+                PortalRevisionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementPortalRevisions"), data => new ApiManagementPortalRevisionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists developer portal's revisions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PortalRevisionContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter">
+        /// | Field       | Supported operators    | Supported functions               |
+        /// |-------------|------------------------|-----------------------------------|
+        /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |isCurrent | eq, ne |    |
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPortalRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementPortalRevisionResource> GetApiManagementPortalRevisions(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementPortalRevisionData, ApiManagementPortalRevisionResource>(new PortalRevisionGetByServiceCollectionResultOfT(
+                PortalRevisionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementPortalRevisions"), data => new ApiManagementPortalRevisionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all subscriptions of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionContracts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementSubscriptionResource> GetApiManagementSubscriptionsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SubscriptionContractData, ApiManagementSubscriptionResource>(new SubscriptionGetAllAsyncCollectionResultOfT(
+                SubscriptionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementSubscriptions"), data => new ApiManagementSubscriptionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all subscriptions of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionContracts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementSubscriptionResource> GetApiManagementSubscriptions(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SubscriptionContractData, ApiManagementSubscriptionResource>(new SubscriptionGetAllCollectionResultOfT(
+                SubscriptionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementSubscriptions"), data => new ApiManagementSubscriptionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of schemas registered with service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalSchemaContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGlobalSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchemasAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, ApiManagementGlobalSchemaResource>(new GlobalSchemaGetByServiceAsyncCollectionResultOfT(
+                GlobalSchemaRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementGlobalSchemas"), data => new ApiManagementGlobalSchemaResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of schemas registered with service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalSchemaContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGlobalSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchemas(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementGlobalSchemaData, ApiManagementGlobalSchemaResource>(new GlobalSchemaGetByServiceCollectionResultOfT(
+                GlobalSchemaRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementGlobalSchemas"), data => new ApiManagementGlobalSchemaResource(Client, data));
+        }
+
+        /// <summary>
+        /// Public settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTenantSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementTenantSettingResource> GetApiManagementTenantSettingsAsync(string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceAsyncCollectionResultOfT(
+                TenantSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementTenantSettings"), data => new ApiManagementTenantSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Public settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTenantSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementTenantSettingResource> GetApiManagementTenantSettings(string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceCollectionResultOfT(
+                TenantSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementTenantSettings"), data => new ApiManagementTenantSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns list of access infos - for Git and Management endpoints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TenantAccessInfoResource> GetTenantAccessInfosAsync(string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceAsyncCollectionResultOfT(
+                TenantAccessRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                context,
+                "MockableApiManagementResourceGroupResource.GetTenantAccessInfos"), data => new TenantAccessInfoResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns list of access infos - for Git and Management endpoints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TenantAccessInfoResource> GetTenantAccessInfos(string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceCollectionResultOfT(
+                TenantAccessRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                context,
+                "MockableApiManagementResourceGroupResource.GetTenantAccessInfos"), data => new TenantAccessInfoResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all workspaces of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WorkspaceContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkspaceContractResource> GetWorkspaceContractsAsync(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WorkspaceContractData, WorkspaceContractResource>(new WorkspaceGetByServiceAsyncCollectionResultOfT(
+                WorkspaceRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetWorkspaceContracts"), data => new WorkspaceContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all workspaces of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WorkspaceContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkspaceContractResource> GetWorkspaceContracts(string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WorkspaceContractData, WorkspaceContractResource>(new WorkspaceGetByServiceCollectionResultOfT(
+                WorkspaceRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                filter,
+                top,
+                skip,
+                context,
+                "MockableApiManagementResourceGroupResource.GetWorkspaceContracts"), data => new WorkspaceContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management gateway config connections within a gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_ListByGateway. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayConfigConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiGatewayConfigConnectionResource> GetApiGatewayConfigConnectionsAsync(string gatewayName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiGatewayConfigConnectionData, ApiGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionGetByGatewayAsyncCollectionResultOfT(
+                ApiGatewayConfigConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                gatewayName,
+                top,
+                skipToken,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiGatewayConfigConnections"), data => new ApiGatewayConfigConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management gateway config connections within a gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_ListByGateway. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayConfigConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiGatewayConfigConnectionResource> GetApiGatewayConfigConnections(string gatewayName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiGatewayConfigConnectionData, ApiGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionGetByGatewayCollectionResultOfT(
+                ApiGatewayConfigConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                gatewayName,
+                top,
+                skipToken,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiGatewayConfigConnections"), data => new ApiGatewayConfigConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management workspaceLinks for a service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinksAsync(string serviceName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementWorkspaceLinksData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT(
+                ApiManagementWorkspaceLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                top,
+                skipToken,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementWorkspaceLinks"), data => new ApiManagementWorkspaceLinksResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management workspaceLinks for a service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinks(string serviceName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementWorkspaceLinksData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceCollectionResultOfT(
+                ApiManagementWorkspaceLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                top,
+                skipToken,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementWorkspaceLinks"), data => new ApiManagementWorkspaceLinksResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management gateway hostname bindings within a gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/hostnameBindings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GatewayHostnameBindingResources_ListByGateway. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="GatewayHostnameBindingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GatewayHostnameBindingResource> GetGatewayHostnameBindingResourcesAsync(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT(
+                ApiGatewayHostnameBindingRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                gatewayName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetGatewayHostnameBindingResources"), data => new GatewayHostnameBindingResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management gateway hostname bindings within a gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/hostnameBindings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GatewayHostnameBindingResources_ListByGateway. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="GatewayHostnameBindingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GatewayHostnameBindingResource> GetGatewayHostnameBindingResources(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayCollectionResultOfT(
+                ApiGatewayHostnameBindingRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                gatewayName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetGatewayHostnameBindingResources"), data => new GatewayHostnameBindingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all private endpoint connections of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementPrivateEndpointConnectionResource> GetApiManagementPrivateEndpointConnectionsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementPrivateEndpointConnectionData, ApiManagementPrivateEndpointConnectionResource>(new PrivateEndpointConnectionGetByServiceAsyncCollectionResultOfT(
+                PrivateEndpointConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementPrivateEndpointConnections"), data => new ApiManagementPrivateEndpointConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all private endpoint connections of the API Management service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementPrivateEndpointConnectionResource> GetApiManagementPrivateEndpointConnections(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementPrivateEndpointConnectionData, ApiManagementPrivateEndpointConnectionResource>(new PrivateEndpointConnectionGetByServiceCollectionResultOfT(
+                PrivateEndpointConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                serviceName,
+                context,
+                "MockableApiManagementResourceGroupResource.GetApiManagementPrivateEndpointConnections"), data => new ApiManagementPrivateEndpointConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the private link resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListPrivateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApiManagementPrivateLinkResourceListResult>> GetApiManagementPrivateLinkResourcesAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            using DiagnosticScope scope = PrivateEndpointConnectionClientDiagnostics.CreateScope("MockableApiManagementResourceGroupResource.GetApiManagementPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateEndpointConnectionRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementPrivateLinkResourceListResult> response = Response.FromValue(ApiManagementPrivateLinkResourceListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the private link resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListPrivateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApiManagementPrivateLinkResourceListResult> GetApiManagementPrivateLinkResources(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            using DiagnosticScope scope = PrivateEndpointConnectionClientDiagnostics.CreateScope("MockableApiManagementResourceGroupResource.GetApiManagementPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateEndpointConnectionRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementPrivateLinkResourceListResult> response = Response.FromValue(ApiManagementPrivateLinkResourceListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

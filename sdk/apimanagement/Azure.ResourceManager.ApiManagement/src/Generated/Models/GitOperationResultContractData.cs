@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -15,101 +16,151 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Long Running Git Operation Results. </summary>
     public partial class GitOperationResultContractData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GitOperationResultContractData"/>. </summary>
         public GitOperationResultContractData()
         {
-            ActionLog = new ChangeTrackingList<OperationResultLogItemContract>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GitOperationResultContractData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationResultIdentifier"> Operation result identifier. </param>
-        /// <param name="status"> Status of an async operation. </param>
-        /// <param name="startedOn">
-        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="updatedOn">
-        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="resultInfo"> Optional result info. </param>
-        /// <param name="error"> Error Body Contract. </param>
-        /// <param name="actionLog"> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GitOperationResultContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operationResultIdentifier, AsyncOperationStatus? status, DateTimeOffset? startedOn, DateTimeOffset? updatedOn, string resultInfo, ErrorResponseBody error, IReadOnlyList<OperationResultLogItemContract> actionLog, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Operation Contract. </param>
+        internal GitOperationResultContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OperationResultContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            OperationResultIdentifier = operationResultIdentifier;
-            Status = status;
-            StartedOn = startedOn;
-            UpdatedOn = updatedOn;
-            ResultInfo = resultInfo;
-            Error = error;
-            ActionLog = actionLog;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the Operation Contract. </summary>
+        [WirePath("properties")]
+        internal OperationResultContractProperties Properties { get; set; }
 
         /// <summary> Operation result identifier. </summary>
         [WirePath("properties.id")]
-        public string OperationResultIdentifier { get; set; }
+        public string OperationResultIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationResultIdentifier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.OperationResultIdentifier = value;
+            }
+        }
+
         /// <summary> Status of an async operation. </summary>
         [WirePath("properties.status")]
-        public AsyncOperationStatus? Status { get; set; }
-        /// <summary>
-        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        public AsyncOperationStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
+        /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.started")]
-        public DateTimeOffset? StartedOn { get; set; }
-        /// <summary>
-        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        public DateTimeOffset? StartedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.StartedOn = value;
+            }
+        }
+
+        /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.updated")]
-        public DateTimeOffset? UpdatedOn { get; set; }
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.UpdatedOn = value;
+            }
+        }
+
         /// <summary> Optional result info. </summary>
         [WirePath("properties.resultInfo")]
-        public string ResultInfo { get; set; }
+        public string ResultInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResultInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.ResultInfo = value;
+            }
+        }
+
         /// <summary> Error Body Contract. </summary>
         [WirePath("properties.error")]
-        public ErrorResponseBody Error { get; set; }
+        public ErrorResponseBody Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.Error = value;
+            }
+        }
+
         /// <summary> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </summary>
         [WirePath("properties.actionLog")]
-        public IReadOnlyList<OperationResultLogItemContract> ActionLog { get; }
+        public IReadOnlyList<OperationResultLogItemContract> ActionLog
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                return Properties.ActionLog;
+            }
+        }
     }
 }

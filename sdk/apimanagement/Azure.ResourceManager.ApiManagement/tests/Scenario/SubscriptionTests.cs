@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -24,31 +24,30 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Standard, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementSubscriptions();
+            var collection = ApiServiceResource.GetSubscriptions();
 
             // list subscriptions: there should be two by default
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             Assert.NotNull(getResponse);
             Assert.AreEqual(firstSubscription.Data.Name, getResponse.Data.Name);
-            Assert.AreEqual(firstSubscription.Data.NotifiesOn, getResponse.Data.NotifiesOn);
+            Assert.AreEqual(firstSubscription.Data.NotificationOn, getResponse.Data.NotificationOn);
             Assert.AreEqual(firstSubscription.Data.PrimaryKey, getResponse.Data.PrimaryKey);
             Assert.AreEqual(firstSubscription.Data.Scope, getResponse.Data.Scope);
             Assert.AreEqual(firstSubscription.Data.SecondaryKey, getResponse.Data.SecondaryKey);
@@ -76,9 +75,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(firstSubscription.Data.ExpireOn, getResponse.Data.ExpireOn);
 
             // update product to accept unlimited number or subscriptions
-            var product = (await ApiServiceResource.GetApiManagementProducts().GetAsync("starter")).Value;
-            await product.UpdateAsync(ETag.All,
-                new ApiManagementProductPatch
+            var product = (await ApiServiceResource.GetProducts().GetAsync("starter")).Value;
+            await product.UpdateAsync(ETag.All.ToString(),
+                new ProductPatch
                 {
                     SubscriptionsLimit = int.MaxValue
                 });
@@ -92,10 +91,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string newSubscriptionSk = Recording.GenerateAssetName("newSubscription3");
             var newSubscriptionState = SubscriptionState.Active;
 
-            var newSubscriptionCreate = new ApiManagementSubscriptionCreateOrUpdateContent
+            var newSubscriptionCreate = new SubscriptionCreateContent
             {
-                DisplayName = newSubscriptionName,
-                Scope = firstSubscription.Data.Scope,
                 OwnerId = firstSubscription.Data.OwnerId,
                 PrimaryKey = newSubscriptionPk,
                 SecondaryKey = newSubscriptionSk,
@@ -119,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(subscriptionResponse.Data.DisplayName);
 
             // list product subscriptions
-            var productSubscriptions = await product.GetAllProductSubscriptionDataAsync().ToEnumerableAsync();
+            var productSubscriptions = await product.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(productSubscriptions);
             Assert.AreEqual(2, productSubscriptions.Count);
 
@@ -130,8 +127,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var patchedExpirationDate = DateTimeOffset.Parse("2025-07-19T16:00:00.0000000Z");
 
             await subscriptionContract.UpdateAsync(
-                ETag.All,
-                new ApiManagementSubscriptionPatch
+                ETag.All.ToString(),
+                new SubscriptionPatch
                 {
                     DisplayName = patchedName,
                     PrimaryKey = patchedPk,
@@ -169,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreNotEqual(patchedSk, keysHttpResponse.Data.SecondaryKey);
 
             // delete the subscription
-            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var falseResult = (await collection.ExistsAsync(newSubscriptionId)).Value;
             Assert.IsFalse(falseResult);
 
@@ -178,11 +175,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var globalSubscriptionCreateResponse = (await collection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 globalSubscriptionId,
-                new ApiManagementSubscriptionCreateOrUpdateContent
-                {
-                    Scope = "/apis",
-                    DisplayName = globalSubscriptionDisplayName
-                })).Value;
+                new SubscriptionCreateContent())).Value;
             Assert.NotNull(globalSubscriptionCreateResponse);
             Assert.IsNull(globalSubscriptionCreateResponse.Data.OwnerId);
             Assert.AreEqual(SubscriptionState.Active, globalSubscriptionCreateResponse.Data.State);
@@ -191,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(globalSubscriptionDisplayName, globalSubscriptionCreateResponse.Data.DisplayName);
 
             // delete the global subscription
-            await globalSubscriptionCreateResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await globalSubscriptionCreateResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
 
             // get the deleted subscription to make sure it was deleted
             falseResult = (await collection.ExistsAsync(globalSubscriptionId)).Value;

@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementGatewayHostnameConfiguration data model.
-    /// Gateway hostname configuration details.
-    /// </summary>
+    /// <summary> Gateway hostname configuration details. </summary>
     public partial class ApiManagementGatewayHostnameConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationData"/>. </summary>
         public ApiManagementGatewayHostnameConfigurationData()
@@ -56,36 +25,74 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="hostname"> Hostname value. Supports valid domain name, partial or full wildcard. </param>
-        /// <param name="certificateId"> Identifier of Certificate entity that will be used for TLS connection establishment. </param>
-        /// <param name="isClientCertificateRequired"> Determines whether gateway requests client certificate. </param>
-        /// <param name="isTls10Enabled"> Specifies if TLS 1.0 is supported. </param>
-        /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
-        /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? isClientCertificateRequired, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Gateway hostname configuration details. </param>
+        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GatewayHostnameConfigurationContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            Hostname = hostname;
-            CertificateId = certificateId;
-            IsClientCertificateRequired = isClientCertificateRequired;
-            IsTls1_0Enabled = isTls10Enabled;
-            IsTls1_1Enabled = isTls11Enabled;
-            IsHttp2_0Enabled = isHttp20Enabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Gateway hostname configuration details. </summary>
+        [WirePath("properties")]
+        internal GatewayHostnameConfigurationContractProperties Properties { get; set; }
 
         /// <summary> Hostname value. Supports valid domain name, partial or full wildcard. </summary>
         [WirePath("properties.hostname")]
-        public string Hostname { get; set; }
+        public string Hostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hostname;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GatewayHostnameConfigurationContractProperties();
+                }
+                Properties.Hostname = value;
+            }
+        }
+
         /// <summary> Identifier of Certificate entity that will be used for TLS connection establishment. </summary>
         [WirePath("properties.certificateId")]
-        public string CertificateId { get; set; }
+        public string CertificateId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GatewayHostnameConfigurationContractProperties();
+                }
+                Properties.CertificateId = value;
+            }
+        }
+
         /// <summary> Determines whether gateway requests client certificate. </summary>
         [WirePath("properties.negotiateClientCertificate")]
-        public bool? IsClientCertificateRequired { get; set; }
+        public bool? IsClientCertificateRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsClientCertificateRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GatewayHostnameConfigurationContractProperties();
+                }
+                Properties.IsClientCertificateRequired = value;
+            }
+        }
     }
 }

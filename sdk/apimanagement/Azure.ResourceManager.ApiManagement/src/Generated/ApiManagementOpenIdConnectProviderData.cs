@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementOpenIdConnectProvider data model.
-    /// OpenId Connect Provider details.
-    /// </summary>
+    /// <summary> OpenId Connect Provider details. </summary>
     public partial class ApiManagementOpenIdConnectProviderData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderData"/>. </summary>
         public ApiManagementOpenIdConnectProviderData()
@@ -56,50 +25,146 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User-friendly OpenID Connect Provider name. </param>
-        /// <param name="description"> User-friendly description of OpenID Connect Provider. </param>
-        /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
-        /// <param name="clientId"> Client ID of developer console which is the client application. </param>
-        /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
-        /// <param name="useInTestConsole"> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </param>
-        /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, bool? useInTestConsole, bool? useInApiDocumentation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> OpenId Connect Provider contract properties. </param>
+        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenidConnectProviderContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Description = description;
-            MetadataEndpoint = metadataEndpoint;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            UseInTestConsole = useInTestConsole;
-            UseInApiDocumentation = useInApiDocumentation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> OpenId Connect Provider contract properties. </summary>
+        [WirePath("properties")]
+        internal OpenidConnectProviderContractProperties Properties { get; set; }
 
         /// <summary> User-friendly OpenID Connect Provider name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenidConnectProviderContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> User-friendly description of OpenID Connect Provider. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenidConnectProviderContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Metadata endpoint URI. </summary>
         [WirePath("properties.metadataEndpoint")]
-        public string MetadataEndpoint { get; set; }
+        public string MetadataEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetadataEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenidConnectProviderContractProperties();
+                }
+                Properties.MetadataEndpoint = value;
+            }
+        }
+
         /// <summary> Client ID of developer console which is the client application. </summary>
         [WirePath("properties.clientId")]
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenidConnectProviderContractProperties();
+                }
+                Properties.ClientId = value;
+            }
+        }
+
         /// <summary> Client Secret of developer console which is the client application. </summary>
         [WirePath("properties.clientSecret")]
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenidConnectProviderContractProperties();
+                }
+                Properties.ClientSecret = value;
+            }
+        }
+
         /// <summary> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </summary>
         [WirePath("properties.useInTestConsole")]
-        public bool? UseInTestConsole { get; set; }
+        public bool? UseInTestConsole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseInTestConsole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenidConnectProviderContractProperties();
+                }
+                Properties.UseInTestConsole = value;
+            }
+        }
+
         /// <summary> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
         [WirePath("properties.useInApiDocumentation")]
-        public bool? UseInApiDocumentation { get; set; }
+        public bool? UseInApiDocumentation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseInApiDocumentation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OpenidConnectProviderContractProperties();
+                }
+                Properties.UseInApiDocumentation = value;
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -22,33 +22,32 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var backendCollection = ApiServiceResource.GetApiManagementBackends();
+            var backendCollection = ApiServiceResource.GetBackends();
 
             // create new group with default parameters
             string backendId = Recording.GenerateAssetName("backendid");
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string urlParameter = new UriBuilder("https", backendName, 443).Uri.ToString();
 
             var backendCreateParameters = new ApiManagementBackendData();
-            backendCreateParameters.Uri = new Uri(urlParameter);
+            backendCreateParameters.Uri = urlParameter;
             backendCreateParameters.Protocol = BackendProtocol.Http;
             backendCreateParameters.Description = Recording.GenerateAssetName("description");
             backendCreateParameters.Tls = new BackendTlsProperties()
             {
-                ShouldValidateCertificateChain = true,
-                ShouldValidateCertificateName = true,
+                ValidateCertificateChain = true,
+                ValidateCertificateName = true,
             };
             backendCreateParameters.Credentials = new BackendCredentialsContract();
             backendCreateParameters.Credentials.Authorization = new BackendAuthorizationHeaderCredentials("basic", "opensemame");
@@ -96,11 +95,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // patch backend
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
-            var patch = new ApiManagementBackendPatch()
+            var patch = new BackendPatch()
             {
                 Description = patchedDescription,
             };
-            await backendContract.UpdateAsync(ETag.All, patch);
+            await backendContract.UpdateAsync(ETag.All.ToString(), patch);
 
             // get to check it was patched
             backendContract = await backendCollection.GetAsync(backendId);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(patchedDescription, backendContract.Data.Description);
 
             // delete the backend
-            await backendContract.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await backendContract.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var resultFalse = (await backendCollection.ExistsAsync(backendId)).Value;
             Assert.IsFalse(resultFalse);
         }

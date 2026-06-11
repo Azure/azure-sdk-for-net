@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Linq;
@@ -21,29 +21,28 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.BasicV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.BasicV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var list = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
 
-            var productCollections = ApiServiceResource.GetApiManagementProducts();
+            var productCollections = ApiServiceResource.GetProducts();
             var listResponse = await productCollections.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(listResponse);
             Assert.AreEqual(0, listResponse.Count());
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 Description = "product",
                 DisplayName = productId,
-                IsSubscriptionRequired = true,
+                SubscriptionRequired = true,
             };
             var product = (await productCollections.CreateOrUpdateAsync(WaitUntil.Completed, productId, data)).Value;
             var name = product.Data.Name;

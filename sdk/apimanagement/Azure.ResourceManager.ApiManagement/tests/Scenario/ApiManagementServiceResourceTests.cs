@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -23,26 +23,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private VirtualNetworkCollection VNetCollection { get; set; }
 
-        private async Task<ApiManagementServiceCollection> GetApiManagementServiceCollectionAsync()
+        private async Task<ApiManagementServiceResourceCollection> GetApiManagementServiceResourceCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             VNetCollection = resourceGroup.GetVirtualNetworks();
-            return resourceGroup.GetApiManagementServices();
+            return resourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task<ApiManagementServiceResource> GetApiManagementServiceAsync()
         {
-            var collection = await GetApiManagementServiceCollectionAsync();
+            var collection = await GetApiManagementServiceResourceCollectionAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Premium, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             return (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task ApplyNetworkConfigurationUpdates()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -52,27 +51,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task Backup_Restore()
         {
             // Backup
             var apiManagementService = await GetApiManagementServiceAsync();
             var backupContent = new ApiManagementServiceBackupRestoreContent("apiteststorageaccount", "apiblob", "backup5")
             {
-                AccessType = StorageAccountAccessType.SystemAssignedManagedIdentity
+                AccessType = AccessType.SystemAssignedManagedIdentity
             };
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.BackupAsync(WaitUntil.Completed, backupContent));
 
             // Restore
             var restoreContent = new ApiManagementServiceBackupRestoreContent("apiteststorageaccount", "apiblob", "backup5")
             {
-                AccessType = StorageAccountAccessType.SystemAssignedManagedIdentity
+                AccessType = AccessType.SystemAssignedManagedIdentity
             };
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.RestoreAsync(WaitUntil.Completed, restoreContent));
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task Get()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -81,165 +78,147 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetAvailableApiManagementServiceSkus()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetAvailableApiManagementServiceSkusAsync().ToEnumerableAsync();
+            var list = await apiManagementService.GetAvailableServiceSkusAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetNetworkStatusByLocation()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var status = await apiManagementService.GetNetworkStatusByLocationAsync(AzureLocation.WestUS2.DisplayName);
+            var status = await apiManagementService.GetByLocationAsync(AzureLocation.WestUS2.DisplayName);
             Assert.GreaterOrEqual(status.Value.ConnectivityStatus.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetNetworkStatuses()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var status = await apiManagementService.GetNetworkStatusesAsync().ToEnumerableAsync();
+            var status = await apiManagementService.NetworkStatusGetByServiceAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(status.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetOutboundNetworkDependenciesEndpoints()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetOutboundNetworkDependenciesEndpointsAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 0);
+            var result = await apiManagementService.OutboundNetworkDependenciesEndpointsGetByServiceAsync();
+            Assert.GreaterOrEqual(result.Value.Value.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetPolicyDescriptions()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            Assert.DoesNotThrow(() => apiManagementService.GetPolicyDescriptionsAsync());
+            var result = await apiManagementService.GetByServiceAsync((PolicyScopeContract?)null);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetPortalSettings()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            Assert.DoesNotThrow(() => apiManagementService.GetPortalSettingsAsync());
+            var result = await apiManagementService.PortalSettingsGetByServiceAsync();
+            Assert.NotNull(result.Value);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetProductsByTags()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetProductsByTagsAsync().ToEnumerableAsync();
+            var list = await apiManagementService.ProductGetByTagsAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetQuotaByCounterKeys()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetQuotaByCounterKeysAsync("foo").ToEnumerableAsync());
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetByServiceAsync("foo", default(CancellationToken)));
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetQuotaByPeriodKey()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetQuotaByPeriodKeyAsync("foo", "foo"));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetAsync("foo", "foo"));
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetRegions()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetRegionsAsync().ToEnumerableAsync();
+            var list = await apiManagementService.RegionGetByServiceAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByApi()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsByApiAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
+            var list = await apiManagementService.GetByApiAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByGeo()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsByGeoAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
+            var list = await apiManagementService.GetByGeoAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByOperation()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsByOperationAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
+            var list = await apiManagementService.GetByOperationAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByProduct()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsByProductAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
+            var list = await apiManagementService.GetByProductAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByRequest()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsByRequestAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
+            var list = await apiManagementService.GetByRequestAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsBySubscription()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsBySubscriptionAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
+            var list = await apiManagementService.GetBySubscriptionAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByTime()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsByTimeAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'", TimeSpan.FromMinutes(15)).ToEnumerableAsync();
+            var list = await apiManagementService.GetByTimeAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'", TimeSpan.FromMinutes(15)).ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByUser()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetReportsByUserAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
+            var list = await apiManagementService.GetByUserAsync("timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'").ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetSsoToken()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -248,29 +227,27 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetTagResources()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var list = await apiManagementService.GetTagResourcesAsync().ToEnumerableAsync();
+            var list = await apiManagementService.GetByServiceAsync(filter: null).ToEnumerableAsync();
             Assert.GreaterOrEqual(list.Count, 0);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetTenantAccessInfo()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var result = (await apiManagementService.GetTenantAccessInfoAsync(AccessName.TenantAccess)).Value;
+            var result = (await apiManagementService.GetTenantAccessInfoAsync(AccessIdName.Access)).Value;
             Assert.NotNull(result.Data.Name);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetTenantConfigurationSyncState()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetTenantConfigurationSyncStateAsync("foo"));
+            var tenantAccess = (await apiManagementService.GetTenantAccessInfoAsync(AccessIdName.Access)).Value;
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await tenantAccess.GetSyncStateAsync());
         }
 
         [Test]
@@ -288,43 +265,40 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task TenantConfiguration_Deploy_Save_Get()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var configName = Recording.GenerateAssetName("testconfig-");
-            var deploy = new ConfigurationDeployContent() { Branch = "master" };
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.ValidateTenantConfigurationAsync(WaitUntil.Completed, configName, deploy));
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.DeployTenantConfigurationAsync(WaitUntil.Completed, configName, deploy));
-            var content = new ConfigurationSaveContent() { Branch = "master" };
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.SaveTenantConfigurationAsync(WaitUntil.Completed, configName, content));
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetTenantConfigurationSyncStateAsync(configName));
+            var tenantAccess = (await apiManagementService.GetTenantAccessInfoAsync(AccessIdName.Access)).Value;
+            var deploy = new ConfigurationDeployContent();
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await tenantAccess.ValidateAsync(WaitUntil.Completed, deploy));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await tenantAccess.DeployAsync(WaitUntil.Completed, deploy));
+            var content = new ConfigurationSaveContent();
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await tenantAccess.SaveAsync(WaitUntil.Completed, content));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await tenantAccess.GetSyncStateAsync());
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task UpdateQuotaByCounterKeys()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var updateContent = new QuotaCounterValueUpdateContent()
+            var updateContent = new QuotaCounterValueUpdateContract()
             {
                 CallsCount = 0,
                 KbTransferred = 2.5630078125
             };
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.UpdateQuotaByCounterKeysAsync("ba", updateContent).ToEnumerableAsync());
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.UpdateAsync("ba", updateContent));
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task UpdateQuotaByPeriodKey()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var updateContent = new QuotaCounterValueUpdateContent()
+            var updateContent = new QuotaCounterValueUpdateContract()
             {
                 CallsCount = 0,
                 KbTransferred = 0
             };
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.UpdateQuotaByPeriodKeyAsync("ba", "0_P3Y6M4DT12H30M5S", updateContent));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.UpdateAsync("ba", "0_P3Y6M4DT12H30M5S", updateContent));
         }
     }
 }

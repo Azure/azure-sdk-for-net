@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await SetCollectionsAsync();
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // now create logger using the eventhub
             await CreateApiServiceAsync();
-            var logCollection = ApiServiceResource.GetApiManagementLoggers();
+            var logCollection = ApiServiceResource.GetLoggers();
             var loggerCreateParameters = new ApiManagementLoggerData()
             {
                 LoggerType = LoggerType.AzureEventHub,
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // patch logger
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
-            await loggerContract.UpdateAsync(ETag.All, new ApiManagementLoggerPatch() { Description = patchedDescription });
+            await loggerContract.UpdateAsync(ETag.All.ToString(), new LoggerUpdateContract() { Description = patchedDescription });
 
             // get to check it was patched
             loggerContract = await logCollection.GetAsync(newloggerId);
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(loggerContract.Data.Credentials);
 
             // delete the logger
-            await loggerContract.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await loggerContract.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var falseResult = await logCollection.ExistsAsync(newloggerId);
             Assert.IsFalse(falseResult);
         }

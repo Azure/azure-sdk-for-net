@@ -13,90 +13,128 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementEmailTemplate data model.
-    /// Email Template details.
-    /// </summary>
+    /// <summary> Email Template details. </summary>
     public partial class ApiManagementEmailTemplateData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateData"/>. </summary>
         public ApiManagementEmailTemplateData()
         {
-            Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="subject"> Subject of the Template. </param>
-        /// <param name="body"> Email Template Body. This should be a valid XDocument. </param>
-        /// <param name="title"> Title of the Template. </param>
-        /// <param name="description"> Description of the Email Template. </param>
-        /// <param name="isDefault"> Whether the template is the default template provided by API Management or has been edited. </param>
-        /// <param name="parameters"> Email Template Parameter values. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementEmailTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string body, string title, string description, bool? isDefault, IList<EmailTemplateParametersContractProperties> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Email Template entity contract properties. </param>
+        internal ApiManagementEmailTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmailTemplateContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            Subject = subject;
-            Body = body;
-            Title = title;
-            Description = description;
-            IsDefault = isDefault;
-            Parameters = parameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Email Template entity contract properties. </summary>
+        [WirePath("properties")]
+        internal EmailTemplateContractProperties Properties { get; set; }
 
         /// <summary> Subject of the Template. </summary>
         [WirePath("properties.subject")]
-        public string Subject { get; set; }
+        public string Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> Email Template Body. This should be a valid XDocument. </summary>
         [WirePath("properties.body")]
-        public string Body { get; set; }
+        public string Body
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Body;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Body = value;
+            }
+        }
+
         /// <summary> Title of the Template. </summary>
         [WirePath("properties.title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Title = value;
+            }
+        }
+
         /// <summary> Description of the Email Template. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Whether the template is the default template provided by API Management or has been edited. </summary>
         [WirePath("properties.isDefault")]
-        public bool? IsDefault { get; }
+        public bool? IsDefault
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefault;
+            }
+        }
+
         /// <summary> Email Template Parameter values. </summary>
         [WirePath("properties.parameters")]
-        public IList<EmailTemplateParametersContractProperties> Parameters { get; }
+        public IList<EmailTemplateParametersContractProperties> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
     }
 }

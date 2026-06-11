@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApiGatewayResource GatewayResource { get; set; }
+        private ApiManagementGatewayResource GatewayResource { get; set; }
 
-        private ApiGatewayCollection GatewayResources { get; set; }
+        private ApiManagementGatewayResourceCollection GatewayResources { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            GatewayResources = ResourceGroup.GetApiGateways();
+            GatewayResources = ResourceGroup.GetApiManagementGatewayResources();
         }
 
         private async Task CreateGatewayResourceAsync()
         {
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiGatewayData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
+            var data = new ApiManagementGatewayResourceData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
             GatewayResource = (await GatewayResources.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
@@ -50,16 +50,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await SetCollectionsAsync();
@@ -68,11 +67,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             string configName = Recording.GenerateAssetName("cfg");
 
-            var collection = await GetApiManagementServiceCollectionAsync();
+            var collection = await GetApiManagementServiceResourceCollectionAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
             Assert.AreEqual(apiManagementService.Data.Name, apiName);
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // patch logger
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
-            await loggerContract.UpdateAsync(ETag.All, new ApiManagementLoggerPatch() { Description = patchedDescription });
+            await loggerContract.UpdateAsync(ETag.All.ToString(), new LoggerUpdateContract() { Description = patchedDescription });
 
             // get to check it was patched
             loggerContract = await logCollection.GetAsync(newloggerId);
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(loggerContract.Data.Credentials);
 
             // delete the logger
-            await loggerContract.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await loggerContract.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var falseResult = await logCollection.ExistsAsync(newloggerId);
             Assert.IsFalse(falseResult);
         }

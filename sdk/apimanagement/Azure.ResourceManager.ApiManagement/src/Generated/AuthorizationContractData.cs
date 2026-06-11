@@ -13,85 +13,118 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the AuthorizationContract data model.
-    /// Authorization contract.
-    /// </summary>
+    /// <summary> Authorization contract. </summary>
     public partial class AuthorizationContractData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationContractData"/>. </summary>
         public AuthorizationContractData()
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationContractData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="authorizationType"> Authorization type options. </param>
-        /// <param name="oAuth2GrantType"> OAuth2 grant type options. </param>
-        /// <param name="parameters"> Authorization parameters. </param>
-        /// <param name="error"> Authorization error details. </param>
-        /// <param name="status"> Status of the Authorization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementAuthorizationType? authorizationType, OAuth2GrantType? oAuth2GrantType, IDictionary<string, string> parameters, ApiManagementAuthorizationError error, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Authorization Contract. </param>
+        internal AuthorizationContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthorizationContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            AuthorizationType = authorizationType;
-            OAuth2GrantType = oAuth2GrantType;
-            Parameters = parameters;
-            Error = error;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the Authorization Contract. </summary>
+        [WirePath("properties")]
+        internal AuthorizationContractProperties Properties { get; set; }
 
         /// <summary> Authorization type options. </summary>
         [WirePath("properties.authorizationType")]
-        public ApiManagementAuthorizationType? AuthorizationType { get; set; }
+        public ApiManagementAuthorizationType? AuthorizationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationContractProperties();
+                }
+                Properties.AuthorizationType = value;
+            }
+        }
+
         /// <summary> OAuth2 grant type options. </summary>
         [WirePath("properties.oauth2grantType")]
-        public OAuth2GrantType? OAuth2GrantType { get; set; }
+        public OAuth2GrantType? OAuth2GrantType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OAuth2GrantType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationContractProperties();
+                }
+                Properties.OAuth2GrantType = value;
+            }
+        }
+
         /// <summary> Authorization parameters. </summary>
         [WirePath("properties.parameters")]
-        public IDictionary<string, string> Parameters { get; }
+        public IDictionary<string, string> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationContractProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
         /// <summary> Authorization error details. </summary>
         [WirePath("properties.error")]
-        public ApiManagementAuthorizationError Error { get; set; }
+        public ApiManagementAuthorizationError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationContractProperties();
+                }
+                Properties.Error = value;
+            }
+        }
+
         /// <summary> Status of the Authorization. </summary>
         [WirePath("properties.status")]
-        public string Status { get; set; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationContractProperties();
+                }
+                Properties.Status = value;
+            }
+        }
     }
 }

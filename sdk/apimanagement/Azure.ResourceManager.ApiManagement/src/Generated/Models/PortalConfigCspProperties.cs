@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The developer portal Content Security Policy (CSP) settings. </summary>
     public partial class PortalConfigCspProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigCspProperties"/>. </summary>
         public PortalConfigCspProperties()
@@ -56,21 +28,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="mode"> The mode of the developer portal Content Security Policy (CSP). </param>
         /// <param name="reportUri"> The URLs used by the browser to report CSP violations. </param>
         /// <param name="allowedSources"> Allowed sources, e.g. `*.trusted.com`, `trusted.com`, `https://`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PortalConfigCspProperties(PortalSettingsCspMode? mode, IList<Uri> reportUri, IList<string> allowedSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PortalConfigCspProperties(PortalSettingsCspMode? mode, IList<Uri> reportUri, IList<string> allowedSources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             ReportUri = reportUri;
             AllowedSources = allowedSources;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The mode of the developer portal Content Security Policy (CSP). </summary>
         [WirePath("mode")]
         public PortalSettingsCspMode? Mode { get; set; }
+
         /// <summary> The URLs used by the browser to report CSP violations. </summary>
         [WirePath("reportUri")]
         public IList<Uri> ReportUri { get; }
+
         /// <summary> Allowed sources, e.g. `*.trusted.com`, `trusted.com`, `https://`. </summary>
         [WirePath("allowedSources")]
         public IList<string> AllowedSources { get; }

@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class HostnameConfiguration : IUtf8JsonSerializable, IJsonModel<HostnameConfiguration>
+    /// <summary> Custom hostname configuration. </summary>
+    public partial class HostnameConfiguration : IJsonModel<HostnameConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostnameConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="HostnameConfiguration"/> for deserialization. </summary>
+        internal HostnameConfiguration()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HostnameConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHostnameConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HostnameConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HostnameConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HostnameConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostnameConfiguration IPersistableModel<HostnameConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HostnameConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HostnameConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HostnameConfiguration)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HostnameType.ToString());
             writer.WritePropertyName("hostName"u8);
@@ -59,15 +103,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (Optional.IsDefined(IsDefaultSslBindingEnabled))
+            if (Optional.IsDefined(DefaultSslBinding))
             {
                 writer.WritePropertyName("defaultSslBinding"u8);
-                writer.WriteBooleanValue(IsDefaultSslBindingEnabled.Value);
+                writer.WriteBooleanValue(DefaultSslBinding.Value);
             }
-            if (Optional.IsDefined(IsClientCertificateNegotiationEnabled))
+            if (Optional.IsDefined(NegotiateClientCertificate))
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
-                writer.WriteBooleanValue(IsClientCertificateNegotiationEnabled.Value);
+                writer.WriteBooleanValue(NegotiateClientCertificate.Value);
             }
             if (Optional.IsDefined(Certificate))
             {
@@ -84,15 +128,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("certificateStatus"u8);
                 writer.WriteStringValue(CertificateStatus.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,29 +145,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        HostnameConfiguration IJsonModel<HostnameConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostnameConfiguration IJsonModel<HostnameConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HostnameConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HostnameConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHostnameConfiguration(document.RootElement, options);
         }
 
-        internal static HostnameConfiguration DeserializeHostnameConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HostnameConfiguration DeserializeHostnameConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HostnameType type = default;
+            HostnameType hostnameType = default;
             string hostName = default;
-            Uri keyVaultId = default;
+            Uri keyVaultSecretUri = default;
             string identityClientId = default;
             string encodedCertificate = default;
             string certificatePassword = default;
@@ -132,99 +181,97 @@ namespace Azure.ResourceManager.ApiManagement.Models
             CertificateInformation certificate = default;
             CertificateSource? certificateSource = default;
             CertificateStatus? certificateStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new HostnameType(property.Value.GetString());
+                    hostnameType = new HostnameType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostName"u8))
+                if (prop.NameEquals("hostName"u8))
                 {
-                    hostName = property.Value.GetString();
+                    hostName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultId"u8))
+                if (prop.NameEquals("keyVaultId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVaultId = new Uri(property.Value.GetString());
+                    keyVaultSecretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("identityClientId"u8))
+                if (prop.NameEquals("identityClientId"u8))
                 {
-                    identityClientId = property.Value.GetString();
+                    identityClientId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encodedCertificate"u8))
+                if (prop.NameEquals("encodedCertificate"u8))
                 {
-                    encodedCertificate = property.Value.GetString();
+                    encodedCertificate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificatePassword"u8))
+                if (prop.NameEquals("certificatePassword"u8))
                 {
-                    certificatePassword = property.Value.GetString();
+                    certificatePassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultSslBinding"u8))
+                if (prop.NameEquals("defaultSslBinding"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultSslBinding = property.Value.GetBoolean();
+                    defaultSslBinding = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("negotiateClientCertificate"u8))
+                if (prop.NameEquals("negotiateClientCertificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    negotiateClientCertificate = property.Value.GetBoolean();
+                    negotiateClientCertificate = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("certificate"u8))
+                if (prop.NameEquals("certificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value, options);
+                    certificate = CertificateInformation.DeserializeCertificateInformation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateSource"u8))
+                if (prop.NameEquals("certificateSource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateSource = new CertificateSource(property.Value.GetString());
+                    certificateSource = new CertificateSource(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateStatus"u8))
+                if (prop.NameEquals("certificateStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateStatus = new CertificateStatus(property.Value.GetString());
+                    certificateStatus = new CertificateStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HostnameConfiguration(
-                type,
+                hostnameType,
                 hostName,
-                keyVaultId,
+                keyVaultSecretUri,
                 identityClientId,
                 encodedCertificate,
                 certificatePassword,
@@ -233,251 +280,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 certificate,
                 certificateSource,
                 certificateStatus,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostnameType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{HostnameType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostName))
-                {
-                    builder.Append("  hostName: ");
-                    if (HostName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HostName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HostName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultSecretUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyVaultId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVaultSecretUri))
-                {
-                    builder.Append("  keyVaultId: ");
-                    builder.AppendLine($"'{KeyVaultSecretUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identityClientId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IdentityClientId))
-                {
-                    builder.Append("  identityClientId: ");
-                    if (IdentityClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IdentityClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IdentityClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncodedCertificate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  encodedCertificate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EncodedCertificate))
-                {
-                    builder.Append("  encodedCertificate: ");
-                    if (EncodedCertificate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EncodedCertificate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EncodedCertificate}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificatePassword), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificatePassword: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificatePassword))
-                {
-                    builder.Append("  certificatePassword: ");
-                    if (CertificatePassword.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CertificatePassword}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CertificatePassword}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefaultSslBindingEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  defaultSslBinding: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDefaultSslBindingEnabled))
-                {
-                    builder.Append("  defaultSslBinding: ");
-                    var boolValue = IsDefaultSslBindingEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientCertificateNegotiationEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  negotiateClientCertificate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsClientCertificateNegotiationEnabled))
-                {
-                    builder.Append("  negotiateClientCertificate: ");
-                    var boolValue = IsClientCertificateNegotiationEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Certificate))
-                {
-                    builder.Append("  certificate: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Certificate, options, 2, false, "  certificate: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateSource), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificateSource: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateSource))
-                {
-                    builder.Append("  certificateSource: ");
-                    builder.AppendLine($"'{CertificateSource.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificateStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateStatus))
-                {
-                    builder.Append("  certificateStatus: ");
-                    builder.AppendLine($"'{CertificateStatus.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HostnameConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HostnameConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HostnameConfiguration IPersistableModel<HostnameConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HostnameConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHostnameConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HostnameConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HostnameConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

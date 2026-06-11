@@ -13,90 +13,128 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementNamedValue data model.
-    /// NamedValue details.
-    /// </summary>
+    /// <summary> NamedValue details. </summary>
     public partial class ApiManagementNamedValueData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueData"/>. </summary>
         public ApiManagementNamedValueData()
         {
-            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
-        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
-        /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> NamedValue entity contract properties. </param>
+        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NamedValueContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            Tags = tags;
-            IsSecret = isSecret;
-            DisplayName = displayName;
-            Value = value;
-            KeyVaultDetails = keyVaultDetails;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> NamedValue entity contract properties. </summary>
+        [WirePath("properties")]
+        internal NamedValueContractProperties Properties { get; set; }
 
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
         [WirePath("properties.tags")]
-        public IList<string> Tags { get; }
+        public IList<string> Tags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                return Properties.Tags;
+            }
+        }
+
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
         [WirePath("properties.secret")]
-        public bool? IsSecret { get; set; }
+        public bool? IsSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.IsSecret = value;
+            }
+        }
+
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("properties.value")]
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
         /// <summary> KeyVault location details of the namedValue. </summary>
         [WirePath("properties.keyVault")]
-        public KeyVaultContractProperties KeyVaultDetails { get; set; }
+        public KeyVaultContractProperties KeyVaultDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.KeyVaultDetails = value;
+            }
+        }
+
         /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

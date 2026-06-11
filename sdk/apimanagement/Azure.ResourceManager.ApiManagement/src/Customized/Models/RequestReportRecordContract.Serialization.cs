@@ -1,0 +1,340 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Net;
+using System.Text.Json;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.ApiManagement.Models
+{
+    /// <summary>
+    /// Workaround for MPG generator bug: the implicit `string` -> <see cref="RequestMethod"/>
+    /// conversion the generator applies to the spec's <c>method: string</c> field is correct
+    /// for the property declaration (matches the previously shipped GA contract), but the
+    /// corresponding <c>JsonModelWriteCore</c> / <c>DeserializeRequestReportRecordContract</c>
+    /// emitted in <c>Generated/Models/RequestReportRecordContract.Serialization.cs</c> contains
+    /// two invalid call sites:
+    /// <list type="bullet">
+    /// <item><description><c>writer.WriteObjectValue&lt;RequestMethod?&gt;(Method.Value, options)</c> (CS1503)</description></item>
+    /// <item><description><c>RequestMethod.DeserializeRequestMethod(prop.Value, options)</c> (CS0117)</description></item>
+    /// </list>
+    /// The hand-written replacements below mirror the generator output verbatim except for
+    /// those two lines, which use the correct <c>WriteStringValue(value.Method)</c> /
+    /// <c>new RequestMethod(value.GetString())</c> shape.
+    ///
+    /// Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/59466
+    /// Remove this customization once the upstream MPG emitter teaches its model serializer
+    /// the <see cref="RequestMethod"/> round-trip shape and the regenerated file compiles on
+    /// its own.
+    /// </summary>
+    [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppress("DeserializeRequestReportRecordContract", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
+    public partial class RequestReportRecordContract
+    {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(ApiId))
+            {
+                writer.WritePropertyName("apiId"u8);
+                writer.WriteStringValue(ApiId);
+            }
+            if (Optional.IsDefined(OperationId))
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
+            {
+                writer.WritePropertyName("productId"u8);
+                writer.WriteStringValue(ProductId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("userId"u8);
+                writer.WriteStringValue(UserId);
+            }
+            if (Optional.IsDefined(Method))
+            {
+                writer.WritePropertyName("method"u8);
+                // Workaround: generator emitted writer.WriteObjectValue<RequestMethod?>(Method.Value, options) (CS1503).
+                writer.WriteStringValue(Method.Value.Method);
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(BackendResponseCode))
+            {
+                writer.WritePropertyName("backendResponseCode"u8);
+                writer.WriteStringValue(BackendResponseCode);
+            }
+            if (Optional.IsDefined(ResponseCode))
+            {
+                writer.WritePropertyName("responseCode"u8);
+                writer.WriteNumberValue(ResponseCode.Value);
+            }
+            if (Optional.IsDefined(ResponseSize))
+            {
+                writer.WritePropertyName("responseSize"u8);
+                writer.WriteNumberValue(ResponseSize.Value);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(Cache))
+            {
+                writer.WritePropertyName("cache"u8);
+                writer.WriteStringValue(Cache);
+            }
+            if (Optional.IsDefined(ApiTime))
+            {
+                writer.WritePropertyName("apiTime"u8);
+                writer.WriteNumberValue(ApiTime.Value);
+            }
+            if (Optional.IsDefined(ServiceTime))
+            {
+                writer.WritePropertyName("serviceTime"u8);
+                writer.WriteNumberValue(ServiceTime.Value);
+            }
+            if (Optional.IsDefined(ApiRegion))
+            {
+                writer.WritePropertyName("apiRegion"u8);
+                writer.WriteStringValue(ApiRegion);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(RequestSize))
+            {
+                writer.WritePropertyName("requestSize"u8);
+                writer.WriteNumberValue(RequestSize.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string apiId = default;
+            string operationId = default;
+            string productId = default;
+            string userId = default;
+            RequestMethod? @method = default;
+            Uri uri = default;
+            IPAddress ipAddress = default;
+            string backendResponseCode = default;
+            int? responseCode = default;
+            int? responseSize = default;
+            DateTimeOffset? timestamp = default;
+            string cache = default;
+            double? apiTime = default;
+            double? serviceTime = default;
+            string apiRegion = default;
+            string subscriptionId = default;
+            string requestId = default;
+            int? requestSize = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("apiId"u8))
+                {
+                    apiId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("operationId"u8))
+                {
+                    operationId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("productId"u8))
+                {
+                    productId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userId"u8))
+                {
+                    userId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("method"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    // Workaround: generator emitted RequestMethod.DeserializeRequestMethod(prop.Value, options) (CS0117).
+                    @method = new RequestMethod(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("url"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("ipAddress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("backendResponseCode"u8))
+                {
+                    backendResponseCode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("responseCode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    responseCode = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("responseSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    responseSize = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("timestamp"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("cache"u8))
+                {
+                    cache = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("apiTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    apiTime = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("serviceTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceTime = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("apiRegion"u8))
+                {
+                    apiRegion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("subscriptionId"u8))
+                {
+                    subscriptionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("requestId"u8))
+                {
+                    requestId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("requestSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requestSize = prop.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new RequestReportRecordContract(
+                apiId,
+                operationId,
+                productId,
+                userId,
+                @method,
+                uri,
+                ipAddress,
+                backendResponseCode,
+                responseCode,
+                responseSize,
+                timestamp,
+                cache,
+                apiTime,
+                serviceTime,
+                apiRegion,
+                subscriptionId,
+                requestId,
+                requestSize,
+                additionalBinaryDataProperties);
+        }
+    }
+}

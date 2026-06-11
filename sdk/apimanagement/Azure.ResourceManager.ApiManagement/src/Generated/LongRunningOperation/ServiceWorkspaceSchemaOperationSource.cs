@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ServiceWorkspaceSchemaOperationSource : IOperationSource<ServiceWorkspaceSchemaResource>
+    /// <summary></summary>
+    internal partial class ServiceWorkspaceSchemaOperationSource : IOperationSource<ServiceWorkspaceSchemaResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServiceWorkspaceSchemaOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServiceWorkspaceSchemaResource IOperationSource<ServiceWorkspaceSchemaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementGlobalSchemaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ApiManagementGlobalSchemaData data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServiceWorkspaceSchemaResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServiceWorkspaceSchemaResource> IOperationSource<ServiceWorkspaceSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementGlobalSchemaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
-            return await Task.FromResult(new ServiceWorkspaceSchemaResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ApiManagementGlobalSchemaData data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceWorkspaceSchemaResource(_client, data);
         }
     }
 }

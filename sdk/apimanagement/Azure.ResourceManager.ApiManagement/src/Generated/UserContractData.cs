@@ -13,107 +13,168 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the UserContract data model.
-    /// User details.
-    /// </summary>
+    /// <summary> User details. </summary>
     public partial class UserContractData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
         public UserContractData()
         {
-            Identities = new ChangeTrackingList<UserIdentityContract>();
-            Groups = new ChangeTrackingList<GroupContractProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
-        /// <param name="note"> Optional note about a user set by the administrator. </param>
-        /// <param name="identities"> Collection of user identities. </param>
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="email"> Email address. </param>
-        /// <param name="registriesOn">
-        /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="groups"> Collection of groups user is part of. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> User entity contract properties. </param>
+        internal UserContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UserContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            State = state;
-            Note = note;
-            Identities = identities;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            RegistriesOn = registriesOn;
-            Groups = groups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> User entity contract properties. </summary>
+        [WirePath("properties")]
+        internal UserContractProperties Properties { get; set; }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
         [WirePath("properties.state")]
-        public ApiManagementUserState? State { get; set; }
+        public ApiManagementUserState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Optional note about a user set by the administrator. </summary>
         [WirePath("properties.note")]
-        public string Note { get; set; }
+        public string Note
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Note;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                Properties.Note = value;
+            }
+        }
+
         /// <summary> Collection of user identities. </summary>
         [WirePath("properties.identities")]
-        public IList<UserIdentityContract> Identities { get; }
+        public IList<UserIdentityContract> Identities
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                return Properties.Identities;
+            }
+        }
+
         /// <summary> First name. </summary>
         [WirePath("properties.firstName")]
-        public string FirstName { get; set; }
+        public string FirstName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirstName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                Properties.FirstName = value;
+            }
+        }
+
         /// <summary> Last name. </summary>
         [WirePath("properties.lastName")]
-        public string LastName { get; set; }
+        public string LastName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                Properties.LastName = value;
+            }
+        }
+
         /// <summary> Email address. </summary>
         [WirePath("properties.email")]
-        public string Email { get; set; }
-        /// <summary>
-        /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        public string Email
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Email;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                Properties.Email = value;
+            }
+        }
+
+        /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.registrationDate")]
-        public DateTimeOffset? RegistriesOn { get; set; }
+        public DateTimeOffset? RegistriesOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RegistriesOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                Properties.RegistriesOn = value;
+            }
+        }
+
         /// <summary> Collection of groups user is part of. </summary>
         [WirePath("properties.groups")]
-        public IReadOnlyList<GroupContractProperties> Groups { get; }
+        public IReadOnlyList<GroupContractProperties> Groups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserContractProperties();
+                }
+                return Properties.Groups;
+            }
+        }
     }
 }

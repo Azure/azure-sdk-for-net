@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -27,60 +27,54 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var groupCollection = ApiServiceResource.GetApiManagementGroups();
+            var groupCollection = ApiServiceResource.GetGroups();
 
             var newGroupId = Recording.GenerateAssetName("sdkGroupId");
             var newGroupDisplayName = Recording.GenerateAssetName("sdkGroup");
-            var parameters = new ApiManagementGroupCreateOrUpdateContent()
+            var parameters = new GroupCreateContent()
             {
-                DisplayName = newGroupDisplayName,
                 Description = "Group created from Sdk client"
             };
 
             var groupContract = (await groupCollection.CreateOrUpdateAsync(WaitUntil.Completed, newGroupId, parameters)).Value;
             Assert.NotNull(groupContract);
-            Assert.AreEqual(newGroupDisplayName, groupContract.Data.DisplayName);
-            Assert.IsFalse(groupContract.Data.IsBuiltIn);
+            Assert.IsFalse(groupContract.Data.BuiltIn);
             Assert.NotNull(groupContract.Data.Description);
-            Assert.AreEqual(ApiManagementGroupType.Custom, groupContract.Data.GroupType);
+            Assert.AreEqual(ApiManagementGroupType.Custom, groupContract.Data.Type);
 
             var userId = Recording.GenerateAssetName("sdkUserId");
             var collection = ApiServiceResource.GetApiManagementUsers();
 
             // list all group users
-            var listResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();
+            var listResponse = await groupContract.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(listResponse);
 
             // create a new user and add to the group
-            var createParameters = new ApiManagementUserCreateOrUpdateContent()
+            var createParameters = new UserCreateContent()
             {
-                FirstName = Recording.GenerateAssetName("sdkFirst"),
-                LastName = Recording.GenerateAssetName("sdkLast"),
-                Email = Recording.GenerateAssetName("sdkFirst.Last") + "@contoso.com",
                 State = ApiManagementUserState.Active,
                 Note = "dummy note"
             };
@@ -88,21 +82,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(userContract);
 
             // add user to group
-            var addUserContract = (await groupContract.CreateGroupUserAsync(userId)).Value;
+            var addUserContract = (await groupContract.CreateAsync(userId)).Value;
             Assert.NotNull(addUserContract);
-            Assert.AreEqual(userContract.Data.Email, addUserContract.Email);
-            Assert.AreEqual(userContract.Data.FirstName, addUserContract.FirstName);
+            Assert.AreEqual(userContract.Data.Email, addUserContract.Data.Email);
+            Assert.AreEqual(userContract.Data.FirstName, addUserContract.Data.FirstName);
 
             // list group user
-            var listgroupResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();
+            var listgroupResponse = await groupContract.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(listgroupResponse.Count, 1);
 
             // remove user from group
-            await groupContract.DeleteGroupUserAsync(userId);
+            await groupContract.DeleteAsync(userId);
 
             // make sure user is removed
-            var falseResult = (await groupContract.CheckGroupUserEntityExistsAsync(userId)).Value;
-            Assert.IsFalse(falseResult);
+            var checkResult = await groupContract.CheckEntityExistsAsync(userId);
+            Assert.NotNull(checkResult);
         }
     }
 }

@@ -6,94 +6,102 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementAuthorizationServerResource"/> and their operations.
-    /// Each <see cref="ApiManagementAuthorizationServerResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get an <see cref="ApiManagementAuthorizationServerCollection"/> instance call the GetApiManagementAuthorizationServers method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// Each <see cref="ApiManagementAuthorizationServerResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ApiManagementAuthorizationServerCollection"/> instance call the GetApiManagementAuthorizationServers method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class ApiManagementAuthorizationServerCollection : ArmCollection, IEnumerable<ApiManagementAuthorizationServerResource>, IAsyncEnumerable<ApiManagementAuthorizationServerResource>
+    public partial class ApiManagementAuthorizationServerCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics;
-        private readonly AuthorizationServerRestOperations _apiManagementAuthorizationServerAuthorizationServerRestClient;
+        private readonly ClientDiagnostics _authorizationServerClientDiagnostics;
+        private readonly AuthorizationServer _authorizationServerRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementAuthorizationServerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerCollection for mocking. </summary>
         protected ApiManagementAuthorizationServerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementAuthorizationServerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementAuthorizationServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementAuthorizationServerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementAuthorizationServerResource.ResourceType, out string apiManagementAuthorizationServerAuthorizationServerApiVersion);
-            _apiManagementAuthorizationServerAuthorizationServerRestClient = new AuthorizationServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementAuthorizationServerAuthorizationServerApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApiManagementAuthorizationServerResource.ResourceType, out string apiManagementAuthorizationServerApiVersion);
+            _authorizationServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementAuthorizationServerResource.ResourceType.Namespace, Diagnostics);
+            _authorizationServerRestClient = new AuthorizationServer(_authorizationServerClientDiagnostics, Pipeline, Endpoint, apiManagementAuthorizationServerApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApiManagementServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates new authorization server or updates an existing authorization server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementAuthorizationServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApiManagementAuthorizationServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, ApiManagementAuthorizationServerData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementAuthorizationServerData> response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ApiManagementAuthorizationServerResource> operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,45 +115,51 @@ namespace Azure.ResourceManager.ApiManagement
         /// Creates new authorization server or updates an existing authorization server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementAuthorizationServerResource> CreateOrUpdate(WaitUntil waitUntil, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApiManagementAuthorizationServerResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, string authsid, ApiManagementAuthorizationServerData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch, cancellationToken);
-                var uri = _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, ApiManagementAuthorizationServerData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementAuthorizationServerData> response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ApiManagementAuthorizationServerResource> operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,38 +173,44 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the details of the authorization server specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementAuthorizationServerResource>> GetAsync(string authsid, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApiManagementAuthorizationServerResource>> GetAsync(string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Get");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementAuthorizationServerAuthorizationServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementAuthorizationServerData> response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -204,38 +224,44 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the details of the authorization server specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public virtual Response<ApiManagementAuthorizationServerResource> Get(string authsid, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApiManagementAuthorizationServerResource> Get(string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Get");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementAuthorizationServerAuthorizationServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementAuthorizationServerData> response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,105 +272,55 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists a collection of authorization servers defined within a service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementAuthorizationServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementAuthorizationServerResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementAuthorizationServerResource(Client, ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(e)), _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics, Pipeline, "ApiManagementAuthorizationServerCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a collection of authorization servers defined within a service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementAuthorizationServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementAuthorizationServerResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementAuthorizationServerResource(Client, ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(e)), _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics, Pipeline, "ApiManagementAuthorizationServerCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string authsid, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Exists");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiManagementAuthorizationServerAuthorizationServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementAuthorizationServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementAuthorizationServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -358,36 +334,52 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public virtual Response<bool> Exists(string authsid, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Exists");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiManagementAuthorizationServerAuthorizationServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementAuthorizationServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementAuthorizationServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -401,38 +393,56 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public virtual async Task<NullableResponse<ApiManagementAuthorizationServerResource>> GetIfExistsAsync(string authsid, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ApiManagementAuthorizationServerResource>> GetIfExistsAsync(string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _apiManagementAuthorizationServerAuthorizationServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementAuthorizationServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementAuthorizationServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementAuthorizationServerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -446,38 +456,56 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationServerContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementAuthorizationServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authsid"> Identifier of the authorization server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        public virtual NullableResponse<ApiManagementAuthorizationServerResource> GetIfExists(string authsid, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ApiManagementAuthorizationServerResource> GetIfExists(string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
 
-            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
+            using DiagnosticScope scope = _authorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _apiManagementAuthorizationServerAuthorizationServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, authsid, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementAuthorizationServerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementAuthorizationServerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementAuthorizationServerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementAuthorizationServerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,21 +513,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ApiManagementAuthorizationServerResource> IEnumerable<ApiManagementAuthorizationServerResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ApiManagementAuthorizationServerResource> IAsyncEnumerable<ApiManagementAuthorizationServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

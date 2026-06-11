@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> OAuth2 settings details. </summary>
     public partial class AuthorizationProviderOAuth2Settings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2Settings"/>. </summary>
         public AuthorizationProviderOAuth2Settings()
@@ -53,19 +25,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2Settings"/>. </summary>
         /// <param name="redirectUri"> Redirect URL to be set in the OAuth application. </param>
         /// <param name="grantTypes"> OAuth2 settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderOAuth2Settings(Uri redirectUri, AuthorizationProviderOAuth2GrantTypes grantTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="keyVault"> Key Vault reference for client secret storage. </param>
+        /// <param name="federatedIdentityCredentialsProperties"> Federated identity credentials properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationProviderOAuth2Settings(Uri redirectUri, AuthorizationProviderOAuth2GrantTypes grantTypes, AuthorizationProviderKeyVaultContract keyVault, AuthorizationProviderFederatedIdentityCredentialsProperties federatedIdentityCredentialsProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedirectUri = redirectUri;
             GrantTypes = grantTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            KeyVault = keyVault;
+            FederatedIdentityCredentialsProperties = federatedIdentityCredentialsProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Redirect URL to be set in the OAuth application. </summary>
         [WirePath("redirectUrl")]
         public Uri RedirectUri { get; set; }
+
         /// <summary> OAuth2 settings. </summary>
         [WirePath("grantTypes")]
         public AuthorizationProviderOAuth2GrantTypes GrantTypes { get; set; }
+
+        /// <summary> Key Vault reference for client secret storage. </summary>
+        [WirePath("keyVault")]
+        public AuthorizationProviderKeyVaultContract KeyVault { get; set; }
+
+        /// <summary> Federated identity credentials properties. </summary>
+        [WirePath("federatedIdentityCredentialsProperties")]
+        public AuthorizationProviderFederatedIdentityCredentialsProperties FederatedIdentityCredentialsProperties { get; }
     }
 }

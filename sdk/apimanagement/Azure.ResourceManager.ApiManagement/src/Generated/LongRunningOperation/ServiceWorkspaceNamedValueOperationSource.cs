@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ServiceWorkspaceNamedValueOperationSource : IOperationSource<ServiceWorkspaceNamedValueResource>
+    /// <summary></summary>
+    internal partial class ServiceWorkspaceNamedValueOperationSource : IOperationSource<ServiceWorkspaceNamedValueResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServiceWorkspaceNamedValueOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServiceWorkspaceNamedValueResource IOperationSource<ServiceWorkspaceNamedValueResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementNamedValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ApiManagementNamedValueData data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServiceWorkspaceNamedValueResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServiceWorkspaceNamedValueResource> IOperationSource<ServiceWorkspaceNamedValueResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementNamedValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
-            return await Task.FromResult(new ServiceWorkspaceNamedValueResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ApiManagementNamedValueData data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceWorkspaceNamedValueResource(_client, data);
         }
     }
 }

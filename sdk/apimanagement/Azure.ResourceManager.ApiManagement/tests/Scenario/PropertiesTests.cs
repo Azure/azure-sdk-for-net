@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -23,31 +23,30 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementNamedValues();
+            var collection = ApiServiceResource.GetNamedValues();
 
             string propertyId = Recording.GenerateAssetName("newproperty");
             string secretPropertyId = Recording.GenerateAssetName("secretproperty");
@@ -55,9 +54,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             string propertyDisplayName = Recording.GenerateAssetName("propertydisplay");
             string propertyValue = Recording.GenerateAssetName("propertyValue");
-            var createParameters = new ApiManagementNamedValueCreateOrUpdateContent()
+            var createParameters = new NamedValueCreateContract()
             {
-                DisplayName = propertyDisplayName,
                 Value = propertyValue
             };
 
@@ -78,11 +76,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string secretPropertyDisplayName = Recording.GenerateAssetName("secretPropertydisplay");
             string secretPropertyValue = Recording.GenerateAssetName("secretPropertyValue");
             List<string> tags = new List<string> { "secret" };
-            var secretCreateParameters = new ApiManagementNamedValueCreateOrUpdateContent()
+            var secretCreateParameters = new NamedValueCreateContract()
             {
-                DisplayName = secretPropertyDisplayName,
                 Value = secretPropertyValue,
-                IsSecret = true,
+                Secret = true,
                 Tags = { "secret" }
             };
 
@@ -98,14 +95,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             //create key vault namedvalue
             // Need to assign identity access
             //string kvPropertyDisplayName = Recording.GenerateAssetName("kvPropertydisplay");
-            //var kvCreateParameters = new ApiManagementNamedValueCreateOrUpdateContent()
+            //var kvCreateParameters = new NamedValueCreateContract()
             //{
             //    DisplayName = kvPropertyDisplayName,
             //    KeyVault = new KeyVaultContractCreateProperties
             //    {
             //        SecretIdentifier = Recording.GenerateAssetName("key")
             //    },
-            //    IsSecret = true
+            //    Secret = true
             //};
 
             //var kvPropertyResponse = (await collection.CreateOrUpdateAsync(
@@ -128,16 +125,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(2, listResponse.Count);
 
             // delete a property
-            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var resultFalse = (await collection.ExistsAsync(propertyId)).Value;
             Assert.IsFalse(resultFalse);
 
             // patch the secret property
-            var updateProperty = new ApiManagementNamedValuePatch()
+            var updateProperty = new NamedValuePatch()
             {
-                IsSecret = false
+                Secret = false
             };
-            await secretValueResponse.UpdateAsync(WaitUntil.Completed, ETag.All, updateProperty);
+            await secretValueResponse.UpdateAsync(WaitUntil.Completed, ETag.All.ToString(), updateProperty);
 
             // check it is patched
             var secretResponse = (await secretValueResponse.GetAsync()).Value;
@@ -151,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         public void ValidateProperty(
-            ApiManagementNamedValueResource contract,
+            NamedValueResource contract,
             string propertyId,
             string propertyDisplayName,
             string propertyValue,
@@ -168,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 Assert.AreEqual(propertyValue, contract.Data.Value);
             }
-            Assert.AreEqual(isSecret, contract.Data.IsSecret);
+            Assert.AreEqual(isSecret, contract.Data.Secret);
             Assert.AreEqual(propertyId, contract.Data.Name);
             if (tags != null)
             {

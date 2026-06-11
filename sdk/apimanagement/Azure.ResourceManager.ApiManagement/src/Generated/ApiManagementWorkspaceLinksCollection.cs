@@ -6,92 +6,95 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementWorkspaceLinksResource"/> and their operations.
-    /// Each <see cref="ApiManagementWorkspaceLinksResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get an <see cref="ApiManagementWorkspaceLinksCollection"/> instance call the GetApiManagementWorkspaceLinks method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// Each <see cref="ApiManagementWorkspaceLinksResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ApiManagementWorkspaceLinksCollection"/> instance call the GetApiManagementWorkspaceLinks method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class ApiManagementWorkspaceLinksCollection : ArmCollection, IEnumerable<ApiManagementWorkspaceLinksResource>, IAsyncEnumerable<ApiManagementWorkspaceLinksResource>
+    public partial class ApiManagementWorkspaceLinksCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics;
-        private readonly ApiManagementWorkspaceLinkRestOperations _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient;
-        private readonly ClientDiagnostics _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics;
-        private readonly ApiManagementWorkspaceLinksRestOperations _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient;
+        private readonly ClientDiagnostics _apiManagementWorkspaceLinkClientDiagnostics;
+        private readonly ApiManagementWorkspaceLink _apiManagementWorkspaceLinkRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementWorkspaceLinksCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiManagementWorkspaceLinksCollection for mocking. </summary>
         protected ApiManagementWorkspaceLinksCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementWorkspaceLinksCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementWorkspaceLinksCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksApiManagementWorkspaceLinkApiVersion);
-            _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksApiManagementWorkspaceLinkApiVersion);
-            _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksApiManagementWorkspaceLinksApiVersion);
-            _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksApiManagementWorkspaceLinksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksApiVersion);
+            _apiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
+            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApiManagementServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an API Management WorkspaceLink resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementWorkspaceLinksResource>> GetAsync(string workspaceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApiManagementWorkspaceLinksResource>> GetAsync(string serviceName, string workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Get");
+            using DiagnosticScope scope = _apiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, workspaceId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementWorkspaceLinksData> response = Response.FromValue(ApiManagementWorkspaceLinksData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,38 +108,44 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets an API Management WorkspaceLink resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        public virtual Response<ApiManagementWorkspaceLinksResource> Get(string workspaceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApiManagementWorkspaceLinksResource> Get(string serviceName, string workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Get");
+            using DiagnosticScope scope = _apiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, workspaceId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementWorkspaceLinksData> response = Response.FromValue(ApiManagementWorkspaceLinksData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,102 +153,58 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List all API Management workspaceLinks for a service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLinks_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementWorkspaceLinksResource(Client, ApiManagementWorkspaceLinksData.DeserializeApiManagementWorkspaceLinksData(e)), _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics, Pipeline, "ApiManagementWorkspaceLinksCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all API Management workspaceLinks for a service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLinks_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementWorkspaceLinksResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementWorkspaceLinksResource(Client, ApiManagementWorkspaceLinksData.DeserializeApiManagementWorkspaceLinksData(e)), _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics, Pipeline, "ApiManagementWorkspaceLinksCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string workspaceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string serviceName, string workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Exists");
+            using DiagnosticScope scope = _apiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, workspaceId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementWorkspaceLinksData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementWorkspaceLinksData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementWorkspaceLinksData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,36 +218,52 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        public virtual Response<bool> Exists(string workspaceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string serviceName, string workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Exists");
+            using DiagnosticScope scope = _apiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, workspaceId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementWorkspaceLinksData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementWorkspaceLinksData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementWorkspaceLinksData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,38 +277,56 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        public virtual async Task<NullableResponse<ApiManagementWorkspaceLinksResource>> GetIfExistsAsync(string workspaceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ApiManagementWorkspaceLinksResource>> GetIfExistsAsync(string serviceName, string workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.GetIfExists");
+            using DiagnosticScope scope = _apiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, workspaceId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementWorkspaceLinksData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementWorkspaceLinksData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementWorkspaceLinksData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementWorkspaceLinksResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,38 +340,56 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementWorkspaceLinksResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        public virtual NullableResponse<ApiManagementWorkspaceLinksResource> GetIfExists(string workspaceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ApiManagementWorkspaceLinksResource> GetIfExists(string serviceName, string workspaceId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.GetIfExists");
+            using DiagnosticScope scope = _apiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, workspaceId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementWorkspaceLinksData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementWorkspaceLinksData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementWorkspaceLinksData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementWorkspaceLinksResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -380,21 +397,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ApiManagementWorkspaceLinksResource> IEnumerable<ApiManagementWorkspaceLinksResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ApiManagementWorkspaceLinksResource> IAsyncEnumerable<ApiManagementWorkspaceLinksResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

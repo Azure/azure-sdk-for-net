@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementCache data model.
-    /// Cache details.
-    /// </summary>
+    /// <summary> Cache details. </summary>
     public partial class ApiManagementCacheData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCacheData"/>. </summary>
         public ApiManagementCacheData()
@@ -56,35 +25,92 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCacheData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Cache description. </param>
-        /// <param name="connectionString"> Runtime connection string to cache. </param>
-        /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
-        /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string connectionString, string useFromLocation, Uri resourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Cache properties details. </param>
+        internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CacheContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            ConnectionString = connectionString;
-            UseFromLocation = useFromLocation;
-            ResourceUri = resourceUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Cache properties details. </summary>
+        [WirePath("properties")]
+        internal CacheContractProperties Properties { get; set; }
 
         /// <summary> Cache description. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Runtime connection string to cache. </summary>
         [WirePath("properties.connectionString")]
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheContractProperties();
+                }
+                Properties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
         [WirePath("properties.useFromLocation")]
-        public string UseFromLocation { get; set; }
+        public string UseFromLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseFromLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheContractProperties();
+                }
+                Properties.UseFromLocation = value;
+            }
+        }
+
         /// <summary> Original uri of entity in external system cache points to. </summary>
         [WirePath("properties.resourceId")]
-        public Uri ResourceUri { get; set; }
+        public Uri ResourceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheContractProperties();
+                }
+                Properties.ResourceUri = value;
+            }
+        }
     }
 }

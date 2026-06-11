@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Linq;
@@ -21,29 +21,28 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Standard, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getResponse);
             Assert.AreEqual(firstOperation.Data.Name, getResponse.Data.Name);
             Assert.AreEqual(firstOperation.Data.Method, getResponse.Data.Method);
-            Assert.AreEqual(firstOperation.Data.UriTemplate, getResponse.Data.UriTemplate);
+            Assert.AreEqual(firstOperation.Data.UrlTemplate, getResponse.Data.UrlTemplate);
 
             // Add new operation
             string newOperationId = Recording.GenerateAssetName("operationid");
@@ -74,13 +73,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             string newOperationRequestHeaderParamName = Recording.GenerateAssetName("newOperationRequestHeaderParmName");
             string newOperationRequestHeaderParamDescr = Recording.GenerateAssetName("newOperationRequestHeaderParamDescr");
-            bool newOperationRequestHeaderParamIsRequired = true;
+            bool newOperationRequestHeaderParamRequired = true;
             string newOperationRequestHeaderParamDefaultValue = Recording.GenerateAssetName("newOperationRequestHeaderParamDefaultValue");
             string newOperationRequestHeaderParamType = "string";
 
             string newOperationRequestParmName = Recording.GenerateAssetName("newOperationRequestParmName");
             string newOperationRequestParamDescr = Recording.GenerateAssetName("newOperationRequestParamDescr");
-            bool newOperationRequestParamIsRequired = true;
+            bool newOperationRequestParamRequired = true;
             string newOperationRequestParamDefaultValue = Recording.GenerateAssetName("newOperationRequestParamDefaultValue");
             string newOperationRequestParamType = "string";
 
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 DisplayName = newOperationName,
                 Method = newOperationMethod,
-                UriTemplate = newperationUrlTemplate,
+                UrlTemplate = newperationUrlTemplate,
                 Description = newOperationDescription,
                 Request = new RequestContract
                 {
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                             new ParameterContract(newOperationRequestHeaderParamName, newOperationRequestHeaderParamType)
                             {
                                 Description = newOperationRequestHeaderParamDescr,
-                                IsRequired = newOperationRequestHeaderParamIsRequired,
+                                Required = newOperationRequestHeaderParamRequired,
                                 DefaultValue = newOperationRequestHeaderParamDefaultValue,
                                 Values = {newOperationRequestHeaderParamDefaultValue, "1", "2", "3"},
                                 TypeName = newOperationRequestRepresentationTypeName
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                             new ParameterContract(newOperationRequestParmName, newOperationRequestParamType)
                             {
                                 Description = newOperationRequestParamDescr,
-                                IsRequired = newOperationRequestParamIsRequired,
+                                Required = newOperationRequestParamRequired,
                                 DefaultValue = newOperationRequestParamDefaultValue,
                                 Values = {newOperationRequestParamDefaultValue, "1", "2", "3"},
                                 TypeName = newOperationRequestRepresentationTypeName
@@ -141,25 +140,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(newOperationId, apiOperationResponse.Data.Name);
 
             // Get the Api Operation Etag
-            var operationTag = (await apiOperationResponse.GetEntityTagAsync()).Value;
+            var operationTag = await apiOperationResponse.GetEntityTagAsync(PolicyIdName.Policy);
             Assert.NotNull(operationTag);
 
             // Patch the operation
             string patchedName = Recording.GenerateAssetName("patchedName");
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
             string patchedMethod = "HEAD";
-            var patchOperation = new ApiOperationPatch()
+            var patchOperation = new OperationUpdateContract()
             {
                 DisplayName = patchedName,
                 Description = patchedDescription,
                 Method = patchedMethod,
             };
-            getResponse = (await apiOperationResponse.UpdateAsync(ETag.All, patchOperation)).Value;
+            getResponse = (await apiOperationResponse.UpdateAsync(ETag.All.ToString(), patchOperation)).Value;
             Assert.NotNull(getResponse);
             Assert.AreEqual(getResponse.Data.Method, patchedMethod);
 
             // Delete the operation
-            await apiOperationResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await apiOperationResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var exsits = (await collection.ExistsAsync(newOperationId)).Value;
             Assert.IsFalse(exsits);
         }

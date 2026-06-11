@@ -11,14 +11,66 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class DiagnosticUpdateContract : IUtf8JsonSerializable, IJsonModel<DiagnosticUpdateContract>
+    /// <summary> Diagnostic details. </summary>
+    public partial class DiagnosticUpdateContract : ResourceData, IJsonModel<DiagnosticUpdateContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticUpdateContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDiagnosticUpdateContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticUpdateContract)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticUpdateContract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiagnosticUpdateContract>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiagnosticUpdateContract IPersistableModel<DiagnosticUpdateContract>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiagnosticUpdateContract)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiagnosticUpdateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="diagnosticUpdateContract"> The <see cref="DiagnosticUpdateContract"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DiagnosticUpdateContract diagnosticUpdateContract)
+        {
+            if (diagnosticUpdateContract == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(diagnosticUpdateContract, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiagnosticUpdateContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,514 +82,105 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiagnosticUpdateContract)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AlwaysLog))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("alwaysLog"u8);
-                writer.WriteStringValue(AlwaysLog.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(LoggerId))
-            {
-                writer.WritePropertyName("loggerId"u8);
-                writer.WriteStringValue(LoggerId);
-            }
-            if (Optional.IsDefined(Sampling))
-            {
-                writer.WritePropertyName("sampling"u8);
-                writer.WriteObjectValue(Sampling, options);
-            }
-            if (Optional.IsDefined(Frontend))
-            {
-                writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue(Frontend, options);
-            }
-            if (Optional.IsDefined(Backend))
-            {
-                writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue(Backend, options);
-            }
-            if (Optional.IsDefined(IsLogClientIPEnabled))
-            {
-                writer.WritePropertyName("logClientIp"u8);
-                writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
-            }
-            if (Optional.IsDefined(HttpCorrelationProtocol))
-            {
-                writer.WritePropertyName("httpCorrelationProtocol"u8);
-                writer.WriteStringValue(HttpCorrelationProtocol.Value.ToString());
-            }
-            if (Optional.IsDefined(Verbosity))
-            {
-                writer.WritePropertyName("verbosity"u8);
-                writer.WriteStringValue(Verbosity.Value.ToString());
-            }
-            if (Optional.IsDefined(OperationNameFormat))
-            {
-                writer.WritePropertyName("operationNameFormat"u8);
-                writer.WriteStringValue(OperationNameFormat.Value.ToString());
-            }
-            if (Optional.IsDefined(Metrics))
-            {
-                writer.WritePropertyName("metrics"u8);
-                writer.WriteBooleanValue(Metrics.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        DiagnosticUpdateContract IJsonModel<DiagnosticUpdateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiagnosticUpdateContract IJsonModel<DiagnosticUpdateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiagnosticUpdateContract)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiagnosticUpdateContract)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDiagnosticUpdateContract(document.RootElement, options);
         }
 
-        internal static DiagnosticUpdateContract DeserializeDiagnosticUpdateContract(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DiagnosticUpdateContract DeserializeDiagnosticUpdateContract(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            AlwaysLog? alwaysLog = default;
-            string loggerId = default;
-            SamplingSettings sampling = default;
-            PipelineDiagnosticSettings frontend = default;
-            PipelineDiagnosticSettings backend = default;
-            bool? logClientIP = default;
-            HttpCorrelationProtocol? httpCorrelationProtocol = default;
-            TraceVerbosityLevel? verbosity = default;
-            OperationNameFormat? operationNameFormat = default;
-            bool? metrics = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DiagnosticContractUpdateProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("alwaysLog"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            alwaysLog = new AlwaysLog(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("loggerId"u8))
-                        {
-                            loggerId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sampling"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sampling = SamplingSettings.DeserializeSamplingSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("frontend"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("backend"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("logClientIp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            logClientIP = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpCorrelationProtocol"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            httpCorrelationProtocol = new HttpCorrelationProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("verbosity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            verbosity = new TraceVerbosityLevel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("operationNameFormat"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            operationNameFormat = new OperationNameFormat(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("metrics"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            metrics = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DiagnosticContractUpdateProperties.DeserializeDiagnosticContractUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DiagnosticUpdateContract(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                alwaysLog,
-                loggerId,
-                sampling,
-                frontend,
-                backend,
-                logClientIP,
-                httpCorrelationProtocol,
-                verbosity,
-                operationNameFormat,
-                metrics,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlwaysLog), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    alwaysLog: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AlwaysLog))
-                {
-                    builder.Append("    alwaysLog: ");
-                    builder.AppendLine($"'{AlwaysLog.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoggerId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    loggerId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LoggerId))
-                {
-                    builder.Append("    loggerId: ");
-                    if (LoggerId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LoggerId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LoggerId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sampling), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sampling: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sampling))
-                {
-                    builder.Append("    sampling: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sampling, options, 4, false, "    sampling: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Frontend), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    frontend: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Frontend))
-                {
-                    builder.Append("    frontend: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Frontend, options, 4, false, "    frontend: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Backend), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    backend: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Backend))
-                {
-                    builder.Append("    backend: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Backend, options, 4, false, "    backend: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLogClientIPEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    logClientIp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsLogClientIPEnabled))
-                {
-                    builder.Append("    logClientIp: ");
-                    var boolValue = IsLogClientIPEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpCorrelationProtocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    httpCorrelationProtocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpCorrelationProtocol))
-                {
-                    builder.Append("    httpCorrelationProtocol: ");
-                    builder.AppendLine($"'{HttpCorrelationProtocol.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Verbosity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    verbosity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Verbosity))
-                {
-                    builder.Append("    verbosity: ");
-                    builder.AppendLine($"'{Verbosity.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationNameFormat), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    operationNameFormat: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OperationNameFormat))
-                {
-                    builder.Append("    operationNameFormat: ");
-                    builder.AppendLine($"'{OperationNameFormat.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    metrics: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Metrics))
-                {
-                    builder.Append("    metrics: ");
-                    var boolValue = Metrics.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DiagnosticUpdateContract>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DiagnosticUpdateContract)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DiagnosticUpdateContract IPersistableModel<DiagnosticUpdateContract>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDiagnosticUpdateContract(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DiagnosticUpdateContract)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DiagnosticUpdateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

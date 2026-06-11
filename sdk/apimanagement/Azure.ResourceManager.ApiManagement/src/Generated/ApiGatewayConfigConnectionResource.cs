@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an ApiGatewayConfigConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiGatewayConfigConnectionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetApiGatewayConfigConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiGatewayResource"/> using the GetApiGatewayConfigConnection method.
+    /// A class representing a ApiGatewayConfigConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiGatewayConfigConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApiGatewayConfigConnections method.
     /// </summary>
     public partial class ApiGatewayConfigConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApiGatewayConfigConnectionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="gatewayName"> The gatewayName. </param>
-        /// <param name="configConnectionName"> The configConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName, string configConnectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         private readonly ClientDiagnostics _apiGatewayConfigConnectionClientDiagnostics;
-        private readonly ApiGatewayConfigConnectionRestOperations _apiGatewayConfigConnectionRestClient;
+        private readonly ApiGatewayConfigConnection _apiGatewayConfigConnectionRestClient;
         private readonly ApiGatewayConfigConnectionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/gateways/configConnections";
 
-        /// <summary> Initializes a new instance of the <see cref="ApiGatewayConfigConnectionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiGatewayConfigConnectionResource for mocking. </summary>
         protected ApiGatewayConfigConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiGatewayConfigConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayConfigConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiGatewayConfigConnectionResource(ArmClient client, ApiGatewayConfigConnectionData data) : this(client, data.Id)
@@ -54,71 +44,93 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiGatewayConfigConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayConfigConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiGatewayConfigConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiGatewayConfigConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiGatewayConfigConnectionApiVersion);
-            _apiGatewayConfigConnectionRestClient = new ApiGatewayConfigConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiGatewayConfigConnectionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _apiGatewayConfigConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _apiGatewayConfigConnectionRestClient = new ApiGatewayConfigConnection(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, Endpoint, apiGatewayConfigConnectionApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ApiGatewayConfigConnectionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
+        /// <param name="configConnectionName"> The configConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName, string configConnectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an API Management gateway config connection resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGatewayConfigConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayConfigConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiGatewayConfigConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiGatewayConfigConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Get");
+            using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiGatewayConfigConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiGatewayConfigConnectionData> response = Response.FromValue(ApiGatewayConfigConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiGatewayConfigConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +144,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets an API Management gateway config connection resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGatewayConfigConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayConfigConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiGatewayConfigConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiGatewayConfigConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Get");
+            using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _apiGatewayConfigConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiGatewayConfigConnectionData> response = Response.FromValue(ApiGatewayConfigConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiGatewayConfigConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +192,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes an existing API Management gateway config connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGatewayConfigConnection_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayConfigConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiGatewayConfigConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +214,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Delete");
+            using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _apiGatewayConfigConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, _apiGatewayConfigConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +242,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes an existing API Management gateway config connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGatewayConfigConnection_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayConfigConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiGatewayConfigConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,14 +264,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Delete");
+            using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _apiGatewayConfigConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, _apiGatewayConfigConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +289,23 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates an API Management gateway config connection. This is long running operation and could take several minutes to complete.
+        /// Update a ApiGatewayConfigConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGatewayConfigConnection_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayConfigConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiGatewayConfigConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,14 +317,27 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Update");
+            using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiGatewayConfigConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionOperationSource(Client), _apiGatewayConfigConnectionClientDiagnostics, Pipeline, _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiGatewayConfigConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ApiManagementArmOperation<ApiGatewayConfigConnectionResource> operation = new ApiManagementArmOperation<ApiGatewayConfigConnectionResource>(
+                    new ApiGatewayConfigConnectionOperationSource(Client),
+                    _apiGatewayConfigConnectionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -301,23 +348,23 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates an API Management gateway config connection. This is long running operation and could take several minutes to complete.
+        /// Update a ApiGatewayConfigConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGatewayConfigConnection_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayConfigConnectionResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayConfigConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiGatewayConfigConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,14 +376,27 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Update");
+            using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiGatewayConfigConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _apiGatewayConfigConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionOperationSource(Client), _apiGatewayConfigConnectionClientDiagnostics, Pipeline, _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiGatewayConfigConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ApiManagementArmOperation<ApiGatewayConfigConnectionResource> operation = new ApiManagementArmOperation<ApiGatewayConfigConnectionResource>(
+                    new ApiGatewayConfigConnectionOperationSource(Client),
+                    _apiGatewayConfigConnectionClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

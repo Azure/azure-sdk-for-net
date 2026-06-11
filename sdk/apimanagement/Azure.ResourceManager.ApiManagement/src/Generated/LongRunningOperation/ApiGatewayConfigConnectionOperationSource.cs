@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ApiGatewayConfigConnectionOperationSource : IOperationSource<ApiGatewayConfigConnectionResource>
+    /// <summary></summary>
+    internal partial class ApiGatewayConfigConnectionOperationSource : IOperationSource<ApiGatewayConfigConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ApiGatewayConfigConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ApiGatewayConfigConnectionResource IOperationSource<ApiGatewayConfigConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiGatewayConfigConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ApiGatewayConfigConnectionData data = ApiGatewayConfigConnectionData.DeserializeApiGatewayConfigConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ApiGatewayConfigConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ApiGatewayConfigConnectionResource> IOperationSource<ApiGatewayConfigConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiGatewayConfigConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
-            return await Task.FromResult(new ApiGatewayConfigConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ApiGatewayConfigConnectionData data = ApiGatewayConfigConnectionData.DeserializeApiGatewayConfigConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ApiGatewayConfigConnectionResource(_client, data);
         }
     }
 }

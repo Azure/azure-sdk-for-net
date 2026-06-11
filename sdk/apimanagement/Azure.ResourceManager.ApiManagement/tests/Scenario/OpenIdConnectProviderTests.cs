@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample");
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1));
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
@@ -44,18 +44,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementOpenIdConnectProviders();
+            var collection = ApiServiceResource.GetOpenidConnectProviderContracts();
 
             string openIdNoSecret = Recording.GenerateAssetName("openId");
             string openId2 = Recording.GenerateAssetName("openId");
             string openIdProviderName = Recording.GenerateAssetName("openIdName");
             string metadataEndpoint = GetOpenIdMetadataEndpointUrl();
             string clientId = Recording.GenerateAssetName("clientId");
-            var openIdConnectCreateParameters = new ApiManagementOpenIdConnectProviderData()
+            var openIdConnectCreateParameters = new OpenidConnectProviderContractData()
             {
                 DisplayName = openIdProviderName,
                 MetadataEndpoint = metadataEndpoint,
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string metadataEndpoint2 = GetOpenIdMetadataEndpointUrl();
             string clientId2 = Recording.GenerateAssetName("clientId");
             string clientSecret = Recording.GenerateAssetName("clientSecret");
-            var openIdConnectCreateParameters2 = new ApiManagementOpenIdConnectProviderData()
+            var openIdConnectCreateParameters2 = new OpenidConnectProviderContractData()
             {
                 DisplayName = openIdProviderName2,
                 MetadataEndpoint = metadataEndpoint2,
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.GreaterOrEqual(listResponse.Count, 2);
 
             // delete a OpenId Connect Provider
-            await openIdConnectProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await openIdConnectProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
 
             // get the deleted openId Connect Provider to make sure it was deleted
             var falseResult = (await collection.ExistsAsync(openIdNoSecret)).Value;
@@ -128,8 +127,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // patch the openId Connect Provider
             string updateMetadataEndpoint = GetOpenIdMetadataEndpointUrl();
             string updatedClientId = Recording.GenerateAssetName("updatedClient");
-            await getResponse2.UpdateAsync(ETag.All,
-                new ApiManagementOpenIdConnectProviderPatch
+            await getResponse2.UpdateAsync(ETag.All.ToString(),
+                new OpenidConnectProviderContractPatch
                 {
                     MetadataEndpoint = updateMetadataEndpoint,
                     ClientId = updatedClientId
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var secretsResponse = (await getResponseOpendId2.GetSecretsAsync()).Value;
 
             // delete the openId Connect Provider
-            await getResponseOpendId2.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getResponseOpendId2.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             falseResult = (await collection.ExistsAsync(openId2)).Value;
             Assert.IsFalse(falseResult);
         }

@@ -7,101 +7,166 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> User create details. </summary>
     public partial class ApiManagementUserCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserCreateOrUpdateContent"/>. </summary>
         public ApiManagementUserCreateOrUpdateContent()
         {
-            Identities = new ChangeTrackingList<UserIdentityContract>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserCreateOrUpdateContent"/>. </summary>
-        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
-        /// <param name="note"> Optional note about a user set by the administrator. </param>
-        /// <param name="identities"> Collection of user identities. </param>
-        /// <param name="email"> Email address. Must not be empty and must be unique within the service instance. </param>
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="password"> User Password. If no value is provided, a default password is generated. </param>
-        /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy portal. </param>
-        /// <param name="confirmation"> Determines the type of confirmation e-mail that will be sent to the newly created user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementUserCreateOrUpdateContent(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string email, string firstName, string lastName, string password, AppType? appType, ConfirmationEmailType? confirmation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> User entity create contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementUserCreateOrUpdateContent(UserCreateParameterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            State = state;
-            Note = note;
-            Identities = identities;
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
-            Password = password;
-            AppType = appType;
-            Confirmation = confirmation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> User entity create contract properties. </summary>
+        [WirePath("properties")]
+        internal UserCreateParameterProperties Properties { get; set; }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
         [WirePath("properties.state")]
-        public ApiManagementUserState? State { get; set; }
+        public ApiManagementUserState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserCreateParameterProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Optional note about a user set by the administrator. </summary>
         [WirePath("properties.note")]
-        public string Note { get; set; }
+        public string Note
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Note;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserCreateParameterProperties();
+                }
+                Properties.Note = value;
+            }
+        }
+
         /// <summary> Collection of user identities. </summary>
         [WirePath("properties.identities")]
-        public IList<UserIdentityContract> Identities { get; }
+        public IList<UserIdentityContract> Identities
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserCreateParameterProperties();
+                }
+                return Properties.Identities;
+            }
+        }
+
         /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
         [WirePath("properties.email")]
-        public string Email { get; set; }
+        public string Email
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Email;
+            }
+        }
+
         /// <summary> First name. </summary>
         [WirePath("properties.firstName")]
-        public string FirstName { get; set; }
+        public string FirstName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirstName;
+            }
+        }
+
         /// <summary> Last name. </summary>
         [WirePath("properties.lastName")]
-        public string LastName { get; set; }
+        public string LastName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastName;
+            }
+        }
+
         /// <summary> User Password. If no value is provided, a default password is generated. </summary>
         [WirePath("properties.password")]
-        public string Password { get; set; }
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserCreateParameterProperties();
+                }
+                Properties.Password = value;
+            }
+        }
+
         /// <summary> Determines the type of application which send the create user request. Default is legacy portal. </summary>
         [WirePath("properties.appType")]
-        public AppType? AppType { get; set; }
+        public AppType? AppType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserCreateParameterProperties();
+                }
+                Properties.AppType = value;
+            }
+        }
+
         /// <summary> Determines the type of confirmation e-mail that will be sent to the newly created user. </summary>
         [WirePath("properties.confirmation")]
-        public ConfirmationEmailType? Confirmation { get; set; }
+        public ConfirmationEmailType? Confirmation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Confirmation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserCreateParameterProperties();
+                }
+                Properties.Confirmation = value;
+            }
+        }
     }
 }

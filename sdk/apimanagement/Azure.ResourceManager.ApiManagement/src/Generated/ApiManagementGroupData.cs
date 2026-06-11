@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementGroup data model.
-    /// Contract details.
-    /// </summary>
+    /// <summary> Contract details. </summary>
     public partial class ApiManagementGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGroupData"/>. </summary>
         public ApiManagementGroupData()
@@ -57,40 +25,102 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Group name. </param>
-        /// <param name="description"> Group description. Can contain HTML formatting tags. </param>
-        /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
-        /// <param name="groupType"> Group type. </param>
-        /// <param name="externalId"> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? groupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Group entity contract properties. </param>
+        internal ApiManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GroupContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Description = description;
-            IsBuiltIn = isBuiltIn;
-            GroupType = groupType;
-            ExternalId = externalId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Group entity contract properties. </summary>
+        [WirePath("properties")]
+        internal GroupContractProperties Properties { get; set; }
 
         /// <summary> Group name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Group description. Can contain HTML formatting tags. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
         [WirePath("properties.builtIn")]
-        public bool? IsBuiltIn { get; }
+        public bool? IsBuiltIn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsBuiltIn;
+            }
+        }
+
         /// <summary> Group type. </summary>
         [WirePath("properties.type")]
-        public ApiManagementGroupType? GroupType { get; set; }
+        public ApiManagementGroupType? GroupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.GroupType = value;
+            }
+        }
+
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("properties.externalId")]
-        public string ExternalId { get; set; }
+        public string ExternalId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.ExternalId = value;
+            }
+        }
     }
 }

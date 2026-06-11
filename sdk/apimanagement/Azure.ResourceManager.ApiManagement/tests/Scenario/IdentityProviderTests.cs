@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -22,24 +22,23 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample");
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Standard, 1));
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -49,15 +48,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string clientId = Recording.GenerateAssetName("clientId");
             string clientSecret = Recording.GenerateAssetName("clientSecret");
 
-            var identityProviderCreateParameters = new ApiManagementIdentityProviderCreateOrUpdateContent()
-            {
-                ClientId = clientId,
-                ClientSecret = clientSecret
-            };
+            var identityProviderCreateParameters = new IdentityProviderCreateContract();
 
             var identityProviderContract = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, IdentityProviderType.Facebook, identityProviderCreateParameters)).Value;
             Assert.NotNull(identityProviderContract);
-            Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.IdentityProviderType);
+            Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.Type);
 
             // list
             var listIdentityProviders = await collection.GetAllAsync().ToEnumerableAsync();
@@ -69,17 +64,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 ClientSecret = patchedSecret
             };
-            await identityProviderContract.UpdateAsync(ETag.All, patch);
+            await identityProviderContract.UpdateAsync(ETag.All.ToString(), patch);
 
             // get to check it was patched
             identityProviderContract = await collection.GetAsync(IdentityProviderType.Facebook);
-            Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.IdentityProviderType);
+            Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.Type);
             Assert.IsNull(identityProviderContract.Data.ClientSecret);
 
             var secret = (await identityProviderContract.GetSecretsAsync()).Value;
 
             // delete the identity provider
-            await identityProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await identityProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var resultFalse = (await collection.ExistsAsync(IdentityProviderType.Facebook)).Value;
             Assert.IsFalse(resultFalse);
         }
