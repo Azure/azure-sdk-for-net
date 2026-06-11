@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Fabric.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Fabric.Tests.csproj" />
+</Solution>

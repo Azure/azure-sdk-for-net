@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation;
+using Specs.Azure.ClientGenerator.Core.Usage._NamespaceUsage;
 
 namespace Specs.Azure.ClientGenerator.Core.Usage
 {
@@ -26,5 +27,7 @@ namespace Specs.Azure.ClientGenerator.Core.Usage
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual ModelInOperation GetModelInOperationClient() => throw null;
+
+        public virtual NamespaceUsage GetNamespaceUsageClient() => throw null;
     }
 }

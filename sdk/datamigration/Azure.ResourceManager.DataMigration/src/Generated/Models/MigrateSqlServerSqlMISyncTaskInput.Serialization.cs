@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskInput : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMISyncTaskInput>
+    /// <summary> Input for task that migrates SQL Server databases to Azure SQL Database Managed Instance online scenario. </summary>
+    public partial class MigrateSqlServerSqlMISyncTaskInput : SqlServerSqlMISyncTaskInput, IJsonModel<MigrateSqlServerSqlMISyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMISyncTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskInput"/> for deserialization. </summary>
+        internal MigrateSqlServerSqlMISyncTaskInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SqlServerSqlMISyncTaskInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMigrateSqlServerSqlMISyncTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateSqlServerSqlMISyncTaskInput IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options) => (MigrateSqlServerSqlMISyncTaskInput)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrateSqlServerSqlMISyncTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskInput)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(NumberOfParallelDatabaseMigrations))
             {
@@ -42,91 +87,94 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        MigrateSqlServerSqlMISyncTaskInput IJsonModel<MigrateSqlServerSqlMISyncTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateSqlServerSqlMISyncTaskInput IJsonModel<MigrateSqlServerSqlMISyncTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MigrateSqlServerSqlMISyncTaskInput)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SqlServerSqlMISyncTaskInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrateSqlServerSqlMISyncTaskInput(document.RootElement, options);
         }
 
-        internal static MigrateSqlServerSqlMISyncTaskInput DeserializeMigrateSqlServerSqlMISyncTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MigrateSqlServerSqlMISyncTaskInput DeserializeMigrateSqlServerSqlMISyncTaskInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            float? numberOfParallelDatabaseMigrations = default;
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
             DataMigrationFileShareInfo backupFileShare = default;
             string storageResourceId = default;
             DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
             DataMigrationMISqlConnectionInfo targetConnectionInfo = default;
             DataMigrationAadApp azureApp = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            float? numberOfParallelDatabaseMigrations = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfParallelDatabaseMigrations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    numberOfParallelDatabaseMigrations = property.Value.GetSingle();
-                    continue;
-                }
-                if (property.NameEquals("selectedDatabases"u8))
+                if (prop.NameEquals("selectedDatabases"u8))
                 {
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("backupFileShare"u8))
+                if (prop.NameEquals("backupFileShare"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupFileShare = DataMigrationFileShareInfo.DeserializeDataMigrationFileShareInfo(property.Value, options);
+                    backupFileShare = DataMigrationFileShareInfo.DeserializeDataMigrationFileShareInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageResourceId"u8))
+                if (prop.NameEquals("storageResourceId"u8))
                 {
-                    storageResourceId = property.Value.GetString();
+                    storageResourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceConnectionInfo"u8))
+                if (prop.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"u8))
+                if (prop.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationMISqlConnectionInfo.DeserializeDataMigrationMISqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationMISqlConnectionInfo.DeserializeDataMigrationMISqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("azureApp"u8))
+                if (prop.NameEquals("azureApp"u8))
                 {
-                    azureApp = DataMigrationAadApp.DeserializeDataMigrationAadApp(property.Value, options);
+                    azureApp = DataMigrationAadApp.DeserializeDataMigrationAadApp(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("numberOfParallelDatabaseMigrations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numberOfParallelDatabaseMigrations = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MigrateSqlServerSqlMISyncTaskInput(
                 selectedDatabases,
                 backupFileShare,
@@ -134,39 +182,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceConnectionInfo,
                 targetConnectionInfo,
                 azureApp,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 numberOfParallelDatabaseMigrations);
         }
-
-        BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MigrateSqlServerSqlMISyncTaskInput IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrateSqlServerSqlMISyncTaskInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MigrateSqlServerSqlMISyncTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

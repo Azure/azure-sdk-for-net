@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataMigration.Models
     internal readonly partial struct DataMigrationCommandType : IEquatable<DataMigrationCommandType>
     {
         private readonly string _value;
+        /// <summary> Migrate.Sync.Complete.Database. </summary>
+        private const string MigrateSyncCompleteDatabaseValue = "Migrate.Sync.Complete.Database";
+        /// <summary> Migrate.SqlServer.AzureDbSqlMi.Complete. </summary>
+        private const string MigrateSqlServerAzureDbSqlMiCompleteValue = "Migrate.SqlServer.AzureDbSqlMi.Complete";
+        /// <summary> cancel. </summary>
+        private const string CancelValue = "cancel";
+        /// <summary> finish. </summary>
+        private const string FinishValue = "finish";
+        /// <summary> restart. </summary>
+        private const string RestartValue = "restart";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationCommandType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationCommandType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MigrateSyncCompleteDatabaseValue = "Migrate.Sync.Complete.Database";
-        private const string MigrateSqlServerAzureDBSqlMICompleteValue = "Migrate.SqlServer.AzureDbSqlMi.Complete";
-        private const string CancelValue = "cancel";
-        private const string FinishValue = "finish";
-        private const string RestartValue = "restart";
+            _value = value;
+        }
 
         /// <summary> Migrate.Sync.Complete.Database. </summary>
         public static DataMigrationCommandType MigrateSyncCompleteDatabase { get; } = new DataMigrationCommandType(MigrateSyncCompleteDatabaseValue);
+
         /// <summary> Migrate.SqlServer.AzureDbSqlMi.Complete. </summary>
-        public static DataMigrationCommandType MigrateSqlServerAzureDBSqlMIComplete { get; } = new DataMigrationCommandType(MigrateSqlServerAzureDBSqlMICompleteValue);
+        public static DataMigrationCommandType MigrateSqlServerAzureDbSqlMiComplete { get; } = new DataMigrationCommandType(MigrateSqlServerAzureDbSqlMiCompleteValue);
+
         /// <summary> cancel. </summary>
         public static DataMigrationCommandType Cancel { get; } = new DataMigrationCommandType(CancelValue);
+
         /// <summary> finish. </summary>
         public static DataMigrationCommandType Finish { get; } = new DataMigrationCommandType(FinishValue);
+
         /// <summary> restart. </summary>
         public static DataMigrationCommandType Restart { get; } = new DataMigrationCommandType(RestartValue);
+
         /// <summary> Determines if two <see cref="DataMigrationCommandType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationCommandType left, DataMigrationCommandType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationCommandType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationCommandType left, DataMigrationCommandType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationCommandType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationCommandType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationCommandType(string value) => new DataMigrationCommandType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationCommandType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationCommandType?(string value) => value == null ? null : new DataMigrationCommandType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationCommandType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationCommandType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
