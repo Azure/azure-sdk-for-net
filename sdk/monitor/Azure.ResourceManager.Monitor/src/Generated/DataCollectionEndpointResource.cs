@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.Monitor
         private readonly DataCollectionEndpoints _dataCollectionEndpointsRestClient;
         private readonly ClientDiagnostics _dataCollectionRuleAssociationsClientDiagnostics;
         private readonly DataCollectionRuleAssociations _dataCollectionRuleAssociationsRestClient;
+        private readonly ClientDiagnostics _nspDataCollectionEndpointClientDiagnostics;
+        private readonly NspDataCollectionEndpoint _nspDataCollectionEndpointRestClient;
         private readonly DataCollectionEndpointResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionEndpoints";
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.Monitor
             _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointResourceApiVersion ?? "2024-03-11");
             _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointResourceApiVersion ?? "2024-03-11");
+            _nspDataCollectionEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _nspDataCollectionEndpointRestClient = new NspDataCollectionEndpoint(_nspDataCollectionEndpointClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointResourceApiVersion ?? "2021-10-01");
             ValidateResourceId(id);
         }
 
@@ -498,7 +502,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _dataCollectionEndpointsClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNSP");
             scope.Start();
             try
             {
@@ -506,7 +510,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -551,7 +555,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _dataCollectionEndpointsClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNSP");
             scope.Start();
             try
             {
@@ -559,7 +563,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -604,8 +608,8 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new DataCollectionEndpointsGetNSPAsyncCollectionResultOfT(
-                _dataCollectionEndpointsRestClient,
+            return new NspDataCollectionEndpointGetNSPAsyncCollectionResultOfT(
+                _nspDataCollectionEndpointRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
@@ -642,8 +646,8 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new DataCollectionEndpointsGetNSPCollectionResultOfT(
-                _dataCollectionEndpointsRestClient,
+            return new NspDataCollectionEndpointGetNSPCollectionResultOfT(
+                _nspDataCollectionEndpointRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
@@ -681,7 +685,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _dataCollectionEndpointsClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNSP");
             scope.Start();
             try
             {
@@ -689,9 +693,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MonitorArmOperation operation = new MonitorArmOperation(_dataCollectionEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MonitorArmOperation operation = new MonitorArmOperation(_nspDataCollectionEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -735,7 +739,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _dataCollectionEndpointsClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNSP");
             scope.Start();
             try
             {
@@ -743,9 +747,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MonitorArmOperation operation = new MonitorArmOperation(_dataCollectionEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MonitorArmOperation operation = new MonitorArmOperation(_nspDataCollectionEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
