@@ -159,7 +159,31 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual("en", response.Value.DetectedLanguage.Language);
             Assert.LessOrEqual(0.5, response.Value.DetectedLanguage.Score);
             Assert.AreEqual(1, response.Value.Translations.Count);
-            Assert.IsTrue(response.Value.Translations.FirstOrDefault().Text.Contains("***"));
+            Assert.IsNotEmpty(response.Value.Translations.First().Text);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task TranslateWithProfanityOptions()
+        {
+            ProfanityAction profanityAction = ProfanityAction.Marked;
+            ProfanityMarker profanityMarkers = ProfanityMarker.Asterisk;
+            string targetLanguage = "es";
+            string inputText = "shit this is fucking crazy";
+            TranslateInputItem input = new TranslateInputItem(
+                inputText,
+                new TranslationTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers)
+            );
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(input).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.NotNull(response.Value);
+            Assert.AreEqual("en", response.Value.DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.DetectedLanguage.Score);
+            Assert.AreEqual(1, response.Value.Translations.Count);
+            Assert.IsNotEmpty(response.Value.Translations.First().Text);
+            Assert.IsTrue(response.Value.Translations.First().Text.Contains("***"));
         }
 
         [RecordedTest]
