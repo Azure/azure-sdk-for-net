@@ -8,7 +8,6 @@ using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -32,18 +31,15 @@ namespace Azure.Generator.Visitors
         protected override MethodProvider? VisitMethod(MethodProvider method)
         {
             _protocolMethodName = method is ScmMethodProvider { Kind: ScmMethodKind.Convenience, ServiceMethod: { } serviceMethod } scmMethod
-                && IsMultipartOperation(serviceMethod.Operation)
+                && (serviceMethod.Operation.IsMultipartFormData
+                    || (serviceMethod.Operation.RequestMediaTypes?.Any(mediaType =>
+                        mediaType.StartsWith(MultipartMediaTypePrefix, StringComparison.OrdinalIgnoreCase)) ?? false))
                     ? scmMethod.Signature.Name
                     : null;
             _requestContentVariable = null;
             _multipartContentVariable = null;
             return base.VisitMethod(method);
         }
-
-        private static bool IsMultipartOperation(InputOperation operation)
-            => operation.IsMultipartFormData
-                || (operation.RequestMediaTypes?.Any(mediaType =>
-                    mediaType.StartsWith(MultipartMediaTypePrefix, StringComparison.OrdinalIgnoreCase)) ?? false);
 
         protected override MethodBodyStatement VisitStatements(MethodBodyStatements statements, MethodProvider method)
         {
