@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = getPublicIpAddressResponse.Value.Id
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Primary = true,
                         PublicIPAddress = new PublicIPAddressData()
                         {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Network.Tests
                         }
                     },
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipconfigName2, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Primary = false,
                         Subnet = new SubnetData()
                         {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = getSubnetResponse.Value.Id
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Network.Tests
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
                     {
-                        Primary = true,PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                        Name = ipConfigName, Primary = true,PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = NetworkIPVersion.IPv4,
                         Subnet = new SubnetData()
                         {
@@ -646,12 +646,12 @@ namespace Azure.ResourceManager.Network.Tests
                         }
                     },
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipv6IpConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = NetworkIPVersion.IPv6,
                     },
 
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName2, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PrivateIPAddressVersion = NetworkIPVersion.IPv4,
                         Subnet = new SubnetData()
                         {
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = getSubnetResponse.Value.Id
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {Name = ipConfigName, PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new SubnetData()
                         {
                             Id = getSubnetResponse.Value.Id
