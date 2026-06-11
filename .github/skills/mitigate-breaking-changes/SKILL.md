@@ -83,8 +83,10 @@ When the spec uses older common types that generate incorrect C# types (e.g., `s
 @@alternateType(MyModel.resourceId, Azure.ResourceManager.CommonTypes.ArmResourceIdentifier, "csharp");
 ```
 
-### `@@hierarchyBuilding` Decorator — Change a resource model's base type
-When a TypeSpec resource model generates with the wrong base class (e.g., a plain `Resource` model instead of `TrackedResource` or `ProxyResource`), use `@@hierarchyBuilding` to override the base type. This is common when the spec defines a resource using a non-standard base type that doesn't map to the correct ARM SDK base class (`ResourceData`, `TrackedResourceData`, etc.).
+### `@@hierarchyBuilding` Decorator — Legacy base-type override
+Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility during MPG migrations. Follow the `mpg-migration` skill instead: verify resource-hierarchy parity first, fix structural resource hierarchy issues in the TypeSpec resource shape, and use SDK-side custom code only for C# base-model/base-type compatibility after the generated surface is stable.
+
+`@@hierarchyBuilding` is a legacy escape hatch. Use it only when the migration owner explicitly approves it and no TypeSpec resource-shape fix or SDK-side customization is appropriate.
 
 **Syntax:**
 ```typespec
@@ -101,16 +103,16 @@ When a TypeSpec resource model generates with the wrong base class (e.g., a plai
 - `Azure.ResourceManager.Foundations.ProxyResource` — generates `ResourceData` (for proxy/child resources)
 - `Azure.ResourceManager.Foundations.Resource` — generates `ResourceData` (ARM resource base)
 
-**When to use:**
-- When the old SDK had `MyData : ResourceData` or `MyData : TrackedResourceData`, but the new TypeSpec-generated SDK produces `MyData : SomeOtherType` (e.g., a service-local `Resource` model)
-- The `CannotRemoveBaseTypeOrInterface` API compatibility violation indicates this issue (e.g., _"Type 'X' does not inherit from base type 'Azure.ResourceManager.Models.ResourceData'"_)
+**Legacy-only scenarios that require explicit approval:**
+- The old SDK had `MyData : ResourceData` or `MyData : TrackedResourceData`, the new TypeSpec-generated SDK produces `MyData : SomeOtherType` (e.g., a service-local `Resource` model), and the migration owner has explicitly rejected the normal MPG migration fix path.
+- The `CannotRemoveBaseTypeOrInterface` API compatibility violation remains after verifying resource-hierarchy parity and attempting the normal SDK-side customization approach.
 
 **Requirements:**
 1. Add `using Azure.ClientGenerator.Core.Legacy;` to the `client.tsp` imports
 2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "..."` before each `@@hierarchyBuilding` call
 3. After adding the decorator, regenerate the SDK code
 
-**Example** (from KeyVault migration):
+**Legacy approved example** (from KeyVault migration):
 ```typespec
 import "@azure-tools/typespec-client-generator-core";
 using Azure.ClientGenerator.Core.Legacy;
