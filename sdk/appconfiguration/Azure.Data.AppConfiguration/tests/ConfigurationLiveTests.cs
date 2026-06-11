@@ -43,12 +43,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationClient GetClient(bool skipClientInstrumentation = false)
         {
-            if (string.IsNullOrEmpty(TestEnvironment.ConnectionString))
-            {
-                throw new TestRecordingMismatchException();
-            }
-            var options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
-            var client = new ConfigurationClient(TestEnvironment.ConnectionString, options);
+            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
+            ConfigurationClient client = new ConfigurationClient(new Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options);
 
             if (!skipClientInstrumentation)
             {
@@ -58,7 +54,7 @@ namespace Azure.Data.AppConfiguration.Tests
             return client;
         }
 
-        private ConfigurationClient GetAADClient(ConfigurationClientOptions clientOptions = null)
+        private ConfigurationClient GetEntraIdClient(ConfigurationClientOptions clientOptions = null)
         {
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
@@ -152,7 +148,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task TokenAudienceDefaultAudience()
         {
-            ConfigurationClient service = GetAADClient();
+            ConfigurationClient service = GetEntraIdClient();
             ConfigurationSetting testSetting = CreateSetting();
 
             try
@@ -175,7 +171,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Audience = TestEnvironment.GetAudience()
             };
-            ConfigurationClient service = GetAADClient(options);
+            ConfigurationClient service = GetEntraIdClient(options);
             ConfigurationSetting testSetting = CreateSetting();
 
             try
@@ -2218,9 +2214,9 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
-        public async Task AddSettingDefaultAAD()
+        public async Task AddSettingDefaultEntraId()
         {
-            ConfigurationClient service = GetAADClient();
+            ConfigurationClient service = GetEntraIdClient();
             ConfigurationSetting testSetting = CreateSetting();
 
             try

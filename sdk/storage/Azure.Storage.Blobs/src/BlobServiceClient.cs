@@ -1942,7 +1942,7 @@ namespace Azure.Storage.Blobs
         #region UndeleteBlobContainer
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -1978,7 +1978,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -2014,7 +2014,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -2056,7 +2056,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -2098,7 +2098,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> GPU settings for the Agent Pool. </summary>
-    public partial class AgentPoolGpuProfile
+    internal partial class AgentPoolGpuProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,27 +24,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolGpuProfile"/>. </summary>
         /// <param name="driver"> Whether to install GPU drivers. When it's not specified, default is Install. </param>
-        /// <param name="driverType"> Specify the type of GPU driver to install when creating Windows agent pools. If not provided, AKS selects the driver based on system compatibility. This cannot be changed once the AgentPool has been created. This cannot be set on Linux AgentPools. For Linux AgentPools, the driver is selected based on system compatibility. </param>
-        /// <param name="nvidia"> NVIDIA-specific GPU settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolGpuProfile(AgentPoolGpuDriver? driver, AgentPoolGpuDriverType? driverType, AgentPoolNvidiaGpuProfile nvidia, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolGpuProfile(AgentPoolGpuDriver? driver, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Driver = driver;
-            DriverType = driverType;
-            Nvidia = nvidia;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to install GPU drivers. When it's not specified, default is Install. </summary>
         [WirePath("driver")]
         public AgentPoolGpuDriver? Driver { get; set; }
-
-        /// <summary> Specify the type of GPU driver to install when creating Windows agent pools. If not provided, AKS selects the driver based on system compatibility. This cannot be changed once the AgentPool has been created. This cannot be set on Linux AgentPools. For Linux AgentPools, the driver is selected based on system compatibility. </summary>
-        [WirePath("driverType")]
-        public AgentPoolGpuDriverType? DriverType { get; set; }
-
-        /// <summary> NVIDIA-specific GPU settings. </summary>
-        [WirePath("nvidia")]
-        public AgentPoolNvidiaGpuProfile Nvidia { get; set; }
     }
 }
