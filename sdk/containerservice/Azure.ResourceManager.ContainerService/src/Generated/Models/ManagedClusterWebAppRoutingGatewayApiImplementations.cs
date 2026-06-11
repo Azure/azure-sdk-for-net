@@ -12,20 +12,20 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Configurations for Gateway API providers to be used for managed ingress with App Routing. </summary>
-    internal partial class ManagedClusterWebAppRoutingGatewayAPIImplementations
+    internal partial class ManagedClusterWebAppRoutingGatewayApiImplementations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterWebAppRoutingGatewayAPIImplementations"/>. </summary>
-        public ManagedClusterWebAppRoutingGatewayAPIImplementations()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWebAppRoutingGatewayApiImplementations"/>. </summary>
+        public ManagedClusterWebAppRoutingGatewayApiImplementations()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterWebAppRoutingGatewayAPIImplementations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWebAppRoutingGatewayApiImplementations"/>. </summary>
         /// <param name="appRoutingIstio"> Configuration for using a sidecar-less Istio control plane for managed ingress via the Gateway API with App Routing. See https://aka.ms/gateway-on-istio for information on using Istio for ingress via the Gateway API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterWebAppRoutingGatewayAPIImplementations(ManagedClusterAppRoutingIstio appRoutingIstio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterWebAppRoutingGatewayApiImplementations(ManagedClusterAppRoutingIstio appRoutingIstio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppRoutingIstio = appRoutingIstio;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
