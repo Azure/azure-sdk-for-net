@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public readonly partial struct ApplyPatchOperationParamType : IEquatable<ApplyPatchOperationParamType>
+    internal readonly partial struct ApplyPatchOperationParamType : IEquatable<ApplyPatchOperationParamType>
     {
         private readonly string _value;
         private const string CreateFileValue = "create_file";

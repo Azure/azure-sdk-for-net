@@ -455,43 +455,6 @@ namespace Azure.AI.Projects
         public string GetApplicationInsightsConnectionString() { throw null; }
         public System.Threading.Tasks.Task<string> GetApplicationInsightsConnectionStringAsync() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AnnotationType : System.IEquatable<Azure.AI.Projects.AnnotationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AnnotationType(string value) { throw null; }
-        public static Azure.AI.Projects.AnnotationType ContainerFileCitation { get { throw null; } }
-        public static Azure.AI.Projects.AnnotationType FileCitation { get { throw null; } }
-        public static Azure.AI.Projects.AnnotationType FilePath { get { throw null; } }
-        public static Azure.AI.Projects.AnnotationType UrlCitation { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.AnnotationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.AnnotationType left, Azure.AI.Projects.AnnotationType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.AnnotationType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.AnnotationType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.AnnotationType left, Azure.AI.Projects.AnnotationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApplyPatchOperationParamType : System.IEquatable<Azure.AI.Projects.ApplyPatchOperationParamType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApplyPatchOperationParamType(string value) { throw null; }
-        public static Azure.AI.Projects.ApplyPatchOperationParamType CreateFile { get { throw null; } }
-        public static Azure.AI.Projects.ApplyPatchOperationParamType DeleteFile { get { throw null; } }
-        public static Azure.AI.Projects.ApplyPatchOperationParamType UpdateFile { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.ApplyPatchOperationParamType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.ApplyPatchOperationParamType left, Azure.AI.Projects.ApplyPatchOperationParamType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.ApplyPatchOperationParamType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.ApplyPatchOperationParamType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.ApplyPatchOperationParamType left, Azure.AI.Projects.ApplyPatchOperationParamType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AzureAIProjectsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIProjectsContext() { }
@@ -692,30 +655,6 @@ namespace Azure.AI.Projects
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.BlobReferenceSasCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputerActionType : System.IEquatable<Azure.AI.Projects.ComputerActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputerActionType(string value) { throw null; }
-        public static Azure.AI.Projects.ComputerActionType Click { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType DoubleClick { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType Drag { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType Keypress { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType Move { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType Screenshot { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType Scroll { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType Type { get { throw null; } }
-        public static Azure.AI.Projects.ComputerActionType Wait { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.ComputerActionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.ComputerActionType left, Azure.AI.Projects.ComputerActionType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.ComputerActionType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.ComputerActionType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.ComputerActionType left, Azure.AI.Projects.ComputerActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionType : System.IEquatable<Azure.AI.Projects.ConnectionType>
     {
         private readonly object _dummy;
@@ -740,61 +679,6 @@ namespace Azure.AI.Projects
         public static bool operator !=(Azure.AI.Projects.ConnectionType left, Azure.AI.Projects.ConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerNetworkPolicyParamType : System.IEquatable<Azure.AI.Projects.ContainerNetworkPolicyParamType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContainerNetworkPolicyParamType(string value) { throw null; }
-        public static Azure.AI.Projects.ContainerNetworkPolicyParamType Allowlist { get { throw null; } }
-        public static Azure.AI.Projects.ContainerNetworkPolicyParamType Disabled { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.ContainerNetworkPolicyParamType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.ContainerNetworkPolicyParamType left, Azure.AI.Projects.ContainerNetworkPolicyParamType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.ContainerNetworkPolicyParamType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.ContainerNetworkPolicyParamType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.ContainerNetworkPolicyParamType left, Azure.AI.Projects.ContainerNetworkPolicyParamType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerSkillType : System.IEquatable<Azure.AI.Projects.ContainerSkillType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContainerSkillType(string value) { throw null; }
-        public static Azure.AI.Projects.ContainerSkillType Inline { get { throw null; } }
-        public static Azure.AI.Projects.ContainerSkillType SkillReference { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.ContainerSkillType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.ContainerSkillType left, Azure.AI.Projects.ContainerSkillType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.ContainerSkillType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.ContainerSkillType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.ContainerSkillType left, Azure.AI.Projects.ContainerSkillType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CredentialType : System.IEquatable<Azure.AI.Projects.CredentialType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CredentialType(string value) { throw null; }
-        public static Azure.AI.Projects.CredentialType AgenticIdentityPreview { get { throw null; } }
-        public static Azure.AI.Projects.CredentialType ApiKey { get { throw null; } }
-        public static Azure.AI.Projects.CredentialType Custom { get { throw null; } }
-        public static Azure.AI.Projects.CredentialType EntraId { get { throw null; } }
-        public static Azure.AI.Projects.CredentialType None { get { throw null; } }
-        public static Azure.AI.Projects.CredentialType SAS { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.CredentialType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.CredentialType left, Azure.AI.Projects.CredentialType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.CredentialType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.CredentialType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.CredentialType left, Azure.AI.Projects.CredentialType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CustomRoutineTrigger : Azure.AI.Projects.RoutineTrigger, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CustomRoutineTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CustomRoutineTrigger>
     {
         public CustomRoutineTrigger(string provider, System.Collections.Generic.IDictionary<string, System.BinaryData> parameters) { }
@@ -810,23 +694,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.CustomRoutineTrigger System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CustomRoutineTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CustomRoutineTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CustomRoutineTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomToolParamFormatType : System.IEquatable<Azure.AI.Projects.CustomToolParamFormatType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CustomToolParamFormatType(string value) { throw null; }
-        public static Azure.AI.Projects.CustomToolParamFormatType Grammar { get { throw null; } }
-        public static Azure.AI.Projects.CustomToolParamFormatType Text { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.CustomToolParamFormatType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.CustomToolParamFormatType left, Azure.AI.Projects.CustomToolParamFormatType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.CustomToolParamFormatType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.CustomToolParamFormatType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.CustomToolParamFormatType left, Azure.AI.Projects.CustomToolParamFormatType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DataGenerationJob : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJob>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJob>
     {
@@ -866,24 +733,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.DataGenerationJobInputs System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobInputs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobInputs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobInputs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataGenerationJobKind : System.IEquatable<Azure.AI.Projects.DataGenerationJobKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataGenerationJobKind(string value) { throw null; }
-        public static Azure.AI.Projects.DataGenerationJobKind SimpleQna { get { throw null; } }
-        public static Azure.AI.Projects.DataGenerationJobKind ToolUse { get { throw null; } }
-        public static Azure.AI.Projects.DataGenerationJobKind Traces { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.DataGenerationJobKind other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.DataGenerationJobKind left, Azure.AI.Projects.DataGenerationJobKind right) { throw null; }
-        public static implicit operator Azure.AI.Projects.DataGenerationJobKind (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.DataGenerationJobKind? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.DataGenerationJobKind left, Azure.AI.Projects.DataGenerationJobKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public abstract partial class DataGenerationJobOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJobOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobOptions>
     {
@@ -929,23 +778,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.DataGenerationJobOutputOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobOutputOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobOutputOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobOutputOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataGenerationJobOutputType : System.IEquatable<Azure.AI.Projects.DataGenerationJobOutputType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataGenerationJobOutputType(string value) { throw null; }
-        public static Azure.AI.Projects.DataGenerationJobOutputType Dataset { get { throw null; } }
-        public static Azure.AI.Projects.DataGenerationJobOutputType File { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.DataGenerationJobOutputType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.DataGenerationJobOutputType left, Azure.AI.Projects.DataGenerationJobOutputType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.DataGenerationJobOutputType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.DataGenerationJobOutputType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.DataGenerationJobOutputType left, Azure.AI.Projects.DataGenerationJobOutputType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DataGenerationJobResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJobResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobResult>
     {
@@ -1010,25 +842,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.DataGenerationJobSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataGenerationJobSourceType : System.IEquatable<Azure.AI.Projects.DataGenerationJobSourceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataGenerationJobSourceType(string value) { throw null; }
-        public static Azure.AI.Projects.DataGenerationJobSourceType Agent { get { throw null; } }
-        public static Azure.AI.Projects.DataGenerationJobSourceType File { get { throw null; } }
-        public static Azure.AI.Projects.DataGenerationJobSourceType Prompt { get { throw null; } }
-        public static Azure.AI.Projects.DataGenerationJobSourceType Traces { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.DataGenerationJobSourceType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.DataGenerationJobSourceType left, Azure.AI.Projects.DataGenerationJobSourceType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.DataGenerationJobSourceType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.DataGenerationJobSourceType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.DataGenerationJobSourceType left, Azure.AI.Projects.DataGenerationJobSourceType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DataGenerationModelOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationModelOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationModelOptions>
     {
@@ -1123,23 +936,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.DatasetReference System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DatasetType : System.IEquatable<Azure.AI.Projects.DatasetType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DatasetType(string value) { throw null; }
-        public static Azure.AI.Projects.DatasetType UriFile { get { throw null; } }
-        public static Azure.AI.Projects.DatasetType UriFolder { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.DatasetType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.DatasetType left, Azure.AI.Projects.DatasetType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.DatasetType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.DatasetType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.DatasetType left, Azure.AI.Projects.DatasetType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DeleteMemoryResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DeleteMemoryResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DeleteMemoryResponse>
     {
@@ -1323,25 +1119,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluatorGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluatorGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EvaluatorGenerationJobSourceType : System.IEquatable<Azure.AI.Projects.EvaluatorGenerationJobSourceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EvaluatorGenerationJobSourceType(string value) { throw null; }
-        public static Azure.AI.Projects.EvaluatorGenerationJobSourceType Agent { get { throw null; } }
-        public static Azure.AI.Projects.EvaluatorGenerationJobSourceType Dataset { get { throw null; } }
-        public static Azure.AI.Projects.EvaluatorGenerationJobSourceType Prompt { get { throw null; } }
-        public static Azure.AI.Projects.EvaluatorGenerationJobSourceType Traces { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.EvaluatorGenerationJobSourceType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.EvaluatorGenerationJobSourceType left, Azure.AI.Projects.EvaluatorGenerationJobSourceType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.EvaluatorGenerationJobSourceType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.EvaluatorGenerationJobSourceType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.EvaluatorGenerationJobSourceType left, Azure.AI.Projects.EvaluatorGenerationJobSourceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class EvaluatorGenerationTokenUsage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluatorGenerationTokenUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluatorGenerationTokenUsage>
     {
         internal EvaluatorGenerationTokenUsage() { }
@@ -1445,76 +1222,6 @@ namespace Azure.AI.Projects
         AgentsOptimizationV1Preview = 10,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionAndCustomToolCallOutputType : System.IEquatable<Azure.AI.Projects.FunctionAndCustomToolCallOutputType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionAndCustomToolCallOutputType(string value) { throw null; }
-        public static Azure.AI.Projects.FunctionAndCustomToolCallOutputType InputFile { get { throw null; } }
-        public static Azure.AI.Projects.FunctionAndCustomToolCallOutputType InputImage { get { throw null; } }
-        public static Azure.AI.Projects.FunctionAndCustomToolCallOutputType InputText { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.FunctionAndCustomToolCallOutputType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.FunctionAndCustomToolCallOutputType left, Azure.AI.Projects.FunctionAndCustomToolCallOutputType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionAndCustomToolCallOutputType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionAndCustomToolCallOutputType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.FunctionAndCustomToolCallOutputType left, Azure.AI.Projects.FunctionAndCustomToolCallOutputType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellCallItemParamEnvironmentType : System.IEquatable<Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellCallItemParamEnvironmentType(string value) { throw null; }
-        public static Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType ContainerReference { get { throw null; } }
-        public static Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType Local { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType left, Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType left, Azure.AI.Projects.FunctionShellCallItemParamEnvironmentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellCallOutputOutcomeParamType : System.IEquatable<Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellCallOutputOutcomeParamType(string value) { throw null; }
-        public static Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType Exit { get { throw null; } }
-        public static Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType Timeout { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType left, Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType left, Azure.AI.Projects.FunctionShellCallOutputOutcomeParamType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellToolParamEnvironmentType : System.IEquatable<Azure.AI.Projects.FunctionShellToolParamEnvironmentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellToolParamEnvironmentType(string value) { throw null; }
-        public static Azure.AI.Projects.FunctionShellToolParamEnvironmentType ContainerAuto { get { throw null; } }
-        public static Azure.AI.Projects.FunctionShellToolParamEnvironmentType ContainerReference { get { throw null; } }
-        public static Azure.AI.Projects.FunctionShellToolParamEnvironmentType Local { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.FunctionShellToolParamEnvironmentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.FunctionShellToolParamEnvironmentType left, Azure.AI.Projects.FunctionShellToolParamEnvironmentType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionShellToolParamEnvironmentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.FunctionShellToolParamEnvironmentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.FunctionShellToolParamEnvironmentType left, Azure.AI.Projects.FunctionShellToolParamEnvironmentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GitHubIssueEvent : System.IEquatable<Azure.AI.Projects.GitHubIssueEvent>
     {
         private readonly object _dummy;
@@ -1548,42 +1255,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GitHubIssueRoutineTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GitHubIssueRoutineTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IndexType : System.IEquatable<Azure.AI.Projects.IndexType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IndexType(string value) { throw null; }
-        public static Azure.AI.Projects.IndexType AzureSearch { get { throw null; } }
-        public static Azure.AI.Projects.IndexType CosmosDB { get { throw null; } }
-        public static Azure.AI.Projects.IndexType ManagedAzureSearch { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.IndexType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.IndexType left, Azure.AI.Projects.IndexType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.IndexType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.IndexType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.IndexType left, Azure.AI.Projects.IndexType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InputContentType : System.IEquatable<Azure.AI.Projects.InputContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InputContentType(string value) { throw null; }
-        public static Azure.AI.Projects.InputContentType InputFile { get { throw null; } }
-        public static Azure.AI.Projects.InputContentType InputImage { get { throw null; } }
-        public static Azure.AI.Projects.InputContentType InputText { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.InputContentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.InputContentType left, Azure.AI.Projects.InputContentType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.InputContentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.InputContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.InputContentType left, Azure.AI.Projects.InputContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class InputFileContentParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputFileContentParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>
     {
         public InputFileContentParam() { }
@@ -1600,48 +1271,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.InputFileContentParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InputItemType : System.IEquatable<Azure.AI.Projects.InputItemType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InputItemType(string value) { throw null; }
-        public static Azure.AI.Projects.InputItemType ApplyPatchCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ApplyPatchCallOutput { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType CodeInterpreterCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType Compaction { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ComputerCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ComputerCallOutput { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType CustomToolCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType CustomToolCallOutput { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType FileSearchCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType FunctionCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType FunctionCallOutput { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ImageGenerationCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ItemReference { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType LocalShellCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType LocalShellCallOutput { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType McpApprovalRequest { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType McpApprovalResponse { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType McpCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType McpListTools { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType Message { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType OutputMessage { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType Reasoning { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ShellCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ShellCallOutput { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ToolSearchCall { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType ToolSearchOutput { get { throw null; } }
-        public static Azure.AI.Projects.InputItemType WebSearchCall { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.InputItemType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.InputItemType left, Azure.AI.Projects.InputItemType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.InputItemType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.InputItemType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.InputItemType left, Azure.AI.Projects.InputItemType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class InputTextContentParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputTextContentParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputTextContentParam>
     {
@@ -1753,30 +1382,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ManagedAzureAISearchIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ManagedAzureAISearchIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MessageContentType : System.IEquatable<Azure.AI.Projects.MessageContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MessageContentType(string value) { throw null; }
-        public static Azure.AI.Projects.MessageContentType ComputerScreenshot { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType InputFile { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType InputImage { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType InputText { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType OutputText { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType ReasoningText { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType Refusal { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType SummaryText { get { throw null; } }
-        public static Azure.AI.Projects.MessageContentType Text { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.MessageContentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.MessageContentType left, Azure.AI.Projects.MessageContentType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.MessageContentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.MessageContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.MessageContentType left, Azure.AI.Projects.MessageContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ModelDeployment : Azure.AI.Projects.AIProjectDeployment, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ModelDeployment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ModelDeployment>
     {
         internal ModelDeployment() { }
@@ -1860,41 +1465,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.NoAuthenticationCredentials System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.NoAuthenticationCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.NoAuthenticationCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.NoAuthenticationCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OpenApiAuthType : System.IEquatable<Azure.AI.Projects.OpenApiAuthType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OpenApiAuthType(string value) { throw null; }
-        public static Azure.AI.Projects.OpenApiAuthType Anonymous { get { throw null; } }
-        public static Azure.AI.Projects.OpenApiAuthType ManagedIdentity { get { throw null; } }
-        public static Azure.AI.Projects.OpenApiAuthType ProjectConnection { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.OpenApiAuthType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.OpenApiAuthType left, Azure.AI.Projects.OpenApiAuthType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.OpenApiAuthType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.OpenApiAuthType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.OpenApiAuthType left, Azure.AI.Projects.OpenApiAuthType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OutputMessageContentType : System.IEquatable<Azure.AI.Projects.OutputMessageContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OutputMessageContentType(string value) { throw null; }
-        public static Azure.AI.Projects.OutputMessageContentType OutputText { get { throw null; } }
-        public static Azure.AI.Projects.OutputMessageContentType Refusal { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.OutputMessageContentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.OutputMessageContentType left, Azure.AI.Projects.OutputMessageContentType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.OutputMessageContentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.OutputMessageContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.OutputMessageContentType left, Azure.AI.Projects.OutputMessageContentType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class PendingUploadConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PendingUploadConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PendingUploadConfiguration>
     {
@@ -2056,24 +1626,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.PromptEvaluatorGenerationJobSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptEvaluatorGenerationJobSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptEvaluatorGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptEvaluatorGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RealtimeMcpErrorType : System.IEquatable<Azure.AI.Projects.RealtimeMcpErrorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RealtimeMcpErrorType(string value) { throw null; }
-        public static Azure.AI.Projects.RealtimeMcpErrorType HttpError { get { throw null; } }
-        public static Azure.AI.Projects.RealtimeMcpErrorType ProtocolError { get { throw null; } }
-        public static Azure.AI.Projects.RealtimeMcpErrorType ToolExecutionError { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.RealtimeMcpErrorType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.RealtimeMcpErrorType left, Azure.AI.Projects.RealtimeMcpErrorType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.RealtimeMcpErrorType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.RealtimeMcpErrorType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.RealtimeMcpErrorType left, Azure.AI.Projects.RealtimeMcpErrorType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ResponseUsageInputTokensDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>
     {
@@ -2341,50 +1893,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.ToolDescription System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ToolDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ToolDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ToolDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ToolType : System.IEquatable<Azure.AI.Projects.ToolType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ToolType(string value) { throw null; }
-        public static Azure.AI.Projects.ToolType A2aPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType ApplyPatch { get { throw null; } }
-        public static Azure.AI.Projects.ToolType AzureAiSearch { get { throw null; } }
-        public static Azure.AI.Projects.ToolType AzureFunction { get { throw null; } }
-        public static Azure.AI.Projects.ToolType BingCustomSearchPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType BingGrounding { get { throw null; } }
-        public static Azure.AI.Projects.ToolType BrowserAutomationPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType CaptureStructuredOutputs { get { throw null; } }
-        public static Azure.AI.Projects.ToolType CodeInterpreter { get { throw null; } }
-        public static Azure.AI.Projects.ToolType Computer { get { throw null; } }
-        public static Azure.AI.Projects.ToolType ComputerUsePreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType Custom { get { throw null; } }
-        public static Azure.AI.Projects.ToolType FabricDataagentPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType FabricIqPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType FileSearch { get { throw null; } }
-        public static Azure.AI.Projects.ToolType Function { get { throw null; } }
-        public static Azure.AI.Projects.ToolType ImageGeneration { get { throw null; } }
-        public static Azure.AI.Projects.ToolType LocalShell { get { throw null; } }
-        public static Azure.AI.Projects.ToolType Mcp { get { throw null; } }
-        public static Azure.AI.Projects.ToolType MemorySearchPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType Namespace { get { throw null; } }
-        public static Azure.AI.Projects.ToolType Openapi { get { throw null; } }
-        public static Azure.AI.Projects.ToolType SharepointGroundingPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType Shell { get { throw null; } }
-        public static Azure.AI.Projects.ToolType ToolboxSearchPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType ToolSearch { get { throw null; } }
-        public static Azure.AI.Projects.ToolType WebSearch { get { throw null; } }
-        public static Azure.AI.Projects.ToolType WebSearchPreview { get { throw null; } }
-        public static Azure.AI.Projects.ToolType WorkIqPreview { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.ToolType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.ToolType left, Azure.AI.Projects.ToolType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.ToolType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.ToolType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.ToolType left, Azure.AI.Projects.ToolType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ToolUseFineTuningDataGenerationJobOptions : Azure.AI.Projects.DataGenerationJobOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ToolUseFineTuningDataGenerationJobOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ToolUseFineTuningDataGenerationJobOptions>
     {

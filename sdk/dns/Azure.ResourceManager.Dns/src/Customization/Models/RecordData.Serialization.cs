@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Dns
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                writer.WriteObjectValue(SystemData, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Dns
             if (Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
-                JsonSerializer.Serialize(writer, TargetResource);
+                writer.WriteObjectValue(TargetResource, options);
             }
             if (Optional.IsDefined(TrafficManagementProfile))
             {
                 writer.WritePropertyName("trafficManagementProfile");
-                JsonSerializer.Serialize(writer, TrafficManagementProfile);
+                writer.WriteObjectValue(TrafficManagementProfile, options);
             }
             if (Optional.IsCollectionDefined(DnsARecords))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Dns
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        writer.WriteObjectValue(document.RootElement, options);
                     }
 #endif
                 }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Dns
                             {
                                 continue;
                             }
-                            targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            targetResource = ModelReaderWriter.Read<WritableSubResource>(BinaryData.FromString(property0.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagementProfile"))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            trafficManagementProfile = ModelReaderWriter.Read<WritableSubResource>(BinaryData.FromString(property0.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("ARecords"u8))

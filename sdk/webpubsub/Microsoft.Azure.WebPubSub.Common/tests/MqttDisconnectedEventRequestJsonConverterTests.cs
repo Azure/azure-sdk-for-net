@@ -19,19 +19,19 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttDisconnectedEventRequest request = JsonSerializer.Deserialize<MqttDisconnectedEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.AreEqual("client disconnect", request.Reason);
-            Assert.True(request.Mqtt.InitiatedByClient);
-            Assert.AreEqual((MqttDisconnectReasonCode)0, request.Mqtt.DisconnectPacket.Code);
-            Assert.AreEqual("p1", request.Mqtt.DisconnectPacket.UserProperties.Single().Name);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Reason, Is.EqualTo("client disconnect"));
+            Assert.That(request.Mqtt.InitiatedByClient, Is.True);
+            Assert.That(request.Mqtt.DisconnectPacket.Code, Is.EqualTo((MqttDisconnectReasonCode)0));
+            Assert.That(request.Mqtt.DisconnectPacket.UserProperties.Single().Name, Is.EqualTo("p1"));
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             MqttDisconnectedEventRequest converted = JsonSerializer.Deserialize<MqttDisconnectedEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual("client disconnect", converted.Reason);
-            Assert.True(converted.Mqtt.InitiatedByClient);
-            Assert.AreEqual(request.Mqtt.DisconnectPacket.Code, converted.Mqtt.DisconnectPacket.Code);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Reason, Is.EqualTo("client disconnect"));
+            Assert.That(converted.Mqtt.InitiatedByClient, Is.True);
+            Assert.That(converted.Mqtt.DisconnectPacket.Code, Is.EqualTo(request.Mqtt.DisconnectPacket.Code));
         }
 
         [Test]
@@ -41,18 +41,18 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttDisconnectedEventRequest request = JsonSerializer.Deserialize<MqttDisconnectedEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.AreEqual("timeout", request.Reason);
-            Assert.False(request.Mqtt.InitiatedByClient);
-            Assert.IsNull(request.Mqtt.DisconnectPacket);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Reason, Is.EqualTo("timeout"));
+            Assert.That(request.Mqtt.InitiatedByClient, Is.False);
+            Assert.That(request.Mqtt.DisconnectPacket, Is.Null);
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             MqttDisconnectedEventRequest converted = JsonSerializer.Deserialize<MqttDisconnectedEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual("timeout", converted.Reason);
-            Assert.False(converted.Mqtt.InitiatedByClient);
-            Assert.IsNull(converted.Mqtt.DisconnectPacket);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Reason, Is.EqualTo("timeout"));
+            Assert.That(converted.Mqtt.InitiatedByClient, Is.False);
+            Assert.That(converted.Mqtt.DisconnectPacket, Is.Null);
         }
     }
 }

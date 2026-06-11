@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct ToolChoiceParamType : IEquatable<ToolChoiceParamType>
+    internal readonly partial struct ToolChoiceParamType : IEquatable<ToolChoiceParamType>
     {
         private readonly string _value;
         private const string AllowedToolsValue = "allowed_tools";

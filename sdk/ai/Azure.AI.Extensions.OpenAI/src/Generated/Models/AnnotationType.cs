@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct AnnotationType : IEquatable<AnnotationType>
+    internal readonly partial struct AnnotationType : IEquatable<AnnotationType>
     {
         private readonly string _value;
         private const string FileCitationValue = "file_citation";

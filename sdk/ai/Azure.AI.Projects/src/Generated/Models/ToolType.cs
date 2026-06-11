@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public readonly partial struct ToolType : IEquatable<ToolType>
+    internal readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;
         private const string FunctionValue = "function";

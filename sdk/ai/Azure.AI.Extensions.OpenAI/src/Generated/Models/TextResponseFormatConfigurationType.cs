@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct TextResponseFormatConfigurationType : IEquatable<TextResponseFormatConfigurationType>
+    internal readonly partial struct TextResponseFormatConfigurationType : IEquatable<TextResponseFormatConfigurationType>
     {
         private readonly string _value;
         private const string TextValue = "text";
