@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.TestFramework
             {
                 // HybridComputeLocation is a backward-compatible alias for LocationData (inherits from LocationData which implements IJsonModel<LocationData>)
                 "Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation",
+                // HybridComputeLicense is a backward-compatible alias for HybridComputeLicenseData (inherits from HybridComputeLicenseData which implements IJsonModel<HybridComputeLicenseData>)
+                "Azure.ResourceManager.HybridCompute.Models.HybridComputeLicense",
             };
         }
     }
