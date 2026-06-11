@@ -77,8 +77,10 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagRevisions(string name = null, string label = null, string after = null, System.Collections.Generic.IEnumerable<string> select = null, System.Collections.Generic.IEnumerable<string> tags = null, string syncToken = null, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetFeatureFlagRevisionsAsync(string name, string label, string after, System.Collections.Generic.IEnumerable<string> select, System.Collections.Generic.IEnumerable<string> tags, string syncToken, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagRevisionsAsync(string name = null, string label = null, string after = null, System.Collections.Generic.IEnumerable<string> select = null, System.Collections.Generic.IEnumerable<string> tags = null, string syncToken = null, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlags(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetFeatureFlags(string name, string label, string syncToken, string after, string acceptDatetime, System.Collections.Generic.IEnumerable<string> select, Azure.MatchConditions matchConditions, System.Collections.Generic.IEnumerable<string> tags, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlags(string name = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, System.Collections.Generic.IEnumerable<string> select = null, Azure.MatchConditions matchConditions = null, System.Collections.Generic.IEnumerable<string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagsAsync(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetFeatureFlagsAsync(string name, string label, string syncToken, string after, string acceptDatetime, System.Collections.Generic.IEnumerable<string> select, Azure.MatchConditions matchConditions, System.Collections.Generic.IEnumerable<string> tags, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagsAsync(string name = null, string label = null, string syncToken = null, string after = null, string acceptDatetime = null, System.Collections.Generic.IEnumerable<string> select = null, Azure.MatchConditions matchConditions = null, System.Collections.Generic.IEnumerable<string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -386,6 +388,19 @@ namespace Azure.Data.AppConfiguration
         Azure.Data.AppConfiguration.FeatureFlagFilter System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FeatureFlagSelector
+    {
+        public static readonly string Any;
+        public FeatureFlagSelector() { }
+        public System.DateTimeOffset? AcceptDateTime { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFields> Fields { get { throw null; } }
+        public string LabelFilter { get { throw null; } set { } }
+        public string NameFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TagsFilter { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class FeatureFlagTelemetryConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagTelemetryConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagTelemetryConfiguration>
     {

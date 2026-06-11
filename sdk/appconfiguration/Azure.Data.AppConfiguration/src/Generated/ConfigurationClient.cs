@@ -280,178 +280,6 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// [Protocol Method] Gets a list of feature flags.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> A filter used to match feature flag names. </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetFeatureFlags(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
-        {
-            return new ConfigurationClientGetFeatureFlagsCollectionResult(
-                this,
-                name,
-                label,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                matchConditions,
-                tags,
-                context,
-                "ConfigurationClient.GetFeatureFlags");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of feature flags.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> A filter used to match feature flag names. </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetFeatureFlagsAsync(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
-        {
-            return new ConfigurationClientGetFeatureFlagsAsyncCollectionResult(
-                this,
-                name,
-                label,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                matchConditions,
-                tags,
-                context,
-                "ConfigurationClient.GetFeatureFlags");
-        }
-
-        /// <summary> Gets a list of feature flags. </summary>
-        /// <param name="name"> A filter used to match feature flag names. </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<FeatureFlag> GetFeatureFlags(string name = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<string> @select = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            return new ConfigurationClientGetFeatureFlagsCollectionResultOfT(
-                this,
-                name,
-                label,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                matchConditions,
-                tags,
-                cancellationToken.ToRequestContext(),
-                "ConfigurationClient.GetFeatureFlags");
-        }
-
-        /// <summary> Gets a list of feature flags. </summary>
-        /// <param name="name"> A filter used to match feature flag names. </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<FeatureFlag> GetFeatureFlagsAsync(string name = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<string> @select = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            return new ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT(
-                this,
-                name,
-                label,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                matchConditions,
-                tags,
-                cancellationToken.ToRequestContext(),
-                "ConfigurationClient.GetFeatureFlags");
-        }
-
-        /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
         /// <item>
@@ -623,18 +451,14 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetFeatureFlag(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        internal virtual Response GetFeatureFlag(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetFeatureFlag");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreateGetFeatureFlagRequest(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -667,18 +491,14 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetFeatureFlagAsync(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        internal virtual async Task<Response> GetFeatureFlagAsync(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetFeatureFlag");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreateGetFeatureFlagRequest(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -704,13 +524,9 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FeatureFlag> GetFeatureFlag(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        internal virtual Response<FeatureFlag> GetFeatureFlag(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = GetFeatureFlag(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, cancellationToken.ToRequestContext());
             return Response.FromValue((FeatureFlag)result, result);
         }
@@ -730,13 +546,9 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FeatureFlag>> GetFeatureFlagAsync(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<FeatureFlag>> GetFeatureFlagAsync(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = await GetFeatureFlagAsync(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((FeatureFlag)result, result);
         }
@@ -877,18 +689,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response PutFeatureFlag(string name, RequestContent content, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual Response PutFeatureFlag(string name, RequestContent content, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutFeatureFlag");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreatePutFeatureFlagRequest(name, content, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -913,18 +721,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PutFeatureFlagAsync(string name, RequestContent content, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> PutFeatureFlagAsync(string name, RequestContent content, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutFeatureFlag");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreatePutFeatureFlagRequest(name, content, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -942,13 +746,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FeatureFlag> PutFeatureFlag(string name, FeatureFlag entity = default, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Response<FeatureFlag> PutFeatureFlag(string name, FeatureFlag entity = default, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = PutFeatureFlag(name, entity, label, syncToken, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((FeatureFlag)result, result);
         }
@@ -960,13 +760,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FeatureFlag>> PutFeatureFlagAsync(string name, FeatureFlag entity = default, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<FeatureFlag>> PutFeatureFlagAsync(string name, FeatureFlag entity = default, string label = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = await PutFeatureFlagAsync(name, entity, label, syncToken, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((FeatureFlag)result, result);
         }
@@ -987,18 +783,14 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteFeatureFlag(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
+        internal virtual Response DeleteFeatureFlag(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteFeatureFlag");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreateDeleteFeatureFlagRequest(name, label, syncToken, ifMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1025,18 +817,14 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteFeatureFlagAsync(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
+        internal virtual async Task<Response> DeleteFeatureFlagAsync(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteFeatureFlag");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreateDeleteFeatureFlagRequest(name, label, syncToken, ifMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1056,13 +844,9 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FeatureFlag> DeleteFeatureFlag(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        internal virtual Response<FeatureFlag> DeleteFeatureFlag(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = DeleteFeatureFlag(name, label, syncToken, ifMatch, cancellationToken.ToRequestContext());
             return Response.FromValue((FeatureFlag)result, result);
         }
@@ -1076,13 +860,9 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FeatureFlag>> DeleteFeatureFlagAsync(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<FeatureFlag>> DeleteFeatureFlagAsync(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = await DeleteFeatureFlagAsync(name, label, syncToken, ifMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((FeatureFlag)result, result);
         }
@@ -1114,7 +894,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetFeatureFlagRevisions(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual Pageable<BinaryData> GetFeatureFlagRevisions(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             return new ConfigurationClientGetFeatureFlagRevisionsCollectionResult(
                 this,
@@ -1156,7 +936,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             return new ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResult(
                 this,
@@ -1190,7 +970,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<FeatureFlag> GetFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<FeatureFlag> GetFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             return new ConfigurationClientGetFeatureFlagRevisionsCollectionResultOfT(
                 this,
@@ -1224,7 +1004,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<FeatureFlag> GetFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<FeatureFlag> GetFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<string> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             return new ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResultOfT(
                 this,

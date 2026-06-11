@@ -94,6 +94,10 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
     [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetFeatureFlags", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetFeatureFlagsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetFeatureFlags", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetFeatureFlagsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
 
     public partial class ConfigurationClient
     {
@@ -818,6 +822,75 @@ namespace Azure.Data.AppConfiguration
             }
 
             return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
+        }
+
+        /// <summary>
+        /// Retrieves one or more <see cref="FeatureFlag"/> entities that match the options specified in the passed-in <see cref="FeatureFlagSelector"/>.
+        /// </summary>
+        /// <param name="selector">Options used to select a set of <see cref="FeatureFlag"/> entities from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An enumerable collection containing the retrieved <see cref="FeatureFlag"/> entities.</returns>
+        public virtual AsyncPageable<FeatureFlag> GetFeatureFlagsAsync(FeatureFlagSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
+
+            return new ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT(
+                this,
+                name,
+                label,
+                _syncToken,
+                after: null,
+                acceptDatetime,
+                select,
+                matchConditions: null,
+                tags,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetFeatureFlags");
+        }
+
+        /// <summary>
+        /// Retrieves one or more <see cref="FeatureFlag"/> entities that match the options specified in the passed-in <see cref="FeatureFlagSelector"/>.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting <see cref="FeatureFlag"/> from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Pageable<FeatureFlag> GetFeatureFlags(FeatureFlagSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
+
+            return new ConfigurationClientGetFeatureFlagsCollectionResultOfT(
+                this,
+                name,
+                label,
+                _syncToken,
+                after: null,
+                acceptDatetime,
+                select,
+                matchConditions: null,
+                tags,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetFeatureFlags");
+        }
+
+        private (string Name, string Label, string AcceptDatetime, IEnumerable<string> Select, IList<string> Tags) TranslateFeatureFlagSelector(FeatureFlagSelector selector)
+        {
+            string acceptDatetime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            IEnumerable<string> select = null;
+            if (selector.Fields.Count > 0)
+            {
+                var fields = new List<string>(selector.Fields.Count);
+                foreach (FeatureFlagFields field in selector.Fields)
+                {
+                    fields.Add(field.ToString());
+                }
+                select = fields;
+            }
+
+            return (selector.NameFilter, selector.LabelFilter, acceptDatetime, select, selector.TagsFilter);
         }
 
         /// <summary>
