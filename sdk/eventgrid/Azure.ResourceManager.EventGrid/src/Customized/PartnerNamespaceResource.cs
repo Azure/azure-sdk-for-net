@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.EventGrid
     public partial class PartnerNamespaceResource
     {
         /// <summary> Adds a tag to the resource. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -25,6 +27,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Adds a tag to the resource. </summary>
+        [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -35,6 +38,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Removes a tag from the resource. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Removes a tag from the resource. </summary>
+        [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -55,6 +60,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replaces the resource tags. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -64,6 +70,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replaces the resource tags. </summary>
+        [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));

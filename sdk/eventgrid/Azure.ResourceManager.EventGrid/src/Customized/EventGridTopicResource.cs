@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -15,9 +18,24 @@ namespace Azure.ResourceManager.EventGrid
     public partial class EventGridTopicResource
     {
         /// <summary> Add a tag to the resource. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EventGridTopicResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _topicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EventGridTopicData> response = Response.FromValue(EventGridTopicData.FromResponse(result), result);
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
 
             EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
             patch.Tags[key] = value;
@@ -26,9 +44,24 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Add a tag to the resource. </summary>
+        [ForwardsClientCalls]
         public virtual Response<EventGridTopicResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (CanUseTagResource(cancellationToken))
+            {
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _topicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EventGridTopicData> response = Response.FromValue(EventGridTopicData.FromResponse(result), result);
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
 
             EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
             patch.Tags[key] = value;
@@ -37,9 +70,24 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Remove a tag from the resource. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EventGridTopicResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _topicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EventGridTopicData> response = Response.FromValue(EventGridTopicData.FromResponse(result), result);
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
 
             EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
             patch.Tags.Remove(key);
@@ -48,9 +96,24 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Remove a tag from the resource. </summary>
+        [ForwardsClientCalls]
         public virtual Response<EventGridTopicResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (CanUseTagResource(cancellationToken))
+            {
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _topicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EventGridTopicData> response = Response.FromValue(EventGridTopicData.FromResponse(result), result);
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
 
             EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
             patch.Tags.Remove(key);
@@ -59,9 +122,25 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replace the resource tags. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EventGridTopicResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _topicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EventGridTopicData> response = Response.FromValue(EventGridTopicData.FromResponse(result), result);
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
 
             EventGridTopicPatch patch = CreatePatchWithTags(tags);
             await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
@@ -69,9 +148,25 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replace the resource tags. </summary>
+        [ForwardsClientCalls]
         public virtual Response<EventGridTopicResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
+            if (CanUseTagResource(cancellationToken))
+            {
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _topicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EventGridTopicData> response = Response.FromValue(EventGridTopicData.FromResponse(result), result);
+                return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
+            }
 
             EventGridTopicPatch patch = CreatePatchWithTags(tags);
             Update(WaitUntil.Completed, patch, cancellationToken);

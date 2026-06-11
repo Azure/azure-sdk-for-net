@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class NamespaceTopicEventSubscriptionResource
     {
+        [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual Response<NamespaceTopicEventSubscriptionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -40,6 +42,7 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -54,6 +57,7 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual Response<NamespaceTopicEventSubscriptionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual Response<NamespaceTopicEventSubscriptionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

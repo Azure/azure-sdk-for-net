@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.EventGrid
     public partial class EventGridDomainResource
     {
         /// <summary> Add a tag to the resource. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EventGridDomainResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -26,6 +28,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Add a tag to the resource. </summary>
+        [ForwardsClientCalls]
         public virtual Response<EventGridDomainResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -37,6 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Remove a tag from the resource. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EventGridDomainResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Remove a tag from the resource. </summary>
+        [ForwardsClientCalls]
         public virtual Response<EventGridDomainResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -59,6 +64,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replace the resource tags. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EventGridDomainResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -69,6 +75,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replace the resource tags. </summary>
+        [ForwardsClientCalls]
         public virtual Response<EventGridDomainResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
