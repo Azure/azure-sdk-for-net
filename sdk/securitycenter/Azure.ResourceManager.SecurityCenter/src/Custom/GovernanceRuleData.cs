@@ -3,7 +3,7 @@
 
 #nullable disable
 
-#pragma warning disable CS1591 // Hidden obsolete compatibility shims do not need public docs.
+#pragma warning disable CS1591 // Hidden compatibility shims do not need public docs.
 
 using System;
 using System.ClientModel.Primitives;
@@ -27,9 +27,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityCenter
 {
     // The previous GA SDK exposed this legacy governance rule type/member from GovernanceRules swagger.
-    // Current TypeSpec emits the updated governance resource shape instead, so this hidden obsolete
-    // shim is retained only for ApiCompat.
-    [Obsolete("This API is no longer supported by the service.", false)]
+    // Current TypeSpec emits the updated governance resource shape instead, so this hidden shim is
+    // retained only for ApiCompat.
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class GovernanceRuleData : SecurityConnectorGovernanceRuleData, IJsonModel<GovernanceRuleData>, IPersistableModel<GovernanceRuleData>
     {

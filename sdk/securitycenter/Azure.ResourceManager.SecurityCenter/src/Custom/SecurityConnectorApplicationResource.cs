@@ -33,9 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [CodeGenSuppress("Data")]
     public partial class SecurityConnectorApplicationResource
     {
-#pragma warning disable CS0618 // Type is retained for API compatibility.
         public virtual SecurityApplicationData Data { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
-#pragma warning restore CS0618
 
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

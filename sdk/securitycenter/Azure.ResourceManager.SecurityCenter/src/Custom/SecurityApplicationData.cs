@@ -3,7 +3,7 @@
 
 #nullable disable
 
-#pragma warning disable CS1591 // Hidden obsolete compatibility shims do not need public docs.
+#pragma warning disable CS1591 // Hidden compatibility shims do not need public docs.
 
 using System;
 using System.ClientModel.Primitives;
@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     // The previous GA SDK generated this legacy AutoRest support type from older Security swagger.
     // Current TypeSpec either emits the updated resource/model name or no longer includes that
-    // legacy schema, so this hidden obsolete shim is retained only for ApiCompat.
-    [Obsolete("This API is no longer supported by the service.", false)]
+    // legacy schema, so this hidden shim is retained only for ApiCompat.
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SecurityApplicationData : SecurityConnectorApplicationData, IJsonModel<SecurityApplicationData>, IPersistableModel<SecurityApplicationData>
     {
