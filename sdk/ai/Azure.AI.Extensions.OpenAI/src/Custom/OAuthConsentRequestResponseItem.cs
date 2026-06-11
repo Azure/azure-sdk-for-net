@@ -9,6 +9,7 @@ public partial class OAuthConsentRequestResponseItem
     [CodeGenMember("ConsentLink")]
     internal string InternalConsentLink { get; }
 
+    /// <summary> Gets the URI the user can open to provide OAuth consent. </summary>
     public Uri ConsentLink { get => new(InternalConsentLink); }
 
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>

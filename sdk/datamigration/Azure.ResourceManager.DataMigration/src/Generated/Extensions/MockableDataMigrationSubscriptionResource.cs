@@ -8,100 +8,160 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.DataMigration.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataMigration.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDataMigrationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _sqlMigrationServiceClientDiagnostics;
-        private SqlMigrationServicesRestOperations _sqlMigrationServiceRestClient;
+        private ClientDiagnostics _migrationServicesClientDiagnostics;
+        private MigrationServices _migrationServicesRestClient;
+        private ClientDiagnostics _sqlMigrationServicesClientDiagnostics;
+        private SqlMigrationServices _sqlMigrationServicesRestClient;
+        private ClientDiagnostics _servicesClientDiagnostics;
+        private Services _servicesRestClient;
         private ClientDiagnostics _resourceSkusClientDiagnostics;
-        private ResourceSkusRestOperations _resourceSkusRestClient;
-        private ClientDiagnostics _dataMigrationServiceServicesClientDiagnostics;
-        private ServicesRestOperations _dataMigrationServiceServicesRestClient;
+        private ResourceSkus _resourceSkusRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
-        private UsagesRestOperations _usagesRestClient;
+        private Usages _usagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataMigrationSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataMigrationSubscriptionResource for mocking. </summary>
         protected MockableDataMigrationSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataMigrationSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataMigrationSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataMigrationSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SqlMigrationServiceClientDiagnostics => _sqlMigrationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration", SqlMigrationServiceResource.ResourceType.Namespace, Diagnostics);
-        private SqlMigrationServicesRestOperations SqlMigrationServiceRestClient => _sqlMigrationServiceRestClient ??= new SqlMigrationServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlMigrationServiceResource.ResourceType));
-        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DataMigrationServiceServicesClientDiagnostics => _dataMigrationServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationServiceResource.ResourceType.Namespace, Diagnostics);
-        private ServicesRestOperations DataMigrationServiceServicesRestClient => _dataMigrationServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataMigrationServiceResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics MigrationServicesClientDiagnostics => _migrationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private MigrationServices MigrationServicesRestClient => _migrationServicesRestClient ??= new MigrationServices(MigrationServicesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics SqlMigrationServicesClientDiagnostics => _sqlMigrationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SqlMigrationServices SqlMigrationServicesRestClient => _sqlMigrationServicesRestClient ??= new SqlMigrationServices(SqlMigrationServicesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ResourceSkus ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkus(ResourceSkusClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         /// <summary>
-        /// Retrieve all SQL migration services in the subscriptions.
+        /// Retrieve all migration services in the subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/migrationServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationServices_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlMigrationServiceResource> GetSqlMigrationServicesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MigrationServiceResource> GetMigrationServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServicesGetBySubscriptionAsyncCollectionResultOfT(MigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetMigrationServices"), data => new MigrationServiceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieve all migration services in the subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/migrationServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MigrationServiceResource> GetMigrationServices(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServicesGetBySubscriptionCollectionResultOfT(MigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetMigrationServices"), data => new MigrationServiceResource(Client, data));
         }
 
         /// <summary>
         /// Retrieve all SQL migration services in the subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlMigrationServices_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlMigrationServiceResource> GetSqlMigrationServicesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetBySubscriptionAsyncCollectionResultOfT(SqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices"), data => new SqlMigrationServiceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieve all SQL migration services in the subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlMigrationServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,111 +169,55 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> A collection of <see cref="SqlMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMigrationServiceResource> GetSqlMigrationServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The skus action returns the list of SKUs that DMS (classic) supports.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSkus_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataMigrationSku.DeserializeDataMigrationSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The skus action returns the list of SKUs that DMS (classic) supports.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSkus_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataMigrationSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataMigrationSku.DeserializeDataMigrationSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetBySubscriptionCollectionResultOfT(SqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices"), data => new SqlMigrationServiceResource(Client, data));
         }
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service resources in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMigrationServices_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMigrationServiceResource> GetDataMigrationServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service resources in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMigrationServices_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,45 +225,53 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <returns> A collection of <see cref="DataMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMigrationServiceResource> GetDataMigrationServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetAllCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>
         /// This method checks whether a proposed top-level resource name is valid and available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServicesOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="content"> Requested name to validate. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckDataMigrationNameAvailabilityAsync(AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability");
+            using DiagnosticScope scope = ServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability");
             scope.Start();
             try
             {
-                var response = await DataMigrationServiceServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServicesRestClient.CreateCheckDataMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMigrationServiceNameAvailabilityResult> response = Response.FromValue(DataMigrationServiceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -273,36 +285,42 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// This method checks whether a proposed top-level resource name is valid and available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServicesOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="content"> Requested name to validate. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataMigrationServiceNameAvailabilityResult> CheckDataMigrationNameAvailability(AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability");
+            using DiagnosticScope scope = ServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability");
             scope.Start();
             try
             {
-                var response = DataMigrationServiceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServicesRestClient.CreateCheckDataMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMigrationServiceNameAvailabilityResult> response = Response.FromValue(DataMigrationServiceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -313,57 +331,117 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
+        /// The skus action returns the list of SKUs that DMS (classic) supports.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceSkusOperationGroup_ListSkus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataMigrationQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataMigrationQuota.DeserializeDataMigrationQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
+        }
+
+        /// <summary>
+        /// The skus action returns the list of SKUs that DMS (classic) supports.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceSkusOperationGroup_ListSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataMigrationSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceSkusGetSkusResourceSkusCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
         }
 
         /// <summary>
         /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The Azure region of the operation. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataMigrationQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
+        }
+
+        /// <summary>
+        /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMigrationQuota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataMigrationQuota.DeserializeDataMigrationQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
         }
     }
 }

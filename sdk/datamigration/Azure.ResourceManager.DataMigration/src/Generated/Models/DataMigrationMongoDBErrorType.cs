@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationMongoDBErrorType : IEquatable<DataMigrationMongoDBErrorType>
     {
         private readonly string _value;
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> ValidationError. </summary>
+        private const string ValidationErrorValue = "ValidationError";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBErrorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationMongoDBErrorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ErrorValue = "Error";
-        private const string ValidationErrorValue = "ValidationError";
-        private const string WarningValue = "Warning";
+            _value = value;
+        }
 
         /// <summary> Error. </summary>
         public static DataMigrationMongoDBErrorType Error { get; } = new DataMigrationMongoDBErrorType(ErrorValue);
+
         /// <summary> ValidationError. </summary>
         public static DataMigrationMongoDBErrorType ValidationError { get; } = new DataMigrationMongoDBErrorType(ValidationErrorValue);
+
         /// <summary> Warning. </summary>
         public static DataMigrationMongoDBErrorType Warning { get; } = new DataMigrationMongoDBErrorType(WarningValue);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBErrorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationMongoDBErrorType left, DataMigrationMongoDBErrorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBErrorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationMongoDBErrorType left, DataMigrationMongoDBErrorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationMongoDBErrorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBErrorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationMongoDBErrorType(string value) => new DataMigrationMongoDBErrorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBErrorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationMongoDBErrorType?(string value) => value == null ? null : new DataMigrationMongoDBErrorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationMongoDBErrorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationMongoDBErrorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

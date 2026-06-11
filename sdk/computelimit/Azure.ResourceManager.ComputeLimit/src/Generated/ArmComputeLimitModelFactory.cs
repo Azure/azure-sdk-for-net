@@ -96,6 +96,13 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             return new ComputeLimitFeatureProperties(state, provisioningState, default);
         }
 
+        /// <param name="serviceTreeId"> The Service Tree identifier associated with this feature action. </param>
+        /// <returns> A new <see cref="Models.ComputeLimitFeatureEnableContent"/> instance for mocking. </returns>
+        public static ComputeLimitFeatureEnableContent ComputeLimitFeatureEnableContent(string serviceTreeId = default)
+        {
+            return new ComputeLimitFeatureEnableContent(serviceTreeId, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

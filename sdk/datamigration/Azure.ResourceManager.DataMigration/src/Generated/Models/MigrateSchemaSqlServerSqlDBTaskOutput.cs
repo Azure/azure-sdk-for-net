@@ -12,61 +12,34 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for the task that migrates Schema for SQL Server databases to Azure SQL databases
-    /// Please note <see cref="MigrateSchemaSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSchemaSqlTaskOutputError"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/> and <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>, and <see cref="MigrateSchemaSqlTaskOutputError"/>.
     /// </summary>
     public abstract partial class MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutput"/>. </summary>
-        protected MigrateSchemaSqlServerSqlDBTaskOutput()
+        /// <param name="resultType"> Result type. </param>
+        private protected MigrateSchemaSqlServerSqlDBTaskOutput(string resultType)
         {
+            ResultType = resultType;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSchemaSqlServerSqlDBTaskOutput(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ResultType = resultType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Result identifier. </summary>
         public string Id { get; }
+
         /// <summary> Result type. </summary>
         internal string ResultType { get; set; }
     }
