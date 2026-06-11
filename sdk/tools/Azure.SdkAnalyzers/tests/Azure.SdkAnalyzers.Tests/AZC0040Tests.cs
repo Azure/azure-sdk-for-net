@@ -280,7 +280,7 @@ namespace Azure.Test
         }
 
         [Test]
-        public async Task AZC0040_NotProducedForMemberInPrivateType()
+        public async Task AZC0040_NotProducedForMemberInInternalType()
         {
             string code = @"
 using Apache.Arrow;
