@@ -733,11 +733,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return GetSecuritySettings().Get(settingName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Applications in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of Applications and their operations over a ApplicationResource. </returns>
-        public virtual ApplicationCollection GetApplications()
+        /// <summary> Gets a collection of SubscriptionSecurityApplications in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionSecurityApplications and their operations over a SubscriptionSecurityApplicationResource. </returns>
+        public virtual SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications()
         {
-            return GetCachedClient(client => new ApplicationCollection(client, Id));
+            return GetCachedClient(client => new SubscriptionSecurityApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -762,11 +762,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationResource>> GetApplicationAsync(string applicationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            return await GetApplications().GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSecurityApplications().GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -791,11 +791,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApplicationResource> GetApplication(string applicationId, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            return GetApplications().Get(applicationId, cancellationToken);
+            return GetSubscriptionSecurityApplications().Get(applicationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityCenterLocations in the <see cref="SubscriptionResource"/>. </summary>

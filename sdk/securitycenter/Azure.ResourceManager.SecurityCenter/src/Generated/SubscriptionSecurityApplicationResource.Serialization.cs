@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    public partial class ApplicationResource : IJsonModel<SecurityConnectorApplicationData>
+    public partial class SubscriptionSecurityApplicationResource : IJsonModel<SecurityConnectorApplicationData>
     {
         private static IJsonModel<SecurityConnectorApplicationData> s_dataDeserializationInstance;
 

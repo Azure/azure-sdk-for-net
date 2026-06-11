@@ -112,12 +112,6 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this ArmClient client, ResourceIdentifier id) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications(this SubscriptionResource subscriptionResource) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(this ArmClient client, ResourceIdentifier id) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [ForwardsClientCalls]
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

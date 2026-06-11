@@ -116,14 +116,6 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [ForwardsClientCalls]
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [ForwardsClientCalls]
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<SecurityTopologyResource> GetTopology(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [ForwardsClientCalls]
         [Obsolete("This API is no longer supported by the service.", false)]

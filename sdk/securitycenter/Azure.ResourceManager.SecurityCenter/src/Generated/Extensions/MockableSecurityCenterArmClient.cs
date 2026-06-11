@@ -1004,13 +1004,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetApiCollections(scope).GetAsync(apiId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SubscriptionSecurityApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public virtual ApplicationResource GetApplicationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionSecurityApplicationResource"/> object. </returns>
+        public virtual SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(ResourceIdentifier id)
         {
-            ApplicationResource.ValidateResourceId(id);
-            return new ApplicationResource(Client, id);
+            SubscriptionSecurityApplicationResource.ValidateResourceId(id);
+            return new SubscriptionSecurityApplicationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SecurityAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>

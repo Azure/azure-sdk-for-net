@@ -33,6 +33,20 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        public async Task Exist()
+        {
+            bool flag = await _tenantAssessmentMetadataCollection.ExistsAsync(_existAssessmentMetadataName);
+            Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task Get()
+        {
+            var tenantAssessmentMetadataResource = await _tenantAssessmentMetadataCollection.GetAsync(_existAssessmentMetadataName);
+            ValidateTenantAssessmentMetadata(tenantAssessmentMetadataResource);
+        }
+
+        [RecordedTest]
         [Ignore("Needs re-recording because the migrated tenant assessment metadata response shape contains empty resource IDs in the old recording.")]
         public async Task GetAll()
         {

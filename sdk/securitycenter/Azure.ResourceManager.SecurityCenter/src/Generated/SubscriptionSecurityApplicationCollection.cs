@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplicationResource"/> and their operations.
-    /// Each <see cref="ApplicationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ApplicationCollection"/> instance call the GetApplications method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="SubscriptionSecurityApplicationResource"/> and their operations.
+    /// Each <see cref="SubscriptionSecurityApplicationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionSecurityApplicationCollection"/> instance call the GetSubscriptionSecurityApplications method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class ApplicationCollection : ArmCollection, IEnumerable<ApplicationResource>, IAsyncEnumerable<ApplicationResource>
+    public partial class SubscriptionSecurityApplicationCollection : ArmCollection, IEnumerable<SubscriptionSecurityApplicationResource>, IAsyncEnumerable<SubscriptionSecurityApplicationResource>
     {
         private readonly ClientDiagnostics _applicationClientDiagnostics;
         private readonly Application _applicationRestClient;
         private readonly ClientDiagnostics _applicationsClientDiagnostics;
         private readonly Applications _applicationsRestClient;
 
-        /// <summary> Initializes a new instance of ApplicationCollection for mocking. </summary>
-        protected ApplicationCollection()
+        /// <summary> Initializes a new instance of SubscriptionSecurityApplicationCollection for mocking. </summary>
+        protected SubscriptionSecurityApplicationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionSecurityApplicationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionSecurityApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplicationResource.ResourceType, out string applicationApiVersion);
-            _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationRestClient = new Application(_applicationClientDiagnostics, Pipeline, Endpoint, applicationApiVersion ?? "2022-07-01-preview");
-            _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, applicationApiVersion ?? "2022-07-01-preview");
+            TryGetApiVersion(SubscriptionSecurityApplicationResource.ResourceType, out string subscriptionSecurityApplicationApiVersion);
+            _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionSecurityApplicationResource.ResourceType.Namespace, Diagnostics);
+            _applicationRestClient = new Application(_applicationClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityApplicationApiVersion ?? "2022-07-01-preview");
+            _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionSecurityApplicationResource.ResourceType.Namespace, Diagnostics);
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityApplicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SubscriptionSecurityApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 Response<SecurityConnectorApplicationData> response = Response.FromValue(SecurityConnectorApplicationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<ApplicationResource> operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SubscriptionSecurityApplicationResource> operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SubscriptionSecurityApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 Response<SecurityConnectorApplicationData> response = Response.FromValue(SecurityConnectorApplicationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<ApplicationResource> operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SubscriptionSecurityApplicationResource> operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApplicationResource>> GetAsync(string applicationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSecurityApplicationResource>> GetAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Get");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.Get");
             scope.Start();
             try
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -239,11 +239,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApplicationResource> Get(string applicationId, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionSecurityApplicationResource> Get(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Get");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.Get");
             scope.Start();
             try
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -285,14 +285,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionSecurityApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionSecurityApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityConnectorApplicationData, ApplicationResource>(new ApplicationsGetAllAsyncCollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationCollection.GetAll"), data => new ApplicationResource(Client, data));
+            return new AsyncPageableWrapper<SecurityConnectorApplicationData, SubscriptionSecurityApplicationResource>(new ApplicationsGetAllAsyncCollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionSecurityApplicationCollection.GetAll"), data => new SubscriptionSecurityApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionSecurityApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionSecurityApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityConnectorApplicationData, ApplicationResource>(new ApplicationsGetAllCollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationCollection.GetAll"), data => new ApplicationResource(Client, data));
+            return new PageableWrapper<SecurityConnectorApplicationData, SubscriptionSecurityApplicationResource>(new ApplicationsGetAllCollectionResultOfT(_applicationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionSecurityApplicationCollection.GetAll"), data => new SubscriptionSecurityApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Exists");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Exists");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -458,11 +458,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ApplicationResource>> GetIfExistsAsync(string applicationId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SubscriptionSecurityApplicationResource>> GetIfExistsAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ApplicationResource>(response.GetRawResponse());
+                    return new NoValueResponse<SubscriptionSecurityApplicationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -519,11 +519,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ApplicationResource> GetIfExists(string applicationId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SubscriptionSecurityApplicationResource> GetIfExists(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -548,9 +548,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ApplicationResource>(response.GetRawResponse());
+                    return new NoValueResponse<SubscriptionSecurityApplicationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        IEnumerator<ApplicationResource> IEnumerable<ApplicationResource>.GetEnumerator()
+        IEnumerator<SubscriptionSecurityApplicationResource> IEnumerable<SubscriptionSecurityApplicationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ApplicationResource> IAsyncEnumerable<ApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SubscriptionSecurityApplicationResource> IAsyncEnumerable<SubscriptionSecurityApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

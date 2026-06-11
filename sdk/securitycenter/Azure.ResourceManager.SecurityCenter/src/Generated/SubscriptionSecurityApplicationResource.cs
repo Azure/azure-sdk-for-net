@@ -18,11 +18,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a Application along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApplicationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApplications method.
+    /// A class representing a SubscriptionSecurityApplication along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionSecurityApplicationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionSecurityApplications method.
     /// </summary>
-    public partial class ApplicationResource : ArmResource
+    public partial class SubscriptionSecurityApplicationResource : ArmResource
     {
         private readonly ClientDiagnostics _applicationClientDiagnostics;
         private readonly Application _applicationRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/applications";
 
-        /// <summary> Initializes a new instance of ApplicationResource for mocking. </summary>
-        protected ApplicationResource()
+        /// <summary> Initializes a new instance of SubscriptionSecurityApplicationResource for mocking. </summary>
+        protected SubscriptionSecurityApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionSecurityApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApplicationResource(ArmClient client, SecurityConnectorApplicationData data) : this(client, data.Id)
+        internal SubscriptionSecurityApplicationResource(ArmClient client, SecurityConnectorApplicationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionSecurityApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionSecurityApplicationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string applicationApiVersion);
+            TryGetApiVersion(ResourceType, out string subscriptionSecurityApplicationApiVersion);
             _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _applicationRestClient = new Application(_applicationClientDiagnostics, Pipeline, Endpoint, applicationApiVersion ?? "2022-07-01-preview");
+            _applicationRestClient = new Application(_applicationClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityApplicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApplicationResource"/>. </description>
+        /// <description> <see cref="SubscriptionSecurityApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSecurityApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationResource.Get");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Get");
             scope.Start();
             try
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApplicationResource"/>. </description>
+        /// <description> <see cref="SubscriptionSecurityApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionSecurityApplicationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationResource.Get");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Get");
             scope.Start();
             try
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApplicationResource"/>. </description>
+        /// <description> <see cref="SubscriptionSecurityApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationResource.Delete");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApplicationResource"/>. </description>
+        /// <description> <see cref="SubscriptionSecurityApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationResource.Delete");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update a Application.
+        /// Update a SubscriptionSecurityApplication.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApplicationResource"/>. </description>
+        /// <description> <see cref="SubscriptionSecurityApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SubscriptionSecurityApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationResource.Update");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Update");
             scope.Start();
             try
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 Response<SecurityConnectorApplicationData> response = Response.FromValue(SecurityConnectorApplicationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<ApplicationResource> operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SubscriptionSecurityApplicationResource> operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update a Application.
+        /// Update a SubscriptionSecurityApplication.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApplicationResource"/>. </description>
+        /// <description> <see cref="SubscriptionSecurityApplicationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApplicationResource> Update(WaitUntil waitUntil, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SubscriptionSecurityApplicationResource> Update(WaitUntil waitUntil, SecurityConnectorApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("ApplicationResource.Update");
+            using DiagnosticScope scope = _applicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationResource.Update");
             scope.Start();
             try
             {
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 Response<SecurityConnectorApplicationData> response = Response.FromValue(SecurityConnectorApplicationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<ApplicationResource> operation = new SecurityCenterArmOperation<ApplicationResource>(Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SubscriptionSecurityApplicationResource> operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

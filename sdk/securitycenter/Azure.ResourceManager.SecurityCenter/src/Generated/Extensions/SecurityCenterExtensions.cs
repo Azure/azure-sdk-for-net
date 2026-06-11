@@ -1765,21 +1765,21 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SubscriptionSecurityApplicationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetApplicationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSubscriptionSecurityApplicationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public static ApplicationResource GetApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionSecurityApplicationResource"/> object. </returns>
+        public static SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetApplicationResource(id);
+            return GetMockableSecurityCenterArmClient(client).GetSubscriptionSecurityApplicationResource(id);
         }
 
         /// <summary>
@@ -3690,27 +3690,27 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a collection of Applications in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of SubscriptionSecurityApplications in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetApplications()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionSecurityApplications()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of Applications and their operations over a ApplicationResource. </returns>
-        public static ApplicationCollection GetApplications(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of SubscriptionSecurityApplications and their operations over a SubscriptionSecurityApplicationResource. </returns>
+        public static SubscriptionSecurityApplicationCollection GetSubscriptionSecurityApplications(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetApplications();
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplications();
         }
 
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetApplicationAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionSecurityApplicationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3718,18 +3718,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApplicationResource>> GetApplicationAsync(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionSecurityApplicationResource>> GetSubscriptionSecurityApplicationAsync(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetApplicationAsync(applicationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplicationAsync(applicationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetApplication(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSubscriptionSecurityApplication(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3737,11 +3737,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ApplicationResource> GetApplication(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(this SubscriptionResource subscriptionResource, string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetApplication(applicationId, cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionSecurityApplication(applicationId, cancellationToken);
         }
 
         /// <summary>
