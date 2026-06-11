@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _credentialSetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryCredentialSetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(
-                    new ContainerRegistryCredentialSetOperationSource(Client),
+                    new ContainerRegistryCredentialSetResourceOperationSource(Client),
                     _credentialSetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _credentialSetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryCredentialSetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(
-                    new ContainerRegistryCredentialSetOperationSource(Client),
+                    new ContainerRegistryCredentialSetResourceOperationSource(Client),
                     _credentialSetsClientDiagnostics,
                     Pipeline,
                     message.Request,

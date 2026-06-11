@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBFleetspaceApiKind : IEquatable<CosmosDBFleetspaceApiKind>
     {
         private readonly string _value;
+        private const string NoSQLValue = "NoSQL";
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceApiKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBFleetspaceApiKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoSQLValue = "NoSQL";
-
-        /// <summary> NoSQL. </summary>
+        /// <summary> Gets the NoSQL. </summary>
         public static CosmosDBFleetspaceApiKind NoSQL { get; } = new CosmosDBFleetspaceApiKind(NoSQLValue);
+
         /// <summary> Determines if two <see cref="CosmosDBFleetspaceApiKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBFleetspaceApiKind left, CosmosDBFleetspaceApiKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBFleetspaceApiKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBFleetspaceApiKind left, CosmosDBFleetspaceApiKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBFleetspaceApiKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBFleetspaceApiKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBFleetspaceApiKind(string value) => new CosmosDBFleetspaceApiKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBFleetspaceApiKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBFleetspaceApiKind?(string value) => value == null ? null : new CosmosDBFleetspaceApiKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBFleetspaceApiKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBFleetspaceApiKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

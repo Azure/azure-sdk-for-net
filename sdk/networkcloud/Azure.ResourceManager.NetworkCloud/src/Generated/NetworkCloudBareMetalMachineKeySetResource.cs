@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
-                    new NetworkCloudBareMetalMachineKeySetOperationSource(Client),
+                    new NetworkCloudBareMetalMachineKeySetResourceOperationSource(Client),
                     _bareMetalMachineKeySetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
-                    new NetworkCloudBareMetalMachineKeySetOperationSource(Client),
+                    new NetworkCloudBareMetalMachineKeySetResourceOperationSource(Client),
                     _bareMetalMachineKeySetsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> A one-shot timer routine trigger. </summary>
     public partial class TimerRoutineTrigger : RoutineTrigger, IJsonModel<TimerRoutineTrigger>
     {
-        /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/> for deserialization. </summary>
-        internal TimerRoutineTrigger()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,12 +71,10 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(TimerRoutineTrigger)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("at"u8);
-            writer.WriteStringValue(At);
-            if (Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(At))
             {
-                writer.WritePropertyName("time_zone"u8);
-                writer.WriteStringValue(TimeZone);
+                writer.WritePropertyName("at"u8);
+                writer.WriteStringValue(At.Value, "O");
             }
         }
 
@@ -112,8 +105,7 @@ namespace Azure.AI.Projects
             }
             RoutineTriggerType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string at = default;
-            string timeZone = default;
+            DateTimeOffset? at = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -123,12 +115,11 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("at"u8))
                 {
-                    at = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("time_zone"u8))
-                {
-                    timeZone = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    at = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +127,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TimerRoutineTrigger(@type, additionalBinaryDataProperties, at, timeZone);
+            return new TimerRoutineTrigger(@type, additionalBinaryDataProperties, at);
         }
     }
 }

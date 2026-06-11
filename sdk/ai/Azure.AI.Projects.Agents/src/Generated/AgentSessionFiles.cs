@@ -43,8 +43,8 @@ namespace Azure.AI.Projects.Agents
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Upload a file to the session sandbox via binary stream.
-        /// Maximum file size is 50 MB. Uploads exceeding this limit return 413 Payload Too Large.
+        /// [Protocol Method] Uploads binary file content to the specified path in the session sandbox.
+        /// The service stores the file relative to the session home directory and rejects payloads larger than 50 MB.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -67,8 +67,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Upload a file to the session sandbox via binary stream.
-        /// Maximum file size is 50 MB. Uploads exceeding this limit return 413 Payload Too Large.
+        /// [Protocol Method] Uploads binary file content to the specified path in the session sandbox.
+        /// The service stores the file relative to the session home directory and rejects payloads larger than 50 MB.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -91,8 +91,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Upload a file to the session sandbox via binary stream.
-        /// Maximum file size is 50 MB. Uploads exceeding this limit return 413 Payload Too Large.
+        /// Uploads binary file content to the specified path in the session sandbox.
+        /// The service stores the file relative to the session home directory and rejects payloads larger than 50 MB.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
@@ -109,8 +109,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Upload a file to the session sandbox via binary stream.
-        /// Maximum file size is 50 MB. Uploads exceeding this limit return 413 Payload Too Large.
+        /// Uploads binary file content to the specified path in the session sandbox.
+        /// The service stores the file relative to the session home directory and rejects payloads larger than 50 MB.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
@@ -127,7 +127,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download a file from the session sandbox as a binary stream.
+        /// [Protocol Method] Downloads the file at the specified sandbox path as a binary stream.
+        /// The path is resolved relative to the session home directory.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -149,7 +150,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download a file from the session sandbox as a binary stream.
+        /// [Protocol Method] Downloads the file at the specified sandbox path as a binary stream.
+        /// The path is resolved relative to the session home directory.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -170,7 +172,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Download a file from the session sandbox as a binary stream. </summary>
+        /// <summary>
+        /// Downloads the file at the specified sandbox path as a binary stream.
+        /// The path is resolved relative to the session home directory.
+        /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
@@ -184,7 +189,10 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
-        /// <summary> Download a file from the session sandbox as a binary stream. </summary>
+        /// <summary>
+        /// Downloads the file at the specified sandbox path as a binary stream.
+        /// The path is resolved relative to the session home directory.
+        /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
@@ -199,88 +207,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] List files and directories at a given path in the session sandbox.
-        /// Returns only the immediate children of the specified directory (non-recursive).
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetSessionFiles(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] List files and directories at a given path in the session sandbox.
-        /// Returns only the immediate children of the specified directory (non-recursive).
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionFilesAsync(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary>
-        /// List files and directories at a given path in the session sandbox.
-        /// Returns only the immediate children of the specified directory (non-recursive).
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionDirectoryListResponse> GetSessionFiles(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetSessionFiles(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SessionDirectoryListResponse)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// List files and directories at a given path in the session sandbox.
-        /// Returns only the immediate children of the specified directory (non-recursive).
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionDirectoryListResponse>> GetSessionFilesAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetSessionFilesAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SessionDirectoryListResponse)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Delete a file or directory from the session sandbox.
-        /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
+        /// [Protocol Method] Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -291,7 +219,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -303,8 +231,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a file or directory from the session sandbox.
-        /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
+        /// [Protocol Method] Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -315,7 +243,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -327,14 +255,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Delete a file or directory from the session sandbox.
-        /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
+        /// Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -344,14 +272,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Delete a file or directory from the session sandbox.
-        /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
+        /// Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>

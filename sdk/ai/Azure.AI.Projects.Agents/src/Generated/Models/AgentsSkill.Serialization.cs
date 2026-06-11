@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A skill object. </summary>
+    /// <summary> A skill resource. </summary>
     public partial class AgentsSkill : IJsonModel<AgentsSkill>
     {
         /// <summary> Initializes a new instance of <see cref="AgentsSkill"/> for deserialization. </summary>
@@ -84,33 +84,18 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(AgentsSkill)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("skill_id"u8);
-            writer.WriteStringValue(SkillId);
-            writer.WritePropertyName("has_blob"u8);
-            writer.WriteBooleanValue(HasBlob);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            writer.WritePropertyName("description"u8);
+            writer.WriteStringValue(Description);
+            writer.WritePropertyName("created_at"u8);
+            writer.WriteNumberValue(CreatedAt, "U");
+            writer.WritePropertyName("default_version"u8);
+            writer.WriteStringValue(DefaultVersion);
+            writer.WritePropertyName("latest_version"u8);
+            writer.WriteStringValue(LatestVersion);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -153,22 +138,18 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string skillId = default;
-            bool hasBlob = default;
+            string id = default;
             string name = default;
             string description = default;
-            IDictionary<string, string> metadata = default;
+            DateTimeOffset createdAt = default;
+            string defaultVersion = default;
+            string latestVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("skill_id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    skillId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("has_blob"u8))
-                {
-                    hasBlob = prop.Value.GetBoolean();
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -181,25 +162,19 @@ namespace Azure.AI.Projects.Agents
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("metadata"u8))
+                if (prop.NameEquals("created_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    metadata = dictionary;
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("default_version"u8))
+                {
+                    defaultVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("latest_version"u8))
+                {
+                    latestVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -208,11 +183,12 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new AgentsSkill(
-                skillId,
-                hasBlob,
+                id,
                 name,
                 description,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                createdAt,
+                defaultVersion,
+                latestVersion,
                 additionalBinaryDataProperties);
         }
     }

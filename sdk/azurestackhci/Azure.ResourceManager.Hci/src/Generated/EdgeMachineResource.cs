@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeMachinePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeMachineResource> operation = new HciArmOperation<EdgeMachineResource>(
-                    new EdgeMachineOperationSource(Client),
+                    new EdgeMachineResourceOperationSource(Client),
                     _edgeMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeMachinePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeMachineResource> operation = new HciArmOperation<EdgeMachineResource>(
-                    new EdgeMachineOperationSource(Client),
+                    new EdgeMachineResourceOperationSource(Client),
                     _edgeMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource> operation = new ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource>(
-                    new ElasticSanPrivateEndpointConnectionOperationSource(Client),
+                    new ElasticSanPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource> operation = new ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource>(
-                    new ElasticSanPrivateEndpointConnectionOperationSource(Client),
+                    new ElasticSanPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

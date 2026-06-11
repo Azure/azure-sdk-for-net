@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
-                    new AzureTrafficCollectorOperationSource(Client),
+                    new AzureTrafficCollectorResourceOperationSource(Client),
                     _azureTrafficCollectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
-                    new AzureTrafficCollectorOperationSource(Client),
+                    new AzureTrafficCollectorResourceOperationSource(Client),
                     _azureTrafficCollectorsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
@@ -18,23 +19,53 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiRoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="agentName"> The project-scoped agent name for responses API dispatch. </param>
-        /// <param name="agentEndpointId"> The endpoint-scoped agent identifier for responses API dispatch. </param>
-        /// <param name="conversationId"> An optional existing conversation identifier to continue during the downstream dispatch. </param>
-        internal InvokeAgentResponsesApiRoutineAction(RoutineActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, string agentEndpointId, string conversationId) : base(@type, additionalBinaryDataProperties)
+        /// <param name="agentName"> The project-scoped agent name for routine dispatch. </param>
+        /// <param name="agentEndpointId"> Legacy endpoint-scoped agent identifier for routine dispatch. </param>
+        /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
+        /// <param name="conversation"> An optional existing conversation identifier to continue during the downstream dispatch. </param>
+        internal InvokeAgentResponsesApiRoutineAction(RoutineActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, string agentEndpointId, BinaryData input, string conversation) : base(@type, additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentEndpointId = agentEndpointId;
-            ConversationId = conversationId;
+            Input = input;
+            Conversation = conversation;
         }
 
-        /// <summary> The project-scoped agent name for responses API dispatch. </summary>
+        /// <summary> The project-scoped agent name for routine dispatch. </summary>
         public string AgentName { get; set; }
 
-        /// <summary> The endpoint-scoped agent identifier for responses API dispatch. </summary>
+        /// <summary> Legacy endpoint-scoped agent identifier for routine dispatch. </summary>
         public string AgentEndpointId { get; set; }
 
+        /// <summary>
+        /// Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Input { get; set; }
+
         /// <summary> An optional existing conversation identifier to continue during the downstream dispatch. </summary>
-        public string ConversationId { get; set; }
+        public string Conversation { get; set; }
     }
 }

@@ -19,7 +19,9 @@ namespace Azure.AI.Projects.Memory;
 [CodeGenType("MemoryStoreKind")] internal readonly partial struct MemoryStoreKind { }
 [CodeGenType("MemoryStoreObjectType")] public readonly partial struct MemoryStoreObjectType { }
 [CodeGenType("MemoryStoreOperationUsage")] public partial class MemoryStoreOperationUsage { }
+/// <summary> Token usage details for the input portion of a memory-store operation. </summary>
 [CodeGenType("MemoryStoreOperationUsageInputTokensDetails")] public partial class MemoryStoreOperationUsageInputTokensDetails { }
+/// <summary> Token usage details for the output portion of a memory-store operation. </summary>
 [CodeGenType("MemoryStoreOperationUsageOutputTokensDetails")] public partial class MemoryStoreOperationUsageOutputTokensDetails { }
 [CodeGenType("MemoryStoreSearchResponse")] public partial class MemoryStoreSearchResponse { }
 [CodeGenType("MemoryUpdateResultDetails")] public partial class MemoryUpdateResultDetails { }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticBackupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppElasticBackupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticBackupResource> operation = new NetAppArmOperation<NetAppElasticBackupResource>(
-                    new NetAppElasticBackupOperationSource(Client),
+                    new NetAppElasticBackupResourceOperationSource(Client),
                     _elasticBackupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticBackupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppElasticBackupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticBackupResource> operation = new NetAppArmOperation<NetAppElasticBackupResource>(
-                    new NetAppElasticBackupOperationSource(Client),
+                    new NetAppElasticBackupResourceOperationSource(Client),
                     _elasticBackupsClientDiagnostics,
                     Pipeline,
                     message.Request,

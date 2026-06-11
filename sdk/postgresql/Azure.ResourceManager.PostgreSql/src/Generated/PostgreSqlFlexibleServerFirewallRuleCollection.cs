@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, PostgreSqlFlexibleServerFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource>(
-                    new PostgreSqlFlexibleServerFirewallRuleOperationSource(Client),
+                    new PostgreSqlFlexibleServerFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, PostgreSqlFlexibleServerFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource>(
-                    new PostgreSqlFlexibleServerFirewallRuleOperationSource(Client),
+                    new PostgreSqlFlexibleServerFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

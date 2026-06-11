@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dell.Storage
                 HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
-                    new DellFileSystemOperationSource(Client),
+                    new DellFileSystemResourceOperationSource(Client),
                     _fileSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Dell.Storage
                 HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
-                    new DellFileSystemOperationSource(Client),
+                    new DellFileSystemResourceOperationSource(Client),
                     _fileSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,

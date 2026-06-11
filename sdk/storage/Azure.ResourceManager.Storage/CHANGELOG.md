@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `StorageAccountResourceAccessRule.TenantId` deserialization to handle empty or invalid string values returned by the service ([#59323](https://github.com/Azure/azure-sdk-for-net/issues/59323)).
+
 ### Other Changes
 
 ## 1.7.0 (2026-05-22)

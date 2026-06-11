@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct SsisMigrationStage : IEquatable<SsisMigrationStage>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Initialize. </summary>
+        private const string InitializeValue = "Initialize";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="SsisMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SsisMigrationStage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string InitializeValue = "Initialize";
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SsisMigrationStage None { get; } = new SsisMigrationStage(NoneValue);
+
         /// <summary> Initialize. </summary>
         public static SsisMigrationStage Initialize { get; } = new SsisMigrationStage(InitializeValue);
+
         /// <summary> InProgress. </summary>
         public static SsisMigrationStage InProgress { get; } = new SsisMigrationStage(InProgressValue);
+
         /// <summary> Completed. </summary>
         public static SsisMigrationStage Completed { get; } = new SsisMigrationStage(CompletedValue);
+
         /// <summary> Determines if two <see cref="SsisMigrationStage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SsisMigrationStage left, SsisMigrationStage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SsisMigrationStage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SsisMigrationStage left, SsisMigrationStage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SsisMigrationStage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SsisMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SsisMigrationStage(string value) => new SsisMigrationStage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SsisMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SsisMigrationStage?(string value) => value == null ? null : new SsisMigrationStage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SsisMigrationStage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SsisMigrationStage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
