@@ -21,23 +21,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterHttpProxyConfig()
         {
             NoProxy = new ChangeTrackingList<string>();
-            EffectiveNoProxy = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterHttpProxyConfig"/>. </summary>
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
-        /// <param name="effectiveNoProxy"> A read-only list of all endpoints for which traffic should not be sent to the proxy. This list is a superset of noProxy and values injected by AKS. </param>
         /// <param name="trustedCA"> Alternative CA cert to use for connecting to proxy servers. </param>
         /// <param name="isHttpProxyEnabled"> Whether to enable HTTP proxy. If disabled, the specified proxy configuration will be not be set on pods and nodes. If not specified, the default is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, IReadOnlyList<string> effectiveNoProxy, string trustedCA, bool? isHttpProxyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCA, bool? isHttpProxyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HttpProxy = httpProxy;
             HttpsProxy = httpsProxy;
             NoProxy = noProxy;
-            EffectiveNoProxy = effectiveNoProxy;
             TrustedCA = trustedCA;
             IsHttpProxyEnabled = isHttpProxyEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,10 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The endpoints that should not go through proxy. </summary>
         [WirePath("noProxy")]
         public IList<string> NoProxy { get; }
-
-        /// <summary> A read-only list of all endpoints for which traffic should not be sent to the proxy. This list is a superset of noProxy and values injected by AKS. </summary>
-        [WirePath("effectiveNoProxy")]
-        public IReadOnlyList<string> EffectiveNoProxy { get; }
 
         /// <summary> Alternative CA cert to use for connecting to proxy servers. </summary>
         [WirePath("trustedCa")]

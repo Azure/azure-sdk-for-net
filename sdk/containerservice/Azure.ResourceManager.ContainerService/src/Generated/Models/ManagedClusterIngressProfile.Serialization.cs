@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("gatewayAPI"u8);
                 writer.WriteObjectValue(GatewayApi, options);
             }
-            if (Optional.IsDefined(ApplicationLoadBalancer))
-            {
-                writer.WritePropertyName("applicationLoadBalancer"u8);
-                writer.WriteObjectValue(ApplicationLoadBalancer, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,7 +128,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ManagedClusterIngressProfileWebAppRouting webAppRouting = default;
             ManagedClusterIngressProfileGatewayConfiguration gatewayApi = default;
-            ManagedClusterIngressProfileApplicationLoadBalancer applicationLoadBalancer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,21 +149,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     gatewayApi = ManagedClusterIngressProfileGatewayConfiguration.DeserializeManagedClusterIngressProfileGatewayConfiguration(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("applicationLoadBalancer"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    applicationLoadBalancer = ManagedClusterIngressProfileApplicationLoadBalancer.DeserializeManagedClusterIngressProfileApplicationLoadBalancer(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, applicationLoadBalancer, additionalBinaryDataProperties);
+            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, additionalBinaryDataProperties);
         }
     }
 }

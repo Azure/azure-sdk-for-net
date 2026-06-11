@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Default domain profile for the managed cluster ingress profile. </summary>
-    public partial class ManagedClusterIngressDefaultDomainProfile : IJsonModel<ManagedClusterIngressDefaultDomainProfile>
+    /// <summary> Control plane metrics collection profile for the Azure Managed Prometheus addon. Configures collection of operational runtime metrics from managed control plane components (kube-apiserver, etcd, etc). See aka.ms/aks/controlplane-metrics for an overview. </summary>
+    internal partial class ManagedClusterAzureMonitorProfileMetricsControlPlane : IJsonModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterIngressDefaultDomainProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterAzureMonitorProfileMetricsControlPlane PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressDefaultDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedClusterIngressDefaultDomainProfile(document.RootElement, options);
+                        return DeserializeManagedClusterAzureMonitorProfileMetricsControlPlane(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterIngressDefaultDomainProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfileMetricsControlPlane)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressDefaultDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterIngressDefaultDomainProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfileMetricsControlPlane)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedClusterIngressDefaultDomainProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterIngressDefaultDomainProfile IPersistableModel<ManagedClusterIngressDefaultDomainProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterAzureMonitorProfileMetricsControlPlane IPersistableModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedClusterIngressDefaultDomainProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedClusterIngressDefaultDomainProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressDefaultDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterIngressDefaultDomainProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfileMetricsControlPlane)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsDefaultDomainEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsDefaultDomainEnabled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DomainName))
-            {
-                writer.WritePropertyName("domainName"u8);
-                writer.WriteStringValue(DomainName);
+                writer.WriteBooleanValue(Enabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,31 +98,30 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterIngressDefaultDomainProfile IJsonModel<ManagedClusterIngressDefaultDomainProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterAzureMonitorProfileMetricsControlPlane IJsonModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterIngressDefaultDomainProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterAzureMonitorProfileMetricsControlPlane JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressDefaultDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureMonitorProfileMetricsControlPlane>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterIngressDefaultDomainProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfileMetricsControlPlane)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedClusterIngressDefaultDomainProfile(document.RootElement, options);
+            return DeserializeManagedClusterAzureMonitorProfileMetricsControlPlane(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedClusterIngressDefaultDomainProfile DeserializeManagedClusterIngressDefaultDomainProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterAzureMonitorProfileMetricsControlPlane DeserializeManagedClusterAzureMonitorProfileMetricsControlPlane(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? isDefaultDomainEnabled = default;
-            string domainName = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,12 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    isDefaultDomainEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("domainName"u8))
-                {
-                    domainName = prop.Value.GetString();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterIngressDefaultDomainProfile(isDefaultDomainEnabled, domainName, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfileMetricsControlPlane(enabled, additionalBinaryDataProperties);
         }
     }
 }
