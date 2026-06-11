@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The SOA record in the record set. </summary>
-        public DnsSoaRecordInfo DnsSoaRecord
+        public DnsSoaRecordInfo DnsSoaRecordInfo
         {
             get
             {

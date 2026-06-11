@@ -194,112 +194,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// Updates a DNS zone. Does not modify DNS records within the zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Zones_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-07-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DnsZoneResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Parameters supplied to the Update operation. </param>
-        /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DnsZoneResource>> UpdateAsync(ZoneUpdateOptions content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _zonesClientDiagnostics.CreateScope("DnsZoneResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _zonesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ZoneUpdateOptions.ToRequestContent(content), ifMatch, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates a DNS zone. Does not modify DNS records within the zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Zones_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-07-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DnsZoneResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Parameters supplied to the Update operation. </param>
-        /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DnsZoneResource> Update(ZoneUpdateOptions content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _zonesClientDiagnostics.CreateScope("DnsZoneResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _zonesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ZoneUpdateOptions.ToRequestContent(content), ifMatch, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Deletes a DNS zone. WARNING: All DNS records in the zone will also be deleted. This operation cannot be undone.
         /// <list type="bullet">
         /// <item>
@@ -602,7 +496,7 @@ namespace Azure.ResourceManager.Dns
                 else
                 {
                     DnsZoneData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ZoneUpdateOptions patch = new ZoneUpdateOptions();
+                    DnsZonePatch patch = new DnsZonePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -650,7 +544,7 @@ namespace Azure.ResourceManager.Dns
                 else
                 {
                     DnsZoneData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ZoneUpdateOptions patch = new ZoneUpdateOptions();
+                    DnsZonePatch patch = new DnsZonePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -697,7 +591,7 @@ namespace Azure.ResourceManager.Dns
                 else
                 {
                     DnsZoneData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ZoneUpdateOptions patch = new ZoneUpdateOptions();
+                    DnsZonePatch patch = new DnsZonePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<DnsZoneResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -740,7 +634,7 @@ namespace Azure.ResourceManager.Dns
                 else
                 {
                     DnsZoneData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ZoneUpdateOptions patch = new ZoneUpdateOptions();
+                    DnsZonePatch patch = new DnsZonePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<DnsZoneResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -782,7 +676,7 @@ namespace Azure.ResourceManager.Dns
                 else
                 {
                     DnsZoneData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ZoneUpdateOptions patch = new ZoneUpdateOptions();
+                    DnsZonePatch patch = new DnsZonePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -828,7 +722,7 @@ namespace Azure.ResourceManager.Dns
                 else
                 {
                     DnsZoneData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ZoneUpdateOptions patch = new ZoneUpdateOptions();
+                    DnsZonePatch patch = new DnsZonePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -859,67 +753,11 @@ namespace Azure.ResourceManager.Dns
             return GetCachedClient(client => new DnsARecordCollection(client, Id));
         }
 
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsARecordResource>> GetDnsARecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsARecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsARecordResource> GetDnsARecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsARecords().Get(relativeRecordSetName, recordType, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DnsAaaaRecords in the <see cref="DnsZoneResource"/>. </summary>
         /// <returns> An object representing collection of DnsAaaaRecords and their operations over a DnsAaaaRecordResource. </returns>
         public virtual DnsAaaaRecordCollection GetDnsAaaaRecords()
         {
             return GetCachedClient(client => new DnsAaaaRecordCollection(client, Id));
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsAaaaRecordResource>> GetDnsAaaaRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsAaaaRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsAaaaRecordResource> GetDnsAaaaRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsAaaaRecords().Get(relativeRecordSetName, recordType, cancellationToken);
         }
 
         /// <summary> Gets a collection of DnsCaaRecords in the <see cref="DnsZoneResource"/>. </summary>
@@ -929,67 +767,11 @@ namespace Azure.ResourceManager.Dns
             return GetCachedClient(client => new DnsCaaRecordCollection(client, Id));
         }
 
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsCaaRecordResource>> GetDnsCaaRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsCaaRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsCaaRecordResource> GetDnsCaaRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsCaaRecords().Get(relativeRecordSetName, recordType, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DnsCnameRecords in the <see cref="DnsZoneResource"/>. </summary>
         /// <returns> An object representing collection of DnsCnameRecords and their operations over a DnsCnameRecordResource. </returns>
         public virtual DnsCnameRecordCollection GetDnsCnameRecords()
         {
             return GetCachedClient(client => new DnsCnameRecordCollection(client, Id));
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsCnameRecordResource>> GetDnsCnameRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsCnameRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsCnameRecordResource> GetDnsCnameRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsCnameRecords().Get(relativeRecordSetName, recordType, cancellationToken);
         }
 
         /// <summary> Gets a collection of DnsMXRecords in the <see cref="DnsZoneResource"/>. </summary>
@@ -999,67 +781,11 @@ namespace Azure.ResourceManager.Dns
             return GetCachedClient(client => new DnsMXRecordCollection(client, Id));
         }
 
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsMXRecordResource>> GetDnsMXRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsMXRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsMXRecordResource> GetDnsMXRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsMXRecords().Get(relativeRecordSetName, recordType, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DnsNSRecords in the <see cref="DnsZoneResource"/>. </summary>
         /// <returns> An object representing collection of DnsNSRecords and their operations over a DnsNSRecordResource. </returns>
         public virtual DnsNSRecordCollection GetDnsNSRecords()
         {
             return GetCachedClient(client => new DnsNSRecordCollection(client, Id));
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsNSRecordResource>> GetDnsNSRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsNSRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsNSRecordResource> GetDnsNSRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsNSRecords().Get(relativeRecordSetName, recordType, cancellationToken);
         }
 
         /// <summary> Gets a collection of DnsPtrRecords in the <see cref="DnsZoneResource"/>. </summary>
@@ -1069,67 +795,11 @@ namespace Azure.ResourceManager.Dns
             return GetCachedClient(client => new DnsPtrRecordCollection(client, Id));
         }
 
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsPtrRecordResource>> GetDnsPtrRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsPtrRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsPtrRecordResource> GetDnsPtrRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsPtrRecords().Get(relativeRecordSetName, recordType, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DnsSoaRecords in the <see cref="DnsZoneResource"/>. </summary>
         /// <returns> An object representing collection of DnsSoaRecords and their operations over a DnsSoaRecordResource. </returns>
         public virtual DnsSoaRecordCollection GetDnsSoaRecords()
         {
             return GetCachedClient(client => new DnsSoaRecordCollection(client, Id));
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsSoaRecordResource>> GetDnsSoaRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsSoaRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsSoaRecordResource> GetDnsSoaRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsSoaRecords().Get(relativeRecordSetName, recordType, cancellationToken);
         }
 
         /// <summary> Gets a collection of DnsSrvRecords in the <see cref="DnsZoneResource"/>. </summary>
@@ -1139,67 +809,11 @@ namespace Azure.ResourceManager.Dns
             return GetCachedClient(client => new DnsSrvRecordCollection(client, Id));
         }
 
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsSrvRecordResource>> GetDnsSrvRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsSrvRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsSrvRecordResource> GetDnsSrvRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsSrvRecords().Get(relativeRecordSetName, recordType, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DnsTxtRecords in the <see cref="DnsZoneResource"/>. </summary>
         /// <returns> An object representing collection of DnsTxtRecords and their operations over a DnsTxtRecordResource. </returns>
         public virtual DnsTxtRecordCollection GetDnsTxtRecords()
         {
             return GetCachedClient(client => new DnsTxtRecordCollection(client, Id));
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsTxtRecordResource>> GetDnsTxtRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsTxtRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsTxtRecordResource> GetDnsTxtRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsTxtRecords().Get(relativeRecordSetName, recordType, cancellationToken);
         }
 
         /// <summary> Gets a collection of DnsTlsaRecords in the <see cref="DnsZoneResource"/>. </summary>
@@ -1209,34 +823,6 @@ namespace Azure.ResourceManager.Dns
             return GetCachedClient(client => new DnsTlsaRecordCollection(client, Id));
         }
 
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsTlsaRecordResource>> GetDnsTlsaRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsTlsaRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsTlsaRecordResource> GetDnsTlsaRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsTlsaRecords().Get(relativeRecordSetName, recordType, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DnsDSRecords in the <see cref="DnsZoneResource"/>. </summary>
         /// <returns> An object representing collection of DnsDSRecords and their operations over a DnsDSRecordResource. </returns>
         public virtual DnsDSRecordCollection GetDnsDSRecords()
@@ -1244,67 +830,11 @@ namespace Azure.ResourceManager.Dns
             return GetCachedClient(client => new DnsDSRecordCollection(client, Id));
         }
 
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsDSRecordResource>> GetDnsDSRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsDSRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsDSRecordResource> GetDnsDSRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsDSRecords().Get(relativeRecordSetName, recordType, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DnsNaptrRecords in the <see cref="DnsZoneResource"/>. </summary>
         /// <returns> An object representing collection of DnsNaptrRecords and their operations over a DnsNaptrRecordResource. </returns>
         public virtual DnsNaptrRecordCollection GetDnsNaptrRecords()
         {
             return GetCachedClient(client => new DnsNaptrRecordCollection(client, Id));
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsNaptrRecordResource>> GetDnsNaptrRecordAsync(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return await GetDnsNaptrRecords().GetAsync(relativeRecordSetName, recordType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a record set. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="recordType"> The type of DNS record in this record set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsNaptrRecordResource> GetDnsNaptrRecord(string relativeRecordSetName, DnsRecordType recordType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            return GetDnsNaptrRecords().Get(relativeRecordSetName, recordType, cancellationToken);
         }
     }
 }

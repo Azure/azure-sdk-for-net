@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Ipv4Address))
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(Ipv4Address.ToString());
+                writer.WriteStringValue(IPv4Address.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            IPAddress ipv4Address = default;
+            IPAddress iPv4Address = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    ipv4Address = IPAddress.Parse(prop.Value.GetString());
+                    iPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Dns.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DnsARecordInfo(ipv4Address, additionalBinaryDataProperties);
+            return new DnsARecordInfo(iPv4Address, additionalBinaryDataProperties);
         }
     }
 }

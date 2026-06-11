@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsARecordInfo"/>. </summary>
-        /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
+        /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsARecordInfo(IPAddress ipv4Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsARecordInfo(IPAddress iPv4Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Ipv4Address = ipv4Address;
+            IPv4Address = iPv4Address;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IPv4 address of this A record. </summary>
-        public IPAddress Ipv4Address { get; set; }
+        public IPAddress IPv4Address { get; set; }
     }
 }

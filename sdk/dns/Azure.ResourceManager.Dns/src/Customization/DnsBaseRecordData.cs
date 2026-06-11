@@ -110,6 +110,18 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TargetResourceId
+        {
+            get => TargetResource is null ? default : TargetResource.Id;
+            set
+            {
+                if (TargetResource is null)
+                    TargetResource = new WritableSubResource();
+                TargetResource.Id = value;
+            }
+        }
+
         /// <summary> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </summary>
         public WritableSubResource TrafficManagementProfile
         {
@@ -124,6 +136,18 @@ namespace Azure.ResourceManager.Dns
                     Properties = new RecordSetProperties();
                 }
                 Properties.TrafficManagementProfile = value;
+            }
+        }
+
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TrafficManagementProfileId
+        {
+            get => TrafficManagementProfile is null ? default : TrafficManagementProfile.Id;
+            set
+            {
+                if (TrafficManagementProfile is null)
+                    TrafficManagementProfile = new WritableSubResource();
+                TrafficManagementProfile.Id = value;
             }
         }
     }

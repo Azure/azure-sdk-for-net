@@ -2585,7 +2585,7 @@
                       {
                         "$id": "199",
                         "kind": "property",
-                        "name": "ipv4Address",
+                        "name": "IPv4Address",
                         "serializedName": "ipv4Address",
                         "doc": "The IPv4 address of this A record.",
                         "type": {
@@ -2670,7 +2670,7 @@
                       {
                         "$id": "205",
                         "kind": "property",
-                        "name": "ipv6Address",
+                        "name": "IPv6Address",
                         "serializedName": "ipv6Address",
                         "doc": "The IPv6 address of this AAAA record.",
                         "type": {
@@ -4859,7 +4859,7 @@
     {
       "$id": "346",
       "kind": "model",
-      "name": "ZoneUpdateOptions",
+      "name": "DnsZonePatch",
       "namespace": "Azure.ResourceManager.Dns",
       "crossLanguageDefinitionId": "Microsoft.Network.ZoneUpdate",
       "usage": "Input,Json",
@@ -34629,7 +34629,7 @@
             {
               "$id": "2930",
               "kind": "basic",
-              "name": "getByTargetResources",
+              "name": "GetDnsResourceReferencesByTargetResources",
               "accessibility": "public",
               "apiVersions": [
                 "2023-07-01-preview"
@@ -34637,7 +34637,7 @@
               "doc": "Returns the DNS records specified by the referencing targetResourceIds.",
               "operation": {
                 "$id": "2931",
-                "name": "getByTargetResources",
+                "name": "GetDnsResourceReferencesByTargetResources",
                 "resourceName": "DnsResourceReferenceOperationGroup",
                 "doc": "Returns the DNS records specified by the referencing targetResourceIds.",
                 "accessibility": "public",
@@ -34927,7 +34927,12 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Microsoft.Network.DnsResourceReferenceOperationGroup.getByTargetResources",
-                "decorators": [],
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@hasClientNameOverride",
+                    "arguments": {}
+                  }
+                ],
                 "examples": [
                   {
                     "$id": "2948",

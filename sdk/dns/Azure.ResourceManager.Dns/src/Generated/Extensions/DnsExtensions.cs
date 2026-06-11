@@ -405,36 +405,36 @@ namespace Azure.ResourceManager.Dns
         /// Returns the DNS records specified by the referencing targetResourceIds.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetByTargetResourcesAsync(DnsResourceReferenceContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResourcesAsync(DnsResourceReferenceContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesAsync(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDnsSubscriptionResource(subscriptionResource).GetByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the DNS records specified by the referencing targetResourceIds.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetByTargetResources(DnsResourceReferenceContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DnsResourceReferenceResult> GetByTargetResources(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public static Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDnsSubscriptionResource(subscriptionResource).GetByTargetResources(content, cancellationToken);
+            return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
         }
     }
 }

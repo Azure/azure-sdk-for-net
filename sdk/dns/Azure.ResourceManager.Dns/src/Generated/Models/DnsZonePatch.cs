@@ -12,21 +12,21 @@ using Azure.ResourceManager.Dns;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Describes a request to update a DNS zone. </summary>
-    public partial class ZoneUpdateOptions
+    public partial class DnsZonePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ZoneUpdateOptions"/>. </summary>
-        public ZoneUpdateOptions()
+        /// <summary> Initializes a new instance of <see cref="DnsZonePatch"/>. </summary>
+        public DnsZonePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ZoneUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsZonePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZoneUpdateOptions(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsZonePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

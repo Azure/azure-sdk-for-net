@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <summary> Describes a request to update a DNS zone. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ZoneUpdateOptions"/> instance for mocking. </returns>
-        public static ZoneUpdateOptions ZoneUpdateOptions(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.DnsZonePatch"/> instance for mocking. </returns>
+        public static DnsZonePatch DnsZonePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZoneUpdateOptions(tags, additionalBinaryDataProperties: null);
+            return new DnsZonePatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="dnsResourceReferences"> The result of dns resource reference request. A list of dns resource references for each of the azure resource in the request. </param>

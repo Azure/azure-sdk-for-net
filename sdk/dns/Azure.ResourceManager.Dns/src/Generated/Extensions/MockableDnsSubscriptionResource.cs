@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = DnsResourceReferenceClientDiagnostics.CreateScope("MockableDnsSubscriptionResource.GetByTargetResources");
+            using DiagnosticScope scope = DnsResourceReferenceClientDiagnostics.CreateScope("MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Dns.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DnsResourceReferenceRestClient.CreateGetByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
+                HttpMessage message = DnsResourceReferenceRestClient.CreateGetDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsResourceReferenceResult> response = Response.FromValue(DnsResourceReferenceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DnsResourceReferenceResult> GetByTargetResources(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = DnsResourceReferenceClientDiagnostics.CreateScope("MockableDnsSubscriptionResource.GetByTargetResources");
+            using DiagnosticScope scope = DnsResourceReferenceClientDiagnostics.CreateScope("MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Dns.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DnsResourceReferenceRestClient.CreateGetByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
+                HttpMessage message = DnsResourceReferenceRestClient.CreateGetDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsResourceReferenceResult> response = Response.FromValue(DnsResourceReferenceResult.FromResponse(result), result);
                 if (response.Value == null)

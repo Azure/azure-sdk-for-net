@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 throw new FormatException($"The model {nameof(DnsAaaaRecordInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Ipv6Address))
+            if (Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteStringValue(Ipv6Address.ToString());
+                writer.WriteStringValue(IPv6Address.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            IPAddress ipv6Address = default;
+            IPAddress iPv6Address = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    ipv6Address = IPAddress.Parse(prop.Value.GetString());
+                    iPv6Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Dns.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DnsAaaaRecordInfo(ipv6Address, additionalBinaryDataProperties);
+            return new DnsAaaaRecordInfo(iPv6Address, additionalBinaryDataProperties);
         }
     }
 }

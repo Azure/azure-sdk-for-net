@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsTxtRecordInfo))]
     [ModelReaderWriterBuildable(typeof(DnsTxtRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsZoneData))]
+    [ModelReaderWriterBuildable(typeof(DnsZonePatch))]
     [ModelReaderWriterBuildable(typeof(DnsZoneResource))]
     [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
     [ModelReaderWriterBuildable(typeof(RecordSetListResult))]
@@ -64,7 +65,6 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneListResult))]
     [ModelReaderWriterBuildable(typeof(ZoneProperties))]
-    [ModelReaderWriterBuildable(typeof(ZoneUpdateOptions))]
     public partial class AzureResourceManagerDnsContext : ModelReaderWriterContext
     {
     }
