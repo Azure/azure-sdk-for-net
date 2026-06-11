@@ -20,26 +20,11 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new PurchaseRequestProperties();
-                }
-                return Properties.AppliedScopes;
+                 throw new NotSupportedException("This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType.");
             }
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new PurchaseRequestProperties();
-                }
-                Properties.AppliedScopes.Clear();
-                if (value != null)
-                {
-                    foreach (string item in value)
-                    {
-                        Properties.AppliedScopes.Add(item);
-                    }
-                }
+                throw new NotSupportedException("This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType.");
             }
         }
     }
