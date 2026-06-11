@@ -7,51 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The ResourceType. </summary>
+    /// <summary></summary>
     internal readonly partial struct ResourceType : IEquatable<ResourceType>
     {
         private readonly string _value;
+        /// <summary> SqlMi. </summary>
+        private const string SqlMiValue = "SqlMi";
+        /// <summary> SqlVm. </summary>
+        private const string SqlVmValue = "SqlVm";
+        /// <summary> SqlDb. </summary>
+        private const string SqlDbValue = "SqlDb";
+        /// <summary> MongoToCosmosDbMongo. </summary>
+        private const string MongoToCosmosDbMongoValue = "MongoToCosmosDbMongo";
+        /// <summary> DatabaseMigrationProperties. </summary>
+        private const string DatabaseMigrationPropertiesValue = "DatabaseMigrationProperties";
 
         /// <summary> Initializes a new instance of <see cref="ResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SqlMIValue = "SqlMi";
-        private const string SqlVmValue = "SqlVm";
-        private const string SqlDBValue = "SqlDb";
-        private const string MongoToCosmosDBMongoValue = "MongoToCosmosDbMongo";
-
         /// <summary> SqlMi. </summary>
-        public static ResourceType SqlMI { get; } = new ResourceType(SqlMIValue);
+        public static ResourceType SqlMi { get; } = new ResourceType(SqlMiValue);
+
         /// <summary> SqlVm. </summary>
         public static ResourceType SqlVm { get; } = new ResourceType(SqlVmValue);
+
         /// <summary> SqlDb. </summary>
-        public static ResourceType SqlDB { get; } = new ResourceType(SqlDBValue);
+        public static ResourceType SqlDb { get; } = new ResourceType(SqlDbValue);
+
         /// <summary> MongoToCosmosDbMongo. </summary>
-        public static ResourceType MongoToCosmosDBMongo { get; } = new ResourceType(MongoToCosmosDBMongoValue);
+        public static ResourceType MongoToCosmosDbMongo { get; } = new ResourceType(MongoToCosmosDbMongoValue);
+
+        /// <summary> DatabaseMigrationProperties. </summary>
+        public static ResourceType DatabaseMigrationProperties { get; } = new ResourceType(DatabaseMigrationPropertiesValue);
+
         /// <summary> Determines if two <see cref="ResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceType left, ResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceType left, ResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceType(string value) => new ResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceType?(string value) => value == null ? null : new ResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

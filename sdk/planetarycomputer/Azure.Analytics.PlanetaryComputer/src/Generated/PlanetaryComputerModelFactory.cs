@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -212,6 +214,36 @@ namespace Azure.Analytics.PlanetaryComputer
         public static ManagedIdentityMetadata ManagedIdentityMetadata(Guid objectId = default, ResourceIdentifier resourceId = default)
         {
             return new ManagedIdentityMetadata(objectId, resourceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> FormContent model for file upload. </summary>
+        /// <param name="data"> Asset metadata. </param>
+        /// <param name="file"> Binary file content to be uploaded. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacAssetData"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static StacAssetData StacAssetData(AssetMetadata data = default, FileBinaryContent @file = default)
+        {
+            return new StacAssetData(data, @file);
+        }
+
+        /// <summary> Asset metadata model. </summary>
+        /// <param name="key"> The key of the asset. </param>
+        /// <param name="type"> The type of the asset. </param>
+        /// <param name="roles"> The roles of the asset. </param>
+        /// <param name="title"> The title of the asset. </param>
+        /// <param name="description"> The description of the asset. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.AssetMetadata"/> instance for mocking. </returns>
+        public static AssetMetadata AssetMetadata(string key = default, string @type = default, IEnumerable<string> roles = default, string title = default, string description = default)
+        {
+            roles ??= new ChangeTrackingList<string>();
+
+            return new AssetMetadata(
+                key,
+                @type,
+                roles.ToList(),
+                title,
+                description,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
