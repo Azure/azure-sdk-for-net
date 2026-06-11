@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> The metadata attached to the record set. </summary>
-        public IDictionary<string, string> Metadata { get; } = new ChangeTrackingDictionary<string, string>();
+        public IDictionary<string, string> Metadata { get; }
 
         /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
         public long? TtlInSeconds { get; set; }
@@ -99,25 +99,25 @@ namespace Azure.ResourceManager.Dns.Models
         public WritableSubResource TrafficManagementProfile { get; set; }
 
         /// <summary> The list of A records in the record set. </summary>
-        public IList<DnsARecordInfo> DnsARecords { get; } = new ChangeTrackingList<DnsARecordInfo>();
+        public IList<DnsARecordInfo> DnsARecords { get; }
 
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<DnsAaaaRecordInfo> DnsAaaaRecords { get; } = new ChangeTrackingList<DnsAaaaRecordInfo>();
+        public IList<DnsAaaaRecordInfo> DnsAaaaRecords { get; }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<DnsMXRecordInfo> DnsMXRecords { get; } = new ChangeTrackingList<DnsMXRecordInfo>();
+        public IList<DnsMXRecordInfo> DnsMXRecords { get; }
 
         /// <summary> The list of NS records in the record set. </summary>
-        public IList<DnsNSRecordInfo> DnsNSRecords { get; } = new ChangeTrackingList<DnsNSRecordInfo>();
+        public IList<DnsNSRecordInfo> DnsNSRecords { get; }
 
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<DnsPtrRecordInfo> DnsPtrRecords { get; } = new ChangeTrackingList<DnsPtrRecordInfo>();
+        public IList<DnsPtrRecordInfo> DnsPtrRecords { get; }
 
         /// <summary> The list of SRV records in the record set. </summary>
-        public IList<DnsSrvRecordInfo> DnsSrvRecords { get; } = new ChangeTrackingList<DnsSrvRecordInfo>();
+        public IList<DnsSrvRecordInfo> DnsSrvRecords { get; }
 
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<DnsTxtRecordInfo> DnsTxtRecords { get; } = new ChangeTrackingList<DnsTxtRecordInfo>();
+        public IList<DnsTxtRecordInfo> DnsTxtRecords { get; }
 
         /// <summary> The CNAME record in the  record set. </summary>
         internal DnsCnameRecordInfo DnsCnameRecord { get; set; }
@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.Dns.Models
         public DnsSoaRecordInfo DnsSoaRecord { get; set; }
 
         /// <summary> The list of CAA records in the record set. </summary>
-        public IList<DnsCaaRecordInfo> DnsCaaRecords { get; } = new ChangeTrackingList<DnsCaaRecordInfo>();
+        public IList<DnsCaaRecordInfo> DnsCaaRecords { get; }
 
         /// <summary> The list of DS records in the record set. </summary>
-        public IList<DnsDSRecordInfo> DnsDSRecords { get; } = new ChangeTrackingList<DnsDSRecordInfo>();
+        public IList<DnsDSRecordInfo> DnsDSRecords { get; }
 
         /// <summary> The list of TLSA records in the record set. </summary>
-        public IList<DnsTlsaRecordInfo> DnsTlsaRecords { get; } = new ChangeTrackingList<DnsTlsaRecordInfo>();
+        public IList<DnsTlsaRecordInfo> DnsTlsaRecords { get; }
 
         /// <summary> The list of NAPTR records in the record set. </summary>
-        public IList<DnsNaptrRecordInfo> DnsNaptrRecords { get; } = new ChangeTrackingList<DnsNaptrRecordInfo>();
+        public IList<DnsNaptrRecordInfo> DnsNaptrRecords { get; }
 
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname

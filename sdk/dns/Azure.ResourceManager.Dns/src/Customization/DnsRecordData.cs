@@ -15,6 +15,15 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the Record data model. </summary>
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("_additionalBinaryDataProperties")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Properties")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("ETag")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Metadata")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("TtlInSeconds")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Fqdn")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("ProvisioningState")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("TargetResource")]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("TrafficManagementProfile")]
     public partial class DnsRecordData : DnsBaseRecordData
     {
         /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>

@@ -11,10 +11,16 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
+using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsAaaaRecord data model. </summary>
+    [CodeGenSuppressAttribute("Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppressAttribute("Create", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppressAttribute("Write", typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppressAttribute("Create", typeof(BinaryData), typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppressAttribute("GetFormatFromOptions", typeof(ModelReaderWriterOptions))]
     public partial class DnsAaaaRecordData : DnsBaseRecordData
     {
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsAaaaRecordData"/> from. </param>

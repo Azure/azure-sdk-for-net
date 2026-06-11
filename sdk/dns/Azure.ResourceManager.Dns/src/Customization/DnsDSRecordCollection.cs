@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
+using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.Dns
 {
@@ -20,6 +21,14 @@ namespace Azure.ResourceManager.Dns
     /// Each <see cref="DnsDSRecordResource"/> in the collection will belong to the same instance of <see cref="DnsZoneResource"/>.
     /// To get a <see cref="DnsDSRecordCollection"/> instance call the GetDnsDSRecords method from an instance of <see cref="DnsZoneResource"/>.
     /// </summary>
+    [CodeGenSuppressAttribute("CreateOrUpdateAsync", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsRecordData), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("CreateOrUpdate", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsRecordData), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("Get", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("ExistsAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("Exists", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetIfExistsAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetIfExists", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
     public partial class DnsDSRecordCollection : ArmCollection
     {
         private readonly ClientDiagnostics _recordSetsClientDiagnostics;

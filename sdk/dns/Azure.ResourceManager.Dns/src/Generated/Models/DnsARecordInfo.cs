@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of <see cref="DnsARecordInfo"/>. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsARecordInfo(string ipv4Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsARecordInfo(IPAddress ipv4Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ipv4Address = ipv4Address;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IPv4 address of this A record. </summary>
-        public string Ipv4Address { get; set; }
+        public IPAddress Ipv4Address { get; set; }
     }
 }

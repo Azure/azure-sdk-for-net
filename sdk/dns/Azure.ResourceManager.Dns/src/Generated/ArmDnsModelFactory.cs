@@ -72,63 +72,6 @@ namespace Azure.ResourceManager.Dns.Models
             return new DelegationSignerInfo(digestAlgorithmType, digestValue, @record, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
-        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
-        /// <param name="dnsARecords"> The list of A records in the record set. </param>
-        /// <param name="dnsAaaaRecords"> The list of AAAA records in the record set. </param>
-        /// <param name="dnsMXRecords"> The list of MX records in the record set. </param>
-        /// <param name="dnsNSRecords"> The list of NS records in the record set. </param>
-        /// <param name="dnsPtrRecords"> The list of PTR records in the record set. </param>
-        /// <param name="dnsSrvRecords"> The list of SRV records in the record set. </param>
-        /// <param name="dnsTxtRecords"> The list of TXT records in the record set. </param>
-        /// <param name="dnsSoaRecordInfo"> The SOA record in the record set. </param>
-        /// <param name="dnsCaaRecords"> The list of CAA records in the record set. </param>
-        /// <param name="dnsDSRecords"> The list of DS records in the record set. </param>
-        /// <param name="dnsTlsaRecords"> The list of TLSA records in the record set. </param>
-        /// <param name="dnsNaptrRecords"> The list of NAPTR records in the record set. </param>
-        /// <param name="cname"> The canonical name for this CNAME record. </param>
-        /// <param name="eTag"> The etag of the record set. </param>
-        /// <returns> A new <see cref="Dns.DnsRecordData"/> instance for mocking. </returns>
-        public static DnsRecordData DnsRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, WritableSubResource trafficManagementProfile = default, IEnumerable<DnsARecordInfo> dnsARecords = default, IEnumerable<DnsAaaaRecordInfo> dnsAaaaRecords = default, IEnumerable<DnsMXRecordInfo> dnsMXRecords = default, IEnumerable<DnsNSRecordInfo> dnsNSRecords = default, IEnumerable<DnsPtrRecordInfo> dnsPtrRecords = default, IEnumerable<DnsSrvRecordInfo> dnsSrvRecords = default, IEnumerable<DnsTxtRecordInfo> dnsTxtRecords = default, DnsSoaRecordInfo dnsSoaRecordInfo = default, IEnumerable<DnsCaaRecordInfo> dnsCaaRecords = default, IEnumerable<DnsDSRecordInfo> dnsDSRecords = default, IEnumerable<DnsTlsaRecordInfo> dnsTlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> dnsNaptrRecords = default, string cname = default, ETag? eTag = default)
-        {
-            return new DnsRecordData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                metadata is null && ttlInSeconds is null && fqdn is null && provisioningState is null && targetResource is null && trafficManagementProfile is null && dnsARecords is null && dnsAaaaRecords is null && dnsMXRecords is null && dnsNSRecords is null && dnsPtrRecords is null && dnsSrvRecords is null && dnsTxtRecords is null && dnsSoaRecordInfo is null && dnsCaaRecords is null && dnsDSRecords is null && dnsTlsaRecords is null && dnsNaptrRecords is null && cname is null ? default : new RecordSetProperties(
-                    metadata,
-                    ttlInSeconds,
-                    fqdn,
-                    provisioningState,
-                    targetResource,
-                    trafficManagementProfile,
-                    (dnsARecords ?? new ChangeTrackingList<DnsARecordInfo>()).ToList(),
-                    (dnsAaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>()).ToList(),
-                    (dnsMXRecords ?? new ChangeTrackingList<DnsMXRecordInfo>()).ToList(),
-                    (dnsNSRecords ?? new ChangeTrackingList<DnsNSRecordInfo>()).ToList(),
-                    (dnsPtrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>()).ToList(),
-                    (dnsSrvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>()).ToList(),
-                    (dnsTxtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>()).ToList(),
-                    new DnsCnameRecordInfo(cname, null),
-                    dnsSoaRecordInfo,
-                    (dnsCaaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>()).ToList(),
-                    (dnsDSRecords ?? new ChangeTrackingList<DnsDSRecordInfo>()).ToList(),
-                    (dnsTlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>()).ToList(),
-                    (dnsNaptrRecords ?? new ChangeTrackingList<DnsNaptrRecordInfo>()).ToList(),
-                    null),
-                eTag);
-        }
-
         /// <summary> A TXT record. </summary>
         /// <param name="value"> The text value of this TXT record. </param>
         /// <returns> A new <see cref="Models.DnsTxtRecordInfo"/> instance for mocking. </returns>

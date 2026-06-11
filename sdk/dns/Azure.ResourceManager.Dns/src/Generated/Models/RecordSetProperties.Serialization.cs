@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Dns.Models
             IList<DnsSrvRecordInfo> dnsSrvRecords = default;
             IList<DnsTxtRecordInfo> dnsTxtRecords = default;
             DnsCnameRecordInfo dnsCnameRecord = default;
-            DnsSoaRecordInfo dnsSoaRecordInfo = default;
+            DnsSoaRecordInfo dnsSoaRecord = default;
             IList<DnsCaaRecordInfo> dnsCaaRecords = default;
             IList<DnsDSRecordInfo> dnsDSRecords = default;
             IList<DnsTlsaRecordInfo> dnsTlsaRecords = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    dnsSoaRecordInfo = DnsSoaRecordInfo.DeserializeDnsSoaRecordInfo(prop.Value, options);
+                    dnsSoaRecord = DnsSoaRecordInfo.DeserializeDnsSoaRecordInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("caaRecords"u8))
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Dns.Models
                 dnsSrvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>(),
                 dnsTxtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>(),
                 dnsCnameRecord,
-                dnsSoaRecordInfo,
+                dnsSoaRecord,
                 dnsCaaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>(),
                 dnsDSRecords ?? new ChangeTrackingList<DnsDSRecordInfo>(),
                 dnsTlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>(),

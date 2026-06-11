@@ -15,6 +15,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsRecord data model. </summary>
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("PersistableModelCreateCore", typeof(BinaryData), typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("PersistableModelWriteCore", typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Write", typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Create", typeof(BinaryData), typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("GetFormatFromOptions", typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("ToRequestContent", typeof(DnsRecordData))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Create", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]
+    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("JsonModelCreateCore", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]
     public partial class DnsRecordData : DnsBaseRecordData
     {
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsRecordData"/> from. </param>
