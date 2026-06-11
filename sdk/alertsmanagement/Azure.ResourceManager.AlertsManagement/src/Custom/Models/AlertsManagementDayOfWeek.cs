@@ -1,0 +1,56 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.AlertsManagement.Models
+{
+    /// <summary> Days of week. </summary>
+    [Obsolete("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public readonly partial struct AlertsManagementDayOfWeek : IEquatable<AlertsManagementDayOfWeek>
+    {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance. </summary>
+        /// <param name="value"> The value. </param>
+        public AlertsManagementDayOfWeek(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
+
+        /// <summary> Sunday. </summary>
+        public static AlertsManagementDayOfWeek Sunday => throw new NotSupportedException();
+        /// <summary> Monday. </summary>
+        public static AlertsManagementDayOfWeek Monday => throw new NotSupportedException();
+        /// <summary> Tuesday. </summary>
+        public static AlertsManagementDayOfWeek Tuesday => throw new NotSupportedException();
+        /// <summary> Wednesday. </summary>
+        public static AlertsManagementDayOfWeek Wednesday => throw new NotSupportedException();
+        /// <summary> Thursday. </summary>
+        public static AlertsManagementDayOfWeek Thursday => throw new NotSupportedException();
+        /// <summary> Friday. </summary>
+        public static AlertsManagementDayOfWeek Friday => throw new NotSupportedException();
+        /// <summary> Saturday. </summary>
+        public static AlertsManagementDayOfWeek Saturday => throw new NotSupportedException();
+
+        /// <summary> Converts a string. </summary>
+        public static implicit operator AlertsManagementDayOfWeek(string value) => new AlertsManagementDayOfWeek(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AlertsManagementDayOfWeek other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(AlertsManagementDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
+
+        /// <summary> Equality operator. </summary>
+        public static bool operator ==(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => left.Equals(right);
+        /// <summary> Inequality operator. </summary>
+        public static bool operator !=(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => !left.Equals(right);
+    }
+}

@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.AlertsManagement
 {
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource>, System.Collections.IEnumerable
     {
         protected AlertProcessingRuleCollection() { }
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData>
     {
         public AlertProcessingRuleData(Azure.Core.AzureLocation location) { }
@@ -28,6 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -55,25 +58,46 @@ namespace Azure.ResourceManager.AlertsManagement
     }
     public static partial class AlertsManagementExtensions
     {
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public static Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource GetAlertProcessingRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public static Azure.ResourceManager.AlertsManagement.AlertProcessingRuleCollection GetAlertProcessingRules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public static Azure.Pageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public static Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetServiceAlert(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use ArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.", true)]
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetServiceAlert(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetServiceAlertAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use ArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.", true)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetServiceAlertAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata> GetServiceAlertMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.ServiceAlertResource GetServiceAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.ServiceAlertCollection GetServiceAlerts(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.ServiceAlertCollection GetServiceAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> GetServiceAlertTenant(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>> GetServiceAlertTenantAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource GetServiceAlertTenantResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.ServiceAlertTenantCollection GetServiceAlertTenants(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource> GetSmartGroup(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource>> GetSmartGroupAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public static Azure.ResourceManager.AlertsManagement.SmartGroupResource GetSmartGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public static Azure.ResourceManager.AlertsManagement.SmartGroupCollection GetSmartGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
     }
     public partial class AzureResourceManagerAlertsManagementContext : System.ClientModel.Primitives.ModelReaderWriterContext
@@ -103,7 +127,10 @@ namespace Azure.ResourceManager.AlertsManagement
     {
         public ServiceAlertData() { }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.ServiceAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.ServiceAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -116,11 +143,15 @@ namespace Azure.ResourceManager.AlertsManagement
         protected ServiceAlertResource() { }
         public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> ChangeState(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, string comment = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> ChangeStateAsync(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, string comment = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> ChangeState(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> ChangeState(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, string comment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> ChangeStateAsync(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> ChangeStateAsync(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, string comment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, System.Guid alertId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult> GetEnrichments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult> GetEnrichmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification> GetHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification>> GetHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.AlertsManagement.ServiceAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -129,6 +160,41 @@ namespace Azure.ResourceManager.AlertsManagement
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ServiceAlertTenantCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>, System.Collections.IEnumerable
+    {
+        protected ServiceAlertTenantCollection() { }
+        public virtual Azure.Response<bool> Exists(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> Get(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> GetAll(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, string smartGroupId = null, bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField? sortBy = default(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField?), Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? sortOrder = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder?), string select = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> GetAllAsync(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, string smartGroupId = null, bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField? sortBy = default(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField?), Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? sortOrder = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder?), string select = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>> GetAsync(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> GetIfExists(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>> GetIfExistsAsync(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ServiceAlertTenantResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ServiceAlertTenantResource() { }
+        public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> ChangeState(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>> ChangeStateAsync(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid alertId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification> GetHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification>> GetHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AlertsManagement.ServiceAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.ServiceAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.ServiceAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AlertsManagement.SmartGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.SmartGroupResource>, System.Collections.IEnumerable
     {
         protected SmartGroupCollection() { }
@@ -146,6 +212,7 @@ namespace Azure.ResourceManager.AlertsManagement
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AlertsManagement.SmartGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.SmartGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.SmartGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.SmartGroupData>
     {
         public SmartGroupData() { }
@@ -170,6 +237,7 @@ namespace Azure.ResourceManager.AlertsManagement
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.SmartGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.SmartGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.SmartGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.SmartGroupData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -195,10 +263,19 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     public partial class MockableAlertsManagementArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableAlertsManagementArmClient() { }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public virtual Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource GetAlertProcessingRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetServiceAlert(Azure.Core.ResourceIdentifier scope, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetServiceAlertAsync(Azure.Core.ResourceIdentifier scope, System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertResource GetServiceAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertCollection GetServiceAlerts(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource GetServiceAlertTenantResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public virtual Azure.ResourceManager.AlertsManagement.SmartGroupResource GetSmartGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
     public partial class MockableAlertsManagementResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableAlertsManagementResourceGroupResource() { }
@@ -209,17 +286,24 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     public partial class MockableAlertsManagementSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableAlertsManagementSubscriptionResource() { }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use MockableAlertsManagementArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.", true)]
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetServiceAlert(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use MockableAlertsManagementArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.", true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetServiceAlertAsync(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertCollection GetServiceAlerts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource> GetSmartGroup(System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource>> GetSmartGroupAsync(System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public virtual Azure.ResourceManager.AlertsManagement.SmartGroupCollection GetSmartGroups() { throw null; }
     }
     public partial class MockableAlertsManagementTenantResource : Azure.ResourceManager.ArmResource
@@ -227,10 +311,60 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         protected MockableAlertsManagementTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata> GetServiceAlertMetadata(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>> GetServiceAlertMetadataAsync(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource> GetServiceAlertTenant(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertTenantResource>> GetServiceAlertTenantAsync(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertTenantCollection GetServiceAlertTenants() { throw null; }
     }
 }
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
+    public abstract partial class AlertEnrichmentItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem>
+    {
+        internal AlertEnrichmentItem() { }
+        public string Description { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus Status { get { throw null; } }
+        public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AlertEnrichmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties>
+    {
+        internal AlertEnrichmentProperties() { }
+        public string AlertId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem> Enrichments { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AlertEnrichmentResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult>
+    {
+        internal AlertEnrichmentResult() { }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public abstract partial class AlertProcessingRuleAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction>
     {
         protected AlertProcessingRuleAction() { }
@@ -241,6 +375,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleAddGroupsAction : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAddGroupsAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAddGroupsAction>
     {
         public AlertProcessingRuleAddGroupsAction(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> actionGroupIds) { }
@@ -252,6 +387,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAddGroupsAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAddGroupsAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition>
     {
         public AlertProcessingRuleCondition() { }
@@ -265,6 +401,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlertProcessingRuleField : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField>
     {
@@ -290,6 +427,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField left, Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleField right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleMonthlyRecurrence : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleMonthlyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleMonthlyRecurrence>
     {
         public AlertProcessingRuleMonthlyRecurrence(System.Collections.Generic.IEnumerable<int> daysOfMonth) { }
@@ -301,6 +439,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleMonthlyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleMonthlyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlertProcessingRuleOperator : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator>
     {
@@ -319,6 +458,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator left, Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRulePatch>
     {
         public AlertProcessingRulePatch() { }
@@ -331,6 +471,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties>
     {
         public AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction> actions) { }
@@ -347,6 +488,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public abstract partial class AlertProcessingRuleRecurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence>
     {
         protected AlertProcessingRuleRecurrence() { }
@@ -359,6 +501,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleRemoveAllGroupsAction : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRemoveAllGroupsAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRemoveAllGroupsAction>
     {
         public AlertProcessingRuleRemoveAllGroupsAction() { }
@@ -369,6 +512,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRemoveAllGroupsAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRemoveAllGroupsAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule>
     {
         public AlertProcessingRuleSchedule() { }
@@ -383,6 +527,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class AlertProcessingRuleWeeklyRecurrence : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleWeeklyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleWeeklyRecurrence>
     {
         public AlertProcessingRuleWeeklyRecurrence(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek> daysOfWeek) { }
@@ -394,6 +539,20 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleWeeklyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleWeeklyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class AlertsManagementBaseDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails>
+    {
+        internal AlertsManagementBaseDetails() { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlertsManagementDayOfWeek : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek>
     {
@@ -415,6 +574,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementDayOfWeek right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AlertsManagementNotificationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult>
+    {
+        public AlertsManagementNotificationResult() { }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus? Status { get { throw null; } set { } }
+        public string StatusUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlertsManagementQuerySortOrder : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder>
     {
@@ -428,8 +602,80 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertsManagementResultStatus : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertsManagementResultStatus(string value) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus Inline { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus None { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus Throttled { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus ThrottledByAlertRule { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus ThrottledBySubscription { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementResultStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertsManagementRuleType : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertsManagementRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType ActionRule { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType AlertRule { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlertsManagementStatus : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlertsManagementStatus(string value) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus left, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AlertsManagementTriggeredRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule>
+    {
+        public AlertsManagementTriggeredRule() { }
+        public string ActionGroupId { get { throw null; } set { } }
+        public string RuleId { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementRuleType? RuleType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlertsSummaryGroupByField : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField>
@@ -448,25 +694,41 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField left, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField left, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField right) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class ArmAlertsManagementModelFactory
     {
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem AlertEnrichmentItem(string title = null, string description = null, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus status = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus), string errorMessage = null, string alertEnrichmentType = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties AlertEnrichmentProperties(string alertId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem> enrichments = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult AlertEnrichmentResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentProperties properties = null) { throw null; }
+        [System.ObsoleteAttribute("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
         public static Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData AlertProcessingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails MonitorServiceDetails(string name = null, string displayName = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceList MonitorServiceList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails> data = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem PrometheusEnrichmentItem(string title = null, string description = null, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus status = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus), string errorMessage = null, string linkToApi = null, System.Collections.Generic.IEnumerable<string> datasources = null, string grafanaExplorePath = null, string query = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery PrometheusInstantQuery(string title = null, string description = null, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus status = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus), string errorMessage = null, string linkToApi = null, System.Collections.Generic.IEnumerable<string> datasources = null, string grafanaExplorePath = null, string query = null, string time = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery PrometheusRangeQuery(string title = null, string description = null, Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus status = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementStatus), string errorMessage = null, string linkToApi = null, System.Collections.Generic.IEnumerable<string> datasources = null, string grafanaExplorePath = null, string query = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset), string step = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails ServiceAlertActionSuppressedDetails(System.Collections.Generic.IEnumerable<string> suppressionActionRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule> suppressedActionGroups = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.ServiceAlertData ServiceAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials ServiceAlertEssentials(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType? signalType = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), string targetResource = null, string targetResourceName = null, string targetResourceGroup = null, string targetResourceType = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), string alertRule = null, string sourceCreatedId = null, System.Guid? smartGroupId = default(System.Guid?), string smartGroupingReason = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? monitorConditionResolvedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, bool? isSuppressed = default(bool?), string description = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata ServiceAlertMetadata(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification ServiceAlertModification(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties ServiceAlertModificationProperties(System.Guid? alertId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo> modifications = null) { throw null; }
-        public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties ServiceAlertProperties(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials essentials = null, System.BinaryData context = null, System.BinaryData egressConfig = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties ServiceAlertProperties(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials essentials, System.BinaryData context, System.BinaryData egressConfig) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties ServiceAlertProperties(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials essentials = null, System.BinaryData context = null, System.BinaryData egressConfig = null, System.Collections.Generic.IDictionary<string, string> customProperties = null) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary ServiceAlertSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup properties = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup ServiceAlertSummaryGroup(long? total = default(long?), long? smartGroupsCount = default(long?), string groupedBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo> values = null) { throw null; }
+        public static Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo ServiceAlertSummaryGroupItemInfo(string name = null, long? count = default(long?), string groupedBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo> values = null) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public static Azure.ResourceManager.AlertsManagement.SmartGroupData SmartGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, long? alertsCount = default(long?), Azure.ResourceManager.AlertsManagement.Models.SmartGroupState? smartGroupState = default(Azure.ResourceManager.AlertsManagement.Models.SmartGroupState?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> resources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> resourceTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> resourceGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> monitorServices = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> monitorConditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> alertStates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> alertSeverities = null, string nextLink = null) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public static Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification SmartGroupModification(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties properties = null) { throw null; }
+        [System.ObsoleteAttribute("The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.", true)]
         public static Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties SmartGroupModificationProperties(System.Guid? smartGroupId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo> modifications = null, string nextLink = null) { throw null; }
     }
+    [System.ObsoleteAttribute("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     public partial class DailyRecurrence : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.DailyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.DailyRecurrence>
     {
         public DailyRecurrence() { }
@@ -498,6 +760,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField left, Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField left, Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -514,6 +777,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition left, Azure.ResourceManager.AlertsManagement.Models.MonitorCondition right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.MonitorCondition (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition left, Azure.ResourceManager.AlertsManagement.Models.MonitorCondition right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -522,7 +786,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         internal MonitorServiceDetails() { }
         public string DisplayName { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -533,7 +800,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal MonitorServiceList() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails> Data { get { throw null; } }
+        protected override Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.MonitorServiceList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.MonitorServiceList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.MonitorServiceList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -555,6 +825,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert LogAnalytics { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert Nagios { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert Platform { get { throw null; } }
+        public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert ResourceHealth { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert Scom { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert ServiceHealth { get { throw null; } }
         public static Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert SmartDetector { get { throw null; } }
@@ -565,8 +836,56 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert left, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert left, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PrometheusEnrichmentItem : Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>
+    {
+        internal PrometheusEnrichmentItem() { }
+        public System.Collections.Generic.IList<string> Datasources { get { throw null; } }
+        public string GrafanaExplorePath { get { throw null; } }
+        public string LinkToApi { get { throw null; } }
+        public string Query { get { throw null; } }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrometheusInstantQuery : Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>
+    {
+        internal PrometheusInstantQuery() { }
+        public string Time { get { throw null; } }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrometheusRangeQuery : Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>
+    {
+        internal PrometheusRangeQuery() { }
+        public System.DateTimeOffset EndOn { get { throw null; } }
+        public System.DateTimeOffset StartOn { get { throw null; } }
+        public string Step { get { throw null; } }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetrievedInformationIdentifier : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier>
@@ -580,8 +899,53 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier left, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier left, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ServiceAlertActionSuppressedDetails : Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails>
+    {
+        public ServiceAlertActionSuppressedDetails() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule> SuppressedActionGroups { get { throw null; } }
+        public System.Collections.Generic.IList<string> SuppressionActionRules { get { throw null; } }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionSuppressedDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceAlertActionTriggeredDetails : Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails>
+    {
+        public ServiceAlertActionTriggeredDetails() { }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementTriggeredRule ActionGroup { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementNotificationResult NotificationResult { get { throw null; } set { } }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertActionTriggeredDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceAlertChangeStateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent>
+    {
+        public ServiceAlertChangeStateContent() { }
+        public string Comments { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertChangeStateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceAlertCollectionGetAllOptions
     {
@@ -626,7 +990,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string TargetResourceGroup { get { throw null; } set { } }
         public string TargetResourceName { get { throw null; } set { } }
         public string TargetResourceType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -637,7 +1004,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal ServiceAlertMetadata() { }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -647,7 +1017,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public abstract partial class ServiceAlertMetadataProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties>
     {
         protected ServiceAlertMetadataProperties() { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -658,7 +1031,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         public ServiceAlertModification() { }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -682,12 +1058,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public ServiceAlertModificationItemInfo() { }
         public string Comments { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails Details { get { throw null; } set { } }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationEvent? ModificationEvent { get { throw null; } set { } }
         public string ModifiedAt { get { throw null; } set { } }
         public string ModifiedBy { get { throw null; } set { } }
         public string NewValue { get { throw null; } set { } }
         public string OldValue { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -699,7 +1079,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public ServiceAlertModificationProperties() { }
         public System.Guid? AlertId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo> Modifications { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -710,14 +1093,34 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         public ServiceAlertProperties() { }
         public System.BinaryData Context { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> CustomProperties { get { throw null; } }
         public System.BinaryData EgressConfig { get { throw null; } }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials Essentials { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceAlertPropertyChangeDetails : Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails>
+    {
+        public ServiceAlertPropertyChangeDetails() { }
+        public string Comment { get { throw null; } set { } }
+        public string NewValue { get { throw null; } set { } }
+        public string OldValue { get { throw null; } set { } }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.AlertsManagement.Models.AlertsManagementBaseDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertPropertyChangeDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceAlertSeverity : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity>
@@ -735,6 +1138,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -752,6 +1156,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSignalType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -769,6 +1174,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState left, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -776,7 +1182,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         public ServiceAlertSummary() { }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -790,7 +1199,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public long? SmartGroupsCount { get { throw null; } set { } }
         public long? Total { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -804,13 +1216,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string GroupedBy { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupAggregatedProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty>
     {
         public SmartGroupAggregatedProperty() { }
@@ -823,6 +1239,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupCollectionGetAllOptions
     {
         public SmartGroupCollectionGetAllOptions() { }
@@ -838,6 +1255,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string TargetResourceType { get { throw null; } set { } }
         public Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? TimeRange { get { throw null; } set { } }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupModification : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification>
     {
         public SmartGroupModification() { }
@@ -849,6 +1267,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public enum SmartGroupModificationEvent
     {
         SmartGroupCreated = 0,
@@ -856,6 +1275,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         AlertAdded = 2,
         AlertRemoved = 3,
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupModificationItemInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo>
     {
         public SmartGroupModificationItemInfo() { }
@@ -873,6 +1293,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     public partial class SmartGroupModificationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties>
     {
         public SmartGroupModificationProperties() { }
@@ -886,6 +1307,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SmartGroupsSortByField : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField>
     {
@@ -905,6 +1327,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField left, Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SmartGroupState : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.SmartGroupState>
     {
@@ -953,6 +1376,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter left, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter right) { throw null; }
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter left, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter right) { throw null; }
         public override string ToString() { throw null; }
     }

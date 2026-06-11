@@ -4,11 +4,17 @@
 
 ### Features Added
 
+- Upgraded API version to 2025-05-25-preview.
+- Added tenant-level alert operations via `TenantResource` extension.
+- Added alert enrichments support via `GetEnrichments` operation.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from AutoRest/Swagger to TypeSpec-based code generation using Azure Management Generator.
 
 ## 1.1.2 (2026-04-17)
 
