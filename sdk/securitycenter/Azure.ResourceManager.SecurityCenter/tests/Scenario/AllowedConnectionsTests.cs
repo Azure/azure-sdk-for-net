@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var allowedConnections = await _resourceGroup.GetAllowedConnectionsResourceAsync(AzureLocation.CentralUS.ToString(), ConnectionType.Internal);
+            var allowedConnections = await _resourceGroup.GetAllowedConnectionsResourceAsync(AzureLocation.CentralUS, ConnectionType.Internal);
             ValidateAllowedConnections(allowedConnections);
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [Ignore("Needs re-recording because the migrated list operation now includes the home-region segment in the request path.")]
         public async Task GetAll()
         {
-            var list = await DefaultSubscription.GetAllowedConnectionsResourcesAsync(AzureLocation.CentralUS.ToString()).ToEnumerableAsync();
+            var list = await DefaultSubscription.GetAllowedConnectionsResourcesAsync(AzureLocation.CentralUS).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateAllowedConnections(list.FirstOrDefault());
         }
