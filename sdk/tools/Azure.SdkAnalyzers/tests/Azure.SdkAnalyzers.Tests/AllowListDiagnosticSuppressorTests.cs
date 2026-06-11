@@ -242,6 +242,7 @@ namespace TestNs
             Assert.That(d.IsSuppressed, Is.False);
         }
 
+<<<<<<< HEAD
         [Test]
         public void SupportedSuppressions_IncludeOpenAI001()
         {
@@ -339,6 +340,8 @@ namespace TestNs
     }
 }";
 
+=======
+>>>>>>> 157d93f06e3 (Add point-suppression mechanism via DiagnosticSuppressor + analyzer assembly split (#59723))
         private static Diagnostic SingleFor(IReadOnlyList<Diagnostic> diagnostics, string typeName)
         {
             return diagnostics.Single(d => d.Id == "AZC0034" && d.GetMessage().Contains("'" + typeName + "'"));
