@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The API entity reference. </summary>
-    public partial class ApiEntityReference
+    public partial class ComputeApiEntityReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
-        public ApiEntityReference()
+        /// <summary> Initializes a new instance of <see cref="ComputeApiEntityReference"/>. </summary>
+        public ComputeApiEntityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeApiEntityReference"/>. </summary>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeApiEntityReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

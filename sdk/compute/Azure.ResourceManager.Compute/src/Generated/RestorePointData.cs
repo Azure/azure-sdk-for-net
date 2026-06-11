@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         internal RestorePointProperties Properties { get; set; }
 
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </summary>
-        public IList<ApiEntityReference> ExcludedDisks
+        public IList<ComputeApiEntityReference> ExcludedDisks
         {
             get
             {

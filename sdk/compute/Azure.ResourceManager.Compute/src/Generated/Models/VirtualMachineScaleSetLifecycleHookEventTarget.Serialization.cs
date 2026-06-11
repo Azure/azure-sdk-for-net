@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ApiEntityReference resource = default;
+            ComputeApiEntityReference resource = default;
             LifecycleHookActionState? actionState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resource = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
+                    resource = ComputeApiEntityReference.DeserializeComputeApiEntityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actionState"u8))

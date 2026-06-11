@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="loadBalancerBackendAddressPoolResources"> The load balancer backend address pools. </param>
         /// <param name="loadBalancerInboundNatPoolResources"> The load balancer inbound nat pools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ComputeApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The subnet. </summary>
-        internal ApiEntityReference Subnet { get; set; }
+        internal ComputeApiEntityReference Subnet { get; set; }
 
         /// <summary> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </summary>
         public bool? Primary { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Subnet is null)
                 {
-                    Subnet = new ApiEntityReference();
+                    Subnet = new ComputeApiEntityReference();
                 }
                 Subnet.Id = value;
             }

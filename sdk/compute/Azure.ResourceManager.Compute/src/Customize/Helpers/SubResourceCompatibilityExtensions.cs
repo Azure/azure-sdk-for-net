@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static IList<WritableSubResource> ToWritableSubResources(this IEnumerable<ComputeWriteableSubResourceData> values)
             => values?.Select(value => new WritableSubResource { Id = value.Id }).ToList();
 
-        public static IList<WritableSubResource> ToWritableSubResources(this IEnumerable<ApiEntityReference> values)
+        public static IList<WritableSubResource> ToWritableSubResources(this IEnumerable<ComputeApiEntityReference> values)
             => values?.Select(value => new WritableSubResource { Id = value.Id }).ToList();
     }
 }

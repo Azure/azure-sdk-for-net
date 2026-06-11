@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(LifecycleHook)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(VmScaleSetLifecycleHookEventType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(VmScaleSetLifecycleHookEventType.Value.ToString());
             }
             if (Optional.IsDefined(WaitDuration))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            VmScaleSetLifecycleHookEventType? @type = default;
+            VmScaleSetLifecycleHookEventType? vmScaleSetLifecycleHookEventType = default;
             TimeSpan? waitDuration = default;
             LifecycleHookAction? defaultAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new VmScaleSetLifecycleHookEventType(prop.Value.GetString());
+                    vmScaleSetLifecycleHookEventType = new VmScaleSetLifecycleHookEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("waitDuration"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LifecycleHook(@type, waitDuration, defaultAction, additionalBinaryDataProperties);
+            return new LifecycleHook(vmScaleSetLifecycleHookEventType, waitDuration, defaultAction, additionalBinaryDataProperties);
         }
     }
 }

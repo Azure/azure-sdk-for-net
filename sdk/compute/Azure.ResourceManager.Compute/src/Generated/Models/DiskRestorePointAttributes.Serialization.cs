@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RestorePointEncryption encryption = default;
-            ApiEntityReference sourceDiskRestorePoint = default;
+            ComputeApiEntityReference sourceDiskRestorePoint = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceDiskRestorePoint = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
+                    sourceDiskRestorePoint = ComputeApiEntityReference.DeserializeComputeApiEntityReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

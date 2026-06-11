@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: <b>ForceDetach.</b> detachOption: <b>ForceDetach</b> is applicable only for managed data disks. If a previous detachment attempt of the data disk did not complete due to an unexpected failure from the virtual machine and the disk is still not released then use force-detach as a last resort option to detach the disk forcibly from the VM. All writes might not have been flushed when using this detach behavior. <b>This feature is still in preview</b>. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the data disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the data disk is retained after VM is deleted. The default value is set to <b>Detach</b>. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, StorageFaultDomainAlignmentType? storageFaultDomainAlignment, VirtualMachineManagedDisk managedDisk, ApiEntityReference sourceResource, bool? toBeDetached, long? diskIopsReadWrite, long? diskMBpsReadWrite, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, StorageFaultDomainAlignmentType? storageFaultDomainAlignment, VirtualMachineManagedDisk managedDisk, ComputeApiEntityReference sourceResource, bool? toBeDetached, long? diskIopsReadWrite, long? diskMBpsReadWrite, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineManagedDisk ManagedDisk { get; set; }
 
         /// <summary> The source resource identifier. It can be a snapshot, or disk restore point from which to create a disk. </summary>
-        internal ApiEntityReference SourceResource { get; set; }
+        internal ComputeApiEntityReference SourceResource { get; set; }
 
         /// <summary> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </summary>
         public bool? ToBeDetached { get; set; }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (SourceResource is null)
                 {
-                    SourceResource = new ApiEntityReference();
+                    SourceResource = new ComputeApiEntityReference();
                 }
                 SourceResource.Id = value;
             }

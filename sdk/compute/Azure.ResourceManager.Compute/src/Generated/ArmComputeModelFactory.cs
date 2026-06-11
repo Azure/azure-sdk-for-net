@@ -501,30 +501,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiffDiskSettings(option, placement, enableFullCaching, default);
         }
 
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetManagedDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetManagedDisk VirtualMachineScaleSetManagedDisk(StorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default, VirtualMachineDiskSecurityProfile securityProfile = default)
-        {
-            return new VirtualMachineScaleSetManagedDisk(storageAccountType, diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default), securityProfile, default);
-        }
-
-        /// <param name="id"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.DiskEncryptionSetParameters"/> instance for mocking. </returns>
-        public static DiskEncryptionSetParameters DiskEncryptionSetParameters(ResourceIdentifier id = default)
-        {
-            return new DiskEncryptionSetParameters(id, default);
-        }
-
-        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineDiskSecurityProfile"/> instance for mocking. </returns>
-        public static VirtualMachineDiskSecurityProfile VirtualMachineDiskSecurityProfile(SecurityEncryptionType? securityEncryptionType = default, ResourceIdentifier diskEncryptionSetId = default)
-        {
-            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default), default);
-        }
-
         /// <param name="name"> The disk name. </param>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="caching"> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </param>
@@ -562,14 +538,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
 
-            return new VirtualMachineScaleSetNetworkProfile(healthProbeId is null ? default : new ApiEntityReference(healthProbeId, default), (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>()).ToList(), networkApiVersion, default);
+            return new VirtualMachineScaleSetNetworkProfile(healthProbeId is null ? default : new ComputeApiEntityReference(healthProbeId, default), (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>()).ToList(), networkApiVersion, default);
         }
 
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
-        /// <returns> A new <see cref="Models.ApiEntityReference"/> instance for mocking. </returns>
-        public static ApiEntityReference ApiEntityReference(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.ComputeApiEntityReference"/> instance for mocking. </returns>
+        public static ComputeApiEntityReference ComputeApiEntityReference(ResourceIdentifier id = default)
         {
-            return new ApiEntityReference(id, default);
+            return new ComputeApiEntityReference(id, default);
         }
 
         /// <param name="id"> Resource Id. </param>
@@ -620,7 +596,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static VirtualMachineScaleSetIPConfiguration VirtualMachineScaleSetIPConfiguration(ResourceIdentifier id = default, string name = default, bool? primary = default, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources = default, ResourceIdentifier subnetId = default)
         {
             return new VirtualMachineScaleSetIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetIPConfigurationProperties(
-                new ApiEntityReference(subnetId, default),
+                new ComputeApiEntityReference(subnetId, default),
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
@@ -977,13 +953,13 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputeSkuProfileVmSize(name, rank, default);
         }
 
-        /// <param name="type"> Specifies the type of the lifecycle hook. </param>
+        /// <param name="vmScaleSetLifecycleHookEventType"> Specifies the type of the lifecycle hook. </param>
         /// <param name="waitDuration"> Specifies the time duration a virtual machine scale set lifecycle hook event sent to the customer waits for a response from the customer. It should be in ISO 8601 format. </param>
         /// <param name="defaultAction"> Specifies the action that will be applied to a target resource in the virtual machine scale set lifecycle hook event if the platform does not receive a response from the customer for the target resource before waitUntil. </param>
         /// <returns> A new <see cref="Models.LifecycleHook"/> instance for mocking. </returns>
-        public static LifecycleHook LifecycleHook(VmScaleSetLifecycleHookEventType? @type = default, TimeSpan? waitDuration = default, LifecycleHookAction? defaultAction = default)
+        public static LifecycleHook LifecycleHook(VmScaleSetLifecycleHookEventType? vmScaleSetLifecycleHookEventType = default, TimeSpan? waitDuration = default, LifecycleHookAction? defaultAction = default)
         {
-            return new LifecycleHook(@type, waitDuration, defaultAction, default);
+            return new LifecycleHook(vmScaleSetLifecycleHookEventType, waitDuration, defaultAction, default);
         }
 
         /// <param name="enabled"> If true, external health is enabled for this scale set. Cannot be set to true on instances where another health monitoring source is active (ApplicationHealth extension or SLB). Defaults to false. </param>
@@ -1194,7 +1170,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineScaleSetUpdateNetworkConfiguration>();
 
-            return new VirtualMachineScaleSetUpdateNetworkProfile(healthProbeId is null ? default : new ApiEntityReference(healthProbeId, default), (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateNetworkConfiguration>()).ToList(), networkApiVersion, default);
+            return new VirtualMachineScaleSetUpdateNetworkProfile(healthProbeId is null ? default : new ComputeApiEntityReference(healthProbeId, default), (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateNetworkConfiguration>()).ToList(), networkApiVersion, default);
         }
 
         /// <param name="id"> Resource Id. </param>
@@ -1245,7 +1221,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static VirtualMachineScaleSetUpdateIPConfiguration VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id = default, string name = default, bool? primary = default, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources = default, ResourceIdentifier subnetId = default)
         {
             return new VirtualMachineScaleSetUpdateIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetUpdateIPConfigurationProperties(
-                new ApiEntityReference(subnetId, default),
+                new ComputeApiEntityReference(subnetId, default),
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
@@ -1646,7 +1622,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventTarget"/> instance for mocking. </returns>
         public static VirtualMachineScaleSetLifecycleHookEventTarget VirtualMachineScaleSetLifecycleHookEventTarget(ResourceIdentifier resourceId = default, LifecycleHookActionState? actionState = default)
         {
-            return new VirtualMachineScaleSetLifecycleHookEventTarget(resourceId is null ? default : new ApiEntityReference(resourceId, default), actionState, default);
+            return new VirtualMachineScaleSetLifecycleHookEventTarget(resourceId is null ? default : new ComputeApiEntityReference(resourceId, default), actionState, default);
         }
 
         /// <param name="eventType"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
@@ -1929,16 +1905,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default);
         }
 
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineManagedDisk"/> instance for mocking. </returns>
-        public static VirtualMachineManagedDisk VirtualMachineManagedDisk(ResourceIdentifier id = default, StorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default, VirtualMachineDiskSecurityProfile securityProfile = default)
-        {
-            return new VirtualMachineManagedDisk(id, default, storageAccountType, diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default), securityProfile);
-        }
-
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="name"> The disk name. </param>
         /// <param name="vhdUri"> Specifies the virtual hard disk's uri. </param>
@@ -1969,7 +1935,7 @@ namespace Azure.ResourceManager.Compute.Models
                 diskSizeGB,
                 storageFaultDomainAlignment,
                 managedDisk,
-                sourceResourceId is null ? default : new ApiEntityReference(sourceResourceId, default),
+                sourceResourceId is null ? default : new ComputeApiEntityReference(sourceResourceId, default),
                 toBeDetached,
                 diskIopsReadWrite,
                 diskMBpsReadWrite,
@@ -2191,25 +2157,6 @@ namespace Azure.ResourceManager.Compute.Models
             dataDisksToDetach ??= new ChangeTrackingList<DataDisksToDetach>();
 
             return new AttachDetachDataDisksRequest((dataDisksToAttach ?? new ChangeTrackingList<DataDisksToAttach>()).ToList(), (dataDisksToDetach ?? new ChangeTrackingList<DataDisksToDetach>()).ToList(), default);
-        }
-
-        /// <param name="diskId"> ID of the managed data disk. </param>
-        /// <param name="lun"> The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. </param>
-        /// <param name="caching"> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The defaulting behavior is: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </param>
-        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the data disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the data disk is retained after VM is deleted. The default value is set to <b>Detach</b>. </param>
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        /// <returns> A new <see cref="Models.DataDisksToAttach"/> instance for mocking. </returns>
-        public static DataDisksToAttach DataDisksToAttach(string diskId = default, int? lun = default, CachingType? caching = default, DiskDeleteOptionType? deleteOption = default, ResourceIdentifier diskEncryptionSetId = default, bool? writeAcceleratorEnabled = default)
-        {
-            return new DataDisksToAttach(
-                diskId,
-                lun,
-                caching,
-                deleteOption,
-                diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default),
-                writeAcceleratorEnabled,
-                default);
         }
 
         /// <param name="diskId"> ID of the managed data disk. </param>
@@ -3298,75 +3245,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new ImageStorageProfile(osDisk, (dataDisks ?? new ChangeTrackingList<ImageDataDisk>()).ToList(), zoneResilient, default);
         }
 
-        /// <param name="snapshotId"> Resource Id. </param>
-        /// <param name="managedDiskId"> Resource Id. </param>
-        /// <param name="blobUri"> The Virtual Hard Disk. </param>
-        /// <param name="caching"> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </param>
-        /// <param name="diskSizeGB"> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. This value cannot be larger than 1023 GB. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
-        /// <param name="osState"> The OS State. For managed images, use Generalized. </param>
-        /// <returns> A new <see cref="Models.ImageOSDisk"/> instance for mocking. </returns>
-        public static ImageOSDisk ImageOSDisk(ResourceIdentifier snapshotId = default, ResourceIdentifier managedDiskId = default, Uri blobUri = default, CachingType? caching = default, int? diskSizeGB = default, StorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default, SupportedOperatingSystemType osType = default, OperatingSystemStateType osState = default)
-        {
-            return new ImageOSDisk(
-                snapshotId is null ? default : new ComputeWriteableSubResourceData(snapshotId, default),
-                managedDiskId is null ? default : new ComputeWriteableSubResourceData(managedDiskId, default),
-                blobUri,
-                caching,
-                diskSizeGB,
-                storageAccountType,
-                diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default),
-                default,
-                osType,
-                osState);
-        }
-
-        /// <param name="snapshotId"> Resource Id. </param>
-        /// <param name="managedDiskId"> Resource Id. </param>
-        /// <param name="blobUri"> The Virtual Hard Disk. </param>
-        /// <param name="caching"> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </param>
-        /// <param name="diskSizeGB"> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. This value cannot be larger than 1023 GB. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.ImageDisk"/> instance for mocking. </returns>
-        public static ImageDisk ImageDisk(ResourceIdentifier snapshotId = default, ResourceIdentifier managedDiskId = default, Uri blobUri = default, CachingType? caching = default, int? diskSizeGB = default, StorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default)
-        {
-            return new ImageDisk(
-                snapshotId is null ? default : new ComputeWriteableSubResourceData(snapshotId, default),
-                managedDiskId is null ? default : new ComputeWriteableSubResourceData(managedDiskId, default),
-                blobUri,
-                caching,
-                diskSizeGB,
-                storageAccountType,
-                diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default),
-                default);
-        }
-
-        /// <param name="snapshotId"> Resource Id. </param>
-        /// <param name="managedDiskId"> Resource Id. </param>
-        /// <param name="blobUri"> The Virtual Hard Disk. </param>
-        /// <param name="caching"> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </param>
-        /// <param name="diskSizeGB"> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. This value cannot be larger than 1023 GB. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
-        /// <returns> A new <see cref="Models.ImageDataDisk"/> instance for mocking. </returns>
-        public static ImageDataDisk ImageDataDisk(ResourceIdentifier snapshotId = default, ResourceIdentifier managedDiskId = default, Uri blobUri = default, CachingType? caching = default, int? diskSizeGB = default, StorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default, int lun = default)
-        {
-            return new ImageDataDisk(
-                snapshotId is null ? default : new ComputeWriteableSubResourceData(snapshotId, default),
-                managedDiskId is null ? default : new ComputeWriteableSubResourceData(managedDiskId, default),
-                blobUri,
-                caching,
-                diskSizeGB,
-                storageAccountType,
-                diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default),
-                default,
-                lun);
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -3434,7 +3312,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
         /// <param name="sourceRestorePointId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <returns> A new <see cref="Compute.RestorePointData"/> instance for mocking. </returns>
-        public static RestorePointData RestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApiEntityReference> excludedDisks = default, RestorePointSourceMetadata sourceMetadata = default, string provisioningState = default, ConsistencyModeType? consistencyMode = default, DateTimeOffset? timeCreated = default, RestorePointInstanceView instanceView = default, int? instantAccessDurationMinutes = default, ResourceIdentifier sourceRestorePointId = default)
+        public static RestorePointData RestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ComputeApiEntityReference> excludedDisks = default, RestorePointSourceMetadata sourceMetadata = default, string provisioningState = default, ConsistencyModeType? consistencyMode = default, DateTimeOffset? timeCreated = default, RestorePointInstanceView instanceView = default, int? instantAccessDurationMinutes = default, ResourceIdentifier sourceRestorePointId = default)
         {
             return new RestorePointData(
                 id,
@@ -3442,12 +3320,12 @@ namespace Azure.ResourceManager.Compute.Models
                 resourceType,
                 systemData,
                 excludedDisks is null && sourceMetadata is null && provisioningState is null && consistencyMode is null && timeCreated is null && sourceRestorePointId is null && instanceView is null && instantAccessDurationMinutes is null ? default : new RestorePointProperties(
-                    (excludedDisks ?? new ChangeTrackingList<ApiEntityReference>()).ToList(),
+                    (excludedDisks ?? new ChangeTrackingList<ComputeApiEntityReference>()).ToList(),
                     sourceMetadata,
                     provisioningState,
                     consistencyMode,
                     timeCreated,
-                    new ApiEntityReference(sourceRestorePointId, default),
+                    new ComputeApiEntityReference(sourceRestorePointId, default),
                     instanceView,
                     instantAccessDurationMinutes,
                     default),
@@ -3521,15 +3399,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.DiskRestorePointAttributes"/> instance for mocking. </returns>
         public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id = default, RestorePointEncryption encryption = default, ResourceIdentifier sourceDiskRestorePointId = default)
         {
-            return new DiskRestorePointAttributes(id, default, encryption, sourceDiskRestorePointId is null ? default : new ApiEntityReference(sourceDiskRestorePointId, default));
-        }
-
-        /// <param name="diskEncryptionSetId"> Resource Id. </param>
-        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk restore point. </param>
-        /// <returns> A new <see cref="Models.RestorePointEncryption"/> instance for mocking. </returns>
-        public static RestorePointEncryption RestorePointEncryption(ResourceIdentifier diskEncryptionSetId = default, RestorePointEncryptionType? encryptionType = default)
-        {
-            return new RestorePointEncryption(diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default), encryptionType, default);
+            return new DiskRestorePointAttributes(id, default, encryption, sourceDiskRestorePointId is null ? default : new ComputeApiEntityReference(sourceDiskRestorePointId, default));
         }
 
         /// <param name="lun"> Gets the logical unit number. </param>
@@ -7211,7 +7081,7 @@ namespace Azure.ResourceManager.Compute.Models
                 diskSizeGB,
                 default,
                 managedDisk,
-                sourceResourceId is null ? default : new ApiEntityReference(sourceResourceId, default),
+                sourceResourceId is null ? default : new ComputeApiEntityReference(sourceResourceId, default),
                 toBeDetached,
                 diskIopsReadWrite,
                 diskMBpsReadWrite,
@@ -7670,7 +7540,7 @@ namespace Azure.ResourceManager.Compute.Models
                     provisioningState,
                     consistencyMode,
                     timeCreated,
-                    new ApiEntityReference(sourceRestorePointId, default),
+                    new ComputeApiEntityReference(sourceRestorePointId, default),
                     instanceView,
                     instantAccessDurationMinutes,
                     default),
@@ -7945,6 +7815,27 @@ namespace Azure.ResourceManager.Compute.Models
                 timeCreated,
                 default,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataDisksToAttach"/>. </summary>
+        /// <param name="diskId"> ID of the managed data disk. </param>
+        /// <param name="lun"> The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The defaulting behavior is: **None for Standard storage. ReadOnly for Premium storage.**. </param>
+        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the data disk is deleted when VM is deleted. **Detach.** If this value is used, the data disk is retained after VM is deleted. The default value is set to **Detach**. </param>
+        /// <param name="diskEncryptionSetId"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
+        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <returns> A new <see cref="Models.DataDisksToAttach"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataDisksToAttach DataDisksToAttach(string diskId = default, int? lun = default, CachingType? caching = default, DiskDeleteOptionType? deleteOption = default, ResourceIdentifier diskEncryptionSetId = default, bool? writeAcceleratorEnabled = default)
+        {
+            return new DataDisksToAttach(
+                diskId,
+                lun,
+                caching,
+                deleteOption,
+                diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default),
+                writeAcceleratorEnabled,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetVmExtensionData"/>. </summary>
@@ -8984,7 +8875,7 @@ namespace Azure.ResourceManager.Compute.Models
                     provisioningState,
                     consistencyMode,
                     timeCreated,
-                    new ApiEntityReference(sourceRestorePointId, default),
+                    new ComputeApiEntityReference(sourceRestorePointId, default),
                     instanceView,
                     default,
                     default),

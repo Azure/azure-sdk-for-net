@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ApiEntityReference subnet = default;
+            ComputeApiEntityReference subnet = default;
             bool? primary = default;
             VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersion? privateIPAddressVersion = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    subnet = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
+                    subnet = ComputeApiEntityReference.DeserializeComputeApiEntityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("primary"u8))

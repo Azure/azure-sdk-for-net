@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? diskSizeGB = default;
             StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
             VirtualMachineManagedDisk managedDisk = default;
-            ApiEntityReference sourceResource = default;
+            ComputeApiEntityReference sourceResource = default;
             bool? toBeDetached = default;
             long? diskIopsReadWrite = default;
             long? diskMBpsReadWrite = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceResource = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
+                    sourceResource = ComputeApiEntityReference.DeserializeComputeApiEntityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("toBeDetached"u8))

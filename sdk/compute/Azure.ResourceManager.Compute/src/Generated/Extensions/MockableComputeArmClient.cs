@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new VirtualMachineScaleSetExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> object. </returns>
-        public virtual VirtualMachineScaleSetLifecycleHookEventDataResource GetVirtualMachineScaleSetLifecycleHookEventDataResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetLifecycleHookEventResource GetVirtualMachineScaleSetLifecycleHookEventResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetLifecycleHookEventDataResource.ValidateResourceId(id);
-            return new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, id);
+            VirtualMachineScaleSetLifecycleHookEventResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetLifecycleHookEventResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVmResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -2893,11 +2893,11 @@ namespace Azure.ResourceManager.Compute
             return GetVirtualMachineScaleSetExtensions().Get(vmssExtensionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetLifecycleHookEventData in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetLifecycleHookEventData and their operations over a VirtualMachineScaleSetLifecycleHookEventDataResource. </returns>
-        public virtual VirtualMachineScaleSetLifecycleHookEventDataCollection GetAllVirtualMachineScaleSetLifecycleHookEventData()
+        /// <summary> Gets a collection of VirtualMachineScaleSetLifecycleHookEvents in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetLifecycleHookEvents and their operations over a VirtualMachineScaleSetLifecycleHookEventResource. </returns>
+        public virtual VirtualMachineScaleSetLifecycleHookEventCollection GetVirtualMachineScaleSetLifecycleHookEvents()
         {
-            return GetCachedClient(client => new VirtualMachineScaleSetLifecycleHookEventDataCollection(client, Id));
+            return GetCachedClient(client => new VirtualMachineScaleSetLifecycleHookEventCollection(client, Id));
         }
 
         /// <summary> Gets a virtual machine scale set lifecycle hook event. </summary>
@@ -2906,11 +2906,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventDataResource>> GetVirtualMachineScaleSetLifecycleHookEventDataAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventResource>> GetVirtualMachineScaleSetLifecycleHookEventAsync(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            return await GetAllVirtualMachineScaleSetLifecycleHookEventData().GetAsync(lifecycleHookEventName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualMachineScaleSetLifecycleHookEvents().GetAsync(lifecycleHookEventName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a virtual machine scale set lifecycle hook event. </summary>
@@ -2919,11 +2919,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="lifecycleHookEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lifecycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualMachineScaleSetLifecycleHookEventDataResource> GetVirtualMachineScaleSetLifecycleHookEventData(string lifecycleHookEventName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetLifecycleHookEventResource> GetVirtualMachineScaleSetLifecycleHookEvent(string lifecycleHookEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lifecycleHookEventName, nameof(lifecycleHookEventName));
 
-            return GetAllVirtualMachineScaleSetLifecycleHookEventData().Get(lifecycleHookEventName, cancellationToken);
+            return GetVirtualMachineScaleSetLifecycleHookEvents().Get(lifecycleHookEventName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualMachineScaleSetVms in the <see cref="VirtualMachineScaleSetResource"/>. </summary>

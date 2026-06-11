@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    public partial class VirtualMachineScaleSetLifecycleHookEventDataResource : IJsonModel<VirtualMachineScaleSetLifecycleHookEventData>
+    public partial class VirtualMachineScaleSetLifecycleHookEventResource : IJsonModel<VirtualMachineScaleSetLifecycleHookEventData>
     {
         private static IJsonModel<VirtualMachineScaleSetLifecycleHookEventData> s_dataDeserializationInstance;
 

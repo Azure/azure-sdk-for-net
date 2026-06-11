@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
         /// <param name="sourceDiskRestorePoint"> Resource Id of the source disk restore point. </param>
-        internal DiskRestorePointAttributes(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointEncryption encryption, ApiEntityReference sourceDiskRestorePoint) : base(id, additionalBinaryDataProperties)
+        internal DiskRestorePointAttributes(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointEncryption encryption, ComputeApiEntityReference sourceDiskRestorePoint) : base(id, additionalBinaryDataProperties)
         {
             Encryption = encryption;
             SourceDiskRestorePoint = sourceDiskRestorePoint;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RestorePointEncryption Encryption { get; set; }
 
         /// <summary> Resource Id of the source disk restore point. </summary>
-        internal ApiEntityReference SourceDiskRestorePoint { get; set; }
+        internal ComputeApiEntityReference SourceDiskRestorePoint { get; set; }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public ResourceIdentifier SourceDiskRestorePointId
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (SourceDiskRestorePoint is null)
                 {
-                    SourceDiskRestorePoint = new ApiEntityReference();
+                    SourceDiskRestorePoint = new ComputeApiEntityReference();
                 }
                 SourceDiskRestorePoint.Id = value;
             }

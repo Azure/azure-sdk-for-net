@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();
-                foreach (ApiEntityReference item in ExcludedDisks)
+                foreach (ComputeApiEntityReference item in ExcludedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<ApiEntityReference> excludedDisks = default;
+            IList<ComputeApiEntityReference> excludedDisks = default;
             RestorePointSourceMetadata sourceMetadata = default;
             string provisioningState = default;
             ConsistencyModeType? consistencyMode = default;
             DateTimeOffset? timeCreated = default;
-            ApiEntityReference sourceRestorePoint = default;
+            ComputeApiEntityReference sourceRestorePoint = default;
             RestorePointInstanceView instanceView = default;
             int? instantAccessDurationMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ApiEntityReference> array = new List<ApiEntityReference>();
+                    List<ComputeApiEntityReference> array = new List<ComputeApiEntityReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiEntityReference.DeserializeApiEntityReference(item, options));
+                        array.Add(ComputeApiEntityReference.DeserializeComputeApiEntityReference(item, options));
                     }
                     excludedDisks = array;
                     continue;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceRestorePoint = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
+                    sourceRestorePoint = ComputeApiEntityReference.DeserializeComputeApiEntityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instanceView"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new RestorePointProperties(
-                excludedDisks ?? new ChangeTrackingList<ApiEntityReference>(),
+                excludedDisks ?? new ChangeTrackingList<ComputeApiEntityReference>(),
                 sourceMetadata,
                 provisioningState,
                 consistencyMode,

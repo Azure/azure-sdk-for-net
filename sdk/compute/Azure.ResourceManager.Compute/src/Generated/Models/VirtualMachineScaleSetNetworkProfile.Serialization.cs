@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ApiEntityReference healthProbe = default;
+            ComputeApiEntityReference healthProbe = default;
             IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
             NetworkApiVersion? networkApiVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    healthProbe = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
+                    healthProbe = ComputeApiEntityReference.DeserializeComputeApiEntityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkInterfaceConfigurations"u8))

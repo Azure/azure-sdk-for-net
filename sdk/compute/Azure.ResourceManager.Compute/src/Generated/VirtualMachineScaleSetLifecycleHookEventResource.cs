@@ -18,11 +18,11 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a VirtualMachineScaleSetLifecycleHookEventData along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetResource"/> using the GetAllVirtualMachineScaleSetLifecycleHookEventData method.
+    /// A class representing a VirtualMachineScaleSetLifecycleHookEvent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetResource"/> using the GetVirtualMachineScaleSetLifecycleHookEvents method.
     /// </summary>
-    public partial class VirtualMachineScaleSetLifecycleHookEventDataResource : ArmResource
+    public partial class VirtualMachineScaleSetLifecycleHookEventResource : ArmResource
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics;
         private readonly VirtualMachineScaleSetLifeCycleHookEvents _virtualMachineScaleSetLifeCycleHookEventsRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/lifecycleHookEvents";
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetLifecycleHookEventDataResource for mocking. </summary>
-        protected VirtualMachineScaleSetLifecycleHookEventDataResource()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetLifecycleHookEventResource for mocking. </summary>
+        protected VirtualMachineScaleSetLifecycleHookEventResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventDataResource(ArmClient client, VirtualMachineScaleSetLifecycleHookEventData data) : this(client, data.Id)
+        internal VirtualMachineScaleSetLifecycleHookEventResource(ArmClient client, VirtualMachineScaleSetLifecycleHookEventData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VirtualMachineScaleSetLifecycleHookEventResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualMachineScaleSetLifecycleHookEventDataApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualMachineScaleSetLifecycleHookEventApiVersion);
             _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetLifeCycleHookEventsRestClient = new VirtualMachineScaleSetLifeCycleHookEvents(_virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetLifecycleHookEventDataApiVersion ?? "2025-11-01");
+            _virtualMachineScaleSetLifeCycleHookEventsRestClient = new VirtualMachineScaleSetLifeCycleHookEvents(_virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetLifecycleHookEventApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/>. </description>
+        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventDataResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataResource.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventResource.Get");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/>. </description>
+        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineScaleSetLifecycleHookEventDataResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetLifecycleHookEventResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataResource.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventResource.Get");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,18 +205,18 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/>. </description>
+        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the Update virtual machine scale set lifecycle hook event operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventDataResource>> UpdateAsync(VirtualMachineScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetLifecycleHookEventResource>> UpdateAsync(VirtualMachineScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataResource.Update");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventResource.Update");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventDataResource"/>. </description>
+        /// <description> <see cref="VirtualMachineScaleSetLifecycleHookEventResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the Update virtual machine scale set lifecycle hook event operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<VirtualMachineScaleSetLifecycleHookEventDataResource> Update(VirtualMachineScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetLifecycleHookEventResource> Update(VirtualMachineScaleSetLifecycleHookEventPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventDataResource.Update");
+            using DiagnosticScope scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetLifecycleHookEventResource.Update");
             scope.Start();
             try
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetLifecycleHookEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

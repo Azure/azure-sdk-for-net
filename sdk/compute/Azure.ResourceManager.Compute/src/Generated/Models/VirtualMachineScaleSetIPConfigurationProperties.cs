@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="loadBalancerBackendAddressPoolResources"> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
         /// <param name="loadBalancerInboundNatPoolResources"> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetIPConfigurationProperties(ComputeApiEntityReference subnet, bool? primary, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the identifier of the subnet. </summary>
-        internal ApiEntityReference Subnet { get; set; }
+        internal ComputeApiEntityReference Subnet { get; set; }
 
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
         public bool? Primary { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Subnet is null)
                 {
-                    Subnet = new ApiEntityReference();
+                    Subnet = new ComputeApiEntityReference();
                 }
                 Subnet.Id = value;
             }
