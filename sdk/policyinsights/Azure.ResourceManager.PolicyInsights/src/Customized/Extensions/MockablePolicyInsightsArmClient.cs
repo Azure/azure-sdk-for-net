@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -174,6 +175,23 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 PolicyTrackedResourcesRestClient, scope.ToString(), policyTrackedResourceType.ToString(),
                 default, default,
                 context, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults");
+        }
+
+        // ===== GA-shape ComponentPolicyStates query overloads (obsolete + throw) =====
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier scope, ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier scope, ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
         }
     }
 }

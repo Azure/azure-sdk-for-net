@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -586,6 +587,107 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
+        }
+
+        // ===== GA-shape ComponentPolicyStates query overloads (obsolete + throw) =====
+        // These stubs are retained only to surface the deprecation contract; the implementations
+        // throw because the host and Pageable<T> shape no longer match the new generator output.
+        // Users should call the new overloads (ComponentPolicyStatesResource + PolicyQuerySettings).
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForPolicyDefinitionComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForPolicyDefinitionComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static Pageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStates(this SubscriptionResource subscriptionResource, SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForPolicyDefinitionComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForSubscriptionComponentPolicyStatesAsync(SubscriptionResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForSubscriptionComponentPolicyStatesAsync(SubscriptionResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForSubscriptionComponentPolicyStatesAsync(SubscriptionResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForSubscriptionComponentPolicyStates(SubscriptionResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForSubscriptionComponentPolicyStates(SubscriptionResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStates(this SubscriptionResource subscriptionResource, SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForSubscriptionComponentPolicyStates(SubscriptionResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(this SubscriptionResource subscriptionResource, SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceGroupComponentPolicyStatesAsync(ResourceGroupResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceGroupComponentPolicyStatesAsync(ResourceGroupResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetQueryResultsForResourceGroupComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceGroupComponentPolicyStatesAsync(ResourceGroupResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceGroupComponentPolicyStates(ResourceGroupResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceGroupComponentPolicyStates(ResourceGroupResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStates(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetQueryResultsForResourceGroupComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceGroupComponentPolicyStates(ResourceGroupResource, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> [Obsolete] Use the new GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
         }
     }
 }
