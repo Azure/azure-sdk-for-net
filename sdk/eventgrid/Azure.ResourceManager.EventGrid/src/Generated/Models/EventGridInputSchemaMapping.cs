@@ -5,39 +5,13 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// By default, Event Grid expects events to be in the Event Grid event schema. Specifying an input schema mapping enables publishing to Event Grid using a custom input schema. Currently, the only supported type of InputSchemaMapping is 'JsonInputSchemaMapping'.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JsonInputSchemaMapping"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventGridJsonInputSchemaMapping"/>.
     /// </summary>
     public abstract partial class EventGridInputSchemaMapping
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="EventGridInputSchemaMapping"/>. </summary>
-        /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
-        private protected EventGridInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType)
-        {
-            InputSchemaMappingType = inputSchemaMappingType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EventGridInputSchemaMapping"/>. </summary>
-        /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            InputSchemaMappingType = inputSchemaMappingType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Type of the custom mapping. </summary>
-        [WirePath("inputSchemaMappingType")]
-        internal InputSchemaMappingType InputSchemaMappingType { get; set; }
     }
 }

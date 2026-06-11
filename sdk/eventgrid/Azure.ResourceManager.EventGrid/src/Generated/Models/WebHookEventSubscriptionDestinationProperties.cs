@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="deliveryAttributeMappings"> Delivery attribute details. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebHookEventSubscriptionDestinationProperties(string endpointUri, string endpointBaseUri, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, string azureActiveDirectoryTenantId, string azureActiveDirectoryApplicationIdOrUri, IList<DeliveryAttributeMapping> deliveryAttributeMappings, TlsVersion? minimumTlsVersionAllowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebHookEventSubscriptionDestinationProperties(string endpointUri, string endpointBaseUri, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string azureActiveDirectoryApplicationIdOrUri, IList<DeliveryAttributeMapping> deliveryAttributeMappings, TlsVersion? minimumTlsVersionAllowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointUri = endpointUri;
             EndpointBaseUri = endpointBaseUri;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("azureActiveDirectoryTenantId")]
-        public string AzureActiveDirectoryTenantId { get; set; }
+        public Guid? AzureActiveDirectoryTenantId { get; set; }
 
         /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("azureActiveDirectoryApplicationIdOrUri")]

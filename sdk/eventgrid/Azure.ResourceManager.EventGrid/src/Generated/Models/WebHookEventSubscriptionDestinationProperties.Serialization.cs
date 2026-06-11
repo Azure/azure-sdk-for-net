@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
-                writer.WriteStringValue(AzureActiveDirectoryTenantId);
+                writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
             if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string endpointBaseUri = default;
             int? maxEventsPerBatch = default;
             int? preferredBatchSizeInKilobytes = default;
-            string azureActiveDirectoryTenantId = default;
+            Guid? azureActiveDirectoryTenantId = default;
             string azureActiveDirectoryApplicationIdOrUri = default;
             IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             TlsVersion? minimumTlsVersionAllowed = default;
@@ -202,7 +202,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("azureActiveDirectoryTenantId"u8))
                 {
-                    azureActiveDirectoryTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureActiveDirectoryTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("azureActiveDirectoryApplicationIdOrUri"u8))

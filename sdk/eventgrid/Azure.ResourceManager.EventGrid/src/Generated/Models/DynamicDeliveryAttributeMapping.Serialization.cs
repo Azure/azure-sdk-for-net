@@ -132,10 +132,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     properties = DynamicDeliveryAttributeMappingProperties.DeserializeDynamicDeliveryAttributeMappingProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new DynamicDeliveryAttributeMapping(name, @type, additionalBinaryDataProperties, properties);
         }

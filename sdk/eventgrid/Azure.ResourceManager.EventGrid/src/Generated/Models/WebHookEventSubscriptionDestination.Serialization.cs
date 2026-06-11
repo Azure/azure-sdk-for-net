@@ -126,10 +126,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     properties = WebHookEventSubscriptionDestinationProperties.DeserializeWebHookEventSubscriptionDestinationProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new WebHookEventSubscriptionDestination(endpointType, additionalBinaryDataProperties, properties);
         }

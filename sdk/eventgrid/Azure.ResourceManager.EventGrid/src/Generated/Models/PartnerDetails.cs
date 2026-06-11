@@ -5,52 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Information about the partner. </summary>
     public partial class PartnerDetails
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="PartnerDetails"/>. </summary>
-        internal PartnerDetails()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PartnerDetails"/>. </summary>
-        /// <param name="description"> This is short description about the partner. The length of this description should not exceed 256 characters. </param>
-        /// <param name="longDescription"> Long description for the partner's scenarios and integration.Length of this description should not exceed 2048 characters. </param>
-        /// <param name="setupUri">
-        /// URI of the partner website that can be used by Azure customers to setup Event Grid
-        /// integration on an event source.
-        /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerDetails(string description, string longDescription, Uri setupUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Description = description;
-            LongDescription = longDescription;
-            SetupUri = setupUri;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> This is short description about the partner. The length of this description should not exceed 256 characters. </summary>
-        [WirePath("description")]
-        public string Description { get; }
-
-        /// <summary> Long description for the partner's scenarios and integration.Length of this description should not exceed 2048 characters. </summary>
-        [WirePath("longDescription")]
-        public string LongDescription { get; }
-
-        /// <summary>
-        /// URI of the partner website that can be used by Azure customers to setup Event Grid
-        /// integration on an event source.
-        /// </summary>
-        [WirePath("setupUri")]
-        public Uri SetupUri { get; }
     }
 }

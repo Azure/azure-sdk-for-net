@@ -121,10 +121,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     inputSchemaMappingType = new InputSchemaMappingType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new UnknownEventGridInputSchemaMapping(inputSchemaMappingType, additionalBinaryDataProperties);
         }

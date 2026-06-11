@@ -12,18 +12,18 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> This enables publishing to Event Grid using a custom input schema. This can be used to map properties from a custom input JSON schema to the Event Grid event schema. </summary>
-    public partial class JsonInputSchemaMapping : EventGridInputSchemaMapping
+    public partial class EventGridJsonInputSchemaMapping : EventGridInputSchemaMapping
     {
-        /// <summary> Initializes a new instance of <see cref="JsonInputSchemaMapping"/>. </summary>
-        public JsonInputSchemaMapping() : base(InputSchemaMappingType.Json)
+        /// <summary> Initializes a new instance of <see cref="EventGridJsonInputSchemaMapping"/>. </summary>
+        public EventGridJsonInputSchemaMapping() : base(InputSchemaMappingType.Json)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="JsonInputSchemaMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridJsonInputSchemaMapping"/>. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> JSON Properties of the input schema mapping. </param>
-        internal JsonInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> additionalBinaryDataProperties, JsonInputSchemaMappingProperties properties) : base(inputSchemaMappingType, additionalBinaryDataProperties)
+        internal EventGridJsonInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> additionalBinaryDataProperties, JsonInputSchemaMappingProperties properties) : base(inputSchemaMappingType, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

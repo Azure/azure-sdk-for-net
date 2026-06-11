@@ -164,10 +164,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     values = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new NumberNotInRangeFilter(operatorType, key, additionalBinaryDataProperties, values ?? new ChangeTrackingList<IList<double>>());
         }

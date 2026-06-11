@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new RoutingEnrichments((@static ?? new ChangeTrackingList<StaticRoutingEnrichment>()).ToList(), (dynamic ?? new ChangeTrackingList<DynamicRoutingEnrichment>()).ToList(), default);
         }
 
-        /// <param name="key"> Static routing enrichment key. </param>
-        /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
+        /// <param name="key"></param>
+        /// <param name="valueType"></param>
         /// <returns> A new <see cref="Models.StaticRoutingEnrichment"/> instance for mocking. </returns>
         public static StaticRoutingEnrichment StaticRoutingEnrichment(string key = default, string valueType = default)
         {
-            return new UnknownStaticRoutingEnrichment(key, default, default);
+            return new UnknownStaticRoutingEnrichment(key, valueType, default);
         }
 
         /// <param name="key"> Static routing enrichment key. </param>
@@ -846,11 +846,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
+        /// <param name="inputSchemaMappingType"></param>
         /// <returns> A new <see cref="Models.EventGridInputSchemaMapping"/> instance for mocking. </returns>
         public static EventGridInputSchemaMapping EventGridInputSchemaMapping(string inputSchemaMappingType = default)
         {
-            return new UnknownEventGridInputSchemaMapping(default, default);
+            return new UnknownEventGridInputSchemaMapping(inputSchemaMappingType, default);
         }
 
         /// <param name="eventType"> The mapping information for the EventType property of the Event Grid Event. </param>
@@ -859,10 +859,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="idSourceField"> Name of a field in the input event schema that's to be used as the source of a mapping. </param>
         /// <param name="topicSourceField"> Name of a field in the input event schema that's to be used as the source of a mapping. </param>
         /// <param name="eventTimeSourceField"> Name of a field in the input event schema that's to be used as the source of a mapping. </param>
-        /// <returns> A new <see cref="Models.JsonInputSchemaMapping"/> instance for mocking. </returns>
-        public static JsonInputSchemaMapping JsonInputSchemaMapping(JsonFieldWithDefault eventType = default, JsonFieldWithDefault subject = default, JsonFieldWithDefault dataVersion = default, string idSourceField = default, string topicSourceField = default, string eventTimeSourceField = default)
+        /// <returns> A new <see cref="Models.EventGridJsonInputSchemaMapping"/> instance for mocking. </returns>
+        public static EventGridJsonInputSchemaMapping EventGridJsonInputSchemaMapping(JsonFieldWithDefault eventType = default, JsonFieldWithDefault subject = default, JsonFieldWithDefault dataVersion = default, string idSourceField = default, string topicSourceField = default, string eventTimeSourceField = default)
         {
-            return new JsonInputSchemaMapping(default, default, idSourceField is null && topicSourceField is null && eventTimeSourceField is null && eventType is null && subject is null && dataVersion is null ? default : new JsonInputSchemaMappingProperties(
+            return new EventGridJsonInputSchemaMapping(default, default, idSourceField is null && topicSourceField is null && eventTimeSourceField is null && eventType is null && subject is null && dataVersion is null ? default : new JsonInputSchemaMappingProperties(
                 new JsonField(idSourceField, default),
                 new JsonField(topicSourceField, default),
                 new JsonField(eventTimeSourceField, default),
@@ -1010,11 +1010,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
+        /// <param name="endpointType"></param>
         /// <returns> A new <see cref="Models.EventSubscriptionDestination"/> instance for mocking. </returns>
         public static EventSubscriptionDestination EventSubscriptionDestination(string endpointType = default)
         {
-            return new UnknownEventSubscriptionDestination(default, default);
+            return new UnknownEventSubscriptionDestination(endpointType, default);
         }
 
         /// <param name="endpointUri"> The URL that represents the endpoint of the destination of an event subscription. </param>
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="deliveryAttributeMappings"> Delivery attribute details. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>
         /// <returns> A new <see cref="Models.WebHookEventSubscriptionDestination"/> instance for mocking. </returns>
-        public static WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(string endpointUri = default, string endpointBaseUri = default, int? maxEventsPerBatch = default, int? preferredBatchSizeInKilobytes = default, string azureActiveDirectoryTenantId = default, string azureActiveDirectoryApplicationIdOrUri = default, IEnumerable<DeliveryAttributeMapping> deliveryAttributeMappings = default, TlsVersion? minimumTlsVersionAllowed = default)
+        public static WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(string endpointUri = default, string endpointBaseUri = default, int? maxEventsPerBatch = default, int? preferredBatchSizeInKilobytes = default, Guid? azureActiveDirectoryTenantId = default, string azureActiveDirectoryApplicationIdOrUri = default, IEnumerable<DeliveryAttributeMapping> deliveryAttributeMappings = default, TlsVersion? minimumTlsVersionAllowed = default)
         {
             return new WebHookEventSubscriptionDestination(default, default, endpointUri is null && endpointBaseUri is null && maxEventsPerBatch is null && preferredBatchSizeInKilobytes is null && azureActiveDirectoryTenantId is null && azureActiveDirectoryApplicationIdOrUri is null && deliveryAttributeMappings is null && minimumTlsVersionAllowed is null ? default : new WebHookEventSubscriptionDestinationProperties(
                 endpointUri,
@@ -1040,12 +1040,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default));
         }
 
-        /// <param name="name"> Name of the delivery attribute or header. </param>
-        /// <param name="type"> Type of the delivery attribute or header name. </param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
         /// <returns> A new <see cref="Models.DeliveryAttributeMapping"/> instance for mocking. </returns>
         public static DeliveryAttributeMapping DeliveryAttributeMapping(string name = default, string @type = default)
         {
-            return new UnknownDeliveryAttributeMapping(name, default, default);
+            return new UnknownDeliveryAttributeMapping(name, @type, default);
         }
 
         /// <param name="name"> Name of the delivery attribute or header. </param>
@@ -1201,12 +1201,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
-        /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="operatorType"></param>
+        /// <param name="key"></param>
         /// <returns> A new <see cref="Models.AdvancedFilter"/> instance for mocking. </returns>
         public static AdvancedFilter AdvancedFilter(string operatorType = default, string key = default)
         {
-            return new UnknownAdvancedFilter(default, key, default);
+            return new UnknownAdvancedFilter(operatorType, key, default);
         }
 
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
@@ -1391,11 +1391,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventSubscriptionRetryPolicy(maxDeliveryAttempts, eventTimeToLiveInMinutes, default);
         }
 
-        /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
+        /// <param name="endpointType"></param>
         /// <returns> A new <see cref="Models.DeadLetterDestination"/> instance for mocking. </returns>
         public static DeadLetterDestination DeadLetterDestination(string endpointType = default)
         {
-            return new UnknownDeadLetterDestination(default, default);
+            return new UnknownDeadLetterDestination(endpointType, default);
         }
 
         /// <param name="resourceId"> The Azure Resource ID of the storage account that is the destination of the deadletter events. </param>
@@ -2058,10 +2058,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default), skuName is null ? default : new ResourceSku(skuName, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="displayName"> Display name of the event type. </param>
         /// <param name="description"> Description of the event type. </param>
         /// <param name="schemaUri"> URL of the schema for this event type. </param>
@@ -2147,15 +2147,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                     partnerDestinationDetails,
                     provisioningState,
                     default),
-                (IDictionary<string, BinaryData>)default);
+                default);
         }
 
-        /// <param name="description"> This is short description about the partner. The length of this description should not exceed 256 characters. </param>
-        /// <param name="longDescription"> Long description for the partner's scenarios and integration.Length of this description should not exceed 2048 characters. </param>
-        /// <param name="setupUri">
-        /// URI of the partner website that can be used by Azure customers to setup Event Grid
-        /// integration on an event source.
-        /// </param>
+        /// <param name="description"></param>
+        /// <param name="longDescription"></param>
+        /// <param name="setupUri"></param>
         /// <returns> A new <see cref="Models.PartnerDetails"/> instance for mocking. </returns>
         public static PartnerDetails PartnerDetails(string description = default, string longDescription = default, Uri setupUri = default)
         {
@@ -2268,12 +2265,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new FiltersConfiguration((includedEventTypes ?? new ChangeTrackingList<string>()).ToList(), (filters ?? new ChangeTrackingList<EventGridFilter>()).ToList(), default);
         }
 
-        /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
-        /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="operatorType"></param>
+        /// <param name="key"></param>
         /// <returns> A new <see cref="Models.EventGridFilter"/> instance for mocking. </returns>
         public static EventGridFilter EventGridFilter(string operatorType = default, string key = default)
         {
-            return new UnknownEventGridFilter(default, key, default);
+            return new UnknownEventGridFilter(operatorType, key, default);
         }
 
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
@@ -2508,7 +2505,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     areRegionalAndGlobalSourcesSupported,
                     (additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>()).ToList(),
                     default),
-                (IDictionary<string, BinaryData>)default);
+                default);
         }
 
         /// <param name="permissionName"></param>
@@ -2956,7 +2953,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     default,
                     provisioningState,
                     default),
-                (IDictionary<string, BinaryData>)default);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebHookEventSubscriptionDestination"/>. </summary>
@@ -2976,12 +2973,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(Uri endpoint = default, Uri baseEndpoint = default, int? maxEventsPerBatch = default, int? preferredBatchSizeInKilobytes = default, Guid? azureActiveDirectoryTenantId = default, string uriOrAzureActiveDirectoryApplicationId = default, IEnumerable<DeliveryAttributeMapping> deliveryAttributeMappings = default, TlsVersion? minimumTlsVersionAllowed = default)
         {
-            return new WebHookEventSubscriptionDestination(default, default, maxEventsPerBatch is null && preferredBatchSizeInKilobytes is null && deliveryAttributeMappings is null && minimumTlsVersionAllowed is null ? default : new WebHookEventSubscriptionDestinationProperties(
+            return new WebHookEventSubscriptionDestination(default, default, maxEventsPerBatch is null && preferredBatchSizeInKilobytes is null && azureActiveDirectoryTenantId is null && deliveryAttributeMappings is null && minimumTlsVersionAllowed is null ? default : new WebHookEventSubscriptionDestinationProperties(
                 default,
                 default,
                 maxEventsPerBatch,
                 preferredBatchSizeInKilobytes,
-                default,
+                azureActiveDirectoryTenantId,
                 default,
                 (deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>()).ToList(),
                 minimumTlsVersionAllowed,

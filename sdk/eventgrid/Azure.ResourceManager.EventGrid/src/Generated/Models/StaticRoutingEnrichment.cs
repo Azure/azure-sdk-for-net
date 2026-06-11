@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -17,33 +13,5 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class StaticRoutingEnrichment
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="StaticRoutingEnrichment"/>. </summary>
-        /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
-        private protected StaticRoutingEnrichment(StaticRoutingEnrichmentType valueType)
-        {
-            ValueType = valueType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StaticRoutingEnrichment"/>. </summary>
-        /// <param name="key"> Static routing enrichment key. </param>
-        /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticRoutingEnrichment(string key, StaticRoutingEnrichmentType valueType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Key = key;
-            ValueType = valueType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Static routing enrichment key. </summary>
-        [WirePath("key")]
-        public string Key { get; set; }
-
-        /// <summary> Static routing enrichment value type. For e.g. this property value can be 'String'. </summary>
-        [WirePath("valueType")]
-        internal StaticRoutingEnrichmentType ValueType { get; set; }
     }
 }

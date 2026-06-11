@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -17,33 +13,5 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class AdvancedFilter
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
-        /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
-        private protected AdvancedFilter(AdvancedFilterOperatorType operatorType)
-        {
-            OperatorType = operatorType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
-        /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
-        /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            OperatorType = operatorType;
-            Key = key;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>
-        [WirePath("operatorType")]
-        internal AdvancedFilterOperatorType OperatorType { get; set; }
-
-        /// <summary> The field/property in the event based on which you want to filter. </summary>
-        [WirePath("key")]
-        public string Key { get; set; }
     }
 }

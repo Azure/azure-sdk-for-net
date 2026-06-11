@@ -126,10 +126,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     properties = AzureFunctionEventSubscriptionDestinationProperties.DeserializeAzureFunctionEventSubscriptionDestinationProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new AzureFunctionEventSubscriptionDestination(endpointType, additionalBinaryDataProperties, properties);
         }

@@ -117,10 +117,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new IsNullOrUndefinedFilter(operatorType, key, additionalBinaryDataProperties);
         }

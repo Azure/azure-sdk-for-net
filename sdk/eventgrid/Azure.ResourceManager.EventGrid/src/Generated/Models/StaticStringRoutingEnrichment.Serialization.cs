@@ -128,10 +128,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     value = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new StaticStringRoutingEnrichment(key, valueType, additionalBinaryDataProperties, value);
         }

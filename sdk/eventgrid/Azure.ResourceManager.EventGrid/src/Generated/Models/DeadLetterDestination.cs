@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -17,27 +13,5 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class DeadLetterDestination
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
-        /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
-        private protected DeadLetterDestination(DeadLetterEndPointType endpointType)
-        {
-            EndpointType = endpointType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
-        /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeadLetterDestination(DeadLetterEndPointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            EndpointType = endpointType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Type of the endpoint for the dead letter destination. </summary>
-        [WirePath("endpointType")]
-        internal DeadLetterEndPointType EndpointType { get; set; }
     }
 }

@@ -132,10 +132,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     value = prop.Value.GetDouble();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new NumberLessThanOrEqualsAdvancedFilter(operatorType, key, additionalBinaryDataProperties, value);
         }

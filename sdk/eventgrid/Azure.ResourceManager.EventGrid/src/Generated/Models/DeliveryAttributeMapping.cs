@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -17,33 +13,5 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class DeliveryAttributeMapping
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
-        /// <param name="type"> Type of the delivery attribute or header name. </param>
-        private protected DeliveryAttributeMapping(DeliveryAttributeMappingType @type)
-        {
-            Type = @type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
-        /// <param name="name"> Name of the delivery attribute or header. </param>
-        /// <param name="type"> Type of the delivery attribute or header name. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeliveryAttributeMapping(string name, DeliveryAttributeMappingType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            Type = @type;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Name of the delivery attribute or header. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-
-        /// <summary> Type of the delivery attribute or header name. </summary>
-        [WirePath("type")]
-        internal DeliveryAttributeMappingType Type { get; set; }
     }
 }

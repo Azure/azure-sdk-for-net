@@ -127,10 +127,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     valueType = new StaticRoutingEnrichmentType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new UnknownStaticRoutingEnrichment(key, valueType, additionalBinaryDataProperties);
         }

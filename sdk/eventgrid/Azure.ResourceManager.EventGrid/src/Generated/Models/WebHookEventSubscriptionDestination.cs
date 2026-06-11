@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("properties.azureActiveDirectoryTenantId")]
-        public string AzureActiveDirectoryTenantId
+        public Guid? AzureActiveDirectoryTenantId
         {
             get
             {

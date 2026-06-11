@@ -142,10 +142,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     values = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
             }
             return new NumberInAdvancedFilter(operatorType, key, additionalBinaryDataProperties, values ?? new ChangeTrackingList<double>());
         }
