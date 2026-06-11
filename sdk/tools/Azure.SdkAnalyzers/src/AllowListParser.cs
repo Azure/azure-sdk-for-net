@@ -149,6 +149,8 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
+            // Start at 1: the rule requires a space before '#', so we read line[i-1].
+            // A leading '#' (i=0) has no preceding char and is never a comment delimiter.
             for (int i = 1; i < line.Length; i++)
             {
                 if (line[i] == '#' && line[i - 1] == ' ')
