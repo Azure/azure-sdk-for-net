@@ -57,6 +57,24 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
+        /// Creates a configuration setting and sets the values from the passed in parameter to this setting,
+        /// including an optional descriptive text.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="description">The description of the configuration setting.</param>
+        /// <param name="etag">The ETag value for the configuration setting.</param>
+        public ConfigurationSetting(string key, string value, string label, string description, ETag etag = default)
+        {
+            Key = key;
+            Value = value;
+            Label = label;
+            Description = description;
+            ETag = etag;
+        }
+
+        /// <summary>
         /// The primary identifier of the configuration setting.
         /// A <see cref="Key"/> is used together with a <see cref="Label"/> to uniquely identify a configuration setting.
         /// </summary>
