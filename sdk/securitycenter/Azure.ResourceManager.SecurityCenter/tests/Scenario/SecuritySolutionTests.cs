@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            var list = await DefaultSubscription.GetSecuritySolutionsAsync().ToEnumerableAsync();
+            var list = await DefaultSubscription.GetSecuritySolutionResourcesAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
     }

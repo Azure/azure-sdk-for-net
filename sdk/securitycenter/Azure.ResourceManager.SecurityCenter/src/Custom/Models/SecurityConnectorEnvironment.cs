@@ -29,7 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public abstract partial class SecurityConnectorEnvironment : IPersistableModel<SecurityConnectorEnvironment>
     {
         protected SecurityConnectorEnvironment() : this(default(EnvironmentType)) { }
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("environmentType"u8);
+            writer.WriteStringValue(EnvironmentType.ToString());
+        }
         SecurityConnectorEnvironment IJsonModel<SecurityConnectorEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { return JsonModelCreateCore(ref reader, options); }
         void IJsonModel<SecurityConnectorEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); JsonModelWriteCore(writer, options); writer.WriteEndObject(); }
         SecurityConnectorEnvironment IPersistableModel<SecurityConnectorEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options) { return PersistableModelCreateCore(data, options); }

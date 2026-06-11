@@ -41,15 +41,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task List()
         {
-            var list = await DefaultSubscription.GetDiscoveredSecuritySolutionsAsync().ToEnumerableAsync();
+            var list = await DefaultSubscription.GetDiscoveredSecuritySolutionsAsync(AzureLocation.CentralUS).ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
 
         [RecordedTest]
         public async Task ListByHomeRegion()
         {
-            var ascLocation = await DefaultSubscription.GetSecurityCenterLocations().GetAsync("centralus");
-            var list = await ascLocation.Value.GetDiscoveredSecuritySolutionsByHomeRegionAsync().ToEnumerableAsync();
+            var list = await DefaultSubscription.GetDiscoveredSecuritySolutionsAsync(AzureLocation.CentralUS).ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
     }

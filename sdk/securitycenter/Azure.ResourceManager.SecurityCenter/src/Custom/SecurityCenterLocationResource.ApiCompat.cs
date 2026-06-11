@@ -35,16 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegionAsync(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegionAsync(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByRegionAsync(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SecurityTopologyResource> GetTopologiesByHomeRegionAsync(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegion(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegion(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }

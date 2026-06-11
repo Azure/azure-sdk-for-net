@@ -4,15 +4,9 @@
     <!-- These scenarios target legacy operations that are no longer service-supported and remain hidden obsolete thrower shims for ApiCompat only. -->
     <Compile Remove="Scenario\AdaptiveApplicationControlGroupTests.cs" />
     <Compile Remove="Scenario\AdaptiveNetworkHardening.cs" />
-    <Compile Remove="Scenario\AlertsSuppressionRuleTests.cs" />
     <Compile Remove="Scenario\CustomAssessmentAutomationTests.cs" />
     <Compile Remove="Scenario\CustomEntityStoreAssignmentTests.cs" />
-    <Compile Remove="Scenario\DiscoveredSecuritySolutionTests.cs" />
-    <Compile Remove="Scenario\ServerVulnerabilityAssessmentTests.cs" />
     <Compile Remove="Scenario\SoftwareTests.cs" />
-    <Compile Remove="Scenario\SecurityConnectorDevOpsTests.cs" />
-    <Compile Remove="Scenario\SecurityContactTests.cs" />
-    <Compile Remove="Scenario\SecuritySolutionTests.cs" />
     <EmbeddedResource Remove="Generated\**" />
     <None Remove="Generated\**" />
   </ItemGroup>
