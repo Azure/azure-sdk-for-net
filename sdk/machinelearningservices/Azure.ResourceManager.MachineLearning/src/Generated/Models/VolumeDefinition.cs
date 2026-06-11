@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Describes the volume configuration for the container. </summary>
+    /// <summary> The VolumeDefinition. </summary>
     public partial class VolumeDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
         public VolumeDefinition()
@@ -51,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
-        /// <param name="definitionType"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
+        /// <param name="type"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
         /// <param name="readOnly"> Indicate whether to mount volume as readOnly. Default value for this is false. </param>
         /// <param name="source"> Source of the mount. For bind mounts this is the host path. </param>
         /// <param name="target"> Target of the mount. For bind mounts this is the path in the container. </param>
@@ -59,10 +31,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="bind"> Bind Options of the mount. </param>
         /// <param name="volume"> Volume Options of the mount. </param>
         /// <param name="tmpfs"> tmpfs option of the mount. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeDefinition(VolumeDefinitionType? definitionType, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VolumeDefinition(VolumeDefinitionType? @type, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DefinitionType = definitionType;
+            Type = @type;
             ReadOnly = readOnly;
             Source = source;
             Target = target;
@@ -70,53 +42,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Bind = bind;
             Volume = volume;
             Tmpfs = tmpfs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </summary>
         [WirePath("type")]
-        public VolumeDefinitionType? DefinitionType { get; set; }
+        public VolumeDefinitionType? Type { get; set; }
+
         /// <summary> Indicate whether to mount volume as readOnly. Default value for this is false. </summary>
         [WirePath("readOnly")]
         public bool? ReadOnly { get; set; }
+
         /// <summary> Source of the mount. For bind mounts this is the host path. </summary>
         [WirePath("source")]
         public string Source { get; set; }
+
         /// <summary> Target of the mount. For bind mounts this is the path in the container. </summary>
         [WirePath("target")]
         public string Target { get; set; }
+
         /// <summary> Consistency of the volume. </summary>
         [WirePath("consistency")]
         public string Consistency { get; set; }
+
         /// <summary> Bind Options of the mount. </summary>
         [WirePath("bind")]
         public MountBindOptions Bind { get; set; }
+
         /// <summary> Volume Options of the mount. </summary>
+        [WirePath("volume")]
         internal VolumeOptions Volume { get; set; }
+
+        /// <summary> tmpfs option of the mount. </summary>
+        [WirePath("tmpfs")]
+        internal TmpfsOptions Tmpfs { get; set; }
+
         /// <summary> Indicate whether volume is nocopy. </summary>
         [WirePath("volume.nocopy")]
         public bool? Nocopy
         {
-            get => Volume is null ? default : Volume.Nocopy;
+            get
+            {
+                return Volume is null ? default : Volume.Nocopy;
+            }
             set
             {
                 if (Volume is null)
+                {
                     Volume = new VolumeOptions();
+                }
                 Volume.Nocopy = value;
             }
         }
 
-        /// <summary> tmpfs option of the mount. </summary>
-        internal TmpfsOptions Tmpfs { get; set; }
         /// <summary> Mention the Tmpfs size. </summary>
         [WirePath("tmpfs.size")]
         public int? TmpfsSize
         {
-            get => Tmpfs is null ? default : Tmpfs.Size;
+            get
+            {
+                return Tmpfs is null ? default : Tmpfs.Size;
+            }
             set
             {
                 if (Tmpfs is null)
+                {
                     Tmpfs = new TmpfsOptions();
+                }
                 Tmpfs.Size = value;
             }
         }

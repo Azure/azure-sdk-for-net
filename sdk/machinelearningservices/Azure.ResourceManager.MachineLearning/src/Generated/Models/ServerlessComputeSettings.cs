@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ServerlessComputeSettings. </summary>
     public partial class ServerlessComputeSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerlessComputeSettings"/>. </summary>
         public ServerlessComputeSettings()
@@ -53,20 +25,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="ServerlessComputeSettings"/>. </summary>
         /// <param name="serverlessComputeCustomSubnet"> The resource ID of an existing virtual network subnet in which serverless compute nodes should be deployed. </param>
-        /// <param name="hasNoPublicIP"> The flag to signal if serverless compute nodes deployed in custom vNet would have no public IP addresses for a workspace with private endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessComputeSettings(ResourceIdentifier serverlessComputeCustomSubnet, bool? hasNoPublicIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="serverlessComputeNoPublicIP"> The flag to signal if serverless compute nodes deployed in custom vNet would have no public IP addresses for a workspace with private endpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerlessComputeSettings(ResourceIdentifier serverlessComputeCustomSubnet, bool? serverlessComputeNoPublicIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerlessComputeCustomSubnet = serverlessComputeCustomSubnet;
-            HasNoPublicIP = hasNoPublicIP;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ServerlessComputeNoPublicIP = serverlessComputeNoPublicIP;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource ID of an existing virtual network subnet in which serverless compute nodes should be deployed. </summary>
         [WirePath("serverlessComputeCustomSubnet")]
         public ResourceIdentifier ServerlessComputeCustomSubnet { get; set; }
+
         /// <summary> The flag to signal if serverless compute nodes deployed in custom vNet would have no public IP addresses for a workspace with private endpoint. </summary>
         [WirePath("serverlessComputeNoPublicIP")]
-        public bool? HasNoPublicIP { get; set; }
+        public bool? ServerlessComputeNoPublicIP { get; set; }
     }
 }

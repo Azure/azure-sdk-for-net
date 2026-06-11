@@ -9,8 +9,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-[assembly: CodeGenSuppressType("ComputeSchedules")]
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class ComputeSchedules : IUtf8JsonSerializable, IJsonModel<ComputeSchedules>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeStartStopSchedule> array = new List<MachineLearningComputeStartStopSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeStartStopSchedule.DeserializeMachineLearningComputeStartStopSchedule(item));
+                        array.Add(MachineLearningComputeStartStopSchedule.DeserializeMachineLearningComputeStartStopSchedule(item, options));
                     }
                     computeStartStop = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                    return ModelReaderWriter.Write(this, options, Azure.ResourceManager.MachineLearning.AzureResourceManagerMachineLearningContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ComputeSchedules)} does not support '{options.Format}' format.");
             }

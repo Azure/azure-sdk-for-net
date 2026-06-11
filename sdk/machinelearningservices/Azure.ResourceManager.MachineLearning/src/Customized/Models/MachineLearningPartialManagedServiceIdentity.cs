@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("MachineLearningPartialManagedServiceIdentity")]
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>

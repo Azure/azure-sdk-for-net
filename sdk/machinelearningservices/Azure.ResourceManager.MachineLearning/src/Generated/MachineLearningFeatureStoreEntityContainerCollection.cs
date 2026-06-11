@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningFeatureStoreEntityContainerCollection : ArmCollection, IEnumerable<MachineLearningFeatureStoreEntityContainerResource>, IAsyncEnumerable<MachineLearningFeatureStoreEntityContainerResource>
     {
-        private readonly ClientDiagnostics _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics;
-        private readonly FeaturestoreEntityContainersRestOperations _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient;
+        private readonly ClientDiagnostics _featurestoreEntityContainersClientDiagnostics;
+        private readonly FeaturestoreEntityContainers _featurestoreEntityContainersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureStoreEntityContainerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerCollection for mocking. </summary>
         protected MachineLearningFeatureStoreEntityContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureStoreEntityContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureStoreEntityContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningFeatureStoreEntityContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningFeatureStoreEntityContainerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningFeatureStoreEntityContainerResource.ResourceType, out string machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersApiVersion);
-            _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient = new FeaturestoreEntityContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MachineLearningFeatureStoreEntityContainerResource.ResourceType, out string machineLearningFeatureStoreEntityContainerApiVersion);
+            _featurestoreEntityContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningFeatureStoreEntityContainerResource.ResourceType.Namespace, Diagnostics);
+            _featurestoreEntityContainersRestClient = new FeaturestoreEntityContainers(_featurestoreEntityContainersClientDiagnostics, Pipeline, Endpoint, machineLearningFeatureStoreEntityContainerApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MachineLearningWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningWorkspaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningWorkspaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="data"> Container entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeatureStoreEntityContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MachineLearningFeatureStoreEntityContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningFeatureStoreEntityContainerResource>(new MachineLearningFeatureStoreEntityContainerOperationSource(Client), _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics, Pipeline, _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, MachineLearningFeatureStoreEntityContainerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation<MachineLearningFeatureStoreEntityContainerResource> operation = new MachineLearningArmOperation<MachineLearningFeatureStoreEntityContainerResource>(
+                    new MachineLearningFeatureStoreEntityContainerResourceOperationSource(Client),
+                    _featurestoreEntityContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Create or update container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="data"> Container entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MachineLearningFeatureStoreEntityContainerResource> CreateOrUpdate(WaitUntil waitUntil, string name, MachineLearningFeatureStoreEntityContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningFeatureStoreEntityContainerResource>(new MachineLearningFeatureStoreEntityContainerOperationSource(Client), _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics, Pipeline, _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, MachineLearningFeatureStoreEntityContainerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation<MachineLearningFeatureStoreEntityContainerResource> operation = new MachineLearningArmOperation<MachineLearningFeatureStoreEntityContainerResource>(
+                    new MachineLearningFeatureStoreEntityContainerResourceOperationSource(Client),
+                    _featurestoreEntityContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineLearningFeatureStoreEntityContainerResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Get");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.GetEntityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateGetEntityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningFeatureStoreEntityContainerData> response = Response.FromValue(MachineLearningFeatureStoreEntityContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeatureStoreEntityContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineLearningFeatureStoreEntityContainerResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Get");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.GetEntity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateGetEntityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningFeatureStoreEntityContainerData> response = Response.FromValue(MachineLearningFeatureStoreEntityContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeatureStoreEntityContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,102 +273,146 @@ namespace Azure.ResourceManager.MachineLearning
         /// List featurestore entity containers.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> page size. </param>
+        /// <param name="name"> name for the featurestore entity. </param>
+        /// <param name="description"> description for the featurestore entity. </param>
+        /// <param name="createdBy"> createdBy user name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningFeatureStoreEntityContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningFeatureStoreEntityContainerResource> GetAllAsync(MachineLearningFeatureStoreEntityContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningFeatureStoreEntityContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningFeatureStoreEntityContainerResource> GetAllAsync(string skip = default, string tags = default, MachineLearningListViewType? listViewType = default, int? pageSize = default, string name = default, string description = default, string createdBy = default, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningFeatureStoreEntityContainerCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureStoreEntityContainerResource(Client, MachineLearningFeatureStoreEntityContainerData.DeserializeMachineLearningFeatureStoreEntityContainerData(e)), _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics, Pipeline, "MachineLearningFeatureStoreEntityContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineLearningFeatureStoreEntityContainerData, MachineLearningFeatureStoreEntityContainerResource>(new FeaturestoreEntityContainersGetAllAsyncCollectionResultOfT(
+                _featurestoreEntityContainersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                skip,
+                tags,
+                listViewType?.ToString(),
+                pageSize,
+                name,
+                description,
+                createdBy,
+                context,
+                "MachineLearningFeatureStoreEntityContainerCollection.GetAll"), data => new MachineLearningFeatureStoreEntityContainerResource(Client, data));
         }
 
         /// <summary>
         /// List featurestore entity containers.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> page size. </param>
+        /// <param name="name"> name for the featurestore entity. </param>
+        /// <param name="description"> description for the featurestore entity. </param>
+        /// <param name="createdBy"> createdBy user name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningFeatureStoreEntityContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningFeatureStoreEntityContainerResource> GetAll(MachineLearningFeatureStoreEntityContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningFeatureStoreEntityContainerResource> GetAll(string skip = default, string tags = default, MachineLearningListViewType? listViewType = default, int? pageSize = default, string name = default, string description = default, string createdBy = default, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningFeatureStoreEntityContainerCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureStoreEntityContainerResource(Client, MachineLearningFeatureStoreEntityContainerData.DeserializeMachineLearningFeatureStoreEntityContainerData(e)), _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics, Pipeline, "MachineLearningFeatureStoreEntityContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineLearningFeatureStoreEntityContainerData, MachineLearningFeatureStoreEntityContainerResource>(new FeaturestoreEntityContainersGetAllCollectionResultOfT(
+                _featurestoreEntityContainersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                skip,
+                tags,
+                listViewType?.ToString(),
+                pageSize,
+                name,
+                description,
+                createdBy,
+                context,
+                "MachineLearningFeatureStoreEntityContainerCollection.GetAll"), data => new MachineLearningFeatureStoreEntityContainerResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Exists");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.GetEntityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateGetEntityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningFeatureStoreEntityContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeatureStoreEntityContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeatureStoreEntityContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,36 +426,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Exists");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.GetEntity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateGetEntityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningFeatureStoreEntityContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeatureStoreEntityContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeatureStoreEntityContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,38 +483,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineLearningFeatureStoreEntityContainerResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.GetEntityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateGetEntityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningFeatureStoreEntityContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeatureStoreEntityContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeatureStoreEntityContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningFeatureStoreEntityContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeatureStoreEntityContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,38 +544,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityContainers_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeatureStoreEntityContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Container name. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineLearningFeatureStoreEntityContainerResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _featurestoreEntityContainersClientDiagnostics.CreateScope("MachineLearningFeatureStoreEntityContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.GetEntity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityContainersRestClient.CreateGetEntityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningFeatureStoreEntityContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeatureStoreEntityContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeatureStoreEntityContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningFeatureStoreEntityContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeatureStoreEntityContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -484,17 +603,18 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningFeatureStoreEntityContainerResource> IEnumerable<MachineLearningFeatureStoreEntityContainerResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineLearningFeatureStoreEntityContainerResource> IAsyncEnumerable<MachineLearningFeatureStoreEntityContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

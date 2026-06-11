@@ -1,0 +1,5 @@
+# WirePathAttribute on synthesized additional-properties bags is codegen metadata and not part of the service contract.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.CustomService.AdditionalProperties' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.DockerSetting.AdditionalProperties' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.EnvironmentVariable.AdditionalProperties' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.ImageSetting.AdditionalProperties' in the contract but not the implementation.

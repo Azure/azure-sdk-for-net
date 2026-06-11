@@ -3,27 +3,19 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The parameters for updating a machine learning workspace. </summary>
+    // Customized: restore shipped constructors/properties that latest TypeSpec generation normalized but cannot remove from the GA API surface.
     public partial class MachineLearningWorkspacePatch
     {
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <summary> Whether requests from Public Network are allowed. </summary>
         public MachineLearningPublicNetworkAccess? PublicNetworkAccess
         {
-            get
-            {
-                return PublicNetworkAccessType.ToString();
-            }
-            set
-            {
-                PublicNetworkAccessType = value.ToString();
-            }
+            get => PublicNetworkAccessType.HasValue ? new MachineLearningPublicNetworkAccess(PublicNetworkAccessType.Value.ToString()) : null;
+            set => PublicNetworkAccessType = value.HasValue ? new PublicNetworkAccess(value.Value.ToString()) : null;
         }
     }
 }

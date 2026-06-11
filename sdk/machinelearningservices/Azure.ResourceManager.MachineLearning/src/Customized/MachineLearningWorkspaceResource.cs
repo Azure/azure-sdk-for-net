@@ -6,18 +6,20 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningWorkspaceResource method.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkspaceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMachineLearningWorkspace method.
     /// </summary>
-    public partial class MachineLearningWorkspaceResource : ArmResource
+    public partial class WorkspaceResource : ArmResource
     {
         /// <summary>
         /// Deletes a machine learning workspace.
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a machine learning workspace.
@@ -55,6 +57,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, null, cancellationToken);
+            => Delete(waitUntil, cancellationToken);
     }
 }

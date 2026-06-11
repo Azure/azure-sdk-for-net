@@ -6,8 +6,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-[assembly: CodeGenSuppressType("ComputeSchedules")]
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The list of schedules to be applied on the computes. </summary>
