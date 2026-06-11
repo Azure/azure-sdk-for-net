@@ -54,7 +54,6 @@ namespace Azure.Storage.Blobs
     [ModelReaderWriterBuildable(typeof(QueryFormat))]
     [ModelReaderWriterBuildable(typeof(QueryRequest))]
     [ModelReaderWriterBuildable(typeof(QuerySerialization))]
-    [ModelReaderWriterBuildable(typeof(SubmitBatchRequest))]
     [ModelReaderWriterBuildable(typeof(UserDelegationKey))]
     public partial class AzureStorageBlobsContext : ModelReaderWriterContext
     {

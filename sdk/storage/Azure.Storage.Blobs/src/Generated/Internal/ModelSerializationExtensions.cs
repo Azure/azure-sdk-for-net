@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,6 +19,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
+#pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.Storage.Blobs
 {
     internal static partial class ModelSerializationExtensions
@@ -263,6 +265,9 @@ namespace Azure.Storage.Blobs
                 case TimeSpan timeSpan:
                     writer.WriteStringValue(timeSpan, "P");
                     break;
+                case FileBinaryContent fileBinaryContent:
+                    writer.WriteFileBinaryContent(fileBinaryContent);
+                    break;
                 default:
                     throw new NotSupportedException($"Not supported type {value.GetType()}");
             }
@@ -353,5 +358,14 @@ namespace Azure.Storage.Blobs
                     throw new NotSupportedException($"Not supported type {typeof(T)}");
             }
         }
+
+        public static void WriteFileBinaryContent(this Utf8JsonWriter writer, FileBinaryContent value)
+        {
+            int capacity = value.TryComputeLength(out long length) && length <= int.MaxValue ? (int)length : 0;
+            using MemoryStream stream = new MemoryStream(capacity);
+            value.WriteTo(stream);
+            writer.WriteBase64StringValue(stream.GetBuffer().AsSpan(0, (int)stream.Position));
+        }
     }
 }
+#pragma warning restore SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.

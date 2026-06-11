@@ -264,7 +264,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateSubmitBatchRequest(long contentLength, RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateSubmitBatchRequest(long contentLength, RequestContent content, string contentType, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -278,7 +278,7 @@ namespace Azure.Storage.Blobs
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "multipart/mixed");
+            request.Headers.SetValue("Content-Type", contentType);
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
