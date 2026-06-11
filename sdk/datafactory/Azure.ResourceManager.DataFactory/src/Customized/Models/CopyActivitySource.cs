@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public abstract partial class CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="CopyActivitySource"/>. </summary>
-        protected CopyActivitySource() : this(null)
+        protected CopyActivitySource()
         {
         }
     }
