@@ -157,3 +157,58 @@ public async Task GoodAsync(CancellationToken token)
 - The analyzer does not report diagnostics when a `RequestContext` is passed from a parameter or local variable
 - The analyzer works with lambda expressions and anonymous functions
 - Setting `CancellationToken` to `CancellationToken.None` or `default` when a cancellation token parameter is available will still trigger a warning
+
+## AZC0040
+
+### Cause
+
+A public or protected API member in an Azure SDK namespace exposes a type from the `Apache.Arrow` library (a type in the `Apache.Arrow` namespace or one of its child namespaces).
+
+### How to fix violation
+
+Keep `Apache.Arrow` types internal and expose abstractions owned by the library instead, converting to and from `Apache.Arrow` types behind the scenes.
+
+### Example of a violation
+
+#### Description
+
+The following code exposes `Apache.Arrow.Table` as the return type of a public method, which causes a violation of AZC0040.
+
+#### Code
+
+```c#
+using Apache.Arrow;
+
+namespace Azure.Data.Analytics
+{
+    public class AnalyticsClient
+    {
+        public Table GetTable() => null; // This will cause AZC0040
+    }
+}
+```
+
+### Example of how to fix
+
+#### Description
+
+Replace the `Apache.Arrow` type with a type owned by the SDK.
+
+#### Code
+
+```diff
+namespace Azure.Data.Analytics
+{
+    public class AnalyticsClient
+    {
+-       public Apache.Arrow.Table GetTable() => null; // This will cause AZC0040
++       public BinaryData GetTable() => null;
+    }
+}
+```
+
+### Notes
+
+- This analyzer only checks public and protected members of public types in Azure SDK namespaces (namespaces starting with `Azure.` except `Azure.Core.*`)
+- A type is treated as an `Apache.Arrow` type when its containing namespace is `Apache.Arrow` or begins with `Apache.Arrow.`
+- Return types, parameter types, property types, field types, event types, base types, implemented interfaces, generic type arguments, and array element types are all analyzed
