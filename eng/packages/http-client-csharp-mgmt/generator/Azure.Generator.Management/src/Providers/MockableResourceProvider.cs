@@ -346,9 +346,11 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, OperationContext operationContext, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
                 return new ArrayResponseOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }

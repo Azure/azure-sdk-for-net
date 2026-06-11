@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationSqlDatabaseFileType : IEquatable<DataMigrationSqlDatabaseFileType>
     {
         private readonly string _value;
+        /// <summary> Rows. </summary>
+        private const string RowsValue = "Rows";
+        /// <summary> Log. </summary>
+        private const string LogValue = "Log";
+        /// <summary> Filestream. </summary>
+        private const string FilestreamValue = "Filestream";
+        /// <summary> NotSupported. </summary>
+        private const string NotSupportedValue = "NotSupported";
+        /// <summary> Fulltext. </summary>
+        private const string FulltextValue = "Fulltext";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSqlDatabaseFileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationSqlDatabaseFileType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RowsValue = "Rows";
-        private const string LogValue = "Log";
-        private const string FilestreamValue = "Filestream";
-        private const string NotSupportedValue = "NotSupported";
-        private const string FulltextValue = "Fulltext";
+            _value = value;
+        }
 
         /// <summary> Rows. </summary>
         public static DataMigrationSqlDatabaseFileType Rows { get; } = new DataMigrationSqlDatabaseFileType(RowsValue);
+
         /// <summary> Log. </summary>
         public static DataMigrationSqlDatabaseFileType Log { get; } = new DataMigrationSqlDatabaseFileType(LogValue);
+
         /// <summary> Filestream. </summary>
         public static DataMigrationSqlDatabaseFileType Filestream { get; } = new DataMigrationSqlDatabaseFileType(FilestreamValue);
+
         /// <summary> NotSupported. </summary>
         public static DataMigrationSqlDatabaseFileType NotSupported { get; } = new DataMigrationSqlDatabaseFileType(NotSupportedValue);
+
         /// <summary> Fulltext. </summary>
         public static DataMigrationSqlDatabaseFileType Fulltext { get; } = new DataMigrationSqlDatabaseFileType(FulltextValue);
+
         /// <summary> Determines if two <see cref="DataMigrationSqlDatabaseFileType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationSqlDatabaseFileType left, DataMigrationSqlDatabaseFileType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationSqlDatabaseFileType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationSqlDatabaseFileType left, DataMigrationSqlDatabaseFileType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationSqlDatabaseFileType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationSqlDatabaseFileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationSqlDatabaseFileType(string value) => new DataMigrationSqlDatabaseFileType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationSqlDatabaseFileType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationSqlDatabaseFileType?(string value) => value == null ? null : new DataMigrationSqlDatabaseFileType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationSqlDatabaseFileType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationSqlDatabaseFileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

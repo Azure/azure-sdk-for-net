@@ -444,9 +444,11 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
                 return new ArrayResponseOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName);
             }

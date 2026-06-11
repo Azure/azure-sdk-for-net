@@ -13,6 +13,7 @@ using NUnit.Framework.Internal.Commands;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V2026_01_01_Preview,
         KeyClientOptions.ServiceVersion.V2025_07_01,
         KeyClientOptions.ServiceVersion.V7_6,
         KeyClientOptions.ServiceVersion.V7_5,
@@ -155,6 +156,43 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName, key.Properties.Version);
 
             AssertKeyVaultKeysEqual(key, keyWithAttestation);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_01_01_Preview)]
+        public async Task CreateExternalKey()
+        {
+            string externalId = TestEnvironment.EkmExternalId;
+            if (string.IsNullOrEmpty(externalId))
+            {
+                throw new IgnoreException(
+                    "No external key ID provided. This test requires an EKM-connected Managed HSM " +
+                    "and an existing external key referenced by the EKM_EXTERNAL_ID environment variable.");
+            }
+
+            string keyName = Recording.GenerateId();
+            ExternalKey externalKey = new ExternalKey(externalId);
+
+            KeyVaultKey created = await Client.CreateExternalKeyAsync(new CreateExternalKeyOptions(keyName, externalKey));
+            RegisterForCleanup(created.Name);
+
+            Assert.AreEqual(keyName, created.Name);
+            Assert.IsNotNull(created.Properties.ExternalKey);
+            Assert.AreEqual(externalId, created.Properties.ExternalKey.Id);
+
+            // Verify the external_key reference is round-tripped on a subsequent GET.
+            KeyVaultKey fetched = await Client.GetKeyAsync(keyName);
+            Assert.IsNotNull(fetched.Properties.ExternalKey);
+            Assert.AreEqual(externalId, fetched.Properties.ExternalKey.Id);
+
+            // The service must report a kty for the registered external key.
+            Assert.That(fetched.KeyType.ToString(), Is.Not.Null.And.Not.Empty);
+
+            DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
+            DeletedKey deleted = deleteOperation.Value;
+
+            Assert.AreEqual(keyName, deleted.Name);
+            Assert.IsNotNull(deleted.Properties.ExternalKey);
         }
     }
 }

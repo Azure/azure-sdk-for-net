@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, addonName, AvsPrivateCloudAddonData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPrivateCloudAddonResource> operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(
-                    new AvsPrivateCloudAddonOperationSource(Client),
+                    new AvsPrivateCloudAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, addonName, AvsPrivateCloudAddonData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPrivateCloudAddonResource> operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(
-                    new AvsPrivateCloudAddonOperationSource(Client),
+                    new AvsPrivateCloudAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,

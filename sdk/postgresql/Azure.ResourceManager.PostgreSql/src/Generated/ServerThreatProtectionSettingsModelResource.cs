@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serverThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServerThreatProtectionSettingsModelData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource> operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(
-                    new ServerThreatProtectionSettingsModelOperationSource(Client),
+                    new ServerThreatProtectionSettingsModelResourceOperationSource(Client),
                     _serverThreatProtectionSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serverThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServerThreatProtectionSettingsModelData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource> operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(
-                    new ServerThreatProtectionSettingsModelOperationSource(Client),
+                    new ServerThreatProtectionSettingsModelResourceOperationSource(Client),
                     _serverThreatProtectionSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

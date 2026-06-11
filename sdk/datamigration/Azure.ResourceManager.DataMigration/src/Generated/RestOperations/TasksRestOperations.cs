@@ -6,154 +6,47 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal partial class TasksRestOperations
+    internal partial class Tasks
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TasksRestOperations. </summary>
+        /// <summary> Initializes a new instance of Tasks for mocking. </summary>
+        protected Tasks()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Tasks. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TasksRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Tasks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-06-30";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string taskType)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string taskName, string expand, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (taskType != null)
-            {
-                uri.AppendQuery("taskType", taskType, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string groupName, string serviceName, string projectName, string taskType)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (taskType != null)
-            {
-                uri.AppendQuery("taskType", taskType, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskType"> Filter tasks by task type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TaskList>> ListAsync(string subscriptionId, string groupName, string serviceName, string projectName, string taskType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListRequest(subscriptionId, groupName, serviceName, projectName, taskType);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TaskList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TaskList.DeserializeTaskList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskType"> Filter tasks by task type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TaskList> List(string subscriptionId, string groupName, string serviceName, string projectName, string taskType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListRequest(subscriptionId, groupName, serviceName, projectName, taskType);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TaskList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TaskList.DeserializeTaskList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
@@ -162,116 +55,56 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(projectName, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string taskName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/tasks/", false);
+            uri.AppendPath(taskName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PUT method creates a new task or updates an existing one, although since tasks have no mutable custom properties, there is little reason to update an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="data"> Information about the task. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationProjectTaskData>> CreateOrUpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string taskName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, groupName, serviceName, projectName, taskName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PUT method creates a new task or updates an existing one, although since tasks have no mutable custom properties, there is little reason to update an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="data"> Information about the task. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationProjectTaskData> CreateOrUpdate(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, groupName, serviceName, projectName, taskName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, string expand)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
@@ -280,346 +113,26 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(projectName, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$expand", expand, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a task. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="expand"> Expand the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationProjectTaskData>> GetAsync(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            using var message = CreateGetRequest(subscriptionId, groupName, serviceName, projectName, taskName, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataMigrationProjectTaskData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a task. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="expand"> Expand the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationProjectTaskData> Get(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            using var message = CreateGetRequest(subscriptionId, groupName, serviceName, projectName, taskName, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataMigrationProjectTaskData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, bool? deleteRunningTasks)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (deleteRunningTasks != null)
-            {
-                uri.AppendQuery("deleteRunningTasks", deleteRunningTasks.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, bool? deleteRunningTasks)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (deleteRunningTasks != null)
-            {
-                uri.AppendQuery("deleteRunningTasks", deleteRunningTasks.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The DELETE method deletes a task, canceling it first if it's running. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            using var message = CreateDeleteRequest(subscriptionId, groupName, serviceName, projectName, taskName, deleteRunningTasks);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The DELETE method deletes a task, canceling it first if it's running. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            using var message = CreateDeleteRequest(subscriptionId, groupName, serviceName, projectName, taskName, deleteRunningTasks);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PATCH method updates an existing task, but since tasks have no mutable custom properties, there is little reason to do so. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="data"> Information about the task. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationProjectTaskData>> UpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string taskName, bool? deleteRunningTasks, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateUpdateRequest(subscriptionId, groupName, serviceName, projectName, taskName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PATCH method updates an existing task, but since tasks have no mutable custom properties, there is little reason to do so. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="data"> Information about the task. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationProjectTaskData> Update(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateUpdateRequest(subscriptionId, groupName, serviceName, projectName, taskName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string taskName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
@@ -628,308 +141,127 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(projectName, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskName, true);
-            uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCancelRequest(string subscriptionId, string groupName, string serviceName, string projectName, string taskName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (deleteRunningTasks != null)
+            {
+                uri.AppendQuery("deleteRunningTasks", TypeFormatters.ConvertToString(deleteRunningTasks), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Delete;
             return message;
         }
 
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. This method cancels a task if it's currently queued or running. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationProjectTaskData>> CancelAsync(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string taskType, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            using var message = CreateCancelRequest(subscriptionId, groupName, serviceName, projectName, taskName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. This method cancels a task if it's currently queued or running. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationProjectTaskData> Cancel(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            using var message = CreateCancelRequest(subscriptionId, groupName, serviceName, projectName, taskName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationProjectTaskData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCommandRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationCommandProperties dataMigrationCommandProperties)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendPath("/command", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCommandRequest(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationCommandProperties dataMigrationCommandProperties)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/tasks/", false);
-            uri.AppendPath(taskName, true);
-            uri.AppendPath("/command", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/tasks", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (taskType != null)
+            {
+                uri.AppendQuery("taskType", taskType, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataMigrationCommandProperties, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. This method executes a command on a running task. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="dataMigrationCommandProperties"> Command to execute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="taskName"/> or <paramref name="dataMigrationCommandProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataMigrationCommandProperties>> CommandAsync(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationCommandProperties dataMigrationCommandProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-            Argument.AssertNotNull(dataMigrationCommandProperties, nameof(dataMigrationCommandProperties));
-
-            using var message = CreateCommandRequest(subscriptionId, groupName, serviceName, projectName, taskName, dataMigrationCommandProperties);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationCommandProperties value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. This method executes a command on a running task. </summary>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskName"> Name of the Task. </param>
-        /// <param name="dataMigrationCommandProperties"> Command to execute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="taskName"/> or <paramref name="dataMigrationCommandProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataMigrationCommandProperties> Command(string subscriptionId, string groupName, string serviceName, string projectName, string taskName, DataMigrationCommandProperties dataMigrationCommandProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-            Argument.AssertNotNull(dataMigrationCommandProperties, nameof(dataMigrationCommandProperties));
-
-            using var message = CreateCommandRequest(subscriptionId, groupName, serviceName, projectName, taskName, dataMigrationCommandProperties);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataMigrationCommandProperties value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName, string taskType)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName, string taskType)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskType"> Filter tasks by task type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TaskList>> ListNextPageAsync(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName, string taskType = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string groupName, string serviceName, string projectName, string taskType, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, groupName, serviceName, projectName, taskType);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        TaskList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TaskList.DeserializeTaskList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
-        /// <param name="groupName"> Name of the resource group. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="taskType"> Filter tasks by task type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TaskList> ListNextPage(string nextLink, string subscriptionId, string groupName, string serviceName, string projectName, string taskType = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string taskName, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, groupName, serviceName, projectName, taskType);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/tasks/", false);
+            uri.AppendPath(taskName, true);
+            uri.AppendPath("/cancel", false);
+            if (_apiVersion != null)
             {
-                case 200:
-                    {
-                        TaskList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TaskList.DeserializeTaskList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCommandRequest(Guid subscriptionId, string groupName, string serviceName, string projectName, string taskName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/tasks/", false);
+            uri.AppendPath(taskName, true);
+            uri.AppendPath("/command", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
         }
     }
 }

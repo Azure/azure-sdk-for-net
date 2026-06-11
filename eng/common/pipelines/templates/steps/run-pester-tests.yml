@@ -32,6 +32,8 @@ steps:
           $config.Filter.Tag = $tags
         }
 
+        $env:PESTER_TEST_RUN = 'true'
+
         Write-Host "Calling 'Invoke-Pester' in workingDirectory '$(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}'. Pester tags filter: '$tags'"
         # https://pester.dev/docs/commands/Invoke-Pester
         Invoke-Pester -Configuration $config

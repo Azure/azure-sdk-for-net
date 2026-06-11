@@ -11,10 +11,10 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
-[CodeGenSuppress("GetGenerationJobs", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(DataGenerationJobScenario?), typeof(IEnumerable<DataGenerationJobKind>), typeof(CancellationToken))]
-[CodeGenSuppress("GetGenerationJobsAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(DataGenerationJobScenario?), typeof(IEnumerable<DataGenerationJobKind>), typeof(CancellationToken))]
-[CodeGenSuppress("GetGenerationJobs", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<DataGenerationJobKind>), typeof(RequestOptions))]
-[CodeGenSuppress("GetGenerationJobsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<DataGenerationJobKind>), typeof(RequestOptions))]
+[CodeGenSuppress("GetGenerationJobs", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetGenerationJobsAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetGenerationJobs", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetGenerationJobsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class DataGenerationJobs
 {
     /// <summary> Gets the details of a data generation job by its ID. </summary>
@@ -191,9 +191,9 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual void DeleteGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult DeleteGenerationJob(string jobId, CancellationToken cancellationToken = default)
     {
-        DeleteGenerationJob(
+        return DeleteGenerationJob(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken);
@@ -205,9 +205,9 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public async virtual Task DeleteGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public async virtual Task<ClientResult> DeleteGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        await DeleteGenerationJobAsync(
+        return await DeleteGenerationJobAsync(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken).ConfigureAwait(false);

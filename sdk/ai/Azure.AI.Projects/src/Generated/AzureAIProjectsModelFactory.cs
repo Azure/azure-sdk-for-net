@@ -367,7 +367,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Model Version Definition. </summary>
-        /// <param name="systemData"> System related metadata. </param>
         /// <param name="blobUri"> URI of the model artifact in blob storage. </param>
         /// <param name="weightType"> The weight type of the model. </param>
         /// <param name="baseModel"> Base model asset ID. </param>
@@ -381,13 +380,12 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Projects.ModelVersion"/> instance for mocking. </returns>
-        public static ModelVersion ModelVersion(SystemDataV3 systemData = default, Uri blobUri = default, FoundryModelWeightType? weightType = default, string baseModel = default, ModelSourceData source = default, LoraConfig loraConfig = default, ArtifactProfile artifactProfile = default, IEnumerable<FoundryModelWarning> warnings = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static ModelVersion ModelVersion(Uri blobUri = default, FoundryModelWeightType? weightType = default, string baseModel = default, ModelSourceData source = default, LoraConfig loraConfig = default, ArtifactProfile artifactProfile = default, IEnumerable<FoundryModelWarning> warnings = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             warnings ??= new ChangeTrackingList<FoundryModelWarning>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ModelVersion(
-                systemData,
                 blobUri,
                 weightType,
                 baseModel,
@@ -401,17 +399,6 @@ namespace Azure.AI.Projects
                 description,
                 tags,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> System metadata for a resource. </summary>
-        /// <param name="createdAt"> Timestamp of resource creation. </param>
-        /// <param name="createdBy"> Identity that created the resource. </param>
-        /// <param name="createdByType"> Type of identity that created the resource. </param>
-        /// <param name="lastModifiedAt"> Timestamp of last resource modification. </param>
-        /// <returns> A new <see cref="Projects.SystemDataV3"/> instance for mocking. </returns>
-        public static SystemDataV3 SystemDataV3(DateTimeOffset? createdAt = default, string createdBy = default, string createdByType = default, DateTimeOffset? lastModifiedAt = default)
-        {
-            return new SystemDataV3(createdAt, createdBy, createdByType, lastModifiedAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Source information for the model. </summary>
@@ -486,13 +473,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Represents the response for a model pending upload request. </summary>
-        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="blobReferenceForConsumption"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
         /// <returns> A new <see cref="Projects.ModelPendingUploadResponse"/> instance for mocking. </returns>
-        public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
+        public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReferenceForConsumption = default, string pendingUploadId = default, string version = default)
         {
-            return new ModelPendingUploadResponse(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+            return new ModelPendingUploadResponse(blobReferenceForConsumption, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request to fetch credentials for a model asset. </summary>
@@ -652,10 +639,11 @@ namespace Azure.AI.Projects
         /// <summary> Evaluation rule action for continuous evaluation. </summary>
         /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
+        /// <param name="samplingRate"> Percentage (0-100] chance that a matching event triggers an evaluation. When omitted, the service-default is to evaluate every event, which is equivalent to setting a sampling rate of 100. </param>
         /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
-        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default)
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default, double? samplingRate = default)
         {
-            return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns);
+            return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns, samplingRate);
         }
 
         /// <summary> Evaluation rule action for human evaluation. </summary>
@@ -700,6 +688,28 @@ namespace Azure.AI.Projects
                 taxonomyCategories.ToList(),
                 properties,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Input configuration for the evaluation taxonomy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AgentTaxonomyInput"/>.
+        /// </summary>
+        /// <param name="type"> Input type of the evaluation taxonomy. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationTaxonomyInput"/> instance for mocking. </returns>
+        public static EvaluationTaxonomyInput EvaluationTaxonomyInput(string @type = default)
+        {
+            return new UnknownEvaluationTaxonomyInput(new EvaluationTaxonomyInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
+        /// <param name="target"> Target configuration for the agent. </param>
+        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
+        /// <returns> A new <see cref="Evaluation.AgentTaxonomyInput"/> instance for mocking. </returns>
+        public static AgentTaxonomyInput AgentTaxonomyInput(EvaluationTarget target = default, IEnumerable<RiskCategory> riskCategories = default)
+        {
+            riskCategories ??= new ChangeTrackingList<RiskCategory>();
+
+            return new AgentTaxonomyInput(EvaluationTaxonomyInputType.Agent, additionalBinaryDataProperties: null, target, riskCategories.ToList());
         }
 
         /// <summary>
@@ -798,6 +808,7 @@ namespace Azure.AI.Projects
         /// <param name="metadata"> Metadata about the evaluator. </param>
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
+        /// <param name="supportedEvaluationLevels"> Evaluation levels this evaluator supports (e.g., `turn`, `conversation`). When omitted on create, the service defaults to `["turn"]`. On update, omitting this field leaves it unchanged; an empty list is rejected. Custom code-based evaluators support only `turn`; custom prompt-based evaluators support exactly one level (`turn` or `conversation`). </param>
         /// <param name="definition"> Definition of the evaluator. </param>
         /// <param name="generationArtifacts"> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </param>
         /// <param name="createdBy"> Creator of the evaluator. </param>
@@ -809,10 +820,11 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<EvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
+            supportedEvaluationLevels ??= new ChangeTrackingList<EvaluationLevel>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new EvaluatorVersion(
@@ -820,6 +832,7 @@ namespace Azure.AI.Projects
                 metadata,
                 evaluatorType,
                 categories.ToList(),
+                supportedEvaluationLevels.ToList(),
                 definition,
                 generationArtifacts,
                 createdBy,
@@ -1308,6 +1321,43 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A sample from the analysis.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationResultSample"/>.
+        /// </summary>
+        /// <param name="id"> The unique identifier for the analysis sample. </param>
+        /// <param name="type"> Sample type. </param>
+        /// <param name="features"> Features to help with additional filtering of data in UX. </param>
+        /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
+        /// <returns> A new <see cref="Evaluation.InsightSample"/> instance for mocking. </returns>
+        public static InsightSample InsightSample(string id = default, string @type = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default)
+        {
+            features ??= new ChangeTrackingDictionary<string, BinaryData>();
+            correlationInfo ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new UnknownInsightSample(id, new SampleType(@type), features, correlationInfo, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A sample from the evaluation result. </summary>
+        /// <param name="id"> The unique identifier for the analysis sample. </param>
+        /// <param name="features"> Features to help with additional filtering of data in UX. </param>
+        /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
+        /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationResultSample"/> instance for mocking. </returns>
+        public static EvaluationResultSample EvaluationResultSample(string id = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default, EvalResult evaluationResult = default)
+        {
+            features ??= new ChangeTrackingDictionary<string, BinaryData>();
+            correlationInfo ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new EvaluationResultSample(
+                id,
+                SampleType.EvaluationResultSample,
+                features,
+                correlationInfo,
+                additionalBinaryDataProperties: null,
+                evaluationResult);
+        }
+
         /// <summary> Result of the evaluation. </summary>
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
@@ -1370,6 +1420,110 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
+        /// Base model for Trigger of the schedule.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CronTrigger"/>, <see cref="Evaluation.RecurrenceTrigger"/>, and <see cref="Evaluation.OneTimeTrigger"/>.
+        /// </summary>
+        /// <param name="type"> Type of the trigger. </param>
+        /// <returns> A new <see cref="Evaluation.ScheduleTrigger"/> instance for mocking. </returns>
+        public static ScheduleTrigger ScheduleTrigger(string @type = default)
+        {
+            return new UnknownTrigger(new TriggerType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cron based trigger. </summary>
+        /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
+        /// <param name="timeZone"> Time zone for the cron schedule. Defaults to `UTC`. </param>
+        /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
+        /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
+        /// <returns> A new <see cref="Evaluation.CronTrigger"/> instance for mocking. </returns>
+        public static CronTrigger CronTrigger(string expression = default, string timeZone = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default)
+        {
+            return new CronTrigger(
+                TriggerType.Cron,
+                additionalBinaryDataProperties: null,
+                expression,
+                timeZone,
+                startTime,
+                endTime);
+        }
+
+        /// <summary> Recurrence based trigger. </summary>
+        /// <param name="startTime"> Start time for the recurrence schedule in ISO 8601 format. </param>
+        /// <param name="endTime"> End time for the recurrence schedule in ISO 8601 format. </param>
+        /// <param name="timeZone"> Time zone for the recurrence schedule. Defaults to `UTC`. </param>
+        /// <param name="interval"> Interval for the recurrence schedule. </param>
+        /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
+        /// <returns> A new <see cref="Evaluation.RecurrenceTrigger"/> instance for mocking. </returns>
+        public static RecurrenceTrigger RecurrenceTrigger(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeZone = default, int interval = default, RecurrenceSchedule schedule = default)
+        {
+            return new RecurrenceTrigger(
+                TriggerType.Recurrence,
+                additionalBinaryDataProperties: null,
+                startTime,
+                endTime,
+                timeZone,
+                interval,
+                schedule);
+        }
+
+        /// <summary>
+        /// Recurrence schedule model.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.HourlyRecurrenceSchedule"/>, <see cref="Evaluation.DailyRecurrenceSchedule"/>, <see cref="Evaluation.WeeklyRecurrenceSchedule"/>, and <see cref="Evaluation.MonthlyRecurrenceSchedule"/>.
+        /// </summary>
+        /// <param name="type"> Recurrence type for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.RecurrenceSchedule"/> instance for mocking. </returns>
+        public static RecurrenceSchedule RecurrenceSchedule(string @type = default)
+        {
+            return new UnknownRecurrenceSchedule(new RecurrenceType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Hourly recurrence schedule. </summary>
+        /// <returns> A new <see cref="Evaluation.HourlyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static HourlyRecurrenceSchedule HourlyRecurrenceSchedule()
+        {
+            return new HourlyRecurrenceSchedule(RecurrenceType.Hourly, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Daily recurrence schedule. </summary>
+        /// <param name="hours"> Hours for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.DailyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static DailyRecurrenceSchedule DailyRecurrenceSchedule(IEnumerable<int> hours = default)
+        {
+            hours ??= new ChangeTrackingList<int>();
+
+            return new DailyRecurrenceSchedule(RecurrenceType.Daily, additionalBinaryDataProperties: null, hours.ToList());
+        }
+
+        /// <summary> Weekly recurrence schedule. </summary>
+        /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.WeeklyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek = default)
+        {
+            daysOfWeek ??= new ChangeTrackingList<DayOfWeek>();
+
+            return new WeeklyRecurrenceSchedule(RecurrenceType.Weekly, additionalBinaryDataProperties: null, daysOfWeek.ToList());
+        }
+
+        /// <summary> Monthly recurrence schedule. </summary>
+        /// <param name="daysOfMonth"> Days of the month for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.MonthlyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static MonthlyRecurrenceSchedule MonthlyRecurrenceSchedule(IEnumerable<int> daysOfMonth = default)
+        {
+            daysOfMonth ??= new ChangeTrackingList<int>();
+
+            return new MonthlyRecurrenceSchedule(RecurrenceType.Monthly, additionalBinaryDataProperties: null, daysOfMonth.ToList());
+        }
+
+        /// <summary> One-time trigger. </summary>
+        /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
+        /// <param name="timeZone"> Time zone for the one-time trigger. Defaults to `UTC`. </param>
+        /// <returns> A new <see cref="Evaluation.OneTimeTrigger"/> instance for mocking. </returns>
+        public static OneTimeTrigger OneTimeTrigger(DateTimeOffset triggerAt = default, string timeZone = default)
+        {
+            return new OneTimeTrigger(TriggerType.OneTime, additionalBinaryDataProperties: null, triggerAt, timeZone);
+        }
+
+        /// <summary>
         /// Schedule task model.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationScheduleTask"/> and <see cref="Evaluation.InsightScheduleTask"/>.
         /// </summary>
@@ -1426,6 +1580,27 @@ namespace Azure.AI.Projects
                 error,
                 properties,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base definition for memory store configurations.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Memory.MemoryStoreDefaultDefinition"/>.
+        /// </summary>
+        /// <param name="kind"> The kind of the memory store. </param>
+        /// <returns> A new <see cref="Memory.MemoryStoreDefinition"/> instance for mocking. </returns>
+        public static MemoryStoreDefinition MemoryStoreDefinition(string kind = default)
+        {
+            return new UnknownMemoryStoreDefinition(new MemoryStoreKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Default memory store implementation. </summary>
+        /// <param name="chatModel"> The name or identifier of the chat completion model deployment used for memory processing. </param>
+        /// <param name="embeddingModel"> The name or identifier of the embedding model deployment used for memory processing. </param>
+        /// <param name="options"> Default memory store options. </param>
+        /// <returns> A new <see cref="Memory.MemoryStoreDefaultDefinition"/> instance for mocking. </returns>
+        public static MemoryStoreDefaultDefinition MemoryStoreDefaultDefinition(string chatModel = default, string embeddingModel = default, MemoryStoreDefaultOptions options = default)
+        {
+            return new MemoryStoreDefaultDefinition(MemoryStoreKind.Default, additionalBinaryDataProperties: null, chatModel, embeddingModel, options);
         }
 
         /// <summary> Default memory store configurations. </summary>
@@ -1822,7 +1997,7 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
-        public static RoutineRun RoutineRun(string id = default, string status = default, RoutineRunPhase? phase = default, RoutineTriggerType? triggerType = default, string triggerName = default, RoutineAttemptSource? attemptSource = default, RoutineActionType? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
+        public static RoutineRun RoutineRun(string id = default, BinaryData status = default, RoutineRunPhase? phase = default, RoutineTriggerType? triggerType = default, string triggerName = default, RoutineAttemptSource? attemptSource = default, RoutineActionType? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             return new RoutineRun(
                 id,
@@ -2104,6 +2279,16 @@ namespace Azure.AI.Projects
             return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Evaluation rule action for continuous evaluation. </summary>
+        /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
+        /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
+        /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId, int? maxHourlyRuns)
+        {
+            return ContinuousEvaluationRuleAction(evalId: evalId, maxHourlyRuns: maxHourlyRuns, samplingRate: default);
+        }
+
         /// <summary> Evaluator Definition. </summary>
         /// <param name="displayName"> Display Name for evaluator. It helps to find the evaluator easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="metadata"> Metadata about the evaluator. </param>
@@ -2122,7 +2307,7 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
         {
-            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, definition: definition, generationArtifacts: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
+            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
 
         /// <summary> Evaluator Metric. </summary>

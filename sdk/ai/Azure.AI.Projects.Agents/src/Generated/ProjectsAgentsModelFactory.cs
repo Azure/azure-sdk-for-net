@@ -3,8 +3,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -933,7 +935,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. Defaults to `false`. </param>
+        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Agents.StructuredInputDefinition"/> instance for mocking. </returns>
         public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IDictionary<string, BinaryData> schema = default, bool? isRequired = default)
         {
@@ -1139,7 +1141,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.CreateAgentFromCodeOptions"/> instance for mocking. </returns>
         public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, BinaryData code = default)
         {
-            return new CreateAgentFromCodeOptions(metadata, code, additionalBinaryDataProperties: null);
+            return new CreateAgentFromCodeOptions(metadata, code);
         }
 
         /// <summary>
@@ -1579,7 +1581,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="response"> Raw agent response text. </param>
         /// <param name="runId"> Identifier of the agent run that produced this result. </param>
         /// <returns> A new <see cref="Agents.OptimizationTaskResult"/> instance for mocking. </returns>
-        public static OptimizationTaskResult OptimizationTaskResult(string taskName = default, string query = default, IDictionary<string, double> scores = default, double compositeScore = default, int tokens = default, TimeSpan durationSeconds = default, bool passed = default, string errorMessage = default, IDictionary<string, string> rationales = default, string response = default, string runId = default)
+        public static OptimizationTaskResult OptimizationTaskResult(string taskName = default, string query = default, IDictionary<string, double> scores = default, double compositeScore = default, long tokens = default, TimeSpan durationSeconds = default, bool passed = default, string errorMessage = default, IDictionary<string, string> rationales = default, string response = default, string runId = default)
         {
             scores ??= new ChangeTrackingDictionary<string, double>();
             rationales ??= new ChangeTrackingDictionary<string, string>();
@@ -1628,19 +1630,6 @@ namespace Azure.AI.Projects.Agents
         public static DatasetInfo DatasetInfo(string name = default, string version = default, int taskCount = default, bool isInline = default)
         {
             return new DatasetInfo(name, version, taskCount, isInline, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The response data for a requested list of items. </summary>
-        /// <param name="data"> The requested list of items. </param>
-        /// <param name="firstId"> The first ID represented in this list. </param>
-        /// <param name="lastId"> The last ID represented in this list. </param>
-        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Agents.AgentsPagedResultOptimizationCandidate"/> instance for mocking. </returns>
-        public static AgentsPagedResultOptimizationCandidate AgentsPagedResultOptimizationCandidate(IEnumerable<OptimizationCandidate> data = default, string firstId = default, string lastId = default, bool hasMore = default)
-        {
-            data ??= new ChangeTrackingList<OptimizationCandidate>();
-
-            return new AgentsPagedResultOptimizationCandidate(data.ToList(), firstId, lastId, hasMore, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Candidate metadata returned by GET /candidates/{id}. </summary>

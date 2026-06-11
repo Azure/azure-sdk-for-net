@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBFleetspaceServiceTier : IEquatable<CosmosDBFleetspaceServiceTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceServiceTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBFleetspaceServiceTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string GeneralPurposeValue = "GeneralPurpose";
         private const string BusinessCriticalValue = "BusinessCritical";
 
-        /// <summary> GeneralPurpose. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceServiceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBFleetspaceServiceTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the GeneralPurpose. </summary>
         public static CosmosDBFleetspaceServiceTier GeneralPurpose { get; } = new CosmosDBFleetspaceServiceTier(GeneralPurposeValue);
-        /// <summary> BusinessCritical. </summary>
+
+        /// <summary> Gets the BusinessCritical. </summary>
         public static CosmosDBFleetspaceServiceTier BusinessCritical { get; } = new CosmosDBFleetspaceServiceTier(BusinessCriticalValue);
+
         /// <summary> Determines if two <see cref="CosmosDBFleetspaceServiceTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBFleetspaceServiceTier left, CosmosDBFleetspaceServiceTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBFleetspaceServiceTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBFleetspaceServiceTier left, CosmosDBFleetspaceServiceTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBFleetspaceServiceTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBFleetspaceServiceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBFleetspaceServiceTier(string value) => new CosmosDBFleetspaceServiceTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBFleetspaceServiceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBFleetspaceServiceTier?(string value) => value == null ? null : new CosmosDBFleetspaceServiceTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBFleetspaceServiceTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBFleetspaceServiceTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

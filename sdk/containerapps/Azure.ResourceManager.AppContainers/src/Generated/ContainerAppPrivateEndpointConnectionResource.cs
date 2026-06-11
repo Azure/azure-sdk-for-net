@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource> operation = new AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource>(
-                    new ContainerAppPrivateEndpointConnectionOperationSource(Client),
+                    new ContainerAppPrivateEndpointConnectionResourceOperationSource(Client),
                     _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource> operation = new AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource>(
-                    new ContainerAppPrivateEndpointConnectionOperationSource(Client),
+                    new ContainerAppPrivateEndpointConnectionResourceOperationSource(Client),
                     _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

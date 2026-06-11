@@ -152,7 +152,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the ModelVersion. The service returns 404 Not Found error if the ModelVersion does not exist.
+        /// [Protocol Method] Retrieves the specified model version, returning 404 if it does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -176,7 +176,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the ModelVersion. The service returns 404 Not Found error if the ModelVersion does not exist.
+        /// [Protocol Method] Retrieves the specified model version, returning 404 if it does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -199,7 +199,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get the specific version of the ModelVersion. The service returns 404 Not Found error if the ModelVersion does not exist. </summary>
+        /// <summary> Retrieves the specified model version, returning 404 if it does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the ModelVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -215,7 +215,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ModelVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Get the specific version of the ModelVersion. The service returns 404 Not Found error if the ModelVersion does not exist. </summary>
+        /// <summary> Retrieves the specified model version, returning 404 if it does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the ModelVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -362,7 +362,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a Location header for polling.
+        /// [Protocol Method] Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a location header for polling the operation status.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -388,7 +388,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a Location header for polling.
+        /// [Protocol Method] Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a location header for polling the operation status.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -413,7 +413,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a Location header for polling. </summary>
+        /// <summary> Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a location header for polling the operation status. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
         /// <param name="modelVersion"> Model version to create. </param>
@@ -431,7 +431,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((CreateAsyncResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a Location header for polling. </summary>
+        /// <summary> Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a location header for polling the operation status. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
         /// <param name="modelVersion"> Model version to create. </param>
@@ -450,7 +450,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Start or retrieve a pending upload for a model version.
+        /// [Protocol Method] Initiates a new pending upload or retrieves an existing one for the specified model version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -476,7 +476,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Start or retrieve a pending upload for a model version.
+        /// [Protocol Method] Initiates a new pending upload or retrieves an existing one for the specified model version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -501,7 +501,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Start or retrieve a pending upload for a model version. </summary>
+        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
         /// <param name="pendingUploadRequest"></param>
@@ -519,7 +519,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((ModelPendingUploadResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Start or retrieve a pending upload for a model version. </summary>
+        /// <summary> Initiates a new pending upload or retrieves an existing one for the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
         /// <param name="pendingUploadRequest"></param>
@@ -538,7 +538,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get credentials for a model version asset.
+        /// [Protocol Method] Retrieves temporary credentials for accessing the storage backing the specified model version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -564,7 +564,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get credentials for a model version asset.
+        /// [Protocol Method] Retrieves temporary credentials for accessing the storage backing the specified model version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -589,7 +589,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get credentials for a model version asset. </summary>
+        /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
         /// <param name="credentialRequest"></param>
@@ -607,7 +607,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
 
-        /// <summary> Get credentials for a model version asset. </summary>
+        /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
         /// <param name="credentialRequest"></param>
