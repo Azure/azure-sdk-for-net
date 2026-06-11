@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -12,5 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Event Type for a subject under a topic. </summary>
     public partial class EventTypeUnderTopic : ResourceData
     {
+        /// <summary> Properties of the event type. </summary>
+        [WirePath("properties")]
+        internal EventTypeProperties Properties { get; }
     }
 }
