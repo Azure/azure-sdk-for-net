@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Database specific information for offline MySQL to Azure Database for MySQL migration task inputs. </summary>
     public partial class MigrateMySqlAzureDBForMySqlOfflineDatabaseInput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineDatabaseInput"/>. </summary>
         public MigrateMySqlAzureDBForMySqlOfflineDatabaseInput()
@@ -55,19 +27,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> Name of the database. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
         /// <param name="tableMap"> Mapping of source to target tables. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(string name, string targetDatabaseName, IDictionary<string, string> tableMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(string name, string targetDatabaseName, IDictionary<string, string> tableMap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TargetDatabaseName = targetDatabaseName;
             TableMap = tableMap;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the database. </summary>
         public string Name { get; set; }
+
         /// <summary> Name of target database. Note: Target database will be truncated before starting migration. </summary>
         public string TargetDatabaseName { get; set; }
+
         /// <summary> Mapping of source to target tables. </summary>
         public IDictionary<string, string> TableMap { get; }
     }

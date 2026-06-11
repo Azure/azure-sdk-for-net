@@ -100,11 +100,7 @@ namespace Azure.ResourceManager.CloudHealth.Samples
             {
                 Properties = new HealthModelRelationshipProperties("Entity1", "Entity2")
                 {
-                    DisplayName = "My relationship",
-                    Labels =
-{
-["key9681"] = "ixfvzsfnpvkkbrce"
-},
+                    DisplayName = "My relationship"
                 },
             };
             ArmOperation<HealthModelRelationshipResource> lro = await healthModelRelationship.UpdateAsync(WaitUntil.Completed, data);
