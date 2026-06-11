@@ -8862,9 +8862,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public JitNetworkAccessPortProtocol(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol All { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol Tcp { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol TCP { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol Udp { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol UDP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
