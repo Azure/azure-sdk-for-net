@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="encryption"> Key encryption configuration properties of the system topic resource. This is an optional property. When not specified, no key encryption is used. </param>
         /// <param name="platformCapabilities"> Represents the platform capabilities of the resource, including Azure Confidential Compute related properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SystemTopicProperties(EventGridResourceProvisioningState? provisioningState, string source, string topicType, string metricResourceId, KeyEncryption encryption, PlatformCapabilities platformCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SystemTopicProperties(EventGridResourceProvisioningState? provisioningState, ResourceIdentifier source, string topicType, Guid? metricResourceId, KeyEncryption encryption, PlatformCapabilities platformCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Source = source;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Source for the system topic. </summary>
         [WirePath("source")]
-        public string Source { get; set; }
+        public ResourceIdentifier Source { get; set; }
 
         /// <summary> TopicType for the system topic. </summary>
         [WirePath("topicType")]
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Metric resource id for the system topic. </summary>
         [WirePath("metricResourceId")]
-        public string MetricResourceId { get; }
+        public Guid? MetricResourceId { get; }
 
         /// <summary> Key encryption configuration properties of the system topic resource. This is an optional property. When not specified, no key encryption is used. </summary>
         [WirePath("encryption")]

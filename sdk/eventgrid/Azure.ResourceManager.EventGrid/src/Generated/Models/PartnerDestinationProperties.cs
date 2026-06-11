@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpointBaseUri"> Endpoint Base URL of the partner destination. </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerDestinationProperties(string partnerRegistrationImmutableId, string endpointServiceContext, DateTimeOffset? expirationTimeIfNotActivatedUtc, PartnerDestinationProvisioningState? provisioningState, PartnerDestinationActivationState? activationState, Uri endpointBaseUri, string messageForActivation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PartnerDestinationProperties(Guid? partnerRegistrationImmutableId, string endpointServiceContext, DateTimeOffset? expirationTimeIfNotActivatedUtc, PartnerDestinationProvisioningState? provisioningState, PartnerDestinationActivationState? activationState, Uri endpointBaseUri, string messageForActivation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             EndpointServiceContext = endpointServiceContext;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The immutable Id of the corresponding partner registration. </summary>
         [WirePath("partnerRegistrationImmutableId")]
-        public string PartnerRegistrationImmutableId { get; set; }
+        public Guid? PartnerRegistrationImmutableId { get; set; }
 
         /// <summary> Endpoint context associated with this partner destination. </summary>
         [WirePath("endpointServiceContext")]

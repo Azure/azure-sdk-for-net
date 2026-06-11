@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Note: This property is marked for deprecation and is not supported in any future GA API version
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerRegistrationProperties(PartnerRegistrationProvisioningState? provisioningState, string partnerRegistrationImmutableId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PartnerRegistrationProperties(PartnerRegistrationProvisioningState? provisioningState, Guid? partnerRegistrationImmutableId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Note: This property is marked for deprecation and is not supported in any future GA API version
         /// </summary>
         [WirePath("partnerRegistrationImmutableId")]
-        public string PartnerRegistrationImmutableId { get; set; }
+        public Guid? PartnerRegistrationImmutableId { get; set; }
     }
 }

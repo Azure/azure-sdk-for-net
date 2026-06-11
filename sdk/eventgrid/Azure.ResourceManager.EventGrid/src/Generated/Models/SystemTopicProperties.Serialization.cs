@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (options.Format != "W" && Optional.IsDefined(MetricResourceId))
             {
                 writer.WritePropertyName("metricResourceId"u8);
-                writer.WriteStringValue(MetricResourceId);
+                writer.WriteStringValue(MetricResourceId.Value);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -147,9 +148,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EventGridResourceProvisioningState? provisioningState = default;
-            string source = default;
+            ResourceIdentifier source = default;
             string topicType = default;
-            string metricResourceId = default;
+            Guid? metricResourceId = default;
             KeyEncryption encryption = default;
             PlatformCapabilities platformCapabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,7 +167,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("source"u8))
                 {
-                    source = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    source = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("topicType"u8))
@@ -176,7 +181,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("metricResourceId"u8))
                 {
-                    metricResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metricResourceId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="partnerDestinationDetails"> Details of the partner destination scenario. </param>
         /// <param name="provisioningState"> Provisioning state of the verified partner. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VerifiedPartnerProperties(string partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, PartnerDetails partnerDestinationDetails, VerifiedPartnerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VerifiedPartnerProperties(Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, PartnerDetails partnerDestinationDetails, VerifiedPartnerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             OrganizationName = organizationName;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> ImmutableId of the corresponding partner registration. </summary>
         [WirePath("partnerRegistrationImmutableId")]
-        public string PartnerRegistrationImmutableId { get; }
+        public Guid? PartnerRegistrationImmutableId { get; }
 
         /// <summary> Official name of the Partner. </summary>
         [WirePath("organizationName")]

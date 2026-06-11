@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid
         /// Note: This property is marked for deprecation and is not supported in any future GA API version
         /// </summary>
         [WirePath("properties.partnerRegistrationImmutableId")]
-        public string PartnerRegistrationImmutableId
+        public Guid? PartnerRegistrationImmutableId
         {
             get
             {

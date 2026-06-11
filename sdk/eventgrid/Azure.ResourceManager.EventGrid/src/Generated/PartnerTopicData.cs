@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="properties"> Properties of the Partner Topic. </param>
         /// <param name="identity"> Identity information for the Partner Topic resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerTopicProperties properties, IdentityInfo identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerTopicProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Identity information for the Partner Topic resource. </summary>
         [WirePath("identity")]
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The immutableId of the corresponding partner registration. </summary>
         [WirePath("properties.partnerRegistrationImmutableId")]
-        public string PartnerRegistrationImmutableId
+        public Guid? PartnerRegistrationImmutableId
         {
             get
             {
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.EventGrid
         /// the partner topic and corresponding event channel are deleted.
         /// </summary>
         [WirePath("properties.expirationTimeIfNotActivatedUtc")]
-        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc
+        public DateTimeOffset? ExpireOnIfNotActivated
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationTimeIfNotActivatedUtc;
+                return Properties is null ? default : Properties.ExpireOnIfNotActivated;
             }
             set
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new PartnerTopicProperties();
                 }
-                Properties.ExpirationTimeIfNotActivatedUtc = value;
+                Properties.ExpireOnIfNotActivated = value;
             }
         }
 

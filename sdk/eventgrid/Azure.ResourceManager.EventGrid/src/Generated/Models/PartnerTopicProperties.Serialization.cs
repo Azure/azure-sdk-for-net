@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
-                writer.WriteStringValue(PartnerRegistrationImmutableId);
+                writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
             if (Optional.IsDefined(Source))
             {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo, options);
             }
-            if (Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
+            if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
-                writer.WriteStringValue(ExpirationTimeIfNotActivatedUtc.Value, "O");
+                writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            string partnerRegistrationImmutableId = default;
+            Guid? partnerRegistrationImmutableId = default;
             string source = default;
             PartnerTopicEventTypeInfo eventTypeInfo = default;
-            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
+            DateTimeOffset? expireOnIfNotActivated = default;
             PartnerTopicProvisioningState? provisioningState = default;
             PartnerTopicActivationState? activationState = default;
             string partnerTopicFriendlyDescription = default;
@@ -169,7 +169,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 if (prop.NameEquals("partnerRegistrationImmutableId"u8))
                 {
-                    partnerRegistrationImmutableId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerRegistrationImmutableId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    expirationTimeIfNotActivatedUtc = prop.Value.GetDateTimeOffset("O");
+                    expireOnIfNotActivated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -232,7 +236,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 partnerRegistrationImmutableId,
                 source,
                 eventTypeInfo,
-                expirationTimeIfNotActivatedUtc,
+                expireOnIfNotActivated,
                 provisioningState,
                 activationState,
                 partnerTopicFriendlyDescription,

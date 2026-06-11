@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> The immutable Id of the corresponding partner registration. </summary>
         [WirePath("properties.partnerRegistrationImmutableId")]
-        public string PartnerRegistrationImmutableId
+        public Guid? PartnerRegistrationImmutableId
         {
             get
             {

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
-                writer.WriteStringValue(PartnerRegistrationImmutableId);
+                writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
             if (Optional.IsDefined(OrganizationName))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            string partnerRegistrationImmutableId = default;
+            Guid? partnerRegistrationImmutableId = default;
             string organizationName = default;
             string partnerDisplayName = default;
             PartnerDetails partnerTopicDetails = default;
@@ -157,7 +157,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 if (prop.NameEquals("partnerRegistrationImmutableId"u8))
                 {
-                    partnerRegistrationImmutableId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerRegistrationImmutableId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("organizationName"u8))

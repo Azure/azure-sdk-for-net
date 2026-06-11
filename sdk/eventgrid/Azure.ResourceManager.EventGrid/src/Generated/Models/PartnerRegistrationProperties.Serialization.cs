@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
-                writer.WriteStringValue(PartnerRegistrationImmutableId);
+                writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             PartnerRegistrationProvisioningState? provisioningState = default;
-            string partnerRegistrationImmutableId = default;
+            Guid? partnerRegistrationImmutableId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("partnerRegistrationImmutableId"u8))
                 {
-                    partnerRegistrationImmutableId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerRegistrationImmutableId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

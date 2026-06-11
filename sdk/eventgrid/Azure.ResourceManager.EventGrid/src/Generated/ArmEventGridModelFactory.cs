@@ -362,30 +362,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku, topicSpacesConfiguration is null && topicsCustomDomains is null && publicNetworkAccess is null && inboundIpRules is null ? default : new NamespaceUpdateParameterProperties(topicSpacesConfiguration, new UpdateTopicsConfigurationInfo((topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(), default), publicNetworkAccess, (inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), default), default);
         }
 
-        /// <param name="type"> The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identity. </param>
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <param name="userAssignedIdentities">
-        /// The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        /// This property is currently not used and reserved for future usage.
-        /// </param>
-        /// <returns> A new <see cref="Models.IdentityInfo"/> instance for mocking. </returns>
-        public static IdentityInfo IdentityInfo(IdentityType? @type = default, string principalId = default, string tenantId = default, IDictionary<string, UserIdentityProperties> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserIdentityProperties>();
-
-            return new IdentityInfo(@type, principalId, tenantId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserIdentityProperties>(), default);
-        }
-
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserIdentityProperties"/> instance for mocking. </returns>
-        public static UserIdentityProperties UserIdentityProperties(string principalId = default, string clientId = default)
-        {
-            return new UserIdentityProperties(principalId, clientId, default);
-        }
-
         /// <param name="state"> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </param>
         /// <param name="routeTopicResourceId"> This property is used to specify custom topic to which events will be routed to from topic spaces configuration under namespace. </param>
         /// <param name="routingEnrichments"> Routing enrichments for topic spaces configuration. </param>
@@ -980,7 +956,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 resourceType,
                 systemData,
                 provisioningState is null ? default : new DomainTopicProperties(provisioningState, default),
-                (IDictionary<string, BinaryData>)default);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1605,7 +1581,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpointBaseUri"> Endpoint Base URL of the partner destination. </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process. </param>
         /// <returns> A new <see cref="EventGrid.PartnerDestinationData"/> instance for mocking. </returns>
-        public static PartnerDestinationData PartnerDestinationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string partnerRegistrationImmutableId = default, string endpointServiceContext = default, DateTimeOffset? expirationTimeIfNotActivatedUtc = default, PartnerDestinationProvisioningState? provisioningState = default, PartnerDestinationActivationState? activationState = default, Uri endpointBaseUri = default, string messageForActivation = default)
+        public static PartnerDestinationData PartnerDestinationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? partnerRegistrationImmutableId = default, string endpointServiceContext = default, DateTimeOffset? expirationTimeIfNotActivatedUtc = default, PartnerDestinationProvisioningState? provisioningState = default, PartnerDestinationActivationState? activationState = default, Uri endpointBaseUri = default, string messageForActivation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1649,7 +1625,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Note: This property is marked for deprecation and is not supported in any future GA API version
         /// </param>
         /// <returns> A new <see cref="EventGrid.PartnerRegistrationData"/> instance for mocking. </returns>
-        public static PartnerRegistrationData PartnerRegistrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PartnerRegistrationProvisioningState? provisioningState = default, string partnerRegistrationImmutableId = default)
+        public static PartnerRegistrationData PartnerRegistrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PartnerRegistrationProvisioningState? provisioningState = default, Guid? partnerRegistrationImmutableId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1682,7 +1658,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="partnerRegistrationImmutableId"> The immutableId of the corresponding partner registration. </param>
         /// <param name="source"> Source associated with this partner topic. This represents a unique partner resource. </param>
         /// <param name="eventTypeInfo"> Event Type information from the corresponding event channel. </param>
-        /// <param name="expirationTimeIfNotActivatedUtc">
+        /// <param name="expireOnIfNotActivated">
         /// Expiration time of the partner topic. If this timer expires while the partner topic is still never activated,
         /// the partner topic and corresponding event channel are deleted.
         /// </param>
@@ -1695,7 +1671,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
         /// <param name="identity"> Identity information for the Partner Topic resource. </param>
         /// <returns> A new <see cref="EventGrid.PartnerTopicData"/> instance for mocking. </returns>
-        public static PartnerTopicData PartnerTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string partnerRegistrationImmutableId = default, string source = default, PartnerTopicEventTypeInfo eventTypeInfo = default, DateTimeOffset? expirationTimeIfNotActivatedUtc = default, PartnerTopicProvisioningState? provisioningState = default, PartnerTopicActivationState? activationState = default, string partnerTopicFriendlyDescription = default, string messageForActivation = default, IdentityInfo identity = default)
+        public static PartnerTopicData PartnerTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? partnerRegistrationImmutableId = default, string source = default, PartnerTopicEventTypeInfo eventTypeInfo = default, DateTimeOffset? expireOnIfNotActivated = default, PartnerTopicProvisioningState? provisioningState = default, PartnerTopicActivationState? activationState = default, string partnerTopicFriendlyDescription = default, string messageForActivation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1706,11 +1682,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                partnerRegistrationImmutableId is null && source is null && eventTypeInfo is null && expirationTimeIfNotActivatedUtc is null && provisioningState is null && activationState is null && partnerTopicFriendlyDescription is null && messageForActivation is null ? default : new PartnerTopicProperties(
+                partnerRegistrationImmutableId is null && source is null && eventTypeInfo is null && expireOnIfNotActivated is null && provisioningState is null && activationState is null && partnerTopicFriendlyDescription is null && messageForActivation is null ? default : new PartnerTopicProperties(
                     partnerRegistrationImmutableId,
                     source,
                     eventTypeInfo,
-                    expirationTimeIfNotActivatedUtc,
+                    expireOnIfNotActivated,
                     provisioningState,
                     activationState,
                     partnerTopicFriendlyDescription,
@@ -1908,7 +1884,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="identity"> Identity information for the resource. </param>
         /// <returns> A new <see cref="EventGrid.SystemTopicData"/> instance for mocking. </returns>
-        public static SystemTopicData SystemTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventGridResourceProvisioningState? provisioningState = default, string source = default, string topicType = default, string metricResourceId = default, IEnumerable<CustomerManagedKeyEncryption> customerManagedKeyEncryption = default, ConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, IdentityInfo identity = default)
+        public static SystemTopicData SystemTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventGridResourceProvisioningState? provisioningState = default, ResourceIdentifier source = default, string topicType = default, Guid? metricResourceId = default, IEnumerable<CustomerManagedKeyEncryption> customerManagedKeyEncryption = default, ConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2117,7 +2093,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 resourceType,
                 systemData,
                 description is null && systemTopic is null ? default : new ExtensionTopicProperties(description, systemTopic, default),
-                (IDictionary<string, BinaryData>)default);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2145,10 +2121,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="partnerRegistrationImmutableId"> ImmutableId of the corresponding partner registration. </param>
         /// <param name="organizationName"> Official name of the Partner. </param>
         /// <param name="partnerDisplayName"> Display name of the verified partner. </param>
@@ -2156,7 +2132,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="partnerDestinationDetails"> Details of the partner destination scenario. </param>
         /// <param name="provisioningState"> Provisioning state of the verified partner. </param>
         /// <returns> A new <see cref="EventGrid.VerifiedPartnerData"/> instance for mocking. </returns>
-        public static VerifiedPartnerData VerifiedPartnerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string partnerRegistrationImmutableId = default, string organizationName = default, string partnerDisplayName = default, PartnerDetails partnerTopicDetails = default, PartnerDetails partnerDestinationDetails = default, VerifiedPartnerProvisioningState? provisioningState = default)
+        public static VerifiedPartnerData VerifiedPartnerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? partnerRegistrationImmutableId = default, string organizationName = default, string partnerDisplayName = default, PartnerDetails partnerTopicDetails = default, PartnerDetails partnerDestinationDetails = default, VerifiedPartnerProvisioningState? provisioningState = default)
         {
             return new VerifiedPartnerData(
                 id,
@@ -2171,7 +2147,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     partnerDestinationDetails,
                     provisioningState,
                     default),
-                default);
+                (IDictionary<string, BinaryData>)default);
         }
 
         /// <param name="description"> This is short description about the partner. The length of this description should not exceed 256 characters. </param>
@@ -2498,10 +2474,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new SubscriptionFullUri(endpointUri, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="provider"> Namespace of the provider of the topic type. </param>
         /// <param name="displayName"> Display Name for the topic type. </param>
         /// <param name="description"> Description of the topic type. </param>
@@ -2532,7 +2508,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     areRegionalAndGlobalSourcesSupported,
                     (additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>()).ToList(),
                     default),
-                default);
+                (IDictionary<string, BinaryData>)default);
         }
 
         /// <param name="permissionName"></param>
@@ -2871,33 +2847,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGrid.PartnerRegistrationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the partner registration. </param>
-        /// <param name="partnerRegistrationImmutableId">
-        /// The immutableId of the corresponding partner registration.
-        ///             Note: This property is marked for deprecation and is not supported in any future GA API version
-        /// </param>
-        /// <returns> A new <see cref="EventGrid.PartnerRegistrationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PartnerRegistrationData PartnerRegistrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PartnerRegistrationProvisioningState? provisioningState = default, Guid? partnerRegistrationImmutableId = default)
-        {
-            return new PartnerRegistrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null ? default : new PartnerRegistrationProperties(provisioningState, default, default),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="EventGrid.PartnerTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2931,17 +2880,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                source is null && eventTypeInfo is null && provisioningState is null && activationState is null && partnerTopicFriendlyDescription is null && messageForActivation is null ? default : new PartnerTopicProperties(
-                    default,
+                partnerRegistrationImmutableId is null && source is null && eventTypeInfo is null && expireOnIfNotActivated is null && provisioningState is null && activationState is null && partnerTopicFriendlyDescription is null && messageForActivation is null ? default : new PartnerTopicProperties(
+                    partnerRegistrationImmutableId,
                     source,
                     eventTypeInfo,
-                    default,
+                    expireOnIfNotActivated,
                     provisioningState,
                     activationState,
                     partnerTopicFriendlyDescription,
                     messageForActivation,
                     default),
-                default,
+                identity,
                 default);
         }
 
@@ -2968,15 +2917,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && topicType is null ? default : new SystemTopicProperties(
+                provisioningState is null && source is null && topicType is null && metricResourceId is null ? default : new SystemTopicProperties(
                     provisioningState,
-                    default,
+                    source,
                     topicType,
-                    default,
+                    metricResourceId,
                     default,
                     default,
                     default),
-                default,
+                identity,
                 default);
         }
 
@@ -2999,15 +2948,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 name,
                 resourceType,
                 systemData,
-                organizationName is null && partnerDisplayName is null && partnerTopicDetails is null && provisioningState is null ? default : new VerifiedPartnerProperties(
-                    default,
+                partnerRegistrationImmutableId is null && organizationName is null && partnerDisplayName is null && partnerTopicDetails is null && provisioningState is null ? default : new VerifiedPartnerProperties(
+                    partnerRegistrationImmutableId,
                     organizationName,
                     partnerDisplayName,
                     partnerTopicDetails,
                     default,
                     provisioningState,
                     default),
-                default);
+                (IDictionary<string, BinaryData>)default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebHookEventSubscriptionDestination"/>. </summary>

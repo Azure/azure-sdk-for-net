@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="properties"> Properties of the system topic. </param>
         /// <param name="identity"> Identity information for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SystemTopicProperties properties, IdentityInfo identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SystemTopicProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Identity information for the resource. </summary>
         [WirePath("identity")]
-        public IdentityInfo Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Provisioning state of the system topic. </summary>
         [WirePath("properties.provisioningState")]
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Source for the system topic. </summary>
         [WirePath("properties.source")]
-        public string Source
+        public ResourceIdentifier Source
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Metric resource id for the system topic. </summary>
         [WirePath("properties.metricResourceId")]
-        public string MetricResourceId
+        public Guid? MetricResourceId
         {
             get
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -12,5 +13,8 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> Event grid Extension Topic. This is used for getting Event Grid related metrics for Azure resources. </summary>
     public partial class ExtensionTopicData : ResourceData
     {
+        /// <summary> Properties of the extension topic. </summary>
+        [WirePath("properties")]
+        internal ExtensionTopicProperties Properties { get; }
     }
 }
