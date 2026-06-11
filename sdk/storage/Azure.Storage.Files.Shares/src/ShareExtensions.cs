@@ -750,7 +750,7 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        internal static IEnumerable<ShareItem> ToShareItems(this IReadOnlyList<ShareItemInternal> shareItemInternals)
+        internal static IEnumerable<ShareItem> ToShareItems(this IEnumerable<ShareItemInternal> shareItemInternals)
         {
             if (shareItemInternals == null)
             {

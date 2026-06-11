@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
                 cancellationToken).ConfigureAwait(false);
 
             return Page<ShareItem>.FromValues(
-                ((IReadOnlyList<ShareItemInternal>)response.Value.ShareItems).ToShareItems().ToArray(),
+                [.. response.Value.ShareItems.ToShareItems()],
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }
