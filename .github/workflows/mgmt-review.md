@@ -222,7 +222,9 @@ Create inline review comments for findings using `create_pull_request_review_com
 
 - Start with a rule ID or phase marker, such as `**[SUFFIX001]**`, `**[Phase 1]**`, `**[4.10]**`, or `**[5.2]**`.
 - Explain the problem and the required fix.
-- Target the current changed file and line in the PR diff. Prefer the current `*.net10.0.cs` API file for API-surface comments.
+- Target the current changed source/customization/TypeSpec file and line in the PR diff. Use `api/*.cs` files for analysis only; do not target API listing files for inline comments because large API files can fail GitHub review-position resolution.
+
+For API-surface findings found in `api/*.cs`, resolve the affected symbol to the generated SDK source file (`src/Generated/**`), SDK customization file (`src/Custom*/**`, `src/Customization*/**`, `src/Customized*/**`), or TypeSpec customization file (`client.tsp`, `main.tsp`, `tspconfig.yaml`) that should be fixed. If the correct source line is not in the PR diff, include the finding in the review body's `Non-inline findings` section instead of falling back to an API file comment.
 
 Post one inline comment per distinct finding so large refresh PRs (which can touch a huge number of files and generate many findings) are reviewed completely without dropping any. You may still merge several closely-related naming findings (e.g., multiple generically-named types fixed the same way) into one comment for readability, but do not omit findings to keep the count down. Always report the full evaluated/flagged counts in the review summary.
 
