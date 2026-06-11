@@ -36,6 +36,9 @@ namespace Azure.Generator.Management
         private WirePathAttributeDefinition? _wirePathAttributeProvider;
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
 
+        private CodeGenResourceDataAttributeDefinition? _codeGenResourceDataAttributeProvider;
+        internal TypeProvider CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
+
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
@@ -289,6 +292,7 @@ namespace Azure.Generator.Management
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
             }
+            ManagementClientGenerator.Instance.AddTypeToKeep(CodeGenResourceDataAttributeDefinition.Name);
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             // Extract array response collection results from all methods
@@ -297,6 +301,7 @@ namespace Azure.Generator.Management
             return [
                 .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
+                CodeGenResourceDataAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
                 .. OperationSourceDict.Values,

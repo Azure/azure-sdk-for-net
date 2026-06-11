@@ -73,7 +73,7 @@ namespace Azure.Generator.Management.Providers
 
             _resourceServiceMethods = resourceMethods;
             _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
-            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
+            ResourceData = ResolveResourceData(model);
 
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
@@ -101,6 +101,31 @@ namespace Azure.Generator.Management.Providers
         public bool IsSingleton => SingletonResourceName is not null;
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
+
+        private ModelProvider ResolveResourceData(InputModelType model)
+        {
+            var customizedDataType = ManagementClientGenerator.Instance.ResourceDataCustomizationResolver.GetResourceDataType(model, ResourceName);
+            if (customizedDataType is not null)
+            {
+                foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+                {
+                    var provider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                    if (provider is not null &&
+                        ((provider.Type.Name == customizedDataType.Name &&
+                            provider.Type.Namespace == customizedDataType.Namespace) ||
+                        inputModel.Name == customizedDataType.Name))
+                    {
+                        return provider;
+                    }
+                }
+
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "general-warning",
+                    $"Cannot find resource data type {customizedDataType.Namespace}.{customizedDataType.Name} specified by CodeGenResourceDataAttribute for resource {ResourceName}.");
+            }
+
+            return ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
+        }
 
         private IReadOnlyList<ResourceClientProvider>? _childResources;
         public IReadOnlyList<ResourceClientProvider> ChildResources => _childResources ??= BuildChildResources();
