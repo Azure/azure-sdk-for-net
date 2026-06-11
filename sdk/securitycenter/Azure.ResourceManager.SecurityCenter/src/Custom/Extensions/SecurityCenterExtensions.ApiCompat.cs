@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecurityCenterPricingCollection GetSecurityCenterPricings(this SubscriptionResource subscriptionResource) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRules.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this SubscriptionResource subscriptionResource) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        [Obsolete("This API is no longer supported by the service.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this ArmClient client, ResourceIdentifier id) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [Obsolete("This API is no longer supported by the service.", false)]

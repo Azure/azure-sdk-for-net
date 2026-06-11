@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
     // The previous GA SDK exposed this legacy governance rule type/member from GovernanceRules swagger.
     // Current TypeSpec emits the updated governance resource shape instead, so this hidden obsolete
     // shim is retained only for ApiCompat.
-    [Obsolete("This API is no longer supported by the service.", false)]
+    [Obsolete("This class is obsolete and will be removed in a future release. Please use GovernanceRuleResource.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SubscriptionGovernanceRuleResource : ArmResource
     {

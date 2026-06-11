@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.SecurityCenter
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [ForwardsClientCalls]
-        [Obsolete("This API is no longer supported by the service.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRule.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [ForwardsClientCalls]
-        [Obsolete("This API is no longer supported by the service.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleAsync.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [ForwardsClientCalls]

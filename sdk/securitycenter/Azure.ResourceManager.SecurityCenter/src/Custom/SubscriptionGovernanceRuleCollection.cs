@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
     // The previous GA SDK exposed this subscription-scoped governance rule collection. Current
     // TypeSpec generates the scope-based GovernanceRule collection instead, so this hidden obsolete
     // shim is retained only for ApiCompat.
-    [Obsolete("This API is no longer supported by the service.", false)]
+    [Obsolete("This class is obsolete and will be removed in a future release. Please use GovernanceRuleCollection.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SubscriptionGovernanceRuleCollection : ArmCollection, IAsyncEnumerable<SubscriptionGovernanceRuleResource>, IEnumerable<SubscriptionGovernanceRuleResource>, IEnumerable
     {

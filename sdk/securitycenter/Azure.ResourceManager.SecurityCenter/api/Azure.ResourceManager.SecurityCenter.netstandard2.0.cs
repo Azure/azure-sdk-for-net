@@ -2802,13 +2802,13 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ObsoleteAttribute("This API is no longer supported by the service.", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use GetGovernanceRule.", false)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This API is no longer supported by the service.", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleAsync.", false)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This API is no longer supported by the service.", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ObsoleteAttribute("This API is no longer supported by the service.", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use GetGovernanceRules.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         [System.ObsoleteAttribute("This API is no longer supported by the service.", false)]
@@ -4272,7 +4272,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported by the service.", false)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release. Please use GovernanceRuleCollection.", false)]
     public partial class SubscriptionGovernanceRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>, System.Collections.IEnumerable
     {
         protected SubscriptionGovernanceRuleCollection() { }
@@ -4288,7 +4288,7 @@ namespace Azure.ResourceManager.SecurityCenter
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported by the service.", false)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release. Please use GovernanceRuleResource.", false)]
     public partial class SubscriptionGovernanceRuleResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
