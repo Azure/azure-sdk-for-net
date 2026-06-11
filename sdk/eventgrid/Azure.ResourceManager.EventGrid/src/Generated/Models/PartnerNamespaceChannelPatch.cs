@@ -73,23 +73,5 @@ namespace Azure.ResourceManager.EventGrid.Models
                 Properties.PartnerDestinationInfo = value;
             }
         }
-
-        /// <summary> Event type info for the partner topic. </summary>
-        [WirePath("properties.partnerTopicInfo.eventTypeInfo")]
-        public PartnerTopicEventTypeInfo EventTypeInfo
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EventTypeInfo;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ChannelUpdateParametersProperties();
-                }
-                Properties.EventTypeInfo = value;
-            }
-        }
     }
 }

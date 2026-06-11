@@ -7,19 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownEventGridFilter : EventGridFilter, IJsonModel<EventGridFilter>
+    internal sealed partial class UnknownFilter : EventGridFilter, IJsonModel<EventGridFilter>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEventGridFilter"/> for deserialization. </summary>
-        internal UnknownEventGridFilter()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EventGridFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -102,33 +96,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEventGridFilter(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownEventGridFilter DeserializeUnknownEventGridFilter(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            FilterOperatorType operatorType = default;
-            string key = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("operatorType"u8))
-                {
-                    operatorType = new FilterOperatorType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("key"u8))
-                {
-                    key = prop.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownEventGridFilter(operatorType, key, additionalBinaryDataProperties);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 throw new FormatException($"The model {nameof(IssuerCertificateInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("certificateUrl"u8);
-            writer.WriteStringValue(CertificateUri);
+            writer.WriteStringValue(CertificateUri.AbsoluteUri);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            string certificateUri = default;
+            Uri certificateUri = default;
             CustomJwtAuthenticationManagedIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("certificateUrl"u8))
                 {
-                    certificateUri = prop.Value.GetString();
+                    certificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

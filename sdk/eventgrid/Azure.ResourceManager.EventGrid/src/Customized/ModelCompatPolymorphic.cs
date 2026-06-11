@@ -11,6 +11,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 [assembly: CodeGenSuppressType("AdvancedFilter")]
 [assembly: CodeGenSuppressType("DeadLetterDestination")]
@@ -822,7 +823,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
     }
 
-    internal sealed class UnknownFilter : EventGridFilter
+    [CodeGenType("UnknownEventGridFilter")]
+    internal sealed partial class UnknownFilter : EventGridFilter
     {
         internal UnknownFilter()
         {
@@ -863,7 +865,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
     }
 
-    internal sealed class UnknownInputSchemaMapping : EventGridInputSchemaMapping
+    [CodeGenType("UnknownEventGridInputSchemaMapping")]
+    internal sealed partial class UnknownInputSchemaMapping : EventGridInputSchemaMapping
     {
         internal UnknownInputSchemaMapping()
         {

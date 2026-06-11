@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="azureActiveDirectoryApplicationIdOrUri"> Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="azureActiveDirectoryTenantId"> Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/>, <paramref name="endpointUri"/>, <paramref name="azureActiveDirectoryApplicationIdOrUri"/> or <paramref name="azureActiveDirectoryTenantId"/> is null. </exception>
-        public WebhookAuthenticationSettings(CustomWebhookAuthenticationManagedIdentity identity, Uri endpointUri, string azureActiveDirectoryApplicationIdOrUri, string azureActiveDirectoryTenantId)
+        public WebhookAuthenticationSettings(CustomWebhookAuthenticationManagedIdentity identity, Uri endpointUri, Uri azureActiveDirectoryApplicationIdOrUri, string azureActiveDirectoryTenantId)
         {
             Argument.AssertNotNull(identity, nameof(identity));
             Argument.AssertNotNull(endpointUri, nameof(endpointUri));
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="azureActiveDirectoryApplicationIdOrUri"> Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="azureActiveDirectoryTenantId"> Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookAuthenticationSettings(CustomWebhookAuthenticationManagedIdentity identity, Uri endpointUri, Uri endpointBaseUri, string azureActiveDirectoryApplicationIdOrUri, string azureActiveDirectoryTenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebhookAuthenticationSettings(CustomWebhookAuthenticationManagedIdentity identity, Uri endpointUri, Uri endpointBaseUri, Uri azureActiveDirectoryApplicationIdOrUri, string azureActiveDirectoryTenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             EndpointUri = endpointUri;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("azureActiveDirectoryApplicationIdOrUri")]
-        public string AzureActiveDirectoryApplicationIdOrUri { get; set; }
+        public Uri AzureActiveDirectoryApplicationIdOrUri { get; set; }
 
         /// <summary> Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("azureActiveDirectoryTenantId")]

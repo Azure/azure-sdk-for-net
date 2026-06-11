@@ -107,19 +107,5 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return Properties.InboundIpRules;
             }
         }
-
-        /// <summary> Custom domain info for topics configuration. </summary>
-        [WirePath("properties.topicsConfiguration.customDomains")]
-        public IList<CustomDomainConfiguration> TopicsCustomDomains
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NamespaceUpdateParameterProperties();
-                }
-                return Properties.TopicsCustomDomains;
-            }
-        }
     }
 }

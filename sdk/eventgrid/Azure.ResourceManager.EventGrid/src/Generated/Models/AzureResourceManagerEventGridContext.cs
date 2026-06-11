@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -292,9 +293,9 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(UnknownAdvancedFilter))]
     [ModelReaderWriterBuildable(typeof(UnknownDeadLetterDestination))]
     [ModelReaderWriterBuildable(typeof(UnknownDeliveryAttributeMapping))]
-    [ModelReaderWriterBuildable(typeof(UnknownEventGridFilter))]
-    [ModelReaderWriterBuildable(typeof(UnknownEventGridInputSchemaMapping))]
     [ModelReaderWriterBuildable(typeof(UnknownEventSubscriptionDestination))]
+    [ModelReaderWriterBuildable(typeof(UnknownFilter))]
+    [ModelReaderWriterBuildable(typeof(UnknownInputSchemaMapping))]
     [ModelReaderWriterBuildable(typeof(UnknownPartnerClientAuthentication))]
     [ModelReaderWriterBuildable(typeof(UnknownPartnerDestinationInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownPartnerUpdateDestinationInfo))]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="IssuerCertificateInfo"/>. </summary>
         /// <param name="certificateUri"> Keyvault certificate URL in https://keyvaultname.vault.azure.net/certificates/certificateName/certificateVersion format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateUri"/> is null. </exception>
-        public IssuerCertificateInfo(string certificateUri)
+        public IssuerCertificateInfo(Uri certificateUri)
         {
             Argument.AssertNotNull(certificateUri, nameof(certificateUri));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="certificateUri"> Keyvault certificate URL in https://keyvaultname.vault.azure.net/certificates/certificateName/certificateVersion format. </param>
         /// <param name="identity"> The identity that will be used to access the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssuerCertificateInfo(string certificateUri, CustomJwtAuthenticationManagedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssuerCertificateInfo(Uri certificateUri, CustomJwtAuthenticationManagedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateUri = certificateUri;
             Identity = identity;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Keyvault certificate URL in https://keyvaultname.vault.azure.net/certificates/certificateName/certificateVersion format. </summary>
         [WirePath("certificateUrl")]
-        public string CertificateUri { get; set; }
+        public Uri CertificateUri { get; set; }
 
         /// <summary> The identity that will be used to access the certificate. </summary>
         [WirePath("identity")]

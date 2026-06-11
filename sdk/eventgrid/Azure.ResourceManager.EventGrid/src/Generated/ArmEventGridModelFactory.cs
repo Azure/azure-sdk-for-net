@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -220,14 +221,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new RoutingEnrichments((@static ?? new ChangeTrackingList<StaticRoutingEnrichment>()).ToList(), (dynamic ?? new ChangeTrackingList<DynamicRoutingEnrichment>()).ToList(), default);
         }
 
-        /// <param name="key"></param>
-        /// <param name="valueType"></param>
-        /// <returns> A new <see cref="Models.StaticRoutingEnrichment"/> instance for mocking. </returns>
-        public static StaticRoutingEnrichment StaticRoutingEnrichment(string key = default, string valueType = default)
-        {
-            return new UnknownStaticRoutingEnrichment(key, valueType, default);
-        }
-
         /// <param name="key"> Static routing enrichment key. </param>
         /// <param name="value"> String type routing enrichment value. </param>
         /// <returns> A new <see cref="Models.StaticStringRoutingEnrichment"/> instance for mocking. </returns>
@@ -270,7 +263,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="certificateUri"> Keyvault certificate URL in https://keyvaultname.vault.azure.net/certificates/certificateName/certificateVersion format. </param>
         /// <param name="identity"> The identity that will be used to access the certificate. </param>
         /// <returns> A new <see cref="Models.IssuerCertificateInfo"/> instance for mocking. </returns>
-        public static IssuerCertificateInfo IssuerCertificateInfo(string certificateUri = default, CustomJwtAuthenticationManagedIdentity identity = default)
+        public static IssuerCertificateInfo IssuerCertificateInfo(Uri certificateUri = default, CustomJwtAuthenticationManagedIdentity identity = default)
         {
             return new IssuerCertificateInfo(certificateUri, identity, default);
         }
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="azureActiveDirectoryApplicationIdOrUri"> Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="azureActiveDirectoryTenantId"> Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <returns> A new <see cref="Models.WebhookAuthenticationSettings"/> instance for mocking. </returns>
-        public static WebhookAuthenticationSettings WebhookAuthenticationSettings(CustomWebhookAuthenticationManagedIdentity identity = default, Uri endpointUri = default, Uri endpointBaseUri = default, string azureActiveDirectoryApplicationIdOrUri = default, string azureActiveDirectoryTenantId = default)
+        public static WebhookAuthenticationSettings WebhookAuthenticationSettings(CustomWebhookAuthenticationManagedIdentity identity = default, Uri endpointUri = default, Uri endpointBaseUri = default, Uri azureActiveDirectoryApplicationIdOrUri = default, string azureActiveDirectoryTenantId = default)
         {
             return new WebhookAuthenticationSettings(
                 identity,
@@ -846,13 +839,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="inputSchemaMappingType"></param>
-        /// <returns> A new <see cref="Models.EventGridInputSchemaMapping"/> instance for mocking. </returns>
-        public static EventGridInputSchemaMapping EventGridInputSchemaMapping(string inputSchemaMappingType = default)
-        {
-            return new UnknownEventGridInputSchemaMapping(inputSchemaMappingType, default);
-        }
-
         /// <param name="eventType"> The mapping information for the EventType property of the Event Grid Event. </param>
         /// <param name="subject"> The mapping information for the Subject property of the Event Grid Event. </param>
         /// <param name="dataVersion"> The mapping information for the DataVersion property of the Event Grid Event. </param>
@@ -1010,13 +996,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="endpointType"></param>
-        /// <returns> A new <see cref="Models.EventSubscriptionDestination"/> instance for mocking. </returns>
-        public static EventSubscriptionDestination EventSubscriptionDestination(string endpointType = default)
-        {
-            return new UnknownEventSubscriptionDestination(endpointType, default);
-        }
-
         /// <param name="endpointUri"> The URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="endpointBaseUri"> The base URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
@@ -1038,14 +1017,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 (deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>()).ToList(),
                 minimumTlsVersionAllowed,
                 default));
-        }
-
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="Models.DeliveryAttributeMapping"/> instance for mocking. </returns>
-        public static DeliveryAttributeMapping DeliveryAttributeMapping(string name = default, string @type = default)
-        {
-            return new UnknownDeliveryAttributeMapping(name, @type, default);
         }
 
         /// <param name="name"> Name of the delivery attribute or header. </param>
@@ -1199,14 +1170,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 enableAdvancedFilteringOnArrays,
                 (advancedFilters ?? new ChangeTrackingList<AdvancedFilter>()).ToList(),
                 default);
-        }
-
-        /// <param name="operatorType"></param>
-        /// <param name="key"></param>
-        /// <returns> A new <see cref="Models.AdvancedFilter"/> instance for mocking. </returns>
-        public static AdvancedFilter AdvancedFilter(string operatorType = default, string key = default)
-        {
-            return new UnknownAdvancedFilter(operatorType, key, default);
         }
 
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
@@ -1389,13 +1352,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventSubscriptionRetryPolicy EventSubscriptionRetryPolicy(int? maxDeliveryAttempts = default, int? eventTimeToLiveInMinutes = default)
         {
             return new EventSubscriptionRetryPolicy(maxDeliveryAttempts, eventTimeToLiveInMinutes, default);
-        }
-
-        /// <param name="endpointType"></param>
-        /// <returns> A new <see cref="Models.DeadLetterDestination"/> instance for mocking. </returns>
-        public static DeadLetterDestination DeadLetterDestination(string endpointType = default)
-        {
-            return new UnknownDeadLetterDestination(endpointType, default);
         }
 
         /// <param name="resourceId"> The Azure Resource ID of the storage account that is the destination of the deadletter events. </param>
@@ -2023,14 +1979,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="name"> Fully qualified name of the extended location. </param>
-        /// <param name="type"> Type of the extended location. </param>
-        /// <returns> A new <see cref="Models.ExtendedLocation"/> instance for mocking. </returns>
-        public static ExtendedLocation ExtendedLocation(string name = default, string @type = default)
-        {
-            return new ExtendedLocation(name, @type, default);
-        }
-
         /// <param name="tags"> Tags of the Topic resource. </param>
         /// <param name="identity"> Topic resource identity information. </param>
         /// <param name="publicNetworkAccess">
@@ -2263,14 +2211,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             filters ??= new ChangeTrackingList<EventGridFilter>();
 
             return new FiltersConfiguration((includedEventTypes ?? new ChangeTrackingList<string>()).ToList(), (filters ?? new ChangeTrackingList<EventGridFilter>()).ToList(), default);
-        }
-
-        /// <param name="operatorType"></param>
-        /// <param name="key"></param>
-        /// <returns> A new <see cref="Models.EventGridFilter"/> instance for mocking. </returns>
-        public static EventGridFilter EventGridFilter(string operatorType = default, string key = default)
-        {
-            return new UnknownEventGridFilter(operatorType, key, default);
         }
 
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>

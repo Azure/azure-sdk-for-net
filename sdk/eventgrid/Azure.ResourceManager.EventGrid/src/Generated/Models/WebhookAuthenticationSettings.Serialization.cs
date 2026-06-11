@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
             writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
-            writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri);
+            writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);
             writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
             writer.WriteStringValue(AzureActiveDirectoryTenantId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             CustomWebhookAuthenticationManagedIdentity identity = default;
             Uri endpointUri = default;
             Uri endpointBaseUri = default;
-            string azureActiveDirectoryApplicationIdOrUri = default;
+            Uri azureActiveDirectoryApplicationIdOrUri = default;
             string azureActiveDirectoryTenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("azureActiveDirectoryApplicationIdOrUri"u8))
                 {
-                    azureActiveDirectoryApplicationIdOrUri = prop.Value.GetString();
+                    azureActiveDirectoryApplicationIdOrUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("azureActiveDirectoryTenantId"u8))

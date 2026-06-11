@@ -7,19 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownEventGridInputSchemaMapping : EventGridInputSchemaMapping, IJsonModel<EventGridInputSchemaMapping>
+    internal sealed partial class UnknownInputSchemaMapping : EventGridInputSchemaMapping, IJsonModel<EventGridInputSchemaMapping>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEventGridInputSchemaMapping"/> for deserialization. </summary>
-        internal UnknownEventGridInputSchemaMapping()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EventGridInputSchemaMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -102,27 +96,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEventGridInputSchemaMapping(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownEventGridInputSchemaMapping DeserializeUnknownEventGridInputSchemaMapping(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            InputSchemaMappingType inputSchemaMappingType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("inputSchemaMappingType"u8))
-                {
-                    inputSchemaMappingType = new InputSchemaMappingType(prop.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownEventGridInputSchemaMapping(inputSchemaMappingType, additionalBinaryDataProperties);
         }
     }
 }

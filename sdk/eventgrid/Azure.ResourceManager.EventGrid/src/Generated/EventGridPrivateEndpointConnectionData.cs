@@ -90,23 +90,5 @@ namespace Azure.ResourceManager.EventGrid
                 Properties.ProvisioningState = value;
             }
         }
-
-        /// <summary> The ARM identifier for Private Endpoint. </summary>
-        [WirePath("properties.privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateEndpointId = value;
-            }
-        }
     }
 }

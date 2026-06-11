@@ -85,59 +85,5 @@ namespace Azure.ResourceManager.EventGrid.Models
                 Properties.DataVersion = value;
             }
         }
-
-        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
-        [WirePath("properties.id.sourceField")]
-        public string IdSourceField
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IdSourceField;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new JsonInputSchemaMappingProperties();
-                }
-                Properties.IdSourceField = value;
-            }
-        }
-
-        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
-        [WirePath("properties.topic.sourceField")]
-        public string TopicSourceField
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TopicSourceField;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new JsonInputSchemaMappingProperties();
-                }
-                Properties.TopicSourceField = value;
-            }
-        }
-
-        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
-        [WirePath("properties.eventTime.sourceField")]
-        public string EventTimeSourceField
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EventTimeSourceField;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new JsonInputSchemaMappingProperties();
-                }
-                Properties.EventTimeSourceField = value;
-            }
-        }
     }
 }
