@@ -5,7 +5,7 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -41,10 +41,8 @@ public class Sample_Models : SamplesBase
         #region Snippet:Sample_Createclient_Models
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var connectionName = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         string modelName = "sample-model";
@@ -55,27 +53,12 @@ public class Sample_Models : SamplesBase
         DirectoryInfo dataFolder = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "sample-model"));
         File.WriteAllBytes(Path.Combine(dataFolder.FullName, "weights.bin"), BinaryData.FromString("hello-foundry-model").ToArray());
         File.WriteAllText(Path.Combine(dataFolder.FullName, "config.json"), "{\"sample\": true}");
-        AIProjectConnection blobConnection = projectClient.Connections.GetConnection(connectionName);
-        //ModelPendingUploadRequest uploadRequest = new()
-        //{
-        //    ConnectionName = blobConnection.Name
-        //};
-        //ModelPendingUploadResponse uploadResponse = await projectClient.Models.StartModelPendingUploadAsync(
-        //    name: modelName,
-        //    version: modelVersion,
-        //    pendingUploadRequest: uploadRequest
-        //);
-        FolderDataset folderDataset = projectClient.Datasets.UploadFolder(
-            name: modelName,
-            version: modelVersion,
-            folderPath: dataFolder.FullName,
-            connectionName: blobConnection.Name
-        );
-        Console.WriteLine($"Created data set. Uri: {folderDataset.DataUri}");
+        Uri dataUri = await projectClient.Models.UploadModelAsync(path: dataFolder.FullName, name: modelName, version: modelVersion);
+        Console.WriteLine($"Created data set. Uri: {dataUri}");
         Directory.Delete(dataFolder.FullName, true);
         #endregion
         #region Snippet:Sample_CreateModel_Models_Async
-        ModelVersion modelVersionObj = new(folderDataset.DataUri)
+        ModelVersion modelVersionObj = new(dataUri)
         {
             WeightType = FoundryModelWeightType.FullWeight,
             Description = "Sample model registered from Azure.AI.Projects",
@@ -87,7 +70,7 @@ public class Sample_Models : SamplesBase
             modelVersion: modelVersionObj);
         #endregion
         #region Snippet:Sample_GetModel_Models_Async
-        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 25, seconds: 0);
+        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 5, seconds: 0);
         ModelVersion retrievedModel = null;
         while (DateTime.UtcNow < deadline)
         {
@@ -111,7 +94,7 @@ public class Sample_Models : SamplesBase
             throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not registered successfully.");
         }
         Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
-        ModelCredentialRequest credentialRequest = new(folderDataset.DataUri);
+        ModelCredentialRequest credentialRequest = new(dataUri);
         DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
         Console.WriteLine($"Model SAS URI: {modelCredential.BlobReference.Credential.SasUri}.");
         #endregion
@@ -142,8 +125,8 @@ public class Sample_Models : SamplesBase
         #endregion
         #region Snippet:Sample_ListLatestVersions_Models_Async
         AsyncCollectionResult<ModelVersion> models = projectClient.Models.GetLatestModelVersionsAsync();
-        Console.WriteLine("The next models are available in the project.");
-        await foreach (ModelVersion oneModel in modelVersions)
+        Console.WriteLine("The next models are available in the project:");
+        await foreach (ModelVersion oneModel in models)
         {
             Console.WriteLine($"    {oneModel.Name}, latest version: {oneModel.Version}");
         }
@@ -151,8 +134,105 @@ public class Sample_Models : SamplesBase
         #region Snippet:Sample_Cleanup_Models_Async
         await projectClient.Models.DeleteModelVersionAsync(name: updatedModel.Name, version: updatedModel.Version);
         #endregion
+    }
 
-        await projectClient.Datasets.DeleteAsync(name: folderDataset.Name, version: folderDataset.Version);
+    [Test]
+    [SyncOnly]
+    public void ModelsSync()
+    {
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+#endif
+        AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        string modelName = "sample-model";
+        string modelVersion = "1";
+        Cleanup(projectClient, modelName, modelVersion);
+        #region Snippet:Sample_UploadData_Models_Sync
+        DirectoryInfo dataFolder = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "sample-model"));
+        File.WriteAllBytes(Path.Combine(dataFolder.FullName, "weights.bin"), BinaryData.FromString("hello-foundry-model").ToArray());
+        File.WriteAllText(Path.Combine(dataFolder.FullName, "config.json"), "{\"sample\": true}");
+        Uri dataUri = projectClient.Models.UploadModel(path: dataFolder.FullName, name: modelName, version: modelVersion);
+        Console.WriteLine($"Created data set. Uri: {dataUri}");
+        Directory.Delete(dataFolder.FullName, true);
+        #endregion
+        #region Snippet:Sample_CreateModel_Models_Sync
+        ModelVersion modelVersionObj = new(dataUri)
+        {
+            WeightType = FoundryModelWeightType.FullWeight,
+            Description = "Sample model registered from Azure.AI.Projects",
+        };
+        modelVersionObj.Tags["source"] = "Model from sample";
+        CreateAsyncResponse createResponse = projectClient.Models.CreateModelVersionRequest(
+            name: modelName,
+            version: modelVersion,
+            modelVersion: modelVersionObj);
+        #endregion
+        #region Snippet:Sample_GetModel_Models_Sync
+        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 5, seconds: 0);
+        ModelVersion retrievedModel = null;
+        while (DateTime.UtcNow < deadline)
+        {
+            Thread.Sleep(500);
+            try
+            {
+                retrievedModel = projectClient.Models.GetModelVersion(modelName, modelVersion);
+                break;
+            }
+            catch (ClientResultException e)
+            {
+                if (e.Status != 404)
+                {
+                    throw;
+                }
+            }
+            Console.WriteLine("Waiting for model to register...");
+        }
+        if (retrievedModel is null)
+        {
+            throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not registered successfully.");
+        }
+        Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
+        ModelCredentialRequest credentialRequest = new(dataUri);
+        DatasetCredential modelCredential = projectClient.Models.GetModelCredentials(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
+        Console.WriteLine($"Model SAS URI: {modelCredential.BlobReference.Credential.SasUri}.");
+        #endregion
+        #region Snippet:Sample_UpdateModel_Models_Sync
+        UpdateModelVersionOptions updateOptions = new()
+        {
+            Description = "Updated model description."
+        };
+        updateOptions.Tags["new_tag"] = "The tag from update";
+        ModelVersion updatedModel = projectClient.Models.UpdateModelVersion(
+            name: retrievedModel.Name,
+            version: retrievedModel.Version,
+            updateOptions: updateOptions
+        );
+        Console.WriteLine($"The model was updated. New description is: {updatedModel.Description}. Tags:");
+        foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
+        {
+            Console.WriteLine($"    Key: {keyValyePair.Key} Value: {keyValyePair.Value}");
+        }
+        #endregion
+        #region Snippet:Sample_ListModelVersions_Models_Sync
+        CollectionResult<ModelVersion> modelVersions = projectClient.Models.GetModelVersions(name: updatedModel.Name);
+        Console.WriteLine($"For model {updatedModel.Name} there are next versions available:");
+        foreach (ModelVersion oneModelVersion in modelVersions)
+        {
+            Console.WriteLine($"    {oneModelVersion.Version}");
+        }
+        #endregion
+        #region Snippet:Sample_ListLatestVersions_Models_Sync
+        CollectionResult<ModelVersion> models = projectClient.Models.GetLatestModelVersions();
+        foreach (ModelVersion oneModel in models)
+        {
+            Console.WriteLine($"    {oneModel.Name}, latest version: {oneModel.Version}");
+        }
+        #endregion
+        #region Snippet:Sample_Cleanup_Models_Sync
+        projectClient.Models.DeleteModelVersion(name: updatedModel.Name, version: updatedModel.Version);
+        #endregion
     }
 
     public Sample_Models(bool isAsync) : base(isAsync)
